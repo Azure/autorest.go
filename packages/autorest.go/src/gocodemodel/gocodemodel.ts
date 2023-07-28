@@ -335,8 +335,6 @@ export interface Parameter {
 
   location: ParameterLocation;
 
-  annotations: ParameterAnnotations;
-
   xml?: XMLInfo;
 }
 
@@ -359,10 +357,6 @@ export interface XMLInfo {
 }
 
 export type ParameterLocation = 'client' | 'method';
-
-export interface ParameterAnnotations {
-  httpStyle?: ',' | '|' | ' ' | '\\t'
-}
 
 export interface ParameterGroup {
   // paramName is the name of the parameter
@@ -390,6 +384,9 @@ export interface HeaderParameter extends Parameter {
   type: HeaderType;
 
   collectionPrefix?: string;
+
+  // for slice types, this is the delimiter to use instead of the default ','
+  delimiter?: '|' | ' ' | '\\t'
 }
 
 export type PathParameterType = BytesType | ConstantType | PrimitiveType | SliceType | TimeType | LiteralValue;
@@ -401,6 +398,9 @@ export interface PathParameter extends Parameter {
   type: PathParameterType;
 
   isURLEncoded: boolean;
+
+  // for slice types, this is the delimiter to use instead of the default ','
+  delimiter?: '|' | ' ' | '\\t'
 }
 
 export type QueryParameterType = BytesType | ConstantType | PrimitiveType | SliceType | TimeType | LiteralValue;
@@ -414,6 +414,9 @@ export interface QueryParameter extends Parameter {
   isURLEncoded: boolean;
 
   explode: boolean;
+
+  // for slice types, this is the delimiter to use instead of the default ','
+  delimiter?: '|' | ' ' | '\\t'
 }
 
 export type URIParameterType = ConstantType | PrimitiveType;
@@ -437,6 +440,9 @@ export interface BodyParameter extends Parameter {
 
 export interface FormBodyParameter extends Parameter {
   formDataName: string;
+
+  // for slice types, this is the delimiter to use instead of the default ','
+  delimiter?: '|' | ' ' | '\\t'
 }
 
 export interface MultipartFormBodyParameter extends Parameter {
@@ -1049,8 +1055,6 @@ export class TimeType implements TimeType {
   }
 }
 
-export class ParameterAnnotations implements ParameterAnnotations {}
-
 export class Parameter implements Parameter {
   constructor(paramName: string, type: PossibleType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
     this.paramName = paramName;
@@ -1058,7 +1062,6 @@ export class Parameter implements Parameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1071,7 +1074,6 @@ export class BodyParameter implements BodyParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = 'method';
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1083,7 +1085,6 @@ export class FormBodyParameter implements FormBodyParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = 'method';
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1095,7 +1096,6 @@ export class MultipartFormBodyParameter implements MultipartFormBodyParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = 'method';
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1107,7 +1107,6 @@ export class HeaderParameter implements HeaderParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1120,7 +1119,6 @@ export class PathParameter implements PathParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1134,7 +1132,6 @@ export class QueryParameter implements QueryParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1146,7 +1143,6 @@ export class URIParameter implements URIParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
-    this.annotations = new ParameterAnnotations();
   }
 }
 
@@ -1158,7 +1154,6 @@ export class ResumeTokenParameter implements ResumeTokenParameter {
     this.paramType = 'optional';
     this.byValue = true;
     this.location = 'method';
-    this.annotations = new ParameterAnnotations();
   }
 }
 

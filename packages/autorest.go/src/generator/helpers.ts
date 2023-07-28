@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ConstantValue, GoCodeModel, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType } from '../gocodemodel/gocodemodel';
+import { ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter } from '../gocodemodel/gocodemodel';
 import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isSliceType, isTimeType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
@@ -204,13 +204,13 @@ export function getParamName(param: Parameter): string {
   return paramName;
 }
 
-export function formatParamValue(param: Parameter, imports: ImportManager): string {
-  let separator = ',';
-  if (param.annotations?.httpStyle) {
-    separator = param.annotations?.httpStyle;
-  }
+export function formatParamValue(param: FormBodyParameter | HeaderParameter | PathParameter | QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
   if (isSliceType(param.type)) {
+    let separator = ',';
+    if (param.delimiter) {
+      separator = param.delimiter;
+    }
     if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
       imports.add('strings');
       return `strings.Join(${paramName}, "${separator}")`;

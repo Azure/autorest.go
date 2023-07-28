@@ -324,6 +324,7 @@ function adaptMethodParameter(op: Operation, param: M4Parameter): Parameter {
       const paramType = adaptParameterType(param);
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
         adaptedParam = new FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, paramType, param.language.go!.byValue);
+        (<FormBodyParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
         adaptedParam = new MultipartFormBodyParameter(param.language.go!.name, bodyType, paramType, param.language.go!.byValue);
       } else {
@@ -342,17 +343,19 @@ function adaptMethodParameter(op: Operation, param: M4Parameter): Parameter {
       if (param.schema.language.go!.headerCollectionPrefix) {
         (<HeaderParameter>adaptedParam).collectionPrefix = param.schema.language.go!.headerCollectionPrefix;
       }
+      (<HeaderParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
       break;
     }
     case 'path':
       adaptedParam = new PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
         adaptPathPrameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
+      (<PathParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
       break;
     case 'query': {
       const queryType = adaptQueryParameterType(param.schema);
       adaptedParam = new QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
                 param.protocol.http?.explode === true, queryType, adaptParameterType(param), param.language.go!.byValue, location);
-
+      (<QueryParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
       break;
     }
     case 'uri':
@@ -377,18 +380,6 @@ function adaptMethodParameter(op: Operation, param: M4Parameter): Parameter {
 
   if (hasDescription(param.language.go!)) {
     adaptedParam.description = param.language.go!.description;
-  }
-
-  switch (param.protocol.http?.style) {
-    case SerializationStyle.PipeDelimited:
-      adaptedParam.annotations.httpStyle = '|';
-      break;
-    case SerializationStyle.SpaceDelimited:
-      adaptedParam.annotations.httpStyle = ' ';
-      break;
-    case SerializationStyle.TabDelimited:
-      adaptedParam.annotations.httpStyle = '\\t';
-      break;
   }
 
   // track client parameter for later use
@@ -416,6 +407,19 @@ function adaptMethodParameter(op: Operation, param: M4Parameter): Parameter {
   }
 
   return adaptedParam;
+}
+
+function adaptParamDelimiter(param: M4Parameter): '|' | ' ' | '\\t' | undefined {
+  switch (param.protocol.http?.style) {
+    case SerializationStyle.PipeDelimited:
+      return '|';
+    case SerializationStyle.SpaceDelimited:
+      return ' ';
+    case SerializationStyle.TabDelimited:
+      return '\\t';
+    default:
+      return undefined;
+  }
 }
 
 // returns true if the parameter should not be URL encoded

@@ -828,11 +828,11 @@ function createLocalVariableName(param: Parameter, suffix: string): string {
 }
 
 // call sites of this function make the assumption that if a param is a slice
-// then it has an HTTP style. while this is probably true considering the context
+// then it has a delimiter. while this is probably true considering the context
 // where this is invoked, it's a bit of a hack.
 function getArraySeparator(param: Parameter): string {
-  if (param.annotations.httpStyle) {
-    return param.annotations.httpStyle;
+  if ((isFormBodyParameter(param) || isHeaderParameter(param) || isPathParameter(param) || isQueryParameter(param)) && param.delimiter) {
+    return param.delimiter;
   }
   return ',';
 }
