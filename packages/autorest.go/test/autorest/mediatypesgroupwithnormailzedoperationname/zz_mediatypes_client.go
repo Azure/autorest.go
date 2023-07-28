@@ -437,7 +437,7 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithTextCreateRequest(ctx cont
 	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"text/plain"}
 	body := streaming.NopCloser(strings.NewReader(message))
-	if err := req.SetBody(body, "application/json"); err != nil {
+	if err := req.SetBody(body, string(contentType)); err != nil {
 		return nil, err
 	}
 
