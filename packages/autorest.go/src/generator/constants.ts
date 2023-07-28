@@ -23,6 +23,9 @@ export async function generateConstants(session: Session<CodeModel>): Promise<st
   }
   // data-plane clients must manage their own constants for these values
   if (<boolean>session.model.language.go!.azureARM) {
+    if (session.model.language.go!.moduleVersion === '') {
+      throw new Error('--module-version is a required parameter when --azure-arm is set');
+    }
     text += 'const (\n';
     text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
     text += `\tmoduleVersion = "v${session.model.language.go!.moduleVersion}"\n`;
