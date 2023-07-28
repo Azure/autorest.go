@@ -16,7 +16,7 @@ export async function m4ToGoCodeModel(session: Session<M4CodeModel>): Promise<Go
   const options = new Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
 
   let type: CodeModelType = 'data-plane';
-  if (await session.getValue('azure-arm', false)) {
+  if (session.model.language.go!.azureARM) {
     type = 'azure-arm';
   }
   
