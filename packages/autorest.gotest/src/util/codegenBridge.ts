@@ -127,7 +127,7 @@ function formatParameterTypeName(param: Parameter): string {
 }
 
 // returns the complete collection of method parameters
-function getMethodParameters(op: Operation): Parameter[] {
+function getMethodParameters(op: Operation): Array<Parameter> {
   const params = new Array<Parameter>();
   const paramGroups = new Array<GroupProperty>();
   for (const param of values(aggregateParameters(op))) {
@@ -159,11 +159,11 @@ function getMethodParameters(op: Operation): Parameter[] {
       return -1;
     }
     return 1;
-  })
+  });
   // add the optional param group last if it's not already in the list.
   // all operations should have an optional params type.  the only exception
   // is the next link operation for pageable operations.
-  if (op.language.go!.optionalParamGroup && !values(paramGroups).any(gp => { return gp.language.go!.name === op.language.go!.optionalParamGroup.language.go!.name})) {
+  if (op.language.go!.optionalParamGroup && !values(paramGroups).any(gp => { return gp.language.go!.name === op.language.go!.optionalParamGroup.language.go!.name; })) {
     paramGroups.push(op.language.go!.optionalParamGroup);
   }
   for (const paramGroup of values(paramGroups)) {
