@@ -705,6 +705,19 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
     return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
   };
+  const getContentType = function(op: Operation): string {
+    const contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
+    if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
+      for (const param of values(op.requests![0].parameters)) {
+        // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
+        // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger.
+        if (param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
+          return `string(${param.language.go!.name})`;
+        }
+      }
+    }
+    return contentType;
+  };
   const mediaType = getMediaType(op.requests![0].protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
@@ -773,16 +786,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += '\treturn req, nil\n';
     }
   } else if (mediaType === 'binary') {
-    let contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
-    if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
-      for (const param of values(op.requests![0].parameters)) {
-        // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
-        // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger.
-        if (param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
-          contentType = `string(${param.language.go!.name})`;
-        }
-      }
-    }
+    const contentType = getContentType(op);
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
     if (bodyParam!.required) {
       text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam?.language.go!.name}, ${contentType})`)}`;
@@ -798,7 +802,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
-    const contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
+    const contentType = getContentType(op);
     if (bodyParam!.required) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
       text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${contentType})`)}\n`;
