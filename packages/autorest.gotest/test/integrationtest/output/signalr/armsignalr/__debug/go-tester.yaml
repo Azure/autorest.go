@@ -22318,6 +22318,7 @@ language:
     generateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
+    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/signalr/armsignalr
     openApiType: arm
     packageName: armsignalr
     parameterGroups:
