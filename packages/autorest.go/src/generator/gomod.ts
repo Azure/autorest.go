@@ -10,6 +10,14 @@ import { lt, toSemver } from '@azure-tools/codegen';
 // Creates the content in go.mod if the --module switch was specified.
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
 export async function generateGoModFile(session: Session<CodeModel>, existingGoMod: string): Promise<string> {
+  const modName = session.model.language.go!.module;
+  if (modName === 'none') {
+    if (existingGoMod === null) {
+      return '';
+    }
+    throw new Error('--module is required when go.mod exists');
+  }
+
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
   const version = await session.getValue('azcore-version', '1.6.1');
@@ -20,10 +28,6 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v' + version;
   if (existingGoMod === null) {
     // no preexisting go.mod file, generate the default one
-    const modName = await session.getValue('module', 'none');
-    if (modName === 'none') {
-      return '';
-    }
     let text = `module ${modName}\n\n`;
     text += 'go 1.18\n\n';
     text += `require ${azcore}\n`;
@@ -43,6 +47,10 @@ export async function generateGoModFile(session: Session<CodeModel>, existingGoM
   if (lt(existingVer, specifiedVer)) {
     // the existing version of azcore is less than the specified version so update it
     existingGoMod = existingGoMod.replace(/github\.com\/Azure\/azure-sdk-for-go\/sdk\/azcore\s+v\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?/, azcore);
+  }
+  // now check if the module name needs to be replaced due to a major version increase
+  if (!existingGoMod.match(`module ${modName}$`)) {
+    existingGoMod = existingGoMod.replace(/module \S+/, `module ${modName}`);
   }
   return existingGoMod;
 }

@@ -6386,6 +6386,7 @@ language:
     groupParameters: true
     hasTimeRFC3339: true
     headAsBoolean: true
+    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/agrifood/armagrifood
     openApiType: arm
     packageName: armagrifood
     parameterGroups:

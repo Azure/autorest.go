@@ -458,15 +458,6 @@ schemas:
           name: IdentityTenantId
           description: The tenant ID of resource.
       protocol: {}
-    - &ref_16
-      type: string
-      apiVersions:
-        - version: 2021-09-01-preview
-      language:
-        default:
-          name: FarmBeatsPropertiesInstanceUri
-          description: Uri of the FarmBeats instance.
-      protocol: {}
     - &ref_18
       type: string
       apiVersions:
@@ -976,6 +967,16 @@ schemas:
         default:
           name: SystemDataLastModifiedAt
           description: The timestamp of resource last modification (UTC)
+      protocol: {}
+  uris:
+    - &ref_16
+      type: uri
+      apiVersions:
+        - version: 2021-09-01-preview
+      language:
+        default:
+          name: FarmBeatsPropertiesInstanceUri
+          description: Uri of the FarmBeats instance.
       protocol: {}
   objects:
     - &ref_3

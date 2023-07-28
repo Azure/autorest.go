@@ -572,7 +572,7 @@ export function formatCommentAsBulletItem(description: string): string {
 
 export async function getParentImport(session: Session<CodeModel>): Promise<string> {
   const clientPkg = session.model.language.go!.packageName;
-  const modName = await session.getValue('module', 'none');
+  const modName = session.model.language.go!.module;
   const containingMod = await session.getValue('containing-module', 'none');
   if (modName !== 'none') {
     return modName;

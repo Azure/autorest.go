@@ -3013,30 +3013,6 @@ schemas:
           name: EndpointAuthKeysSecondaryKey
           description: The secondary key.
       protocol: {}
-    - &ref_293
-      type: string
-      apiVersions:
-        - version: 2022-02-01-preview
-      extensions:
-        x-ms-mutability:
-          - read
-      language:
-        default:
-          name: EndpointPropertiesBaseScoringUri
-          description: Endpoint URI.
-      protocol: {}
-    - &ref_294
-      type: string
-      apiVersions:
-        - version: 2022-02-01-preview
-      extensions:
-        x-ms-mutability:
-          - read
-      language:
-        default:
-          name: EndpointPropertiesBaseSwaggerUri
-          description: Endpoint Swagger URI.
-      protocol: {}
     - &ref_5
       type: string
       apiVersions:
@@ -11103,6 +11079,31 @@ schemas:
           name: TargetUtilizationScaleSettingsPollingInterval
           description: The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds.
       protocol: {}
+  uris:
+    - &ref_293
+      type: uri
+      apiVersions:
+        - version: 2022-02-01-preview
+      extensions:
+        x-ms-mutability:
+          - read
+      language:
+        default:
+          name: EndpointPropertiesBaseScoringUri
+          description: Endpoint URI.
+      protocol: {}
+    - &ref_294
+      type: uri
+      apiVersions:
+        - version: 2022-02-01-preview
+      extensions:
+        x-ms-mutability:
+          - read
+      language:
+        default:
+          name: EndpointPropertiesBaseSwaggerUri
+          description: Endpoint Swagger URI.
+      protocol: {}
   uuids:
     - &ref_76
       type: uuid
@@ -12358,7 +12359,6 @@ schemas:
                                                     nullable: true
                                                     serializedName: subnet
                                                     extensions:
-                                                      x-ms-azure-resource: true
                                                       x-nullable: true
                                                     language: &ref_2033
                                                       default:
@@ -12599,8 +12599,6 @@ schemas:
                                                     protocol: {}
                                                   - schema: *ref_151
                                                     serializedName: subnet
-                                                    extensions:
-                                                      x-ms-azure-resource: true
                                                     language: &ref_2067
                                                       default:
                                                         name: subnet
@@ -17482,7 +17480,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: AccountKey
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17546,7 +17543,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: Certificate
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17616,7 +17612,6 @@ schemas:
                                                                             required: true
                                                                             serializedName: secrets
                                                                             extensions:
-                                                                              x-ms-discriminator-value: KerberosPassword
                                                                               x-ms-mutability:
                                                                                 - create
                                                                                 - update
@@ -17699,7 +17694,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: KerberosKeytab
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17761,7 +17755,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: Sas
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -17825,7 +17818,6 @@ schemas:
                                                                 required: true
                                                                 serializedName: secrets
                                                                 extensions:
-                                                                  x-ms-discriminator-value: ServicePrincipal
                                                                   x-ms-mutability:
                                                                     - create
                                                                     - update
@@ -18935,7 +18927,6 @@ schemas:
                                                                                                           nullable: true
                                                                                                           serializedName: data
                                                                                                           extensions:
-                                                                                                            x-ms-discriminator-value: MLTable
                                                                                                             x-nullable: true
                                                                                                           language:
                                                                                                             default:
@@ -19047,7 +19038,6 @@ schemas:
                                                                                               nullable: true
                                                                                               serializedName: data
                                                                                               extensions:
-                                                                                                x-ms-discriminator-value: MLTable
                                                                                                 x-nullable: true
                                                                                               language:
                                                                                                 default:
@@ -19091,8 +19081,6 @@ schemas:
                                                                                             - schema: *ref_38
                                                                                               required: true
                                                                                               serializedName: data
-                                                                                              extensions:
-                                                                                                x-ms-discriminator-value: MLTable
                                                                                               language: &ref_2781
                                                                                                 default:
                                                                                                   name: data
@@ -21685,7 +21673,6 @@ schemas:
                                                           required: false
                                                           serializedName: limits
                                                           extensions:
-                                                            x-ms-discriminator-value: Command
                                                             x-ms-mutability:
                                                               - create
                                                               - read
@@ -21862,7 +21849,6 @@ schemas:
                                                           required: false
                                                           serializedName: limits
                                                           extensions:
-                                                            x-ms-discriminator-value: Sweep
                                                             x-ms-mutability:
                                                               - create
                                                               - read
@@ -28112,7 +28098,7 @@ operationGroups:
             OperationsList:
               parameters:
                 api-version: 2022-02-01-preview
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json
               responses:
                 '200':
                   body:
@@ -28242,7 +28228,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json
               responses:
                 '200':
                   body:
@@ -28453,7 +28439,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
               responses:
                 '200':
                   body:
@@ -28607,7 +28593,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -28743,7 +28729,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json
               responses:
                 '200':
                   body:
@@ -28862,7 +28848,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
               responses:
                 '200':
                   body:
@@ -29045,7 +29031,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json
               responses:
                 '200':
                   body:
@@ -29165,7 +29151,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
               responses:
                 '200':
                   body:
@@ -29285,7 +29271,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
               responses:
                 '200': {}
                 '202': {}
@@ -29372,7 +29358,7 @@ operationGroups:
               parameters:
                 api-version: 2022-02-01-preview
                 subscriptionId: 00000000-1111-2222-3333-444444444444
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listBySubscription.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listBySubscription.json
               responses:
                 '200':
                   body:
@@ -29504,7 +29490,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json
               responses:
                 '200':
                   body:
@@ -29620,7 +29606,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
               responses:
                 '200':
                   body:
@@ -29731,7 +29717,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
               responses:
                 '200':
                   body:
@@ -29834,7 +29820,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
               responses:
                 '200':
                   body:
@@ -29938,7 +29924,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
               responses:
                 '200':
                   body:
@@ -30048,7 +30034,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json
               responses:
                 '200':
                   body:
@@ -30436,7 +30422,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json
               responses:
                 '200':
                   body:
@@ -30818,7 +30804,7 @@ operationGroups:
                       limit: 200
                       unit: Count
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json
               responses:
                 '200':
                   body:
@@ -30917,7 +30903,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json
               responses:
                 '200':
                   body:
@@ -31326,7 +31312,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json
               responses:
                 '200':
                   body:
@@ -31470,7 +31456,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
               responses:
                 '200':
                   body:
@@ -31492,7 +31478,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
               responses:
                 '200':
                   body:
@@ -31539,7 +31525,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
               responses:
                 '200':
                   body:
@@ -31582,7 +31568,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
               responses:
                 '200':
                   body:
@@ -31793,7 +31779,8 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
+              x-ms-original-file: >-
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
               responses:
                 '200':
                   body:
@@ -31883,7 +31870,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
               responses:
                 '200':
                   body:
@@ -31917,7 +31904,7 @@ operationGroups:
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
               responses:
                 '200':
                   body:
@@ -31950,7 +31937,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
               responses:
                 '200':
                   body:
@@ -31995,7 +31982,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
               responses:
                 '200':
                   body:
@@ -32031,7 +32018,7 @@ operationGroups:
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
               responses:
                 '200':
                   body:
@@ -32070,7 +32057,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
               responses:
                 '200':
                   body:
@@ -32137,7 +32124,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
               responses:
                 '200':
                   body:
@@ -32304,7 +32291,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
               responses:
                 '200':
                   body:
@@ -32470,7 +32457,7 @@ operationGroups:
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 underlyingResourceAction: Delete
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
               responses:
                 '200': {}
                 '202':
@@ -32591,7 +32578,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json
               responses:
                 '200':
                   body:
@@ -32726,7 +32713,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json
               responses:
                 '200':
                   body:
@@ -32842,7 +32829,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -32954,7 +32941,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -33066,7 +33053,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -33178,7 +33165,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json
               responses:
                 '200':
                   body:
@@ -33322,7 +33309,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json
               responses:
                 '200':
                   body:
@@ -33474,7 +33461,8 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
+              x-ms-original-file: >-
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -33606,7 +33594,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -33717,7 +33705,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json
               responses:
                 '200':
                   body:
@@ -33863,7 +33851,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 target: www.facebook.com
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json
               responses:
                 '200':
                   body:
@@ -34025,7 +34013,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json
               responses:
                 '200':
                   body:
@@ -34149,7 +34137,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
               responses:
                 '200':
                   body:
@@ -34277,7 +34265,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -34413,7 +34401,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json
               responses:
                 '200':
                   body:
@@ -34604,7 +34592,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -34723,7 +34711,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json
               responses:
                 '200':
                   body:
@@ -34940,7 +34928,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json
               responses:
                 '200':
                   body:
@@ -35162,7 +35150,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -35356,7 +35344,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json
               responses:
                 '200':
                   body:
@@ -35523,7 +35511,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json
               responses:
                 '200':
                   body:
@@ -35749,7 +35737,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -35882,7 +35870,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json
               responses:
                 '200':
                   body:
@@ -36154,7 +36142,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
               responses:
                 '200':
                   body:
@@ -36432,7 +36420,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -36675,7 +36663,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json
               responses:
                 '200':
                   body:
@@ -36832,7 +36820,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -36949,7 +36937,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json
               responses:
                 '200':
                   body:
@@ -37118,7 +37106,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -37314,7 +37302,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json
               responses:
                 '200':
                   body:
@@ -37474,7 +37462,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -37605,7 +37593,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json
               responses:
                 '200':
                   body:
@@ -37795,7 +37783,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -37971,7 +37959,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json
               responses:
                 '200':
                   body:
@@ -38115,7 +38103,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -38232,7 +38220,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json
               responses:
                 '200':
                   body:
@@ -38404,7 +38392,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -38616,7 +38604,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json
               responses:
                 '200':
                   body:
@@ -38777,7 +38765,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -38908,7 +38896,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json
               responses:
                 '200':
                   body:
@@ -39100,7 +39088,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -39277,7 +39265,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json
               responses:
                 '200':
                   body:
@@ -39442,7 +39430,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -39559,7 +39547,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json
               responses:
                 '200':
                   body:
@@ -39736,7 +39724,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -39965,7 +39953,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json
               responses:
                 '200':
                   body:
@@ -40126,7 +40114,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -40257,7 +40245,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json
               responses:
                 '200':
                   body:
@@ -40449,7 +40437,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -40695,7 +40683,7 @@ operationGroups:
                 searchText: string
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json
               responses:
                 '200':
                   body:
@@ -40846,7 +40834,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -40963,7 +40951,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json
               responses:
                 '200':
                   body:
@@ -41166,7 +41154,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -41249,7 +41237,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -41334,7 +41322,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -41411,7 +41399,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -41578,7 +41566,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
               responses:
                 '200':
                   body:
@@ -41717,7 +41705,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json
               responses:
                 '200':
                   body:
@@ -41859,7 +41847,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -41976,7 +41964,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json
               responses:
                 '200':
                   body:
@@ -42150,7 +42138,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -42368,7 +42356,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json
               responses:
                 '200':
                   body:
@@ -42543,7 +42531,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -42674,7 +42662,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json
               responses:
                 '200':
                   body:
@@ -42893,7 +42881,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -43146,7 +43134,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json
               responses:
                 '200':
                   body:
@@ -43230,7 +43218,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json
               responses:
                 '200':
                   body:
@@ -43309,7 +43297,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json
               responses:
                 '200':
                   body:
@@ -43367,7 +43355,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json
               responses:
                 '200':
                   body:
@@ -43583,7 +43571,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -43702,7 +43690,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json
               responses:
                 '200':
                   body:
@@ -43783,7 +43771,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
               responses:
                 '200':
                   body:
@@ -43858,7 +43846,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
               responses:
                 '200':
                   body:
@@ -43912,7 +43900,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
               responses:
                 '200':
                   body:
@@ -44179,7 +44167,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -44381,7 +44369,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -44552,7 +44540,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -44700,7 +44688,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -44939,7 +44927,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json
               responses:
                 '200': {}
         language:
@@ -45086,7 +45074,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json
               responses:
                 '200':
                   body:
@@ -45228,7 +45216,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -45345,7 +45333,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json
               responses:
                 '200':
                   body:
@@ -45514,7 +45502,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -45799,7 +45787,7 @@ operationGroups:
                 tags: string
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json
               responses:
                 '200':
                   body:
@@ -45964,7 +45952,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -46095,7 +46083,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json
               responses:
                 '200':
                   body:
@@ -46295,7 +46283,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -46547,7 +46535,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tags: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json
               responses:
                 '200':
                   body:
@@ -46740,7 +46728,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -46859,7 +46847,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json
               responses:
                 '200':
                   body:
@@ -47078,7 +47066,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
               responses:
                 '200':
                   body:
@@ -47302,7 +47290,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -47500,7 +47488,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
               responses:
                 '200':
                   body:
@@ -47659,7 +47647,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
               responses:
                 '200': {}
                 '202': {}
@@ -47779,7 +47767,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json
               responses:
                 '200':
                   body:
@@ -47948,7 +47936,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json
               responses:
                 '200':
                   body:
@@ -48181,7 +48169,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -48315,7 +48303,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -48392,7 +48380,8 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+              x-ms-original-file: >-
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -48648,7 +48637,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -48743,7 +48732,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -49033,7 +49022,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -49225,7 +49214,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -49505,7 +49494,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
               responses:
                 '200':
                   body:
@@ -49664,7 +49653,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -49691,7 +49680,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
+                file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -49818,7 +49807,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Workspace/tadelesh/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json
+              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json
               responses:
                 '200':
                   body:
