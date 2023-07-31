@@ -1005,12 +1005,12 @@ export class PolymorphicType implements PolymorphicType {
 }
 
 export class InterfaceType implements InterfaceType {
+  // possibleTypes and rootType are required. however, we have a chicken-and-egg
+  // problem as creating a PolymorphicType requires the necessary InterfaceType.
+  // so these fields MUST be populated after creating the InterfaceType.
   constructor(name: string, discriminatorField: string) {
     this.name = name;
     this.discriminatorField = discriminatorField;
-    // possibleTypes and rootType are required. however, we have a chicken-and-egg
-    // problem as creating a PolymorphicType requires the necessary InterfaceType.
-    // so these fields MUST be populated after creating the InterfaceType.
     //this.possibleTypes = possibleTypes;
     //this.rootType = rootType;
   }
