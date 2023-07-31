@@ -151,15 +151,7 @@ function getMethodParameters(op: Operation): Array<Parameter> {
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
   // add any parameter groups.  optional groups go last
-  paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
-    if (a.required === b.required) {
-      return 0;
-    }
-    if (a.required && !b.required) {
-      return -1;
-    }
-    return 1;
-  });
+  paramGroups.sort(sortParametersByRequired);
   // add the optional param group last if it's not already in the list.
   // all operations should have an optional params type.  the only exception
   // is the next link operation for pageable operations.
