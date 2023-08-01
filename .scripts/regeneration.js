@@ -99,13 +99,13 @@ for (namespace in goMappings) {
 }
 
 const blobStorage = './swagger/specification/storage/data-plane/Microsoft.BlobStorage/readme.md';
-generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--module-version=0.1.0 --inject-spans --azcore-version=1.7.0-beta.2');
+generateFromReadme("azblob", blobStorage, 'package-2021-12', 'test/storage/azblob', '--module-version=0.1.0 --inject-spans --azcore-version=1.8.0-beta.2');
 
 const network = './swagger/specification/network/resource-manager/readme.md';
-generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
+generateFromReadme("armnetwork", network, 'package-2022-09', 'test/network/armnetwork', '--module=armnetwork --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.8.0-beta.2');
 
 const compute = './swagger/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2 --slice-elements-byval');
+generateFromReadme("armcompute", compute, 'package-2021-12-01', 'test/compute/armcompute', '--module=armcompute --module-version=0.1.0 --azure-arm=true --remove-unreferenced-types --generate-fakes --inject-spans --azcore-version=1.8.0-beta.2 --slice-elements-byval');
 
 const synapseArtifacts = './swagger/specification/synapse/data-plane/readme.md';
 generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-composite-v6', 'test/synapse/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --module-version=0.1.0 --openapi-type="data-plane"');
@@ -126,9 +126,9 @@ const databoxedge = './swagger/specification/databoxedge/resource-manager/readme
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/armdataboxedge', '--module=armdataboxedge --module-version=2.0.0 --azure-arm=true --remove-unreferenced-types');
 
 const acr = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes --azcore-version=1.7.0-beta.2');
+generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes --azcore-version=1.8.0-beta.2');
 
-generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2');
+generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --azcore-version=1.8.0-beta.2');
 
 function should_generate(name) {
     if (filter !== undefined) {
@@ -155,7 +155,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --inject-spans --azcore-version=1.7.0-beta.2 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+        exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --inject-spans --azcore-version=1.8.0-beta.2 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
