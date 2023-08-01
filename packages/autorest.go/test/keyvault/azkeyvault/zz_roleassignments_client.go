@@ -210,22 +210,15 @@ func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, s
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *RoleAssignmentsClientListForScopeResponse) (RoleAssignmentsClientListForScopeResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listForScopeCreateRequest(ctx, vaultBaseURL, scope, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listForScopeCreateRequest(ctx, vaultBaseURL, scope, options)
+			}, nil)
 			if err != nil {
 				return RoleAssignmentsClientListForScopeResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return RoleAssignmentsClientListForScopeResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return RoleAssignmentsClientListForScopeResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listForScopeHandleResponse(resp)
 		},

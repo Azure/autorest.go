@@ -274,22 +274,15 @@ func (client *IPAllocationsClient) NewListPager(options *IPAllocationsClientList
 		},
 		Fetcher: func(ctx context.Context, page *IPAllocationsClientListResponse) (IPAllocationsClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "IPAllocationsClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return IPAllocationsClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return IPAllocationsClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return IPAllocationsClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -337,22 +330,15 @@ func (client *IPAllocationsClient) NewListByResourceGroupPager(resourceGroupName
 		},
 		Fetcher: func(ctx context.Context, page *IPAllocationsClientListByResourceGroupResponse) (IPAllocationsClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "IPAllocationsClient.NewListByResourceGroupPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return IPAllocationsClientListByResourceGroupResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return IPAllocationsClientListByResourceGroupResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return IPAllocationsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},

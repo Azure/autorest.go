@@ -288,22 +288,15 @@ func (client *RoutingIntentClient) NewListPager(resourceGroupName string, virtua
 		},
 		Fetcher: func(ctx context.Context, page *RoutingIntentClientListResponse) (RoutingIntentClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoutingIntentClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, virtualHubName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, virtualHubName, options)
+			}, nil)
 			if err != nil {
 				return RoutingIntentClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return RoutingIntentClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return RoutingIntentClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},

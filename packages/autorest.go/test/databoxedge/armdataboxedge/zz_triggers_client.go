@@ -265,22 +265,15 @@ func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string,
 		},
 		Fetcher: func(ctx context.Context, page *TriggersClientListByDataBoxEdgeDeviceResponse) (TriggersClientListByDataBoxEdgeDeviceResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TriggersClient.NewListByDataBoxEdgeDevicePager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return TriggersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},

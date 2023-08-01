@@ -228,22 +228,15 @@ func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, opt
 		},
 		Fetcher: func(ctx context.Context, page *ClientListResponse) (ClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, headerEnums, queryEnum, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, headerEnums, queryEnum, options)
+			}, nil)
 			if err != nil {
 				return ClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -289,6 +282,91 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 	return result, nil
 }
 
+// BeginListLRO - A long-running paged operation that uses a next link operation
+//
+// Generated from API version 2.0
+//   - options - ClientBeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
+func (client *Client) BeginListLRO(ctx context.Context, options *ClientBeginListLROOptions) (*runtime.Poller[*runtime.Pager[ClientListLROResponse]], error) {
+	pager := runtime.NewPager(runtime.PagingHandler[ClientListLROResponse]{
+		More: func(page ClientListLROResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ClientListLROResponse) (ClientListLROResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginListLRO")
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), *page.NextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listLROCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listLRONextCreateRequest(ctx, encodedNextLink)
+				},
+			})
+			if err != nil {
+				return ClientListLROResponse{}, err
+			}
+			return client.listLROHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listLRO(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ClientListLROResponse]]{
+			Response: &pager,
+		})
+		return poller, err
+	} else {
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ClientListLROResponse]]{
+			Response: &pager,
+		})
+	}
+}
+
+// ListLRO - A long-running paged operation that uses a next link operation
+//
+// Generated from API version 2.0
+func (client *Client) listLRO(ctx context.Context, options *ClientBeginListLROOptions) (*http.Response, error) {
+	var err error
+	const operationName = "Client.BeginListLRO"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.listLROCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
+	}
+	return httpResp, nil
+}
+
+// listLROCreateRequest creates the ListLRO request.
+func (client *Client) listLROCreateRequest(ctx context.Context, options *ClientBeginListLROOptions) (*policy.Request, error) {
+	urlPath := "/paged"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listLROHandleResponse handles the ListLRO response.
+func (client *Client) listLROHandleResponse(resp *http.Response) (ClientListLROResponse, error) {
+	result := ClientListLROResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PagesOfThings); err != nil {
+		return ClientListLROResponse{}, err
+	}
+	return result, nil
+}
+
 //   - options - ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager
 //     method.
 func (client *Client) NewListWithSharedNextOnePager(options *ClientListWithSharedNextOneOptions) *runtime.Pager[ClientListWithSharedNextOneResponse] {
@@ -298,22 +376,19 @@ func (client *Client) NewListWithSharedNextOnePager(options *ClientListWithShare
 		},
 		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextOneResponse) (ClientListWithSharedNextOneResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextOnePager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listWithSharedNextOneCreateRequest(ctx, options)
-			} else {
-				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithSharedNextOneCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+				},
+			})
 			if err != nil {
 				return ClientListWithSharedNextOneResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListWithSharedNextOneResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListWithSharedNextOneResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithSharedNextOneHandleResponse(resp)
 		},
@@ -350,22 +425,19 @@ func (client *Client) NewListWithSharedNextTwoPager(options *ClientListWithShare
 		},
 		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextTwoResponse) (ClientListWithSharedNextTwoResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextTwoPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listWithSharedNextTwoCreateRequest(ctx, options)
-			} else {
-				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithSharedNextTwoCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+				},
+			})
 			if err != nil {
 				return ClientListWithSharedNextTwoResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListWithSharedNextTwoResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListWithSharedNextTwoResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithSharedNextTwoHandleResponse(resp)
 		},
@@ -459,6 +531,18 @@ func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (Clien
 		return ClientPolicyAssignmentResponse{}, err
 	}
 	return result, nil
+}
+
+// listLRONextCreateRequest creates the listLRONextCreateRequest request.
+func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+	urlPath := "/paged"
+	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
 }
 
 // listWithSharedNextCreateRequest creates the listWithSharedNextCreateRequest request.

@@ -55,22 +55,15 @@ func (client *ReservationsDetailsClient) NewListPager(scope string, options *Res
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListResponse) (ReservationsDetailsClientListResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, scope, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, scope, options)
+			}, nil)
 			if err != nil {
 				return ReservationsDetailsClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsDetailsClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsDetailsClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -130,22 +123,15 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservat
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListByReservationOrderResponse) (ReservationsDetailsClientListByReservationOrderResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByReservationOrderCreateRequest(ctx, reservationOrderID, filter, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByReservationOrderCreateRequest(ctx, reservationOrderID, filter, options)
+			}, nil)
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsDetailsClientListByReservationOrderResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsDetailsClientListByReservationOrderResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByReservationOrderHandleResponse(resp)
 		},
@@ -195,22 +181,15 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservation
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsDetailsClientListByReservationOrderAndReservationResponse) (ReservationsDetailsClientListByReservationOrderAndReservationResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, filter, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, filter, options)
+			}, nil)
 			if err != nil {
 				return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByReservationOrderAndReservationHandleResponse(resp)
 		},

@@ -287,22 +287,15 @@ func (client *RoutesClient) NewListPager(resourceGroupName string, routeTableNam
 		},
 		Fetcher: func(ctx context.Context, page *RoutesClientListResponse) (RoutesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RoutesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, routeTableName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, routeTableName, options)
+			}, nil)
 			if err != nil {
 				return RoutesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return RoutesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return RoutesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},

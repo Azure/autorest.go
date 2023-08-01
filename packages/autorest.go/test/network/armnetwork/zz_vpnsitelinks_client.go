@@ -127,22 +127,15 @@ func (client *VPNSiteLinksClient) NewListByVPNSitePager(resourceGroupName string
 		},
 		Fetcher: func(ctx context.Context, page *VPNSiteLinksClientListByVPNSiteResponse) (VPNSiteLinksClientListByVPNSiteResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VPNSiteLinksClient.NewListByVPNSitePager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
+			}, nil)
 			if err != nil {
 				return VPNSiteLinksClientListByVPNSiteResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VPNSiteLinksClientListByVPNSiteResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VPNSiteLinksClientListByVPNSiteResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByVPNSiteHandleResponse(resp)
 		},

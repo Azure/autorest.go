@@ -22,6 +22,11 @@ type ClientGetScriptResponse struct {
 	Value *string
 }
 
+// ClientListLROResponse contains the response from method Client.BeginListLRO.
+type ClientListLROResponse struct {
+	PagesOfThings
+}
+
 // ClientListResponse contains the response from method Client.NewListPager.
 type ClientListResponse struct {
 	// The response model for the List API. Returns a list of all the previously created aliases.

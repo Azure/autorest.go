@@ -275,22 +275,15 @@ func (client *LoadBalancersClient) NewListPager(resourceGroupName string, option
 		},
 		Fetcher: func(ctx context.Context, page *LoadBalancersClientListResponse) (LoadBalancersClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadBalancersClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return LoadBalancersClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return LoadBalancersClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return LoadBalancersClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -341,22 +334,15 @@ func (client *LoadBalancersClient) NewListAllPager(options *LoadBalancersClientL
 		},
 		Fetcher: func(ctx context.Context, page *LoadBalancersClientListAllResponse) (LoadBalancersClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "LoadBalancersClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return LoadBalancersClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return LoadBalancersClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return LoadBalancersClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},

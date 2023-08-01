@@ -37,6 +37,10 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ClientListOptions) (resp azfake.PagerResponder[azalias.ClientListResponse])
 
+	// BeginListLRO is the fake for method Client.BeginListLRO
+	// HTTP status codes to indicate success: http.StatusAccepted
+	BeginListLRO func(ctx context.Context, options *azalias.ClientBeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]], errResp azfake.ErrorResponder)
+
 	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListWithSharedNextOnePager func(options *azalias.ClientListWithSharedNextOneOptions) (resp azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse])
@@ -57,6 +61,7 @@ func NewServerTransport(srv *Server) *ServerTransport {
 	return &ServerTransport{
 		srv:                           srv,
 		newListPager:                  newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
+		beginListLRO:                  newTracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]](),
 		newListWithSharedNextOnePager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]](),
 		newListWithSharedNextTwoPager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]](),
 	}
@@ -67,6 +72,7 @@ func NewServerTransport(srv *Server) *ServerTransport {
 type ServerTransport struct {
 	srv                           *Server
 	newListPager                  *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
+	beginListLRO                  *tracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]]
 	newListWithSharedNextOnePager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]]
 	newListWithSharedNextTwoPager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]]
 }
@@ -89,6 +95,8 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 		resp, err = s.dispatchGetScript(req)
 	case "Client.NewListPager":
 		resp, err = s.dispatchNewListPager(req)
+	case "Client.BeginListLRO":
+		resp, err = s.dispatchBeginListLRO(req)
 	case "Client.NewListWithSharedNextOnePager":
 		resp, err = s.dispatchNewListWithSharedNextOnePager(req)
 	case "Client.NewListWithSharedNextTwoPager":
@@ -454,6 +462,36 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	if !server.PagerResponderMore(newListPager) {
 		s.newListPager.remove(req)
 	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchBeginListLRO(req *http.Request) (*http.Response, error) {
+	if s.srv.BeginListLRO == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginListLRO not implemented")}
+	}
+	beginListLRO := s.beginListLRO.get(req)
+	if beginListLRO == nil {
+		respr, errRespr := s.srv.BeginListLRO(req.Context(), nil)
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
+		}
+		beginListLRO = &respr
+		s.beginListLRO.add(req, beginListLRO)
+	}
+
+	resp, err := server.PollerResponderNext(beginListLRO, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		s.beginListLRO.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginListLRO) {
+		s.beginListLRO.remove(req)
+	}
+
 	return resp, nil
 }
 

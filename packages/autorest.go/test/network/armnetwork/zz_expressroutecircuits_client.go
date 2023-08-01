@@ -409,22 +409,15 @@ func (client *ExpressRouteCircuitsClient) NewListPager(resourceGroupName string,
 		},
 		Fetcher: func(ctx context.Context, page *ExpressRouteCircuitsClientListResponse) (ExpressRouteCircuitsClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ExpressRouteCircuitsClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return ExpressRouteCircuitsClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ExpressRouteCircuitsClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ExpressRouteCircuitsClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -475,22 +468,15 @@ func (client *ExpressRouteCircuitsClient) NewListAllPager(options *ExpressRouteC
 		},
 		Fetcher: func(ctx context.Context, page *ExpressRouteCircuitsClientListAllResponse) (ExpressRouteCircuitsClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ExpressRouteCircuitsClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return ExpressRouteCircuitsClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ExpressRouteCircuitsClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ExpressRouteCircuitsClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},

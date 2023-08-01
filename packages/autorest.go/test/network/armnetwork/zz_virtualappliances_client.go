@@ -275,22 +275,15 @@ func (client *VirtualAppliancesClient) NewListPager(options *VirtualAppliancesCl
 		},
 		Fetcher: func(ctx context.Context, page *VirtualAppliancesClientListResponse) (VirtualAppliancesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualAppliancesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return VirtualAppliancesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualAppliancesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualAppliancesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -338,22 +331,15 @@ func (client *VirtualAppliancesClient) NewListByResourceGroupPager(resourceGroup
 		},
 		Fetcher: func(ctx context.Context, page *VirtualAppliancesClientListByResourceGroupResponse) (VirtualAppliancesClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualAppliancesClient.NewListByResourceGroupPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return VirtualAppliancesClientListByResourceGroupResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualAppliancesClientListByResourceGroupResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualAppliancesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},

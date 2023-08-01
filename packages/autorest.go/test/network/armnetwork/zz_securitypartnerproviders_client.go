@@ -273,22 +273,15 @@ func (client *SecurityPartnerProvidersClient) NewListPager(options *SecurityPart
 		},
 		Fetcher: func(ctx context.Context, page *SecurityPartnerProvidersClientListResponse) (SecurityPartnerProvidersClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SecurityPartnerProvidersClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return SecurityPartnerProvidersClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return SecurityPartnerProvidersClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return SecurityPartnerProvidersClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -336,22 +329,15 @@ func (client *SecurityPartnerProvidersClient) NewListByResourceGroupPager(resour
 		},
 		Fetcher: func(ctx context.Context, page *SecurityPartnerProvidersClientListByResourceGroupResponse) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SecurityPartnerProvidersClient.NewListByResourceGroupPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},

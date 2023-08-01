@@ -264,22 +264,15 @@ func (client *ProfilesClient) NewListPager(resourceGroupName string, options *Pr
 		},
 		Fetcher: func(ctx context.Context, page *ProfilesClientListResponse) (ProfilesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ProfilesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return ProfilesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ProfilesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ProfilesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -329,22 +322,15 @@ func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOpti
 		},
 		Fetcher: func(ctx context.Context, page *ProfilesClientListAllResponse) (ProfilesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ProfilesClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return ProfilesClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ProfilesClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ProfilesClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},

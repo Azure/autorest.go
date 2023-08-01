@@ -680,22 +680,15 @@ func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName strin
 		},
 		Fetcher: func(ctx context.Context, page *DevicesClientListByResourceGroupResponse) (DevicesClientListByResourceGroupResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.NewListByResourceGroupPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return DevicesClientListByResourceGroupResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return DevicesClientListByResourceGroupResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return DevicesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -748,22 +741,15 @@ func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientLi
 		},
 		Fetcher: func(ctx context.Context, page *DevicesClientListBySubscriptionResponse) (DevicesClientListBySubscriptionResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.NewListBySubscriptionPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listBySubscriptionCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listBySubscriptionCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return DevicesClientListBySubscriptionResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return DevicesClientListBySubscriptionResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return DevicesClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},

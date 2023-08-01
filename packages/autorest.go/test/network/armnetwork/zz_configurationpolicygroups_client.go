@@ -290,22 +290,15 @@ func (client *ConfigurationPolicyGroupsClient) NewListByVPNServerConfigurationPa
 		},
 		Fetcher: func(ctx context.Context, page *ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse) (ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ConfigurationPolicyGroupsClient.NewListByVPNServerConfigurationPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByVPNServerConfigurationCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByVPNServerConfigurationCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, options)
+			}, nil)
 			if err != nil {
 				return ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByVPNServerConfigurationHandleResponse(resp)
 		},

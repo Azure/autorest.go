@@ -265,22 +265,15 @@ func (client *WebApplicationFirewallPoliciesClient) NewListPager(resourceGroupNa
 		},
 		Fetcher: func(ctx context.Context, page *WebApplicationFirewallPoliciesClientListResponse) (WebApplicationFirewallPoliciesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WebApplicationFirewallPoliciesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return WebApplicationFirewallPoliciesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return WebApplicationFirewallPoliciesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return WebApplicationFirewallPoliciesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -331,22 +324,15 @@ func (client *WebApplicationFirewallPoliciesClient) NewListAllPager(options *Web
 		},
 		Fetcher: func(ctx context.Context, page *WebApplicationFirewallPoliciesClientListAllResponse) (WebApplicationFirewallPoliciesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WebApplicationFirewallPoliciesClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return WebApplicationFirewallPoliciesClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return WebApplicationFirewallPoliciesClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return WebApplicationFirewallPoliciesClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},

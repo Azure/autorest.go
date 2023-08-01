@@ -344,22 +344,15 @@ func (client *VirtualNetworksClient) NewListPager(resourceGroupName string, opti
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListResponse) (VirtualNetworksClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworksClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworksClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworksClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -410,22 +403,15 @@ func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksCli
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListAllResponse) (VirtualNetworksClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworksClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworksClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworksClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},
@@ -474,16 +460,11 @@ func (client *VirtualNetworksClient) BeginListDdosProtectionStatus(ctx context.C
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListDdosProtectionStatusResponse) (VirtualNetworksClientListDdosProtectionStatusResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.BeginListDdosProtectionStatus")
-			req, err := runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), *page.NextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listDdosProtectionStatusCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworksClientListDdosProtectionStatusResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworksClientListDdosProtectionStatusResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworksClientListDdosProtectionStatusResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listDdosProtectionStatusHandleResponse(resp)
 		},
@@ -585,22 +566,15 @@ func (client *VirtualNetworksClient) NewListUsagePager(resourceGroupName string,
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworksClientListUsageResponse) (VirtualNetworksClientListUsageResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworksClient.NewListUsagePager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listUsageCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listUsageCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworksClientListUsageResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworksClientListUsageResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworksClientListUsageResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listUsageHandleResponse(resp)
 		},

@@ -216,22 +216,15 @@ func (client *DataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowC
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DataFlowClientGetDataFlowsByWorkspaceResponse) (DataFlowClientGetDataFlowsByWorkspaceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDataFlowsByWorkspaceCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDataFlowsByWorkspaceCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return DataFlowClientGetDataFlowsByWorkspaceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return DataFlowClientGetDataFlowsByWorkspaceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return DataFlowClientGetDataFlowsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDataFlowsByWorkspaceHandleResponse(resp)
 		},

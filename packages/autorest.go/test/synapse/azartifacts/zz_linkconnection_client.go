@@ -283,22 +283,15 @@ func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnect
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *LinkConnectionClientListByWorkspaceResponse) (LinkConnectionClientListByWorkspaceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByWorkspaceCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByWorkspaceCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return LinkConnectionClientListByWorkspaceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return LinkConnectionClientListByWorkspaceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return LinkConnectionClientListByWorkspaceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByWorkspaceHandleResponse(resp)
 		},

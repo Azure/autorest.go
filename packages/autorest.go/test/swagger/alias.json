@@ -719,6 +719,54 @@
           }
         }
       }
+    },
+    "/paged": {
+      "post": {
+        "operationId": "Alias_ListLRO",
+        "description": "A long-running paged operation that uses a next link operation",
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "values",
+          "operationName": "Alias_listLRONext"
+        },
+        "x-ms-long-running-operation": true,
+        "responses": {
+          "202": {
+            "description": "List response with a nextLink",
+            "schema": {
+              "$ref": "#/definitions/PagesOfThings"
+            }
+          }
+        }
+      }
+    },
+    "/paged/fragment/{nextLink}": {
+      "get": {
+        "operationId": "Alias_listLRONext",
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "values",
+          "operationName": "Alias_listLRONext"
+        },
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Next link for list operation.",
+            "x-ms-skip-url-encoding": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "List response with a nextLink",
+            "schema": {
+              "$ref": "#/definitions/PagesOfThings"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1117,6 +1165,20 @@
       "description": "List of integer enums",
       "type": "integer",
       "enum": [200, 403, 405, 406, 429]
+    },
+    "PagesOfThings": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeWithRawJSON"
+          }
+        },
+        "nextLink": {
+          "type": "string"
+        }
+      }
     }
   }
 }

@@ -975,22 +975,15 @@ func (client *VirtualNetworkGatewaysClient) NewListPager(resourceGroupName strin
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworkGatewaysClientListResponse) (VirtualNetworkGatewaysClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkGatewaysClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworkGatewaysClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworkGatewaysClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworkGatewaysClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -1043,22 +1036,15 @@ func (client *VirtualNetworkGatewaysClient) NewListConnectionsPager(resourceGrou
 		},
 		Fetcher: func(ctx context.Context, page *VirtualNetworkGatewaysClientListConnectionsResponse) (VirtualNetworkGatewaysClientListConnectionsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "VirtualNetworkGatewaysClient.NewListConnectionsPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
+			}, nil)
 			if err != nil {
 				return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return VirtualNetworkGatewaysClientListConnectionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listConnectionsHandleResponse(resp)
 		},

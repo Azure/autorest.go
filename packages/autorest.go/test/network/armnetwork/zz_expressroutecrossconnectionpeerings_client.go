@@ -290,22 +290,15 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) NewListPager(resourceGr
 		},
 		Fetcher: func(ctx context.Context, page *ExpressRouteCrossConnectionPeeringsClientListResponse) (ExpressRouteCrossConnectionPeeringsClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ExpressRouteCrossConnectionPeeringsClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
+			}, nil)
 			if err != nil {
 				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
