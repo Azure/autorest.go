@@ -1,15 +1,19 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@autorest/codemodel':
     specifier: ~4.19.3
     version: 4.19.3
   '@autorest/extension-base':
-    specifier: ~3.5.0
-    version: 3.5.0
+    specifier: ~3.5.2
+    version: 3.5.2
   '@autorest/go':
-    specifier: ~4.0.0-preview.51
-    version: 4.0.0-preview.51
+    specifier: ~4.0.0-preview.55
+    version: 4.0.0-preview.55
   '@autorest/testmodeler':
     specifier: ~2.4.0
     version: 2.4.0(@typescript-eslint/parser@4.1.1)(eslint@6.6.0)(openapi-types@12.1.3)(tslib@2.5.3)
@@ -42,10 +46,10 @@ dependencies:
     version: 3.2.0(@typescript-eslint/parser@4.1.1)(eslint@6.6.0)
   nunjucks:
     specifier: ^3.2.3
-    version: 3.2.3
+    version: 3.2.4
   oav:
-    specifier: 3.2.4
-    version: 3.2.4(openapi-types@12.1.3)(tslib@2.5.3)
+    specifier: 3.0.3
+    version: 3.0.3(openapi-types@12.1.3)(tslib@2.5.3)
   reflect-metadata:
     specifier: ~0.1.13
     version: 0.1.13
@@ -107,14 +111,6 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
 
-  /@apidevtools/json-schema-ref-parser@9.0.6:
-    resolution: {integrity: sha512-M3YgsLjI0lZxvrpeGVk9Ap032W6TPQkH6pRAZz81Ac3WUNF79VQooAFnp8umjvVzUmD93NkogxEwbSce7qMsUg==}
-    dependencies:
-      '@jsdevtools/ono': 7.1.3
-      call-me-maybe: 1.0.2
-      js-yaml: 3.13.1
-    dev: false
-
   /@apidevtools/json-schema-ref-parser@9.1.2:
     resolution: {integrity: sha512-r1w81DpR+KyRWd3f+rk6TNqMgedmAxZP5v5KWlXQWlgMUUtyEJch0DKEci1SorPMiSeM8XPl7MZ3miJ60JIpQg==}
     dependencies:
@@ -147,29 +143,6 @@ packages:
       z-schema: 5.0.5
     dev: false
 
-  /@apidevtools/swagger-parser@10.1.0(openapi-types@12.1.3):
-    resolution: {integrity: sha512-9Kt7EuS/7WbMAUv2gSziqjvxwDbFSg3Xeyfuj5laUODX8o/k/CpsAKiQ8W7/R88eXFTMbJYg6+7uAmOWNKmwnw==}
-    peerDependencies:
-      openapi-types: '>=7'
-    dependencies:
-      '@apidevtools/json-schema-ref-parser': 9.0.6
-      '@apidevtools/openapi-schemas': 2.1.0
-      '@apidevtools/swagger-methods': 3.0.2
-      '@jsdevtools/ono': 7.1.3
-      ajv: 8.12.0
-      ajv-draft-04: 1.0.0(ajv@8.12.0)
-      call-me-maybe: 1.0.2
-      openapi-types: 12.1.3
-    dev: false
-
-  /@autorest/codemodel@4.18.2:
-    resolution: {integrity: sha512-xnGbxU2xvqtyIQYYwsEZsK+w2MmavbUrQdk1/sLPhjT+cQ5R6VUc5PX1ZTmPzBZWc/utiaAurxFC65J5J/uSgA==}
-    engines: {node: '>=12.0.0'}
-    dependencies:
-      '@azure-tools/codegen': 2.9.2
-      js-yaml: 4.0.0
-    dev: false
-
   /@autorest/codemodel@4.19.3:
     resolution: {integrity: sha512-8RMPjq2BmLNn080EHGbSc0E9pk7EO6i+vi3vGrz8xrfnTBydOZPJUZqmOpEmNnV6LRbr23cthXQo0JbA/bStWg==}
     engines: {node: '>=12.0.0'}
@@ -178,8 +151,8 @@ packages:
       js-yaml: 4.0.0
     dev: false
 
-  /@autorest/extension-base@3.4.4:
-    resolution: {integrity: sha512-u7+3GGzeYwFcafjt8gmpt0JM56UCdgP3Okhb23i5jhoc+5v7AWPEi00n5YmMb27OcR8wNDkb1jqtDjjeTnUHeQ==}
+  /@autorest/extension-base@3.5.2:
+    resolution: {integrity: sha512-brpRtQ34mo/SZPTWrOUYvDHOKbvDa9eX5N15qd0OGLX8q3y29nXjhokMVoink4w1jW+8p2KXy2emMIZL14s+HQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@azure-tools/codegen': 2.9.2
@@ -187,21 +160,12 @@ packages:
       vscode-jsonrpc: 3.6.2
     dev: false
 
-  /@autorest/extension-base@3.5.0:
-    resolution: {integrity: sha512-G+jRTAm9Zd0GRpj6Slsj7QPQDKuy4SFtnuWT7XTcCOJ/R5FU3jPBC73J57Jd4S2SDnlAnWmmX12IeBy/XqJFTw==}
+  /@autorest/go@4.0.0-preview.55:
+    resolution: {integrity: sha512-kPnCwf8Q+JIpBOMhpAf7rIiFPo0iJR2cytwRH1osC9NqJAQ7Xfs4hqL18AHH3VxzdRBd+MT5EteJSpJoit+/yw==}
     engines: {node: '>=12.0.0'}
     dependencies:
-      '@azure-tools/codegen': 2.9.2
-      js-yaml: 4.0.0
-      vscode-jsonrpc: 3.6.2
-    dev: false
-
-  /@autorest/go@4.0.0-preview.51:
-    resolution: {integrity: sha512-0FtFE1u8GCo5Ig/h6mCC7jJ+gRIS8dIV/3cE/mdzu4wub03H9BJ+BopKqFsg03sM66Lx165GDtaQkmrqO1pP6Q==}
-    engines: {node: '>=10.12.0'}
-    dependencies:
-      '@autorest/codemodel': 4.18.2
-      '@autorest/extension-base': 3.4.4
+      '@autorest/codemodel': 4.19.3
+      '@autorest/extension-base': 3.5.2
       '@azure-tools/async-io': 3.0.254
       '@azure-tools/codegen': 2.9.2
       '@azure-tools/linq': 3.1.187
@@ -222,7 +186,7 @@ packages:
     resolution: {integrity: sha512-gUCMtAJO2WPEr+5rImr6xu/sdz/Utm5aPa2AFx8pfNoJvUhVGujxM8SWt6bl5lvzNgeH9YVWkpQrF/GyA4aLzg==}
     dependencies:
       '@autorest/codemodel': 4.19.3
-      '@autorest/extension-base': 3.5.0
+      '@autorest/extension-base': 3.5.2
       '@azure-tools/codegen': 2.9.2
       '@types/lodash': 4.14.183
       autorest: 3.2.3
@@ -361,29 +325,6 @@ packages:
       - encoding
     dev: false
 
-  /@azure/core-http@2.3.2:
-    resolution: {integrity: sha512-Z4dfbglV9kNZO177CNx4bo5ekFuYwwsvjLiKdZI4r84bYGv3irrbQz7JC3/rUfFH2l4T/W6OFleJaa2X0IaQqw==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@azure/abort-controller': 1.1.0
-      '@azure/core-auth': 1.4.0
-      '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/core-util': 1.3.2
-      '@azure/logger': 1.0.4
-      '@types/node-fetch': 2.6.4
-      '@types/tunnel': 0.0.3
-      form-data: 4.0.0
-      node-fetch: 2.6.11
-      process: 0.11.10
-      tough-cookie: 4.1.3
-      tslib: 2.5.3
-      tunnel: 0.0.6
-      uuid: 8.3.2
-      xml2js: 0.5.0
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
   /@azure/core-lro@1.0.5:
     resolution: {integrity: sha512-0EFCFZxARrIoLWMIRt4vuqconRVIO2Iin7nFBfJiYCCbKp5eEmxutNk8uqudPmG0XFl5YqlVh68/al/vbE5OOg==}
     engines: {node: '>=8.0.0'}
@@ -420,14 +361,6 @@ packages:
     dependencies:
       '@opencensus/web-types': 0.0.7
       '@opentelemetry/api': 1.0.0-rc.0
-      tslib: 2.5.3
-    dev: false
-
-  /@azure/core-tracing@1.0.0-preview.13:
-    resolution: {integrity: sha512-KxDlhXyMlh2Jhj2ykX6vNEU0Vou4nHr025KoSEiz7cS3BNiHNaZcdECk/DmLkEB0as5T7b/TpRcehJ5yV6NeXQ==}
-    engines: {node: '>=12.0.0'}
-    dependencies:
-      '@opentelemetry/api': 1.4.1
       tslib: 2.5.3
     dev: false
 
@@ -1166,11 +1099,6 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: false
 
-  /@opentelemetry/api@1.4.1:
-    resolution: {integrity: sha512-O2yRJce1GOc6PAy3QxFM4NzFiWzvScDC1/5ihYBL6BUEVdq0XMWN01sppE+H6bBXbaFYipjwFLEWLg5PaSOThA==}
-    engines: {node: '>=8.0.0'}
-    dev: false
-
   /@postman/form-data@3.1.1:
     resolution: {integrity: sha512-vjh8Q2a8S6UCm/KKs31XFJqEEgmbjBmpPNVV2eVav6905wyFAwaUOBGA1NPBI4ERH9MMZc6w0umFgM6WbEPMdg==}
     engines: {node: '>= 6'}
@@ -1420,12 +1348,6 @@ packages:
       '@types/node': 17.0.23
     dev: false
 
-  /@types/tunnel@0.0.3:
-    resolution: {integrity: sha512-sOUTGn6h1SfQ+gbgqC364jLFBw2lnFqkgF3q0WovEHRLMrVD1sd5aufqi/aJObLekJO+Aq5z646U4Oxy6shXMA==}
-    dependencies:
-      '@types/node': 17.0.23
-    dev: false
-
   /@types/yargs-parser@21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
     dev: true
@@ -1640,17 +1562,6 @@ packages:
       indent-string: 5.0.0
     dev: true
 
-  /ajv-draft-04@1.0.0(ajv@8.12.0):
-    resolution: {integrity: sha512-mv00Te6nmYbRp5DCwclxtt7yV/joXJPGS7nM+97GdxvuttCOfgI3K4U25zboyeX0O+myI8ERluxQe5wljMmVIw==}
-    peerDependencies:
-      ajv: ^8.5.0
-    peerDependenciesMeta:
-      ajv:
-        optional: true
-    dependencies:
-      ajv: 8.12.0
-    dev: false
-
   /ajv-keywords@3.5.2(ajv@6.12.6):
     resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
     peerDependencies:
@@ -1682,15 +1593,6 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  /ajv@8.12.0:
-    resolution: {integrity: sha512-sRu1kpcO9yLtYxBKvqfTeh9KzZEwO3STyX1HT+4CaDzC6HpTGYhIhPIzj9XuKU7KYDwnaeh5hcOwjy1QuJzBPA==}
-    dependencies:
-      fast-deep-equal: 3.1.3
-      json-schema-traverse: 1.0.0
-      require-from-string: 2.0.2
-      uri-js: 4.4.1
-    dev: false
 
   /amdefine@1.0.1:
     resolution: {integrity: sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==}
@@ -4796,10 +4698,6 @@ packages:
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
 
-  /json-schema-traverse@1.0.0:
-    resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
-    dev: false
-
   /json-schema@0.4.0:
     resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
     dev: false
@@ -5337,7 +5235,7 @@ packages:
     resolution: {integrity: sha512-4GUt3kSEYmk4ITxzB/b9vaIDfUVWN/Ml1Fwl11IlnIG2iaJ9O6WXZ9SrYM9NLI8OCBieN2Y8SWC2oJV0RQ7qYg==}
     hasBin: true
     dependencies:
-      abbrev: 1.0.9
+      abbrev: 1.1.1
     dev: false
 
   /nopt@6.0.0:
@@ -5370,8 +5268,8 @@ packages:
       path-key: 3.1.1
     dev: true
 
-  /nunjucks@3.2.3:
-    resolution: {integrity: sha512-psb6xjLj47+fE76JdZwskvwG4MYsQKXUtMsPh6U0YMvmyjRtKRFcxnlXGWglNybtNTNVmGdp94K62/+NjF5FDQ==}
+  /nunjucks@3.2.4:
+    resolution: {integrity: sha512-26XRV6BhkgK0VOxfbU5cQI+ICFUtMLixv1noZn1tGU38kQH5A5nmmbk/O45xdyBhD1esk47nKrY0mvQpZIhRjQ==}
     engines: {node: '>= 6.9.0'}
     hasBin: true
     peerDependencies:
@@ -5491,54 +5389,6 @@ packages:
       - supports-color
       - tslib
       - utf-8-validate
-    dev: false
-
-  /oav@3.2.4(openapi-types@12.1.3)(tslib@2.5.3):
-    resolution: {integrity: sha512-H5c+4qHWe6D9fynkCTiPN+0ICwjeEJAS//cVWdMZVAcim/FGrpqwi+TpU6K5rZGTCxacAgCnj8KY6ooD+qOAEw==}
-    engines: {node: '>=12.0.0'}
-    hasBin: true
-    dependencies:
-      '@apidevtools/swagger-parser': 10.1.0(openapi-types@12.1.3)
-      '@autorest/schemas': 1.3.4
-      '@azure-tools/openapi-tools-common': 1.2.2
-      '@azure/core-http': 2.3.2
-      '@azure/openapi-markdown': 0.9.4
-      '@ts-common/commonmark-to-markdown': 2.0.2(tslib@2.5.3)
-      ajv: 6.12.6
-      commonmark: 0.29.3
-      deepdash: 5.3.9
-      difflib: 0.2.4
-      fast-json-stable-stringify: 2.1.0
-      fs-extra: 10.1.0
-      glob: 7.2.3
-      humanize-duration: 3.28.0
-      inversify: 5.1.1
-      js-yaml: 4.1.0
-      json-merge-patch: 1.0.2
-      json-pointer: 0.6.2
-      json-schema-traverse: 0.4.1
-      jsonpath-plus: 4.0.0
-      junit-report-builder: 3.0.1
-      lodash: 4.17.21
-      md5-file: 5.0.0
-      mkdirp: 1.0.4
-      mockjs: 1.1.0
-      moment: 2.29.4
-      ms-rest: 2.5.6
-      mustache: 4.2.0
-      newman: 5.3.2
-      path-to-regexp: 6.2.1
-      postman-collection: 4.1.7
-      reflect-metadata: 0.1.13
-      toposort: 2.0.2
-      uuid: 3.4.0
-      winston: 3.9.0
-      yargs: 15.4.1
-      z-schema: 5.0.5
-    transitivePeerDependencies:
-      - encoding
-      - openapi-types
-      - tslib
     dev: false
 
   /object-hash@1.3.1:
@@ -6186,11 +6036,6 @@ packages:
 
   /require-from-string@1.2.1:
     resolution: {integrity: sha512-H7AkJWMobeskkttHyhTVtS0fxpFLjxhbfMa6Bk3wimP7sdPRGL3EyCg3sAQenFfAe+xQ+oAc85Nmtvq0ROM83Q==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
-  /require-from-string@2.0.2:
-    resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
     dev: false
 
@@ -7074,7 +6919,7 @@ packages:
 
   /viz.js@2.1.2:
     resolution: {integrity: sha512-UO6CPAuEMJ8oNR0gLLNl+wUiIzQUsyUOp8SyyDKTqVRBtq7kk1VnFmIZW8QufjxGrGEuI+LVR7p/C7uEKy0LQw==}
-    deprecated: no longer supported
+    deprecated: 2.x is no longer supported, 3.x published as @viz-js/viz
     dev: false
 
   /vscode-jsonrpc@3.6.2:
