@@ -45,7 +45,7 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
               }
             }
             for (const successCode of successCodes) {
-                return successCode
+                return successCode;
             }
         },
         funcMethodReturns: (op: Operation, packageName: string): string => {
@@ -72,13 +72,13 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
             const methodParams = getMethodParameters(op);
             for (const methodParam of values(methodParams)) {
                 if (methodParam.language.go!.name === paramName) {
-                    return formatParameterTypeName(methodParam, pkgName)
+                    return formatParameterTypeName(methodParam, pkgName);
                 }
             }
-            return
+            return;
         },
         capitalize: (name: string): string => {
-            return capitalize(name)
+            return capitalize(name);
         },
       });
     }
