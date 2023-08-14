@@ -46,11 +46,10 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
 
 {%- for example in exampleGroup.examples %}
     {%- if loop.first %}
-    fakeServer := fake.{{exampleGroup.operationGroup.language.go.name}}Server{}
+    fakeServer := fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientName)}}Server{}
     client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &arm.ClientOptions{
         ClientOptions: azcore.ClientOptions{
-            Transport: fake.New{{exampleGroup.operationGroup.language.go.name}}ServerTransport(&fakeServer),
-            TracingProvider: azotel.NewTracingProvider(testsuite.otelTP, nil),
+            Transport: fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientCtorName)}}ServerTransport(&fakeServer),
         },
     })
     testsuite.Require().NoError(err, "Failed to create client")
@@ -82,29 +81,36 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
     fakeServer.{{example.opName}} = {{jsFunc.funcMethodReturns(exampleGroup.operation,packageName)}} {
         {%- for param in example.methodParametersOutput %}
         {%- if param.paramName != 'options' and param.paramName != 'ctx' %}
-        {%- if param.paramName == 'body' %}
-        testsuite.Require().True(reflect.DeepEqual(example{{jsFunc.capitalize(param.paramName)}}, {{param.paramName}}))
+        {%- for methodParam in example.methodParameters %}
+        {%- if param.paramName == methodParam.exampleValue.language.go.name %}
+        {%- if methodParam.exampleValue.schema.type == 'object' %}
+        testsuite.Require().True(reflect.DeepEqual(example{{jsFunc.capitalize(param.paramName)}}, {{jsFunc.uncapitalize(param.paramName)}}))
         {%- else %}
-        testsuite.Require().Equal(example{{jsFunc.capitalize(param.paramName)}}, {{param.paramName}})
+        testsuite.Require().Equal(example{{jsFunc.capitalize(param.paramName)}}, {{jsFunc.uncapitalize(param.paramName)}})
         {%- endif %}
+        {%- endif %}
+        {%- endfor %}
         {%- endif %}
         {%- endfor %}
 
         {%- if example.isLRO %}
             {%- if example.isPageable%}
             resp = azfake.PollerResponder[azfake.PagerResponder[{{packageName}}.{{example.pollerType}}]]{}
+            pager := azfake.PagerResponder[{{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}]{}
+            pager.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
+            resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, pager, nil)
             {%- else %}
             resp = azfake.PollerResponder[{{packageName}}.{{example.pollerType}}]{}
+            resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.pollerType}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
             {%- endif%}
-            resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.pollerType}}{ {% if example.checkResponse %}{{example.responseType}}: exampleRes{% endif %} }, nil)
             return
         {%- elif example.isPageable %}
             resp = azfake.PagerResponder[{{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}]{}
-            resp.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}{ {% if example.checkResponse %}{{example.responseType}}: exampleRes{% endif %} }, nil)
+            resp.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
             return
         {%- else%}
             resp = azfake.Responder[{{packageName}}.{{example.returnInfo[0]}}]{}
-            resp.SetResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.returnInfo[0]}}{ {% if example.checkResponse %}{{example.responseType}}: exampleRes{% endif %} }, nil)
+            resp.SetResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.returnInfo[0]}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
             return
         {%- endif %}
     }

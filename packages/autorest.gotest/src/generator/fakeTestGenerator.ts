@@ -80,6 +80,12 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
         capitalize: (name: string): string => {
             return capitalize(name);
         },
+        uncapitalize: (name: string): string => {
+          return uncapitalize(name);
+        },
+        cutClientSuffix: (client: string): string => {
+          return client.substring(0,client.lastIndexOf("Client"))
+        },
       });
     }
   }
