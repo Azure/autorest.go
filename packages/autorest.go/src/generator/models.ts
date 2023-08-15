@@ -7,8 +7,7 @@ import { GoCodeModel, ModelType, MapType, ModelField, ModelFormat, PolymorphicTy
 import { getLiteralValueTypeName, getTypeDeclaration, isMapType, isBytesType, isInterfaceType, isModelType, isPrimitiveType, isPolymorphicType, isSliceType, isTimeType, isLiteralValue } from '../gocodemodel/gocodemodel';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength } from './helpers';
-import { contentPreamble, formatLiteralValue, sortAscending } from './helpers';
+import { commentLength, contentPreamble, formatLiteralValue, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 export interface ModelsSerDe {

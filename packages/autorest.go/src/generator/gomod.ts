@@ -21,6 +21,8 @@ export async function generateGoModFile(codeModel: GoCodeModel, existingGoMod: s
   // the version can be overwritten by passing the --azcore-version switch during generation.
   let version = '1.6.1';
   if (codeModel.options.azcoreVersion) {
+    // when matching versions, we need to handle beta, non-beta, and pseudo versions
+    // 1.2.3-beta.1, 1.2.3, 0.22.1-0.20220315231014-ed309e73db6b
     if (!codeModel.options.azcoreVersion.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
       throw new Error(`azcore version ${version} must in the format major.minor.patch[-beta.N]`);
     }

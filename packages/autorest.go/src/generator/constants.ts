@@ -5,8 +5,7 @@
 
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { contentPreamble } from './helpers';
-import { commentLength } from './helpers';
+import { commentLength, contentPreamble } from './helpers';
 import { GoCodeModel } from '../gocodemodel/gocodemodel';
 
 // Creates the content in constants.go
