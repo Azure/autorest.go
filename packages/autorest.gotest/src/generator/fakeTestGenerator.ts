@@ -84,7 +84,7 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
           return uncapitalize(name);
         },
         cutClientSuffix: (client: string): string => {
-          return client.substring(0,client.lastIndexOf("Client"));
+          return client.substring(0,client.lastIndexOf('Client'));
         },
       });
     }
