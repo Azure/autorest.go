@@ -20,7 +20,7 @@
     "stop-testserver": "./node_modules/.bin/autorest-testserver stop",
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
-    "test": "jest --ci",
+    "test": "jest --ci --passWithNoTests",
     "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
     "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
     "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
