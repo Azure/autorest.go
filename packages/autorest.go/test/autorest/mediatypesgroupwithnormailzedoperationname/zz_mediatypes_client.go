@@ -440,7 +440,6 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithTextCreateRequest(ctx cont
 	if err := req.SetBody(body, string(contentType)); err != nil {
 		return nil, err
 	}
-
 	return req, nil
 }
 

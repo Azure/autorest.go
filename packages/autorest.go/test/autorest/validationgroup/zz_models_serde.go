@@ -83,7 +83,7 @@ func (p Product) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "capacity", p.Capacity)
 	populate(objectMap, "child", p.Child)
 	populate(objectMap, "constChild", p.ConstChild)
-	objectMap["constInt"] = 0
+	objectMap["constInt"] = int32(0)
 	objectMap["constString"] = "constant"
 	objectMap["constStringAsEnum"] = "constant_string_as_enum"
 	populate(objectMap, "display_names", p.DisplayNames)

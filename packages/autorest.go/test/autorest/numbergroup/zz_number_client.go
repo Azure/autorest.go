@@ -761,7 +761,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, -99999999.99); err != nil {
+	if err := runtime.MarshalAsJSON(req, float64(-99999999.99)); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -802,7 +802,7 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, 99999999.99); err != nil {
+	if err := runtime.MarshalAsJSON(req, float64(99999999.99)); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -884,7 +884,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, -99999999.99); err != nil {
+	if err := runtime.MarshalAsJSON(req, float64(-99999999.99)); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -925,7 +925,7 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, 99999999.99); err != nil {
+	if err := runtime.MarshalAsJSON(req, float64(99999999.99)); err != nil {
 		return nil, err
 	}
 	return req, nil

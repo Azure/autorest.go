@@ -97,18 +97,3 @@ type PagingClientGetSinglePagesResponse struct {
 type PagingClientGetWithQueryParamsResponse struct {
 	ProductResult
 }
-
-// PagingClientNextFragmentResponse contains the response from method PagingClient.NewNextFragmentPager.
-type PagingClientNextFragmentResponse struct {
-	ODataProductResult
-}
-
-// PagingClientNextFragmentWithGroupingResponse contains the response from method PagingClient.NewNextFragmentWithGroupingPager.
-type PagingClientNextFragmentWithGroupingResponse struct {
-	ODataProductResult
-}
-
-// PagingClientNextOperationWithQueryParamsResponse contains the response from method PagingClient.NewNextOperationWithQueryParamsPager.
-type PagingClientNextOperationWithQueryParamsResponse struct {
-	ProductResult
-}

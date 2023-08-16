@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Operation, OperationGroup, Parameter, SchemaResponse } from '@autorest/codemodel';
-import { isLROOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/dist/src/common/helpers';
-import { formatParameterTypeName, getMethodParameters, getResponseEnvelopeName } from '@autorest/go/dist/src/generator/helpers';
+import { GroupProperty, ImplementationLocation, Operation, OperationGroup, Parameter, SchemaResponse, SchemaType } from '@autorest/codemodel';
+import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/dist/src/transform/helpers';
 import { values } from '@azure-tools/linq';
+import { sortParametersByRequired } from '../common/helpers';
 
 // homo structureed with getAPIParametersSig() in autorest.go
 export function getAPIParametersSig(op: Operation): Array<[string, string, Parameter]> {
@@ -114,4 +114,57 @@ export function getSchemaResponse(op: Operation): SchemaResponse | undefined {
     throw new Error(`LRO ${op.language.go!.clientName}.${op.language.go!.name} contains multiple response types which is not supported`);
   }
   return with200;
+}
+
+// returns the type name with possible * prefix
+function formatParameterTypeName(param: Parameter): string {
+  const typeName = param.schema.language.go!.name;
+  // client params with default values are treated as optional
+  if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
+    return typeName;
+  }
+  return `*${typeName}`;
+}
+
+// returns the complete collection of method parameters
+function getMethodParameters(op: Operation): Array<Parameter> {
+  const params = new Array<Parameter>();
+  const paramGroups = new Array<GroupProperty>();
+  for (const param of values(aggregateParameters(op))) {
+    if (param.implementation === ImplementationLocation.Client) {
+      // client params are passed via the receiver
+      continue;
+    } else if (param.language.go!.paramGroup) {
+      // param groups will be added after individual params
+      if (!paramGroups.includes(param.language.go!.paramGroup)) {
+        paramGroups.push(param.language.go!.paramGroup);
+      }
+      continue;
+    } else if (param.schema.type === SchemaType.Constant) {
+      // don't generate a parameter for a constant
+      // NOTE: this check must come last as non-required optional constants
+      // in header/query params get dumped into the optional params group
+      continue;
+    }
+    params.push(param);
+  }
+  // move global optional params to the end of the slice
+  params.sort(sortParametersByRequired);
+  // add any parameter groups.  optional groups go last
+  paramGroups.sort(sortParametersByRequired);
+  // add the optional param group last if it's not already in the list.
+  // all operations should have an optional params type.  the only exception
+  // is the next link operation for pageable operations.
+  if (op.language.go!.optionalParamGroup && !values(paramGroups).any(gp => { return gp.language.go!.name === op.language.go!.optionalParamGroup.language.go!.name; })) {
+    paramGroups.push(op.language.go!.optionalParamGroup);
+  }
+  for (const paramGroup of values(paramGroups)) {
+    params.push(paramGroup);
+  }
+  return params;
+}
+
+// returns the response envelope type name
+function getResponseEnvelopeName(op: Operation): string {
+  return op.language.go!.responseEnv.language.go!.name;
 }

@@ -114,11 +114,10 @@ func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Co
 
 // customNamedRequestIDHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Response) (HeaderClientCustomNamedRequestIDHeadResponse, error) {
-	result := HeaderClientCustomNamedRequestIDHeadResponse{}
+	result := HeaderClientCustomNamedRequestIDHeadResponse{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
 	}
-	result.Success = resp.StatusCode >= 200 && resp.StatusCode < 300
 	return result, nil
 }
 

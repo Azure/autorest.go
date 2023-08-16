@@ -39,7 +39,7 @@ pipeline:
   # output the files to disk
   go/emitter:
     input: 
-      - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
+      - go-transform  # this allows us to dump out the code model after transformation (add --output-artifact:go-code-model on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
     is-object: false # tell it that we're not putting an object graph out

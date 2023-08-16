@@ -3,12 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
+import { GoCodeModel, ModelType, MapType, ModelField, ModelFormat, PolymorphicType, InterfaceType, PossibleType } from '../gocodemodel/gocodemodel';
+import { getLiteralValueTypeName, getTypeDeclaration, isMapType, isBytesType, isInterfaceType, isModelType, isPrimitiveType, isPolymorphicType, isSliceType, isTimeType, isLiteralValue } from '../gocodemodel/gocodemodel';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, Language, ObjectSchema, Property, Schema, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength, aggregateProperties } from '../common/helpers';
-import { contentPreamble, hasDescription, getClientDefaultValue, sortAscending } from './helpers';
+import { commentLength, contentPreamble, formatLiteralValue, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 export interface ModelsSerDe {
@@ -16,15 +15,15 @@ export interface ModelsSerDe {
   serDe: string;
 }
 
-// Creates the content in models.go and models_serde.go
-export async function generateModels(session: Session<CodeModel>): Promise<ModelsSerDe> {
+// Creates the content in models.go
+export async function generateModels(codeModel: GoCodeModel): Promise<ModelsSerDe> {
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();
-  let modelText = await contentPreamble(session);
+  let modelText = contentPreamble(codeModel);
 
   // we do model generation first as it can add imports to the imports list
-  const modelDefs = generateModelDefs(modelImports, serdeImports, session.model.schemas.objects);
+  const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel.models);
 
   modelText += modelImports.text();
 
@@ -34,7 +33,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   let needsJSONPopulateByteArray = false;
   let needsJSONPopulateAny = false;
   let serdeTextBody = '';
-  modelDefs.sort((a: ModelDef, b: ModelDef) => { return sortAscending(a.Language.name, b.Language.name); });
   for (const modelDef of values(modelDefs)) {
     modelText += modelDef.text();
 
@@ -112,7 +110,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   }
   let serdeText = '';
   if (serdeTextBody.length > 0) {
-    serdeText = await contentPreamble(session);
+    serdeText = contentPreamble(codeModel);
     serdeText += serdeImports.text();
     serdeText += serdeTextBody;
   }
@@ -122,77 +120,76 @@ export async function generateModels(session: Session<CodeModel>): Promise<Model
   };
 }
 
-function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, objects?: Array<ObjectSchema>): Array<ModelDef> {
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, models: Array<ModelType | PolymorphicType>): Array<ModelDef> {
   const modelDefs = new Array<ModelDef>();
-  for (const obj of values(objects)) {
-    if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
-      continue;
-    }
-
-    if (obj.language.go!.isLRO) {
-      modelImports.add('time');
-      modelImports.add('context');
-    }
-    const props = aggregateProperties(obj);
-    const modelDef = new ModelDef(obj.language.go!, props);
-    for (const prop of values(props)) {
-      modelImports.addImportForSchemaType(prop.schema);
-      if (prop.schema.type === SchemaType.Any && !prop.schema.language.go!.rawJSONAsBytes) {
+  for (const model of models) {
+    const modelDef = new ModelDef(model.name, model.format, model.description, model.fields);
+    for (const field of values(modelDef.Fields)) {
+      modelImports.addImportForType(field.type);
+      if (isPrimitiveType(field.type) && field.type.typeName === 'any') {
         modelDef.HasAny = true;
       }
     }
 
-    if (obj.language.go!.marshallingFormat === 'xml' && !obj.language.go!.omitSerDeMethods) {
+    if (isModelType(model) && model.format === 'xml' && !model.annotations.omitSerDeMethods) {
       serdeImports.add('encoding/xml');
-      if (obj.language.go!.needsDateTimeMarshalling) {
-        serdeImports.add('time');
+      let needsDateTimeMarshalling = false;
+      let byteArrayFormat = false;
+      for (const field of values(model.fields)) {
+        serdeImports.addImportForType(field.type);
+        if (isTimeType(field.type)) {
+          needsDateTimeMarshalling = true;
+        } else if (isBytesType(field.type)) {
+          byteArrayFormat = true;
+        }
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
-      if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj) || obj.language.go!.byteArrayFormat) {
-        generateXMLMarshaller(modelDef, serdeImports);
-        if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.byteArrayFormat) {
-          generateXMLUnmarshaller(modelDef, serdeImports);
+      if (needsDateTimeMarshalling || model.xml?.wrapper || needsXMLArrayMarshalling(model) || byteArrayFormat) {
+        generateXMLMarshaller(model, modelDef, serdeImports);
+        if (needsDateTimeMarshalling || byteArrayFormat) {
+          generateXMLUnmarshaller(model, modelDef, serdeImports);
         }
-      } else if (needsXMLDictionaryUnmarshalling(obj)) {
-        generateXMLUnmarshaller(modelDef, serdeImports);
+      } else if (needsXMLDictionaryUnmarshalling(model)) {
+        generateXMLUnmarshaller(model, modelDef, serdeImports);
       }
       modelDefs.push(modelDef);
       continue;
     }
-    if (obj.discriminator) {
-      generateDiscriminatorMarkerMethod(obj, modelDef);
-    }
-    for (const parent of values(obj.parents?.all)) {
-      if (isObjectSchema(parent) && parent.discriminator) {
+    if (isPolymorphicType(model)) {
+      generateDiscriminatorMarkerMethod(model.interface, modelDef);
+      for (let parent = model.interface.parent; parent !== undefined; parent = parent.parent) {
         generateDiscriminatorMarkerMethod(parent, modelDef);
       }
     }
     serdeImports.add('reflect');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    if (obj.language.go!.byteArrayFormat) {
-      modelDef.HasJSONByteArray = true;
+    for (const field of values(model.fields)) {
+      if (isBytesType(field.type)) {
+        modelDef.HasJSONByteArray = true;
+      }
     }
-    if (!obj.language.go!.omitSerDeMethods) {
-      generateJSONMarshaller(serdeImports, obj, modelDef);
-      generateJSONUnmarshaller(serdeImports, modelDef);
+    if (!model.annotations.omitSerDeMethods) {
+      generateJSONMarshaller(model, modelDef, serdeImports);
+      generateJSONUnmarshaller(model, modelDef, serdeImports);
     }
     modelDefs.push(modelDef);
   }
   return modelDefs;
 }
 
-function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
-  for (const prop of values(obj.properties)) {
-    if (prop.language.go!.needsXMLDictionaryUnmarshalling) {
+function needsXMLDictionaryUnmarshalling(modelType: ModelType): boolean {
+  for (const field of values(modelType.fields)) {
+    // additional properties uses an internal wrapper type with its own unmarshaller
+    if (isMapType(field.type) && !field.annotations.isAdditionalProperties) {
       return true;
     }
   }
   return false;
 }
 
-function needsXMLArrayMarshalling(obj: ObjectSchema): boolean {
-  for (const prop of values(obj.properties)) {
-    if (prop.language.go!.needsXMLArrayMarshalling) {
+function needsXMLArrayMarshalling(modelType: ModelType): boolean {
+  for (const prop of values(modelType.fields)) {
+    if (isSliceType(prop.type)) {
       return true;
     }
   }
@@ -200,104 +197,97 @@ function needsXMLArrayMarshalling(obj: ObjectSchema): boolean {
 }
 
 // generates discriminator marker method
-function generateDiscriminatorMarkerMethod(obj: ObjectSchema, modelDef: ModelDef) {
-  const typeName = obj.language.go!.name;
+function generateDiscriminatorMarkerMethod(type: InterfaceType, modelDef: ModelDef) {
+  const typeName = type.rootType.name;
   const receiver = modelDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
-  let method = `func (${receiver} *${modelDef.Language.name}) ${interfaceMethod}() *${typeName} {`;
-  if (obj.language.go!.name === modelDef.Language.name) {
+  let method = `func (${receiver} *${modelDef.Name}) ${interfaceMethod}() *${typeName} {`;
+  if (type.rootType.name === modelDef.Name) {
     // the marker method is on the discriminator itself, so just return the receiver
     method += ` return ${receiver} }\n\n`;
   } else {
     // the marker method is on a child type, so return an instance of the parent
     // type by copying the parent values into a new instance.
-    method += `\n\treturn &${obj.language.go!.name}{\n`;
-    const props = aggregateProperties(obj);
-    props.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-    for (const prop of values(props)) {
-      method += `\t\t${prop.language.go!.name}: ${modelDef.receiverName()}.${prop.language.go!.name},\n`;
+    method += `\n\treturn &${type.rootType.name}{\n`;
+    for (const field of values(type.rootType.fields)) {
+      method += `\t\t${field.fieldName}: ${modelDef.receiverName()}.${field.fieldName},\n`;
     }
     method += '\t}\n}\n\n';
   }
-  modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${modelDef.Language.name}.`, text: method });
+  modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${type.name} interface for type ${modelDef.Name}.`, text: method });
 }
 
-function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, modelDef: ModelDef) {
-  if (!obj.discriminatorValue && (!modelDef.Properties || modelDef.Properties.length === 0)) {
+function generateJSONMarshaller(modelType: ModelType | PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
+  if (isModelType(modelType) && modelType.fields.length === 0) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
     return;
   }
   imports.add('encoding/json');
-  const typeName = modelDef.Language.name;
+  const typeName = modelDef.Name;
   const receiver = modelDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += '\tobjectMap := make(map[string]any)\n';
-  marshaller += generateJSONMarshallerBody(obj, modelDef, imports);
+  marshaller += generateJSONMarshallerBody(modelType, receiver, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
   modelDef.SerDeMethods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(obj: ObjectSchema, modelDef: ModelDef, imports: ImportManager): string {
-  const receiver = modelDef.receiverName();
+function generateJSONMarshallerBody(modelType: ModelType | PolymorphicType, receiver: string, imports: ImportManager): string {
   let marshaller = '';
-  let addlProps: DictionarySchema | undefined;
-  for (const prop of values(modelDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      addlProps = <DictionarySchema>prop.schema;
+  let addlProps: MapType | undefined;
+  for (const field of values(modelType.fields)) {
+    if (isMapType(field.type) && field.annotations.isAdditionalProperties) {
+      addlProps = field.type;
       continue;
     }
-    if (prop.isDiscriminator) {
-      if (obj.discriminatorValue) {
-        marshaller += `\tobjectMap["${prop.serializedName}"] = ${obj.discriminatorValue}\n`;
+    if (field.annotations.isDiscriminator) {
+      if (field.defaultValue) {
+        marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.defaultValue)}\n`;
       } else {
         // if there's no discriminator value (e.g. Fish in test server), use the field's value.
         // this will enable support for custom types that aren't (yet) described in the swagger.
-        marshaller += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+        marshaller += `\tobjectMap["${field.serializedName}"] = ${receiver}.${field.fieldName}\n`;
       }
-    } else if (prop.schema.type === SchemaType.ByteArray) {
-      let base64Format = 'Std';
-      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
-        base64Format = 'URL';
-      }
+    } else if (isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
-      const source = `${receiver}.${prop.language.go!.name}`;
-      let elementPtr = '';
-      if (<boolean>prop.schema.language.go!.elementIsPtr) {
-        elementPtr = '*';
+      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+    } else if (isSliceType(field.type) && isTimeType(field.type.elementType)) {
+      const source = `${receiver}.${field.fieldName}`;
+      let elementPtr = '*';
+      if (field.byValue) {
+        elementPtr = '';
       }
-      marshaller += `\taux := make([]${elementPtr}${prop.schema.elementType.language.go!.internalTimeType}, len(${source}), len(${source}))\n`;
+      marshaller += `\taux := make([]${elementPtr}${field.type.elementType.dateTimeFormat}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (${elementPtr}${prop.schema.elementType.language.go!.internalTimeType})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.dateTimeFormat})(${source}[i])\n`;
       marshaller += '\t}\n';
-      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
-    } else if (prop.schema.type === SchemaType.Constant) {
-      marshaller += `\tobjectMap["${prop.serializedName}"] = ${formatConstantValue(<ConstantSchema>prop.schema)}\n`;
-    } else if (prop.schema.language.go!.rawJSONAsBytes) {
-      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", json.RawMessage(${receiver}.${prop.language.go!.name}))\n`;
+      marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
+    } else if (isLiteralValue(field.type)) {
+      marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.type)}\n`;
+    } else if (isSliceType(field.type) && field.type.rawJSONAsBytes) {
+      marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.fieldName}))\n`;
     } else {
-      if (prop.clientDefaultValue) {
+      if (field.defaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        marshaller += `\tif ${receiver}.${prop.language.go!.name} == nil {\n\t\t${receiver}.${prop.language.go!.name} = to.Ptr(${getClientDefaultValue(prop)})\n\t}\n`;
+        marshaller += `\tif ${receiver}.${field.fieldName} == nil {\n\t\t${receiver}.${field.fieldName} = to.Ptr(${formatLiteralValue(field.defaultValue)})\n\t}\n`;
       }
       let populate = 'populate';
-      if (prop.schema.language.go!.internalTimeType) {
-        populate += capitalize(prop.schema.language.go!.internalTimeType);
-      } else if (prop.schema.type === SchemaType.Any) {
+      if (isTimeType(field.type)) {
+        populate += capitalize(field.type.dateTimeFormat);
+      } else if (isPrimitiveType(field.type) && field.type.typeName === 'any') {
         populate += 'Any';
       }
-      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name})\n`;
+      marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName})\n`;
     }
   }
   if (addlProps) {
     marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
     marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
     let assignment = 'val';
-    if (addlProps.elementType.language.go!.internalTimeType) {
-      assignment = `(*${addlProps.elementType.language.go!.internalTimeType})(val)`;
+    if (isTimeType(addlProps.valueType)) {
+      assignment = `(*${addlProps.valueType.dateTimeFormat})(val)`;
     }
     marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
     marshaller += '\t\t}\n';
@@ -306,43 +296,41 @@ function generateJSONMarshallerBody(obj: ObjectSchema, modelDef: ModelDef, impor
   return marshaller;
 }
 
-function generateJSONUnmarshaller(imports: ImportManager, modelDef: ModelDef) {
+function generateJSONUnmarshaller(modelType: ModelType | PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
-  if (!modelDef.Properties || modelDef.Properties.length === 0) {
+  if (!modelDef.Fields) {
     return;
   }
   imports.add('encoding/json');
   imports.add('fmt');
-  const typeName = modelDef.Language.name;
+  const typeName = modelDef.Name;
   const receiver = modelDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
   unmarshaller += '\tvar rawMsg map[string]json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshaller += '\t}\n';
-  unmarshaller += generateJSONUnmarshallerBody(modelDef, imports);
+  unmarshaller += generateJSONUnmarshallerBody(modelType, receiver, imports);
   unmarshaller += '}\n\n';
   modelDef.SerDeMethods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager): string {
-  const receiver = modelDef.receiverName();
-  const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
+function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, receiver: string, imports: ImportManager): string {
+  const emitAddlProps = function (tab: string, addlProps: MapType): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
-    let ptr = '', ref = '';
-    if (<boolean>addlProps.language.go!.elementIsPtr) {
-      ptr = '*';
+    let ref = '';
+    if (!addlProps.valueTypeByValue) {
       ref = '&';
     }
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = map[string]${ptr}${addlProps.elementType.language.go!.name}{}\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = ${getTypeDeclaration(addlProps)}{}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
-    let auxType = addlProps.elementType.language.go!.name;
+    let auxType = getTypeDeclaration(addlProps.valueType);
     let assignment = `${ref}aux`;
-    if (addlProps.elementType.language.go!.internalTimeType) {
+    if (isTimeType(addlProps.valueType)) {
       imports.add('time');
-      auxType = addlProps.elementType.language.go!.internalTimeType;
+      auxType = addlProps.valueType.dateTimeFormat!;
       assignment = `(*time.Time)(${assignment})`;
     }
     addlPropsText += `${tab}\t\t\tvar aux ${auxType}\n`;
@@ -356,39 +344,35 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
   unmarshalBody += '\t\tvar err error\n';
   unmarshalBody += '\t\tswitch key {\n';
-  let addlProps: DictionarySchema | undefined;
-  for (const prop of values(modelDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      addlProps = <DictionarySchema>prop.schema;
+  let addlProps: MapType | undefined;
+  for (const field of values(modelType.fields)) {
+    if (isMapType(field.type) && field.annotations.isAdditionalProperties) {
+      addlProps = field.type;
       continue;
     }
-    unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
-    if (hasDiscriminatorInterface(prop.schema)) {
-      unmarshalBody += generateDiscriminatorUnmarshaller(prop, receiver);
-    } else if (prop.schema.language.go!.internalTimeType) {
-      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
-    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
+    unmarshalBody += `\t\tcase "${field.serializedName}":\n`;
+    if (hasDiscriminatorInterface(field.type)) {
+      unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
+    } else if (isTimeType(field.type)) {
+      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.dateTimeFormat)}(val, "${field.fieldName}", &${receiver}.${field.fieldName})\n`;
+    } else if (isSliceType(field.type) && isTimeType(field.type.elementType)) {
       imports.add('time');
-      let elementPtr = '';
-      if (<boolean>prop.schema.language.go!.elementIsPtr) {
-        elementPtr = '*';
+      let elementPtr = '*';
+      if (field.byValue) {
+        elementPtr = '';
       }
-      unmarshalBody += `\t\t\tvar aux []${elementPtr}${prop.schema.elementType.language.go!.internalTimeType}\n`;
-      unmarshalBody += `\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &aux)\n`;
+      unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.dateTimeFormat}\n`;
+      unmarshalBody += `\t\t\terr = unpopulate(val, "${field.fieldName}", &aux)\n`;
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (${elementPtr}time.Time)(au))\n`;
+      unmarshalBody += `\t\t\t\t${receiver}.${field.fieldName} = append(${receiver}.${field.fieldName}, (${elementPtr}time.Time)(au))\n`;
       unmarshalBody += '\t\t\t}\n';
-    } else if (prop.schema.type === SchemaType.ByteArray) {
-      let base64Format = 'Std';
-      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
-        base64Format = 'URL';
-      }
+    } else if (isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
-    } else if (prop.schema.language.go!.rawJSONAsBytes) {
-      unmarshalBody += `\t\t\t${receiver}.${prop.language.go!.name} = val\n`;
+      unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+    } else if (isSliceType(field.type) && field.type.rawJSONAsBytes) {
+      unmarshalBody += `\t\t\t${receiver}.${field.fieldName} = val\n`;
     } else {
-      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.fieldName}", &${receiver}.${field.fieldName})\n`;
     }
     unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
   }
@@ -407,40 +391,42 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
 
 // returns true if item has a discriminator interface.
 // recursively called for arrays and dictionaries.
-function hasDiscriminatorInterface(item: Schema): boolean {
-  if (item.language.go!.discriminatorInterface) {
+function hasDiscriminatorInterface(item: PossibleType): boolean {
+  if (isInterfaceType(item)) {
     return true;
-  } else if (isArraySchema(item) || isDictionarySchema(item)) {
+  } else if (isMapType(item)) {
+    return hasDiscriminatorInterface(item.valueType);
+  } else if (isSliceType(item)) {
     return hasDiscriminatorInterface(item.elementType);
   }
   return false;
 }
 
 // returns the text for unmarshalling a discriminated type
-function generateDiscriminatorUnmarshaller(prop: Property, receiver: string): string {
+function generateDiscriminatorUnmarshaller(field: ModelField, receiver: string): string {
   const startingIndentation = '\t\t\t';
-  const propertyName = prop.language.go!.name;
+  const propertyName = field.fieldName;
 
   // these are the simple, non-nested cases (e.g. IterfaceType, []InterfaceType, map[string]InterfaceType)
-  if (isObjectSchema(prop.schema)) {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
-  } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
-  } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
+  if (isInterfaceType(field.type)) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.name}(val)\n`;
+  } else if (isSliceType(field.type) && isInterfaceType(field.type.elementType)) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.elementType.name}Array(val)\n`;
+  } else if (isMapType(field.type) && isInterfaceType(field.type.valueType)) {
+    return `${startingIndentation}${receiver}.${propertyName}, err = unmarshal${field.type.valueType.name}Map(val)\n`;
   }
 
   // nested case (e.g. [][]InterfaceType, map[string]map[string]InterfaceType etc)
   // first, unmarshal the raw data
-  const rawTargetVar = `${prop.serializedName}Raw`;
-  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(prop.schema, true)}\n`;
+  const rawTargetVar = `${field.serializedName}Raw`;
+  let text = `${startingIndentation}var ${rawTargetVar} ${recursiveGetDiscriminatorTypeName(field.type, true)}\n`;
   text += `${startingIndentation}if err = json.Unmarshal(val, &${rawTargetVar}); err != nil {\n`;
   text += `${startingIndentation}\treturn err\n${startingIndentation}}\n`;
 
   // create a local instantiation of the final type
-  const finalTargetVar = prop.serializedName;
-  let finalTargetCtor = recursiveGetDiscriminatorTypeName(prop.schema, false);
-  if (prop.schema.type === SchemaType.Array) {
+  const finalTargetVar = field.serializedName;
+  let finalTargetCtor = recursiveGetDiscriminatorTypeName(field.type, false);
+  if (isSliceType(field.type)) {
     finalTargetCtor = `make(${finalTargetCtor}, len(${rawTargetVar}))`;
   } else {
     // must be a dictionary
@@ -449,7 +435,7 @@ function generateDiscriminatorUnmarshaller(prop: Property, receiver: string): st
   text += `${startingIndentation}${finalTargetVar} := ${finalTargetCtor}\n`;
 
   // now populate the final type
-  text += recursivePopulateDiscriminator(prop.schema, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
+  text += recursivePopulateDiscriminator(field.type, receiver, rawTargetVar, finalTargetVar, startingIndentation, 1);
 
   // finally, assign the final target to the property
   text += `${startingIndentation}${receiver}.${propertyName} = ${finalTargetVar}\n`;
@@ -459,31 +445,31 @@ function generateDiscriminatorUnmarshaller(prop: Property, receiver: string): st
 // constructs the type name for a nested discriminated type
 // raw e.g. map[string]json.RawMessage, []json.RawMessage etc
 // !raw e.g. map[string]map[string]InterfaceType, [][]InterfaceType etc
-function recursiveGetDiscriminatorTypeName(item: Schema, raw: boolean): string {
+function recursiveGetDiscriminatorTypeName(item: PossibleType, raw: boolean): string {
   // when raw is true, stop recursing at the level before the leaf schema
-  if (isArraySchema(item)) {
-    if (!raw || item.elementType.type !== SchemaType.Object) {
+  if (isSliceType(item)) {
+    if (!raw || !isInterfaceType(item.elementType)) {
       return `[]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
     }
-  } else if (isDictionarySchema(item)) {
-    if (!raw || item.elementType.type !== SchemaType.Object) {
-      return `map[string]${recursiveGetDiscriminatorTypeName(item.elementType, raw)}`;
+  } else if (isMapType(item)) {
+    if (!raw || !isInterfaceType(item.valueType)) {
+      return `map[string]${recursiveGetDiscriminatorTypeName(item.valueType, raw)}`;
     }
   }
   if (raw) {
     return 'json.RawMessage';
   }
-  return item.language.go!.discriminatorInterface;
+  return getTypeDeclaration(item);
 }
 
 // recursively constructs the text to populate a nested discriminator
-function recursivePopulateDiscriminator(item: Schema, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
+function recursivePopulateDiscriminator(item: PossibleType, receiver: string, rawSrc: string, dest: string, indent: string, nesting: number): string {
   let text = '';
   let interfaceName = '';
   let targetType = '';
 
-  if (isArraySchema(item)) {
-    if (item.elementType.type !== SchemaType.Object) {
+  if (isSliceType(item)) {
+    if (!isInterfaceType(item.elementType)) {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
         text += `${indent}${dest} = make(${recursiveGetDiscriminatorTypeName(item, false)}, len(${rawSrc}))\n`;
@@ -498,10 +484,10 @@ function recursivePopulateDiscriminator(item: Schema, receiver: string, rawSrc: 
     }
 
     // we're at leaf node - 1, so get the interface from the element's type
-    interfaceName = item.elementType.language.go!.discriminatorInterface;
+    interfaceName = getTypeDeclaration(item.elementType);
     targetType = 'Array';
-  } else if (isDictionarySchema(item)) {
-    if (item.elementType.type !== SchemaType.Object) {
+  } else if (isMapType(item)) {
+    if (!isInterfaceType(item.valueType)) {
       if (nesting > 1) {
         // at nestling level 1, the destination var was already created in generateDiscriminatorUnmarshaller()
         text += `${indent}${dest} = ${recursiveGetDiscriminatorTypeName(item, false)}{}\n`;
@@ -510,13 +496,13 @@ function recursivePopulateDiscriminator(item: Schema, receiver: string, rawSrc: 
       text += `${indent}for k${nesting}, v${nesting} := range ${rawSrc} {\n`;
       rawSrc = `v${nesting}`; // source becomes the current value in the source map
       dest = `${dest}[k${nesting}]`; // update destination to the destination map's value for the current key
-      text += recursivePopulateDiscriminator(item.elementType, receiver, rawSrc, dest, indent+'\t', nesting+1);
+      text += recursivePopulateDiscriminator(item.valueType, receiver, rawSrc, dest, indent+'\t', nesting+1);
       text += `${indent}}\n`;
       return text;
     }
 
     // we're at leaf node - 1, so get the interface from the element's type
-    interfaceName = item.elementType.language.go!.discriminatorInterface;
+    interfaceName = getTypeDeclaration(item.valueType);
     targetType = 'Map';
   }
 
@@ -526,29 +512,25 @@ function recursivePopulateDiscriminator(item: Schema, receiver: string, rawSrc: 
   return text;
 }
 
-function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager) {
+function generateXMLMarshaller(modelType: ModelType, modelDef: ModelDef, imports: ImportManager) {
   // only needed for types with time.Time or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
-  const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Language.name}.`;
-  let text = `func (${receiver} ${modelDef.Language.name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
-  if (modelDef.Language.xmlWrapperName) {
-    text += `\tstart.Name.Local = "${modelDef.Language.xmlWrapperName}"\n`;
+  const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Name}.`;
+  let text = `func (${receiver} ${modelDef.Name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
+  if (modelType.xml?.wrapper) {
+    text += `\tstart.Name.Local = "${modelType.xml.wrapper}"\n`;
   }
-  text += generateAliasType(modelDef, receiver, true);
-  for (const prop of values(modelDef.Properties)) {
-    if (prop.language.go!.needsXMLArrayMarshalling) {
-      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
-      text += `\t\taux.${prop.language.go!.name} = &${receiver}.${prop.language.go!.name}\n`;
+  text += generateAliasType(modelType, receiver, true);
+  for (const field of values(modelDef.Fields)) {
+    if (isSliceType(field.type)) {
+      text += `\tif ${receiver}.${field.fieldName} != nil {\n`;
+      text += `\t\taux.${field.fieldName} = &${receiver}.${field.fieldName}\n`;
       text += '\t}\n';
-    } else if (prop.schema.type === SchemaType.ByteArray) {
-      let base64Format = 'Std';
-      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
-        base64Format = 'URL';
-      }
+    } else if (isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
-      text += `\t\tencoded${prop.language.go!.name} := runtime.EncodeByteArray(${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
-      text += `\t\taux.${prop.language.go!.name} = &encoded${prop.language.go!.name}\n`;
+      text += `\tif ${receiver}.${field.fieldName} != nil {\n`;
+      text += `\t\tencoded${field.fieldName} := runtime.EncodeByteArray(${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+      text += `\t\taux.${field.fieldName} = &encoded${field.fieldName}\n`;
       text += '\t}\n';
     }
   }
@@ -557,28 +539,24 @@ function generateXMLMarshaller(modelDef: ModelDef, imports: ImportManager) {
   modelDef.SerDeMethods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
-function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager) {
+function generateXMLUnmarshaller(modelType: ModelType, modelDef: ModelDef, imports: ImportManager) {
   // non-polymorphic case, must be something with time.Time
   const receiver = modelDef.receiverName();
-  const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Language.name}.`;
-  let text = `func (${receiver} *${modelDef.Language.name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
-  text += generateAliasType(modelDef, receiver, false);
+  const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${modelDef.Name}.`;
+  let text = `func (${receiver} *${modelDef.Name}) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {\n`;
+  text += generateAliasType(modelType, receiver, false);
   text += '\tif err := dec.DecodeElement(aux, &start); err != nil {\n';
   text += '\t\treturn err\n';
   text += '\t}\n';
-  for (const prop of values(modelDef.Properties)) {
-    if (prop.schema.type === SchemaType.DateTime) {
-      text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
-    } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t${receiver}.${prop.language.go!.name} = (map[string]*string)(aux.${prop.language.go!.name})\n`;
-    } else if (prop.schema.type === SchemaType.ByteArray) {
-      let base64Format = 'Std';
-      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
-        base64Format = 'URL';
-      }
+  for (const field of values(modelDef.Fields)) {
+    if (isTimeType(field.type)) {
+      text += `\t${receiver}.${field.fieldName} = (*time.Time)(aux.${field.fieldName})\n`;
+    } else if (field.annotations.isAdditionalProperties || isMapType(field.type)) {
+      text += `\t${receiver}.${field.fieldName} = (map[string]*string)(aux.${field.fieldName})\n`;
+    } else if (isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      text += `\tif aux.${prop.language.go!.name} != nil {\n`;
-      text += `\t\tif err := runtime.DecodeByteArray(*aux.${prop.language.go!.name}, &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format); err != nil {\n`;
+      text += `\tif aux.${field.fieldName} != nil {\n`;
+      text += `\t\tif err := runtime.DecodeByteArray(*aux.${field.fieldName}, &${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format); err != nil {\n`;
       text += '\t\t\treturn err\n';
       text += '\t\t}\n';
       text += '\t}\n';
@@ -590,20 +568,20 @@ function generateXMLUnmarshaller(modelDef: ModelDef, imports: ImportManager) {
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller
-function generateAliasType(modelDef: ModelDef, receiver: string, forMarshal: boolean): string {
-  let text = `\ttype alias ${modelDef.Language.name}\n`;
+function generateAliasType(modelType: ModelType, receiver: string, forMarshal: boolean): string {
+  let text = `\ttype alias ${modelType.name}\n`;
   text += '\taux := &struct {\n';
   text += '\t\t*alias\n';
-  for (const prop of values(modelDef.Properties)) {
-    const sn = getXMLSerialization(prop, modelDef.Language);
-    if (prop.schema.type === SchemaType.DateTime) {
-      text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.internalTimeType} \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
-    } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
-      text += `\t\t${prop.language.go!.name} additionalProperties \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
-    } else if (prop.language.go!.needsXMLArrayMarshalling) {
-      text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.name} \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
-    } else if (prop.schema.type === SchemaType.ByteArray) {
-      text += `\t\t${prop.language.go!.name} *string \`${modelDef.Language.marshallingFormat}:"${sn}"\`\n`;
+  for (const field of values(modelType.fields)) {
+    const sn = getXMLSerialization(field, false);
+    if (isTimeType(field.type)) {
+      text += `\t\t${field.fieldName} *${field.type.dateTimeFormat} \`${modelType.format}:"${sn}"\`\n`;
+    } else if (field.annotations.isAdditionalProperties || isMapType(field.type)) {
+      text += `\t\t${field.fieldName} additionalProperties \`${modelType.format}:"${sn}"\`\n`;
+    } else if (isSliceType(field.type)) {
+      text += `\t\t${field.fieldName} *${getTypeDeclaration(field.type)} \`${modelType.format}:"${sn}"\`\n`;
+    } else if (isBytesType(field.type)) {
+      text += `\t\t${field.fieldName} *string \`${modelType.format}:"${sn}"\`\n`;
     }
   }
   text += '\t}{\n';
@@ -614,11 +592,11 @@ function generateAliasType(modelDef: ModelDef, receiver: string, forMarshal: boo
   text += `\t\talias: (*alias)(${rec}),\n`;
   if (forMarshal) {
     // emit code to initialize time fields
-    for (const prop of values(modelDef.Properties)) {
-      if (prop.schema.type !== SchemaType.DateTime) {
+    for (const field of modelType.fields) {
+      if (!isTimeType(field.type)) {
         continue;
       }
-      text += `\t\t${prop.language.go!.name}: (*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name}),\n`;
+      text += `\t\t${field.fieldName}: (*${field.type.dateTimeFormat})(${receiver}.${field.fieldName}),\n`;
     }
   }
   text += '\t}\n';
@@ -634,19 +612,20 @@ interface ModelMethod {
 
 // represents model definition as a Go struct
 class ModelDef {
-  readonly Language: Language;
-  readonly Properties?: Array<Property>;
+  readonly Name: string;
+  readonly Format: ModelFormat;
+  readonly Description?: string;
+  readonly Fields?: Array<ModelField>;
   readonly SerDeMethods: Array<ModelMethod>;
   readonly Methods: Array<ModelMethod>;
   HasJSONByteArray: boolean;
   HasAny: boolean;
 
-  constructor(language: Language, props?: Array<Property>) {
-    this.Language = language;
-    this.Properties = props;
-    if (this.Properties) {
-      this.Properties.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-    }
+  constructor(name: string, format: ModelFormat, description?: string, fields?: Array<ModelField>) {
+    this.Name = name;
+    this.Format = format;
+    this.Description = description;
+    this.Fields = fields;
     this.SerDeMethods = new Array<ModelMethod>();
     this.Methods = new Array<ModelMethod>();
     this.HasJSONByteArray = false;
@@ -655,86 +634,83 @@ class ModelDef {
 
   text(): string {
     let text = '';
-    if (hasDescription(this.Language)) {
-      text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
+    if (this.Description) {
+      text += `${comment(this.Description, '// ', undefined, commentLength)}\n`;
     }
-    text += `type ${this.Language.name} struct {\n`;
-    // used to track when to add an extra \n between fields that have comments
-    let first = true;
+    text += `type ${this.Name} struct {\n`;
+
     // group fields by required/optional/read-only in that order
-    this.Properties?.sort((lhs: Property, rhs: Property): number => {
-      if ((lhs.required && !rhs.required) || (!lhs.readOnly && rhs.readOnly)) {
+    this.Fields?.sort((lhs: ModelField, rhs: ModelField): number => {
+      if ((lhs.annotations.required && !rhs.annotations.required) || (!lhs.annotations.readOnly && rhs.annotations.readOnly)) {
         return -1;
-      } else if ((rhs.readOnly && !lhs.readOnly) || (!rhs.readOnly && lhs.readOnly)) {
+      } else if ((rhs.annotations.readOnly && !lhs.annotations.readOnly) || (!rhs.annotations.readOnly && lhs.annotations.readOnly)) {
         return 1;
       } else {
         return 0;
       }
     });
-    for (const prop of values(this.Properties)) {
-      if (prop.language.go!.embeddedType) {
-        continue;
-      }
-      if (hasDescription(prop.language.go!)) {
+
+    // used to track when to add an extra \n between fields that have comments
+    let first = true;
+
+    for (const field of values(this.Fields)) {
+      if (field.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
+        text += `\t${comment(field.description, '// ', undefined, commentLength)}\n`;
       }
-      let typeName = prop.schema.language.go!.name;
-      if (prop.schema.type === SchemaType.Constant) {
+      let typeName = getTypeDeclaration(field.type);
+      if (isLiteralValue(field.type)) {
         // for constants we use the underlying type name
-        typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
+        typeName = getLiteralValueTypeName(field.type.type);
       }
-      let serialization = prop.serializedName;
-      if (this.Language.marshallingFormat === 'json') {
+      let serialization = field.serializedName;
+      if (this.Format === 'json') {
         serialization += ',omitempty';
-      } else if (this.Language.marshallingFormat === 'xml') {
-        serialization = getXMLSerialization(prop, this.Language);
-      }
-      let readOnly = '';
-      if (prop.readOnly) {
-        readOnly = ' azure:"ro"';
+      } else if (this.Format === 'xml') {
+        serialization = getXMLSerialization(field, false);
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
-      if (this.Language.marshallingFormat === 'xml' && !prop.language.go!.isAdditionalProperties) {
-        tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
+      if (this.Format === 'xml' && !field.annotations.isAdditionalProperties) {
+        tag = ` \`${this.Format}:"${serialization}"\``;
       }
-      text += `\t${prop.language.go!.name} ${getStar(prop.language.go!)}${typeName}${tag}\n`;
+      text += `\t${field.fieldName} ${getStar(field.byValue)}${typeName}${tag}\n`;
       first = false;
     }
+
     text += '}\n\n';
     return text;
   }
 
   receiverName(): string {
-    const typeName = this.Language.name;
+    const typeName = this.Name;
     return typeName[0].toLowerCase();
   }
 }
 
-export function getXMLSerialization(prop: Property, lang: Language): string {
-  let serialization = prop.serializedName;
+export function getXMLSerialization(field: ModelField, isResponseEnvelope: boolean): string {
+  let serialization = field.serializedName;
   // default to using the serialization name
-  if (prop.schema.serialization?.xml?.name) {
+  if (field.xml?.name) {
     // xml can specifiy its own name, prefer that if available
-    serialization = prop.schema.serialization.xml.name;
-  } else if (prop.schema.serialization?.xml?.text) {
+    serialization = field.xml.name;
+  } else if (field.xml?.text) {
     // type has the x-ms-text attribute applied so it should be character data, not a node (https://github.com/Azure/autorest/tree/main/docs/extensions#x-ms-text)
     // see https://pkg.go.dev/encoding/xml#Unmarshal for what ,chardata actually means
     serialization = ',chardata';
   }
-  if (prop.schema.serialization?.xml?.attribute) {
+  if (field.xml?.attribute) {
     // value comes from an xml attribute
     serialization += ',attr';
-  } else if (isArraySchema(prop.schema)) {
+  } else if (isSliceType(field.type)) {
     // start with the serialized name of the element, preferring xml name if available
-    let inner = prop.schema.elementType.language.go!.name;
-    if (prop.schema.elementType.serialization?.xml?.name) {
-      inner = prop.schema.elementType.serialization.xml.name;
+    let inner = getTypeDeclaration(field.type.elementType);
+    if (field.xml?.name) {
+      inner = field.xml.name;
     }
     // arrays can be wrapped or unwrapped.  here's a wrapped example
     // note how the array of apple objects is "wrapped" in GoodApples
@@ -758,8 +734,8 @@ export function getXMLSerialization(prop: Property, lang: Language): string {
 
     // arrays in the response type are handled slightly different as we
     // unmarshal directly into them so no need to add the unwrapping.
-    if (prop.schema.serialization?.xml?.wrapped && lang.responseType !== true) {
-      serialization += `>${inner}`;
+    if (field.xml?.wraps && !isResponseEnvelope) {
+      serialization += `>${field.xml.wraps}`;
     } else {
       serialization = inner;
     }
@@ -767,9 +743,8 @@ export function getXMLSerialization(prop: Property, lang: Language): string {
   return serialization;
 }
 
-export function getStar(lang: Language): string {
-  // lang is assumed to be go
-  if (lang.byValue === true) {
+export function getStar(byValue: boolean): string {
+  if (byValue === true) {
     return '';
   }
   return '*';
