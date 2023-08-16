@@ -34,9 +34,8 @@ export async function generateServerInternal(session: Session<CodeModel>): Promi
     }
   }
   if (needsTracker) {
-    imports.add('regexp');
-    imports.add('strings');
     imports.add('sync');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
     body += tracker;
   }
   return text + imports.text() + body;
@@ -119,20 +118,10 @@ type tracker[T any] struct {
 	mu sync.Mutex
 }
 
-func (p *tracker[T]) key(req *http.Request) string {
-	path := req.URL.Path
-	if match, _ := regexp.Match(\`/page_\\d+$\`, []byte(path)); match {
-		path = path[:strings.LastIndex(path, "/")]
-	} else if strings.HasSuffix(path, "/get/fake/status") {
-		path = path[:len(path)-16]
-	}
-	return path
-}
-
 func (p *tracker[T]) get(req *http.Request) *T {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	if item, ok := p.items[p.key(req)]; ok {
+	if item, ok := p.items[server.SanitizePagerPollerPath(req.URL.Path)]; ok {
 		return item
 	}
 	return nil
@@ -141,12 +130,12 @@ func (p *tracker[T]) get(req *http.Request) *T {
 func (p *tracker[T]) add(req *http.Request, item *T) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	p.items[p.key(req)] = item
+	p.items[server.SanitizePagerPollerPath(req.URL.Path)] = item
 }
 
 func (p *tracker[T]) remove(req *http.Request) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	delete(p.items, p.key(req))
+	delete(p.items, server.SanitizePagerPollerPath(req.URL.Path))
 }
 `;
