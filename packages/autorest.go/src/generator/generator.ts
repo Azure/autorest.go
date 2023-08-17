@@ -23,7 +23,7 @@ import { generateServerInternal } from './fake/internal';
 import { sortAscending } from './helpers';
 
 // The generator emits Go source code files to disk.
-export async function protocolGen(host: AutorestExtensionHost) {
+export async function generateCode(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
 
   try {

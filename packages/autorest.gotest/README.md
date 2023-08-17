@@ -74,11 +74,11 @@ pipeline:
     input:
       - test-modeler
     scope: scope-testmodeler/emitter
-  go-transform:
+  go-transform-m4:
     input:
       - test-modeler
   go-tester:
-    input: go-transform
+    input: go-transform-m4
     output-artifact: source-file-go-tester
   gotest/emitter:
     input:
