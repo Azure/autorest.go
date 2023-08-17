@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CodeModel as M4CodeModel, codeModelSchema, ObjectSchema } from '@autorest/codemodel';
+import * as m4 from '@autorest/codemodel';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { AutorestExtensionHost, Session, startSession } from '@autorest/extension-base';
-import { GoCodeModel, CodeModelType, ConstantType, Info, isClientSideDefault, ModelField, ModelType, Options, ParameterGroup, PolymorphicType, ResponseEnvelope, StructField, StructType, InterfaceType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { adaptClients } from './clients';
 import { adaptConstantType, adaptInterfaceType, adaptModel, adaptModelField } from './types';
 import { aggregateProperties } from '../transform/helpers';
@@ -17,17 +17,17 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
 
   try {
-    const session = await startSession<M4CodeModel>(host, codeModelSchema);
+    const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
 
-    const info = new Info(session.model.info.title);
-    const options = new Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
+    const info = new go.Info(session.model.info.title);
+    const options = new go.Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
 
-    let type: CodeModelType = 'data-plane';
+    let type: go.CodeModelType = 'data-plane';
     if (session.model.language.go!.azureARM) {
       type = 'azure-arm';
     }
     
-    const codeModel = new GoCodeModel(info, type, session.model.language.go!.packageName, options);
+    const codeModel = new go.GoCodeModel(info, type, session.model.language.go!.packageName, options);
     if (session.model.language.go!.host) {
       codeModel.host = session.model.language.go!.host;
     }
@@ -59,12 +59,12 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     codeModel.models = adaptModels(session);
     codeModel.clients = adaptClients(session, codeModel);
 
-    const paramGroups = new Map<string, ParameterGroup>();
+    const paramGroups = new Map<string, go.ParameterGroup>();
 
     for (const client of values(codeModel.clients)) {
       for (const method of client.methods) {
         if (!codeModel.responseEnvelopes) {
-          codeModel.responseEnvelopes = new Array<ResponseEnvelope>();
+          codeModel.responseEnvelopes = new Array<go.ResponseEnvelope>();
         }
         codeModel.responseEnvelopes.push(method.responseEnvelope);
         for (const param of values(method.parameters)) {
@@ -83,7 +83,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
 
     if (paramGroups.size > 0) {
       // adapt all of the parameter groups
-      codeModel.paramGroups = new Array<StructType>();
+      codeModel.paramGroups = new Array<go.StructType>();
       for (const groupName of paramGroups.keys()) {
         const paramGroup = paramGroups.get(groupName);
         codeModel.paramGroups.push(adaptParameterGroup(paramGroup!));
@@ -104,9 +104,9 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
   }
 }
 
-function adaptConstantTypes(session: Session<M4CodeModel>): Array<ConstantType> | undefined {
+function adaptConstantTypes(session: Session<m4.CodeModel>): Array<go.ConstantType> | undefined {
   // group all enum categories into a single array so they can be sorted
-  const constTypes = new Array<ConstantType>();
+  const constTypes = new Array<go.ConstantType>();
   for (const choice of values(session.model.schemas.choices)) {
     if (choice.language.go!.omitType) {
       continue;
@@ -128,22 +128,22 @@ function adaptConstantTypes(session: Session<M4CodeModel>): Array<ConstantType> 
   return constTypes;
 }
 
-function adaptParameterGroup(paramGroup: ParameterGroup): StructType {
-  const structType = new StructType(paramGroup.groupName);
+function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
+  const structType = new go.StructType(paramGroup.groupName);
   structType.description = paramGroup.description;
   if (paramGroup.params) {
-    structType.fields = new Array<StructField>();
+    structType.fields = new Array<go.StructField>();
     for (const param of values(paramGroup.params)) {
       if (param.paramType === 'literal') {
         continue;
       }
-      let byValue = param.paramType === 'required' || (param.location === 'client' && isClientSideDefault(param.paramType));
+      let byValue = param.paramType === 'required' || (param.location === 'client' && go.isClientSideDefault(param.paramType));
       // if the param isn't required, check if it should be passed by value or not.
       // optional params that are implicitly nil-able shouldn't be pointer-to-type.
       if (!byValue) {
         byValue = param.byValue;
       }
-      const field = new StructField(param.paramName, param.type, byValue);
+      const field = new go.StructField(param.paramName, param.type, byValue);
       field.description = param.description;
       structType.fields.push(field);
     }
@@ -152,18 +152,18 @@ function adaptParameterGroup(paramGroup: ParameterGroup): StructType {
 }
 
 interface InterfaceTypeObjectSchema {
-  iface: InterfaceType;
-  obj: ObjectSchema;
+  iface: go.InterfaceType;
+  obj: m4.ObjectSchema;
 }
 
-function adaptInterfaceTypes(session: Session<M4CodeModel>): Array<InterfaceType> | undefined {
+function adaptInterfaceTypes(session: Session<m4.CodeModel>): Array<go.InterfaceType> | undefined {
   if (!session.model.language.go!.discriminators) {
     return undefined;
   }
 
-  const ifaces = new Array<InterfaceType>();
+  const ifaces = new Array<go.InterfaceType>();
   const ifaceObjs = new Array<InterfaceTypeObjectSchema>();
-  const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators;
+  const discriminators = <Array<m4.ObjectSchema>>session.model.language.go!.discriminators;
 
   // discriminators contains all of the root discriminated types but *not* any sub-roots (e.g. Salmon).
   for (const discriminator of values(discriminators)) {
@@ -181,24 +181,24 @@ function adaptInterfaceTypes(session: Session<M4CodeModel>): Array<InterfaceType
   
   // now that the InterfaceTypes have been created, we can populate the rootType and possibleTypes
   for (const ifaceObj of values(ifaceObjs)) {
-    ifaceObj.iface.rootType = <PolymorphicType>adaptModel(ifaceObj.obj);
-    ifaceObj.iface.possibleTypes = new Array<PolymorphicType>();
+    ifaceObj.iface.rootType = <go.PolymorphicType>adaptModel(ifaceObj.obj);
+    ifaceObj.iface.possibleTypes = new Array<go.PolymorphicType>();
     for (const disc of values(ifaceObj.obj.discriminator!.all)) {
-      const possibleType = adaptModel(<ObjectSchema>disc);
-      ifaceObj.iface.possibleTypes.push(<PolymorphicType>possibleType);
+      const possibleType = adaptModel(<m4.ObjectSchema>disc);
+      ifaceObj.iface.possibleTypes.push(<go.PolymorphicType>possibleType);
     }
   }
 
   return ifaces;
 }
 
-function recursiveAdaptInterfaceType(obj: ObjectSchema, ifaces: Array<InterfaceType>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: InterfaceType) {
+function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.InterfaceType>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: go.InterfaceType) {
   const iface = adaptInterfaceType(obj, parent);
   ifaces.push(iface);
   ifaceObjs.push({iface, obj});
 
   for (const val of values(obj.discriminator!.immediate)) {
-    const asObj = <ObjectSchema>val;
+    const asObj = <m4.ObjectSchema>val;
     if (asObj.discriminator) {
       recursiveAdaptInterfaceType(asObj, ifaces, ifaceObjs, iface);
     }
@@ -206,12 +206,12 @@ function recursiveAdaptInterfaceType(obj: ObjectSchema, ifaces: Array<InterfaceT
 }
 
 interface ModelTypeObjectSchema {
-  type: ModelType | PolymorphicType;
-  obj: ObjectSchema;
+  type: go.ModelType | go.PolymorphicType;
+  obj: m4.ObjectSchema;
 }
 
-function adaptModels(session: Session<M4CodeModel>): Array<ModelType | PolymorphicType> {
-  const modelTypes = new Array<ModelType | PolymorphicType>();
+function adaptModels(session: Session<m4.CodeModel>): Array<go.ModelType | go.PolymorphicType> {
+  const modelTypes = new Array<go.ModelType | go.PolymorphicType>();
   const modelObjs = new Array<ModelTypeObjectSchema>();
   for (const obj of values(session.model.schemas.objects)) {
     if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
@@ -224,7 +224,7 @@ function adaptModels(session: Session<M4CodeModel>): Array<ModelType | Polymorph
   }
 
   for (const modelObj of values(modelObjs)) {
-    modelObj.type.fields = new Array<ModelField>();
+    modelObj.type.fields = new Array<go.ModelField>();
     const props = aggregateProperties(modelObj.obj);
     for (const prop of values(props)) {
       const field = adaptModelField(prop, modelObj.obj);

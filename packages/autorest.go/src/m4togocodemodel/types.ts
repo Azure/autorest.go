@@ -3,25 +3,25 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, ConstantSchema, DictionarySchema, Language, NumberSchema, ObjectSchema, Property, Schema, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import * as m4 from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { BytesType, ConstantType, ConstantValue, MapType, ModelAnnotations, ModelField, ModelFieldAnnotations, ModelFormat, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, StandardType, TimeType, BytesEncoding, LiteralValue, InterfaceType, XMLInfo, getTypeDeclaration, isLiteralValueType, isConstantType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 
 // returns true if the language contains a description
-export function hasDescription(lang: Language): boolean {
+export function hasDescription(lang: m4.Language): boolean {
   return (lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING'));
 }
 
 // cache of previously created types
-const types = new Map<string, PossibleType>();
-const constValues = new Map<string, ConstantValue>();
+const types = new Map<string, go.PossibleType>();
+const constValues = new Map<string, go.ConstantValue>();
 
-export function adaptConstantType(choice: ChoiceSchema | SealedChoiceSchema): ConstantType {
+export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchema): go.ConstantType {
   let constType = types.get(choice.language.go!.name);
   if (constType) {
-    return <ConstantType>constType;
+    return <go.ConstantType>constType;
   }
-  constType = new ConstantType(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
+  constType = new go.ConstantType(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
   constType.values = adaptConstantValue(constType, choice.choices);
   if (hasDescription(choice.language.go!)) {
     constType.description = choice.language.go!.description;
@@ -30,12 +30,12 @@ export function adaptConstantType(choice: ChoiceSchema | SealedChoiceSchema): Co
   return constType;
 }
 
-function adaptConstantValue(type: ConstantType, choices: Array<ChoiceValue>): Array<ConstantValue> {
-  const values = new Array<ConstantValue>();
+function adaptConstantValue(type: go.ConstantType, choices: Array<m4.ChoiceValue>): Array<go.ConstantValue> {
+  const values = new Array<go.ConstantValue>();
   for (const choice of choices) {
     let value = constValues.get(choice.language.go!.name);
     if (!value) {
-      value = new ConstantValue(choice.language.go!.name, type, choice.value);
+      value = new go.ConstantValue(choice.language.go!.name, type, choice.value);
       if (hasDescription(choice.language.go!)) {
         value.description = choice.language.go!.description;
       }
@@ -60,13 +60,13 @@ function adaptPrimitiveType(name: string): 'bool' | 'float32' | 'float64' | 'int
   }
 }
 
-export function adaptInterfaceType(obj: ObjectSchema, parent?: InterfaceType): InterfaceType {
+export function adaptInterfaceType(obj: m4.ObjectSchema, parent?: go.InterfaceType): go.InterfaceType {
   let iface = types.get(obj.language.go!.discriminatorInterface);
   if (iface) {
-    return <InterfaceType>iface;
+    return <go.InterfaceType>iface;
   }
 
-  iface = new InterfaceType(obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
+  iface = new go.InterfaceType(obj.language.go!.discriminatorInterface, obj.discriminator!.property.serializedName);
   if (parent) {
     iface.parent = parent;
   }
@@ -75,13 +75,13 @@ export function adaptInterfaceType(obj: ObjectSchema, parent?: InterfaceType): I
   return iface;
 }
 
-export function adaptModel(obj: ObjectSchema): ModelType | PolymorphicType {
+export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicType {
   let modelType = types.get(obj.language.go!.name);
   if (modelType) {
-    return <ModelType | PolymorphicType>modelType;
+    return <go.ModelType | go.PolymorphicType>modelType;
   }
 
-  const annotations = new ModelAnnotations(obj.language.go!.omitSerDeMethods);
+  const annotations = new go.ModelAnnotations(obj.language.go!.omitSerDeMethods);
   if (obj.discriminator || obj.discriminatorValue) {
     let ifaceName: string | undefined;
     if (obj.language.go!.discriminatorInterface) {
@@ -106,13 +106,13 @@ export function adaptModel(obj: ObjectSchema): ModelType | PolymorphicType {
     if (!iface) {
       throw new Error(`didn't find InterfaceType for discriminator interface ${ifaceName} on type ${obj.language.go!.name}`);
     }
-    modelType = new PolymorphicType(obj.language.go!.name, <InterfaceType>iface, annotations);
+    modelType = new go.PolymorphicType(obj.language.go!.name, <go.InterfaceType>iface, annotations);
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
-      (<PolymorphicType>modelType).discriminatorValue = obj.discriminatorValue;
+      (<go.PolymorphicType>modelType).discriminatorValue = obj.discriminatorValue;
     }
   } else {
-    modelType = new ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations);
+    modelType = new go.ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations);
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
@@ -124,50 +124,50 @@ export function adaptModel(obj: ObjectSchema): ModelType | PolymorphicType {
   return modelType;
 }
 
-export function adaptModelField(prop: Property, obj: ObjectSchema): ModelField {
-  const annotations = new ModelFieldAnnotations(prop.required === true, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
-  const field = new ModelField(prop.language.go!.name, adaptPossibleType(prop.schema), prop.language.go!.byValue === true, prop.serializedName, annotations);
+export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
+  const annotations = new go.ModelFieldAnnotations(prop.required === true, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
+  const field = new go.ModelField(prop.language.go!.name, adaptPossibleType(prop.schema), prop.language.go!.byValue === true, prop.serializedName, annotations);
   if (hasDescription(prop.language.go!)) {
     field.description = prop.language.go!.description;
   }
   if (prop.isDiscriminator && obj.discriminatorValue) {
     const keyName = `discriminator-value-${obj.discriminatorValue}`;
-    let discriminatorLiteral = <LiteralValue>types.get(keyName);
+    let discriminatorLiteral = <go.LiteralValue>types.get(keyName);
     if (!discriminatorLiteral) {
       // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
       if (obj.discriminatorValue[0] === '"') {
-        discriminatorLiteral = new LiteralValue(new PrimitiveType('string'), obj.discriminatorValue);
+        discriminatorLiteral = new go.LiteralValue(new go.PrimitiveType('string'), obj.discriminatorValue);
       } else {
         // find the corresponding constant value
         const value = constValues.get(obj.discriminatorValue);
         if (!value) {
           throw new Error(`didn't find a constant value for discriminator value ${obj.discriminatorValue}`);
         }
-        discriminatorLiteral = new LiteralValue(value.type, value);
+        discriminatorLiteral = new go.LiteralValue(value.type, value);
       }
     }
     types.set(keyName, discriminatorLiteral);
     field.defaultValue = discriminatorLiteral;
   } else if (prop.clientDefaultValue) {
-    if (!isLiteralValueType(field.type)) {
-      throw new Error(`unsupported default value type ${getTypeDeclaration(field.type)} for field ${field.fieldName}`);
+    if (!go.isLiteralValueType(field.type)) {
+      throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.fieldName}`);
     }
-    if (isConstantType(field.type)) {
+    if (go.isConstantType(field.type)) {
       // find the corresponding ConstantValue
       const constType = types.get(field.type.name);
       if (!constType) {
         throw new Error(`didn't find ConstantType for ${field.type.name}`);
       }
       let found = false;
-      for (const val of values((<ConstantType>constType).values)) {
+      for (const val of values((<go.ConstantType>constType).values)) {
         if (val.value === prop.clientDefaultValue) {
           const keyName = `literal-${val.valueName}`;
           let literalValue = types.get(keyName);
           if (!literalValue) {
-            literalValue = new LiteralValue(field.type, val);
+            literalValue = new go.LiteralValue(field.type, val);
             types.set(keyName, literalValue);
           }
-          field.defaultValue = <LiteralValue>literalValue;
+          field.defaultValue = <go.LiteralValue>literalValue;
           found = true;
           break;
         }
@@ -176,13 +176,13 @@ export function adaptModelField(prop: Property, obj: ObjectSchema): ModelField {
         throw new Error(`didn't find ConstantValue for ${prop.clientDefaultValue}`);
       }
     } else {
-      const keyName = `literal-${getTypeDeclaration(field.type)}-${prop.clientDefaultValue}`;
+      const keyName = `literal-${go.getTypeDeclaration(field.type)}-${prop.clientDefaultValue}`;
       let literalValue = types.get(keyName);
       if (!literalValue) {
-        literalValue = new LiteralValue(field.type, prop.clientDefaultValue);
+        literalValue = new go.LiteralValue(field.type, prop.clientDefaultValue);
         types.set(keyName, literalValue);
       }
-      field.defaultValue = <LiteralValue>literalValue;
+      field.defaultValue = <go.LiteralValue>literalValue;
     }
   }
 
@@ -191,7 +191,7 @@ export function adaptModelField(prop: Property, obj: ObjectSchema): ModelField {
   return field;
 }
 
-function adaptModelFormat(obj: ObjectSchema): ModelFormat {
+function adaptModelFormat(obj: m4.ObjectSchema): go.ModelFormat {
   if (obj.language.go!.marshallingFormat === 'json') {
     return 'json';
   } else if (obj.language.go!.marshallingFormat === 'xml') {
@@ -201,8 +201,8 @@ function adaptModelFormat(obj: ObjectSchema): ModelFormat {
   }
 }
 
-export function adaptXMLInfo(obj: Schema): XMLInfo | undefined {
-  const xmlInfo = new XMLInfo();
+export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
+  const xmlInfo = new go.XMLInfo();
   let includeXMLField = false;
   if (obj.serialization?.xml?.name) {
     xmlInfo.name = obj.serialization?.xml?.name;
@@ -216,8 +216,8 @@ export function adaptXMLInfo(obj: Schema): XMLInfo | undefined {
     xmlInfo.attribute = true;
     includeXMLField = true;
   }
-  if (obj.type === SchemaType.Array) {
-    const asArray = <ArraySchema>obj;
+  if (obj.type === m4.SchemaType.Array) {
+    const asArray = <m4.ArraySchema>obj;
     if (obj.serialization?.xml?.wrapped) {
       if (asArray.elementType.serialization?.xml?.name) {
         xmlInfo.wraps = asArray.elementType.serialization.xml.name;
@@ -243,145 +243,145 @@ export function adaptXMLInfo(obj: Schema): XMLInfo | undefined {
 }
 
 // converts an M4 schema type to a Go code model type
-export function adaptPossibleType(schema: Schema, elementTypeByValue?: boolean): PossibleType {
+export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolean): go.PossibleType {
   const rawJSONAsBytes = <boolean>schema.language.go!.rawJSONAsBytes;
   switch (schema.type) {
-    case SchemaType.Any: {
+    case m4.SchemaType.Any: {
       if (rawJSONAsBytes) {
-        const anyRawJSONKey = `${SchemaType.Any}-raw-json`;
+        const anyRawJSONKey = `${m4.SchemaType.Any}-raw-json`;
         let anyRawJSON = types.get(anyRawJSONKey);
         if (anyRawJSON) {
           return anyRawJSON;
         }
-        anyRawJSON = new SliceType(new PrimitiveType('byte'), true);
+        anyRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
         anyRawJSON.rawJSONAsBytes = true;
         types.set(anyRawJSONKey, anyRawJSON);
         return anyRawJSON;
       }
-      let anyType = types.get(SchemaType.Any);
+      let anyType = types.get(m4.SchemaType.Any);
       if (anyType) {
         return anyType;
       }
-      anyType = new PrimitiveType('any');
-      types.set(SchemaType.Any, anyType);
+      anyType = new go.PrimitiveType('any');
+      types.set(m4.SchemaType.Any, anyType);
       return anyType;
     }
-    case SchemaType.AnyObject: {
+    case m4.SchemaType.AnyObject: {
       if (rawJSONAsBytes) {
-        const anyObjectRawJSONKey = `${SchemaType.Any}-raw-json`;
+        const anyObjectRawJSONKey = `${m4.SchemaType.Any}-raw-json`;
         let anyObjectRawJSON = types.get(anyObjectRawJSONKey);
         if (anyObjectRawJSON) {
           return anyObjectRawJSON;
         }
-        anyObjectRawJSON = new SliceType(new PrimitiveType('byte'), true);
+        anyObjectRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
         anyObjectRawJSON.rawJSONAsBytes = true;
         types.set(anyObjectRawJSONKey, anyObjectRawJSON);
         return anyObjectRawJSON;
       }
-      let anyObject = types.get(SchemaType.AnyObject);
+      let anyObject = types.get(m4.SchemaType.AnyObject);
       if (anyObject) {
         return anyObject;
       }
-      anyObject = new MapType(new PrimitiveType('any'), true);
-      types.set(SchemaType.AnyObject, anyObject);
+      anyObject = new go.MapType(new go.PrimitiveType('any'), true);
+      types.set(m4.SchemaType.AnyObject, anyObject);
       return anyObject;
     }
-    case SchemaType.ArmId: {
-      let stringType = types.get(SchemaType.String);
+    case m4.SchemaType.ArmId: {
+      let stringType = types.get(m4.SchemaType.String);
       if (stringType) {
         return stringType;
       }
-      stringType = new PrimitiveType('string');
-      types.set(SchemaType.ArmId, stringType);
+      stringType = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.ArmId, stringType);
       return stringType;
     }
-    case SchemaType.Array: {
+    case m4.SchemaType.Array: {
       let myElementTypeByValue = !schema.language.go!.elementIsPtr;
       if (elementTypeByValue) {
         myElementTypeByValue = elementTypeByValue;
       }
-      const keyName = recursiveKeyName(`${SchemaType.Array}-${myElementTypeByValue}`, (<ArraySchema>schema).elementType);
+      const keyName = recursiveKeyName(`${m4.SchemaType.Array}-${myElementTypeByValue}`, (<m4.ArraySchema>schema).elementType);
       let arrayType = types.get(keyName);
       if (arrayType) {
         return arrayType;
       }
-      arrayType = new SliceType(adaptPossibleType((<ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
+      arrayType = new go.SliceType(adaptPossibleType((<m4.ArraySchema>schema).elementType, elementTypeByValue), myElementTypeByValue);
       types.set(keyName, arrayType);
       return arrayType;
     }
-    case SchemaType.Boolean: {
-      let primitiveBool = types.get(SchemaType.Boolean);
+    case m4.SchemaType.Boolean: {
+      let primitiveBool = types.get(m4.SchemaType.Boolean);
       if (primitiveBool) {
         return primitiveBool;
       }
-      primitiveBool = new PrimitiveType('bool');
-      types.set(SchemaType.Boolean, primitiveBool);
+      primitiveBool = new go.PrimitiveType('bool');
+      types.set(m4.SchemaType.Boolean, primitiveBool);
       return primitiveBool;
     }
-    case SchemaType.Binary: {
-      let binaryType = types.get(SchemaType.Binary);
+    case m4.SchemaType.Binary: {
+      let binaryType = types.get(m4.SchemaType.Binary);
       if (binaryType) {
         return binaryType;
       }
-      binaryType = new StandardType('io.ReadSeekCloser', 'io');
-      types.set(SchemaType.Binary, binaryType);
+      binaryType = new go.StandardType('io.ReadSeekCloser', 'io');
+      types.set(m4.SchemaType.Binary, binaryType);
       return binaryType;
     }
-    case SchemaType.ByteArray:
-      return adaptBytesType(<ByteArraySchema>schema);
-    case SchemaType.Char: {
-      let rune = types.get(SchemaType.Char);
+    case m4.SchemaType.ByteArray:
+      return adaptBytesType(<m4.ByteArraySchema>schema);
+    case m4.SchemaType.Char: {
+      let rune = types.get(m4.SchemaType.Char);
       if (rune) {
         return rune;
       }
-      rune = new PrimitiveType('rune');
-      types.set(SchemaType.Char, rune);
+      rune = new go.PrimitiveType('rune');
+      types.set(m4.SchemaType.Char, rune);
       return rune;
     }
-    case SchemaType.Choice:
-      return adaptConstantType(<ChoiceSchema>schema);
-    case SchemaType.Constant:
-      return adaptLiteralValue(<ConstantSchema>schema);
-    case SchemaType.Date:
-    case SchemaType.DateTime:
-    case SchemaType.Time:
-    case SchemaType.UnixTime: {
+    case m4.SchemaType.Choice:
+      return adaptConstantType(<m4.ChoiceSchema>schema);
+    case m4.SchemaType.Constant:
+      return adaptLiteralValue(<m4.ConstantSchema>schema);
+    case m4.SchemaType.Date:
+    case m4.SchemaType.DateTime:
+    case m4.SchemaType.Time:
+    case m4.SchemaType.UnixTime: {
       let time = types.get(schema.language.go!.internalTimeType);
       if (time) {
         return time;
       }
-      time = new TimeType(schema.language.go!.internalTimeType);
+      time = new go.TimeType(schema.language.go!.internalTimeType);
       types.set(schema.language.go!.internalTimeType, time);
       return time;
     }
-    case SchemaType.Dictionary: {
+    case m4.SchemaType.Dictionary: {
       const valueTypeByValue = !schema.language.go!.elementIsPtr;
-      const keyName = recursiveKeyName(`${SchemaType.Dictionary}-${valueTypeByValue}`, (<DictionarySchema>schema).elementType);
+      const keyName = recursiveKeyName(`${m4.SchemaType.Dictionary}-${valueTypeByValue}`, (<m4.DictionarySchema>schema).elementType);
       let mapType = types.get(keyName);
       if (mapType) {
         return mapType;
       }
-      mapType = new MapType(adaptPossibleType((<DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
+      mapType = new go.MapType(adaptPossibleType((<m4.DictionarySchema>schema).elementType, elementTypeByValue), valueTypeByValue);
       types.set(keyName, mapType);
       return mapType;
     }
-    case SchemaType.Duration: {
-      let duration = types.get(SchemaType.Duration);
+    case m4.SchemaType.Duration: {
+      let duration = types.get(m4.SchemaType.Duration);
       if (duration) {
         return duration;
       }
-      duration = new PrimitiveType('string');
-      types.set(SchemaType.Duration, duration);
+      duration = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.Duration, duration);
       return duration;
     }
-    case SchemaType.Integer: {
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Integer: {
+      if ((<m4.NumberSchema>schema).precision === 32) {
         const int32Key = 'int32';
         let int32 = types.get(int32Key);
         if (int32) {
           return int32;
         }
-        int32 = new PrimitiveType(int32Key);
+        int32 = new go.PrimitiveType(int32Key);
         types.set(int32Key, int32);
         return int32;
       }
@@ -390,18 +390,18 @@ export function adaptPossibleType(schema: Schema, elementTypeByValue?: boolean):
       if (int64) {
         return int64;
       }
-      int64 = new PrimitiveType(int64Key);
+      int64 = new go.PrimitiveType(int64Key);
       types.set(int64Key, int64);
       return int64;
     }
-    case SchemaType.Number: {
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Number: {
+      if ((<m4.NumberSchema>schema).precision === 32) {
         const float32Key = 'float32';
         let float32 = types.get(float32Key);
         if (float32) {
           return float32;
         }
-        float32 = new PrimitiveType(float32Key);
+        float32 = new go.PrimitiveType(float32Key);
         types.set(float32Key, float32);
         return float32;
       }
@@ -410,39 +410,39 @@ export function adaptPossibleType(schema: Schema, elementTypeByValue?: boolean):
       if (float64) {
         return float64;
       }
-      float64 = new PrimitiveType(float64Key);
+      float64 = new go.PrimitiveType(float64Key);
       types.set(float64Key, float64);
       return float64;
     }
-    case SchemaType.Object:
-      return adaptModel(<ObjectSchema>schema);
-    case SchemaType.SealedChoice:
-      return adaptConstantType(<SealedChoiceSchema>schema);
-    case SchemaType.String: {
-      let stringType = types.get(SchemaType.String);
+    case m4.SchemaType.Object:
+      return adaptModel(<m4.ObjectSchema>schema);
+    case m4.SchemaType.SealedChoice:
+      return adaptConstantType(<m4.SealedChoiceSchema>schema);
+    case m4.SchemaType.String: {
+      let stringType = types.get(m4.SchemaType.String);
       if (stringType) {
         return stringType;
       }
-      stringType = new PrimitiveType('string');
-      types.set(SchemaType.String, stringType);
+      stringType = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.String, stringType);
       return stringType;
     }
-    case SchemaType.Uri: {
-      let uriType = types.get(SchemaType.Uri);
+    case m4.SchemaType.Uri: {
+      let uriType = types.get(m4.SchemaType.Uri);
       if (uriType) {
         return uriType;
       }
-      uriType = new PrimitiveType('string');
-      types.set(SchemaType.Uri, uriType);
+      uriType = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.Uri, uriType);
       return uriType;
     }
-    case SchemaType.Uuid: {
-      let uuid = types.get(SchemaType.Uuid);
+    case m4.SchemaType.Uuid: {
+      let uuid = types.get(m4.SchemaType.Uuid);
       if (uuid) {
         return uuid;
       }
-      uuid = new PrimitiveType('string');
-      types.set(SchemaType.Uuid, uuid);
+      uuid = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.Uuid, uuid);
       return uuid;
     }
     default:
@@ -450,88 +450,88 @@ export function adaptPossibleType(schema: Schema, elementTypeByValue?: boolean):
   }
 }
 
-function adaptLiteralValue(constSchema: ConstantSchema): LiteralValue {
+function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
   switch (constSchema.valueType.type) {
-    case SchemaType.Boolean: {
-      const keyName = `literal-${SchemaType.Boolean}-${constSchema.value.value}`;
+    case m4.SchemaType.Boolean: {
+      const keyName = `literal-${m4.SchemaType.Boolean}-${constSchema.value.value}`;
       let literalBool = types.get(keyName);
       if (literalBool) {
-        return <LiteralValue>literalBool;
+        return <go.LiteralValue>literalBool;
       }
-      literalBool = new LiteralValue(new PrimitiveType('bool'), constSchema.value.value);
+      literalBool = new go.LiteralValue(new go.PrimitiveType('bool'), constSchema.value.value);
       types.set(keyName, literalBool);
       return literalBool;
     }
-    case SchemaType.ByteArray: {
-      const keyName = `literal-${SchemaType.ByteArray}-${constSchema.value.value}`;
+    case m4.SchemaType.ByteArray: {
+      const keyName = `literal-${m4.SchemaType.ByteArray}-${constSchema.value.value}`;
       let literalByteArray = types.get(keyName);
       if (literalByteArray) {
-        return <LiteralValue>literalByteArray;
+        return <go.LiteralValue>literalByteArray;
       }
-      literalByteArray = new LiteralValue(adaptBytesType(<ByteArraySchema>constSchema.valueType), constSchema.value.value);
+      literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constSchema.valueType), constSchema.value.value);
       types.set(keyName, literalByteArray);
       return literalByteArray;
     }
-    case SchemaType.Choice:
-    case SchemaType.SealedChoice: {
+    case m4.SchemaType.Choice:
+    case m4.SchemaType.SealedChoice: {
       const keyName = `literal-choice-${constSchema.value.value}`;
       let literalConst = types.get(keyName);
       if (literalConst) {
-        return <LiteralValue>literalConst;
+        return <go.LiteralValue>literalConst;
       }
-      literalConst = new LiteralValue(adaptConstantType(<ChoiceSchema>constSchema.valueType), constSchema.value.value);
+      literalConst = new go.LiteralValue(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType), constSchema.value.value);
       types.set(keyName, literalConst);
       return literalConst;
     }
-    case SchemaType.Date:
-    case SchemaType.DateTime:
-    case SchemaType.UnixTime: {
+    case m4.SchemaType.Date:
+    case m4.SchemaType.DateTime:
+    case m4.SchemaType.UnixTime: {
       const keyName = `literal-${constSchema.valueType.language.go!.internalTimeType}-${constSchema.value.value}`;
       let literalTime = types.get(keyName);
       if (literalTime) {
-        return <LiteralValue>literalTime;
+        return <go.LiteralValue>literalTime;
       }
-      literalTime = new LiteralValue(new TimeType(constSchema.valueType.language.go!.internalTimeType), constSchema.value.value);
+      literalTime = new go.LiteralValue(new go.TimeType(constSchema.valueType.language.go!.internalTimeType), constSchema.value.value);
       types.set(keyName, literalTime);
       return literalTime;
     }
-    case SchemaType.Integer: {
-      const keyName = `literal-int${(<NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
+    case m4.SchemaType.Integer: {
+      const keyName = `literal-int${(<m4.NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
       let literalInt = types.get(keyName);
       if (literalInt) {
-        return <LiteralValue>literalInt;
+        return <go.LiteralValue>literalInt;
       }
-      if ((<NumberSchema>constSchema.valueType).precision === 32) {
-        literalInt = new LiteralValue(new PrimitiveType('int32'), constSchema.value.value);
+      if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
+        literalInt = new go.LiteralValue(new go.PrimitiveType('int32'), constSchema.value.value);
       } else {
-        literalInt = new LiteralValue(new PrimitiveType('int64'), constSchema.value.value);
+        literalInt = new go.LiteralValue(new go.PrimitiveType('int64'), constSchema.value.value);
       }
       types.set(keyName, literalInt);
       return literalInt;
     }
-    case SchemaType.Number: {
-      const keyName = `literal-float${(<NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
+    case m4.SchemaType.Number: {
+      const keyName = `literal-float${(<m4.NumberSchema>constSchema.valueType).precision}-${constSchema.value.value}`;
       let literalFloat = types.get(keyName);
       if (literalFloat) {
-        return <LiteralValue>literalFloat;
+        return <go.LiteralValue>literalFloat;
       }
-      if ((<NumberSchema>constSchema.valueType).precision === 32) {
-        literalFloat = new LiteralValue(new PrimitiveType('float32'), constSchema.value.value);
+      if ((<m4.NumberSchema>constSchema.valueType).precision === 32) {
+        literalFloat = new go.LiteralValue(new go.PrimitiveType('float32'), constSchema.value.value);
       } else {
-        literalFloat = new LiteralValue(new PrimitiveType('float64'), constSchema.value.value);
+        literalFloat = new go.LiteralValue(new go.PrimitiveType('float64'), constSchema.value.value);
       }
       types.set(keyName, literalFloat);
       return literalFloat;
     }
-    case SchemaType.String:
-    case SchemaType.Duration:
-    case SchemaType.Uuid: {
+    case m4.SchemaType.String:
+    case m4.SchemaType.Duration:
+    case m4.SchemaType.Uuid: {
       const keyName = `literal-string-${constSchema.value.value}`;
       let literalString = types.get(keyName);
       if (literalString) {
-        return <LiteralValue>literalString;
+        return <go.LiteralValue>literalString;
       }
-      literalString = new LiteralValue(new PrimitiveType('string'), constSchema.value.value);
+      literalString = new go.LiteralValue(new go.PrimitiveType('string'), constSchema.value.value);
       types.set(keyName, literalString);
       return literalString;
     }
@@ -540,30 +540,30 @@ function adaptLiteralValue(constSchema: ConstantSchema): LiteralValue {
   }
 }
 
-function adaptBytesType(schema: ByteArraySchema): BytesType {
-  let format: BytesEncoding = 'Std';
+function adaptBytesType(schema: m4.ByteArraySchema): go.BytesType {
+  let format: go.BytesEncoding = 'Std';
   if (schema.format === 'base64url') {
     format = 'URL';
   }
-  const keyName = `${SchemaType.ByteArray}-${format}`;
+  const keyName = `${m4.SchemaType.ByteArray}-${format}`;
   let bytesType = types.get(keyName);
   if (bytesType) {
-    return <BytesType>bytesType;
+    return <go.BytesType>bytesType;
   }
-  bytesType = new BytesType(format);
+  bytesType = new go.BytesType(format);
   types.set(keyName, bytesType);
   return bytesType;
 }
 
-function recursiveKeyName(root: string, obj: Schema): string {
+function recursiveKeyName(root: string, obj: m4.Schema): string {
   switch (obj.type) {
-    case SchemaType.Array:
-      return recursiveKeyName(`${root}-${SchemaType.Array}`, (<ArraySchema>obj).elementType);
-    case SchemaType.Dictionary:
-      return recursiveKeyName(`${root}-${SchemaType.Dictionary}`, (<DictionarySchema>obj).elementType);
-    case SchemaType.Date:
-    case SchemaType.DateTime:
-    case SchemaType.UnixTime:
+    case m4.SchemaType.Array:
+      return recursiveKeyName(`${root}-${m4.SchemaType.Array}`, (<m4.ArraySchema>obj).elementType);
+    case m4.SchemaType.Dictionary:
+      return recursiveKeyName(`${root}-${m4.SchemaType.Dictionary}`, (<m4.DictionarySchema>obj).elementType);
+    case m4.SchemaType.Date:
+    case m4.SchemaType.DateTime:
+    case m4.SchemaType.UnixTime:
       return obj.language.go!.internalTimeType;
     default:
       return `${root}-${obj.language.go!.name}`;
