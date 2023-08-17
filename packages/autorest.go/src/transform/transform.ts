@@ -11,10 +11,9 @@ import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditio
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
-import { m4ToGoCodeModel } from  './m4adapter/adapter';
 
 // The transformer adds Go-specific information to the code model.
-export async function transform(host: AutorestExtensionHost) {
+export async function transformM4(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
 
   try {
@@ -25,13 +24,11 @@ export async function transform(host: AutorestExtensionHost) {
     await process(session);
     await labelUnreferencedTypes(session);
 
-    const goCodeModel = await m4ToGoCodeModel(session);
-
     // output the model to the pipeline
     host.writeFile({
-      filename: 'go-code-model.yaml',
-      content: serialize(goCodeModel),
-      artifactType: 'go-code-model'
+      filename: 'code-model-v4-transform.yaml',
+      content: serialize(session.model),
+      artifactType: 'code-model-v4'
     });
 
   } catch (E) {
