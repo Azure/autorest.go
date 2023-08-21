@@ -97,29 +97,45 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             {%- if example.isPageable%}
             resp = azfake.PollerResponder[azfake.PagerResponder[{{packageName}}.{{example.pollerType}}]]{}
             pager := azfake.PagerResponder[{{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}]{}
+            {%- if example.responseIsDiscriminator %}
+            pager.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, exampleRes, nil)
+            {%- else %}
             pager.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
+            {%- endif %}
             resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, pager, nil)
             {%- else %}
             resp = azfake.PollerResponder[{{packageName}}.{{example.pollerType}}]{}
+            {%- if example.responseIsDiscriminator %}
+            resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, exampleRes, nil)
+            {%- else %}
             resp.SetTerminalResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.pollerType}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
+            {%- endif %}
             {%- endif%}
             return
         {%- elif example.isPageable %}
             resp = azfake.PagerResponder[{{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}]{}
+            {%- if example.responseIsDiscriminator %}
+            resp.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, exampleRes, nil)
+            {%- else %}
             resp.AddPage({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{exampleGroup.operation.language.go.responseEnv.language.go.name}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
+            {%- endif %}
             return
         {%- else%}
             resp = azfake.Responder[{{packageName}}.{{example.returnInfo[0]}}]{}
+            {%- if example.responseIsDiscriminator %}
+            resp.SetResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, exampleRes, nil)
+            {%- else %}
             resp.SetResponse({{jsFunc.getHttpCode(exampleGroup.operation)}}, {{packageName}}.{{example.returnInfo[0]}}{ {% if example.checkResponse %}{{example.responseType}}: {% if example.responseTypePointer%}&{% endif %}exampleRes{% endif %} }, nil)
+            {%- endif %}
             return
         {%- endif %}
     }
 
     {%- if example.returnInfo.length == 2 %}
         {%- if example.isLRO %}
-            poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+            poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
         {%- else %}
-            {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+            {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
         {%- endif %}
         testsuite.Require().NoError(err, "Failed to get result for example {{example.originalFile}}")
         {%- if example.isLRO %}
@@ -127,7 +143,7 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             testsuite.Require().NoError(err, "Failed to get LRO result for example {{example.originalFile}}")
         {%- endif %}
     {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
-        pager {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+        pager {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
         for pager.More() {
             {% if example.checkResponse and verifyResponse%}nextResult{% else %}_{% endif %}, err := pager.NextPage(ctx)
             testsuite.Require().NoError(err, "Failed to advance page for example {{example.originalFile}}")
@@ -136,7 +152,7 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             {%- endif %}
         }
     {%- else %}
-        client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+        client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
     {%- endif %}
 
     {%- if example.isLRO and example.isPageable and example.checkResponse %}

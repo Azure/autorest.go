@@ -28,6 +28,16 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
             })
             .join(', ');
         },
+        getExampleParams: (params: Array<ParameterOutput>) => {
+          return params
+            .map((p) => {
+              if (p.paramName === 'ctx' || p.paramName === 'options') {
+                return p.paramOutput;
+              }
+              return 'example'+ capitalize(p.paramName);
+            })
+            .join(', '); 
+        },
         getHttpCode: (op: Operation) => {
             const successCodes = new Array<string>();
             if (isMultiRespOperation(op)) {
@@ -77,12 +87,8 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
             }
             return;
         },
-        capitalize: (name: string): string => {
-            return capitalize(name);
-        },
-        uncapitalize: (name: string): string => {
-          return uncapitalize(name);
-        },
+        capitalize: capitalize,
+        uncapitalize: uncapitalize,
         cutClientSuffix: (client: string): string => {
           return client.substring(0,client.lastIndexOf('Client'));
         },
