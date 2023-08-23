@@ -10,7 +10,7 @@ import { ImportManager } from './imports';
 
 // Creates the content in polymorphic_helpers.go
 export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeServerPkg?: string): Promise<string> {
-  if (!codeModel.interfaceTypes) {
+  if (codeModel.interfaceTypes.length === 0) {
     // no polymorphic types
     return '';
   }

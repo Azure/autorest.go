@@ -132,7 +132,7 @@ export function getCreateRequestParameters(method: Method): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(method: Method | NextPageMethod, paramsFilter?: (p?: Array<Parameter>) => Array<Parameter> | undefined): Array<Parameter | ParameterGroup> {
+export function getMethodParameters(method: Method | NextPageMethod, paramsFilter?: (p: Array<Parameter>) => Array<Parameter>): Array<Parameter | ParameterGroup> {
   const params = new Array<Parameter>();
   const paramGroups = new Array<ParameterGroup>();
   let methodParams = method.parameters;

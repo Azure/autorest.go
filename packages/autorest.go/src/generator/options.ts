@@ -12,7 +12,7 @@ import { ImportManager } from './imports';
 
 // Creates the content in options.go
 export async function generateOptions(codeModel: GoCodeModel): Promise<string> {
-  if (!codeModel.paramGroups) {
+  if (codeModel.paramGroups.length === 0) {
     return '';
   }
 
@@ -36,7 +36,7 @@ function emit(struct: StructType, imports: ImportManager): string {
   }
   text += `type ${struct.name} struct {\n`;
 
-  if (!struct.fields) {
+  if (struct.fields.length === 0) {
     // this is an optional params placeholder struct
     text += '\t// placeholder for future optional parameters\n';
   } else {

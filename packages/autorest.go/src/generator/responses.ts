@@ -13,7 +13,7 @@ import { getStar } from './models';
 
 // Creates the content in response_types.go
 export async function generateResponses(codeModel: GoCodeModel): Promise<string> {
-  if (!codeModel.responseEnvelopes) {
+  if (codeModel.responseEnvelopes. length === 0) {
     return '';
   }
 
@@ -78,7 +78,7 @@ function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
   }
 
   text += `type ${respEnv.name} struct {\n`;
-  if (!respEnv.result && !respEnv.headers) {
+  if (!respEnv.result && respEnv.headers.length === 0) {
     // this is an empty response envelope
     text += '\t// placeholder for future response values\n';
   } else {

@@ -9,7 +9,7 @@ import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
 
 export async function generateServerInternal(codeModel: GoCodeModel): Promise<string> {
-  if (!codeModel.clients) {
+  if (codeModel.clients.length === 0) {
     return '';
   }
   const text = contentPreamble(codeModel, 'fake');

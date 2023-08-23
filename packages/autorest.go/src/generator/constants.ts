@@ -11,7 +11,7 @@ import { GoCodeModel } from '../gocodemodel/gocodemodel';
 // Creates the content in constants.go
 export async function generateConstants(codeModel: GoCodeModel): Promise<string> {
   // lack of operation groups indicates model-only mode.
-  if (!codeModel.clients || (!codeModel.constants && !codeModel.host && codeModel.type !== 'azure-arm')) {
+  if (!codeModel.clients || (codeModel.constants.length === 0 && !codeModel.host && codeModel.type !== 'azure-arm')) {
     return '';
   }
   let text = contentPreamble(codeModel);
