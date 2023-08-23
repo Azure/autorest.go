@@ -208,12 +208,12 @@ export async function generateCode(host: AutorestExtensionHost) {
 }
 
 function sortContent(codeModel: GoCodeModel) {
-  codeModel.constants?.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
+  codeModel.constants.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
   for (const enm of values(codeModel.constants)) {
     enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
   }
 
-  codeModel.interfaceTypes?.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
+  codeModel.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
   for (const iface of values(codeModel.interfaceTypes)) {
     iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
   }
@@ -223,17 +223,17 @@ function sortContent(codeModel: GoCodeModel) {
     model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.paramGroups?.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
+  codeModel.paramGroups.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
   for (const paramGroup of values(codeModel.paramGroups)) {
-    paramGroup.fields?.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
+    paramGroup.fields.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.responseEnvelopes?.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  codeModel.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
   for (const respEnv of values(codeModel.responseEnvelopes)) {
-    respEnv.headers?.sort((a: HeaderResponse, b: HeaderResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    respEnv.headers.sort((a: HeaderResponse, b: HeaderResponse) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.clients?.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
+  codeModel.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
   for (const client of values(codeModel.clients)) {
     client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
   }

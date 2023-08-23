@@ -9,7 +9,7 @@ import { contentPreamble, sortAscending } from './helpers';
 
 // Creates the content in interfaces.go
 export async function generateInterfaces(codeModel: GoCodeModel): Promise<string> {
-  if (!codeModel.interfaceTypes) {
+  if (codeModel.interfaceTypes.length === 0) {
     // no polymorphic types
     return '';
   }
