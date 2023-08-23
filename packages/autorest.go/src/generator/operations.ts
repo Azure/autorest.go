@@ -26,7 +26,7 @@ export class OperationGroupContent {
 export async function generateOperations(codeModel: GoCodeModel): Promise<Array<OperationGroupContent>> {
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
-  if (!codeModel.clients) {
+  if (codeModel.clients.length === 0) {
     return operations;
   }
   const azureARM = codeModel.type === 'azure-arm';
@@ -69,7 +69,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
       for (const param of values(client.hostParams)) {
         clientText += `\t${param.paramName} ${getTypeDeclaration(param.type)}\n`;
       }
-    } else if (client.hostParams) {
+    } else if (client.hostParams.length > 0) {
       // non-complex case.  the final endpoint URL will be constructed
       // from the host param(s) in the client constructor and placed here.
       hostParamName = 'endpoint';
@@ -78,7 +78,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
 
     // check for any optional host params
     const optionalParams = new Array<Parameter>();
-    if (client.hostParams) {
+    if (client.hostParams.length > 0) {
       // client parameterized host
       for (const param of values(client.hostParams)) {
         if (!isRequiredParameter(param) && !isLiteralParameter(param)) {
@@ -93,7 +93,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
     };
 
     // now emit any client params (non parameterized host params case)
-    if (client.parameters) {
+    if (client.parameters.length > 0) {
       const addedGroups = new Set<string>();
       for (const clientParam of values(client.parameters)) {
         if (isLiteralParameter(clientParam)) {
@@ -131,7 +131,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
       const paramDocs = new Array<string>();
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      if (client.parameters) {
+      if (client.parameters.length > 0) {
         client.parameters.sort(sortParametersByRequired);
         for (const clientParam of values(client.parameters)) {
           methodParams.push(`${clientParam.paramName} ${formatParameterTypeName(clientParam)}`);
@@ -366,8 +366,8 @@ function emitPagerDefinition(client: Client, method: PageableMethod, imports: Im
   return text;
 }
 
-function genApiVersionDoc(apiVersions?: Array<string>): string {
-  if (!apiVersions) {
+function genApiVersionDoc(apiVersions: Array<string>): string {
+  if (apiVersions.length === 0) {
     return '';
   }
   return `//\n// Generated from API version ${apiVersions.join(',')}\n`;
@@ -430,7 +430,7 @@ function generateOperation(client: Client, method: Method, imports: ImportManage
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   // HAB with headers response is handled in protocol responder
-  if (method.responseEnvelope.result && isHeadAsBooleanResult(method.responseEnvelope.result) && !method.responseEnvelope.headers) {
+  if (method.responseEnvelope.result && isHeadAsBooleanResult(method.responseEnvelope.result) && method.responseEnvelope.headers.length === 0) {
     text += `\treturn ${method.responseEnvelope.name}{${method.responseEnvelope.result.fieldName}: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil\n`;
   } else {
     if (isLROMethod(method)) {
@@ -869,7 +869,7 @@ function isArrayOfDateTimeForMarshalling(paramType: PossibleType): string | unde
 }
 
 function needsResponseHandler(method: Method): boolean {
-  return hasSchemaResponse(method) || !!method.responseEnvelope.headers || (isLROMethod(method) && !!method.responseEnvelope.result) || isPageableMethod(method);
+  return hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0 || (isLROMethod(method) && !!method.responseEnvelope.result) || isPageableMethod(method);
 }
 
 function generateResponseUnmarshaller(method: Method, type: PossibleType, format: ResultFormat, unmarshalTarget: string): string {
@@ -942,7 +942,7 @@ function createProtocolResponse(client: Client, method: Method, imports: ImportM
   let text = `${comment(name, '// ')} handles the ${method.methodName} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
-  const addHeaders = function (headers?: Array<HeaderResponse>) {
+  const addHeaders = function (headers: Array<HeaderResponse>) {
     for (const header of values(headers)) {
       text += formatHeaderResponseValue(header, imports, 'result', `${method.responseEnvelope.name}{}`);
     }

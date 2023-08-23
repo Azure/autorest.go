@@ -19,20 +19,21 @@ export interface GoCodeModel {
   models: Array<ModelType | PolymorphicType>;
 
   // all of the const types to generate (constants.go file)
-  constants?: Array<ConstantType>;
+  constants: Array<ConstantType>;
 
   // all of the operation groups (i.e. clients and their methods)
   // no clients indicates a models-only build
-  clients?: Array<Client>;
+  clients: Array<Client>;
 
   // all of the parameter groups including the options types (options.go file)
-  paramGroups?: Array<StructType>;
+  paramGroups: Array<StructType>;
 
   // all of the response envelopes (responses.go file)
-  responseEnvelopes?: Array<ResponseEnvelope>;
+  // no response envelopes indicates a models-only build
+  responseEnvelopes: Array<ResponseEnvelope>;
 
   // all of the interfaces for discriminated types (interfaces.go file)
-  interfaceTypes?: Array<InterfaceType>;
+  interfaceTypes: Array<InterfaceType>;
 
   marshallingRequirements: MarshallingRequirements;
 }
@@ -86,7 +87,7 @@ export interface StructType {
   description?: string;
 
   // there are only a few corner-cases where a struct has no fields
-  fields?: Array<StructField>;
+  fields: Array<StructField>;
 }
 
 // ModelFormat indicates what format a model is sent/received as.
@@ -202,14 +203,16 @@ export interface Client {
   // the name of the client's constructor func
   ctorName: string;
 
-  parameters?: Array<Parameter>;
+  // contains only modeled client parameters and it's legal for an operation to not have any modeled client parameters
+  parameters: Array<Parameter>;
 
   methods: Array<Method | LROMethod | PageableMethod | LROPageableMethod>;
 
   // client has a statically defined host
   host?: string;
 
-  hostParams?: Array<URIParameter>;
+  // can be empty if there are no host params
+  hostParams: Array<URIParameter>;
 
   // complexHostParams indicates that the parameters to construct the full host name
   // span the client and the method. see custombaseurlgroup for an example of this.
@@ -227,7 +230,7 @@ export interface Method {
   httpMethod: HTTPMethod;
 
   // any modeled parameters. the ones we add to the generated code (context.Context etc) aren't included here
-  parameters?: Array<Parameter>;
+  parameters: Array<Parameter>;
   
   optionalParamsGroup: ParameterGroup;
 
@@ -240,7 +243,7 @@ export interface Method {
 
   naming: MethodNaming;
 
-  apiVersions?: Array<string>; // TODO: not sure why this needs to be an array or optional
+  apiVersions: Array<string>; // TODO: not sure why this needs to be an array
 }
 
 export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
@@ -278,14 +281,15 @@ export interface NextPageMethod {
 
   httpMethod: HTTPMethod;
 
-  parameters?: Array<Parameter>;
+  // any modeled parameters
+  parameters: Array<Parameter>;
 
   // the complete list of successful HTTP status codes
   httpStatusCodes: Array<number>;
 
   client: Client;
 
-  apiVersions?: Array<string>; // TODO: not sure why this needs to be an array or optional
+  apiVersions: Array<string>; // TODO: not sure why this needs to be an array
 
   isNextPageMethod: true;
 }
@@ -372,7 +376,7 @@ export interface ParameterGroup {
   location: ParameterLocation;
 
   // the params that belong to this group
-  params?: Array<Parameter>;
+  params: Array<Parameter>;
 }
 
 export type HeaderType = BytesType | ConstantType | MapType | PrimitiveType | SliceType | TimeType | LiteralValue;
@@ -496,7 +500,8 @@ export interface ResponseEnvelope {
   // for operations that return no body (e.g. a 204) this will be undefined.
   result?: ResultType;
 
-  headers?: Array<HeaderResponse>;
+  // any modeled response headers
+  headers: Array<HeaderResponse>;
 
   method: Method | LROMethod | PageableMethod | LROPageableMethod;
 }
@@ -847,21 +852,29 @@ export class MarshallingRequirements implements MarshallingRequirements {
 
 export class GoCodeModel implements GoCodeModel {
   constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
+    this.clients = new Array<Client>();
+    this.constants = new Array<ConstantType>();
     this.info = info;
-    this.type = type;
-    this.packageName = packageName;
-    this.options = options;
+    this.interfaceTypes = new Array<InterfaceType>();
     this.marshallingRequirements = new MarshallingRequirements();
+    this.models = new Array<ModelType | PolymorphicType>();
+    this.options = options;
+    this.packageName = packageName;
+    this.paramGroups = new Array<StructType>();
+    this.responseEnvelopes = new Array<ResponseEnvelope>();
+    this.type = type;
   }
 }
 
 export class Client implements Client {
   constructor(name: string, groupName: string, ctorName: string) {
     this.clientName = name;
-    this.groupName = groupName;
-    this.ctorName = ctorName;
-    this.methods = new Array<Method>();
     this.complexHostParams = false;
+    this.ctorName = ctorName;
+    this.groupName = groupName;
+    this.hostParams = new Array<URIParameter>();
+    this.methods = new Array<Method>();
+    this.parameters = new Array<Parameter>();
   }
 }
 
@@ -892,65 +905,91 @@ export class MethodNaming implements MethodNaming {
 
 export class Method implements Method {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    this.methodName = name;
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
     this.client = client;
-    this.httpPath = httpPath;
     this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
+    this.methodName = name;
     this.naming = naming;
+    this.parameters = new Array<Parameter>();
   }
 }
 
 export class LROMethod implements LROMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    this.methodName = name;
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
     this.client = client;
-    this.httpPath = httpPath;
     this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
-    this.naming = naming;
     this.isLRO = true;
+    this.methodName = name;
+    this.naming = naming;
+    this.parameters = new Array<Parameter>();
   }
 }
 
 export class PageableMethod implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    this.methodName = name;
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
     this.client = client;
-    this.httpPath = httpPath;
     this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
-    this.naming = naming;
     this.isPageable = true;
+    this.methodName = name;
+    this.naming = naming;
+    this.parameters = new Array<Parameter>();
   }
 }
 
 export class LROPageableMethod implements LROPageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    this.methodName = name;
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
     this.client = client;
-    this.httpPath = httpPath;
     this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
-    this.naming = naming;
     this.isLRO = true;
     this.isPageable = true;
+    this.methodName = name;
+    this.naming = naming;
+    this.parameters = new Array<Parameter>();
   }
 }
 
 export class NextPageMethod implements NextPageMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>) {
-    this.methodName = name;
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
     this.client = client;
-    this.httpPath = httpPath;
     this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
     this.isNextPageMethod = true;
+    this.methodName = name;
+    this.parameters = new Array<Parameter>();
   }
 }
 
 export class StructType implements StructType {
   constructor(name: string) {
+    this.fields = new Array<StructField>();
     this.name = name;
   }
 }
@@ -1165,10 +1204,12 @@ export class ClientSideDefault implements ClientSideDefault {
 
 export class ParameterGroup implements ParameterGroup {
   constructor(paramName: string, groupName: string, required: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
     this.groupName = groupName;
-    this.required = required;
     this.location = location;
+    this.paramName = paramName;
+    // params is required but must be populated post construction
+    this.params = new Array<Parameter>();
+    this.required = required;
   }
 }
 
@@ -1181,9 +1222,10 @@ export class LiteralValue implements LiteralValue {
 
 export class ResponseEnvelope implements ResponseEnvelope {
   constructor(name: string, description: string, forMethod: Method) {
-    this.name = name;
     this.description = description;
+    this.headers = new Array<HeaderResponse>();
     this.method = forMethod;
+    this.name = name;
   }
 }
 

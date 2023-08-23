@@ -842,7 +842,7 @@ function getArraySeparator(param: Parameter): string {
 // e.g. host := "{vault}{secret}{dnsSuffix}" becomes http://contososecret.com
 // there's no way to reliably split the host back up into its constituent parameters.
 // so we just pass the full value as a single host parameter.
-function consolidateHostParams(params?: Array<Parameter>): Array<Parameter> | undefined {
+function consolidateHostParams(params: Array<Parameter>): Array<Parameter> {
   if (!values(params).where((each: Parameter) => { return isURIParameter(each); }).any()) {
     // no host params
     return params;

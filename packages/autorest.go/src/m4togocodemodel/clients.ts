@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as m4 from '@autorest/codemodel';
-import { Session } from '@autorest/extension-base';
 import { KnownMediaType } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { adaptXMLInfo } from './types';
@@ -19,9 +18,8 @@ import { OperationNaming } from '../transform/namer';
 const clientParams = new Map<string, go.Parameter>();
 const paramGroups = new Map<string, go.ParameterGroup>();
 
-export function adaptClients(session: Session<m4.CodeModel>, codeModel: go.GoCodeModel): Array<go.Client> | undefined {
-  const clients = new Array<go.Client>();
-  for (const group of values(session.model.operationGroups)) {
+export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel) {
+  for (const group of values(m4CodeModel.operationGroups)) {
     const client = adaptClient(group);
 
     for (const op of values(group.operations)) {
@@ -37,7 +35,7 @@ export function adaptClients(session: Session<m4.CodeModel>, codeModel: go.GoCod
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, session.model, codeModel);
+          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
           (<go.LROPageableMethod>method).nextPageMethod = nextPageMethod;
         }
       } else if (isLROOperation(op)) {
@@ -54,21 +52,20 @@ export function adaptClients(session: Session<m4.CodeModel>, codeModel: go.GoCod
           const httpPath = <string>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.path;
           const httpMethod = op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.method;
           const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, session.model, codeModel);
+          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
           (<go.PageableMethod>method).nextPageMethod = nextPageMethod;
         }
       } else {
         method = new go.Method(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
       }
 
-      populateMethod(op, method, session.model, codeModel);
+      populateMethod(op, method, m4CodeModel, codeModel);
 
       client.methods.push(method);
     }
 
     // if any client parameters were adapted, add them to the client
     if (group.language.go!.clientParams) {
-      client.parameters = new Array<go.Parameter>();
       for (const param of <Array<m4.Parameter>>group.language.go!.clientParams) {
         const adaptedParam = clientParams.get(param.language.go!.name);
         if (!adaptedParam) {
@@ -78,13 +75,8 @@ export function adaptClients(session: Session<m4.CodeModel>, codeModel: go.GoCod
       }
     }
 
-    clients.push(client);
+    codeModel.clients.push(client);
   }
-
-  if (clients.length === 0) {
-    return undefined;
-  }
-  return clients;
 }
 
 function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel) {
@@ -103,13 +95,10 @@ function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod,
     method.responseEnvelope = adaptResponseEnvelope(m4CodeModel, codeModel, op, method);
   }
 
-  method.parameters = adaptMethodParameters(op);
+  adaptMethodParameters(op, method);
 
-  if (op.apiVersions) {
-    method.apiVersions = new Array<string>();
-    for (const apiver of op.apiVersions) {
-      method.apiVersions.push(apiver.version);
-    }
+  for (const apiver of values(op.apiVersions)) {
+    method.apiVersions.push(apiver.version);
   }
 }
 
@@ -156,13 +145,11 @@ function adaptClient(group: m4.OperationGroup): go.Client {
     client.complexHostParams = true;
   }
   if (group.language.go!.hostParams) {
-    const uriParams = new Array<go.URIParameter>();
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
       const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema),
         adaptParameterType(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
-      uriParams.push(uriParam);
+      client.hostParams.push(uriParam);
     }
-    client.hostParams = uriParams;
   }
 
   return client;
@@ -182,18 +169,15 @@ function adaptMethodLocation(location?: m4.ImplementationLocation): go.Parameter
   }
 }
 
-function adaptMethodParameters(op: m4.Operation): Array<go.Parameter> | undefined {
+function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPageMethod) {
   if (!op.parameters) {
-    return undefined;
+    return;
   }
 
-  const methodParams = new Array<go.Parameter>();
   for (const param of values(aggregateParameters(op))) {
     const methodParam = adaptMethodParameter(op, param);
-    methodParams.push(methodParam);
+    method.parameters.push(methodParam);
   }
-
-  return methodParams;
 }
 
 function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
@@ -203,9 +187,6 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMo
   // add any headers
   for (const prop of values(respEnvSchema.properties)) {
     if (prop.language.go!.fromHeader) {
-      if (!respEnv.headers) {
-        respEnv.headers = new Array<go.HeaderResponse>();
-      }
       const headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
       if (hasDescription(prop.language.go!)) {
         headerResp.description = prop.language.go!.description;
@@ -388,10 +369,6 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
   
   if (param.language.go!.paramGroup) {
     const paramGroup = findOrAdaptParamsGroup(param);
-    if (!paramGroup.params) {
-      paramGroup.params = new Array<go.Parameter>();
-    }
-
     // parameter groups can be shared across methods so don't add any duplicate parameters
     if (values(paramGroup.params).where((each: go.Parameter) => { return each.paramName === adaptedParam.paramName; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
