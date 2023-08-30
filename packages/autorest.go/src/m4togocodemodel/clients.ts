@@ -232,13 +232,13 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMo
   } else if (getSchemaResponse(op)) {
     let modelType: go.ModelType | undefined;
     for (const model of codeModel.models) {
-      if (model.name === resultProp.schema.language.go!.name && go.isModelType(model)) {
+      if (model.name === resultProp.schema.language.go!.name) {
         modelType = model;
         break;
       }
     }
     if (!modelType) {
-      throw new Error(`didn't find ModelType for response envelope ${respEnv.name}`);
+      throw new Error(`didn't find type name ${resultProp.schema.language.go!.name} for response envelope ${respEnv.name}`);
     }
     respEnv.result = new go.ModelResult(modelType, adaptResultFormat(getSchemaResponse(op)!.protocol));
   } else {

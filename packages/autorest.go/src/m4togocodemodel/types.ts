@@ -309,15 +309,6 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       types.set(keyName, arrayType);
       return arrayType;
     }
-    case m4.SchemaType.Boolean: {
-      let primitiveBool = types.get(m4.SchemaType.Boolean);
-      if (primitiveBool) {
-        return primitiveBool;
-      }
-      primitiveBool = new go.PrimitiveType('bool');
-      types.set(m4.SchemaType.Boolean, primitiveBool);
-      return primitiveBool;
-    }
     case m4.SchemaType.Binary: {
       let binaryType = types.get(m4.SchemaType.Binary);
       if (binaryType) {
@@ -326,6 +317,15 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       binaryType = new go.StandardType('io.ReadSeekCloser', 'io');
       types.set(m4.SchemaType.Binary, binaryType);
       return binaryType;
+    }
+    case m4.SchemaType.Boolean: {
+      let primitiveBool = types.get(m4.SchemaType.Boolean);
+      if (primitiveBool) {
+        return primitiveBool;
+      }
+      primitiveBool = new go.PrimitiveType('bool');
+      types.set(m4.SchemaType.Boolean, primitiveBool);
+      return primitiveBool;
     }
     case m4.SchemaType.ByteArray:
       return adaptBytesType(<m4.ByteArraySchema>schema);
@@ -342,6 +342,15 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       return adaptConstantType(<m4.ChoiceSchema>schema);
     case m4.SchemaType.Constant:
       return adaptLiteralValue(<m4.ConstantSchema>schema);
+    case m4.SchemaType.Credential: {
+      let credType = types.get(m4.SchemaType.Credential);
+      if (credType) {
+        return credType;
+      }
+      credType = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.Credential, credType);
+      return credType;
+    }
     case m4.SchemaType.Date:
     case m4.SchemaType.DateTime:
     case m4.SchemaType.Time:
@@ -416,6 +425,15 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
     }
     case m4.SchemaType.Object:
       return adaptModel(<m4.ObjectSchema>schema);
+    case m4.SchemaType.ODataQuery: {
+      let odataType = types.get(m4.SchemaType.ODataQuery);
+      if (odataType) {
+        return odataType;
+      }
+      odataType = new go.PrimitiveType('string');
+      types.set(m4.SchemaType.ODataQuery, odataType);
+      return odataType;
+    }
     case m4.SchemaType.SealedChoice:
       return adaptConstantType(<m4.SealedChoiceSchema>schema);
     case m4.SchemaType.String: {
@@ -564,7 +582,7 @@ function recursiveKeyName(root: string, obj: m4.Schema): string {
     case m4.SchemaType.Date:
     case m4.SchemaType.DateTime:
     case m4.SchemaType.UnixTime:
-      return obj.language.go!.internalTimeType;
+      return `${root}-${obj.language.go!.internalTimeType}`;
     default:
       return `${root}-${obj.language.go!.name}`;
   }
