@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
+import { CodeModel, ObjectSchema, Property, Schema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isDictionarySchema, recursiveUnwrapArrayDictionary } from '../common/helpers';
-import { contentPreamble, getParentImport, sortAscending } from './helpers';
+import { contentPreamble, getMethodParameters, getParentImport, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in polymorphic_helpers.go
-export async function generatePolymorphicHelpers(session: Session<CodeModel>, packageName?: string): Promise<string> {
+export async function generatePolymorphicHelpers(session: Session<CodeModel>, fakeServerPkg?: string): Promise<string> {
   if (!session.model.language.go!.discriminators) {
     // no polymorphic types
     return '';
@@ -21,10 +21,10 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
     // all polymorphic types omitted
     return '';
   }
-  let text = await contentPreamble(session, packageName);
+  let text = await contentPreamble(session, fakeServerPkg);
   const imports = new ImportManager();
   imports.add('encoding/json');
-  if (packageName) {
+  if (fakeServerPkg) {
     // content is being generated into a separate package, add the necessary import
     imports.add(await getParentImport(session));
   }
@@ -42,17 +42,17 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
   const scalars = new Set<string>();
   const arrays = new Set<string>();
   const maps = new Set<string>();
-  const trackDisciminator = function(prop: Property) {
-    if (prop.schema.language.go!.discriminatorInterface) {
-      scalars.add(prop.schema.language.go!.discriminatorInterface);
-    } else if (isArraySchema(prop.schema)) {
-      const discriminatorInterface = recursiveUnwrapArrayDictionary(prop.schema).language.go!.discriminatorInterface;
+  const trackDisciminator = function(schema: Schema) {
+    if (schema.language.go!.discriminatorInterface) {
+      scalars.add(schema.language.go!.discriminatorInterface);
+    } else if (isArraySchema(schema)) {
+      const discriminatorInterface = recursiveUnwrapArrayDictionary(schema).language.go!.discriminatorInterface;
       if (discriminatorInterface) {
         scalars.add(discriminatorInterface);
         arrays.add(discriminatorInterface);
       }
-    } else if (isDictionarySchema(prop.schema)) {
-      const discriminatorInterface = recursiveUnwrapArrayDictionary(prop.schema).language.go!.discriminatorInterface;
+    } else if (isDictionarySchema(schema)) {
+      const discriminatorInterface = recursiveUnwrapArrayDictionary(schema).language.go!.discriminatorInterface;
       if (discriminatorInterface) {
         scalars.add(discriminatorInterface);
         maps.add(discriminatorInterface);
@@ -62,14 +62,25 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
   // calculate which discriminator helpers we actually need to generate
   for (const obj of values(session.model.schemas.objects)) {
     for (const prop of values(obj.properties)) {
-      trackDisciminator(prop);
+      trackDisciminator(prop.schema);
     }
   }
   for (const respEnv of values(<Array<ObjectSchema>>session.model.language.go!.responseEnvelopes)) {
     if (respEnv.language.go!.resultProp) {
       const resultProp = <Property>respEnv.language.go!.resultProp;
       if (resultProp.isDiscriminator) {
-        trackDisciminator(resultProp);
+        trackDisciminator(resultProp.schema);
+      }
+    }
+  }
+  if (fakeServerPkg) {
+    // when generating for the fakes server, we must also look at operation parameters
+    for (const group of values(session.model.operationGroups)) {
+      for (const op of values(group.operations)) {
+        const params = getMethodParameters(op);
+        for (const param of values(params)) {
+          trackDisciminator(param.schema);
+        }
       }
     }
   }
@@ -83,7 +94,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, pa
   discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface); });
 
   let prefix = '';
-  if (packageName) {
+  if (fakeServerPkg) {
     // content is being generated into a separate package, set the type name prefix
     prefix = `${session.model.language.go!.packageName}.`;
   }

@@ -123,11 +123,11 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	elements := strings.Split(groupByUnescaped, ",")
-	groupByParam := make([]azalias.SomethingCount, len(elements))
-	for i := 0; i < len(elements); i++ {
+	groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
+	for i := 0; i < len(groupByUnescapedElements); i++ {
 		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(elements[i], 10, 32)
+		parsedInt, err = strconv.ParseInt(groupByUnescapedElements[i], 10, 32)
 		if err != nil {
 			return nil, err
 		}
@@ -193,10 +193,10 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		if err != nil {
 			return nil, err
 		}
-		elements := strings.Split(groupByUnescaped, ",")
-		groupByParam := make([]azalias.LogMetricsGroupBy, len(elements))
-		for i := 0; i < len(elements); i++ {
-			groupByParam[i] = azalias.LogMetricsGroupBy(elements[i])
+		groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescapedElements))
+		for i := 0; i < len(groupByUnescapedElements); i++ {
+			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescapedElements[i])
 		}
 		var options *azalias.ClientListOptions
 		if len(groupByParam) > 0 {

@@ -68,7 +68,8 @@ export function formatTypeName(schema: Schema, pkgName?: string): string {
   // for array/dictionary, we need to splice the package name into the correct location
   const elementType = unwrapSchemaType(schema);
   if (elementType.type === SchemaType.Choice || elementType.type === SchemaType.SealedChoice || elementType.type === SchemaType.Object) {
-    return typeName.replace(`*${elementType.language.go!.name}`, `*${pkgName}.${elementType.language.go!.name}`);
+    // don't use a * prefix on the type name as --slice-elements-byval will remove it for slices
+    return typeName.replace(`${elementType.language.go!.name}`, `${pkgName}.${elementType.language.go!.name}`);
   }
 
   return typeName;
