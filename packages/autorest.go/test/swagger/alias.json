@@ -315,13 +315,35 @@
         ],
         "parameters": [
           {
-            "$ref": "#/parameters/ScheduleCreateOrUpdateProperties"
-          },
-          {
             "$ref": "#/parameters/OptionalClientVersion"
           },
           {
             "$ref": "#/parameters/OptionalClientIndex"
+          },
+          {
+            "name": "things",
+            "required": true,
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "this",
+                "that",
+                "other"
+              ],
+              "x-ms-enum": {
+                "name": "Things"
+              }
+            }
+          },
+          {
+            "name": "polymorphicParam",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GeoJsonObject"
+            }
           },
           {
             "name": "interval",
@@ -329,6 +351,13 @@
             "type": "string",
             "required": false,
             "format": "duration"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "format": "uuid"
           }
         ],
         "responses": {
@@ -714,6 +743,18 @@
         "anyObject": {
           "type": "object",
           "description": "any JSON object"
+        }
+      }
+    },
+    "TypeWithSliceOfTimes": {
+      "type": "object",
+      "properties": {
+        "times": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       }
     }
