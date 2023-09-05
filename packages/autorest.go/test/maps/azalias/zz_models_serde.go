@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"reflect"
+	"time"
 )
 
 // MarshalJSON implements the json.Marshaller interface for type AliasesCreateResponse.
@@ -530,6 +531,41 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "anything":
 			err = unpopulate(val, "Anything", &t.Anything)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", t, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TypeWithSliceOfTimes.
+func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	aux := make([]timeRFC3339, len(t.Times), len(t.Times))
+	for i := 0; i < len(t.Times); i++ {
+		aux[i] = (timeRFC3339)(t.Times[i])
+	}
+	populate(objectMap, "times", aux)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type TypeWithSliceOfTimes.
+func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", t, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "times":
+			var aux []timeRFC3339
+			err = unpopulate(val, "Times", &aux)
+			for _, au := range aux {
+				t.Times = append(t.Times, (time.Time)(au))
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {

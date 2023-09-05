@@ -16,6 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // Client contains the methods for the Alias group.
@@ -246,13 +247,13 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 //
 // Generated from API version 2.0
 //   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
+func (client *Client) PolicyAssignment(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	var err error
 	const operationName = "Client.PolicyAssignment"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
+	req, err := client.policyAssignmentCreateRequest(ctx, things, polymorphicParam, options)
 	if err != nil {
 		return ClientPolicyAssignmentResponse{}, err
 	}
@@ -269,7 +270,7 @@ func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreate
 }
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.
-func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
+func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
 	urlPath := "/policy"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -279,15 +280,19 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props S
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalVersion != nil {
 		reqQP.Set("optional-version", *client.clientOptionalGroup.OptionalVersion)
 	}
+	reqQP.Set("things", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(things), "[]")), ","))
 	if options != nil && options.Interval != nil {
 		reqQP.Set("interval", *options.Interval)
+	}
+	if options != nil && options.Unique != nil {
+		reqQP.Set("unique", *options.Unique)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
 		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, props); err != nil {
+	if err := runtime.MarshalAsJSON(req, polymorphicParam); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -265,9 +265,13 @@ function generateJSONMarshallerBody(obj: ObjectSchema, modelDef: ModelDef, impor
       marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
       const source = `${receiver}.${prop.language.go!.name}`;
-      marshaller += `\taux := make([]*${prop.schema.elementType.language.go!.internalTimeType}, len(${source}), len(${source}))\n`;
+      let elementPtr = '';
+      if (<boolean>prop.schema.language.go!.elementIsPtr) {
+        elementPtr = '*';
+      }
+      marshaller += `\taux := make([]${elementPtr}${prop.schema.elementType.language.go!.internalTimeType}, len(${source}), len(${source}))\n`;
       marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
-      marshaller += `\t\taux[i] = (*${prop.schema.elementType.language.go!.internalTimeType})(${source}[i])\n`;
+      marshaller += `\t\taux[i] = (${elementPtr}${prop.schema.elementType.language.go!.internalTimeType})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
     } else if (prop.schema.type === SchemaType.Constant) {
@@ -365,10 +369,14 @@ function generateJSONUnmarshallerBody(modelDef: ModelDef, imports: ImportManager
       unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
       imports.add('time');
-      unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
+      let elementPtr = '';
+      if (<boolean>prop.schema.language.go!.elementIsPtr) {
+        elementPtr = '*';
+      }
+      unmarshalBody += `\t\t\tvar aux []${elementPtr}${prop.schema.elementType.language.go!.internalTimeType}\n`;
       unmarshalBody += `\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &aux)\n`;
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
-      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (*time.Time)(au))\n`;
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (${elementPtr}time.Time)(au))\n`;
       unmarshalBody += '\t\t\t}\n';
     } else if (prop.schema.type === SchemaType.ByteArray) {
       let base64Format = 'Std';

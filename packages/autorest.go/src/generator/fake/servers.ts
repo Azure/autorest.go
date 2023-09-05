@@ -555,11 +555,12 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       if ((<ArraySchema>param.schema).elementType.type !== SchemaType.String) {
         const asArray = <ArraySchema>param.schema;
         imports.add('strings');
-        content += `\telements := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
+        const elementsParam = `${paramValue}Elements`;
+        content += `\t${elementsParam} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
         const localVar = createLocalVariableName(param, 'Param');
         const toType = `${clientPkg}.${asArray.elementType.language.go!.name}`;
-        content += `\t${localVar} := make([]${toType}, len(elements))\n`;
-        content += '\tfor i := 0; i < len(elements); i++ {\n';
+        content += `\t${localVar} := make([]${toType}, len(${elementsParam}))\n`;
+        content += `\tfor i := 0; i < len(${elementsParam}); i++ {\n`;
         let fromVar: string;
         switch (asArray.elementType.type) {
           case SchemaType.Choice:
@@ -571,18 +572,18 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
                 imports.add('strconv');
                 fromVar = 'parsedInt';
                 content += `\t\tvar ${fromVar} int64\n`;
-                content += `\t\t${fromVar}, err = strconv.ParseInt(elements[i], 10, 32)\n`;
+                content += `\t\t${fromVar}, err = strconv.ParseInt(${elementsParam}[i], 10, 32)\n`;
                 content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
                 break;
               case SchemaType.Number:
                 imports.add('strconv');
                 fromVar = 'parsedNum';
                 content += `\t\tvar ${fromVar} float64\n`;
-                content += `\t\t${fromVar}, err = strconv.ParseFloat(elements[i], 32)\n`;
+                content += `\t\t${fromVar}, err = strconv.ParseFloat(${elementsParam}[i], 32)\n`;
                 content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
                 break;
               case SchemaType.String:
-                fromVar = 'elements[i]';
+                fromVar = `${elementsParam}[i]`;
                 break;
               default:
                 throw new Error(`unhandled array element choice type ${asChoice.choiceType.type}`);
@@ -612,8 +613,8 @@ function createParamGroupParams(clientPkg: string, op: Operation, imports: Impor
       imports.add('encoding/base64');
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.Duration || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String)) {
-      // for params that don't require parsing, the value is inlined into the invocation of the fake.
+    } else if (param.language.go!.paramGroup && (param.schema.type === SchemaType.ArmId || param.schema.type === SchemaType.Choice || param.schema.type === SchemaType.Constant || param.schema.type === SchemaType.Credential || param.schema.type === SchemaType.Duration || param.schema.type === SchemaType.SealedChoice || param.schema.type === SchemaType.String || param.schema.type === SchemaType.Uuid || param.schema.type === SchemaType.Uri)) {
+      // for params that don't require parsing (all param types that coalesce to string), the value is inlined into the invocation of the fake.
       // but if it's grouped, then we need to create a local first which will later be copied into the param group.
       content += `\t${createLocalVariableName(param, 'Param')} := `;
       let paramValue = getParamValueWithCast(clientPkg, param, imports);

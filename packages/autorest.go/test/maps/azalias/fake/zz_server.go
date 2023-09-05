@@ -39,7 +39,7 @@ type Server struct {
 
 	// PolicyAssignment is the fake for method Client.PolicyAssignment
 	// HTTP status codes to indicate success: http.StatusOK
-	PolicyAssignment func(ctx context.Context, props azalias.ScheduleCreateOrUpdateProperties, options *azalias.ClientPolicyAssignmentOptions) (resp azfake.Responder[azalias.ClientPolicyAssignmentResponse], errResp azfake.ErrorResponder)
+	PolicyAssignment func(ctx context.Context, things []azalias.Things, polymorphicParam azalias.GeoJSONObjectClassification, options *azalias.ClientPolicyAssignmentOptions) (resp azfake.Responder[azalias.ClientPolicyAssignmentResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
@@ -123,11 +123,11 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	elements := strings.Split(groupByUnescaped, ",")
-	groupByParam := make([]azalias.SomethingCount, len(elements))
-	for i := 0; i < len(elements); i++ {
+	groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
+	for i := 0; i < len(groupByUnescapedElements); i++ {
 		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(elements[i], 10, 32)
+		parsedInt, err = strconv.ParseInt(groupByUnescapedElements[i], 10, 32)
 		if err != nil {
 			return nil, err
 		}
@@ -193,10 +193,10 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		if err != nil {
 			return nil, err
 		}
-		elements := strings.Split(groupByUnescaped, ",")
-		groupByParam := make([]azalias.LogMetricsGroupBy, len(elements))
-		for i := 0; i < len(elements); i++ {
-			groupByParam[i] = azalias.LogMetricsGroupBy(elements[i])
+		groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescapedElements))
+		for i := 0; i < len(groupByUnescapedElements); i++ {
+			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescapedElements[i])
 		}
 		var options *azalias.ClientListOptions
 		if len(groupByParam) > 0 {
@@ -230,22 +230,41 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{errors.New("fake for method PolicyAssignment not implemented")}
 	}
 	qp := req.URL.Query()
-	body, err := server.UnmarshalRequestAsJSON[azalias.ScheduleCreateOrUpdateProperties](req)
+	raw, err := readRequestBody(req)
 	if err != nil {
 		return nil, err
+	}
+	body, err := unmarshalGeoJSONObjectClassification(raw)
+	if err != nil {
+		return nil, err
+	}
+	thingsUnescaped, err := url.QueryUnescape(qp.Get("things"))
+	if err != nil {
+		return nil, err
+	}
+	thingsUnescapedElements := strings.Split(thingsUnescaped, ",")
+	thingsParam := make([]azalias.Things, len(thingsUnescapedElements))
+	for i := 0; i < len(thingsUnescapedElements); i++ {
+		thingsParam[i] = azalias.Things(thingsUnescapedElements[i])
 	}
 	intervalUnescaped, err := url.QueryUnescape(qp.Get("interval"))
 	if err != nil {
 		return nil, err
 	}
 	intervalParam := getOptional(intervalUnescaped)
+	uniqueUnescaped, err := url.QueryUnescape(qp.Get("unique"))
+	if err != nil {
+		return nil, err
+	}
+	uniqueParam := getOptional(uniqueUnescaped)
 	var options *azalias.ClientPolicyAssignmentOptions
-	if intervalParam != nil {
+	if intervalParam != nil || uniqueParam != nil {
 		options = &azalias.ClientPolicyAssignmentOptions{
 			Interval: intervalParam,
+			Unique:   uniqueParam,
 		}
 	}
-	respr, errRespr := s.srv.PolicyAssignment(req.Context(), body, options)
+	respr, errRespr := s.srv.PolicyAssignment(req.Context(), thingsParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

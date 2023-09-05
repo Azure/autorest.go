@@ -139,3 +139,20 @@ func PossibleSomethingCountValues() []SomethingCount {
 		SomethingCountTwenty,
 	}
 }
+
+type Things string
+
+const (
+	ThingsOther Things = "other"
+	ThingsThat  Things = "that"
+	ThingsThis  Things = "this"
+)
+
+// PossibleThingsValues returns the possible values for the Things const type.
+func PossibleThingsValues() []Things {
+	return []Things{
+		ThingsOther,
+		ThingsThat,
+		ThingsThis,
+	}
+}

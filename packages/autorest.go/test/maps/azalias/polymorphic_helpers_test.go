@@ -96,7 +96,7 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 
 func TestInterfaceRoundTrip(t *testing.T) {
 	props1 := ScheduleCreateOrUpdateProperties{
-		Aliases:     []*string{to.Ptr("foo")},
+		Aliases:     []string{"foo"},
 		Description: to.Ptr("funky"),
 		Interval:    false,
 		StartTime:   to.Ptr(time.Now().UTC()),
@@ -126,8 +126,8 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	if *props1.StartTime != *props2.StartTime {
 		t.Fatalf("expected %v, got %v", *props1.StartTime, *props2.StartTime)
 	}
-	if *props1.Aliases[0] != *props2.Aliases[0] {
-		t.Fatalf("expected %v, got %v", *props1.Aliases[0], *props2.Aliases[0])
+	if props1.Aliases[0] != props2.Aliases[0] {
+		t.Fatalf("expected %v, got %v", props1.Aliases[0], props2.Aliases[0])
 	}
 }
 

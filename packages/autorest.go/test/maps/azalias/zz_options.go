@@ -50,4 +50,5 @@ type ClientOptionalGroup struct {
 // ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
 type ClientPolicyAssignmentOptions struct {
 	Interval *string
+	Unique   *string
 }
