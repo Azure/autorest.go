@@ -3,133 +3,143 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { commentLength } from '../common/helpers';
-import { contentPreamble, hasDescription, sortAscending } from './helpers';
+import { GoCodeModel, ResponseEnvelope, PolymorphicResult, MonomorphicResult } from '../gocodemodel/gocodemodel';
+import { getResultPossibleType, getTypeDeclaration, isLROMethod, isMonomorphicResult, isPolymorphicResult, isModelResult } from '../gocodemodel/gocodemodel';
+import { commentLength, contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { getStar, getXMLSerialization } from './models';
+import { getStar } from './models';
 
 // Creates the content in response_types.go
-export async function generateResponses(session: Session<CodeModel>): Promise<string> {
-  const responseEnvelopes = <Array<ObjectSchema>>session.model.language.go!.responseEnvelopes;
-  if (responseEnvelopes.length === 0) {
+export async function generateResponses(codeModel: GoCodeModel): Promise<string> {
+  if (codeModel.responseEnvelopes. length === 0) {
     return '';
   }
 
   const imports = new ImportManager();
-  let text = await contentPreamble(session);
+  let text = contentPreamble(codeModel);
   let content = '';
 
-  responseEnvelopes.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-  for (const respEnv of values(responseEnvelopes)) {
-    respEnv.properties?.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
+  for (const respEnv of codeModel.responseEnvelopes) {
     content += emit(respEnv, imports);
     content += generateUnmarshallerForResponeEnvelope(respEnv, imports);
   }
-
+  
   text += imports.text();
   text += content;
   return text;
 }
 
 // check if the response envelope requires an unmarshaller
-function generateUnmarshallerForResponeEnvelope(respEnv: ObjectSchema, imports: ImportManager): string {
+function generateUnmarshallerForResponeEnvelope(respEnv: ResponseEnvelope, imports: ImportManager): string {
   // if the response envelope contains a discriminated type we need an unmarshaller
-  let discriminatorProp: Property | undefined;
+  let polymorphicRes: PolymorphicResult | undefined;
   // in addition, if it's an LRO operation that returns a scalar, we will also need one
-  let nonEmbeddedProp: Property | undefined;
-  for (const prop of values(respEnv.properties)) {
-    if (prop.isDiscriminator) {
-      discriminatorProp = prop;
-      break;
-    } else if (respEnv.language.go!.forLRO && !prop.language.go!.embeddedType && !prop.language.go!.fromHeader) {
-      nonEmbeddedProp = prop;
-    }
+  let monomorphicRes: MonomorphicResult | undefined;
+  if (respEnv.result && isPolymorphicResult(respEnv.result)) {
+    polymorphicRes = respEnv.result;
+  } else if (isLROMethod(respEnv.method) && respEnv.result && isMonomorphicResult(respEnv.result)) {
+    monomorphicRes = respEnv.result;
   }
 
-  if (!discriminatorProp && !nonEmbeddedProp) {
+  if (!polymorphicRes && !monomorphicRes) {
     // no unmarshaller required
     return '';
   }
 
-  const receiver = respEnv.language.go!.name[0].toLowerCase();
-  let unmarshaller = `\t${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.language.go!.name}.`, '// ', undefined, commentLength)}\n`;
-  unmarshaller += `func (${receiver} *${respEnv.language.go!.name}) UnmarshalJSON(data []byte) error {\n`;
+  const receiver = respEnv.name[0].toLowerCase();
+  let unmarshaller = `\t${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
+  unmarshaller += `func (${receiver} *${respEnv.name}) UnmarshalJSON(data []byte) error {\n`;
 
   // add a custom unmarshaller to the response envelope
-  if (discriminatorProp) {
-    const type = discriminatorProp.schema.language.go!.discriminatorInterface;
+  if (polymorphicRes) {
+    const type = polymorphicRes.interfaceType.name;
     unmarshaller += `\tres, err := unmarshal${type}(data)\n`;
     unmarshaller += '\tif err != nil {\n';
     unmarshaller += '\t\treturn err\n';
     unmarshaller += '\t}\n';
     unmarshaller += `\t${receiver}.${type} = res\n`;
     unmarshaller += '\treturn nil\n';
-  } else if (nonEmbeddedProp) {
+  } else if (monomorphicRes) {
     imports.add('encoding/json');
-    unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${nonEmbeddedProp.language.go!.name})\n`;
+    unmarshaller += `\treturn json.Unmarshal(data, &${receiver}.${monomorphicRes.fieldName})\n`;
   } else {
-    throw new Error(`unhandled case for response envelope ${respEnv.language.go!.name}`);
+    throw new Error(`unhandled case for response envelope ${respEnv.name}`);
   }
   unmarshaller += '}\n\n';
   return unmarshaller;
 }
 
-function emit(respEnv: ObjectSchema, imports: ImportManager): string {
+function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
   let text = '';
-  if (hasDescription(respEnv.language.go!)) {
-    text += `${comment(respEnv.language.go!.description, '// ', undefined, commentLength)}\n`;
+  if (respEnv.description) {
+    text += `${comment(respEnv.description, '// ', undefined, commentLength)}\n`;
   }
 
-  text += `type ${respEnv.language.go!.name} struct {\n`;
-  if (!respEnv.properties) {
+  text += `type ${respEnv.name} struct {\n`;
+  if (!respEnv.result && respEnv.headers.length === 0) {
     // this is an empty response envelope
     text += '\t// placeholder for future response values\n';
   } else {
+    // fields will contain the merged headers and response field so they can be sorted together
+    const fields = new Array<{desc?: string, field: string}>();
+
     // used to track when to add an extra \n between fields that have comments
     let first = true;
 
-    // embedded properties go first
-    for (const prop of values(respEnv.properties)) {
-      if (prop.language.go!.embeddedType) {
-        if (hasDescription(prop.language.go!)) {
-          if (!first) {
-            // add an extra new-line between fields IFF the field
-            // has a comment and it's not the very first one.
-            text += '\n';
-          }
-          text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
+    if (respEnv.result) {
+      if (isModelResult(respEnv.result) || isPolymorphicResult(respEnv.result)) {
+        // anonymously embedded type always goes first
+        if (respEnv.result.description) {
+          text += `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
         }
-        text += `\t${prop.schema.language.go!.name}\n`;
+        text += `\t${getTypeDeclaration(getResultPossibleType(respEnv.result))}\n`;
         first = false;
+      } else {
+        let desc: string | undefined;
+        if (respEnv.result.description) {
+          desc = `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
+        }
+
+        const type = getResultPossibleType(respEnv.result);
+        imports.addImportForType(type);
+
+        let tag = '';
+        if (isMonomorphicResult(respEnv.result) && respEnv.result.format === 'XML') {
+          // only emit tags for XML; JSON uses custom marshallers/unmarshallers
+          if (respEnv.result.xml?.wraps) {
+            tag = ` \`xml:"${respEnv.result.xml.wraps}"\``;
+          } else if (respEnv.result.xml?.name) {
+            tag = ` \`xml:"${respEnv.result.xml.name}"\``;
+          }
+        }
+
+        fields.push({desc: desc, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${getTypeDeclaration(type)}${tag}\n`});
       }
     }
 
-    for (const prop of values(respEnv.properties)) {
-      if (prop.language.go!.embeddedType) {
-        continue;
+    for (const header of values(respEnv.headers)) {
+      imports.addImportForType(header.type);
+      let desc: string | undefined;
+      if (header.description) {
+        desc = `\t${comment(header.description, '// ', undefined, commentLength)}\n`;
       }
-      imports.addImportForSchemaType(prop.schema);
+      fields.push({desc: desc, field: `\t${header.fieldName} ${getStar(header.byValue)}${getTypeDeclaration(header.type)}\n`});
+    }
 
-      if (hasDescription(prop.language.go!)) {
+    fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return sortAscending(a.field, b.field); });
+
+    for (const field of fields) {
+      if (field.desc) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
+        text += field.desc;
       }
-
-      let tag = '';
-      // only emit tags for XML; JSON uses custom marshallers/unmarshallers
-      if (respEnv.language.go!.marshallingFormat === 'xml' && !prop.language.go!.fromHeader) {
-        tag = ` \`xml:"${getXMLSerialization(prop, respEnv.language.go!)}"\``;
-      }
-
-      text += `\t${prop.language.go!.name} ${getStar(prop.language.go!)}${prop.schema.language.go!.name}${tag}\n`;
+      text += field.field;
       first = false;
     }
   }

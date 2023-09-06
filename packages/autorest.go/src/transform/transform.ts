@@ -3,17 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
+import { capitalize, KnownMediaType, serialize, uncapitalize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties, recursiveUnwrapArrayDictionary } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties, recursiveUnwrapArrayDictionary } from './helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
 
 // The transformer adds Go-specific information to the code model.
-export async function transform(host: AutorestExtensionHost) {
+export async function transformM4(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
 
   try {
@@ -449,6 +449,11 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // add suffix to binary/text, suppose there will be only one structured media type
         separateOperationByRequestsProtocol(group, op, [KnownMediaType.Json, KnownMediaType.Xml, KnownMediaType.Form, KnownMediaType.Multipart]);
       }
+
+      if (!group.language.go!.host) {
+        // all operations/groups have the same host, so just grab the first one
+        group.language.go!.host = op.requests?.[0].protocol.http?.uri;
+      }
     }
   }
   // track any client-level parameterized host params.
@@ -523,7 +528,10 @@ async function processOperationRequests(session: Session<CodeModel>) {
           }
           for (const internalOp of values(group.operations)) {
             if (internalOp.language.go!.name === dupeOp.language.default.name) {
-              internalOp.language.go!.paging.isNextOp = true;
+              if (!internalOp.language.go!.paging.isNextOp) {
+                internalOp.language.go!.paging.isNextOp = true;
+                internalOp.language.go!.name = `${uncapitalize(internalOp.language.go!.name)}CreateRequest`;
+              }
               break;
             }
           }

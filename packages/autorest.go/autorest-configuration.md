@@ -24,22 +24,25 @@ pipeline:
     input: modelerfour/identity
 
   # fix up names add Go-specific data to the code model
-  go-transform:
+  go-transform-m4:
     input: go
 
-  # generates code for the protocol layer
-  go-protocol:
-    input: go-transform
+  go-m4-to-gocodemodel:
+    input: go-transform-m4
+
+  # generates code
+  go-codegen:
+    input: go-m4-to-gocodemodel
 
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
     input:
-      - go-protocol
+      - go-codegen
 
   # output the files to disk
   go/emitter:
     input: 
-      - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
+      - go-transform-m4  # this allows us to dump out the code model after transformation (add --output-artifact:go-code-model on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
     is-object: false # tell it that we're not putting an object graph out

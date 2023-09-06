@@ -1,25 +1,25 @@
 // @ts-check
 
 const config = {
-    transform: {
-      "^.+\\.ts$": "ts-jest",
+  transform: {
+    '^.+\\.ts$': 'ts-jest',
+  },
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+  moduleNameMapper: {},
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.ts', '!**/node_modules/**'],
+  coverageReporters: ['json', 'html', 'cobertura'],
+  coveragePathIgnorePatterns: ['/node_modules/', '.*/test/.*'],
+  modulePathIgnorePatterns: ['<rootDir>/sdk'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
     },
-    moduleFileExtensions: ["ts", "js", "json", "node"],
-    moduleNameMapper: {},
-    collectCoverage: true,
-    collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
-    coverageReporters: ["json", "html", "cobertura"],
-    coveragePathIgnorePatterns: ["/node_modules/", ".*/test/.*"],
-    modulePathIgnorePatterns: ["<rootDir>/sdk"],
-    globals: {
-      "ts-jest": {
-        tsconfig: "tsconfig.json",
-      },
-    },
-    setupFilesAfterEnv: [],
-    verbose: true,
-    testEnvironment: "node",
-    testMatch: ["<rootDir>/src/**/*.test.ts", "<rootDir>/test/**/*.test.ts"],
+  },
+  setupFilesAfterEnv: [],
+  verbose: true,
+  testEnvironment: 'node',
+  testMatch: ['<rootDir>/src/**/*.test.ts', '<rootDir>/test/**/*.test.ts'],
 };
   
 module.exports = config;

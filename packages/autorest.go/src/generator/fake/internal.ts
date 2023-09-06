@@ -3,18 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
+import { GoCodeModel, isLROMethod, isPageableMethod } from '../../gocodemodel/gocodemodel';
 import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
-import { isLROOperation, isPageableOperation } from '../../common/helpers';
 
-export async function generateServerInternal(session: Session<CodeModel>): Promise<string> {
-  if (session.model.operationGroups.length === 0) {
+export async function generateServerInternal(codeModel: GoCodeModel): Promise<string> {
+  if (codeModel.clients.length === 0) {
     return '';
   }
-  const text = await contentPreamble(session, 'fake');
+  const text = contentPreamble(codeModel, 'fake');
   const imports = new ImportManager();
   imports.add('io');
   imports.add('net/http');
@@ -22,9 +20,9 @@ export async function generateServerInternal(session: Session<CodeModel>): Promi
   let body = content;
   // only generate the tracker content if required
   let needsTracker = false;
-  for (const group of values(session.model.operationGroups)) {
-    for (const op of values(group.operations)) {
-      if (isLROOperation(op) || isPageableOperation(op)) {
+  for (const client of values(codeModel.clients)) {
+    for (const method of values(client.methods)) {
+      if (isLROMethod(method) || isPageableMethod(method)) {
         needsTracker = true;
         break;
       }

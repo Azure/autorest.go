@@ -3,87 +3,85 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
-import { CodeModel, ObjectSchema, Property, Schema } from '@autorest/codemodel';
+import { GoCodeModel, isMapType, isPolymorphicResult, isInterfaceType, isSliceType, isMonomorphicResult, PossibleType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isDictionarySchema, recursiveUnwrapArrayDictionary } from '../common/helpers';
-import { contentPreamble, getMethodParameters, getParentImport, sortAscending } from './helpers';
+import { contentPreamble, getParentImport } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in polymorphic_helpers.go
-export async function generatePolymorphicHelpers(session: Session<CodeModel>, fakeServerPkg?: string): Promise<string> {
-  if (!session.model.language.go!.discriminators) {
+export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeServerPkg?: string): Promise<string> {
+  if (codeModel.interfaceTypes.length === 0) {
     // no polymorphic types
     return '';
   }
-  const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators.filter((d: ObjectSchema) => !d.language.go!.omitType);
-  if (discriminators.length === 0) {
-    // all polymorphic types omitted
-    return '';
-  }
-  let text = await contentPreamble(session, fakeServerPkg);
+
+  let text = contentPreamble(codeModel, fakeServerPkg);
   const imports = new ImportManager();
   imports.add('encoding/json');
   if (fakeServerPkg) {
     // content is being generated into a separate package, add the necessary import
-    imports.add(await getParentImport(session));
+    imports.add(getParentImport(codeModel));
   }
+
   text += imports.text();
-  // add any sub-hierarchies (SalmonType, SharkType in the test server) to the list
-  for (const disc of values(discriminators)) {
-    for (const val of values(disc.discriminator!.all)) {
-      const objSchema = <ObjectSchema>val;
-      // some hierarchies can overlap, so conditionally add
-      if (objSchema.discriminator && !discriminators.includes(objSchema)) {
-        discriminators.push(objSchema);
-      }
-    }
-  }
+
   const scalars = new Set<string>();
   const arrays = new Set<string>();
   const maps = new Set<string>();
-  const trackDisciminator = function(schema: Schema) {
-    if (schema.language.go!.discriminatorInterface) {
-      scalars.add(schema.language.go!.discriminatorInterface);
-    } else if (isArraySchema(schema)) {
-      const discriminatorInterface = recursiveUnwrapArrayDictionary(schema).language.go!.discriminatorInterface;
-      if (discriminatorInterface) {
-        scalars.add(discriminatorInterface);
-        arrays.add(discriminatorInterface);
+
+  // we know there are polymorphic types but we don't know how they're used.
+  // i.e. are they vanilla fields, elements in a slice, or values in a map.
+  // polymorphic types within maps/slices will also need the scalar helpers.
+  const trackDisciminator = function(type: PossibleType) {
+    if (isInterfaceType(type)) {
+      scalars.add(type.name);
+    } else if (isSliceType(type)) {
+      const leafType = recursiveUnwrapMapSlice(type);
+      if (isInterfaceType(leafType)) {
+        scalars.add(leafType.name);
+        arrays.add(leafType.name);
       }
-    } else if (isDictionarySchema(schema)) {
-      const discriminatorInterface = recursiveUnwrapArrayDictionary(schema).language.go!.discriminatorInterface;
-      if (discriminatorInterface) {
-        scalars.add(discriminatorInterface);
-        maps.add(discriminatorInterface);
+    } else if (isMapType(type)) {
+      const leafType = recursiveUnwrapMapSlice(type);
+      if (isInterfaceType(leafType)) {
+        scalars.add(leafType.name);
+        maps.add(leafType.name);
       }
     }
   };
+
   // calculate which discriminator helpers we actually need to generate
-  for (const obj of values(session.model.schemas.objects)) {
-    for (const prop of values(obj.properties)) {
-      trackDisciminator(prop.schema);
+  for (const model of codeModel.models) {
+    for (const field of model.fields) {
+      trackDisciminator(field.type);
     }
   }
-  for (const respEnv of values(<Array<ObjectSchema>>session.model.language.go!.responseEnvelopes)) {
-    if (respEnv.language.go!.resultProp) {
-      const resultProp = <Property>respEnv.language.go!.resultProp;
-      if (resultProp.isDiscriminator) {
-        trackDisciminator(resultProp.schema);
+
+  for (const respEnv of values(codeModel.responseEnvelopes)) {
+    if (!respEnv.result) {
+      continue;
+    }
+
+    if (isMonomorphicResult(respEnv.result)) {
+      if (isMapType(respEnv.result.monomorphicType)) {
+        trackDisciminator(respEnv.result.monomorphicType.valueType);
+      } else if (isSliceType(respEnv.result.monomorphicType)) {
+        trackDisciminator(respEnv.result.monomorphicType.elementType);
       }
+    } else if (isPolymorphicResult(respEnv.result)) {
+      trackDisciminator(respEnv.result.interfaceType);
     }
   }
+
   if (fakeServerPkg) {
     // when generating for the fakes server, we must also look at operation parameters
-    for (const group of values(session.model.operationGroups)) {
-      for (const op of values(group.operations)) {
-        const params = getMethodParameters(op);
-        for (const param of values(params)) {
-          trackDisciminator(param.schema);
-        }
+    for (const client of values(codeModel.clients)) {
+      for (const param of values(client.parameters)) {
+        trackDisciminator(param.type);
       }
     }
   }
+
   if (scalars.size === 0 && arrays.size === 0 && maps.size === 0) {
     // this is a corner-case that can happen when all the discriminated types
     // are error types.  there's a bug in M4 that incorrectly annotates such
@@ -91,20 +89,19 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
     // 'exception'.  until this is fixed, we can wind up here.
     return '';
   }
-  discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface); });
 
   let prefix = '';
   if (fakeServerPkg) {
     // content is being generated into a separate package, set the type name prefix
-    prefix = `${session.model.language.go!.packageName}.`;
+    prefix = `${codeModel.packageName}.`;
   }
 
-  for (const disc of values(discriminators)) {
+  for (const interfaceType of codeModel.interfaceTypes) {
     // generate unmarshallers for each discriminator
-    const discName = disc.language.go!.discriminatorInterface;
+
     // scalar unmarshaller
-    if (scalars.has(discName)) {
-      text += `func unmarshal${discName}(rawMsg json.RawMessage) (${prefix}${discName}, error) {\n`;
+    if (scalars.has(interfaceType.name)) {
+      text += `func unmarshal${interfaceType.name}(rawMsg json.RawMessage) (${prefix}${interfaceType.name}, error) {\n`;
       text += '\tif rawMsg == nil {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
@@ -112,20 +109,19 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
       text += '\tif err := json.Unmarshal(rawMsg, &m); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';
-      text += `\tvar b ${prefix}${discName}\n`;
-      text += `\tswitch m["${disc.discriminator!.property.serializedName}"] {\n`;
-      for (const val of values(disc.discriminator!.all)) {
-        const objSchema = <ObjectSchema>val;
-        let disc = objSchema.discriminatorValue;
+      text += `\tvar b ${prefix}${interfaceType.name}\n`;
+      text += `\tswitch m["${interfaceType.discriminatorField}"] {\n`;
+      for (const possibleType of interfaceType.possibleTypes) {
+        let disc = possibleType.discriminatorValue;
         // when the discriminator value is an enum, cast the const as a string
         if (disc![0] !== '"') {
           disc = `string(${prefix}${disc})`;
         }
         text += `\tcase ${disc}:\n`;
-        text += `\t\tb = &${prefix}${val.language.go!.name}{}\n`;
+        text += `\t\tb = &${prefix}${possibleType.name}{}\n`;
       }
       text += '\tdefault:\n';
-      text += `\t\tb = &${prefix}${disc.language.go!.name}{}\n`;
+      text += `\t\tb = &${prefix}${interfaceType.rootType.name}{}\n`;
       text += '\t}\n';
       text += '\tif err := json.Unmarshal(rawMsg, b); err != nil {\n\t\treturn nil, err\n\t}\n';
       text += '\treturn b, nil\n';
@@ -133,8 +129,8 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
     }
 
     // array unmarshaller
-    if (arrays.has(discName)) {
-      text += `func unmarshal${discName}Array(rawMsg json.RawMessage) ([]${prefix}${discName}, error) {\n`;
+    if (arrays.has(interfaceType.name)) {
+      text += `func unmarshal${interfaceType.name}Array(rawMsg json.RawMessage) ([]${prefix}${interfaceType.name}, error) {\n`;
       text += '\tif rawMsg == nil {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
@@ -142,9 +138,9 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
       text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';
-      text += `\tfArray := make([]${prefix}${discName}, len(rawMessages))\n`;
+      text += `\tfArray := make([]${prefix}${interfaceType.name}, len(rawMessages))\n`;
       text += '\tfor index, rawMessage := range rawMessages {\n';
-      text += `\t\tf, err := unmarshal${discName}(rawMessage)\n`;
+      text += `\t\tf, err := unmarshal${interfaceType.name}(rawMessage)\n`;
       text += '\t\tif err != nil {\n';
       text += '\t\t\treturn nil, err\n';
       text += '\t\t}\n';
@@ -155,8 +151,8 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
     }
 
     // map unmarshaller
-    if (maps.has(discName)) {
-      text += `func unmarshal${discName}Map(rawMsg json.RawMessage) (map[string]${prefix}${discName}, error) {\n`;
+    if (maps.has(interfaceType.name)) {
+      text += `func unmarshal${interfaceType.name}Map(rawMsg json.RawMessage) (map[string]${prefix}${interfaceType.name}, error) {\n`;
       text += '\tif rawMsg == nil {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
@@ -164,9 +160,9 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
       text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';
-      text += `\tfMap := make(map[string]${prefix}${discName}, len(rawMessages))\n`;
+      text += `\tfMap := make(map[string]${prefix}${interfaceType.name}, len(rawMessages))\n`;
       text += '\tfor key, rawMessage := range rawMessages {\n';
-      text += `\t\tf, err := unmarshal${discName}(rawMessage)\n`;
+      text += `\t\tf, err := unmarshal${interfaceType.name}(rawMessage)\n`;
       text += '\t\tif err != nil {\n';
       text += '\t\t\treturn nil, err\n';
       text += '\t\t}\n';
@@ -177,4 +173,13 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>, fa
     }
   }
   return text;
+}
+
+function recursiveUnwrapMapSlice(item: PossibleType): PossibleType {
+  if (isMapType(item)) {
+    return recursiveUnwrapMapSlice(item.valueType);
+  } else if (isSliceType(item)) {
+    return recursiveUnwrapMapSlice(item.elementType);
+  }
+  return item;
 }
