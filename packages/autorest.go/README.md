@@ -1,6 +1,6 @@
 # AutoRest Go Generator 
 
-The AutoRest Go generator is intended to be use from AutoRest. 
+The AutoRest Go generator is intended to be used from AutoRest. 
 
 > see https://aka.ms/autorest
 
