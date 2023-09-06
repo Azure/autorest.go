@@ -52,20 +52,20 @@
     {
       "commandKind": "global",
       "name": "regenerate",
-      "summary": "run node .scripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
-      "shellCommand": "node .scripts/regeneration.js"
+      "summary": "run node packages/autorest.go/.scripts/regeneration.js to regenerate all swaggers specified in the autorest.testserver",
+      "shellCommand": "node packages/autorest.go/.scripts/regeneration.js"
     },
     {
       "commandKind": "global",
       "name": "modtidy",
-      "summary": "run node .scripts/modtidy.js to perform tidy up all go.mod files",
-      "shellCommand": "node .scripts/modtidy.js"
+      "summary": "run node packages/autorest.go/.scripts/modtidy.js to perform tidy up all go.mod files",
+      "shellCommand": "node packages/autorest.go/.scripts/modtidy.js"
     },
     {
       "commandKind": "global",
       "name": "buildvet",
-      "summary": "run node .scripts/buildvet.js to build and vet all modules",
-      "shellCommand": "node .scripts/buildvet.js"
+      "summary": "run node packages/autorest.go/.scripts/buildvet.js to build and vet all modules",
+      "shellCommand": "node packages/autorest.go/.scripts/buildvet.js"
     },
     {
       "commandKind": "global",
