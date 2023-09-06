@@ -176,6 +176,9 @@ function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.GoCodeMo
 
 function recursiveAdaptInterfaceType(obj: m4.ObjectSchema, ifaces: Array<go.InterfaceType>, ifaceObjs: Array<InterfaceTypeObjectSchema>, parent?: go.InterfaceType) {
   const iface = adaptInterfaceType(obj, parent);
+  if (ifaces.includes(iface)) {
+    return;
+  }
   ifaces.push(iface);
   ifaceObjs.push({iface, obj});
 
