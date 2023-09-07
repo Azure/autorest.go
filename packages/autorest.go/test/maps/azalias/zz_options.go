@@ -38,6 +38,16 @@ type ClientListOptions struct {
 	GroupBy []LogMetricsGroupBy
 }
 
+// ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
+type ClientListWithSharedNextOneOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
+type ClientListWithSharedNextTwoOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ClientOptionalGroup contains a group of parameters for the Client client.
 type ClientOptionalGroup struct {
 	// Index number of Azure Maps API.

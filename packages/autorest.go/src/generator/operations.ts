@@ -170,6 +170,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
 
     // generate operations
     let opText = '';
+    const nextPageMethods = new Array<NextPageMethod>();
     for (const method of client.methods) {
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
@@ -183,9 +184,14 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
         // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(client, method, imports);
       }
-      if (isPageableMethod(method) && method.nextPageMethod) {
-        opText += createProtocolRequest(client, method.nextPageMethod, imports, hostParamName);
+      if (isPageableMethod(method) && method.nextPageMethod && !nextPageMethods.includes(method.nextPageMethod)) {
+        // track the next page methods to generate as multiple operations can use the same next page operation
+        nextPageMethods.push(method.nextPageMethod);
       }
+    }
+
+    for (const method of nextPageMethods) {
+      opText += createProtocolRequest(client, method, imports, hostParamName);
     }
 
     // stitch it all together

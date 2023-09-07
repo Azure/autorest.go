@@ -381,25 +381,6 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 	return result, nil
 }
 
-// nextFragmentCreateRequest creates the nextFragmentCreateRequest request.
-func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*policy.Request, error) {
-	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
-	if tenant == "" {
-		return nil, errors.New("parameter tenant cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api_version", apiVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
-}
-
 // NewGetMultiplePagesFragmentWithGroupingNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
 // with parameters grouped
 //
@@ -463,25 +444,6 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	return result, nil
-}
-
-// nextFragmentWithGroupingCreateRequest creates the nextFragmentWithGroupingCreateRequest request.
-func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
-	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
-	if customParameterGroup.Tenant == "" {
-		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api_version", customParameterGroup.APIVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
 }
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
@@ -1150,6 +1112,44 @@ func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response
 		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	return result, nil
+}
+
+// nextFragmentCreateRequest creates the nextFragmentCreateRequest request.
+func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*policy.Request, error) {
+	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
+	if tenant == "" {
+		return nil, errors.New("parameter tenant cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
+	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api_version", apiVersion)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// nextFragmentWithGroupingCreateRequest creates the nextFragmentWithGroupingCreateRequest request.
+func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
+	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
+	if customParameterGroup.Tenant == "" {
+		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
+	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api_version", customParameterGroup.APIVersion)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
 }
 
 // nextOperationWithQueryParamsCreateRequest creates the nextOperationWithQueryParamsCreateRequest request.

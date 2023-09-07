@@ -49,10 +49,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMode
         (<go.PageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
         if (op.language.go!.paging.nextLinkOperation) {
           // adapt the next link operation
-          const httpPath = <string>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.path;
-          const httpMethod = op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.method;
-          const nextPageMethod = new go.NextPageMethod(op.language.go!.paging.nextLinkOperation.language.go.name, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
-          populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+          const nextPageMethod = adaptNextPageMethod(op, m4CodeModel, client, codeModel);
           (<go.PageableMethod>method).nextPageMethod = nextPageMethod;
         }
       } else {
@@ -77,6 +74,23 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMode
 
     codeModel.clients.push(client);
   }
+}
+
+// used to ensure unique instances of go.NextPageMethod since they can be shared across operations
+// only adaptNextPageMethod should touch this!
+const adaptedNextPageMethods = new Map<string, go.NextPageMethod>();
+
+function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, codeModel: go.GoCodeModel): go.NextPageMethod {
+  const nextPageMethodName = op.language.go!.paging.nextLinkOperation.language.go.name;
+  let nextPageMethod = adaptedNextPageMethods.get(nextPageMethodName);
+  if (!nextPageMethod) {
+    const httpPath = <string>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.path;
+    const httpMethod = <go.HTTPMethod>op.language.go!.paging.nextLinkOperation.requests![0].protocol.http!.method;
+    nextPageMethod = new go.NextPageMethod(nextPageMethodName, client, httpPath, httpMethod, getStatusCodes(op.language.go!.paging.nextLinkOperation));
+    populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
+    adaptedNextPageMethods.set(nextPageMethodName, nextPageMethod);
+  }
+  return nextPageMethod;
 }
 
 function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel) {
