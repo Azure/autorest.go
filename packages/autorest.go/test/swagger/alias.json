@@ -97,6 +97,14 @@
         "name": "client-optional-group"
       }
     },
+    "OptionalClientString": {
+      "name": "optional-string",
+      "description": "Some optional string not in a param group.",
+      "type": "string",
+      "in": "header",
+      "required": false,
+      "x-ms-parameter-location": "client"
+    },
     "CreateCreatorDataItemId": {
       "name": "creator-id",
       "description": "The unique id that references a creator data item to be aliased.",
@@ -319,6 +327,9 @@
           },
           {
             "$ref": "#/parameters/OptionalClientIndex"
+          },
+          {
+            "$ref": "#/parameters/OptionalClientString"
           },
           {
             "name": "things",

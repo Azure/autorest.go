@@ -672,6 +672,11 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
 
     if (isRequiredParameter(param) || isLiteralParameter(param) || isClientSideDefault(param.paramType)) {
       text += emitHeaderSet(param, '\t');
+    } else if (param.location === 'client' && !param.group) {
+      // global optional param
+      text += `\tif client.${param.paramName} != nil {\n`;
+      text += emitHeaderSet(param, '\t');
+      text += '\t}\n';
     } else {
       text += emitParamGroupCheck(param);
       text += emitHeaderSet(param, '\t\t');
