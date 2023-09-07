@@ -315,6 +315,68 @@
         }
       }
     },
+    "/listWithSharedNextOne": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "aliases",
+          "operationName": "Alias_listWithSharedNext"
+        },
+        "operationId": "Alias_listWithSharedNextOne",
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/listWithSharedNextTwo": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "aliases",
+          "operationName": "Alias_listWithSharedNext"
+        },
+        "operationId": "Alias_listWithSharedNextTwo",
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/listWithSharedNext": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": null,
+          "itemName": "values"
+        },
+        "operationId": "Alias_listWithSharedNext",
+        "description": "A shared next link operation",
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
     "/policy": {
       "put": {
         "operationId": "Alias_PolicyAssignment",

@@ -37,6 +37,14 @@ type Server struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(options *azalias.ClientListOptions) (resp azfake.PagerResponder[azalias.ClientListResponse])
 
+	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewListWithSharedNextOnePager func(options *azalias.ClientListWithSharedNextOneOptions) (resp azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse])
+
+	// NewListWithSharedNextTwoPager is the fake for method Client.NewListWithSharedNextTwoPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewListWithSharedNextTwoPager func(options *azalias.ClientListWithSharedNextTwoOptions) (resp azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse])
+
 	// PolicyAssignment is the fake for method Client.PolicyAssignment
 	// HTTP status codes to indicate success: http.StatusOK
 	PolicyAssignment func(ctx context.Context, things []azalias.Things, polymorphicParam azalias.GeoJSONObjectClassification, options *azalias.ClientPolicyAssignmentOptions) (resp azfake.Responder[azalias.ClientPolicyAssignmentResponse], errResp azfake.ErrorResponder)
@@ -47,16 +55,20 @@ type Server struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServerTransport(srv *Server) *ServerTransport {
 	return &ServerTransport{
-		srv:          srv,
-		newListPager: newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
+		srv:                           srv,
+		newListPager:                  newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
+		newListWithSharedNextOnePager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]](),
+		newListWithSharedNextTwoPager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]](),
 	}
 }
 
 // ServerTransport connects instances of azalias.Client to instances of Server.
 // Don't use this type directly, use NewServerTransport instead.
 type ServerTransport struct {
-	srv          *Server
-	newListPager *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
+	srv                           *Server
+	newListPager                  *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
+	newListWithSharedNextOnePager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]]
+	newListWithSharedNextTwoPager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]]
 }
 
 // Do implements the policy.Transporter interface for ServerTransport.
@@ -77,6 +89,10 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 		resp, err = s.dispatchGetScript(req)
 	case "Client.NewListPager":
 		resp, err = s.dispatchNewListPager(req)
+	case "Client.NewListWithSharedNextOnePager":
+		resp, err = s.dispatchNewListWithSharedNextOnePager(req)
+	case "Client.NewListWithSharedNextTwoPager":
+		resp, err = s.dispatchNewListWithSharedNextTwoPager(req)
 	case "Client.PolicyAssignment":
 		resp, err = s.dispatchPolicyAssignment(req)
 	default:
@@ -221,6 +237,60 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	}
 	if !server.PagerResponderMore(newListPager) {
 		s.newListPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchNewListWithSharedNextOnePager(req *http.Request) (*http.Response, error) {
+	if s.srv.NewListWithSharedNextOnePager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListWithSharedNextOnePager not implemented")}
+	}
+	newListWithSharedNextOnePager := s.newListWithSharedNextOnePager.get(req)
+	if newListWithSharedNextOnePager == nil {
+		resp := s.srv.NewListWithSharedNextOnePager(nil)
+		newListWithSharedNextOnePager = &resp
+		s.newListWithSharedNextOnePager.add(req, newListWithSharedNextOnePager)
+		server.PagerResponderInjectNextLinks(newListWithSharedNextOnePager, req, func(page *azalias.ClientListWithSharedNextOneResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newListWithSharedNextOnePager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListWithSharedNextOnePager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListWithSharedNextOnePager) {
+		s.newListWithSharedNextOnePager.remove(req)
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchNewListWithSharedNextTwoPager(req *http.Request) (*http.Response, error) {
+	if s.srv.NewListWithSharedNextTwoPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListWithSharedNextTwoPager not implemented")}
+	}
+	newListWithSharedNextTwoPager := s.newListWithSharedNextTwoPager.get(req)
+	if newListWithSharedNextTwoPager == nil {
+		resp := s.srv.NewListWithSharedNextTwoPager(nil)
+		newListWithSharedNextTwoPager = &resp
+		s.newListWithSharedNextTwoPager.add(req, newListWithSharedNextTwoPager)
+		server.PagerResponderInjectNextLinks(newListWithSharedNextTwoPager, req, func(page *azalias.ClientListWithSharedNextTwoResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newListWithSharedNextTwoPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		s.newListWithSharedNextTwoPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListWithSharedNextTwoPager) {
+		s.newListWithSharedNextTwoPager.remove(req)
 	}
 	return resp, nil
 }

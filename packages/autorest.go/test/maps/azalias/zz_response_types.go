@@ -28,6 +28,18 @@ type ClientListResponse struct {
 	ListResponse
 }
 
+// ClientListWithSharedNextOneResponse contains the response from method Client.NewListWithSharedNextOnePager.
+type ClientListWithSharedNextOneResponse struct {
+	// The response model for the List API. Returns a list of all the previously created aliases.
+	ListResponse
+}
+
+// ClientListWithSharedNextTwoResponse contains the response from method Client.NewListWithSharedNextTwoPager.
+type ClientListWithSharedNextTwoResponse struct {
+	// The response model for the List API. Returns a list of all the previously created aliases.
+	ListResponse
+}
+
 // ClientPolicyAssignmentResponse contains the response from method Client.PolicyAssignment.
 type ClientPolicyAssignmentResponse struct {
 	PolicyAssignmentProperties
