@@ -26,6 +26,7 @@ type Client struct {
 	endpoint            string
 	clientGroup         ClientGroup
 	clientOptionalGroup *ClientOptionalGroup
+	optionalString      *string
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -290,6 +291,9 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things 
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
 		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}
+	}
+	if client.optionalString != nil {
+		req.Raw().Header["optional-string"] = []string{*client.optionalString}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, polymorphicParam); err != nil {
