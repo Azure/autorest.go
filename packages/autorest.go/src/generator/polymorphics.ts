@@ -51,35 +51,36 @@ export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeSer
   };
 
   // calculate which discriminator helpers we actually need to generate
-  for (const model of codeModel.models) {
-    for (const field of model.fields) {
-      trackDisciminator(field.type);
-    }
-  }
-
-  for (const respEnv of values(codeModel.responseEnvelopes)) {
-    if (!respEnv.result) {
-      continue;
-    }
-
-    if (isMonomorphicResult(respEnv.result)) {
-      if (isMapType(respEnv.result.monomorphicType)) {
-        trackDisciminator(respEnv.result.monomorphicType.valueType);
-      } else if (isSliceType(respEnv.result.monomorphicType)) {
-        trackDisciminator(respEnv.result.monomorphicType.elementType);
-      }
-    } else if (isPolymorphicResult(respEnv.result)) {
-      trackDisciminator(respEnv.result.interfaceType);
-    }
-  }
-
+  
   if (fakeServerPkg) {
-    // when generating for the fakes server, we must also look at operation parameters
+    // when generating for the fakes server, we must look at operation parameters instead of return values
     for (const client of values(codeModel.clients)) {
       for (const method of values(client.methods)) {
         for (const param of values(method.parameters)) {
           trackDisciminator(param.type);
         }
+      }
+    }
+  } else {
+    for (const model of codeModel.models) {
+      for (const field of model.fields) {
+        trackDisciminator(field.type);
+      }
+    }
+
+    for (const respEnv of values(codeModel.responseEnvelopes)) {
+      if (!respEnv.result) {
+        continue;
+      }
+
+      if (isMonomorphicResult(respEnv.result)) {
+        if (isMapType(respEnv.result.monomorphicType)) {
+          trackDisciminator(respEnv.result.monomorphicType.valueType);
+        } else if (isSliceType(respEnv.result.monomorphicType)) {
+          trackDisciminator(respEnv.result.monomorphicType.elementType);
+        }
+      } else if (isPolymorphicResult(respEnv.result)) {
+        trackDisciminator(respEnv.result.interfaceType);
       }
     }
   }

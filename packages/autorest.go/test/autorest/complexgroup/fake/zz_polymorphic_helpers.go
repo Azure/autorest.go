@@ -13,46 +13,6 @@ import (
 	"generatortests/complexgroup"
 )
 
-func unmarshalDotFishClassification(rawMsg json.RawMessage) (complexgroup.DotFishClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]any
-	if err := json.Unmarshal(rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b complexgroup.DotFishClassification
-	switch m["fish.type"] {
-	case "DotSalmon":
-		b = &complexgroup.DotSalmon{}
-	default:
-		b = &complexgroup.DotFish{}
-	}
-	if err := json.Unmarshal(rawMsg, b); err != nil {
-		return nil, err
-	}
-	return b, nil
-}
-
-func unmarshalDotFishClassificationArray(rawMsg json.RawMessage) ([]complexgroup.DotFishClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []json.RawMessage
-	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]complexgroup.DotFishClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalDotFishClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
-
 func unmarshalFishClassification(rawMsg json.RawMessage) (complexgroup.FishClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -77,46 +37,6 @@ func unmarshalFishClassification(rawMsg json.RawMessage) (complexgroup.FishClass
 		b = &complexgroup.SmartSalmon{}
 	default:
 		b = &complexgroup.Fish{}
-	}
-	if err := json.Unmarshal(rawMsg, b); err != nil {
-		return nil, err
-	}
-	return b, nil
-}
-
-func unmarshalFishClassificationArray(rawMsg json.RawMessage) ([]complexgroup.FishClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []json.RawMessage
-	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]complexgroup.FishClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalFishClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
-
-func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (complexgroup.MyBaseTypeClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]any
-	if err := json.Unmarshal(rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b complexgroup.MyBaseTypeClassification
-	switch m["kind"] {
-	case string(complexgroup.MyKindKind1):
-		b = &complexgroup.MyDerivedType{}
-	default:
-		b = &complexgroup.MyBaseType{}
 	}
 	if err := json.Unmarshal(rawMsg, b); err != nil {
 		return nil, err
