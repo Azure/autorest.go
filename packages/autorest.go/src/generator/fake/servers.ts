@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Client, GoCodeModel, Method, PageableMethod, Parameter, ParameterGroup, isBinaryResult, isConstantType, isHeadAsBooleanResult, isHeaderParameter, isInterfaceType, isModelResult, isMonomorphicResult, isMultipartFormBodyParameter, isPolymorphicResult, isPrimitiveType, isResumeTokenParameter, isStandardType } from '../../gocodemodel/gocodemodel';
+import { Client, GoCodeModel, Method, PageableMethod, Parameter, ParameterGroup, PrimitiveTypeName, isBinaryResult, isConstantType, isHeadAsBooleanResult, isHeaderParameter, isInterfaceType, isModelResult, isMonomorphicResult, isMultipartFormBodyParameter, isPolymorphicResult, isPrimitiveType, isResumeTokenParameter, isStandardType } from '../../gocodemodel/gocodemodel';
 import { AnyResult, BinaryResult, BodyParameter, MonomorphicResult, PolymorphicResult, ModelResult, isAnyResult, isBytesType, isTimeType } from '../../gocodemodel/gocodemodel';
 import { getTypeDeclaration, isBodyParameter, isFormBodyParameter, isLiteralValue, isLROMethod, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter } from '../../gocodemodel/gocodemodel';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
@@ -525,35 +525,36 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
     // parse params as required
     if (isSliceType(param.type)) {
       if (isConstantType(param.type.elementType) || (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName !== 'string')) {
-        const asArray = param.type;
         imports.add('strings');
         const elementsParam = `${paramValue}Elements`;
         content += `\t${elementsParam} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
         const localVar = createLocalVariableName(param, 'Param');
-        const toType = `${clientPkg}.${getTypeDeclaration(asArray.elementType)}`;
+        let elementTypeName: PrimitiveTypeName; // ConstantTypeTypes is a subset of PrimitiveTypeName
+        if (isConstantType(param.type.elementType)) {
+          elementTypeName = param.type.elementType.type;
+        } else {
+          elementTypeName = param.type.elementType.typeName;
+        }
+        const toType = `${clientPkg}.${getTypeDeclaration(param.type.elementType)}`;
         content += `\t${localVar} := make([]${toType}, len(${elementsParam}))\n`;
         content += `\tfor i := 0; i < len(${elementsParam}); i++ {\n`;
         let fromVar: string;
-        if (isConstantType(asArray.elementType)) {
-          if (asArray.elementType.type === 'int32' || asArray.elementType.type === 'int64') {
-            imports.add('strconv');
-            fromVar = 'parsedInt';
-            content += `\t\tvar ${fromVar} int64\n`;
-            content += `\t\t${fromVar}, err = strconv.ParseInt(${elementsParam}[i], 10, 32)\n`;
-            content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
-          } else if (asArray.elementType.type === 'float32' || asArray.elementType.type === 'float64') {
-            imports.add('strconv');
-            fromVar = 'parsedNum';
-            content += `\t\tvar ${fromVar} float64\n`;
-            content += `\t\t${fromVar}, err = strconv.ParseFloat(${elementsParam}[i], 32)\n`;
-            content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
-          } else if (asArray.elementType.type === 'string') {
-            fromVar = `${elementsParam}[i]`;
-          } else {
-            throw new Error(`unhandled array element choice type ${asArray.elementType.type}`);
-          }
+        if (elementTypeName === 'int32' || elementTypeName === 'int64') {
+          imports.add('strconv');
+          fromVar = 'parsedInt';
+          content += `\t\tvar ${fromVar} int64\n`;
+          content += `\t\t${fromVar}, err = strconv.ParseInt(${elementsParam}[i], 10, 32)\n`;
+          content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
+        } else if (elementTypeName === 'float32' || elementTypeName === 'float64') {
+          imports.add('strconv');
+          fromVar = 'parsedNum';
+          content += `\t\tvar ${fromVar} float64\n`;
+          content += `\t\t${fromVar}, err = strconv.ParseFloat(${elementsParam}[i], 32)\n`;
+          content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
+        } else if (elementTypeName === 'string') {
+          fromVar = `${elementsParam}[i]`;
         } else {
-          throw new Error(`unhandled array element type ${getTypeDeclaration(asArray.elementType)}`);
+          throw new Error(`unhandled array element type ${elementTypeName}`);
         }
         content += `\t\t${localVar}[i] = ${toType}(${fromVar})\n\t}\n`;
       } else if (param.group) {
