@@ -76,8 +76,10 @@ export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeSer
   if (fakeServerPkg) {
     // when generating for the fakes server, we must also look at operation parameters
     for (const client of values(codeModel.clients)) {
-      for (const param of values(client.parameters)) {
-        trackDisciminator(param.type);
+      for (const method of values(client.methods)) {
+        for (const param of values(method.parameters)) {
+          trackDisciminator(param.type);
+        }
       }
     }
   }
