@@ -265,11 +265,10 @@ func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, opt
 
 // head300HandleResponse handles the Head300 response.
 func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (HTTPRedirectsClientHead300Response, error) {
-	result := HTTPRedirectsClientHead300Response{}
+	result := HTTPRedirectsClientHead300Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	result.Success = resp.StatusCode >= 200 && resp.StatusCode < 300
 	return result, nil
 }
 

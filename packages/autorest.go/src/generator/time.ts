@@ -3,10 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@autorest/codemodel';
-import { contentPreamble } from './helpers';
 import { values } from '@azure-tools/linq';
+import { GoCodeModel, isTimeType } from '../gocodemodel/gocodemodel';
+import { contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -22,22 +21,22 @@ export class Content {
 
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateTimeHelpers(session: Session<CodeModel>, packageName?: string): Promise<Array<Content>> {
+export async function generateTimeHelpers(codeModel: GoCodeModel, packageName?: string): Promise<Array<Content>> {
   const content = new Array<Content>();
-  if (!session.model.language.go!.generateTimeRFC1123Helper &&
-    !session.model.language.go!.generateTimeRFC3339Helper &&
-    !session.model.language.go!.generateUnixTimeHelper &&
-    !session.model.language.go!.generateDateHelper) {
+  if (!codeModel.marshallingRequirements.generateTimeRFC1123Helper &&
+    !codeModel.marshallingRequirements.generateTimeRFC3339Helper &&
+    !codeModel.marshallingRequirements.generateUnixTimeHelper &&
+    !codeModel.marshallingRequirements.generateDateHelper) {
     return content;
   }
   let needsPopulate = false;
-  for (const obj of values(session.model.schemas.objects)) {
-    if (obj.language.go!.marshallingFormat !== 'json') {
+  for (const model of codeModel.models) {
+    if (model.format !== 'json') {
       // population helpers are for JSON only
       continue;
     }
-    for (const prop of values(obj.properties)) {
-      if (prop.schema.language.go!.internalTimeType) {
+    for (const field of values(model.fields)) {
+      if (isTimeType(field.type)) {
         needsPopulate = true;
         break;
       }
@@ -46,17 +45,17 @@ export async function generateTimeHelpers(session: Session<CodeModel>, packageNa
       break;
     }
   }
-  const preamble = await contentPreamble(session, packageName);
-  if (session.model.language.go!.generateTimeRFC1123Helper) {
+  const preamble = contentPreamble(codeModel, packageName);
+  if (codeModel.marshallingRequirements.generateTimeRFC1123Helper) {
     content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.generateTimeRFC3339Helper) {
+  if (codeModel.marshallingRequirements.generateTimeRFC3339Helper) {
     content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.generateUnixTimeHelper) {
+  if (codeModel.marshallingRequirements.generateUnixTimeHelper) {
     content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsPopulate)));
   }
-  if (session.model.language.go!.generateDateHelper) {
+  if (codeModel.marshallingRequirements.generateDateHelper) {
     content.push(new Content('date_type', generateDateHelper(preamble, needsPopulate)));
   }
   return content;

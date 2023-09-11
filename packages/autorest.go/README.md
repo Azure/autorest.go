@@ -1,6 +1,21 @@
-# AutoRest Go
+# AutoRest Go Generator 
 
-The Go plugin is used to generate Go source code.
+The AutoRest Go generator is intended to be used from AutoRest. 
+
+> see https://aka.ms/autorest
+
+# Contributing
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.microsoft.com.
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ### Autorest plugin configuration
 - Please don't edit this section unless you're re-configuring how the Go extension plugs in to AutoRest
@@ -8,7 +23,7 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 
 # Pipeline Configuration
 ``` yaml
-version: 3.9.6
+version: 3.9.7
 use-extension:
   "@autorest/modelerfour" : "4.26.2"
 
@@ -24,22 +39,25 @@ pipeline:
     input: modelerfour/identity
 
   # fix up names add Go-specific data to the code model
-  go-transform:
+  go-transform-m4:
     input: go
 
-  # generates code for the protocol layer
-  go-protocol:
-    input: go-transform
+  go-m4-to-gocodemodel:
+    input: go-transform-m4
+
+  # generates code
+  go-codegen:
+    input: go-m4-to-gocodemodel
 
   # extensibility: allow text-transforms after the code gen
   go/text-transform:
     input:
-      - go-protocol
+      - go-codegen
 
   # output the files to disk
   go/emitter:
     input: 
-      - go-transform  # this allows us to dump out the code model after the namer (add --output-artifact:code-model-v4 on the command line)
+      - go-transform-m4  # this allows us to dump out the code model after transformation (add --output-artifact:go-code-model on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
     is-object: false # tell it that we're not putting an object graph out

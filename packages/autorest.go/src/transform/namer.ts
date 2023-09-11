@@ -8,7 +8,7 @@ import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
-import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
+import { aggregateParameters, hasAdditionalProperties } from './helpers';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -110,6 +110,12 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
   model.language.go!.module = module;
+
+  const containingModule = await session.getValue('containing-module', 'none');
+  if (containingModule !== 'none' && module !== 'none') {
+    throw new Error('--module and --containing-module are mutually exclusive');
+  }
+  model.language.go!.containingModule = containingModule;
 
   // fix up type names
   const structNames = new Set<string>();

@@ -122,7 +122,7 @@ type GeoJSONRecursiveDisciminators struct {
 // ListResponse - The response model for the List API. Returns a list of all the previously created aliases.
 type ListResponse struct {
 	// READ-ONLY; A list of all the previously created aliases.
-	Aliases []*ListItem
+	Aliases []ListItem
 
 	// READ-ONLY; If present, the location of the next page of data.
 	NextLink *string
@@ -153,7 +153,7 @@ type PolicyAssignmentProperties struct {
 // ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.
 type ScheduleCreateOrUpdateProperties struct {
 	// A list of all the previously created aliases.
-	Aliases []*string
+	Aliases []string
 
 	// Gets or sets the description of the schedule.
 	Description *string
@@ -171,4 +171,8 @@ type TypeWithRawJSON struct {
 
 	// any valid JSON
 	Anything any
+}
+
+type TypeWithSliceOfTimes struct {
+	Times []time.Time
 }

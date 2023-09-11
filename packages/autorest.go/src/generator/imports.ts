@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, DictionarySchema, Schema, SchemaType } from '@autorest/codemodel';
+import { isMapType, isSliceType, isStandardType, isTimeType, PossibleType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { sortAscending } from './helpers';
 
@@ -50,22 +50,15 @@ export class ImportManager {
     return text;
   }
 
-  addImportForSchemaType(schema: Schema) {
-    switch (schema.type) {
-      case SchemaType.Array:
-        this.addImportForSchemaType((<ArraySchema>schema).elementType);
-        break;
-      case SchemaType.Binary:
-        this.add('io');
-        break;
-      case SchemaType.Dictionary:
-        this.addImportForSchemaType((<DictionarySchema>schema).elementType);
-        break;
-      case SchemaType.Date:
-      case SchemaType.DateTime:
-      case SchemaType.UnixTime:
-        this.add('time');
-        break;
+  addImportForType(type: PossibleType) {
+    if (isMapType(type)) {
+      this.addImportForType(type.valueType);
+    } else if (isSliceType(type)) {
+      this.addImportForType(type.elementType);
+    } else if (isStandardType(type)) {
+      this.add(type.packageName);
+    } else if (isTimeType(type)) {
+      this.add('time');
     }
   }
 

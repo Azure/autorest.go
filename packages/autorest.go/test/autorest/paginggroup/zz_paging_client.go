@@ -1114,7 +1114,7 @@ func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// nextFragmentCreateRequest creates the NextFragment request.
+// nextFragmentCreateRequest creates the nextFragmentCreateRequest request.
 func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVersion string, tenant string, nextLink string) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}/{nextLink}"
 	if tenant == "" {
@@ -1133,16 +1133,7 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 	return req, nil
 }
 
-// nextFragmentHandleResponse handles the NextFragment response.
-func (client *PagingClient) nextFragmentHandleResponse(resp *http.Response) (PagingClientNextFragmentResponse, error) {
-	result := PagingClientNextFragmentResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingClientNextFragmentResponse{}, err
-	}
-	return result, nil
-}
-
-// nextFragmentWithGroupingCreateRequest creates the NextFragmentWithGrouping request.
+// nextFragmentWithGroupingCreateRequest creates the nextFragmentWithGroupingCreateRequest request.
 func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Context, nextLink string, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}/{nextLink}"
 	if customParameterGroup.Tenant == "" {
@@ -1161,16 +1152,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// nextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
-func (client *PagingClient) nextFragmentWithGroupingHandleResponse(resp *http.Response) (PagingClientNextFragmentWithGroupingResponse, error) {
-	result := PagingClientNextFragmentWithGroupingResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingClientNextFragmentWithGroupingResponse{}, err
-	}
-	return result, nil
-}
-
-// nextOperationWithQueryParamsCreateRequest creates the NextOperationWithQueryParams request.
+// nextOperationWithQueryParamsCreateRequest creates the nextOperationWithQueryParamsCreateRequest request.
 func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx context.Context) (*policy.Request, error) {
 	urlPath := "/paging/multiple/nextOperationWithQueryParams"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1182,13 +1164,4 @@ func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx contex
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
-}
-
-// nextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
-func (client *PagingClient) nextOperationWithQueryParamsHandleResponse(resp *http.Response) (PagingClientNextOperationWithQueryParamsResponse, error) {
-	result := PagingClientNextOperationWithQueryParamsResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingClientNextOperationWithQueryParamsResponse{}, err
-	}
-	return result, nil
 }

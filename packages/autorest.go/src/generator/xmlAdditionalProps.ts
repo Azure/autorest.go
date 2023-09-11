@@ -3,18 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
-import { CodeModel } from '@autorest/codemodel';
+import { GoCodeModel } from '../gocodemodel/gocodemodel';
 import { contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content for required additional properties XML marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateXMLAdditionalPropsHelpers(session: Session<CodeModel>): Promise<string> {
-  if (!session.model.language.go!.needsXMLDictionaryUnmarshalling) {
+export async function generateXMLAdditionalPropsHelpers(codeModel: GoCodeModel): Promise<string> {
+  if (!codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper) {
     return '';
   }
-  let text = await contentPreamble(session);
+  let text = contentPreamble(codeModel);
   // add standard imports
   const imports = new ImportManager();
   imports.add('encoding/xml');

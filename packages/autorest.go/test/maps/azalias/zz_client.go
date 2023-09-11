@@ -16,6 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // Client contains the methods for the Alias group.
@@ -25,6 +26,7 @@ type Client struct {
 	endpoint            string
 	clientGroup         ClientGroup
 	clientOptionalGroup *ClientOptionalGroup
+	optionalString      *string
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -241,18 +243,122 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 	return result, nil
 }
 
+//   - options - ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager
+//     method.
+func (client *Client) NewListWithSharedNextOnePager(options *ClientListWithSharedNextOneOptions) *runtime.Pager[ClientListWithSharedNextOneResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ClientListWithSharedNextOneResponse]{
+		More: func(page ClientListWithSharedNextOneResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextOneResponse) (ClientListWithSharedNextOneResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextOnePager")
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listWithSharedNextOneCreateRequest(ctx, options)
+			} else {
+				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			}
+			if err != nil {
+				return ClientListWithSharedNextOneResponse{}, err
+			}
+			resp, err := client.internal.Pipeline().Do(req)
+			if err != nil {
+				return ClientListWithSharedNextOneResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientListWithSharedNextOneResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listWithSharedNextOneHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listWithSharedNextOneCreateRequest creates the ListWithSharedNextOne request.
+func (client *Client) listWithSharedNextOneCreateRequest(ctx context.Context, options *ClientListWithSharedNextOneOptions) (*policy.Request, error) {
+	urlPath := "/listWithSharedNextOne"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listWithSharedNextOneHandleResponse handles the ListWithSharedNextOne response.
+func (client *Client) listWithSharedNextOneHandleResponse(resp *http.Response) (ClientListWithSharedNextOneResponse, error) {
+	result := ClientListWithSharedNextOneResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
+		return ClientListWithSharedNextOneResponse{}, err
+	}
+	return result, nil
+}
+
+//   - options - ClientListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager
+//     method.
+func (client *Client) NewListWithSharedNextTwoPager(options *ClientListWithSharedNextTwoOptions) *runtime.Pager[ClientListWithSharedNextTwoResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ClientListWithSharedNextTwoResponse]{
+		More: func(page ClientListWithSharedNextTwoResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextTwoResponse) (ClientListWithSharedNextTwoResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextTwoPager")
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listWithSharedNextTwoCreateRequest(ctx, options)
+			} else {
+				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			}
+			if err != nil {
+				return ClientListWithSharedNextTwoResponse{}, err
+			}
+			resp, err := client.internal.Pipeline().Do(req)
+			if err != nil {
+				return ClientListWithSharedNextTwoResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientListWithSharedNextTwoResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listWithSharedNextTwoHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// listWithSharedNextTwoCreateRequest creates the ListWithSharedNextTwo request.
+func (client *Client) listWithSharedNextTwoCreateRequest(ctx context.Context, options *ClientListWithSharedNextTwoOptions) (*policy.Request, error) {
+	urlPath := "/listWithSharedNextTwo"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listWithSharedNextTwoHandleResponse handles the ListWithSharedNextTwo response.
+func (client *Client) listWithSharedNextTwoHandleResponse(resp *http.Response) (ClientListWithSharedNextTwoResponse, error) {
+	result := ClientListWithSharedNextTwoResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
+		return ClientListWithSharedNextTwoResponse{}, err
+	}
+	return result, nil
+}
+
 // PolicyAssignment -
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
 //   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
+func (client *Client) PolicyAssignment(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	var err error
 	const operationName = "Client.PolicyAssignment"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
+	req, err := client.policyAssignmentCreateRequest(ctx, things, polymorphicParam, options)
 	if err != nil {
 		return ClientPolicyAssignmentResponse{}, err
 	}
@@ -269,7 +375,7 @@ func (client *Client) PolicyAssignment(ctx context.Context, props ScheduleCreate
 }
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.
-func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
+func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *ClientPolicyAssignmentOptions) (*policy.Request, error) {
 	urlPath := "/policy"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -279,15 +385,22 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, props S
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalVersion != nil {
 		reqQP.Set("optional-version", *client.clientOptionalGroup.OptionalVersion)
 	}
+	reqQP.Set("things", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(things), "[]")), ","))
 	if options != nil && options.Interval != nil {
 		reqQP.Set("interval", *options.Interval)
+	}
+	if options != nil && options.Unique != nil {
+		reqQP.Set("unique", *options.Unique)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
 		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}
 	}
+	if client.optionalString != nil {
+		req.Raw().Header["optional-string"] = []string{*client.optionalString}
+	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, props); err != nil {
+	if err := runtime.MarshalAsJSON(req, polymorphicParam); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -300,4 +413,16 @@ func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (Clien
 		return ClientPolicyAssignmentResponse{}, err
 	}
 	return result, nil
+}
+
+// listWithSharedNextCreateRequest creates the listWithSharedNextCreateRequest request.
+func (client *Client) listWithSharedNextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+	urlPath := "/listWithSharedNext"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["nextLink"] = []string{nextLink}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
 }

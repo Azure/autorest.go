@@ -97,6 +97,14 @@
         "name": "client-optional-group"
       }
     },
+    "OptionalClientString": {
+      "name": "optional-string",
+      "description": "Some optional string not in a param group.",
+      "type": "string",
+      "in": "header",
+      "required": false,
+      "x-ms-parameter-location": "client"
+    },
     "CreateCreatorDataItemId": {
       "name": "creator-id",
       "description": "The unique id that references a creator data item to be aliased.",
@@ -307,6 +315,68 @@
         }
       }
     },
+    "/listWithSharedNextOne": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "aliases",
+          "operationName": "Alias_listWithSharedNext"
+        },
+        "operationId": "Alias_listWithSharedNextOne",
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/listWithSharedNextTwo": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink",
+          "itemName": "aliases",
+          "operationName": "Alias_listWithSharedNext"
+        },
+        "operationId": "Alias_listWithSharedNextTwo",
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/listWithSharedNext": {
+      "get": {
+        "x-ms-pageable": {
+          "nextLinkName": null,
+          "itemName": "values"
+        },
+        "operationId": "Alias_listWithSharedNext",
+        "description": "A shared next link operation",
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "got the next page",
+            "schema": {
+              "$ref": "#/definitions/AliasListResponse"
+            }
+          }
+        }
+      }
+    },
     "/policy": {
       "put": {
         "operationId": "Alias_PolicyAssignment",
@@ -315,13 +385,38 @@
         ],
         "parameters": [
           {
-            "$ref": "#/parameters/ScheduleCreateOrUpdateProperties"
-          },
-          {
             "$ref": "#/parameters/OptionalClientVersion"
           },
           {
             "$ref": "#/parameters/OptionalClientIndex"
+          },
+          {
+            "$ref": "#/parameters/OptionalClientString"
+          },
+          {
+            "name": "things",
+            "required": true,
+            "in": "query",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "this",
+                "that",
+                "other"
+              ],
+              "x-ms-enum": {
+                "name": "Things"
+              }
+            }
+          },
+          {
+            "name": "polymorphicParam",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GeoJsonObject"
+            }
           },
           {
             "name": "interval",
@@ -329,6 +424,13 @@
             "type": "string",
             "required": false,
             "format": "duration"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "format": "uuid"
           }
         ],
         "responses": {
@@ -714,6 +816,18 @@
         "anyObject": {
           "type": "object",
           "description": "any JSON object"
+        }
+      }
+    },
+    "TypeWithSliceOfTimes": {
+      "type": "object",
+      "properties": {
+        "times": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       }
     }

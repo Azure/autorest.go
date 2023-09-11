@@ -3,23 +3,25 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Session } from '@autorest/extension-base';
+import { ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter } from '../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isSliceType, isTimeType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
-import { aggregateParameters, commentLength, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
-import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema, DictionarySchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
+
+// variable to be used to determine comment length when calling comment from @azure-tools
+export const commentLength = 120;
 
 export const dateFormat = '2006-01-02';
 export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
 
 // returns the common source-file preamble (license comment, package name etc)
-export async function contentPreamble(session: Session<CodeModel>, packageName?: string): Promise<string> {
+export function contentPreamble(codeModel: GoCodeModel, packageName?: string): string {
   if (!packageName) {
-    packageName = session.model.language.go!.packageName;
+    packageName = codeModel.packageName;
   }
-  const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
+  const headerText = comment(codeModel.options.headerText, '// ');
   let text = '//go:build go1.18\n// +build go1.18\n\n';
   // ensure tools recognize the file as generated according to
   // https://pkg.go.dev/cmd/go#hdr-Generate_Go_files_by_processing_source
@@ -31,104 +33,97 @@ export async function contentPreamble(session: Session<CodeModel>, packageName?:
   return text;
 }
 
-// returns true if the language contains a description
-export function hasDescription(lang: Language): boolean {
-  return (lang.description !== undefined && lang.description.length > 0 && !lang.description.startsWith('MISSING'));
-}
-
 // used to sort strings in ascending order
 export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
+export function isParameter(param: Parameter | ParameterGroup): param is Parameter {
+  return (<ParameterGroup>param).groupName === undefined;
+}
+
+export function isParameterGroup(param: Parameter | ParameterGroup): param is ParameterGroup {
+  return (<ParameterGroup>param).groupName !== undefined;
+}
+
+export function isRequiredParameter(param: Parameter): boolean {
+  // parameters with a client-side default value are always optional
+  if (isClientSideDefault(param.paramType)) {
+    return false;
+  }
+  return param.paramType === 'required';
+}
+
+export function isLiteralParameter(param: Parameter): boolean {
+  if (isClientSideDefault(param.paramType)) {
+    return false;
+  }
+  return param.paramType === 'literal';
+}
+
 // returns the type name with possible * prefix
-export function formatParameterTypeName(param: Parameter, pkgName?: string): string {
-  const typeName = formatTypeName(param.schema, pkgName);
-  if (param.required) {
-    return typeName;
+export function formatParameterTypeName(param: Parameter | ParameterGroup, pkgName?: string): string {
+  let typeName: string;
+  if (isParameterGroup(param)) {
+    typeName = param.groupName;
+    if (pkgName) {
+      typeName = `${pkgName}.${typeName}`;
+    }
+    if (param.required) {
+      return typeName;
+    }
+  } else {
+    typeName = getTypeDeclaration(param.type, pkgName);
+    if (isRequiredParameter(param) || (param.location === 'client' && isClientSideDefault(param.paramType))) {
+      // client parameters with default values aren't emitted as pointer-to-type
+      return typeName;
+    }
   }
   return `*${typeName}`;
 }
 
-// returns the type name with possible pkgName prefix
-export function formatTypeName(schema: Schema, pkgName?: string): string {
-  const typeName = schema.language.go!.name;
-  if (!pkgName) {
-    return typeName;
-  }
-
-  // if not an array/dictionary, just prepend the package name
-  if (schema.type !== SchemaType.Array && schema.type !== SchemaType.Dictionary) {
-    if (schema.type === SchemaType.Choice || schema.type === SchemaType.SealedChoice || schema.type === SchemaType.Object) {
-      return `${pkgName}.${typeName}`;
-    }
-    return typeName;
-  }
-
-  // for array/dictionary, we need to splice the package name into the correct location
-  const elementType = unwrapSchemaType(schema);
-  if (elementType.type === SchemaType.Choice || elementType.type === SchemaType.SealedChoice || elementType.type === SchemaType.Object) {
-    return typeName.replace(`*${elementType.language.go!.name}`, `*${pkgName}.${elementType.language.go!.name}`);
-  }
-
-  return typeName;
-}
-
-// recursively gets the element schema from an array/dictionary
-function unwrapSchemaType(schema: Schema): Schema {
-  if (schema.type === SchemaType.Array) {
-    return unwrapSchemaType((<ArraySchema>schema).elementType);
-  } else if (schema.type === SchemaType.Dictionary) {
-    return unwrapSchemaType((<DictionarySchema>schema).elementType);
-  }
-  return schema;
-}
-
-// returns true if the parameter should not be URL encoded
-export function skipURLEncoding(param: Parameter): boolean {
-  if (param.extensions) {
-    return param.extensions['x-ms-skip-url-encoding'] === true;
-  }
-  return false;
-}
-
 // sorts parameters by their required state, ordering required before optional
-export function sortParametersByRequired(a: Parameter, b: Parameter): number {
-  if (a.required === b.required) {
-    return 0;
+export function sortParametersByRequired(a: Parameter | ParameterGroup, b: Parameter | ParameterGroup): number {
+  let aRequired = false;
+  let bRequired = false;
+
+  if (isParameter(a)) {
+    aRequired = isRequiredParameter(a);
+  } else {
+    aRequired = a.required;
   }
-  if (a.required && !b.required) {
+
+  if (isParameter(b)) {
+    bRequired = isRequiredParameter(b);
+  } else {
+    bRequired = b.required;
+  }
+
+  if (aRequired === bRequired) {
+    return 0;
+  } else if (aRequired && !bRequired) {
     return -1;
   }
   return 1;
 }
 
-// if an LRO returns a discriminated type, unmarshall the response into the response envelope, else the property field
-export function discriminatorFinalResponse(respEnv: ObjectSchema): string {
-  const resultProp = <Property>respEnv.language.go!.resultProp;
-  if (resultProp.schema.language.go!.discriminatorInterface) {
-    return '';
-  }
-  return '.' + resultProp.language.go!.name;
-}
-
 // returns the parameters for the internal request creator method.
 // e.g. "i int, s string"
-export function getCreateRequestParametersSig(op: Operation): string {
-  const methodParams = getMethodParameters(op);
+export function getCreateRequestParametersSig(method: Method | NextPageMethod): string {
+  const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(methodParam.paramName)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
 
 // returns the parameter names for an operation (excludes the param types).
 // e.g. "i, s"
-export function getCreateRequestParameters(op: Operation): string {
+export function getCreateRequestParameters(method: Method): string {
   // split param list into individual params
-  const reqParams = getCreateRequestParametersSig(op).split(',');
+  const reqParams = getCreateRequestParametersSig(method).split(',');
   // keep the parameter names from the name/type tuples
   for (let i = 0; i < reqParams.length; ++i) {
     reqParams[i] = reqParams[i].trim().split(' ')[0];
@@ -137,31 +132,36 @@ export function getCreateRequestParameters(op: Operation): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(op: Operation): Array<Parameter> {
+export function getMethodParameters(method: Method | NextPageMethod, paramsFilter?: (p: Array<Parameter>) => Array<Parameter>): Array<Parameter | ParameterGroup> {
   const params = new Array<Parameter>();
-  const paramGroups = new Array<GroupProperty>();
-  for (const param of values(aggregateParameters(op))) {
-    if (param.implementation === ImplementationLocation.Client) {
+  const paramGroups = new Array<ParameterGroup>();
+  let methodParams = method.parameters;
+  if (paramsFilter) {
+    methodParams = paramsFilter(methodParams);
+  }
+  for (const param of values(methodParams)) {
+    if (param.location === 'client') {
       // client params are passed via the receiver
+      // must check before param group as client params can be grouped
       continue;
-    } else if (param.language.go!.paramGroup) {
+    } else if (param.group) {
       // param groups will be added after individual params
-      if (!paramGroups.includes(param.language.go!.paramGroup)) {
-        paramGroups.push(param.language.go!.paramGroup);
+      if (!paramGroups.includes(param.group)) {
+        paramGroups.push(param.group);
       }
-      continue;
-    } else if (param.schema.type === SchemaType.Constant) {
+    } else if (isLiteralValue(param.type)) {
       // don't generate a parameter for a constant
       // NOTE: this check must come last as non-required optional constants
       // in header/query params get dumped into the optional params group
       continue;
+    } else {
+      params.push(param);
     }
-    params.push(param);
   }
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
   // add any parameter groups.  optional groups go last
-  paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
+  paramGroups.sort((a: ParameterGroup, b: ParameterGroup) => {
     if (a.required === b.required) {
       return 0;
     }
@@ -171,78 +171,64 @@ export function getMethodParameters(op: Operation): Array<Parameter> {
     return 1;
   });
   // add the optional param group last if it's not already in the list.
-  // all operations should have an optional params type.  the only exception
-  // is the next link operation for pageable operations.
-  if (op.language.go!.optionalParamGroup && !values(paramGroups).any(gp => { return gp.language.go!.name === op.language.go!.optionalParamGroup.language.go!.name; })) {
-    paramGroups.push(op.language.go!.optionalParamGroup);
+  if (isMethod(method)) {
+    if (!values(paramGroups).any(gp => { return gp.groupName === method.optionalParamsGroup.groupName; })) {
+      paramGroups.push(method.optionalParamsGroup);
+    }
   }
-  for (const paramGroup of values(paramGroups)) {
-    params.push(paramGroup);
+  const combined = new Array<Parameter | ParameterGroup>();
+  for (const param of params) {
+    combined.push(param);
   }
-  return params;
+  for (const paramGroup of paramGroups) {
+    combined.push(paramGroup);
+  }
+  return combined;
 }
 
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
 export function getParamName(param: Parameter): string {
-  let paramName = param.language.go!.name;
+  let paramName = param.paramName;
   // must check paramGroup first as client params can also be grouped
-  if (param.language.go!.paramGroup) {
-    paramName = `${uncapitalize(param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
+  if (param.group) {
+    paramName = `${uncapitalize(param.group.paramName)}.${capitalize(paramName)}`;
   }
-  if (param.implementation === ImplementationLocation.Client) {
+  if (param.location === 'client') {
     paramName = `client.${paramName}`;
   }
-  if (param.required !== true && !param.language.go!.byValue) {
+  // client parameters with default values aren't emitted as pointer-to-type
+  if (!isRequiredParameter(param) && !(param.location === 'client' && isClientSideDefault(param.paramType)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
 }
 
-export function formatParamValue(param: Parameter, imports: ImportManager): string {
-  let separator = ',';
-  switch (param.protocol.http?.style) {
-    case SerializationStyle.PipeDelimited:
-      separator = '|';
-      break;
-    case SerializationStyle.SpaceDelimited:
-      separator = ' ';
-      break;
-    case SerializationStyle.TabDelimited:
-      separator = '\\t';
-      break;
-  }
+export function formatParamValue(param: FormBodyParameter | HeaderParameter | PathParameter | QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
-  switch (param.schema.type) {
-    case SchemaType.Array: {
-      const arraySchema = <ArraySchema>param.schema;
-      switch (arraySchema.elementType.type) {
-        case SchemaType.String:
-          imports.add('strings');
-          return `strings.Join(${paramName}, "${separator}")`;
-        default:
-          imports.add('fmt');
-          imports.add('strings');
-          return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
-      }
+  if (isSliceType(param.type)) {
+    let separator = ',';
+    if (param.delimiter) {
+      separator = param.delimiter;
     }
-    case SchemaType.Date:
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substring(1);
-      }
-      break;
-    case SchemaType.DateTime:
-      imports.add('time');
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substring(1);
-      }
+    if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+      imports.add('strings');
+      return `strings.Join(${paramName}, "${separator}")`;
+    } else {
+      imports.add('fmt');
+      imports.add('strings');
+      return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
+    }
+  } else if (isTimeType(param.type)) {
+    if (!isRequiredParameter(param) && paramName[0] === '*') {
+      // remove the dereference
+      paramName = paramName.substring(1);
+    }
   }
-  return formatValue(paramName, param.schema, imports);
+  return formatValue(paramName, param.type, imports);
 }
 
-export function formatValue(paramName: string, schema: Schema, imports: ImportManager, defef?: boolean): string {
+export function formatValue(paramName: string, type: PossibleType, imports: ImportManager, defef?: boolean): string {
   // callers don't have enough context to know if paramName needs to be
   // deferenced so we track that here when specified. note that not all
   // cases will require paramName to be dereferenced.
@@ -250,298 +236,245 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
   if (defef === true) {
     star = '*';
   }
-  switch (schema.type) {
-    case SchemaType.Array:
-      throw new Error('can\'t format array without parameter info');
-    case SchemaType.Boolean:
+  if (isLiteralValue(type)) {
+    // cannot use formatLiteralValue() since all values are treated as strings
+    return `"${type.literal}"`;
+  } else if (isBytesType(type)) {
+    // ByteArray is a base-64 encoded value in string format
+    imports.add('encoding/base64');
+    let byteFormat = 'Std';
+    if (type.encoding === 'URL') {
+      byteFormat = 'RawURL';
+    }
+    return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
+  } else if (isPrimitiveType(type)) {
+    if (type.typeName === 'bool') {
       imports.add('strconv');
       return `strconv.FormatBool(${star}${paramName})`;
-    case SchemaType.ByteArray: {
-      // ByteArray is a base-64 encoded value in string format
-      imports.add('encoding/base64');
-      let byteFormat = 'Std';
-      if ((<ByteArraySchema>schema).format === 'base64url') {
-        byteFormat = 'RawURL';
-      }
-      return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
+    } else if (type.typeName === 'int32') {
+      imports.add('strconv');
+      return `strconv.FormatInt(int64(${star}${paramName}), 10)`;
+    } else if (type.typeName === 'int64') {
+      imports.add('strconv');
+      return `strconv.FormatInt(${star}${paramName}, 10)`;
+    } else if (type.typeName === 'float32') {
+      imports.add('strconv');
+      return `strconv.FormatFloat(float64(${star}${paramName}), 'f', -1, 32)`;
+    } else if (type.typeName === 'float64') {
+      imports.add('strconv');
+      return `strconv.FormatFloat(${star}${paramName}, 'f', -1, 64)`;
     }
-    case SchemaType.Choice:
-    case SchemaType.SealedChoice:
-      return `string(${star}${paramName})`;
-    case SchemaType.Constant: {
-      const constSchema = <ConstantSchema>schema;
-      // cannot use formatConstantValue() since all values are treated as strings
-      return `"${constSchema.value.value}"`;
-    }
-    case SchemaType.Date:
+  } else if (isTimeType(type)) {
+    if (type.dateTimeFormat === 'dateType') {
       return `${paramName}.Format("${dateFormat}")`;
-    case SchemaType.DateTime: {
+    } else if (type.dateTimeFormat === 'timeUnix') {
+      return `timeUnix(${star}${paramName}).String()`;
+    } else {
       imports.add('time');
       let format = datetimeRFC3339Format;
-      const dateTime = <DateTimeSchema>schema;
-      if (dateTime.format === 'date-time-rfc1123') {
+      if (type.dateTimeFormat === 'timeRFC1123') {
         format = datetimeRFC1123Format;
       }
       return `${paramName}.Format(${format})`;
     }
-    case SchemaType.UnixTime:
-      return `timeUnix(${star}${paramName}).String()`;
-    case SchemaType.Integer: {
-      imports.add('strconv');
-      const intSchema = <NumberSchema>schema;
-      let intParam = paramName;
-      if (intSchema.precision === 32) {
-        intParam = `int64(${star}${intParam})`;
-        star = '';
-      }
-      return `strconv.FormatInt(${star}${intParam}, 10)`;
-    }
-    case SchemaType.Number: {
-      imports.add('strconv');
-      const numberSchema = <NumberSchema>schema;
-      let floatParam = paramName;
-      if (numberSchema.precision === 32) {
-        floatParam = `float64(${star}${floatParam})`;
-        star = '';
-      }
-      return `strconv.FormatFloat(${star}${floatParam}, 'f', -1, ${numberSchema.precision})`;
-    }
-    default:
-      return `${star}${paramName}`;
+  } else if (isConstantType(type)) {
+    return `string(${star}${paramName})`;
   }
+  return `${star}${paramName}`;
 }
 
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-export function getClientDefaultValue(param: Parameter | Property): string {
-  const getChoiceValue = function (choices: Array<ChoiceValue>): string {
-    // find the corresponding const type name
-    for (const choice of values(choices)) {
-      if (choice.value === param.clientDefaultValue) {
-        return choice.language.go!.name;
-      }
+export function formatLiteralValue(value: LiteralValue): string {
+  if (isConstantType(value.type)) {
+    return (<ConstantValue>value.literal).valueName;
+  } else if (isPrimitiveType(value.type)) {
+    switch (value.type.typeName) {
+      case 'float32':
+        return `float32(${value.literal})`;
+      case 'float64':
+        return `float64(${value.literal})`;
+      case 'int32':
+        return `int32(${value.literal})`;
+      case 'int64':
+        return `int64(${value.literal})`;
+      case 'string':
+        if (value.literal[0] === '"') {
+          // string is already quoted
+          return value.literal;
+        }
+        return `"${value.literal}"`;
+      default:
+        return value.literal;
     }
-    throw new Error(`failed to find matching constant for default value ${param.clientDefaultValue}`);
-  };
-  switch (param.schema.type) {
-    case SchemaType.Choice:
-      return getChoiceValue((<ChoiceSchema>param.schema).choices);
-    case SchemaType.Integer:
-      if ((<NumberSchema>param.schema).precision === 32) {
-        return `int32(${param.clientDefaultValue})`;
-      }
-      return `int64(${param.clientDefaultValue})`;
-    case SchemaType.Number:
-      if ((<NumberSchema>param.schema).precision === 32) {
-        return `float32(${param.clientDefaultValue})`;
-      }
-      return `float64(${param.clientDefaultValue})`;
-    case SchemaType.SealedChoice:
-      return getChoiceValue((<SealedChoiceSchema>param.schema).choices);
-    case SchemaType.String:
-      return `"${param.clientDefaultValue}"`;
-    default:
-      return param.clientDefaultValue;
+  } else if (isTimeType(value.type)) {
+    return `"${value.literal}"`;
   }
+  return value.literal;
 }
 
 // returns true if at least one of the responses has a schema
-export function hasSchemaResponse(op: Operation): boolean {
-  for (const resp of values(op.responses)) {
-    if (isSchemaResponse(resp)) {
-      return true;
-    }
+export function hasSchemaResponse(method: Method): boolean {
+  const result = method.responseEnvelope.result;
+  if (!result) {
+    return false;
   }
-  return false;
-}
-
-// returns the response envelope type name
-export function getResponseEnvelopeName(op: Operation): string {
-  return op.language.go!.responseEnv.language.go!.name;
-}
-
-// returns the result property for the operation or undefined if it doesn't return a model
-export function hasResultProperty(op: Operation): Property | undefined {
-  const responseEnv = getResponseEnvelope(op);
-  if (responseEnv.language.go!.resultProp) {
-    return responseEnv.language.go!.resultProp;
-  }
-  return undefined;
-}
-
-export function getResponseEnvelope(op: Operation): ObjectSchema {
-  return op.language.go!.responseEnv;
+  return isAnyResult(result) || isMonomorphicResult(result) || isPolymorphicResult(result) || isModelResult(result);
 }
 
 // returns the name of the response field within the response envelope
-export function getResultFieldName(op: Operation): string {
-  if (isMultiRespOperation(op)) {
-    return 'Value';
+export function getResultFieldName(method: Method): string {
+  const result = method.responseEnvelope.result;
+  if (!result) {
+    throw new Error(`missing result for method ${method.methodName}`);
+  } else if (isAnyResult(result) || isBinaryResult(result) || isHeadAsBooleanResult(result) || isMonomorphicResult(result)) {
+    return result.fieldName;
+  } else if (isPolymorphicResult(result)) {
+    return result.interfaceType.name;
+  } else if (isModelResult(result)) {
+    return result.modelType.name;
+  } else {
+    throw new Error(`unhandled result type for method ${method.client.clientName}.${method.methodName}`);
   }
-  const responseEnv = op.language.go!.responseEnv;
-  if (responseEnv.language.go!.resultProp.schema.serialization?.xml?.name) {
-    // here we use the schema name instead of the result field name as it's anonymously embedded in the response envelope.
-    // this is to handle XML cases that specify a custom XML name for the propery within the result field.
-    return responseEnv.language.go!.resultProp.schema.language.go!.name;
-  }
-  return responseEnv.language.go!.resultProp.language.go!.name;
 }
 
-export function getStatusCodes(op: Operation): Array<string> {
-  // concat all status codes that return the same schema into one array.
-  // this is to support operations that specify multiple response codes
-  // that return the same schema (or no schema).
-  let statusCodes = new Array<string>();
-  for (const resp of values(op.responses)) {
-    statusCodes = statusCodes.concat(resp.protocol.http?.statusCodes);
-  }
-  if (statusCodes.length === 0) {
-    // if the operation defines no status codes (which is non-conformant)
-    // then add 200, 201, 202, and 204 to the list.  this is to accomodate
-    // some quirky tests in the test server.
-    // TODO: https://github.com/Azure/autorest.go/issues/659
-    statusCodes = ['200', '201', '202', '204'];
-  }
-  return statusCodes;
-}
-
-export function formatStatusCodes(statusCodes: Array<string>): string {
+export function formatStatusCodes(statusCodes: Array<number>): string {
   const asHTTPStatus = new Array<string>();
-  for (const rawCode of values(statusCodes)) {
+  for (const rawCode of statusCodes) {
     asHTTPStatus.push(formatStatusCode(rawCode));
   }
   return asHTTPStatus.join(', ');
 }
 
-export function formatStatusCode(statusCode: string): string {
+export function formatStatusCode(statusCode: number): string {
   switch (statusCode) {
     // 1xx
-    case '100':
+    case 100:
       return 'http.StatusContinue';
-    case '101':
+    case 101:
       return 'http.StatusSwitchingProtocols';
-    case '102':
+    case 102:
       return 'http.StatusProcessing';
-    case '103':
+    case 103:
       return 'http.StatusEarlyHints';
     // 2xx
-    case '200':
+    case 200:
       return 'http.StatusOK';
-    case '201':
+    case 201:
       return 'http.StatusCreated';
-    case '202':
+    case 202:
       return 'http.StatusAccepted';
-    case '203':
+    case 203:
       return 'http.StatusNonAuthoritativeInfo';
-    case '204':
+    case 204:
       return 'http.StatusNoContent';
-    case '205':
+    case 205:
       return 'http.StatusResetContent';
-    case '206':
+    case 206:
       return 'http.StatusPartialContent';
-    case '207':
+    case 207:
       return 'http.StatusMultiStatus';
-    case '208':
+    case 208:
       return 'http.StatusAlreadyReported';
-    case '226':
+    case 226:
       return 'http.StatusIMUsed';
     // 3xx
-    case '300':
+    case 300:
       return 'http.StatusMultipleChoices';
-    case '301':
+    case 301:
       return 'http.StatusMovedPermanently';
-    case '302':
+    case 302:
       return 'http.StatusFound';
-    case '303':
+    case 303:
       return 'http.StatusSeeOther';
-    case '304':
+    case 304:
       return 'http.StatusNotModified';
-    case '305':
+    case 305:
       return 'http.StatusUseProxy';
-    case '307':
+    case 307:
       return 'http.StatusTemporaryRedirect';
     // 4xx
-    case '400':
+    case 400:
       return 'http.StatusBadRequest';
-    case '401':
+    case 401:
       return 'http.StatusUnauthorized';
-    case '402':
+    case 402:
       return 'http.StatusPaymentRequired';
-    case '403':
+    case 403:
       return 'http.StatusForbidden';
-    case '404':
+    case 404:
       return 'http.StatusNotFound';
-    case '405':
+    case 405:
       return 'http.StatusMethodNotAllowed';
-    case '406':
+    case 406:
       return 'http.StatusNotAcceptable';
-    case '407':
+    case 407:
       return 'http.StatusProxyAuthRequired';
-    case '408':
+    case 408:
       return 'http.StatusRequestTimeout';
-    case '409':
+    case 409:
       return 'http.StatusConflict';
-    case '410':
+    case 410:
       return 'http.StatusGone';
-    case '411':
+    case 411:
       return 'http.StatusLengthRequired';
-    case '412':
+    case 412:
       return 'http.StatusPreconditionFailed';
-    case '413':
+    case 413:
       return 'http.StatusRequestEntityTooLarge';
-    case '414':
+    case 414:
       return 'http.StatusRequestURITooLong';
-    case '415':
+    case 415:
       return 'http.StatusUnsupportedMediaType';
-    case '416':
+    case 416:
       return 'http.StatusRequestedRangeNotSatisfiable';
-    case '417':
+    case 417:
       return 'http.StatusExpectationFailed';
-    case '418':
+    case 418:
       return 'http.StatusTeapot';
-    case '421':
+    case 421:
       return 'http.StatusMisdirectedRequest';
-    case '422':
+    case 422:
       return 'http.StatusUnprocessableEntity';
-    case '423':
+    case 423:
       return 'http.StatusLocked';
-    case '424':
+    case 424:
       return 'http.StatusFailedDependency';
-    case '425':
+    case 425:
       return 'http.StatusTooEarly';
-    case '426':
+    case 426:
       return 'http.StatusUpgradeRequired';
-    case '428':
+    case 428:
       return 'http.StatusPreconditionRequired';
-    case '429':
+    case 429:
       return 'http.StatusTooManyRequests';
-    case '431':
+    case 431:
       return 'http.StatusRequestHeaderFieldsTooLarge';
-    case '451':
+    case 451:
       return 'http.StatusUnavailableForLegalReasons';
     // 5xx
-    case '500':
+    case 500:
       return 'http.StatusInternalServerError';
-    case '501':
+    case 501:
       return 'http.StatusNotImplemented';
-    case '502':
+    case 502:
       return 'http.StatusBadGateway';
-    case '503':
+    case 503:
       return 'http.StatusServiceUnavailable';
-    case '504':
+    case 504:
       return 'http.StatusGatewayTimeout ';
-    case '505':
+    case 505:
       return 'http.StatusHTTPVersionNotSupported';
-    case '506':
+    case 506:
       return 'http.StatusVariantAlsoNegotiates';
-    case '507':
+    case 507:
       return 'http.StatusInsufficientStorage';
-    case '508':
+    case 508:
       return 'http.StatusLoopDetected';
-    case '510':
+    case 510:
       return 'http.StatusNotExtended';
-    case '511':
+    case 511:
       return 'http.StatusNetworkAuthenticationRequired';
     default:
       throw new Error(`unhandled status code ${statusCode}`);
@@ -570,14 +503,12 @@ export function formatCommentAsBulletItem(description: string): string {
   return chunks.join('\n');
 }
 
-export async function getParentImport(session: Session<CodeModel>): Promise<string> {
-  const clientPkg = session.model.language.go!.packageName;
-  const modName = session.model.language.go!.module;
-  const containingMod = await session.getValue('containing-module', 'none');
-  if (modName !== 'none') {
-    return modName;
-  } else if (containingMod !== 'none') {
-    return containingMod + '/' + clientPkg;
+export function getParentImport(codeModel: GoCodeModel): string {
+  const clientPkg = codeModel.packageName;
+  if (codeModel.options.module) {
+    return codeModel.options.module;
+  } else if (codeModel.options.containingModule) {
+    return codeModel.options.containingModule + '/' + clientPkg;
   } else {
     throw new Error('unable to determine containing module for fakes. specify either the module or containing-module switch');
   }

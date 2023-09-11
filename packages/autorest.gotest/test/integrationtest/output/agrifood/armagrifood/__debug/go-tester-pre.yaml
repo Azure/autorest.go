@@ -4783,6 +4783,7 @@ operationGroups:
         clientName: ExtensionsClient
         clientParams:
           - *ref_124
+        host: '{$host}'
     protocol: {}
   - &ref_376
     $key: FarmBeatsExtensions
@@ -5599,6 +5600,7 @@ operationGroups:
         description: ''
         clientCtorName: NewFarmBeatsExtensionsClient
         clientName: FarmBeatsExtensionsClient
+        host: '{$host}'
     protocol: {}
   - &ref_404
     $key: FarmBeatsModels
@@ -7159,6 +7161,7 @@ operationGroups:
         clientName: FarmBeatsModelsClient
         clientParams:
           - *ref_124
+        host: '{$host}'
     protocol: {}
   - &ref_456
     $key: Locations
@@ -7356,6 +7359,7 @@ operationGroups:
         clientName: LocationsClient
         clientParams:
           - *ref_124
+        host: '{$host}'
     protocol: {}
   - &ref_462
     $key: Operations
@@ -7569,6 +7573,7 @@ operationGroups:
         description: ''
         clientCtorName: NewOperationsClient
         clientName: OperationsClient
+        host: '{$host}'
     protocol: {}
   - &ref_482
     $key: PrivateEndpointConnections
@@ -8486,6 +8491,7 @@ operationGroups:
         clientName: PrivateEndpointConnectionsClient
         clientParams:
           - *ref_124
+        host: '{$host}'
     protocol: {}
   - &ref_505
     $key: PrivateLinkResources
@@ -8917,6 +8923,7 @@ operationGroups:
         clientName: PrivateLinkResourcesClient
         clientParams:
           - *ref_124
+        host: '{$host}'
     protocol: {}
 security:
   authenticationRequired: true
@@ -12448,6 +12455,7 @@ language:
     name: AzureAgFoodPlatformRPService
     description: ''
     azureARM: true
+    containingModule: none
     generateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
