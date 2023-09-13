@@ -1,0 +1,40 @@
+schedules:
+- cron: '0 0 * * *'
+  displayName: Nightly dev build
+  branches:
+    include:
+    - main
+
+trigger: none
+pr: none
+
+parameters:
+- name: UseTypeSpecNext
+  displayName: Use TypeSpec "next" version
+  type: boolean
+  default: true
+
+resources:
+  repositories:
+    - repository: sdk-repository
+      type: github
+      endpoint: Azure
+      name: Azure/azure-sdk-for-go
+      ref: refs/heads/users/pahallis/cookiecutter
+    - repository: azure-sdk-tools
+      type: github
+      endpoint: Azure
+      name: Azure/azure-sdk-tools
+      ref: refs/heads/users/pahallis/cookiecutter-go
+
+extends:
+  template: eng/pipelines/templates/stages/archetype-autorest-preview.yml@azure-sdk-tools
+  parameters:
+    RegenerationJobCount: 1
+    BuildAlphaVersion: true
+    UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
+    Packages:
+    - name: generator
+      file: autorest-go-*.tgz
+      type: npm
+    PublishTarget: 'internal'

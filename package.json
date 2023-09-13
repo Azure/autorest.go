@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "ci-init": "pwsh eng/scripts/init.ps1",
+    "ci-build": "pwsh eng/scripts/build.ps1"
+  },
+  "devDependencies": {
+    "@microsoft/rush": "^5.56.0",
+    "@azure-tools/typespec-bump-deps": "0.3.0"
+  }
+}
