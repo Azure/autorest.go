@@ -30,7 +30,7 @@ function updateVersion($suffix) {
   invoke "npm version $version$suffix --allow-same-version --no-workspaces-update"
 }
 
-$outFolder = New-Item $Output -ItemType Directory -Force
+$packagesFolder = New-Item "$Output/packages" -ItemType Directory -Force
 
 Push-Location "$root/packages/autorest.go"
 try {
@@ -38,7 +38,7 @@ try {
       updateVersion  "-alpha.$BuildNumber"
     }
 
-    invoke "npm pack --pack-destination=$outFolder"
+    invoke "npm pack --pack-destination=$packagesFolder"
 
     exit $LASTEXITCODE
 }
