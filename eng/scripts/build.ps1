@@ -30,6 +30,10 @@ function updateVersion($suffix) {
   invoke "npm version $version$suffix --allow-same-version --no-workspaces-update"
 }
 
+if (!$Output) {
+    $Output = "$root/artifacts"
+}
+
 $packagesFolder = New-Item "$Output/packages" -ItemType Directory -Force
 
 Push-Location "$root/packages/autorest.go"
