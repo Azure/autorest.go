@@ -21,6 +21,10 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
 
     const info = new go.Info(session.model.info.title);
     const options = new go.Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
+    const azcoreVersion = await session.getValue('azcore-version', '');
+    if (azcoreVersion !== '') {
+      options.azcoreVersion = azcoreVersion;
+    }
 
     let type: go.CodeModelType = 'data-plane';
     if (session.model.language.go!.azureARM) {
