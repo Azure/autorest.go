@@ -527,7 +527,7 @@ export function elementByValueForParam(param: Parameter): boolean {
 }
 
 function formatRFC3339Nano(t: string): string {
-  let date = new Date(t);
+  const date = new Date(t);
   
   function pad(n: number): string {
       return n < 10 ? '0' + n : String(n);
