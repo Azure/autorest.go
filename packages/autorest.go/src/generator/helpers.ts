@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter } from '../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isSliceType, isTimeType } from '../gocodemodel/gocodemodel';
+import { CollectionFormat, ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter, isFormBodyCollectionParameter, isHeaderCollectionParameter, isPathCollectionParameter, isQueryCollectionParameter } from '../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isTimeType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports';
@@ -206,11 +206,11 @@ export function getParamName(param: Parameter): string {
 
 export function formatParamValue(param: FormBodyParameter | HeaderParameter | PathParameter | QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
-  if (isSliceType(param.type)) {
-    let separator = ',';
-    if (param.delimiter) {
-      separator = param.delimiter;
+  if (isFormBodyCollectionParameter(param) || isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
+    if (param.collectionFormat === 'multi') {
+      throw new Error('multi collection format should have been previously handled');
     }
+    const separator = getDelimiterForCollectionFormat(param.collectionFormat);
     if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
       imports.add('strings');
       return `strings.Join(${paramName}, "${separator}")`;
@@ -226,6 +226,21 @@ export function formatParamValue(param: FormBodyParameter | HeaderParameter | Pa
     }
   }
   return formatValue(paramName, param.type, imports);
+}
+
+export function getDelimiterForCollectionFormat(cf: CollectionFormat): string {
+  switch (cf) {
+    case 'csv':
+      return ',';
+    case 'pipes':
+      return '|';
+    case 'ssv':
+      return ' ';
+    case 'tsv':
+      return '\\t';
+    default:
+      throw new Error(`unhandled CollectionFormat ${cf}`);
+  }
 }
 
 export function formatValue(paramName: string, type: PossibleType, imports: ImportManager, defef?: boolean): string {
