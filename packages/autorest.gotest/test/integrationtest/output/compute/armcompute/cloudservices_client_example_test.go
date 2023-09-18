@@ -734,13 +734,13 @@ func ExampleCloudServicesClient_GetInstanceView() {
 	// 				Code: to.Ptr("ProvisioningState/succeeded"),
 	// 				DisplayStatus: to.Ptr("Provisioning succeeded"),
 	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
-	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t}()),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T11:20:07.095Z"); return t}()),
 	// 			},
 	// 			{
 	// 				Code: to.Ptr("PowerState/started"),
 	// 				DisplayStatus: to.Ptr("Started"),
 	// 				Level: to.Ptr(armcompute.StatusLevelTypesInfo),
-	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t}()),
+	// 				Time: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T11:20:07.095Z"); return t}()),
 	// 			},
 	// 			{
 	// 				Code: to.Ptr("CurrentUpgradeDomain/-1"),

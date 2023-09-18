@@ -120,7 +120,7 @@ func ExampleDedicatedHostsClient_Get() {
 	// 		},
 	// 		PlatformFaultDomain: to.Ptr[int32](1),
 	// 		ProvisioningState: to.Ptr("Succeeded"),
-	// 		ProvisioningTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-27T01:02:38.3138469+00:00"); return t}()),
+	// 		ProvisioningTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-27T01:02:38.313Z"); return t}()),
 	// 		VirtualMachines: []*armcompute.SubResourceReadOnly{
 	// 			{
 	// 				ID: to.Ptr("/subscriptions/subId/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/vm1"),

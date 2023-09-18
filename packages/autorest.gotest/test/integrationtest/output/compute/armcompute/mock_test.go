@@ -673,7 +673,7 @@ func (testsuite *MockTestSuite) TestDedicatedHosts_Get() {
 			},
 			PlatformFaultDomain: to.Ptr[int32](1),
 			ProvisioningState:   to.Ptr("Succeeded"),
-			ProvisioningTime:    to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-27T01:02:38.3138469+00:00"); return t }()),
+			ProvisioningTime:    to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-27T01:02:38.313Z"); return t }()),
 			VirtualMachines: []*armcompute.SubResourceReadOnly{
 				{
 					ID: to.Ptr("/subscriptions/subId/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/vm1"),
@@ -5179,7 +5179,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 						Code:          to.Ptr("ProvisioningState/succeeded"),
 						DisplayStatus: to.Ptr("Provisioning succeeded"),
 						Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.477089+00:00"); return t }()),
+						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.477Z"); return t }()),
 					}},
 			},
 			{
@@ -5189,7 +5189,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 						Code:          to.Ptr("ProvisioningState/succeeded"),
 						DisplayStatus: to.Ptr("Provisioning succeeded"),
 						Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.461517+00:00"); return t }()),
+						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:29:47.461Z"); return t }()),
 					}},
 			}},
 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypeV1),
@@ -5199,10 +5199,10 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 			AvailablePatchSummary: &armcompute.AvailablePatchSummary{
 				AssessmentActivityID:          to.Ptr("68f8b292-dfc2-4646-9781-33cc88631968"),
 				CriticalAndSecurityPatchCount: to.Ptr[int32](1),
-				LastModifiedTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+				LastModifiedTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				OtherPatchCount:               to.Ptr[int32](2),
 				RebootPending:                 to.Ptr(true),
-				StartTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+				StartTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				Status:                        to.Ptr(armcompute.PatchOperationStatusSucceeded),
 			},
 			ConfigurationStatuses: []*armcompute.InstanceViewStatus{
@@ -5210,30 +5210,30 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 					Code:          to.Ptr("PatchModeConfigurationState/Ready"),
 					DisplayStatus: to.Ptr("Status_PatchModeConfigurationState_Ready"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				},
 				{
 					Code:          to.Ptr("PatchModeConfigurationState/Pending"),
 					DisplayStatus: to.Ptr("Status_PatchModeConfigurationState_Pending"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				},
 				{
 					Code:          to.Ptr("AssessmentModeConfigurationState/Pending"),
 					DisplayStatus: to.Ptr("Status_AssessmentModeConfigurationState_Pending"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				}},
 			LastPatchInstallationSummary: &armcompute.LastPatchInstallationSummary{
 				ExcludedPatchCount:        to.Ptr[int32](1),
 				FailedPatchCount:          to.Ptr[int32](1),
 				InstallationActivityID:    to.Ptr("68f8b292-dfc2-4646-9981-33cc88631968"),
 				InstalledPatchCount:       to.Ptr[int32](1),
-				LastModifiedTime:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+				LastModifiedTime:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				MaintenanceWindowExceeded: to.Ptr(false),
 				NotSelectedPatchCount:     to.Ptr[int32](1),
 				PendingPatchCount:         to.Ptr[int32](1),
-				StartTime:                 to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+				StartTime:                 to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 				Status:                    to.Ptr(armcompute.PatchOperationStatusSucceeded),
 			},
 		},
@@ -5244,7 +5244,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 				Code:          to.Ptr("ProvisioningState/succeeded"),
 				DisplayStatus: to.Ptr("Provisioning succeeded"),
 				Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:30:12.8051917+00:00"); return t }()),
+				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T21:30:12.805Z"); return t }()),
 			},
 			{
 				Code:          to.Ptr("PowerState/running"),
@@ -5268,7 +5268,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 					DisplayStatus: to.Ptr("Ready"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
 					Message:       to.Ptr("GuestAgent is running and accepting new configurations."),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T23:11:22+00:00"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-10-14T23:11:22.000Z"); return t }()),
 				}},
 			VMAgentVersion: to.Ptr("2.7.41491.949"),
 		},
@@ -5312,7 +5312,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 						Code:          to.Ptr("ProvisioningState/succeeded"),
 						DisplayStatus: to.Ptr("Provisioning succeeded"),
 						Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:29:47.477089+00:00"); return t }()),
+						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:29:47.477Z"); return t }()),
 					}},
 			}},
 		HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypeV1),
@@ -5323,7 +5323,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 				Code:          to.Ptr("ProvisioningState/succeeded"),
 				DisplayStatus: to.Ptr("Provisioning succeeded"),
 				Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:30:12.8051917+00:00"); return t }()),
+				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T21:30:12.805Z"); return t }()),
 			},
 			{
 				Code:          to.Ptr("PowerState/running"),
@@ -5337,7 +5337,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 					DisplayStatus: to.Ptr("Ready"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
 					Message:       to.Ptr("GuestAgent is running and accepting new configurations."),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T23:11:22+00:00"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T23:11:22.000Z"); return t }()),
 				}},
 			VMAgentVersion: to.Ptr("2.7.41491.949"),
 		},
@@ -5525,9 +5525,9 @@ func (testsuite *MockTestSuite) TestVirtualMachines_AssessPatches() {
 				Classifications: []*string{
 					to.Ptr("Definition Updates")},
 				KbID:                 to.Ptr("2267602"),
-				LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.2830263Z"); return t }()),
+				LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.283Z"); return t }()),
 				PatchID:              to.Ptr("35428702-5784-4ba4-a6e0-5222258b5411"),
-				PublishedDate:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00Z"); return t }()),
+				PublishedDate:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00.000Z"); return t }()),
 				RebootBehavior:       to.Ptr(armcompute.VMGuestPatchRebootBehaviorNeverReboots),
 				Version:              to.Ptr(""),
 			},
@@ -5538,16 +5538,16 @@ func (testsuite *MockTestSuite) TestVirtualMachines_AssessPatches() {
 				Classifications: []*string{
 					to.Ptr("Update Rollups")},
 				KbID:                 to.Ptr("890830"),
-				LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.2830263Z"); return t }()),
+				LastModifiedDateTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:18:45.283Z"); return t }()),
 				PatchID:              to.Ptr("39f9cdd1-795c-4d0e-8c0a-73ab3f31746d"),
-				PublishedDate:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00Z"); return t }()),
+				PublishedDate:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-11-07T00:00:00.000Z"); return t }()),
 				RebootBehavior:       to.Ptr(armcompute.VMGuestPatchRebootBehaviorCanRequestReboot),
 				Version:              to.Ptr(""),
 			}},
 		CriticalAndSecurityPatchCount: to.Ptr[int32](1),
 		OtherPatchCount:               to.Ptr[int32](2),
 		RebootPending:                 to.Ptr(true),
-		StartDateTime:                 to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+		StartDateTime:                 to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 		Status:                        to.Ptr(armcompute.PatchOperationStatusSucceeded),
 	}
 	if !reflect.DeepEqual(exampleRes, res.VirtualMachineAssessPatchesResult) {
@@ -5572,7 +5572,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstallPatches() {
 			ClassificationsToInclude: []*armcompute.VMGuestPatchClassificationWindows{
 				to.Ptr(armcompute.VMGuestPatchClassificationWindowsCritical),
 				to.Ptr(armcompute.VMGuestPatchClassificationWindowsSecurity)},
-			MaxPatchPublishDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-11-19T02:36:43.0539904+00:00"); return t }()),
+			MaxPatchPublishDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-11-19T02:36:43.053Z"); return t }()),
 		},
 	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json")
@@ -5607,7 +5607,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstallPatches() {
 			}},
 		PendingPatchCount: to.Ptr[int32](2),
 		RebootStatus:      to.Ptr(armcompute.VMGuestPatchRebootStatusCompleted),
-		StartDateTime:     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.2556154Z"); return t }()),
+		StartDateTime:     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-04-24T21:02:04.255Z"); return t }()),
 		Status:            to.Ptr(armcompute.PatchOperationStatusSucceeded),
 	}
 	if !reflect.DeepEqual(exampleRes, res.VirtualMachineInstallPatchesResult) {
@@ -10845,7 +10845,7 @@ func (testsuite *MockTestSuite) TestRestorePointCollections_Get() {
 							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
 						}},
 					ProvisioningDetails: &armcompute.RestorePointProvisioningDetails{
-						CreationTime:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.8401519+00:00"); return t }()),
+						CreationTime:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.840Z"); return t }()),
 						StatusCode:           to.Ptr[int32](0),
 						StatusMessage:        to.Ptr("{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}"),
 						TotalUsedSizeInBytes: to.Ptr[int64](10835349504),
@@ -11073,7 +11073,7 @@ func (testsuite *MockTestSuite) TestRestorePoints_Get() {
 				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
 			}},
 		ProvisioningDetails: &armcompute.RestorePointProvisioningDetails{
-			CreationTime:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.8401519+00:00"); return t }()),
+			CreationTime:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.840Z"); return t }()),
 			StatusCode:           to.Ptr[int32](0),
 			StatusMessage:        to.Ptr("{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}"),
 			TotalUsedSizeInBytes: to.Ptr[int64](10835349504),
@@ -11576,7 +11576,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 						Code:          to.Ptr("ProvisioningState/succeeded"),
 						DisplayStatus: to.Ptr("Provisioning succeeded"),
 						Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T04:58:58.0882815+00:00"); return t }()),
+						Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T04:58:58.088Z"); return t }()),
 					}},
 			}},
 		PlatformFaultDomain:  to.Ptr[int32](0),
@@ -11586,7 +11586,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 				Code:          to.Ptr("ProvisioningState/succeeded"),
 				DisplayStatus: to.Ptr("Provisioning succeeded"),
 				Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-06-05T04:59:58.1852966+00:00"); return t }()),
+				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-06-05T04:59:58.185Z"); return t }()),
 			},
 			{
 				Code:          to.Ptr("PowerState/running"),
@@ -11600,7 +11600,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 					DisplayStatus: to.Ptr("Not Ready"),
 					Level:         to.Ptr(armcompute.StatusLevelTypesWarning),
 					Message:       to.Ptr("VM status blob is found but not yet populated."),
-					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T05:00:32+00:00"); return t }()),
+					Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-03-01T05:00:32.000Z"); return t }()),
 				}},
 			VMAgentVersion: to.Ptr("Unknown"),
 		},
@@ -11719,9 +11719,9 @@ func (testsuite *MockTestSuite) TestLogAnalytics_ExportRequestRateByInterval() {
 	testsuite.Require().NoError(err, "Failed to create client")
 	poller, err := client.BeginExportRequestRateByInterval(ctx, "westus", armcompute.RequestRateByIntervalInput{
 		BlobContainerSasURI: to.Ptr("https://somesasuri"),
-		FromTime:            to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
+		FromTime:            to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862Z"); return t }()),
 		GroupByResourceName: to.Ptr(true),
-		ToTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
+		ToTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862Z"); return t }()),
 		IntervalLength:      to.Ptr(armcompute.IntervalInMinsFiveMins),
 	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsRequestRateByInterval.json")
@@ -11750,12 +11750,12 @@ func (testsuite *MockTestSuite) TestLogAnalytics_ExportThrottledRequests() {
 	testsuite.Require().NoError(err, "Failed to create client")
 	poller, err := client.BeginExportThrottledRequests(ctx, "westus", armcompute.ThrottledRequestsInput{
 		BlobContainerSasURI:        to.Ptr("https://somesasuri"),
-		FromTime:                   to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
+		FromTime:                   to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862Z"); return t }()),
 		GroupByClientApplicationID: to.Ptr(false),
 		GroupByOperationName:       to.Ptr(true),
 		GroupByResourceName:        to.Ptr(false),
 		GroupByUserAgent:           to.Ptr(false),
-		ToTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
+		ToTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862Z"); return t }()),
 	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13562,7 +13562,7 @@ func (testsuite *MockTestSuite) TestDisks_Get() {
 				SecurityType: to.Ptr(armcompute.DiskSecurityTypesTrustedLaunch),
 			},
 			SupportsHibernation: to.Ptr(true),
-			TimeCreated:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079Z"); return t }()),
 		},
 		SKU: &armcompute.DiskSKU{
 			Name: to.Ptr(armcompute.DiskStorageAccountTypesStandardLRS),
@@ -13632,7 +13632,7 @@ func (testsuite *MockTestSuite) TestDisks_ListByResourceGroup() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.927Z"); return t }()),
 					},
 				},
 				{
@@ -13650,7 +13650,7 @@ func (testsuite *MockTestSuite) TestDisks_ListByResourceGroup() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872242+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872Z"); return t }()),
 					},
 				},
 				{
@@ -13693,7 +13693,7 @@ func (testsuite *MockTestSuite) TestDisks_ListByResourceGroup() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.3973934+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.397Z"); return t }()),
 					},
 				}},
 		}
@@ -13758,7 +13758,7 @@ func (testsuite *MockTestSuite) TestDisks_List() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.927Z"); return t }()),
 					},
 				},
 				{
@@ -13776,7 +13776,7 @@ func (testsuite *MockTestSuite) TestDisks_List() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872242+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.872Z"); return t }()),
 					},
 				},
 				{
@@ -13819,7 +13819,7 @@ func (testsuite *MockTestSuite) TestDisks_List() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.3973934+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:36.397Z"); return t }()),
 					},
 				}},
 		}
@@ -14013,7 +14013,7 @@ func (testsuite *MockTestSuite) TestSnapshots_Get() {
 				Publisher: to.Ptr("test_test_pmc2pc1"),
 			},
 			SupportsHibernation: to.Ptr(true),
-			TimeCreated:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:         to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.079Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.Snapshot) {
@@ -14080,7 +14080,7 @@ func (testsuite *MockTestSuite) TestSnapshots_ListByResourceGroup() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.9278721+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:41:35.927Z"); return t }()),
 					},
 				}},
 		}
@@ -14145,7 +14145,7 @@ func (testsuite *MockTestSuite) TestSnapshots_List() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.6630569+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.663Z"); return t }()),
 					},
 				},
 				{
@@ -14187,7 +14187,7 @@ func (testsuite *MockTestSuite) TestSnapshots_List() {
 						},
 						OSType:            to.Ptr(armcompute.OperatingSystemTypesWindows),
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.3247198+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2016-12-28T04:47:30.324Z"); return t }()),
 					},
 				}},
 		}
@@ -14337,7 +14337,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/KeyVersion2"),
 			},
 			EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			LastKeyRotationTimestamp:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t }()),
+			LastKeyRotationTimestamp:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079Z"); return t }()),
 			ProvisioningState:                 to.Ptr("Succeeded"),
 			RotationToLatestKeyVersionEnabled: to.Ptr(true),
 		},
@@ -14383,7 +14383,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion2"),
 			},
 			EncryptionType:           to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t }()),
+			LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079Z"); return t }()),
 			PreviousKeys: []*armcompute.KeyForDiskEncryptionSet{
 				{
 					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
@@ -14441,7 +14441,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 				},
 			},
 			EncryptionType:           to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079872+00:00"); return t }()),
+			LastKeyRotationTimestamp: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-12-01T04:41:35.079Z"); return t }()),
 			PreviousKeys:             []*armcompute.KeyForDiskEncryptionSet{},
 		},
 	}
@@ -14700,7 +14700,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_CreateOrUpdate() {
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.DiskAccessProperties{
 			ProvisioningState: to.Ptr("Succeeded"),
-			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.DiskAccess) {
@@ -14784,7 +14784,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Get() {
 					},
 				}},
 			ProvisioningState: to.Ptr("Succeeded"),
-			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.DiskAccess) {
@@ -14813,7 +14813,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Get() {
 		},
 		Properties: &armcompute.DiskAccessProperties{
 			ProvisioningState: to.Ptr("Succeeded"),
-			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.DiskAccess) {
@@ -14863,7 +14863,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_ListByResourceGroup() {
 					},
 					Properties: &armcompute.DiskAccessProperties{
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 					},
 				},
 				{
@@ -14894,7 +14894,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_ListByResourceGroup() {
 								},
 							}},
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 					},
 				}},
 		}
@@ -14932,7 +14932,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_List() {
 					},
 					Properties: &armcompute.DiskAccessProperties{
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 					},
 				},
 				{
@@ -14963,7 +14963,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_List() {
 								},
 							}},
 						ProvisioningState: to.Ptr("Succeeded"),
-						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079872+00:00"); return t }()),
+						TimeCreated:       to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-05-01T04:41:35.079Z"); return t }()),
 					},
 				}},
 		}
@@ -15159,7 +15159,7 @@ func (testsuite *MockTestSuite) TestDiskRestorePoint_Get() {
 			OSType:           to.Ptr(armcompute.OperatingSystemTypesWindows),
 			SourceResourceID: to.Ptr("/subscriptions/d2260d06-e00d-422f-8b63-93df551a59ae/resourceGroups/rg0680fb0c-89f1-41b4-96c0-35733a181558/providers/Microsoft.Compute/disks/TestDisk45ceb03433006d1baee0"),
 			SourceUniqueID:   to.Ptr("48e058b1-7eea-4968-b532-10a8a1130c13"),
-			TimeCreated:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079872+00:00"); return t }()),
+			TimeCreated:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.DiskRestorePoint) {
@@ -15193,7 +15193,7 @@ func (testsuite *MockTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
 						OSType:           to.Ptr(armcompute.OperatingSystemTypesWindows),
 						SourceResourceID: to.Ptr("/subscriptions/d2260d06-e00d-422f-8b63-93df551a59ae/resourceGroups/rg0680fb0c-89f1-41b4-96c0-35733a181558/providers/Microsoft.Compute/disks/TestDisk45ceb03433006d1baee0"),
 						SourceUniqueID:   to.Ptr("48e058b1-7eea-4968-b532-10a8a1130c13"),
-						TimeCreated:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079872+00:00"); return t }()),
+						TimeCreated:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079Z"); return t }()),
 					},
 				}},
 		}
@@ -15713,7 +15713,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -15845,7 +15845,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -15980,7 +15980,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16107,7 +16107,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16242,7 +16242,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16364,7 +16364,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16455,7 +16455,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Update() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16536,7 +16536,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Update() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16602,7 +16602,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16685,7 +16685,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16747,7 +16747,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16813,7 +16813,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 		Properties: &armcompute.GalleryImageVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -16901,7 +16901,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
 					Properties: &armcompute.GalleryImageVersionProperties{
 						ProvisioningState: to.Ptr(armcompute.GalleryImageVersionPropertiesProvisioningStateSucceeded),
 						PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-							PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00Z"); return t }()),
+							PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-01T00:00:00.000Z"); return t }()),
 							ReplicaCount:       to.Ptr[int32](1),
 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 							TargetRegions: []*armcompute.TargetRegion{
@@ -17129,7 +17129,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 		Location: to.Ptr("West US"),
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17160,9 +17160,9 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ExcludeFromLatest:  to.Ptr(false),
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.597Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17200,7 +17200,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Update() {
 	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", armcompute.GalleryApplicationVersionUpdate{
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17231,9 +17231,9 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Update() {
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ExcludeFromLatest:  to.Ptr(false),
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.597Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17277,9 +17277,9 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Get() {
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ExcludeFromLatest:  to.Ptr(false),
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.597Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17332,9 +17332,9 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Get() {
 		Properties: &armcompute.GalleryApplicationVersionProperties{
 			ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
 			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t }()),
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 				ExcludeFromLatest:  to.Ptr(false),
-				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t }()),
+				PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.597Z"); return t }()),
 				ReplicaCount:       to.Ptr[int32](1),
 				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 				TargetRegions: []*armcompute.TargetRegion{
@@ -17398,9 +17398,9 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_ListByGalleryAppl
 					Properties: &armcompute.GalleryApplicationVersionProperties{
 						ProvisioningState: to.Ptr(armcompute.GalleryApplicationVersionPropertiesProvisioningStateSucceeded),
 						PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-							EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00+00:00"); return t }()),
+							EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00.000Z"); return t }()),
 							ExcludeFromLatest:  to.Ptr(false),
-							PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.5972568+00:00"); return t }()),
+							PublishedDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-06-21T17:13:57.597Z"); return t }()),
 							ReplicaCount:       to.Ptr[int32](1),
 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
 							TargetRegions: []*armcompute.TargetRegion{
@@ -17654,8 +17654,8 @@ func (testsuite *MockTestSuite) TestSharedGalleryImageVersions_List() {
 						UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"),
 					},
 					Properties: &armcompute.SharedGalleryImageVersionProperties{
-						EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28Z"); return t }()),
-						PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28Z"); return t }()),
+						EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28.000Z"); return t }()),
+						PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28.000Z"); return t }()),
 					},
 				}},
 		}
@@ -17685,8 +17685,8 @@ func (testsuite *MockTestSuite) TestSharedGalleryImageVersions_Get() {
 			UniqueID: to.Ptr("/SharedGalleries/galleryUniqueName/Images/myGalleryImageName/Versions/myGalleryImageVersionName"),
 		},
 		Properties: &armcompute.SharedGalleryImageVersionProperties{
-			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28Z"); return t }()),
-			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28Z"); return t }()),
+			EndOfLifeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2022-03-20T09:12:28.000Z"); return t }()),
+			PublishedDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-03-20T09:12:28.000Z"); return t }()),
 		},
 	}
 	if !reflect.DeepEqual(exampleRes, res.SharedGalleryImageVersion) {
@@ -18668,13 +18668,13 @@ func (testsuite *MockTestSuite) TestCloudServices_GetInstanceView() {
 				Code:          to.Ptr("ProvisioningState/succeeded"),
 				DisplayStatus: to.Ptr("Provisioning succeeded"),
 				Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t }()),
+				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T11:20:07.095Z"); return t }()),
 			},
 			{
 				Code:          to.Ptr("PowerState/started"),
 				DisplayStatus: to.Ptr("Started"),
 				Level:         to.Ptr(armcompute.StatusLevelTypesInfo),
-				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T16:50:07.0953535+05:30"); return t }()),
+				Time:          to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-12T11:20:07.095Z"); return t }()),
 			},
 			{
 				Code:          to.Ptr("CurrentUpgradeDomain/-1"),
