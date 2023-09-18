@@ -173,6 +173,29 @@
       "schema": {
         "$ref": "#/definitions/GeoJsonObjectNamedCollection"
       }
+    },
+    "NumericHeaderCollection": {
+      "name": "headerCounts",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "csv",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "NumericQueryCollection": {
+      "name": "queryCounts",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "csv",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      }
     }
   },
   "paths": {
@@ -303,6 +326,12 @@
         "parameters": [
           {
             "$ref": "#/parameters/GeoJsonCreateOrUpdateProperties"
+          },
+          {
+            "$ref": "#/parameters/NumericHeaderCollection"
+          },
+          {
+            "$ref": "#/parameters/NumericQueryCollection"
           }
         ],
         "responses": {

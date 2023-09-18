@@ -256,7 +256,7 @@ function generateJSONMarshallerBody(modelType: ModelType | PolymorphicType, rece
     } else if (isSliceType(field.type) && isTimeType(field.type.elementType)) {
       const source = `${receiver}.${field.fieldName}`;
       let elementPtr = '*';
-      if (field.byValue) {
+      if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
       marshaller += `\taux := make([]${elementPtr}${field.type.elementType.dateTimeFormat}, len(${source}), len(${source}))\n`;
@@ -358,7 +358,7 @@ function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, re
     } else if (isSliceType(field.type) && isTimeType(field.type.elementType)) {
       imports.add('time');
       let elementPtr = '*';
-      if (field.byValue) {
+      if (field.type.elementTypeByValue) {
         elementPtr = '';
       }
       unmarshalBody += `\t\t\tvar aux []${elementPtr}${field.type.elementType.dateTimeFormat}\n`;

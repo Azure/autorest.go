@@ -466,6 +466,10 @@ function createPathParamsRegex(method: Method): string {
   // each path param will replaced with a regex capture.
   // note that some path params are optional.
   let urlPath = method.httpPath;
+  // escape any characters in the path that could be interpreted as regex tokens
+  // per RFC3986, these are the pchars that also double as regex tokens
+  // . $ * + ()
+  urlPath = urlPath.replace(/([.$*+()])/g, '\\$1');
   for (const param of values(method.parameters)) {
     if (!isPathParameter(param)) {
       continue;
@@ -525,6 +529,11 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
     // parse params as required
     if (isSliceType(param.type)) {
       if (isConstantType(param.type.elementType) || (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName !== 'string')) {
+        if (isHeaderParameter(param)) {
+          // we only need to do this for headers.  for query/path params it was handled earlier
+          paramValue = createLocalVariableName(param, 'Header');
+          content += `\t${paramValue} := getHeaderValue(req.Header, "${param.headerName}")\n`;
+        }
         imports.add('strings');
         const elementsParam = `${paramValue}Elements`;
         content += `\t${elementsParam} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
@@ -535,7 +544,10 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         } else {
           elementTypeName = param.type.elementType.typeName;
         }
-        const toType = `${clientPkg}.${getTypeDeclaration(param.type.elementType)}`;
+        let toType = getTypeDeclaration(param.type.elementType);
+        if (isConstantType(param.type.elementType)) {
+          toType = `${clientPkg}.${toType}`;
+        }
         content += `\t${localVar} := make([]${toType}, len(${elementsParam}))\n`;
         content += `\tfor i := 0; i < len(${elementsParam}); i++ {\n`;
         let fromVar: string;
@@ -790,7 +802,7 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
 
   if (isSliceType(param.type)) {
     const asArray = param.type;
-    if (isConstantType(asArray.elementType)) {
+    if (isConstantType(asArray.elementType) || (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName !== 'string')) {
       return createLocalVariableName(param, 'Param');
     } else if (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName === 'string') {
       imports.add('strings');
