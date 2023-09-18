@@ -116,13 +116,13 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 //
 // Generated from API version 2.0
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
 	const operationName = "Client.GetScript"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getScriptCreateRequest(ctx, props, options)
+	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, props, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -139,12 +139,16 @@ func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCol
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *Client) getScriptCreateRequest(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err

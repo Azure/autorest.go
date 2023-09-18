@@ -99,7 +99,7 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginCreateOrUpdate(r
 	}
 	beginCreateOrUpdate := c.beginCreateOrUpdate.get(req)
 	if beginCreateOrUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -151,7 +151,7 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginDelete(req *http
 	}
 	beginDelete := c.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -197,7 +197,7 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchGet(req *http.Request
 	if c.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups/(?P<configurationPolicyGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 4 {
@@ -236,7 +236,7 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchNewListByVPNServerCon
 	}
 	newListByVPNServerConfigurationPager := c.newListByVPNServerConfigurationPager.get(req)
 	if newListByVPNServerConfigurationPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Network/vpnServerConfigurations/(?P<vpnServerConfigurationName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/configurationPolicyGroups`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 3 {

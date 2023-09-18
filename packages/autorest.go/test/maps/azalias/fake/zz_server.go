@@ -31,7 +31,7 @@ type Server struct {
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
-	GetScript func(ctx context.Context, props azalias.GeoJSONObjectNamedCollection, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
+	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, props azalias.GeoJSONObjectNamedCollection, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method Client.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -179,11 +179,37 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	if s.srv.GetScript == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetScript not implemented")}
 	}
+	qp := req.URL.Query()
 	body, err := server.UnmarshalRequestAsJSON[azalias.GeoJSONObjectNamedCollection](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetScript(req.Context(), body, nil)
+	headerCountsHeader := getHeaderValue(req.Header, "headerCounts")
+	headerCountsHeaderElements := strings.Split(headerCountsHeader, ",")
+	headerCountsParam := make([]int32, len(headerCountsHeaderElements))
+	for i := 0; i < len(headerCountsHeaderElements); i++ {
+		var parsedInt int64
+		parsedInt, err = strconv.ParseInt(headerCountsHeaderElements[i], 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		headerCountsParam[i] = int32(parsedInt)
+	}
+	queryCountsUnescaped, err := url.QueryUnescape(qp.Get("queryCounts"))
+	if err != nil {
+		return nil, err
+	}
+	queryCountsUnescapedElements := strings.Split(queryCountsUnescaped, ",")
+	queryCountsParam := make([]int64, len(queryCountsUnescapedElements))
+	for i := 0; i < len(queryCountsUnescapedElements); i++ {
+		var parsedInt int64
+		parsedInt, err = strconv.ParseInt(queryCountsUnescapedElements[i], 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		queryCountsParam[i] = int64(parsedInt)
+	}
+	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

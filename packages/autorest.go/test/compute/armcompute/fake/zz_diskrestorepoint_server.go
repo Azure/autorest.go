@@ -97,7 +97,7 @@ func (d *DiskRestorePointServerTransport) dispatchGet(req *http.Request) (*http.
 	if d.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 5 {
@@ -140,7 +140,7 @@ func (d *DiskRestorePointServerTransport) dispatchBeginGrantAccess(req *http.Req
 	}
 	beginGrantAccess := d.beginGrantAccess.get(req)
 	if beginGrantAccess == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/beginGetAccess`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/beginGetAccess`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 5 {
@@ -196,7 +196,7 @@ func (d *DiskRestorePointServerTransport) dispatchNewListByRestorePointPager(req
 	}
 	newListByRestorePointPager := d.newListByRestorePointPager.get(req)
 	if newListByRestorePointPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 4 {
@@ -241,7 +241,7 @@ func (d *DiskRestorePointServerTransport) dispatchBeginRevokeAccess(req *http.Re
 	}
 	beginRevokeAccess := d.beginRevokeAccess.get(req)
 	if beginRevokeAccess == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/endGetAccess`
+		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.Compute/restorePointCollections/(?P<restorePointCollectionName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/restorePoints/(?P<vmRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/diskRestorePoints/(?P<diskRestorePointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/endGetAccess`
 		regex := regexp.MustCompile(regexStr)
 		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 		if matches == nil || len(matches) < 5 {
