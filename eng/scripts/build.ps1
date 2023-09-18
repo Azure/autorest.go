@@ -10,42 +10,46 @@ $ErrorActionPreference = 'Stop'
 
 $root = (Resolve-Path "$PSScriptRoot/../..").Path.Replace('\', '/')
 
-function invoke($command) {
-    Write-Host "> $command"
-    Invoke-Expression $command
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "Command failed: $command"
-        exit $LASTEXITCODE
-    }
-}
-
-function invoke-npx($package, $npxArgs) {
-  $packageJson = Get-Content "$root/package.json" -Raw | ConvertFrom-Json
-  $version = $packageJson.devDependencies.$package
-  invoke "npx --yes $package@$version $npxArgs"
-}
-
-function updateVersion($suffix) {
-  $version = (Get-Content "package.json" -Raw | ConvertFrom-Json).version.Split('-')[0]
-  invoke "npm version $version$suffix --allow-same-version --no-workspaces-update"
-}
-
 if (!$Output) {
-    $Output = "$root/artifacts"
+  $Output = "$root/artifacts"
 }
 
 $packagesFolder = New-Item "$Output/packages" -ItemType Directory -Force
 
-Push-Location "$root/packages/autorest.go"
-try {
+function invoke($command) {
+  Write-Host "> $command"
+  Invoke-Expression $command
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "Command failed: $command"
+    exit $LASTEXITCODE
+  }
+}
+
+function updatePackage($name, $path) {
+  Push-Location $path
+  try {
+    $version = (Get-Content "./package.json" -Raw | ConvertFrom-Json).version
+
     if ($BuildAlphaVersion) {
-      updateVersion  "-alpha.$BuildNumber"
+      $version = "$($version.Split('-')[0])-alpha.$BuildNumber"
+      invoke "npm version $version --allow-same-version --no-workspaces-update"
+      if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
 
     invoke "npm pack --pack-destination=$packagesFolder"
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    
+    $packageMatrix[$name] = $version
+  }
+  finally {
+      Pop-Location
+  }
+}
 
-    exit $LASTEXITCODE
-}
-finally {
-    Pop-Location
-}
+$packageMatrix = @{}
+
+updatePackage "generator" "$root/packages/autorest.go"
+
+$packageMatrix | ConvertTo-Json | Set-Content $output/package-versions.json
+
+exit 0

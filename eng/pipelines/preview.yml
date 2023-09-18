@@ -42,3 +42,21 @@ extends:
       file: autorest-go-*.tgz
       type: npm
     PublishTarget: 'internal'
+    SdkInitializationSteps:
+    - pwsh: |
+        $packageVersions = Get-Content "$(buildArtifactsPath)/package-versions.json" -Raw | ConvertFrom-Json
+        $generatorVersion = $packageVersions.generator
+
+        $pattern = '(?m)^use: "@autorest/go(@.*)"\s*$'
+        $mdFiles = Get-ChildItem -Path "./sdk" -Filter "autorest.md" -Recurse
+        foreach ($mdFile in $mdFiles) {
+          $content = Get-Content -Path $mdFile -Raw
+
+          if ($content -match $pattern) {
+            Write-Host "Update @autorest/go version in $mdFile"
+            $content = $content -replace $pattern, "use: `"@autorest/go@$generatorVersion`""
+            Set-Content -Path $mdFile -Value $content -Encoding UTF8 -NoNewLine
+          }
+        }
+      displayName: 'Update autorest.md files'
+      workingDirectory: $(sdkRepositoryPath)
