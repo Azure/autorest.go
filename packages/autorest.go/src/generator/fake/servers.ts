@@ -467,7 +467,7 @@ function createPathParamsRegex(method: Method): string {
   // note that some path params are optional.
   let urlPath = method.httpPath;
   // escape any characters in the path that could be interpreted as regex tokens
-  // per the RFC, these are the pchars that also double as regex tokens
+  // per RFC3986, these are the pchars that also double as regex tokens
   // . $ * + ()
   urlPath = urlPath.replace(/([.$*+()])/g, '\\$1');
   for (const param of values(method.parameters)) {
