@@ -27,6 +27,10 @@ resources:
       name: Azure/azure-sdk-tools
       ref: refs/heads/users/pahallis/cookiecutter
 
+pool:
+  name: azsdk-pool-mms-win-2022-general
+  vmImage: windows-2022
+
 extends:
   template: eng/pipelines/templates/stages/archetype-autorest-preview.yml@azure-sdk-tools
   parameters:
