@@ -71,6 +71,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 // Generated from API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SupportPackagesClient.BeginTriggerSupportPackage")
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
 		return nil, err

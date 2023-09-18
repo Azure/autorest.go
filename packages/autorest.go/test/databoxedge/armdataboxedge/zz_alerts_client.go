@@ -53,6 +53,7 @@ func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, o
 //   - options - AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
 func (client *AlertsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *AlertsClientGetOptions) (AlertsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AlertsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return AlertsClientGetResponse{}, err
@@ -118,6 +119,7 @@ func (client *AlertsClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AlertsClientListByDataBoxEdgeDeviceResponse) (AlertsClientListByDataBoxEdgeDeviceResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AlertsClient.NewListByDataBoxEdgeDevicePager")
 			var req *policy.Request
 			var err error
 			if page == nil {

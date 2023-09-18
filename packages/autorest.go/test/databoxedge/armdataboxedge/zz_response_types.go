@@ -8,10 +8,17 @@
 
 package armdataboxedge
 
+import "encoding/json"
+
 // AddonsClientCreateOrUpdateResponse contains the response from method AddonsClient.BeginCreateOrUpdate.
 type AddonsClientCreateOrUpdateResponse struct {
 	// Role Addon
 	AddonClassification
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AddonsClientCreateOrUpdateResponse.
+func (a AddonsClientCreateOrUpdateResponse) MarshalJSON() ([]byte, error) {
+	return json.Marshal(a.AddonClassification)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AddonsClientCreateOrUpdateResponse.
@@ -315,6 +322,11 @@ type RolesClientCreateOrUpdateResponse struct {
 	RoleClassification
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RolesClientCreateOrUpdateResponse.
+func (r RolesClientCreateOrUpdateResponse) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.RoleClassification)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type RolesClientCreateOrUpdateResponse.
 func (r *RolesClientCreateOrUpdateResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalRoleClassification(data)
@@ -435,6 +447,11 @@ type SupportPackagesClientTriggerSupportPackageResponse struct {
 type TriggersClientCreateOrUpdateResponse struct {
 	// Trigger details.
 	TriggerClassification
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TriggersClientCreateOrUpdateResponse.
+func (t TriggersClientCreateOrUpdateResponse) MarshalJSON() ([]byte, error) {
+	return json.Marshal(t.TriggerClassification)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type TriggersClientCreateOrUpdateResponse.
