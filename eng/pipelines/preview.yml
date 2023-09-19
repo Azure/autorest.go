@@ -34,7 +34,7 @@ pool:
 extends:
   template: eng/pipelines/templates/stages/archetype-autorest-preview.yml@azure-sdk-tools
   parameters:
-    RegenerationJobCount: 1
+    RegenerationJobCount: 3
     BuildAlphaVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     Packages:
