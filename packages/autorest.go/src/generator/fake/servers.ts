@@ -543,8 +543,8 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         content += `\t${escapedParam} := ${paramValue}\n`;
         content += `\t${paramVar} := make([]string, len(${escapedParam}))\n`;
         content += `\tfor i, v := range ${escapedParam} {\n`;
-        content += '\t\tu, err := url.QueryUnescape(v)\n';
-        content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
+        content += '\t\tu, unescapeErr := url.QueryUnescape(v)\n';
+        content += '\t\tif unescapeErr != nil {\n\t\t\treturn nil, unescapeErr\n\t\t}\n';
         content += `\t\t${paramVar}[i] = u\n\t}\n`;
       } else {
         let where: string;

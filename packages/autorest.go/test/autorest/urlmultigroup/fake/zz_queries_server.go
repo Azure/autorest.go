@@ -85,9 +85,9 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 	arrayQueryEscaped := qp["arrayQuery"]
 	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
-		u, err := url.QueryUnescape(v)
-		if err != nil {
-			return nil, err
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
 		}
 		arrayQueryUnescaped[i] = u
 	}
@@ -121,9 +121,9 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 	arrayQueryEscaped := qp["arrayQuery"]
 	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
-		u, err := url.QueryUnescape(v)
-		if err != nil {
-			return nil, err
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
 		}
 		arrayQueryUnescaped[i] = u
 	}
@@ -157,9 +157,9 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 	arrayQueryEscaped := qp["arrayQuery"]
 	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
-		u, err := url.QueryUnescape(v)
-		if err != nil {
-			return nil, err
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
 		}
 		arrayQueryUnescaped[i] = u
 	}

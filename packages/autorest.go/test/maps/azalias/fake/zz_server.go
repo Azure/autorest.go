@@ -137,9 +137,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	groupByEscaped := qp["groupBy"]
 	groupByUnescaped := make([]string, len(groupByEscaped))
 	for i, v := range groupByEscaped {
-		u, err := url.QueryUnescape(v)
-		if err != nil {
-			return nil, err
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
 		}
 		groupByUnescaped[i] = u
 	}
@@ -216,9 +216,9 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	explodedStuffEscaped := qp["explodedStuff"]
 	explodedStuffUnescaped := make([]string, len(explodedStuffEscaped))
 	for i, v := range explodedStuffEscaped {
-		u, err := url.QueryUnescape(v)
-		if err != nil {
-			return nil, err
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
 		}
 		explodedStuffUnescaped[i] = u
 	}
@@ -260,9 +260,9 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		groupByEscaped := qp["groupBy"]
 		groupByUnescaped := make([]string, len(groupByEscaped))
 		for i, v := range groupByEscaped {
-			u, err := url.QueryUnescape(v)
-			if err != nil {
-				return nil, err
+			u, unescapeErr := url.QueryUnescape(v)
+			if unescapeErr != nil {
+				return nil, unescapeErr
 			}
 			groupByUnescaped[i] = u
 		}
