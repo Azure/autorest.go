@@ -19,7 +19,6 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 import { generateServers } from './fake/servers';
-import { generateServerInternal } from './fake/internal';
 import { sortAscending } from './helpers';
 
 // The generator emits Go source code files to disk.
@@ -158,8 +157,8 @@ export async function generateCode(host: AutorestExtensionHost) {
 
     const generateFakes = await session.getValue('generate-fakes', false);
     if (generateFakes) {
-      const operations = await generateServers(session.model);
-      for (const op of values(operations)) {
+      const serverContent = await generateServers(session.model);
+      for (const op of values(serverContent.servers)) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
         // insert a _ before Server, i.e. Foo_Server
@@ -174,10 +173,9 @@ export async function generateCode(host: AutorestExtensionHost) {
         });
       }
 
-      const internal = await generateServerInternal(session.model);
       host.writeFile({
         filename: `fake/${filePrefix}internal.go`,
-        content: internal,
+        content: serverContent.internals,
         artifactType: 'source-file-go'
       });
 

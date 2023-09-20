@@ -21,7 +21,6 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -240,7 +239,7 @@ func (p *PathsServerTransport) dispatchArrayCSVInPath(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.ArrayCSVInPath(req.Context(), strings.Split(arrayPathUnescaped, ","), nil)
+	respr, errRespr := p.srv.ArrayCSVInPath(req.Context(), splitHelper(arrayPathUnescaped, ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
