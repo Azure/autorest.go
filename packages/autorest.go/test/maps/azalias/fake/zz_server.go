@@ -20,7 +20,6 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 )
 
 // Server is a fake server for instances of the azalias.Client type.
@@ -139,7 +138,7 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+	groupByUnescapedElements := splitHelper(groupByUnescaped, ",")
 	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
 	for i := 0; i < len(groupByUnescapedElements); i++ {
 		var parsedInt int64
@@ -185,7 +184,7 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 		return nil, err
 	}
 	headerCountsHeader := getHeaderValue(req.Header, "headerCounts")
-	headerCountsHeaderElements := strings.Split(headerCountsHeader, ",")
+	headerCountsHeaderElements := splitHelper(headerCountsHeader, ",")
 	headerCountsParam := make([]int32, len(headerCountsHeaderElements))
 	for i := 0; i < len(headerCountsHeaderElements); i++ {
 		var parsedInt int64
@@ -199,7 +198,7 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	if err != nil {
 		return nil, err
 	}
-	queryCountsUnescapedElements := strings.Split(queryCountsUnescaped, ",")
+	queryCountsUnescapedElements := splitHelper(queryCountsUnescaped, ",")
 	queryCountsParam := make([]int64, len(queryCountsUnescapedElements))
 	for i := 0; i < len(queryCountsUnescapedElements); i++ {
 		var parsedInt int64
@@ -235,7 +234,7 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		if err != nil {
 			return nil, err
 		}
-		groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
+		groupByUnescapedElements := splitHelper(groupByUnescaped, ",")
 		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescapedElements))
 		for i := 0; i < len(groupByUnescapedElements); i++ {
 			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescapedElements[i])
@@ -338,7 +337,7 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	thingsUnescapedElements := strings.Split(thingsUnescaped, ",")
+	thingsUnescapedElements := splitHelper(thingsUnescaped, ",")
 	thingsParam := make([]azalias.Things, len(thingsUnescapedElements))
 	for i := 0; i < len(thingsUnescapedElements); i++ {
 		thingsParam[i] = azalias.Things(thingsUnescapedElements[i])

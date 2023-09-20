@@ -11,6 +11,18 @@ import { values } from '@azure-tools/linq';
 import { contentPreamble, formatLiteralValue, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatValue, getMethodParameters, getParentImport, isParameter, isParameterGroup, isLiteralParameter, isRequiredParameter } from '../helpers';
 import { fixUpMethodName } from '../operations';
 import { ImportManager } from '../imports';
+import { generateServerInternal, RequiredHelpers } from './internal';
+
+// contains the generated content for all servers and the required helpers
+export class ServerContent {
+  readonly servers: Array<OperationGroupContent>;
+  readonly internals: string;
+
+  constructor(servers: Array<OperationGroupContent>, internals: string) {
+    this.servers = servers;
+    this.internals = internals;
+  }
+}
 
 // represents the generated content for an operation group
 export class OperationGroupContent {
@@ -23,7 +35,10 @@ export class OperationGroupContent {
   }
 }
 
-export async function generateServers(codeModel: GoCodeModel): Promise<Array<OperationGroupContent>> {
+// used to track the helpers we need to emit. they're all false by default.
+const requiredHelpers = new RequiredHelpers();
+
+export async function generateServers(codeModel: GoCodeModel): Promise<ServerContent> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
@@ -118,8 +133,10 @@ export async function generateServers(codeModel: GoCodeModel): Promise<Array<Ope
           if (isPageableMethod(method)) {
             respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
           }
+          requiredHelpers.tracker = true;
           content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PollerResponder[${respType}]](),\n`;
         } else if (isPageableMethod(method)) {
+          requiredHelpers.tracker = true;
           content += `\t\t${uncapitalize(fixUpMethodName(method))}: newTracker[azfake.PagerResponder[${respType}]](),\n`;
         }
       }
@@ -137,8 +154,10 @@ export async function generateServers(codeModel: GoCodeModel): Promise<Array<Ope
         if (isPageableMethod(method)) {
           respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
         }
+        requiredHelpers.tracker = true;
         content +=`\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
       } else if (isPageableMethod(method)) {
+        requiredHelpers.tracker = true;
         content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]]\n`;
       }
     }
@@ -154,7 +173,7 @@ export async function generateServers(codeModel: GoCodeModel): Promise<Array<Ope
     text += content;
     operations.push(new OperationGroupContent(serverName, text));
   }
-  return operations;
+  return new ServerContent(operations, generateServerInternal(codeModel, requiredHelpers));
 }
 
 function generateServerTransportMethods(clientPkg: string, serverTransport: string, client: Client, finalMethods: Array<Method>, imports: ImportManager): string {
@@ -375,6 +394,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
         content += '\treq.Body.Close()\n';
       } else if (isInterfaceType(bodyParam.type)) {
+        requiredHelpers.readRequestBody = true;
         content += '\traw, err := readRequestBody(req)\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
         content += `\tbody, err := unmarshal${bodyParam.type.name}(raw)\n`;
@@ -532,11 +552,12 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         if (isHeaderParameter(param)) {
           // we only need to do this for headers.  for query/path params it was handled earlier
           paramValue = createLocalVariableName(param, 'Header');
+          requiredHelpers.getHeaderValue = true;
           content += `\t${paramValue} := getHeaderValue(req.Header, "${param.headerName}")\n`;
         }
-        imports.add('strings');
         const elementsParam = `${paramValue}Elements`;
-        content += `\t${elementsParam} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
+        requiredHelpers.splitHelper = true;
+        content += `\t${elementsParam} := splitHelper(${paramValue}, "${getArraySeparator(param)}")\n`;
         const localVar = createLocalVariableName(param, 'Param');
         let elementTypeName: PrimitiveTypeName; // ConstantTypeTypes is a subset of PrimitiveTypeName
         if (isConstantType(param.type.elementType)) {
@@ -570,16 +591,17 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         }
         content += `\t\t${localVar}[i] = ${toType}(${fromVar})\n\t}\n`;
       } else if (param.group) {
-        // for slices of strings that aren't in a parameter group, the call to strings.Split(...) is inlined
-        // into the invocation of the fake e.g. srv.FakeFunc(strings.Split...). but if it's grouped, then we
+        // for slices of strings that aren't in a parameter group, the call to splitHelper(...) is inlined
+        // into the invocation of the fake e.g. srv.FakeFunc(splitHelper...). but if it's grouped, then we
         // need to create a local first which will later be copied into the param group.
-        imports.add('strings');
-        content += `\t${createLocalVariableName(param, 'Param')} := strings.Split(${paramValue}, "${getArraySeparator(param)}")\n`;
+        requiredHelpers.splitHelper = true;
+        content += `\t${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${getArraySeparator(param)}")\n`;
       }
     } else if (isPrimitiveType(param.type) && param.type.typeName === 'bool') {
       imports.add('strconv');
       let from = `strconv.ParseBool(${paramValue})`;
       if (!isRequiredParameter(param)) {
+        requiredHelpers.parseOptional = true;
         from = `parseOptional(${paramValue}, strconv.ParseBool)`;
       }
       content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
@@ -592,8 +614,9 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       // for params that don't require parsing (all param types that coalesce to string), the value is inlined into the invocation of the fake.
       // but if it's grouped, then we need to create a local first which will later be copied into the param group.
       content += `\t${createLocalVariableName(param, 'Param')} := `;
-      let paramValue = getParamValueWithCast(clientPkg, param, imports);
+      let paramValue = getParamValueWithCast(clientPkg, param);
       if (!isRequiredParameter(param)) {
+        requiredHelpers.getOptional = true;
         paramValue = `getOptional(${paramValue})`;
       }
       content += `${paramValue}\n`;
@@ -602,6 +625,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         imports.add('time');
         let from = `time.Parse("2006-01-02", ${paramValue})`;
         if (!isRequiredParameter(param)) {
+          requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })`;
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
@@ -614,6 +638,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         }
         let from = `time.Parse(${format}, ${paramValue})`;
         if (!isRequiredParameter(param)) {
+          requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse(${format}, v) })`;
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
@@ -622,6 +647,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         imports.add('strconv');
         let from = `strconv.ParseInt(${paramValue}, 10, 64)`;
         if (!isRequiredParameter(param)) {
+          requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (int64, error) { return strconv.ParseInt(v, 10, 64) })`;
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
@@ -639,9 +665,13 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         parseType = 'Float';
         base = '';
       }
-      let parser = 'parseWithCast';
+      let parser: string;
       if (!isRequiredParameter(param)) {
+        requiredHelpers.parseOptional = true;
         parser = 'parseOptional';
+      } else {
+        requiredHelpers.parseWithCast = true;
+        parser = 'parseWithCast';
       }
       if (precision === '32' || !isRequiredParameter(param)) {
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${parseType.toLowerCase()}${precision}, error) {\n`;
@@ -663,6 +693,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       content += `\tvar ${localVar} map[string]*string\n`;
       content += '\tfor hh := range req.Header {\n';
       const headerPrefix = param.collectionPrefix;
+      requiredHelpers.getHeaderValue = true;
       content += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
       content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;
       content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
@@ -744,7 +775,7 @@ function populateApiParams(clientPkg: string, method: Method, imports: ImportMan
       continue;
     }
     imports.addImportForType(param.type);
-    params.push(`${getParamValueWithCast(clientPkg, param, imports)}`);
+    params.push(`${getParamValueWithCast(clientPkg, param)}`);
   }
 
   return params.join(', ');
@@ -770,6 +801,7 @@ function getParamValue(param: Parameter): string {
     return `qp.Get("${param.queryParameter}")`;
   } else if (isHeaderParameter(param)) {
     // use req
+    requiredHelpers.getHeaderValue = true;
     return `getHeaderValue(req.Header, "${param.headerName}")`;
   } else if (isBodyParameter(param)) {
     if (param.bodyFormat === 'binary') {
@@ -787,7 +819,7 @@ function getParamValue(param: Parameter): string {
   }
 }
 
-function getParamValueWithCast(clientPkg: string, param: Parameter, imports: ImportManager): string {
+function getParamValueWithCast(clientPkg: string, param: Parameter): string {
   let value = getParamValue(param);
   if (isBodyParameter(param) || isFormBodyParameter(param) || isMultipartFormBodyParameter(param)) {
     // if the param is in the body, it's already in the correct format
@@ -805,8 +837,8 @@ function getParamValueWithCast(clientPkg: string, param: Parameter, imports: Imp
     if (isConstantType(asArray.elementType) || (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName !== 'string')) {
       return createLocalVariableName(param, 'Param');
     } else if (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName === 'string') {
-      imports.add('strings');
-      return `strings.Split(${value}, "${getArraySeparator(param)}")`;
+      requiredHelpers.splitHelper = true;
+      return `splitHelper(${value}, "${getArraySeparator(param)}")`;
     } else {
       throw new Error(`unhandled array element type ${getTypeDeclaration(asArray.elementType)}`);
     }

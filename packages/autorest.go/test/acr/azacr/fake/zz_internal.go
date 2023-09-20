@@ -10,7 +10,6 @@ package fake
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
-	"io"
 	"net/http"
 	"reflect"
 	"sync"
@@ -24,11 +23,13 @@ func (nonRetriableError) NonRetriable() {
 	// marker method
 }
 
-func getOptional[T any](v T) *T {
-	if reflect.ValueOf(v).IsZero() {
-		return nil
+func contains[T comparable](s []T, v T) bool {
+	for _, vv := range s {
+		if vv == v {
+			return true
+		}
 	}
-	return &v
+	return false
 }
 
 func getHeaderValue(h http.Header, k string) string {
@@ -37,6 +38,13 @@ func getHeaderValue(h http.Header, k string) string {
 		return ""
 	}
 	return v[0]
+}
+
+func getOptional[T any](v T) *T {
+	if reflect.ValueOf(v).IsZero() {
+		return nil
+	}
+	return &v
 }
 
 func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
@@ -48,35 +56,6 @@ func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error)
 		return nil, err
 	}
 	return &t, err
-}
-
-func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {
-	t, err := parse(v)
-	if err != nil {
-		return *new(T), err
-	}
-	return t, err
-}
-
-func readRequestBody(req *http.Request) ([]byte, error) {
-	if req.Body == nil {
-		return nil, nil
-	}
-	body, err := io.ReadAll(req.Body)
-	if err != nil {
-		return nil, err
-	}
-	req.Body.Close()
-	return body, nil
-}
-
-func contains[T comparable](s []T, v T) bool {
-	for _, vv := range s {
-		if vv == v {
-			return true
-		}
-	}
-	return false
 }
 
 func newTracker[T any]() *tracker[T] {
