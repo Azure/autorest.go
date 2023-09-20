@@ -8,8 +8,6 @@
 
 package fake
 
-import "strings"
-
 type nonRetriableError struct {
 	error
 }
@@ -25,11 +23,4 @@ func contains[T comparable](s []T, v T) bool {
 		}
 	}
 	return false
-}
-
-func splitHelper(s, sep string) []string {
-	if s == "" {
-		return nil
-	}
-	return strings.Split(s, sep)
 }

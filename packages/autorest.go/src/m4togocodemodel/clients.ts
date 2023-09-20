@@ -119,15 +119,15 @@ function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod,
 function adaptHeaderType(schema: m4.Schema, forParam: boolean): go.HeaderType {
   // for header params, we never pass the element type by pointer
   const type = adaptPossibleType(schema, forParam);
-  if (go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isStandardType(type)) {
+  if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isStandardType(type)) {
     throw new Error(`unexpected header parameter type ${schema.type}`);
   }
   return type;
 }
 
-function adaptPathPrameterType(schema: m4.Schema): go.PathParameterType {
+function adaptPathParameterType(schema: m4.Schema): go.PathParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isStandardType(type)) {
+  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
     throw new Error(`unexpected path parameter type ${schema.type}`);
   }
   return type;
@@ -135,7 +135,7 @@ function adaptPathPrameterType(schema: m4.Schema): go.PathParameterType {
 
 function adaptQueryParameterType(schema: m4.Schema): go.QueryParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isStandardType(type)) {
+  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
   } else if (go.isSliceType(type)) {
     type.elementTypeByValue = true;
@@ -201,12 +201,18 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMo
   // add any headers
   for (const prop of values(respEnvSchema.properties)) {
     if (prop.language.go!.fromHeader) {
-      const headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
+      let headerResp: go.HeaderResponse | go.HeaderMapResponse;
+      if (prop.schema.language.go!.headerCollectionPrefix) {
+        const headerType = adaptPossibleType(prop.schema, false);
+        if (!go.isMapType(headerType)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapResponse ${prop.language.go!.name}`);
+        }
+        headerResp = new go.HeaderMapResponse(prop.language.go!.name, headerType, prop.schema.language.go!.headerCollectionPrefix, prop.language.go!.fromHeader, prop.language.go!.byValue);
+      } else {
+        headerResp = new go.HeaderResponse(prop.language.go!.name, adaptHeaderType(prop.schema, false), prop.language.go!.fromHeader, prop.language.go!.byValue);
+      }
       if (hasDescription(prop.language.go!)) {
         headerResp.description = prop.language.go!.description;
-      }
-      if (prop.schema.language.go!.headerCollectionPrefix) {
-        headerResp.collectionPrefix = prop.schema.language.go!.headerCollectionPrefix;
       }
       respEnv.headers.push(headerResp);
     }
@@ -317,8 +323,15 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       const bodyType = adaptPossibleType(param.schema);
       const paramType = adaptParameterType(param);
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
-        adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, paramType, param.language.go!.byValue);
-        (<go.FormBodyParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
+        const collectionFormat = adaptCollectionFormat(param);
+        if (collectionFormat) {
+          if (!go.isSliceType(bodyType)) {
+            throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
+          }
+          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, paramType, param.language.go!.byValue);
+        } else {
+          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, paramType, param.language.go!.byValue);
+        }
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
         adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, paramType, param.language.go!.byValue);
       } else {
@@ -330,26 +343,55 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       break;
     }
     case 'header': {
-      const headerType = adaptHeaderType(param.schema, true);
-      adaptedParam = new go.HeaderParameter(param.language.go!.name, param.language.go!.serializedName, headerType, adaptParameterType(param),
-                param.language.go!.byValue, location);
-
+      const collectionFormat = adaptCollectionFormat(param);
       if (param.schema.language.go!.headerCollectionPrefix) {
-        (<go.HeaderParameter>adaptedParam).collectionPrefix = param.schema.language.go!.headerCollectionPrefix;
+        const headerType = adaptPossibleType(param.schema, true);
+        if (!go.isMapType(headerType)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
+        }
+        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, adaptParameterType(param),
+          param.language.go!.byValue, location);
+      } else if (collectionFormat) {
+        const headerType = adaptPossibleType(param.schema, true);
+        if (!go.isSliceType(headerType)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
+        }
+        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, adaptParameterType(param),
+          param.language.go!.byValue, location);
+      } else {
+        adaptedParam = new go.HeaderParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderType(param.schema, true),
+          adaptParameterType(param), param.language.go!.byValue, location);
       }
-      (<go.HeaderParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
       break;
     }
-    case 'path':
-      adaptedParam = new go.PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-        adaptPathPrameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
-      (<go.PathParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
+    case 'path': {
+      const collectionFormat = adaptCollectionFormat(param);
+      if (collectionFormat) {
+        const pathType = adaptPossibleType(param.schema);
+        if (!go.isSliceType(pathType)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
+        }
+        adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          pathType, collectionFormat, adaptParameterType(param), param.language.go!.byValue, location);
+      } else {
+        adaptedParam = new go.PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          adaptPathParameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
+      }
       break;
+    }
     case 'query': {
-      const queryType = adaptQueryParameterType(param.schema);
-      adaptedParam = new go.QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-                param.protocol.http?.explode === true, queryType, adaptParameterType(param), param.language.go!.byValue, location);
-      (<go.QueryParameter>adaptedParam).delimiter = adaptParamDelimiter(param);
+      const collectionFormat = adaptExtendedCollectionFormat(param);
+      if (collectionFormat) {
+        const queryType = adaptPossibleType(param.schema);
+        if (!go.isSliceType(queryType)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
+        }
+        adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          queryType, collectionFormat, adaptParameterType(param), param.language.go!.byValue, location);
+      } else {
+        adaptedParam = new go.QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
+          adaptQueryParameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
+      }
       break;
     }
     case 'uri':
@@ -399,14 +441,36 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
   return adaptedParam;
 }
 
-function adaptParamDelimiter(param: m4.Parameter): '|' | ' ' | '\\t' | undefined {
+function adaptCollectionFormat(param: m4.Parameter): go.CollectionFormat | undefined {
   switch (param.protocol.http?.style) {
     case m4.SerializationStyle.PipeDelimited:
-      return '|';
+      return 'pipes';
+    case m4.SerializationStyle.Simple:
+      return 'csv';
     case m4.SerializationStyle.SpaceDelimited:
-      return ' ';
+      return 'ssv';
     case m4.SerializationStyle.TabDelimited:
-      return '\\t';
+      return 'tsv';
+    default:
+      return undefined;
+  }
+}
+
+function adaptExtendedCollectionFormat(param: m4.Parameter): go.ExtendedCollectionFormat | undefined {
+  switch (param.protocol.http?.style) {
+    case m4.SerializationStyle.Form:
+      if (param.protocol.http?.explode === true){
+        return 'multi';
+      }
+      return 'csv';
+    case m4.SerializationStyle.PipeDelimited:
+      return 'pipes';
+    case m4.SerializationStyle.Simple:
+      return 'csv';
+    case m4.SerializationStyle.SpaceDelimited:
+      return 'ssv';
+    case m4.SerializationStyle.TabDelimited:
+      return 'tsv';
     default:
       return undefined;
   }

@@ -30,7 +30,7 @@ type Server struct {
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
-	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, props azalias.GeoJSONObjectNamedCollection, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
+	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, props azalias.GeoJSONObjectNamedCollection, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method Client.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -134,11 +134,16 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
-	if err != nil {
-		return nil, err
+	groupByEscaped := qp["groupBy"]
+	groupByUnescaped := make([]string, len(groupByEscaped))
+	for i, v := range groupByEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		groupByUnescaped[i] = u
 	}
-	groupByUnescapedElements := splitHelper(groupByUnescaped, ",")
+	groupByUnescapedElements := groupByUnescaped
 	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
 	for i := 0; i < len(groupByUnescapedElements); i++ {
 		var parsedInt int64
@@ -208,7 +213,29 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 		}
 		queryCountsParam[i] = int64(parsedInt)
 	}
-	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, body, nil)
+	explodedStuffEscaped := qp["explodedStuff"]
+	explodedStuffUnescaped := make([]string, len(explodedStuffEscaped))
+	for i, v := range explodedStuffEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		explodedStuffUnescaped[i] = u
+	}
+	explodedStuffUnescapedElements := explodedStuffUnescaped
+	explodedStuffParam := make([]int64, len(explodedStuffUnescapedElements))
+	for i := 0; i < len(explodedStuffUnescapedElements); i++ {
+		var parsedInt int64
+		parsedInt, err = strconv.ParseInt(explodedStuffUnescapedElements[i], 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		explodedStuffParam[i] = int64(parsedInt)
+	}
+	explodedGroup := azalias.ExplodedGroup{
+		ExplodedStuff: explodedStuffParam,
+	}
+	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, body, explodedGroup, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -230,11 +257,16 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	newListPager := s.newListPager.get(req)
 	if newListPager == nil {
 		qp := req.URL.Query()
-		groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
-		if err != nil {
-			return nil, err
+		groupByEscaped := qp["groupBy"]
+		groupByUnescaped := make([]string, len(groupByEscaped))
+		for i, v := range groupByEscaped {
+			u, unescapeErr := url.QueryUnescape(v)
+			if unescapeErr != nil {
+				return nil, unescapeErr
+			}
+			groupByUnescaped[i] = u
 		}
-		groupByUnescapedElements := splitHelper(groupByUnescaped, ",")
+		groupByUnescapedElements := groupByUnescaped
 		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescapedElements))
 		for i := 0; i < len(groupByUnescapedElements); i++ {
 			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescapedElements[i])

@@ -196,6 +196,21 @@
         "type": "integer",
         "format": "int64"
       }
+    },
+    "GroupedExplodedQueryCollection": {
+      "name": "explodedStuff",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "multi",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "x-ms-parameter-grouping": {
+        "name": "exploded-group"
+      }
     }
   },
   "paths": {
@@ -332,6 +347,9 @@
           },
           {
             "$ref": "#/parameters/NumericQueryCollection"
+          },
+          {
+            "$ref": "#/parameters/GroupedExplodedQueryCollection"
           }
         ],
         "responses": {

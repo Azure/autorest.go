@@ -115,14 +115,15 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
+//   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
 	const operationName = "Client.GetScript"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, props, options)
+	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, props, explodedGroup, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -139,7 +140,7 @@ func (client *Client) GetScript(ctx context.Context, headerCounts []int32, query
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -147,6 +148,9 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
+	for _, qv := range explodedGroup.ExplodedStuff {
+		reqQP.Add("explodedStuff", fmt.Sprintf("%v", qv))
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}

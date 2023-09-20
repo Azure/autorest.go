@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Client, ClientSideDefault, GoCodeModel, HeaderParameter, LROMethod, Method, PageableMethod, Parameter, PossibleType, QueryParameter, ResultFormat, BodyParameter, HeaderResponse, PathParameterType, isMonomorphicResult, isPolymorphicResult, isModelResult, isHeadAsBooleanResult, isModelType, NextPageMethod, isMethod } from '../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isBinaryResult, isBodyParameter, isClientSideDefault, isConstantType, isFormBodyParameter, isLROMethod, isMapType, isMultipartFormBodyParameter, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter, isHeaderParameter, isPrimitiveType, isTimeType, isBytesType, isLiteralValue, isAnyResult } from '../gocodemodel/gocodemodel';
+import { Client, ClientSideDefault, GoCodeModel, HeaderParameter, LROMethod, Method, PageableMethod, Parameter, PossibleType, QueryParameter, ResultFormat, BodyParameter, HeaderMapResponse, HeaderResponse, PathParameterType, isMonomorphicResult, isPolymorphicResult, isModelResult, isHeadAsBooleanResult, isModelType, NextPageMethod, isMethod, isQueryCollectionParameter, isHeaderMapParameter } from '../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isBinaryResult, isBodyParameter, isClientSideDefault, isConstantType, isFormBodyParameter, isHeaderMapResponse, isLROMethod, isMapType, isMultipartFormBodyParameter, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter, isHeaderParameter, isPrimitiveType, isTimeType, isBytesType, isLiteralValue, isAnyResult } from '../gocodemodel/gocodemodel';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { commentLength, formatLiteralValue, isLiteralParameter, isRequiredParameter } from './helpers';
@@ -205,9 +205,9 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(headerResp: HeaderResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(headerResp: HeaderResponse | HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
-  if (headerResp.collectionPrefix) {
+  if (isHeaderMapResponse(headerResp)) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     imports.add('strings');
     const headerPrefix = headerResp.collectionPrefix;
@@ -525,7 +525,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
         }
         return type.type === 'string';
       };
-      if (((isPrimitiveType(pp.type) && pp.type.typeName === 'string') || choiceIsString(pp.type)) && pp.isURLEncoded) {
+      if (((isPrimitiveType(pp.type) && pp.type.typeName === 'string') || choiceIsString(pp.type)) && pp.isEncoded) {
         const paramName = getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
@@ -533,7 +533,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
         text += '\t}\n';
       }
       let paramValue = formatParamValue(pp, imports);
-      if (pp.isURLEncoded) {
+      if (pp.isEncoded) {
         imports.add('net/url');
         paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }
@@ -567,7 +567,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     if (!isQueryParameter(qp)) {
       continue;
     }
-    if (qp.isURLEncoded) {
+    if (qp.isEncoded) {
       encodedParams.push(qp);
     } else {
       unencodedParams.push(qp);
@@ -596,11 +596,8 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     text += '\treqQP := req.Raw().URL.Query()\n';
     for (const qp of values(encodedParams)) {
       let setter: string;
-      if (qp.explode) {
+      if (isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
-        if (!isSliceType(qp.type)) {
-          throw new Error(`expected SchemaType.Array for query param ${qp.paramName}`);
-        }
         // emit a type conversion for the qv based on the array's element type
         let queryVal: string;
         const arrayQP = qp.type;
@@ -638,7 +635,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     }
     for (const qp of values(unencodedParams)) {
       let setter: string;
-      if (qp.explode === true) {
+      if (isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
         setter += `\t\tunencodedParams = append(unencodedParams, "${qp.queryParameter}="+qv)\n`;
         setter += '\t}';
@@ -660,7 +657,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
       return emitClientSideDefault(headerParam, headerParam.paramType, (name, val) => {
         return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
       }, imports);
-    } else if (headerParam.collectionPrefix) {
+    } else if (isHeaderMapParameter(headerParam)) {
       let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
       headerText += `${prefix}\tif v != nil {\n`;
       headerText += `${prefix}\t\treq.Raw().Header["${headerParam.collectionPrefix}"+k] = []string{*v}\n`;
@@ -953,7 +950,7 @@ function createProtocolResponse(client: Client, method: Method, imports: ImportM
   let text = `${comment(name, '// ')} handles the ${method.methodName} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
-  const addHeaders = function (headers: Array<HeaderResponse>) {
+  const addHeaders = function (headers: Array<HeaderResponse | HeaderMapResponse>) {
     for (const header of values(headers)) {
       text += formatHeaderResponseValue(header, imports, 'result', `${method.responseEnvelope.name}{}`);
     }

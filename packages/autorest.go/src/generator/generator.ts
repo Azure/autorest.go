@@ -6,7 +6,7 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
+import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderMapResponse, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
 import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
@@ -228,7 +228,7 @@ function sortContent(codeModel: GoCodeModel) {
 
   codeModel.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
   for (const respEnv of values(codeModel.responseEnvelopes)) {
-    respEnv.headers.sort((a: HeaderResponse, b: HeaderResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    respEnv.headers.sort((a: HeaderResponse | HeaderMapResponse, b: HeaderResponse | HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
   codeModel.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });

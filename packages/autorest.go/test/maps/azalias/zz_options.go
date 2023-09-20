@@ -62,3 +62,8 @@ type ClientPolicyAssignmentOptions struct {
 	Interval *string
 	Unique   *string
 }
+
+// ExplodedGroup contains a group of parameters for the Client.GetScript method.
+type ExplodedGroup struct {
+	ExplodedStuff []int64
+}
