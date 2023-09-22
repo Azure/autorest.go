@@ -307,7 +307,9 @@ export class MockTestDataRender extends BaseDataRender {
         const isPolymophismValue =
           value?.schema?.type === SchemaType.Object &&
           ((<ObjectSchema>value.schema).discriminatorValue !== undefined || (<ObjectSchema>value.schema).discriminator?.property.isDiscriminator === true);
-        output += `${this.getLanguageName(value)}: ${this.exampleValueToString(value, isPolymophismValue || !value.language.go?.byValue === true)},\n`;
+          if (!this.getLanguageName(value).includes('NextLink')) {
+            output += `${this.getLanguageName(value)}: ${this.exampleValueToString(value, isPolymophismValue || !value.language.go?.byValue === true)},\n`;
+          }
       }
       output += '}';
       return output;
