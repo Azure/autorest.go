@@ -8,7 +8,7 @@ trigger:
   paths:
     exclude:
       - packages/autorest.gotest
-      - swagger
+      - packages/typespec-go
 
 pr:
   branches:
@@ -20,7 +20,7 @@ pr:
   paths:
     exclude:
       - packages/autorest.gotest
-      - swagger
+      - packages/typespec-go
 
 jobs:
   - job: "AutoRest_Go_CI"

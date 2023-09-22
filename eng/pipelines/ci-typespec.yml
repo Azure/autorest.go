@@ -8,7 +8,8 @@ trigger:
   paths:
     exclude:
       - packages/autorest.go
-      - packages/typespec-go
+      - packages/autorest.gotest
+      - swagger
 
 pr:
   branches:
@@ -20,11 +21,12 @@ pr:
   paths:
     exclude:
       - packages/autorest.go
-      - packages/typespec-go
+      - packages/autorest.gotest
+      - swagger
 
 jobs:
-  - job: "AutoRest_Go_CI"
-    displayName: "Run AutoRest CI Checks"
+  - job: "TypeSpec_Go_CI"
+    displayName: "Run TypeSpec Go CI Checks"
 
     strategy:
       matrix:
