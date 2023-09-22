@@ -543,6 +543,7 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type TypeWithSliceOfTimes.
 func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
+	populateTimeRFC3339(objectMap, "interval", t.Interval)
 	aux := make([]timeRFC3339, len(t.Times), len(t.Times))
 	for i := 0; i < len(t.Times); i++ {
 		aux[i] = (timeRFC3339)(t.Times[i])
@@ -560,6 +561,9 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "interval":
+			err = unpopulateTimeRFC3339(val, "Interval", &t.Interval)
+			delete(rawMsg, key)
 		case "times":
 			var aux []timeRFC3339
 			err = unpopulate(val, "Times", &aux)

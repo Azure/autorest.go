@@ -371,6 +371,10 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       }
       return 'time.Time';
     case SchemaType.Time:
+      schema.language.go!.internalTimeType = 'timeRFC3339';
+      if (type === 'InBody') {
+        codeModel.language.go!.generateTimeRFC3339Helper = true;
+      }
       return 'time.Time';
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
