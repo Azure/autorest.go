@@ -7,7 +7,7 @@ import { Client, ClientSideDefault, GoCodeModel, HeaderParameter, LROMethod, Met
 import { getTypeDeclaration, isBinaryResult, isBodyParameter, isClientSideDefault, isConstantType, isFormBodyParameter, isHeaderMapResponse, isLROMethod, isMapType, isMultipartFormBodyParameter, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter, isHeaderParameter, isPrimitiveType, isTimeType, isBytesType, isLiteralValue, isAnyResult } from '../gocodemodel/gocodemodel';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, formatLiteralValue, isLiteralParameter, isRequiredParameter } from './helpers';
+import { commentLength, formatLiteralValue, isLiteralParameter, isRequiredParameter, timeRFC3339Format } from './helpers';
 import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, formatStatusCodes, formatValue, getResultFieldName, hasSchemaResponse, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
@@ -259,9 +259,11 @@ function formatHeaderResponseValue(headerResp: HeaderResponse | HeaderMapRespons
     imports.add('time');
     if (headerResp.type.dateTimeFormat === 'dateType') {
       text += `\t\t${name}, err := time.Parse("${dateFormat}", val)\n`;
+    } else if (headerResp.type.dateTimeFormat === 'timeRFC3339') {
+      text += `\t\t${name}, err := time.Parse("${timeRFC3339Format}", val)\n`;
     } else {
       let format = datetimeRFC3339Format;
-      if (headerResp.type.dateTimeFormat === 'timeRFC1123') {
+      if (headerResp.type.dateTimeFormat === 'dateTimeRFC1123') {
         format = datetimeRFC1123Format;
       }
       text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
@@ -724,7 +726,10 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     } else if (isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'dateType') {
       // wrap the body in the internal dateType
       body = `dateType(${body})`;
-    } else if (isTimeType(bodyParam.type) && (bodyParam.type.dateTimeFormat === 'timeRFC1123' || bodyParam.type.dateTimeFormat === 'timeUnix')) {
+    } else if (isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'timeRFC3339') {
+      // wrap the body in the internal timeRFC3339 type
+      body = `timeRFC3339(${body})`;
+    } else if (isTimeType(bodyParam.type) && (bodyParam.type.dateTimeFormat === 'dateTimeRFC1123' || bodyParam.type.dateTimeFormat === 'timeUnix')) {
       // wrap the body in the custom time type
       text += `\taux := ${bodyParam.type.dateTimeFormat}(${body})\n`;
       body = 'aux';
@@ -863,15 +868,17 @@ function isArrayOfDateTimeForMarshalling(paramType: PossibleType): string | unde
   if (!isTimeType(paramType.elementType)) {
     return undefined;
   }
-  if (!paramType.elementType.dateTimeFormat) {
+  /*if (!paramType.elementType.dateTimeFormat) {
     return undefined;
-  }
+  }*/
   switch (paramType.elementType.dateTimeFormat) {
     case 'dateType':
-    case 'timeRFC1123':
+    case 'dateTimeRFC1123':
+    case 'timeRFC3339':
     case 'timeUnix':
       return paramType.elementType.dateTimeFormat;
     default:
+      // dateTimeRFC3339 uses the default marshaller
       return undefined;
   }
 }

@@ -23,12 +23,12 @@ func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
+		Expiry *dateTimeRFC3339 `xml:"Expiry"`
+		Start  *dateTimeRFC3339 `xml:"Start"`
 	}{
 		alias:  (*alias)(&a),
-		Expiry: (*timeRFC3339)(a.Expiry),
-		Start:  (*timeRFC3339)(a.Start),
+		Expiry: (*dateTimeRFC3339)(a.Expiry),
+		Start:  (*dateTimeRFC3339)(a.Start),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -38,8 +38,8 @@ func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 	type alias AccessPolicy
 	aux := &struct {
 		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
+		Expiry *dateTimeRFC3339 `xml:"Expiry"`
+		Start  *dateTimeRFC3339 `xml:"Start"`
 	}{
 		alias: (*alias)(a),
 	}
@@ -76,10 +76,10 @@ func (b Banana) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias Banana
 	aux := &struct {
 		*alias
-		Expiration *timeRFC3339 `xml:"expiration"`
+		Expiration *dateTimeRFC3339 `xml:"expiration"`
 	}{
 		alias:      (*alias)(&b),
-		Expiration: (*timeRFC3339)(b.Expiration),
+		Expiration: (*dateTimeRFC3339)(b.Expiration),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -89,7 +89,7 @@ func (b *Banana) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias Banana
 	aux := &struct {
 		*alias
-		Expiration *timeRFC3339 `xml:"expiration"`
+		Expiration *dateTimeRFC3339 `xml:"expiration"`
 	}{
 		alias: (*alias)(b),
 	}
@@ -121,14 +121,14 @@ func (b BlobProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement) err
 	type alias BlobProperties
 	aux := &struct {
 		*alias
-		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
-		LastModified       *timeRFC1123 `xml:"Last-Modified"`
+		CopyCompletionTime *dateTimeRFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *dateTimeRFC1123 `xml:"DeletedTime"`
+		LastModified       *dateTimeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias:              (*alias)(&b),
-		CopyCompletionTime: (*timeRFC1123)(b.CopyCompletionTime),
-		DeletedTime:        (*timeRFC1123)(b.DeletedTime),
-		LastModified:       (*timeRFC1123)(b.LastModified),
+		CopyCompletionTime: (*dateTimeRFC1123)(b.CopyCompletionTime),
+		DeletedTime:        (*dateTimeRFC1123)(b.DeletedTime),
+		LastModified:       (*dateTimeRFC1123)(b.LastModified),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -138,9 +138,9 @@ func (b *BlobProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	type alias BlobProperties
 	aux := &struct {
 		*alias
-		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
-		LastModified       *timeRFC1123 `xml:"Last-Modified"`
+		CopyCompletionTime *dateTimeRFC1123 `xml:"CopyCompletionTime"`
+		DeletedTime        *dateTimeRFC1123 `xml:"DeletedTime"`
+		LastModified       *dateTimeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(b),
 	}
@@ -193,10 +193,10 @@ func (c ContainerProperties) MarshalXML(enc *xml.Encoder, start xml.StartElement
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		LastModified *timeRFC1123 `xml:"Last-Modified"`
+		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias:        (*alias)(&c),
-		LastModified: (*timeRFC1123)(c.LastModified),
+		LastModified: (*dateTimeRFC1123)(c.LastModified),
 	}
 	return enc.EncodeElement(aux, start)
 }
@@ -206,7 +206,7 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 	type alias ContainerProperties
 	aux := &struct {
 		*alias
-		LastModified *timeRFC1123 `xml:"Last-Modified"`
+		LastModified *dateTimeRFC1123 `xml:"Last-Modified"`
 	}{
 		alias: (*alias)(c),
 	}

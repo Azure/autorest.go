@@ -15,6 +15,7 @@ export const commentLength = 120;
 export const dateFormat = '2006-01-02';
 export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
+export const timeRFC3339Format = '15:04:05.999999999Z07:00';
 
 // returns the common source-file preamble (license comment, package name etc)
 export function contentPreamble(codeModel: GoCodeModel, packageName?: string): string {
@@ -284,10 +285,12 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       return `${paramName}.Format("${dateFormat}")`;
     } else if (type.dateTimeFormat === 'timeUnix') {
       return `timeUnix(${star}${paramName}).String()`;
+    } else if (type.dateTimeFormat === 'timeRFC3339') {
+      return `timeRFC3339(${star}${paramName}).String()`;
     } else {
       imports.add('time');
       let format = datetimeRFC3339Format;
-      if (type.dateTimeFormat === 'timeRFC1123') {
+      if (type.dateTimeFormat === 'dateTimeRFC1123') {
         format = datetimeRFC1123Format;
       }
       return `${paramName}.Format(${format})`;

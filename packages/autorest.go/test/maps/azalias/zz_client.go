@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Client contains the methods for the Alias group.
@@ -117,13 +118,13 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // Generated from API version 2.0
 //   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
 	const operationName = "Client.GetScript"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, props, explodedGroup, options)
+	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, headerTime, props, explodedGroup, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -140,7 +141,7 @@ func (client *Client) GetScript(ctx context.Context, headerCounts []int32, query
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -153,6 +154,7 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
+	req.Raw().Header["headerTime"] = []string{timeRFC3339(headerTime).String()}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err

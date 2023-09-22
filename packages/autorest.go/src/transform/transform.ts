@@ -311,9 +311,9 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
     case SchemaType.DateTime: {
       const dateTime = <DateTimeSchema>schema;
       if (dateTime.format === 'date-time-rfc1123') {
-        schema.language.go!.internalTimeType = 'timeRFC1123';
+        schema.language.go!.internalTimeType = 'dateTimeRFC1123';
       } else {
-        schema.language.go!.internalTimeType = 'timeRFC3339';
+        schema.language.go!.internalTimeType = 'dateTimeRFC3339';
       }
       if (type === 'InBody') {
         // add a marker to the code model indicating that we need
@@ -321,9 +321,9 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
         // header/query param values are parsed separately so they
         // don't need the custom time types.
         if (dateTime.format === 'date-time-rfc1123') {
-          codeModel.language.go!.generateTimeRFC1123Helper = true;
+          codeModel.language.go!.generateDateTimeRFC1123Helper = true;
         } else {
-          codeModel.language.go!.generateTimeRFC3339Helper = true;
+          codeModel.language.go!.generateDateTimeRFC3339Helper = true;
         }
       }
       return 'time.Time';

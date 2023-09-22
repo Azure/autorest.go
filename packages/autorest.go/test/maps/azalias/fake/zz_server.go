@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 // Server is a fake server for instances of the azalias.Client type.
@@ -30,7 +31,7 @@ type Server struct {
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
-	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, props azalias.GeoJSONObjectNamedCollection, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
+	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method Client.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -232,10 +233,14 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 		}
 		explodedStuffParam[i] = int64(parsedInt)
 	}
+	headerTimeParam, err := time.Parse("15:04:05.999999999Z07:00", getHeaderValue(req.Header, "headerTime"))
+	if err != nil {
+		return nil, err
+	}
 	explodedGroup := azalias.ExplodedGroup{
 		ExplodedStuff: explodedStuffParam,
 	}
-	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, body, explodedGroup, nil)
+	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, headerTimeParam, body, explodedGroup, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

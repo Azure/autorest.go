@@ -70,7 +70,9 @@ export interface Options {
 export interface MarshallingRequirements {
   generateDateHelper: boolean;
 
-  generateTimeRFC1123Helper: boolean;
+  generateDateTimeRFC1123Helper: boolean;
+
+  generateDateTimeRFC3339Helper: boolean;
 
   generateTimeRFC3339Helper: boolean;
 
@@ -752,7 +754,7 @@ export interface StandardType {
   packageName: string;
 }
 
-export type DateTimeFormat = 'dateType' | 'timeRFC1123' | 'timeRFC3339' | 'timeUnix';
+export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
 
 // TimeType is a time.Time type from the standard library with a format specifier.
 export interface TimeType extends StandardType {
@@ -915,7 +917,8 @@ export class Options implements Options {
 export class MarshallingRequirements implements MarshallingRequirements {
   constructor() {
     this.generateDateHelper = false;
-    this.generateTimeRFC1123Helper = false;
+    this.generateDateTimeRFC1123Helper = false;
+    this.generateDateTimeRFC3339Helper = false;
     this.generateTimeRFC3339Helper = false;
     this.generateUnixTimeHelper = false;
     this.generateXMLDictionaryUnmarshallingHelper = false;

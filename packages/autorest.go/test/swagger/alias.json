@@ -350,6 +350,14 @@
           },
           {
             "$ref": "#/parameters/GroupedExplodedQueryCollection"
+          },
+          {
+            "name": "headerTime",
+            "in": "header",
+            "required": true,
+            "x-ms-parameter-location": "method",
+            "type": "string",
+            "format": "time"
           }
         ],
         "responses": {

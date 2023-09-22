@@ -8,7 +8,7 @@ import { AnyResult, BinaryResult, BodyParameter, MonomorphicResult, PolymorphicR
 import { getTypeDeclaration, isBodyParameter, isFormBodyParameter, isHeaderCollectionParameter, isHeaderMapParameter, isHeaderMapResponse, isLiteralValue, isLROMethod, isPageableMethod, isPathParameter, isQueryCollectionParameter, isQueryParameter, isSliceType, isURIParameter } from '../../gocodemodel/gocodemodel';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatLiteralValue, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatValue, getDelimiterForCollectionFormat, getMethodParameters, getParentImport, isParameter, isParameterGroup, isLiteralParameter, isRequiredParameter } from '../helpers';
+import { contentPreamble, dateFormat, formatLiteralValue, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatValue, getDelimiterForCollectionFormat, getMethodParameters, getParentImport, isParameter, isParameterGroup, isLiteralParameter, isRequiredParameter, timeRFC3339Format } from '../helpers';
 import { fixUpMethodName } from '../operations';
 import { ImportManager } from '../imports';
 import { generateServerInternal, RequiredHelpers } from './internal';
@@ -645,19 +645,23 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       }
       content += `${paramValue}\n`;
     } else if (isTimeType(param.type)) {
-      if (param.type.dateTimeFormat === 'dateType') {
+      if (param.type.dateTimeFormat === 'dateType' || param.type.dateTimeFormat === 'timeRFC3339') {
         imports.add('time');
-        let from = `time.Parse("2006-01-02", ${paramValue})`;
+        let format = dateFormat;
+        if (param.type.dateTimeFormat === 'timeRFC3339') {
+          format = timeRFC3339Format;
+        }
+        let from = `time.Parse("${format}", ${paramValue})`;
         if (!isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
-          from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("2006-01-02", v) })`;
+          from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("${format}", v) })`;
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-      } else if (param.type.dateTimeFormat === 'timeRFC1123' || param.type.dateTimeFormat === 'timeRFC3339') {
+      } else if (param.type.dateTimeFormat === 'dateTimeRFC1123' || param.type.dateTimeFormat === 'dateTimeRFC3339') {
         imports.add('time');
         let format = 'time.RFC3339Nano';
-        if (param.type.dateTimeFormat === 'timeRFC1123') {
+        if (param.type.dateTimeFormat === 'dateTimeRFC1123') {
           format = 'time.RFC1123';
         }
         let from = `time.Parse(${format}, ${paramValue})`;
