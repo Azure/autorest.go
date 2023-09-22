@@ -868,9 +868,6 @@ function isArrayOfDateTimeForMarshalling(paramType: PossibleType): string | unde
   if (!isTimeType(paramType.elementType)) {
     return undefined;
   }
-  /*if (!paramType.elementType.dateTimeFormat) {
-    return undefined;
-  }*/
   switch (paramType.elementType.dateTimeFormat) {
     case 'dateType':
     case 'dateTimeRFC1123':
