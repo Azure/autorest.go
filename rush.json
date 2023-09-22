@@ -105,6 +105,12 @@
       "projectFolder": "packages/autorest.gotest",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/typespec-go",
+      "projectFolder": "packages/typespec-go",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }

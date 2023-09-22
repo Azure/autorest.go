@@ -1,0 +1,71 @@
+{
+  "name": "@azure-tools/typespec-go",
+  "version": "0.1.0",
+  "description": "TypeSpec emitter for Go SDKs",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
+  "tspMain": "dist/src/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "eslint-fix": "eslint  . --fix --ext .ts",
+    "eslint": "eslint  . --ext .ts",
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "prepare": "npm run build",
+    "test": "jest --ci --passWithNoTests",
+    "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
+    "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
+    "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
+  },
+  "files": [
+    "dist/**",
+    "!dist/test/**"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure/autorest.go.git"
+  },
+  "keywords": [
+    "cadl",
+    "go",
+    "golang",
+    "typespec"
+  ],
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Azure/autorest.go/issues"
+  },
+  "homepage": "https://github.com/Azure/autorest.go#readme",
+  "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
+  "devDependencies": {
+    "@types/js-yaml": "~4.0.6",
+    "@types/node": "^18.16.3",
+    "@typescript-eslint/eslint-plugin": "~4.1.1",
+    "@typescript-eslint/parser": "~4.1.1",
+    "@types/jest": "~26.0.24",
+    "eslint": "~6.6.0",
+    "jest": "~27.0.6",
+    "ts-jest": "~27.0.4",
+    "typescript": "~5.1.3"
+  },
+  "dependencies": {
+    "@azure-tools/cadl-ranch-expect": "~0.7.0",
+    "@azure-tools/cadl-ranch-specs": "~0.22.0",
+    "@azure-tools/typespec-azure-core": ">=0.34.0 <1.0.0",
+    "@azure-tools/typespec-client-generator-core": ">=0.35.0-dev.3 <1.0.0",
+    "@typespec/compiler": ">=0.48.0 <1.0.0",
+    "@typespec/http": ">=0.48.0 <1.0.0",
+    "@typespec/rest": ">=0.48.0 <1.0.0",
+    "@typespec/versioning": ">=0.48.0 <1.0.0",
+    "js-yaml": "~4.1.0"
+  }
+}
