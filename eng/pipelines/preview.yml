@@ -47,15 +47,19 @@ extends:
         $packageVersions = Get-Content "$(buildArtifactsPath)/package-versions.json" -Raw | ConvertFrom-Json
         $generatorVersion = $packageVersions.generator
 
-        $pattern = '(?m)^use: "@autorest/go(@.*)"\s*$'
-        $mdFiles = Get-ChildItem -Path "./sdk" -Filter "autorest.md" -Recurse
-        foreach ($mdFile in $mdFiles) {
-          $content = Get-Content -Path $mdFile -Raw
+        $files = @(
+          'eng/scripts/build.ps1'
+          'eng/scripts/MgmtTestLib.ps1'
+        )
 
-          if ($content -match $pattern) {
-            Write-Host "Update @autorest/go version in $mdFile"
-            $content = $content -replace $pattern, "use: `"@autorest/go@$generatorVersion`""
-            Set-Content -Path $mdFile -Value $content -Encoding UTF8 -NoNewLine
+        foreach ($file in $files) {
+          $content = Get-Content -Path $file -Raw
+
+          if ($content -match '"@autorest/go@.*?"') {
+            $content = $content -replace $Matches[0], "`"@autorest/go@$generatorVersion`""
+
+            Write-Host "Update @autorest/go version in $file"
+            Set-Content -Path $file -Value $content -Encoding UTF8 -NoNewLine
           }
         }
       displayName: 'Update autorest.md files'
