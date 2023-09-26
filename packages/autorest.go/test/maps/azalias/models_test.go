@@ -6,6 +6,7 @@ package azalias
 import (
 	"encoding/json"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -55,4 +56,19 @@ func TestUnmarshalFail(t *testing.T) {
 	err := json.Unmarshal([]byte(data), &geo)
 	require.Error(t, err)
 	require.Equal(t, "unmarshalling type *azalias.GeoJSONFeature: struct field ID: json: cannot unmarshal number into Go value of type string", err.Error())
+}
+
+func TestTimeFormat(t *testing.T) {
+	theTime, err := time.Parse(time.TimeOnly, "15:04:05.12345")
+	require.NoError(t, err)
+	source := TypeWithSliceOfTimes{
+		Interval: &theTime,
+	}
+	data, err := json.Marshal(source)
+	require.NoError(t, err)
+	require.EqualValues(t, `{"interval":"15:04:05.12345Z","times":[]}`, string(data))
+	dest := TypeWithSliceOfTimes{}
+	require.NoError(t, json.Unmarshal([]byte(`{"interval": "15:04:05.12345"}`), &dest))
+	require.NotNil(t, dest.Interval)
+	require.EqualValues(t, theTime, *dest.Interval)
 }

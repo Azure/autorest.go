@@ -934,7 +934,7 @@ func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Cont
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
 func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
 	result := ArrayClientGetDateTimeInvalidCharsResponse{}
-	var aux []*timeRFC3339
+	var aux []*dateTimeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
@@ -988,7 +988,7 @@ func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Conte
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
 func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidNullResponse, error) {
 	result := ArrayClientGetDateTimeInvalidNullResponse{}
-	var aux []*timeRFC3339
+	var aux []*dateTimeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
@@ -1043,7 +1043,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
 func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
 	result := ArrayClientGetDateTimeRFC1123ValidResponse{}
-	var aux []*timeRFC1123
+	var aux []*dateTimeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
@@ -1096,7 +1096,7 @@ func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, op
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
 func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeValidResponse, error) {
 	result := ArrayClientGetDateTimeValidResponse{}
-	var aux []*timeRFC3339
+	var aux []*dateTimeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
@@ -2692,9 +2692,9 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := make([]*timeRFC1123, len(arrayBody))
+	aux := make([]*dateTimeRFC1123, len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
-		aux[i] = (*timeRFC1123)(arrayBody[i])
+		aux[i] = (*dateTimeRFC1123)(arrayBody[i])
 	}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err

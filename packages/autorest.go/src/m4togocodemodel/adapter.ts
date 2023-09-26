@@ -35,11 +35,14 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.host) {
       codeModel.host = session.model.language.go!.host;
     }
-    if (session.model.language.go!.generateTimeRFC1123Helper) {
-      codeModel.marshallingRequirements.generateTimeRFC1123Helper = true;
+    if (session.model.language.go!.generateDateTimeRFC1123Helper) {
+      codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
     }
     if (session.model.language.go!.generateTimeRFC3339Helper) {
       codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
+    }
+    if (session.model.language.go!.generateDateTimeRFC3339Helper) {
+      codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
     }
     if (session.model.language.go!.generateUnixTimeHelper) {
       codeModel.marshallingRequirements.generateUnixTimeHelper = true;

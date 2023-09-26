@@ -476,7 +476,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "aliases", s.Aliases)
 	populate(objectMap, "description", s.Description)
 	populateAny(objectMap, "interval", s.Interval)
-	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
+	populateDateTimeRFC3339(objectMap, "startTime", s.StartTime)
 	return json.Marshal(objectMap)
 }
 
@@ -499,7 +499,7 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Interval", &s.Interval)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, "StartTime", &s.StartTime)
+			err = unpopulateDateTimeRFC3339(val, "StartTime", &s.StartTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -543,9 +543,10 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type TypeWithSliceOfTimes.
 func (t TypeWithSliceOfTimes) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	aux := make([]timeRFC3339, len(t.Times), len(t.Times))
+	populateTimeRFC3339(objectMap, "interval", t.Interval)
+	aux := make([]dateTimeRFC3339, len(t.Times), len(t.Times))
 	for i := 0; i < len(t.Times); i++ {
-		aux[i] = (timeRFC3339)(t.Times[i])
+		aux[i] = (dateTimeRFC3339)(t.Times[i])
 	}
 	populate(objectMap, "times", aux)
 	return json.Marshal(objectMap)
@@ -560,8 +561,11 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "interval":
+			err = unpopulateTimeRFC3339(val, "Interval", &t.Interval)
+			delete(rawMsg, key)
 		case "times":
-			var aux []timeRFC3339
+			var aux []dateTimeRFC3339
 			err = unpopulate(val, "Times", &aux)
 			for _, au := range aux {
 				t.Times = append(t.Times, (time.Time)(au))

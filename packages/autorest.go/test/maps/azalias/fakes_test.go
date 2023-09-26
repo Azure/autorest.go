@@ -9,6 +9,7 @@ import (
 	"context"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
@@ -19,11 +20,14 @@ func TestFakeGetScript(t *testing.T) {
 	headerContent := []int32{0, 2, 4}
 	queryContent := []int64{3, 6, 9}
 	explodedContent := []int64{9, 8, 7}
+	timeContent, err := time.Parse(time.TimeOnly, "15:04:05.12345")
+	require.NoError(t, err)
 	server := fake.Server{
-		GetScript: func(ctx context.Context, headerCounts []int32, queryCounts []int64, props azalias.GeoJSONObjectNamedCollection, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder) {
+		GetScript: func(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder) {
 			require.EqualValues(t, headerContent, headerCounts)
 			require.EqualValues(t, queryContent, queryCounts)
 			require.EqualValues(t, explodedContent, explodedGroup.ExplodedStuff)
+			require.EqualValues(t, timeContent, headerTime)
 			resp.SetResponse(http.StatusOK, azalias.ClientGetScriptResponse{}, nil)
 			return
 		},
@@ -32,7 +36,7 @@ func TestFakeGetScript(t *testing.T) {
 		Transport: fake.NewServerTransport(&server),
 	})
 	require.NoError(t, err)
-	_, err = client.GetScript(context.Background(), headerContent, queryContent, azalias.GeoJSONObjectNamedCollection{}, azalias.ExplodedGroup{
+	_, err = client.GetScript(context.Background(), headerContent, queryContent, timeContent, azalias.GeoJSONObjectNamedCollection{}, azalias.ExplodedGroup{
 		ExplodedStuff: explodedContent,
 	}, nil)
 	require.NoError(t, err)

@@ -47,7 +47,7 @@ func (a *AccessToken) UnmarshalJSON(data []byte) error {
 func (a Annotations) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "org.opencontainers.image.authors", a.Authors)
-	populateTimeRFC3339(objectMap, "org.opencontainers.image.created", a.Created)
+	populateDateTimeRFC3339(objectMap, "org.opencontainers.image.created", a.Created)
 	populate(objectMap, "org.opencontainers.image.description", a.Description)
 	populate(objectMap, "org.opencontainers.image.documentation", a.Documentation)
 	populate(objectMap, "org.opencontainers.image.licenses", a.Licenses)
@@ -79,7 +79,7 @@ func (a *Annotations) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Authors", &a.Authors)
 			delete(rawMsg, key)
 		case "org.opencontainers.image.created":
-			err = unpopulateTimeRFC3339(val, "Created", &a.Created)
+			err = unpopulateDateTimeRFC3339(val, "Created", &a.Created)
 			delete(rawMsg, key)
 		case "org.opencontainers.image.description":
 			err = unpopulate(val, "Description", &a.Description)
@@ -238,8 +238,8 @@ func (a *ArtifactTagProperties) UnmarshalJSON(data []byte) error {
 func (c ContainerRepositoryProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "changeableAttributes", c.ChangeableAttributes)
-	populateTimeRFC3339(objectMap, "createdTime", c.CreatedOn)
-	populateTimeRFC3339(objectMap, "lastUpdateTime", c.LastUpdatedOn)
+	populateDateTimeRFC3339(objectMap, "createdTime", c.CreatedOn)
+	populateDateTimeRFC3339(objectMap, "lastUpdateTime", c.LastUpdatedOn)
 	populate(objectMap, "manifestCount", c.ManifestCount)
 	populate(objectMap, "imageName", c.Name)
 	populate(objectMap, "registry", c.RegistryLoginServer)
@@ -260,10 +260,10 @@ func (c *ContainerRepositoryProperties) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ChangeableAttributes", &c.ChangeableAttributes)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateTimeRFC3339(val, "CreatedOn", &c.CreatedOn)
+			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &c.CreatedOn)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateTimeRFC3339(val, "LastUpdatedOn", &c.LastUpdatedOn)
+			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &c.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "manifestCount":
 			err = unpopulate(val, "ManifestCount", &c.ManifestCount)
@@ -617,9 +617,9 @@ func (m ManifestAttributesBase) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "architecture", m.Architecture)
 	populate(objectMap, "changeableAttributes", m.ChangeableAttributes)
 	populate(objectMap, "configMediaType", m.ConfigMediaType)
-	populateTimeRFC3339(objectMap, "createdTime", m.CreatedOn)
+	populateDateTimeRFC3339(objectMap, "createdTime", m.CreatedOn)
 	populate(objectMap, "digest", m.Digest)
-	populateTimeRFC3339(objectMap, "lastUpdateTime", m.LastUpdatedOn)
+	populateDateTimeRFC3339(objectMap, "lastUpdateTime", m.LastUpdatedOn)
 	populate(objectMap, "os", m.OperatingSystem)
 	populate(objectMap, "references", m.RelatedArtifacts)
 	populate(objectMap, "imageSize", m.Size)
@@ -646,13 +646,13 @@ func (m *ManifestAttributesBase) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ConfigMediaType", &m.ConfigMediaType)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateTimeRFC3339(val, "CreatedOn", &m.CreatedOn)
+			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &m.CreatedOn)
 			delete(rawMsg, key)
 		case "digest":
 			err = unpopulate(val, "Digest", &m.Digest)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateTimeRFC3339(val, "LastUpdatedOn", &m.LastUpdatedOn)
+			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &m.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "os":
 			err = unpopulate(val, "OperatingSystem", &m.OperatingSystem)
@@ -1262,9 +1262,9 @@ func (r *RepositoryWriteableProperties) UnmarshalJSON(data []byte) error {
 func (t TagAttributesBase) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "changeableAttributes", t.ChangeableAttributes)
-	populateTimeRFC3339(objectMap, "createdTime", t.CreatedOn)
+	populateDateTimeRFC3339(objectMap, "createdTime", t.CreatedOn)
 	populate(objectMap, "digest", t.Digest)
-	populateTimeRFC3339(objectMap, "lastUpdateTime", t.LastUpdatedOn)
+	populateDateTimeRFC3339(objectMap, "lastUpdateTime", t.LastUpdatedOn)
 	populate(objectMap, "name", t.Name)
 	populate(objectMap, "signed", t.Signed)
 	return json.Marshal(objectMap)
@@ -1283,13 +1283,13 @@ func (t *TagAttributesBase) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "ChangeableAttributes", &t.ChangeableAttributes)
 			delete(rawMsg, key)
 		case "createdTime":
-			err = unpopulateTimeRFC3339(val, "CreatedOn", &t.CreatedOn)
+			err = unpopulateDateTimeRFC3339(val, "CreatedOn", &t.CreatedOn)
 			delete(rawMsg, key)
 		case "digest":
 			err = unpopulate(val, "Digest", &t.Digest)
 			delete(rawMsg, key)
 		case "lastUpdateTime":
-			err = unpopulateTimeRFC3339(val, "LastUpdatedOn", &t.LastUpdatedOn)
+			err = unpopulateDateTimeRFC3339(val, "LastUpdatedOn", &t.LastUpdatedOn)
 			delete(rawMsg, key)
 		case "name":
 			err = unpopulate(val, "Name", &t.Name)

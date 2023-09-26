@@ -174,5 +174,6 @@ type TypeWithRawJSON struct {
 }
 
 type TypeWithSliceOfTimes struct {
-	Times []time.Time
+	Interval *time.Time
+	Times    []time.Time
 }
