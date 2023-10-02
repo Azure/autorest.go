@@ -48,6 +48,14 @@ func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error)
 	return &t, err
 }
 
+func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {
+	t, err := parse(v)
+	if err != nil {
+		return *new(T), err
+	}
+	return t, err
+}
+
 func splitHelper(s, sep string) []string {
 	if s == "" {
 		return nil

@@ -308,7 +308,7 @@ func (h *HeaderServerTransport) dispatchParamDate(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := h.srv.ParamDate(req.Context(), getHeaderValue(req.Header, "scenario"), time.Time(valueParam), nil)
+	respr, errRespr := h.srv.ParamDate(req.Context(), getHeaderValue(req.Header, "scenario"), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -331,7 +331,7 @@ func (h *HeaderServerTransport) dispatchParamDatetime(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := h.srv.ParamDatetime(req.Context(), getHeaderValue(req.Header, "scenario"), time.Time(valueParam), nil)
+	respr, errRespr := h.srv.ParamDatetime(req.Context(), getHeaderValue(req.Header, "scenario"), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

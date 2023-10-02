@@ -8,11 +8,16 @@
 
 package azalias
 
+import "time"
+
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
 type ClientCreateOptions struct {
 	// Some enums that are boolean values.
 	BoolHeaderEnum1 *BooleanEnum
 	GroupBy         []SomethingCount
+
+	// Optional unix time passed via header.
+	OptionalUnixTime *time.Time
 
 	// The unique id that references the assigned data item to be aliased.
 	AssignedID *float32

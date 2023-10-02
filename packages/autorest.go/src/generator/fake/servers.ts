@@ -606,16 +606,24 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
         where = 'Query';
       }
       let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (isRequiredParameter(param) &&
-        ((isPrimitiveType(param.type) && param.type.typeName === 'string') ||
-          (isConstantType(param.type) && param.type.type === 'string') ||
-          (isSliceType(param.type) && isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
-        // by convention, if the value is in its "final form" (i.e. no parsing required)
-        // then its var is to have the "Param" suffix. the only case is string, everything
-        // else requires some amount of parsing/conversion.
+      if (isRequiredParameter(param) && isConstantType(param.type) && param.type.type === 'string') {
+        // for string-based enums, we perform the conversion as part of unescaping
         paramVar = createLocalVariableName(param, 'Param');
+        content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${getTypeDeclaration(param.type, clientPkg)}, error) {\n`;
+        content += `\t\tp, err := url.${where}Unescape(v)\n`;
+        content += '\t\tif err != nil {\n\t\t\treturn "", err\n\t\t}\n';
+        content += `\t\treturn ${getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
+      } else {
+        if (isRequiredParameter(param) &&
+        ((isPrimitiveType(param.type) && param.type.typeName === 'string') ||
+          (isSliceType(param.type) && isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
+          // by convention, if the value is in its "final form" (i.e. no parsing required)
+          // then its var is to have the "Param" suffix. the only case is string, everything
+          // else requires some amount of parsing/conversion.
+          paramVar = createLocalVariableName(param, 'Param');
+        }
+        content += `\t${paramVar}, err := url.${where}Unescape(${paramValue})\n`;
       }
-      content += `\t${paramVar}, err := url.${where}Unescape(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       paramValue = paramVar;
     }
@@ -709,12 +717,18 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       } else {
         imports.add('strconv');
-        let from = `strconv.ParseInt(${paramValue}, 10, 64)`;
+        let parser: string;
         if (!isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
-          from = `parseOptional(${paramValue}, func(v string) (int64, error) { return strconv.ParseInt(v, 10, 64) })`;
+          parser = 'parseOptional';
+        } else {
+          requiredHelpers.parseWithCast = true;
+          parser = 'parseWithCast';
         }
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func (v string) (time.Time, error) {\n`;
+        content += '\t\tp, err := strconv.ParseInt(v, 10, 64)\n';
+        content += '\t\tif err != nil {\n\t\t\treturn time.Time{}, err\n\t\t}\n';
+        content += '\t\treturn time.Unix(p, 0).UTC(), nil\n\t})\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
     } else if (isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
@@ -924,22 +938,16 @@ function getFinalParamValue(clientPkg: string, param: Parameter, paramValues: Ma
     }
     return paramValue;
   } else if (isRequiredParameter(param)) {
+    // optional params are always in their "final" form
     if (isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
       if (param.collectionFormat !== 'multi' && isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
         return `splitHelper(${paramValue}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
-    } else if (isHeaderParameter(param) || isPathParameter(param) || isQueryParameter(param)) {
-      // optional params have already been converted to their const/time types as part of parsing.
-      if (isTimeType(param.type)) {
-        if (param.type.dateTimeFormat === 'timeUnix') {
-          return `time.Unix(${paramValue}, 0)`;
-        }
-        return `time.Time(${paramValue})`;
-      } else if (isConstantType(param.type)) {
-        return `${getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
-      }
+    } else if (isHeaderParameter(param) && isConstantType(param.type) && param.type.type === 'string') {
+      // since headers aren't escaped, we cast required, string-based enums inline
+      return `${getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
   }
 

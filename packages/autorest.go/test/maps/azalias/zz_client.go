@@ -49,14 +49,15 @@ type Client struct {
 // Generated from API version 2.0
 //   - stringQuery - The unique id that references the assigned data item to be aliased.
 //   - boolHeaderEnum - Some enums that are boolean values.
+//   - unixTimeQuery - Required unix time passed via query param.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, options *ClientCreateOptions) (ClientCreateResponse, error) {
+func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, unixTimeQuery time.Time, headerEnum SomeEnum, queryEnum SomeEnum, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
 	const operationName = "Client.Create"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createCreateRequest(ctx, headerBools, stringQuery, boolHeaderEnum, options)
+	req, err := client.createCreateRequest(ctx, headerBools, stringQuery, boolHeaderEnum, unixTimeQuery, headerEnum, queryEnum, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -73,7 +74,7 @@ func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuer
 }
 
 // createCreateRequest creates the Create request.
-func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, options *ClientCreateOptions) (*policy.Request, error) {
+func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, unixTimeQuery time.Time, headerEnum SomeEnum, queryEnum SomeEnum, options *ClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -90,11 +91,13 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	if options != nil && options.BoolHeaderEnum1 != nil {
 		reqQP.Set("boolHeaderEnum", fmt.Sprintf("%v", *options.BoolHeaderEnum1))
 	}
+	reqQP.Set("unixTimeQuery", timeUnix(unixTimeQuery).String())
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
 		}
 	}
+	reqQP.Set("queryEnum", string(queryEnum))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientGroup.ClientIndex), 10)}
 	assignedIDDefault := float32(8989)
@@ -104,6 +107,10 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
 	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
 	req.Raw().Header["boolHeaderEnum"] = []string{fmt.Sprintf("%v", boolHeaderEnum)}
+	if options != nil && options.OptionalUnixTime != nil {
+		req.Raw().Header["optionalUnixTime"] = []string{timeUnix(*options.OptionalUnixTime).String()}
+	}
+	req.Raw().Header["headerEnum"] = []string{string(headerEnum)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

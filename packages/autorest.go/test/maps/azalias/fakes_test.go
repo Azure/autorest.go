@@ -18,18 +18,24 @@ import (
 )
 
 func TestFakeCreate(t *testing.T) {
-	headerContent := []bool{true, false, false, true}
-	queryContent := "foo"
-	headerEnum := azalias.BooleanEnumEnabled
-	queryEnum := azalias.BooleanEnumDisabled
+	headerBoolsContent := []bool{true, false, false, true}
+	stringQueryContent := "foo"
+	boolHeaderEnumContent := azalias.BooleanEnumEnabled
+	unixTimeQueryContent := time.Unix(1460505600, 0).UTC()
+	headerEnumContent := azalias.SomeEnumOne
+	queryEnumContent := azalias.SomeEnumThree
+	BoolHeaderEnum1Content := azalias.BooleanEnumDisabled
 	server := fake.Server{
-		Create: func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder) {
-			require.EqualValues(t, headerContent, headerBools)
-			require.EqualValues(t, queryContent, stringQuery)
-			require.EqualValues(t, headerEnum, boolHeaderEnum)
+		Create: func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder) {
+			require.EqualValues(t, headerBoolsContent, headerBools)
+			require.EqualValues(t, stringQueryContent, stringQuery)
+			require.EqualValues(t, boolHeaderEnumContent, boolHeaderEnum)
+			require.EqualValues(t, unixTimeQueryContent, unixTimeQuery)
+			require.EqualValues(t, headerEnumContent, headerEnum)
+			require.EqualValues(t, queryEnumContent, queryEnum)
 			require.NotNil(t, options)
 			require.NotNil(t, options.BoolHeaderEnum1)
-			require.EqualValues(t, queryEnum, *options.BoolHeaderEnum1)
+			require.EqualValues(t, BoolHeaderEnum1Content, *options.BoolHeaderEnum1)
 			resp.SetResponse(http.StatusCreated, azalias.ClientCreateResponse{}, nil)
 			return
 		},
@@ -38,8 +44,8 @@ func TestFakeCreate(t *testing.T) {
 		Transport: fake.NewServerTransport(&server),
 	})
 	require.NoError(t, err)
-	_, err = client.Create(context.Background(), headerContent, queryContent, headerEnum, &azalias.ClientCreateOptions{
-		BoolHeaderEnum1: to.Ptr(queryEnum),
+	_, err = client.Create(context.Background(), headerBoolsContent, stringQueryContent, boolHeaderEnumContent, unixTimeQueryContent, headerEnumContent, queryEnumContent, &azalias.ClientCreateOptions{
+		BoolHeaderEnum1: to.Ptr(BoolHeaderEnum1Content),
 	})
 	require.NoError(t, err)
 }

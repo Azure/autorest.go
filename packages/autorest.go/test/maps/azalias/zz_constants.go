@@ -160,6 +160,23 @@ func PossibleLogMetricsGroupByValues() []LogMetricsGroupBy {
 	}
 }
 
+type SomeEnum string
+
+const (
+	SomeEnumOne   SomeEnum = "one"
+	SomeEnumThree SomeEnum = "three"
+	SomeEnumTwo   SomeEnum = "two"
+)
+
+// PossibleSomeEnumValues returns the possible values for the SomeEnum const type.
+func PossibleSomeEnumValues() []SomeEnum {
+	return []SomeEnum{
+		SomeEnumOne,
+		SomeEnumThree,
+		SomeEnumTwo,
+	}
+}
+
 type SomethingCount int32
 
 const (

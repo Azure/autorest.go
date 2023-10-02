@@ -187,6 +187,24 @@
         ]
       }
     },
+    "OptionalUnixTimeInHeader": {
+      "name": "optionalUnixTime",
+      "description": "Optional unix time passed via header.",
+      "type": "integer",
+      "format": "unixtime",
+      "in": "header",
+      "required": false,
+      "x-ms-parameter-location": "method"
+    },
+    "UnixTimeInQuery": {
+      "name": "unixTimeQuery",
+      "description": "Required unix time passed via query param.",
+      "type": "integer",
+      "format": "unixtime",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
     "AliasId": {
       "name": "aliasId",
       "description": "The unique id that references an existing alias.",
@@ -367,6 +385,12 @@
             "$ref": "#/parameters/BooleanEnumInQuery"
           },
           {
+            "$ref": "#/parameters/OptionalUnixTimeInHeader"
+          },
+          {
+            "$ref": "#/parameters/UnixTimeInQuery"
+          },
+          {
             "name": "groupBy",
             "in": "query",
             "type": "array",
@@ -384,6 +408,22 @@
                 "name": "SomethingCount"
               }
             }
+          },
+          {
+            "name": "headerEnum",
+            "in": "header",
+            "required": true,
+            "x-ms-enum": { "name": "SomeEnum", "modelAsString": true },
+            "type": "string",
+            "enum": ["one", "two", "three"]
+          },
+          {
+            "name": "queryEnum",
+            "in": "query",
+            "required": true,
+            "x-ms-enum": { "name": "SomeEnum", "modelAsString": true },
+            "type": "string",
+            "enum": ["one", "two", "three"]
           }
         ],
         "responses": {

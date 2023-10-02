@@ -390,7 +390,7 @@ func (p *PathsServerTransport) dispatchDateNull(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.DateNull(req.Context(), time.Time(datePathParam), nil)
+	respr, errRespr := p.srv.DateNull(req.Context(), datePathParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -423,7 +423,7 @@ func (p *PathsServerTransport) dispatchDateTimeNull(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.DateTimeNull(req.Context(), time.Time(dateTimePathParam), nil)
+	respr, errRespr := p.srv.DateTimeNull(req.Context(), dateTimePathParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -524,11 +524,17 @@ func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	enumPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("enumPath")])
+	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
+		p, err := url.PathUnescape(v)
+		if err != nil {
+			return "", err
+		}
+		return urlgroup.URIColor(p), nil
+	})
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.EnumNull(req.Context(), urlgroup.URIColor(enumPathParam), nil)
+	respr, errRespr := p.srv.EnumNull(req.Context(), enumPathParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -553,11 +559,17 @@ func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	enumPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("enumPath")])
+	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
+		p, err := url.PathUnescape(v)
+		if err != nil {
+			return "", err
+		}
+		return urlgroup.URIColor(p), nil
+	})
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.EnumValid(req.Context(), urlgroup.URIColor(enumPathParam), nil)
+	respr, errRespr := p.srv.EnumValid(req.Context(), enumPathParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -843,11 +855,17 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	unixTimeURLPathParam, err := strconv.ParseInt(unixTimeURLPathUnescaped, 10, 64)
+	unixTimeURLPathParam, err := parseWithCast(unixTimeURLPathUnescaped, func(v string) (time.Time, error) {
+		p, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return time.Time{}, err
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.UnixTimeURL(req.Context(), time.Unix(unixTimeURLPathParam, 0), nil)
+	respr, errRespr := p.srv.UnixTimeURL(req.Context(), unixTimeURLPathParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
