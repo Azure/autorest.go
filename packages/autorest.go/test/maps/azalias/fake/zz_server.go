@@ -173,9 +173,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		return nil, err
 	}
 	optionalUnixTimeParam, err := parseOptional(getHeaderValue(req.Header, "optionalUnixTime"), func(v string) (time.Time, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return time.Time{}, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
 		}
 		return time.Unix(p, 0).UTC(), nil
 	})
@@ -187,9 +187,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		return nil, err
 	}
 	unixTimeQueryParam, err := parseWithCast(unixTimeQueryUnescaped, func(v string) (time.Time, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return time.Time{}, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
 		}
 		return time.Unix(p, 0).UTC(), nil
 	})

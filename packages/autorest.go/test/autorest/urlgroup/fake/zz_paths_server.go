@@ -856,9 +856,9 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 		return nil, err
 	}
 	unixTimeURLPathParam, err := parseWithCast(unixTimeURLPathUnescaped, func(v string) (time.Time, error) {
-		p, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			return time.Time{}, err
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
 		}
 		return time.Unix(p, 0).UTC(), nil
 	})

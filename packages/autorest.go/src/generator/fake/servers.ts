@@ -726,8 +726,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
           parser = 'parseWithCast';
         }
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func (v string) (time.Time, error) {\n`;
-        content += '\t\tp, err := strconv.ParseInt(v, 10, 64)\n';
-        content += '\t\tif err != nil {\n\t\t\treturn time.Time{}, err\n\t\t}\n';
+        content += '\t\tp, parseErr := strconv.ParseInt(v, 10, 64)\n';
+        content += '\t\tif parseErr != nil {\n\t\t\treturn time.Time{}, parseErr\n\t\t}\n';
         content += '\t\treturn time.Unix(p, 0).UTC(), nil\n\t})\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
