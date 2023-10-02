@@ -610,8 +610,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
         // for string-based enums, we perform the conversion as part of unescaping
         paramVar = createLocalVariableName(param, 'Param');
         content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${getTypeDeclaration(param.type, clientPkg)}, error) {\n`;
-        content += `\t\tp, err := url.${where}Unescape(v)\n`;
-        content += '\t\tif err != nil {\n\t\t\treturn "", err\n\t\t}\n';
+        content += `\t\tp, unescapeErr := url.${where}Unescape(v)\n`;
+        content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
         content += `\t\treturn ${getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
       } else {
         if (isRequiredParameter(param) &&

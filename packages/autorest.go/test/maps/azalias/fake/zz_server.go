@@ -214,9 +214,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 		groupByParam[i] = azalias.SomethingCount(parsedInt32)
 	}
 	queryEnumParam, err := parseWithCast(qp.Get("queryEnum"), func(v string) (azalias.SomeEnum, error) {
-		p, err := url.QueryUnescape(v)
-		if err != nil {
-			return "", err
+		p, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return "", unescapeErr
 		}
 		return azalias.SomeEnum(p), nil
 	})
