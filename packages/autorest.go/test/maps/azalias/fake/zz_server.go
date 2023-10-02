@@ -27,7 +27,7 @@ import (
 type Server struct {
 	// Create is the fake for method Client.Create
 	// HTTP status codes to indicate success: http.StatusCreated
-	Create func(ctx context.Context, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder)
+	Create func(ctx context.Context, headerBools []bool, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
@@ -135,6 +135,16 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
+	headerBoolsHeader := getHeaderValue(req.Header, "headerBools")
+	headerBoolsHeaderElements := splitHelper(headerBoolsHeader, ",")
+	headerBoolsParam := make([]bool, len(headerBoolsHeaderElements))
+	for i := 0; i < len(headerBoolsHeaderElements); i++ {
+		parsedBool, parseErr := strconv.ParseBool(headerBoolsHeaderElements[i])
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		headerBoolsParam[i] = bool(parsedBool)
+	}
 	groupByEscaped := qp["groupBy"]
 	groupByUnescaped := make([]string, len(groupByEscaped))
 	for i, v := range groupByEscaped {
@@ -147,12 +157,11 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	groupByUnescapedElements := groupByUnescaped
 	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
 	for i := 0; i < len(groupByUnescapedElements); i++ {
-		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(groupByUnescapedElements[i], 10, 32)
-		if err != nil {
-			return nil, err
+		parsedInt32, parseErr := strconv.ParseInt(groupByUnescapedElements[i], 10, 32)
+		if parseErr != nil {
+			return nil, parseErr
 		}
-		groupByParam[i] = azalias.SomethingCount(parsedInt)
+		groupByParam[i] = azalias.SomethingCount(parsedInt32)
 	}
 	var options *azalias.ClientCreateOptions
 	if creatorIDParam != nil || assignedIDParam != nil || len(groupByParam) > 0 {
@@ -162,7 +171,7 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 			GroupBy:    groupByParam,
 		}
 	}
-	respr, errRespr := s.srv.Create(req.Context(), options)
+	respr, errRespr := s.srv.Create(req.Context(), headerBoolsParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -193,12 +202,11 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	headerCountsHeaderElements := splitHelper(headerCountsHeader, ",")
 	headerCountsParam := make([]int32, len(headerCountsHeaderElements))
 	for i := 0; i < len(headerCountsHeaderElements); i++ {
-		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(headerCountsHeaderElements[i], 10, 32)
-		if err != nil {
-			return nil, err
+		parsedInt32, parseErr := strconv.ParseInt(headerCountsHeaderElements[i], 10, 32)
+		if parseErr != nil {
+			return nil, parseErr
 		}
-		headerCountsParam[i] = int32(parsedInt)
+		headerCountsParam[i] = int32(parsedInt32)
 	}
 	queryCountsUnescaped, err := url.QueryUnescape(qp.Get("queryCounts"))
 	if err != nil {
@@ -207,12 +215,11 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	queryCountsUnescapedElements := splitHelper(queryCountsUnescaped, ",")
 	queryCountsParam := make([]int64, len(queryCountsUnescapedElements))
 	for i := 0; i < len(queryCountsUnescapedElements); i++ {
-		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(queryCountsUnescapedElements[i], 10, 32)
-		if err != nil {
-			return nil, err
+		parsedInt64, parseErr := strconv.ParseInt(queryCountsUnescapedElements[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
 		}
-		queryCountsParam[i] = int64(parsedInt)
+		queryCountsParam[i] = int64(parsedInt64)
 	}
 	explodedStuffEscaped := qp["explodedStuff"]
 	explodedStuffUnescaped := make([]string, len(explodedStuffEscaped))
@@ -226,12 +233,11 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	explodedStuffUnescapedElements := explodedStuffUnescaped
 	explodedStuffParam := make([]int64, len(explodedStuffUnescapedElements))
 	for i := 0; i < len(explodedStuffUnescapedElements); i++ {
-		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(explodedStuffUnescapedElements[i], 10, 32)
-		if err != nil {
-			return nil, err
+		parsedInt64, parseErr := strconv.ParseInt(explodedStuffUnescapedElements[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
 		}
-		explodedStuffParam[i] = int64(parsedInt)
+		explodedStuffParam[i] = int64(parsedInt64)
 	}
 	headerTimeParam, err := time.Parse("15:04:05.999999999Z07:00", getHeaderValue(req.Header, "headerTime"))
 	if err != nil {
