@@ -611,13 +611,13 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
           fromVar = 'parsedBool';
           content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${elementsParam}[i])\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
-        } else if (elementTypeName === 'string') {
-          // we're casting an enum string value to its const type
-          fromVar = `${elementsParam}[i]`;
         } else if (elementTypeName === 'float32' || elementTypeName === 'float64' || elementTypeName === 'int32' || elementTypeName === 'int64') {
           fromVar = `parsed${capitalize(elementTypeName)}`;
           content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${elementsParam}[i]`, elementTypeName)}\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+        } else if (elementTypeName === 'string') {
+          // we're casting an enum string value to its const type
+          fromVar = `${elementsParam}[i]`;
         } else {
           throw new Error(`unhandled array element type ${elementTypeName}`);
         }
