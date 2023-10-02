@@ -931,12 +931,9 @@ function getFinalParamValue(clientPkg: string, param: Parameter, paramValues: Ma
 
   // there are a few corner-cases that require some fix-ups
 
-  if (isBodyParameter(param) || isFormBodyParameter(param) || isFormBodyCollectionParameter(param) || isMultipartFormBodyParameter(param)) {
+  if ((isBodyParameter(param) || isFormBodyParameter(param) || isFormBodyCollectionParameter(param) || isMultipartFormBodyParameter(param)) && isTimeType(param.type)) {
     // time types in the body have been unmarshalled into our time helpers thus require a cast to time.Time
-    if (isTimeType(param.type)) {
-      return `time.Time(${paramValue})`;
-    }
-    return paramValue;
+    return `time.Time(${paramValue})`;
   } else if (isRequiredParameter(param)) {
     // optional params are always in their "final" form
     if (isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
