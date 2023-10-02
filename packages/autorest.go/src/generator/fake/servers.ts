@@ -507,6 +507,21 @@ function createPathParamsRegex(method: Method): string {
 function createParamGroupParams(clientPkg: string, method: Method, imports: ImportManager): string {
   let content = '';
 
+  const emitNumericConversion = function(src: string, type: 'float32' | 'float64' | 'int32' | 'int64'): string {
+    imports.add('strconv');
+    let precision: '32' | '64' = '32';
+    if (type === 'float64' || type === 'int64') {
+      precision = '64';
+    }
+    let parseType: 'Int' | 'Float' = 'Int';
+    let base = '10, ';
+    if (type === 'float32' || type === 'float64') {
+      parseType = 'Float';
+      base = '';
+    }
+    return `strconv.Parse${parseType}(${src}, ${base}${precision})`;
+  };
+
   // create any param groups and populate their values
   const paramGroups = new Map<ParameterGroup, Array<Parameter>>();
   for (const param of values(consolidateHostParams(method.parameters))) {
@@ -591,19 +606,17 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         content += `\t${localVar} := make([]${toType}, len(${elementsParam}))\n`;
         content += `\tfor i := 0; i < len(${elementsParam}); i++ {\n`;
         let fromVar: string;
-        if (elementTypeName === 'int32' || elementTypeName === 'int64') {
+        if (elementTypeName === 'bool') {
           imports.add('strconv');
-          fromVar = 'parsedInt';
-          content += `\t\tvar ${fromVar} int64\n`;
-          content += `\t\t${fromVar}, err = strconv.ParseInt(${elementsParam}[i], 10, 32)\n`;
-          content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
-        } else if (elementTypeName === 'float32' || elementTypeName === 'float64') {
-          imports.add('strconv');
-          fromVar = 'parsedNum';
-          content += `\t\tvar ${fromVar} float64\n`;
-          content += `\t\t${fromVar}, err = strconv.ParseFloat(${elementsParam}[i], 32)\n`;
-          content += '\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
+          fromVar = 'parsedBool';
+          content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${elementsParam}[i])\n`;
+          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+        } else if (elementTypeName === 'float32' || elementTypeName === 'float64' || elementTypeName === 'int32' || elementTypeName === 'int64') {
+          fromVar = `parsed${capitalize(elementTypeName)}`;
+          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${elementsParam}[i]`, elementTypeName)}\n`;
+          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
         } else if (elementTypeName === 'string') {
+          // we're casting an enum string value to its const type
           fromVar = `${elementsParam}[i]`;
         } else {
           throw new Error(`unhandled array element type ${elementTypeName}`);
@@ -682,17 +695,6 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
     } else if (isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
-      imports.add('strconv');
-      let precision: '32' | '64' = '32';
-      if (param.type.typeName === 'float64' || param.type.typeName === 'int64') {
-        precision = '64';
-      }
-      let parseType: 'Int' | 'Float' = 'Int';
-      let base = '10, ';
-      if (param.type.typeName === 'float32' || param.type.typeName === 'float64') {
-        parseType = 'Float';
-        base = '';
-      }
       let parser: string;
       if (!isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
@@ -701,17 +703,17 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         requiredHelpers.parseWithCast = true;
         parser = 'parseWithCast';
       }
-      if (precision === '32' || !isRequiredParameter(param)) {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${parseType.toLowerCase()}${precision}, error) {\n`;
-        content += `\t\tp, parseErr := strconv.Parse${parseType}(v, ${base}${precision})\n`;
+      if ((param.type.typeName === 'float32' || param.type.typeName === 'int32') || !isRequiredParameter(param)) {
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.typeName}, error) {\n`;
+        content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.typeName)}\n`;
         content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
         let result = 'p';
-        if (precision === '32') {
-          result = `${parseType.toLowerCase()}${precision}(${result})`;
+        if (param.type.typeName === 'float32' || param.type.typeName === 'int32') {
+          result = `${param.type.typeName}(${result})`;
         }
         content += `\t\treturn ${result}, nil\n\t})\n`;
       } else {
-        content += `\t${createLocalVariableName(param, 'Param')}, err := strconv.Parse${parseType}(${paramValue}, ${base}64)\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${emitNumericConversion(paramValue, param.type.typeName)}\n`;
       }
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (isHeaderMapParameter(param)) {

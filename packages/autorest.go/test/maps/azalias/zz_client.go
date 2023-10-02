@@ -48,13 +48,13 @@ type Client struct {
 //
 // Generated from API version 2.0
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
+func (client *Client) Create(ctx context.Context, headerBools []bool, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
 	const operationName = "Client.Create"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createCreateRequest(ctx, options)
+	req, err := client.createCreateRequest(ctx, headerBools, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -71,7 +71,7 @@ func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) 
 }
 
 // createCreateRequest creates the Create request.
-func (client *Client) createCreateRequest(ctx context.Context, options *ClientCreateOptions) (*policy.Request, error) {
+func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, options *ClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -96,6 +96,7 @@ func (client *Client) createCreateRequest(ctx context.Context, options *ClientCr
 		assignedIDDefault = *options.AssignedID
 	}
 	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
+	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

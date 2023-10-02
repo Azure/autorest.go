@@ -16,6 +16,23 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestFakeCreate(t *testing.T) {
+	headerContent := []bool{true, false, false, true}
+	server := fake.Server{
+		Create: func(ctx context.Context, headerBools []bool, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder) {
+			require.EqualValues(t, headerContent, headerBools)
+			resp.SetResponse(http.StatusCreated, azalias.ClientCreateResponse{}, nil)
+			return
+		},
+	}
+	client, err := azalias.NewClient("https://contoso.com", &azcore.ClientOptions{
+		Transport: fake.NewServerTransport(&server),
+	})
+	require.NoError(t, err)
+	_, err = client.Create(context.Background(), headerContent, nil)
+	require.NoError(t, err)
+}
+
 func TestFakeGetScript(t *testing.T) {
 	headerContent := []int32{0, 2, 4}
 	queryContent := []int64{3, 6, 9}
