@@ -123,15 +123,15 @@ func (d *DdosProtectionPlansServerTransport) dispatchBeginCreateOrUpdate(req *ht
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		ddosProtectionPlanNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
+		ddosProtectionPlanNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, ddosProtectionPlanNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, ddosProtectionPlanNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -167,15 +167,15 @@ func (d *DdosProtectionPlansServerTransport) dispatchBeginDelete(req *http.Reque
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		ddosProtectionPlanNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
+		ddosProtectionPlanNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, ddosProtectionPlanNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameParam, ddosProtectionPlanNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -209,15 +209,15 @@ func (d *DdosProtectionPlansServerTransport) dispatchGet(req *http.Request) (*ht
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	ddosProtectionPlanNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
+	ddosProtectionPlanNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, ddosProtectionPlanNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, ddosProtectionPlanNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -277,11 +277,11 @@ func (d *DdosProtectionPlansServerTransport) dispatchNewListByResourceGroupPager
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		d.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armnetwork.DdosProtectionPlansClientListByResourceGroupResponse, createLink func() string) {
@@ -316,15 +316,15 @@ func (d *DdosProtectionPlansServerTransport) dispatchUpdateTags(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	ddosProtectionPlanNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
+	ddosProtectionPlanNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosProtectionPlanName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, ddosProtectionPlanNameUnescaped, body, nil)
+	respr, errRespr := d.srv.UpdateTags(req.Context(), resourceGroupNameParam, ddosProtectionPlanNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

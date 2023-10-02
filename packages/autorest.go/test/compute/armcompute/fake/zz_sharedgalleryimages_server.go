@@ -87,19 +87,19 @@ func (s *SharedGalleryImagesServerTransport) dispatchGet(req *http.Request) (*ht
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	galleryUniqueNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
+	galleryUniqueNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
 	if err != nil {
 		return nil, err
 	}
-	galleryImageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageName")])
+	galleryImageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), locationUnescaped, galleryUniqueNameUnescaped, galleryImageNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), locationParam, galleryUniqueNameParam, galleryImageNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -127,11 +127,11 @@ func (s *SharedGalleryImagesServerTransport) dispatchNewListPager(req *http.Requ
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
-		galleryUniqueNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
+		galleryUniqueNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
 		if err != nil {
 			return nil, err
 		}
@@ -146,7 +146,7 @@ func (s *SharedGalleryImagesServerTransport) dispatchNewListPager(req *http.Requ
 				SharedTo: sharedToParam,
 			}
 		}
-		resp := s.srv.NewListPager(locationUnescaped, galleryUniqueNameUnescaped, options)
+		resp := s.srv.NewListPager(locationParam, galleryUniqueNameParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.SharedGalleryImagesClientListResponse, createLink func() string) {

@@ -109,19 +109,19 @@ func (r *RouteFilterRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeFilterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
+		routeFilterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
 		if err != nil {
 			return nil, err
 		}
-		ruleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
+		ruleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, routeFilterNameUnescaped, ruleNameUnescaped, body, nil)
+		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, routeFilterNameParam, ruleNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (r *RouteFilterRulesServerTransport) dispatchBeginDelete(req *http.Request)
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeFilterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
+		routeFilterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
 		if err != nil {
 			return nil, err
 		}
-		ruleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
+		ruleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, routeFilterNameUnescaped, ruleNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, routeFilterNameParam, ruleNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (r *RouteFilterRulesServerTransport) dispatchGet(req *http.Request) (*http.
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	routeFilterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
+	routeFilterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
 	if err != nil {
 		return nil, err
 	}
-	ruleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
+	ruleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, routeFilterNameUnescaped, ruleNameUnescaped, nil)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, routeFilterNameParam, ruleNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (r *RouteFilterRulesServerTransport) dispatchNewListByRouteFilterPager(req 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeFilterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
+		routeFilterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeFilterName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := r.srv.NewListByRouteFilterPager(resourceGroupNameUnescaped, routeFilterNameUnescaped, nil)
+		resp := r.srv.NewListByRouteFilterPager(resourceGroupNameParam, routeFilterNameParam, nil)
 		newListByRouteFilterPager = &resp
 		r.newListByRouteFilterPager.add(req, newListByRouteFilterPager)
 		server.PagerResponderInjectNextLinks(newListByRouteFilterPager, req, func(page *armnetwork.RouteFilterRulesClientListByRouteFilterResponse, createLink func() string) {

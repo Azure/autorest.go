@@ -124,19 +124,19 @@ func (p *PacketCapturesServerTransport) dispatchBeginCreate(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+		networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 		if err != nil {
 			return nil, err
 		}
-		packetCaptureNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
+		packetCaptureNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginCreate(req.Context(), resourceGroupNameUnescaped, networkWatcherNameUnescaped, packetCaptureNameUnescaped, body, nil)
+		respr, errRespr := p.srv.BeginCreate(req.Context(), resourceGroupNameParam, networkWatcherNameParam, packetCaptureNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -172,19 +172,19 @@ func (p *PacketCapturesServerTransport) dispatchBeginDelete(req *http.Request) (
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+		networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 		if err != nil {
 			return nil, err
 		}
-		packetCaptureNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
+		packetCaptureNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, networkWatcherNameUnescaped, packetCaptureNameUnescaped, nil)
+		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameParam, networkWatcherNameParam, packetCaptureNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -218,19 +218,19 @@ func (p *PacketCapturesServerTransport) dispatchGet(req *http.Request) (*http.Re
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+	networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 	if err != nil {
 		return nil, err
 	}
-	packetCaptureNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
+	packetCaptureNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameUnescaped, networkWatcherNameUnescaped, packetCaptureNameUnescaped, nil)
+	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameParam, networkWatcherNameParam, packetCaptureNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -257,19 +257,19 @@ func (p *PacketCapturesServerTransport) dispatchBeginGetStatus(req *http.Request
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+		networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 		if err != nil {
 			return nil, err
 		}
-		packetCaptureNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
+		packetCaptureNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginGetStatus(req.Context(), resourceGroupNameUnescaped, networkWatcherNameUnescaped, packetCaptureNameUnescaped, nil)
+		respr, errRespr := p.srv.BeginGetStatus(req.Context(), resourceGroupNameParam, networkWatcherNameParam, packetCaptureNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -305,15 +305,15 @@ func (p *PacketCapturesServerTransport) dispatchNewListPager(req *http.Request) 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+		networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewListPager(resourceGroupNameUnescaped, networkWatcherNameUnescaped, nil)
+		resp := p.srv.NewListPager(resourceGroupNameParam, networkWatcherNameParam, nil)
 		newListPager = &resp
 		p.newListPager.add(req, newListPager)
 	}
@@ -343,19 +343,19 @@ func (p *PacketCapturesServerTransport) dispatchBeginStop(req *http.Request) (*h
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkWatcherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
+		networkWatcherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkWatcherName")])
 		if err != nil {
 			return nil, err
 		}
-		packetCaptureNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
+		packetCaptureNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("packetCaptureName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginStop(req.Context(), resourceGroupNameUnescaped, networkWatcherNameUnescaped, packetCaptureNameUnescaped, nil)
+		respr, errRespr := p.srv.BeginStop(req.Context(), resourceGroupNameParam, networkWatcherNameParam, packetCaptureNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

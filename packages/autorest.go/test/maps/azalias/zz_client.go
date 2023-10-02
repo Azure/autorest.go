@@ -47,14 +47,16 @@ type Client struct {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
+//   - stringQuery - The unique id that references the assigned data item to be aliased.
+//   - boolHeaderEnum - Some enums that are boolean values.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, headerBools []bool, options *ClientCreateOptions) (ClientCreateResponse, error) {
+func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
 	const operationName = "Client.Create"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createCreateRequest(ctx, headerBools, options)
+	req, err := client.createCreateRequest(ctx, headerBools, stringQuery, boolHeaderEnum, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -71,7 +73,7 @@ func (client *Client) Create(ctx context.Context, headerBools []bool, options *C
 }
 
 // createCreateRequest creates the Create request.
-func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, options *ClientCreateOptions) (*policy.Request, error) {
+func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, options *ClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -84,6 +86,10 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 		creatorIDDefault = *options.CreatorID
 	}
 	reqQP.Set("creator-id", strconv.FormatInt(int64(creatorIDDefault), 10))
+	reqQP.Set("stringQuery", stringQuery)
+	if options != nil && options.BoolHeaderEnum1 != nil {
+		reqQP.Set("boolHeaderEnum", fmt.Sprintf("%v", *options.BoolHeaderEnum1))
+	}
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
@@ -97,6 +103,7 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 	}
 	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
 	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
+	req.Raw().Header["boolHeaderEnum"] = []string{fmt.Sprintf("%v", boolHeaderEnum)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -117,15 +124,16 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
+//   - SomeGroup - SomeGroup contains a group of parameters for the Client.GetScript method.
 //   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
 	const operationName = "Client.GetScript"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, headerTime, props, explodedGroup, options)
+	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, explodedStringStuff, numericHeader, headerTime, props, someGroup, explodedGroup, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -142,7 +150,7 @@ func (client *Client) GetScript(ctx context.Context, headerCounts []int32, query
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, headerTime time.Time, props GeoJSONObjectNamedCollection, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -153,8 +161,18 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 	for _, qv := range explodedGroup.ExplodedStuff {
 		reqQP.Add("explodedStuff", fmt.Sprintf("%v", qv))
 	}
+	for _, qv := range explodedStringStuff {
+		reqQP.Add("explodedStringStuff", qv)
+	}
+	if options != nil && options.OptionalExplodedStuff != nil {
+		for _, qv := range options.OptionalExplodedStuff {
+			reqQP.Add("optionalExplodedStuff", qv)
+		}
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
+	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
+	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
 	req.Raw().Header["headerTime"] = []string{timeRFC3339(headerTime).String()}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
@@ -196,7 +214,7 @@ func (client *Client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 //
 // Generated from API version 2.0
 //   - options - ClientListOptions contains the optional parameters for the Client.NewListPager method.
-func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
+func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, options *ClientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -206,7 +224,7 @@ func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 			var req *policy.Request
 			var err error
 			if page == nil {
-				req, err = client.listCreateRequest(ctx, options)
+				req, err = client.listCreateRequest(ctx, headerEnums, queryEnum, options)
 			} else {
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			}
@@ -227,7 +245,7 @@ func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 }
 
 // listCreateRequest creates the List request.
-func (client *Client) listCreateRequest(ctx context.Context, options *ClientListOptions) (*policy.Request, error) {
+func (client *Client) listCreateRequest(ctx context.Context, headerEnums []IntEnum, queryEnum IntEnum, options *ClientListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -235,12 +253,22 @@ func (client *Client) listCreateRequest(ctx context.Context, options *ClientList
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("client-version", client.clientGroup.ClientVersion)
+	if options != nil && options.QueryEnums != nil {
+		for _, qv := range options.QueryEnums {
+			reqQP.Add("queryEnums", fmt.Sprintf("%d", qv))
+		}
+	}
+	reqQP.Set("queryEnum", fmt.Sprintf("%v", queryEnum))
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["headerEnums"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerEnums), "[]")), ",")}
+	if options != nil && options.HeaderEnum != nil {
+		req.Raw().Header["headerEnum"] = []string{fmt.Sprintf("%v", *options.HeaderEnum)}
+	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

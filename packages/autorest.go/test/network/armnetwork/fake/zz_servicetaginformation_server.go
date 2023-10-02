@@ -84,7 +84,7 @@ func (s *ServiceTagInformationServerTransport) dispatchNewListPager(req *http.Re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
@@ -108,7 +108,7 @@ func (s *ServiceTagInformationServerTransport) dispatchNewListPager(req *http.Re
 				TagName:           tagNameParam,
 			}
 		}
-		resp := s.srv.NewListPager(locationUnescaped, options)
+		resp := s.srv.NewListPager(locationParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ServiceTagInformationClientListResponse, createLink func() string) {

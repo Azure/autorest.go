@@ -76,19 +76,19 @@ func (s *ServiceAssociationLinksServerTransport) dispatchList(req *http.Request)
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
-	subnetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subnetName")])
+	subnetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("subnetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.List(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, subnetNameUnescaped, nil)
+	respr, errRespr := s.srv.List(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, subnetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

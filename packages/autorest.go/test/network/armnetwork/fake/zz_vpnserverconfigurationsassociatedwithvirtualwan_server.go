@@ -82,15 +82,15 @@ func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatc
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualWANNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
+		virtualWANNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginList(req.Context(), resourceGroupNameUnescaped, virtualWANNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginList(req.Context(), resourceGroupNameParam, virtualWANNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

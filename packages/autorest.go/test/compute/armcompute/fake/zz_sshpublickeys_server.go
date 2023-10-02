@@ -123,15 +123,15 @@ func (s *SSHPublicKeysServerTransport) dispatchCreate(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	sshPublicKeyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
+	sshPublicKeyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Create(req.Context(), resourceGroupNameUnescaped, sshPublicKeyNameUnescaped, body, nil)
+	respr, errRespr := s.srv.Create(req.Context(), resourceGroupNameParam, sshPublicKeyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -156,15 +156,15 @@ func (s *SSHPublicKeysServerTransport) dispatchDelete(req *http.Request) (*http.
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	sshPublicKeyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
+	sshPublicKeyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameUnescaped, sshPublicKeyNameUnescaped, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameParam, sshPublicKeyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -189,15 +189,15 @@ func (s *SSHPublicKeysServerTransport) dispatchGenerateKeyPair(req *http.Request
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	sshPublicKeyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
+	sshPublicKeyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GenerateKeyPair(req.Context(), resourceGroupNameUnescaped, sshPublicKeyNameUnescaped, nil)
+	respr, errRespr := s.srv.GenerateKeyPair(req.Context(), resourceGroupNameParam, sshPublicKeyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -222,15 +222,15 @@ func (s *SSHPublicKeysServerTransport) dispatchGet(req *http.Request) (*http.Res
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	sshPublicKeyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
+	sshPublicKeyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, sshPublicKeyNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, sshPublicKeyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -257,11 +257,11 @@ func (s *SSHPublicKeysServerTransport) dispatchNewListByResourceGroupPager(req *
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		s.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.SSHPublicKeysClientListByResourceGroupResponse, createLink func() string) {
@@ -329,15 +329,15 @@ func (s *SSHPublicKeysServerTransport) dispatchUpdate(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	sshPublicKeyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
+	sshPublicKeyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("sshPublicKeyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Update(req.Context(), resourceGroupNameUnescaped, sshPublicKeyNameUnescaped, body, nil)
+	respr, errRespr := s.srv.Update(req.Context(), resourceGroupNameParam, sshPublicKeyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

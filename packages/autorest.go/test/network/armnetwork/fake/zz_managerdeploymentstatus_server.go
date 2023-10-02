@@ -82,11 +82,11 @@ func (m *ManagerDeploymentStatusServerTransport) dispatchList(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (m *ManagerDeploymentStatusServerTransport) dispatchList(req *http.Request)
 			Top: topParam,
 		}
 	}
-	respr, errRespr := m.srv.List(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, options)
+	respr, errRespr := m.srv.List(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

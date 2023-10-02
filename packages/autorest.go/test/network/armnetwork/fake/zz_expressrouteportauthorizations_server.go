@@ -109,19 +109,19 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchBeginCreateOrUpd
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRoutePortNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
+		expressRoutePortNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
 		if err != nil {
 			return nil, err
 		}
-		authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+		authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, expressRoutePortNameUnescaped, authorizationNameUnescaped, body, nil)
+		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, expressRoutePortNameParam, authorizationNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchBeginDelete(req 
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRoutePortNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
+		expressRoutePortNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
 		if err != nil {
 			return nil, err
 		}
-		authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+		authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, expressRoutePortNameUnescaped, authorizationNameUnescaped, nil)
+		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameParam, expressRoutePortNameParam, authorizationNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchGet(req *http.Re
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	expressRoutePortNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
+	expressRoutePortNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
 	if err != nil {
 		return nil, err
 	}
-	authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+	authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameUnescaped, expressRoutePortNameUnescaped, authorizationNameUnescaped, nil)
+	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameParam, expressRoutePortNameParam, authorizationNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchNewListPager(req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRoutePortNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
+		expressRoutePortNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRoutePortName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := e.srv.NewListPager(resourceGroupNameUnescaped, expressRoutePortNameUnescaped, nil)
+		resp := e.srv.NewListPager(resourceGroupNameParam, expressRoutePortNameParam, nil)
 		newListPager = &resp
 		e.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ExpressRoutePortAuthorizationsClientListResponse, createLink func() string) {

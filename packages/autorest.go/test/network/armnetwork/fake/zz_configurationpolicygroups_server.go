@@ -109,19 +109,19 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginCreateOrUpdate(r
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vpnServerConfigurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
+		vpnServerConfigurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
 		if err != nil {
 			return nil, err
 		}
-		configurationPolicyGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
+		configurationPolicyGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, vpnServerConfigurationNameUnescaped, configurationPolicyGroupNameUnescaped, body, nil)
+		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, vpnServerConfigurationNameParam, configurationPolicyGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginDelete(req *http
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vpnServerConfigurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
+		vpnServerConfigurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
 		if err != nil {
 			return nil, err
 		}
-		configurationPolicyGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
+		configurationPolicyGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, vpnServerConfigurationNameUnescaped, configurationPolicyGroupNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginDelete(req.Context(), resourceGroupNameParam, vpnServerConfigurationNameParam, configurationPolicyGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchGet(req *http.Request
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vpnServerConfigurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
+	vpnServerConfigurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
 	if err != nil {
 		return nil, err
 	}
-	configurationPolicyGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
+	configurationPolicyGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationPolicyGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameUnescaped, vpnServerConfigurationNameUnescaped, configurationPolicyGroupNameUnescaped, nil)
+	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameParam, vpnServerConfigurationNameParam, configurationPolicyGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (c *ConfigurationPolicyGroupsServerTransport) dispatchNewListByVPNServerCon
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vpnServerConfigurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
+		vpnServerConfigurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnServerConfigurationName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListByVPNServerConfigurationPager(resourceGroupNameUnescaped, vpnServerConfigurationNameUnescaped, nil)
+		resp := c.srv.NewListByVPNServerConfigurationPager(resourceGroupNameParam, vpnServerConfigurationNameParam, nil)
 		newListByVPNServerConfigurationPager = &resp
 		c.newListByVPNServerConfigurationPager.add(req, newListByVPNServerConfigurationPager)
 		server.PagerResponderInjectNextLinks(newListByVPNServerConfigurationPager, req, func(page *armnetwork.ConfigurationPolicyGroupsClientListByVPNServerConfigurationResponse, createLink func() string) {

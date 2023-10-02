@@ -176,15 +176,15 @@ func (a *AuthenticationServerTransport) dispatchGetAcrAccessTokenFromLogin(req *
 		return nil, &nonRetriableError{errors.New("fake for method GetAcrAccessTokenFromLogin not implemented")}
 	}
 	qp := req.URL.Query()
-	serviceUnescaped, err := url.QueryUnescape(qp.Get("service"))
+	serviceParam, err := url.QueryUnescape(qp.Get("service"))
 	if err != nil {
 		return nil, err
 	}
-	scopeUnescaped, err := url.QueryUnescape(qp.Get("scope"))
+	scopeParam, err := url.QueryUnescape(qp.Get("scope"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), serviceUnescaped, scopeUnescaped, nil)
+	respr, errRespr := a.srv.GetAcrAccessTokenFromLogin(req.Context(), serviceParam, scopeParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

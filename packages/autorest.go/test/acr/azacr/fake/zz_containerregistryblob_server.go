@@ -138,11 +138,11 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Re
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CancelUpload(req.Context(), locationUnescaped, nil)
+	respr, errRespr := c.srv.CancelUpload(req.Context(), locationParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -167,15 +167,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckBlobExists(req *http
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CheckBlobExists(req.Context(), nameUnescaped, digestUnescaped, nil)
+	respr, errRespr := c.srv.CheckBlobExists(req.Context(), nameParam, digestParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -206,15 +206,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCheckChunkExists(req *htt
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CheckChunkExists(req.Context(), nameUnescaped, digestUnescaped, getHeaderValue(req.Header, "Range"), nil)
+	respr, errRespr := c.srv.CheckChunkExists(req.Context(), nameParam, digestParam, getHeaderValue(req.Header, "Range"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -246,15 +246,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchCompleteUpload(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	digestUnescaped, err := url.QueryUnescape(qp.Get("digest"))
+	digestParam, err := url.QueryUnescape(qp.Get("digest"))
 	if err != nil {
 		return nil, err
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestUnescaped, locationUnescaped, req.Body.(io.ReadSeekCloser), nil)
+	respr, errRespr := c.srv.CompleteUpload(req.Context(), digestParam, locationParam, req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -288,15 +288,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.DeleteBlob(req.Context(), nameUnescaped, digestUnescaped, nil)
+	respr, errRespr := c.srv.DeleteBlob(req.Context(), nameParam, digestParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -327,15 +327,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetBlob(req.Context(), nameUnescaped, digestUnescaped, nil)
+	respr, errRespr := c.srv.GetBlob(req.Context(), nameParam, digestParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -369,15 +369,15 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetChunk(req.Context(), nameUnescaped, digestUnescaped, getHeaderValue(req.Header, "Range"), nil)
+	respr, errRespr := c.srv.GetChunk(req.Context(), nameParam, digestParam, getHeaderValue(req.Header, "Range"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -411,11 +411,11 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetUploadStatus(req *http
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetUploadStatus(req.Context(), locationUnescaped, nil)
+	respr, errRespr := c.srv.GetUploadStatus(req.Context(), locationParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -447,19 +447,19 @@ func (c *ContainerRegistryBlobServerTransport) dispatchMountBlob(req *http.Reque
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	fromUnescaped, err := url.QueryUnescape(qp.Get("from"))
+	fromParam, err := url.QueryUnescape(qp.Get("from"))
 	if err != nil {
 		return nil, err
 	}
-	mountUnescaped, err := url.QueryUnescape(qp.Get("mount"))
+	mountParam, err := url.QueryUnescape(qp.Get("mount"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.MountBlob(req.Context(), nameUnescaped, fromUnescaped, mountUnescaped, nil)
+	respr, errRespr := c.srv.MountBlob(req.Context(), nameParam, fromParam, mountParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -493,11 +493,11 @@ func (c *ContainerRegistryBlobServerTransport) dispatchStartUpload(req *http.Req
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.StartUpload(req.Context(), nameUnescaped, nil)
+	respr, errRespr := c.srv.StartUpload(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -531,11 +531,11 @@ func (c *ContainerRegistryBlobServerTransport) dispatchUploadChunk(req *http.Req
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("nextBlobUuidLink")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UploadChunk(req.Context(), locationUnescaped, req.Body.(io.ReadSeekCloser), nil)
+	respr, errRespr := c.srv.UploadChunk(req.Context(), locationParam, req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

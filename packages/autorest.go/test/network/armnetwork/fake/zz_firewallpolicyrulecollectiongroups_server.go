@@ -109,19 +109,19 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchBeginCreateO
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		firewallPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
+		firewallPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		ruleCollectionGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
+		ruleCollectionGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := f.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, firewallPolicyNameUnescaped, ruleCollectionGroupNameUnescaped, body, nil)
+		respr, errRespr := f.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, firewallPolicyNameParam, ruleCollectionGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchBeginDelete(
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		firewallPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
+		firewallPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		ruleCollectionGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
+		ruleCollectionGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := f.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, firewallPolicyNameUnescaped, ruleCollectionGroupNameUnescaped, nil)
+		respr, errRespr := f.srv.BeginDelete(req.Context(), resourceGroupNameParam, firewallPolicyNameParam, ruleCollectionGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchGet(req *htt
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	firewallPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
+	firewallPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	ruleCollectionGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
+	ruleCollectionGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ruleCollectionGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := f.srv.Get(req.Context(), resourceGroupNameUnescaped, firewallPolicyNameUnescaped, ruleCollectionGroupNameUnescaped, nil)
+	respr, errRespr := f.srv.Get(req.Context(), resourceGroupNameParam, firewallPolicyNameParam, ruleCollectionGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchNewListPager
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		firewallPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
+		firewallPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := f.srv.NewListPager(resourceGroupNameUnescaped, firewallPolicyNameUnescaped, nil)
+		resp := f.srv.NewListPager(resourceGroupNameParam, firewallPolicyNameParam, nil)
 		newListPager = &resp
 		f.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.FirewallPolicyRuleCollectionGroupsClientListResponse, createLink func() string) {

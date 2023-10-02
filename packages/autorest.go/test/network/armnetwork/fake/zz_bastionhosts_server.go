@@ -125,15 +125,15 @@ func (b *BastionHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Requ
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, bastionHostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -169,15 +169,15 @@ func (b *BastionHostsServerTransport) dispatchBeginDelete(req *http.Request) (*h
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := b.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, nil)
+		respr, errRespr := b.srv.BeginDelete(req.Context(), resourceGroupNameParam, bastionHostNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -211,15 +211,15 @@ func (b *BastionHostsServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+	bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := b.srv.Get(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, nil)
+	respr, errRespr := b.srv.Get(req.Context(), resourceGroupNameParam, bastionHostNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -279,11 +279,11 @@ func (b *BastionHostsServerTransport) dispatchNewListByResourceGroupPager(req *h
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := b.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := b.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		b.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armnetwork.BastionHostsClientListByResourceGroupResponse, createLink func() string) {
@@ -320,15 +320,15 @@ func (b *BastionHostsServerTransport) dispatchBeginUpdateTags(req *http.Request)
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := b.srv.BeginUpdateTags(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		respr, errRespr := b.srv.BeginUpdateTags(req.Context(), resourceGroupNameParam, bastionHostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

@@ -87,15 +87,15 @@ func (s *SharedGalleriesServerTransport) dispatchGet(req *http.Request) (*http.R
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	galleryUniqueNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
+	galleryUniqueNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryUniqueName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), locationUnescaped, galleryUniqueNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), locationParam, galleryUniqueNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -123,7 +123,7 @@ func (s *SharedGalleriesServerTransport) dispatchNewListPager(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
@@ -138,7 +138,7 @@ func (s *SharedGalleriesServerTransport) dispatchNewListPager(req *http.Request)
 				SharedTo: sharedToParam,
 			}
 		}
-		resp := s.srv.NewListPager(locationUnescaped, options)
+		resp := s.srv.NewListPager(locationParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.SharedGalleriesClientListResponse, createLink func() string) {

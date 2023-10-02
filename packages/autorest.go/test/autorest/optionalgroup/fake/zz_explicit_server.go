@@ -649,7 +649,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.PostRequiredIntegerHeader(req.Context(), int32(headerParameterParam), nil)
+	respr, errRespr := e.srv.PostRequiredIntegerHeader(req.Context(), headerParameterParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

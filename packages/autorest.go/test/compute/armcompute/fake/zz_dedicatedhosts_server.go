@@ -125,19 +125,19 @@ func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+		hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+		hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, hostNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, hostGroupNameParam, hostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -173,19 +173,19 @@ func (d *DedicatedHostsServerTransport) dispatchBeginDelete(req *http.Request) (
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+		hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+		hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, hostNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameParam, hostGroupNameParam, hostNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -220,15 +220,15 @@ func (d *DedicatedHostsServerTransport) dispatchGet(req *http.Request) (*http.Re
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+	hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+	hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +243,7 @@ func (d *DedicatedHostsServerTransport) dispatchGet(req *http.Request) (*http.Re
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, hostNameUnescaped, options)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, hostGroupNameParam, hostNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -270,15 +270,15 @@ func (d *DedicatedHostsServerTransport) dispatchNewListByHostGroupPager(req *htt
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+		hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListByHostGroupPager(resourceGroupNameUnescaped, hostGroupNameUnescaped, nil)
+		resp := d.srv.NewListByHostGroupPager(resourceGroupNameParam, hostGroupNameParam, nil)
 		newListByHostGroupPager = &resp
 		d.newListByHostGroupPager.add(req, newListByHostGroupPager)
 		server.PagerResponderInjectNextLinks(newListByHostGroupPager, req, func(page *armcompute.DedicatedHostsClientListByHostGroupResponse, createLink func() string) {
@@ -311,19 +311,19 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+		hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+		hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginRestart(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, hostNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginRestart(req.Context(), resourceGroupNameParam, hostGroupNameParam, hostNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -363,19 +363,19 @@ func (d *DedicatedHostsServerTransport) dispatchBeginUpdate(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+		hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
+		hostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, hostNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameParam, hostGroupNameParam, hostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

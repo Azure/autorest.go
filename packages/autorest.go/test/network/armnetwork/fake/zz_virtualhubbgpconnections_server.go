@@ -99,15 +99,15 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchNewListPager(req *http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, virtualHubNameUnescaped, nil)
+		resp := v.srv.NewListPager(resourceGroupNameParam, virtualHubNameParam, nil)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.VirtualHubBgpConnectionsClientListResponse, createLink func() string) {
@@ -140,19 +140,19 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchBeginListAdvertisedRou
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hubName")])
+		hubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hubName")])
 		if err != nil {
 			return nil, err
 		}
-		connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+		connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginListAdvertisedRoutes(req.Context(), resourceGroupNameUnescaped, hubNameUnescaped, connectionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginListAdvertisedRoutes(req.Context(), resourceGroupNameParam, hubNameParam, connectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -188,19 +188,19 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchBeginListLearnedRoutes
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		hubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hubName")])
+		hubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hubName")])
 		if err != nil {
 			return nil, err
 		}
-		connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+		connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginListLearnedRoutes(req.Context(), resourceGroupNameUnescaped, hubNameUnescaped, connectionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginListLearnedRoutes(req.Context(), resourceGroupNameParam, hubNameParam, connectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

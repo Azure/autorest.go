@@ -296,7 +296,11 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       return `${paramName}.Format(${format})`;
     }
   } else if (isConstantType(type)) {
-    return `string(${star}${paramName})`;
+    if (type.type === 'string') {
+      return `string(${star}${paramName})`;
+    }
+    imports.add('fmt');
+    return `fmt.Sprintf("%v", ${star}${paramName})`;
   }
   return `${star}${paramName}`;
 }

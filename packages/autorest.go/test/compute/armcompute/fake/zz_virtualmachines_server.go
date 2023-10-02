@@ -267,15 +267,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginAssessPatches(req *http.Re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginAssessPatches(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginAssessPatches(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -315,15 +315,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginCapture(req *http.Request)
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCapture(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCapture(req.Context(), resourceGroupNameParam, vmNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -359,15 +359,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginConvertToManagedDisks(req 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginConvertToManagedDisks(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginConvertToManagedDisks(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -407,15 +407,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginCreateOrUpdate(req *http.R
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, vmNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -452,11 +452,11 @@ func (v *VirtualMachinesServerTransport) dispatchBeginDeallocate(req *http.Reque
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
@@ -474,7 +474,7 @@ func (v *VirtualMachinesServerTransport) dispatchBeginDeallocate(req *http.Reque
 				Hibernate: hibernateParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginDeallocate(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+		respr, errRespr := v.srv.BeginDeallocate(req.Context(), resourceGroupNameParam, vmNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -511,11 +511,11 @@ func (v *VirtualMachinesServerTransport) dispatchBeginDelete(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
@@ -533,7 +533,7 @@ func (v *VirtualMachinesServerTransport) dispatchBeginDelete(req *http.Request) 
 				ForceDeletion: forceDeletionParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, vmNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -567,15 +567,15 @@ func (v *VirtualMachinesServerTransport) dispatchGeneralize(req *http.Request) (
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+	vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Generalize(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+	respr, errRespr := v.srv.Generalize(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -601,11 +601,11 @@ func (v *VirtualMachinesServerTransport) dispatchGet(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+	vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 	if err != nil {
 		return nil, err
 	}
@@ -620,7 +620,7 @@ func (v *VirtualMachinesServerTransport) dispatchGet(req *http.Request) (*http.R
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, vmNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -651,15 +651,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginInstallPatches(req *http.R
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginInstallPatches(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginInstallPatches(req.Context(), resourceGroupNameParam, vmNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -693,15 +693,15 @@ func (v *VirtualMachinesServerTransport) dispatchInstanceView(req *http.Request)
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+	vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.InstanceView(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+	respr, errRespr := v.srv.InstanceView(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -729,7 +729,7 @@ func (v *VirtualMachinesServerTransport) dispatchNewListPager(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
@@ -744,7 +744,7 @@ func (v *VirtualMachinesServerTransport) dispatchNewListPager(req *http.Request)
 				Filter: filterParam,
 			}
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, options)
+		resp := v.srv.NewListPager(resourceGroupNameParam, options)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.VirtualMachinesClientListResponse, createLink func() string) {
@@ -828,15 +828,15 @@ func (v *VirtualMachinesServerTransport) dispatchNewListAvailableSizesPager(req 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListAvailableSizesPager(resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		resp := v.srv.NewListAvailableSizesPager(resourceGroupNameParam, vmNameParam, nil)
 		newListAvailableSizesPager = &resp
 		v.newListAvailableSizesPager.add(req, newListAvailableSizesPager)
 	}
@@ -866,11 +866,11 @@ func (v *VirtualMachinesServerTransport) dispatchNewListByLocationPager(req *htt
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListByLocationPager(locationUnescaped, nil)
+		resp := v.srv.NewListByLocationPager(locationParam, nil)
 		newListByLocationPager = &resp
 		v.newListByLocationPager.add(req, newListByLocationPager)
 		server.PagerResponderInjectNextLinks(newListByLocationPager, req, func(page *armcompute.VirtualMachinesClientListByLocationResponse, createLink func() string) {
@@ -903,15 +903,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginPerformMaintenance(req *ht
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginPerformMaintenance(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginPerformMaintenance(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -948,11 +948,11 @@ func (v *VirtualMachinesServerTransport) dispatchBeginPowerOff(req *http.Request
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
@@ -970,7 +970,7 @@ func (v *VirtualMachinesServerTransport) dispatchBeginPowerOff(req *http.Request
 				SkipShutdown: skipShutdownParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginPowerOff(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+		respr, errRespr := v.srv.BeginPowerOff(req.Context(), resourceGroupNameParam, vmNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1006,15 +1006,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginReapply(req *http.Request)
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginReapply(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginReapply(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1050,15 +1050,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginRedeploy(req *http.Request
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginRedeploy(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginRedeploy(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1098,11 +1098,11 @@ func (v *VirtualMachinesServerTransport) dispatchBeginReimage(req *http.Request)
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
@@ -1112,7 +1112,7 @@ func (v *VirtualMachinesServerTransport) dispatchBeginReimage(req *http.Request)
 				Parameters: &body,
 			}
 		}
-		respr, errRespr := v.srv.BeginReimage(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+		respr, errRespr := v.srv.BeginReimage(req.Context(), resourceGroupNameParam, vmNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1148,15 +1148,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginRestart(req *http.Request)
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginRestart(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginRestart(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1191,11 +1191,11 @@ func (v *VirtualMachinesServerTransport) dispatchRetrieveBootDiagnosticsData(req
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+	vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 	if err != nil {
 		return nil, err
 	}
@@ -1219,7 +1219,7 @@ func (v *VirtualMachinesServerTransport) dispatchRetrieveBootDiagnosticsData(req
 			SasURIExpirationTimeInMinutes: sasURIExpirationTimeInMinutesParam,
 		}
 	}
-	respr, errRespr := v.srv.RetrieveBootDiagnosticsData(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, options)
+	respr, errRespr := v.srv.RetrieveBootDiagnosticsData(req.Context(), resourceGroupNameParam, vmNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1250,15 +1250,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginRunCommand(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginRunCommand(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginRunCommand(req.Context(), resourceGroupNameParam, vmNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1292,15 +1292,15 @@ func (v *VirtualMachinesServerTransport) dispatchSimulateEviction(req *http.Requ
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+	vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.SimulateEviction(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+	respr, errRespr := v.srv.SimulateEviction(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1327,15 +1327,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginStart(req *http.Request) (
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginStart(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginStart(req.Context(), resourceGroupNameParam, vmNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1375,15 +1375,15 @@ func (v *VirtualMachinesServerTransport) dispatchBeginUpdate(req *http.Request) 
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
+		vmNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, vmNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameParam, vmNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

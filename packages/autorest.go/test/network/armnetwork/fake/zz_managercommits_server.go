@@ -86,15 +86,15 @@ func (m *ManagerCommitsServerTransport) dispatchBeginPost(req *http.Request) (*h
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := m.srv.BeginPost(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, nil)
+		respr, errRespr := m.srv.BeginPost(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

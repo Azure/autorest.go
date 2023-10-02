@@ -112,11 +112,11 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodPathValid(req *http.Re
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	unencodedPathParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
+	unencodedPathParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetMethodPathValid(req.Context(), unencodedPathParamUnescaped, nil)
+	respr, errRespr := s.srv.GetMethodPathValid(req.Context(), unencodedPathParamParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -167,11 +167,11 @@ func (s *SkipURLEncodingServerTransport) dispatchGetMethodQueryValid(req *http.R
 		return nil, &nonRetriableError{errors.New("fake for method GetMethodQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
+	q1Param, err := url.QueryUnescape(qp.Get("q1"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), q1Unescaped, nil)
+	respr, errRespr := s.srv.GetMethodQueryValid(req.Context(), q1Param, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -191,11 +191,11 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathQueryValid(req *http.Req
 		return nil, &nonRetriableError{errors.New("fake for method GetPathQueryValid not implemented")}
 	}
 	qp := req.URL.Query()
-	q1Unescaped, err := url.QueryUnescape(qp.Get("q1"))
+	q1Param, err := url.QueryUnescape(qp.Get("q1"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), q1Unescaped, nil)
+	respr, errRespr := s.srv.GetPathQueryValid(req.Context(), q1Param, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -220,11 +220,11 @@ func (s *SkipURLEncodingServerTransport) dispatchGetPathValid(req *http.Request)
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	unencodedPathParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
+	unencodedPathParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("unencodedPathParam")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetPathValid(req.Context(), unencodedPathParamUnescaped, nil)
+	respr, errRespr := s.srv.GetPathValid(req.Context(), unencodedPathParamParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

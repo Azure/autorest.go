@@ -123,15 +123,15 @@ func (c *CustomIPPrefixesServerTransport) dispatchBeginCreateOrUpdate(req *http.
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		customIPPrefixNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
+		customIPPrefixNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, customIPPrefixNameUnescaped, body, nil)
+		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, customIPPrefixNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -167,15 +167,15 @@ func (c *CustomIPPrefixesServerTransport) dispatchBeginDelete(req *http.Request)
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		customIPPrefixNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
+		customIPPrefixNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, customIPPrefixNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginDelete(req.Context(), resourceGroupNameParam, customIPPrefixNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -210,11 +210,11 @@ func (c *CustomIPPrefixesServerTransport) dispatchGet(req *http.Request) (*http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	customIPPrefixNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
+	customIPPrefixNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (c *CustomIPPrefixesServerTransport) dispatchGet(req *http.Request) (*http.
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameUnescaped, customIPPrefixNameUnescaped, options)
+	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameParam, customIPPrefixNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -256,11 +256,11 @@ func (c *CustomIPPrefixesServerTransport) dispatchNewListPager(req *http.Request
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := c.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		c.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.CustomIPPrefixesClientListResponse, createLink func() string) {
@@ -328,15 +328,15 @@ func (c *CustomIPPrefixesServerTransport) dispatchUpdateTags(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	customIPPrefixNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
+	customIPPrefixNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("customIpPrefixName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, customIPPrefixNameUnescaped, body, nil)
+	respr, errRespr := c.srv.UpdateTags(req.Context(), resourceGroupNameParam, customIPPrefixNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

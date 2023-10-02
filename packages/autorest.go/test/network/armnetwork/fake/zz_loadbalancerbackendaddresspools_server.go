@@ -109,19 +109,19 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchBeginCreateOrUp
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		backendAddressPoolNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
+		backendAddressPoolNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := l.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, backendAddressPoolNameUnescaped, body, nil)
+		respr, errRespr := l.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, loadBalancerNameParam, backendAddressPoolNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchBeginDelete(req
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		backendAddressPoolNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
+		backendAddressPoolNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := l.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, backendAddressPoolNameUnescaped, nil)
+		respr, errRespr := l.srv.BeginDelete(req.Context(), resourceGroupNameParam, loadBalancerNameParam, backendAddressPoolNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchGet(req *http.R
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+	loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 	if err != nil {
 		return nil, err
 	}
-	backendAddressPoolNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
+	backendAddressPoolNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("backendAddressPoolName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := l.srv.Get(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, backendAddressPoolNameUnescaped, nil)
+	respr, errRespr := l.srv.Get(req.Context(), resourceGroupNameParam, loadBalancerNameParam, backendAddressPoolNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchNewListPager(re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := l.srv.NewListPager(resourceGroupNameUnescaped, loadBalancerNameUnescaped, nil)
+		resp := l.srv.NewListPager(resourceGroupNameParam, loadBalancerNameParam, nil)
 		newListPager = &resp
 		l.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.LoadBalancerBackendAddressPoolsClientListResponse, createLink func() string) {

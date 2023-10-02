@@ -96,11 +96,11 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchGetUpdateDomain(req *
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+	cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchGetUpdateDomain(req *
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetUpdateDomain(req.Context(), resourceGroupNameUnescaped, cloudServiceNameUnescaped, int32(updateDomainParam), nil)
+	respr, errRespr := c.srv.GetUpdateDomain(req.Context(), resourceGroupNameParam, cloudServiceNameParam, updateDomainParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -145,15 +145,15 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchNewListUpdateDomainsP
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListUpdateDomainsPager(resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+		resp := c.srv.NewListUpdateDomainsPager(resourceGroupNameParam, cloudServiceNameParam, nil)
 		newListUpdateDomainsPager = &resp
 		c.newListUpdateDomainsPager.add(req, newListUpdateDomainsPager)
 		server.PagerResponderInjectNextLinks(newListUpdateDomainsPager, req, func(page *armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse, createLink func() string) {
@@ -190,11 +190,11 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchBeginWalkUpdateDomain
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
@@ -212,7 +212,7 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchBeginWalkUpdateDomain
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginWalkUpdateDomain(req.Context(), resourceGroupNameUnescaped, cloudServiceNameUnescaped, int32(updateDomainParam), body, nil)
+		respr, errRespr := c.srv.BeginWalkUpdateDomain(req.Context(), resourceGroupNameParam, cloudServiceNameParam, updateDomainParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

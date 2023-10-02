@@ -125,15 +125,15 @@ func (i *ImagesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		imageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
+		imageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, imageNameUnescaped, body, nil)
+		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, imageNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -169,15 +169,15 @@ func (i *ImagesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		imageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
+		imageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := i.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, imageNameUnescaped, nil)
+		respr, errRespr := i.srv.BeginDelete(req.Context(), resourceGroupNameParam, imageNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -212,11 +212,11 @@ func (i *ImagesServerTransport) dispatchGet(req *http.Request) (*http.Response, 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	imageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
+	imageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ func (i *ImagesServerTransport) dispatchGet(req *http.Request) (*http.Response, 
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := i.srv.Get(req.Context(), resourceGroupNameUnescaped, imageNameUnescaped, options)
+	respr, errRespr := i.srv.Get(req.Context(), resourceGroupNameParam, imageNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -291,11 +291,11 @@ func (i *ImagesServerTransport) dispatchNewListByResourceGroupPager(req *http.Re
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := i.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := i.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		i.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.ImagesClientListByResourceGroupResponse, createLink func() string) {
@@ -332,15 +332,15 @@ func (i *ImagesServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Re
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		imageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
+		imageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("imageName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := i.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, imageNameUnescaped, body, nil)
+		respr, errRespr := i.srv.BeginUpdate(req.Context(), resourceGroupNameParam, imageNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

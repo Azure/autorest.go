@@ -148,7 +148,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfBody(req *ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.ValidationOfBody(req.Context(), resourceGroupNameUnescaped, int32(idParam), body, nil)
+	respr, errRespr := a.srv.ValidationOfBody(req.Context(), resourceGroupNameParam, idParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -191,7 +191,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
@@ -209,7 +209,7 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.ValidationOfMethodParameters(req.Context(), resourceGroupNameUnescaped, int32(idParam), nil)
+	respr, errRespr := a.srv.ValidationOfMethodParameters(req.Context(), resourceGroupNameParam, idParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

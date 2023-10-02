@@ -117,15 +117,15 @@ func (d *DedicatedHostGroupsServerTransport) dispatchCreateOrUpdate(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+	hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, hostGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -150,15 +150,15 @@ func (d *DedicatedHostGroupsServerTransport) dispatchDelete(req *http.Request) (
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+	hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Delete(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.Delete(req.Context(), resourceGroupNameParam, hostGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -184,11 +184,11 @@ func (d *DedicatedHostGroupsServerTransport) dispatchGet(req *http.Request) (*ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+	hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (d *DedicatedHostGroupsServerTransport) dispatchGet(req *http.Request) (*ht
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, options)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, hostGroupNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -230,11 +230,11 @@ func (d *DedicatedHostGroupsServerTransport) dispatchNewListByResourceGroupPager
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		d.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.DedicatedHostGroupsClientListByResourceGroupResponse, createLink func() string) {
@@ -302,15 +302,15 @@ func (d *DedicatedHostGroupsServerTransport) dispatchUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	hostGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
+	hostGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("hostGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Update(req.Context(), resourceGroupNameUnescaped, hostGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.Update(req.Context(), resourceGroupNameParam, hostGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

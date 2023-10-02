@@ -92,15 +92,15 @@ func (c *ComplexModelServerTransport) dispatchCreate(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Create(req.Context(), subscriptionIDUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := c.srv.Create(req.Context(), subscriptionIDParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -125,11 +125,11 @@ func (c *ComplexModelServerTransport) dispatchList(req *http.Request) (*http.Res
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.List(req.Context(), resourceGroupNameUnescaped, nil)
+	respr, errRespr := c.srv.List(req.Context(), resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -158,15 +158,15 @@ func (c *ComplexModelServerTransport) dispatchUpdate(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
+	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Update(req.Context(), subscriptionIDUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := c.srv.Update(req.Context(), subscriptionIDParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

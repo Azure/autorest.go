@@ -133,19 +133,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginDelete(req *http
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+		roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginDelete(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -180,15 +180,15 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGet(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+	roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+	cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGet(req *http.Request
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := c.srv.Get(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, options)
+	respr, errRespr := c.srv.Get(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -228,19 +228,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGetInstanceView(req *
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+	roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+	cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetInstanceView(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+	respr, errRespr := c.srv.GetInstanceView(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -265,19 +265,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchGetRemoteDesktopFile(
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+	roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+	cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetRemoteDesktopFile(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+	respr, errRespr := c.srv.GetRemoteDesktopFile(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -308,11 +308,11 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchNewListPager(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
@@ -327,7 +327,7 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchNewListPager(req *htt
 				Expand: expandParam,
 			}
 		}
-		resp := c.srv.NewListPager(resourceGroupNameUnescaped, cloudServiceNameUnescaped, options)
+		resp := c.srv.NewListPager(resourceGroupNameParam, cloudServiceNameParam, options)
 		newListPager = &resp
 		c.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.CloudServiceRoleInstancesClientListResponse, createLink func() string) {
@@ -360,19 +360,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRebuild(req *htt
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+		roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginRebuild(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginRebuild(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -408,19 +408,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginReimage(req *htt
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+		roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginReimage(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginReimage(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -456,19 +456,19 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRestart(req *htt
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		roleInstanceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
+		roleInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleInstanceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		cloudServiceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
+		cloudServiceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("cloudServiceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginRestart(req.Context(), roleInstanceNameUnescaped, resourceGroupNameUnescaped, cloudServiceNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginRestart(req.Context(), roleInstanceNameParam, resourceGroupNameParam, cloudServiceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

@@ -119,15 +119,15 @@ func (p *ProfilesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkProfileNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
+	networkProfileNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkProfileNameUnescaped, body, nil)
+	respr, errRespr := p.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, networkProfileNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -154,15 +154,15 @@ func (p *ProfilesServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkProfileNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
+		networkProfileNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, networkProfileNameUnescaped, nil)
+		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameParam, networkProfileNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -197,11 +197,11 @@ func (p *ProfilesServerTransport) dispatchGet(req *http.Request) (*http.Response
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkProfileNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
+	networkProfileNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (p *ProfilesServerTransport) dispatchGet(req *http.Request) (*http.Response
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameUnescaped, networkProfileNameUnescaped, options)
+	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameParam, networkProfileNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -243,11 +243,11 @@ func (p *ProfilesServerTransport) dispatchNewListPager(req *http.Request) (*http
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := p.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		p.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ProfilesClientListResponse, createLink func() string) {
@@ -315,15 +315,15 @@ func (p *ProfilesServerTransport) dispatchUpdateTags(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkProfileNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
+	networkProfileNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkProfileName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, networkProfileNameUnescaped, body, nil)
+	respr, errRespr := p.srv.UpdateTags(req.Context(), resourceGroupNameParam, networkProfileNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

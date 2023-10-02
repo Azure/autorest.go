@@ -87,11 +87,11 @@ func (v *VirtualApplianceSKUsServerTransport) dispatchGet(req *http.Request) (*h
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	skuNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("skuName")])
+	skuNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("skuName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), skuNameUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), skuNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

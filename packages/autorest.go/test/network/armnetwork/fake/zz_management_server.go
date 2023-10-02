@@ -165,15 +165,15 @@ func (m *ManagementServerTransport) dispatchCheckDNSNameAvailability(req *http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	domainNameLabelUnescaped, err := url.QueryUnescape(qp.Get("domainNameLabel"))
+	domainNameLabelParam, err := url.QueryUnescape(qp.Get("domainNameLabel"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.CheckDNSNameAvailability(req.Context(), locationUnescaped, domainNameLabelUnescaped, nil)
+	respr, errRespr := m.srv.CheckDNSNameAvailability(req.Context(), locationParam, domainNameLabelParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -204,15 +204,15 @@ func (m *ManagementServerTransport) dispatchBeginDeleteBastionShareableLink(req 
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := m.srv.BeginDeleteBastionShareableLink(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		respr, errRespr := m.srv.BeginDeleteBastionShareableLink(req.Context(), resourceGroupNameParam, bastionHostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -252,15 +252,15 @@ func (m *ManagementServerTransport) dispatchNewDisconnectActiveSessionsPager(req
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := m.srv.NewDisconnectActiveSessionsPager(resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		resp := m.srv.NewDisconnectActiveSessionsPager(resourceGroupNameParam, bastionHostNameParam, body, nil)
 		newDisconnectActiveSessionsPager = &resp
 		m.newDisconnectActiveSessionsPager.add(req, newDisconnectActiveSessionsPager)
 		server.PagerResponderInjectNextLinks(newDisconnectActiveSessionsPager, req, func(page *armnetwork.ManagementClientDisconnectActiveSessionsResponse, createLink func() string) {
@@ -291,11 +291,11 @@ func (m *ManagementServerTransport) dispatchExpressRouteProviderPort(req *http.R
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	providerportUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("providerport")])
+	providerportParam, err := url.PathUnescape(matches[regex.SubexpIndex("providerport")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.ExpressRouteProviderPort(req.Context(), providerportUnescaped, nil)
+	respr, errRespr := m.srv.ExpressRouteProviderPort(req.Context(), providerportParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -326,15 +326,15 @@ func (m *ManagementServerTransport) dispatchBeginGeneratevirtualwanvpnserverconf
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualWANNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
+		virtualWANNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := m.srv.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req.Context(), resourceGroupNameUnescaped, virtualWANNameUnescaped, body, nil)
+		respr, errRespr := m.srv.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req.Context(), resourceGroupNameParam, virtualWANNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -370,15 +370,15 @@ func (m *ManagementServerTransport) dispatchBeginGetActiveSessions(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := m.srv.BeginGetActiveSessions(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, nil)
+		respr, errRespr := m.srv.BeginGetActiveSessions(req.Context(), resourceGroupNameParam, bastionHostNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -418,15 +418,15 @@ func (m *ManagementServerTransport) dispatchNewGetBastionShareableLinkPager(req 
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := m.srv.NewGetBastionShareableLinkPager(resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		resp := m.srv.NewGetBastionShareableLinkPager(resourceGroupNameParam, bastionHostNameParam, body, nil)
 		newGetBastionShareableLinkPager = &resp
 		m.newGetBastionShareableLinkPager.add(req, newGetBastionShareableLinkPager)
 		server.PagerResponderInjectNextLinks(newGetBastionShareableLinkPager, req, func(page *armnetwork.ManagementClientGetBastionShareableLinkResponse, createLink func() string) {
@@ -462,11 +462,11 @@ func (m *ManagementServerTransport) dispatchListActiveConnectivityConfigurations
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
@@ -490,7 +490,7 @@ func (m *ManagementServerTransport) dispatchListActiveConnectivityConfigurations
 			Top: topParam,
 		}
 	}
-	respr, errRespr := m.srv.ListActiveConnectivityConfigurations(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, options)
+	respr, errRespr := m.srv.ListActiveConnectivityConfigurations(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -520,11 +520,11 @@ func (m *ManagementServerTransport) dispatchListActiveSecurityAdminRules(req *ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
@@ -548,7 +548,7 @@ func (m *ManagementServerTransport) dispatchListActiveSecurityAdminRules(req *ht
 			Top: topParam,
 		}
 	}
-	respr, errRespr := m.srv.ListActiveSecurityAdminRules(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, options)
+	respr, errRespr := m.srv.ListActiveSecurityAdminRules(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -578,11 +578,11 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveConnectiv
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
@@ -606,7 +606,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveConnectiv
 			Top: topParam,
 		}
 	}
-	respr, errRespr := m.srv.ListNetworkManagerEffectiveConnectivityConfigurations(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, body, options)
+	respr, errRespr := m.srv.ListNetworkManagerEffectiveConnectivityConfigurations(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -636,11 +636,11 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveSecurityA
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
@@ -664,7 +664,7 @@ func (m *ManagementServerTransport) dispatchListNetworkManagerEffectiveSecurityA
 			Top: topParam,
 		}
 	}
-	respr, errRespr := m.srv.ListNetworkManagerEffectiveSecurityAdminRules(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, body, options)
+	respr, errRespr := m.srv.ListNetworkManagerEffectiveSecurityAdminRules(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, body, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -695,15 +695,15 @@ func (m *ManagementServerTransport) dispatchBeginPutBastionShareableLink(req *ht
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		bastionHostNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
+		bastionHostNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("bastionHostName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := m.srv.BeginPutBastionShareableLink(req.Context(), resourceGroupNameUnescaped, bastionHostNameUnescaped, body, nil)
+		respr, errRespr := m.srv.BeginPutBastionShareableLink(req.Context(), resourceGroupNameParam, bastionHostNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -737,15 +737,15 @@ func (m *ManagementServerTransport) dispatchSupportedSecurityProviders(req *http
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualWANNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
+	virtualWANNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.SupportedSecurityProviders(req.Context(), resourceGroupNameUnescaped, virtualWANNameUnescaped, nil)
+	respr, errRespr := m.srv.SupportedSecurityProviders(req.Context(), resourceGroupNameParam, virtualWANNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

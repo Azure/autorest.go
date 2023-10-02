@@ -195,15 +195,15 @@ func (c *ContainerRegistryServerTransport) dispatchCreateManifest(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CreateManifest(req.Context(), nameUnescaped, referenceUnescaped, body, nil)
+	respr, errRespr := c.srv.CreateManifest(req.Context(), nameParam, referenceParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -240,15 +240,15 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteManifest(req *http.Requ
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.DeleteManifest(req.Context(), nameUnescaped, referenceUnescaped, nil)
+	respr, errRespr := c.srv.DeleteManifest(req.Context(), nameParam, referenceParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -273,11 +273,11 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteRepository(req *http.Re
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.DeleteRepository(req.Context(), nameUnescaped, nil)
+	respr, errRespr := c.srv.DeleteRepository(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -302,15 +302,15 @@ func (c *ContainerRegistryServerTransport) dispatchDeleteTag(req *http.Request) 
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.DeleteTag(req.Context(), nameUnescaped, referenceUnescaped, nil)
+	respr, errRespr := c.srv.DeleteTag(req.Context(), nameParam, referenceParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -335,11 +335,11 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +350,7 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifest(req *http.Request
 			Accept: acceptParam,
 		}
 	}
-	respr, errRespr := c.srv.GetManifest(req.Context(), nameUnescaped, referenceUnescaped, options)
+	respr, errRespr := c.srv.GetManifest(req.Context(), nameParam, referenceParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -375,15 +375,15 @@ func (c *ContainerRegistryServerTransport) dispatchGetManifestProperties(req *ht
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetManifestProperties(req.Context(), nameUnescaped, digestUnescaped, nil)
+	respr, errRespr := c.srv.GetManifestProperties(req.Context(), nameParam, digestParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -411,7 +411,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 		if err != nil {
 			return nil, err
 		}
@@ -447,7 +447,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetManifestsPager(req *htt
 				Orderby: orderbyParam,
 			}
 		}
-		resp := c.srv.NewGetManifestsPager(nameUnescaped, options)
+		resp := c.srv.NewGetManifestsPager(nameParam, options)
 		newGetManifestsPager = &resp
 		c.newGetManifestsPager.add(req, newGetManifestsPager)
 		server.PagerResponderInjectNextLinks(newGetManifestsPager, req, func(page *azacr.ContainerRegistryClientGetManifestsResponse, createLink func() string) {
@@ -478,11 +478,11 @@ func (c *ContainerRegistryServerTransport) dispatchGetProperties(req *http.Reque
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetProperties(req.Context(), nameUnescaped, nil)
+	respr, errRespr := c.srv.GetProperties(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -561,15 +561,15 @@ func (c *ContainerRegistryServerTransport) dispatchGetTagProperties(req *http.Re
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.GetTagProperties(req.Context(), nameUnescaped, referenceUnescaped, nil)
+	respr, errRespr := c.srv.GetTagProperties(req.Context(), nameParam, referenceParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -597,7 +597,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 		if err != nil {
 			return nil, err
 		}
@@ -639,7 +639,7 @@ func (c *ContainerRegistryServerTransport) dispatchNewGetTagsPager(req *http.Req
 				Digest:  digestParam,
 			}
 		}
-		resp := c.srv.NewGetTagsPager(nameUnescaped, options)
+		resp := c.srv.NewGetTagsPager(nameParam, options)
 		newGetTagsPager = &resp
 		c.newGetTagsPager.add(req, newGetTagsPager)
 		server.PagerResponderInjectNextLinks(newGetTagsPager, req, func(page *azacr.ContainerRegistryClientGetTagsResponse, createLink func() string) {
@@ -674,15 +674,15 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateManifestProperties(req 
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	digestUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
+	digestParam, err := url.PathUnescape(matches[regex.SubexpIndex("digest")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateManifestProperties(req.Context(), nameUnescaped, digestUnescaped, body, nil)
+	respr, errRespr := c.srv.UpdateManifestProperties(req.Context(), nameParam, digestParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -711,11 +711,11 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateProperties(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateProperties(req.Context(), nameUnescaped, body, nil)
+	respr, errRespr := c.srv.UpdateProperties(req.Context(), nameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -744,15 +744,15 @@ func (c *ContainerRegistryServerTransport) dispatchUpdateTagAttributes(req *http
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	referenceUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
+	referenceParam, err := url.PathUnescape(matches[regex.SubexpIndex("reference")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.UpdateTagAttributes(req.Context(), nameUnescaped, referenceUnescaped, body, nil)
+	respr, errRespr := c.srv.UpdateTagAttributes(req.Context(), nameParam, referenceParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -117,15 +117,15 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchCreateOrUpdate(req *ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	proximityPlacementGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
+	proximityPlacementGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, proximityPlacementGroupNameUnescaped, body, nil)
+	respr, errRespr := p.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, proximityPlacementGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -150,15 +150,15 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchDelete(req *http.Reque
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	proximityPlacementGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
+	proximityPlacementGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.Delete(req.Context(), resourceGroupNameUnescaped, proximityPlacementGroupNameUnescaped, nil)
+	respr, errRespr := p.srv.Delete(req.Context(), resourceGroupNameParam, proximityPlacementGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -184,11 +184,11 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchGet(req *http.Request)
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	proximityPlacementGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
+	proximityPlacementGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchGet(req *http.Request)
 			IncludeColocationStatus: includeColocationStatusParam,
 		}
 	}
-	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameUnescaped, proximityPlacementGroupNameUnescaped, options)
+	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameParam, proximityPlacementGroupNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -230,11 +230,11 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchNewListByResourceGroup
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := p.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		p.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.ProximityPlacementGroupsClientListByResourceGroupResponse, createLink func() string) {
@@ -302,15 +302,15 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchUpdate(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	proximityPlacementGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
+	proximityPlacementGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("proximityPlacementGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.Update(req.Context(), resourceGroupNameUnescaped, proximityPlacementGroupNameUnescaped, body, nil)
+	respr, errRespr := p.srv.Update(req.Context(), resourceGroupNameParam, proximityPlacementGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

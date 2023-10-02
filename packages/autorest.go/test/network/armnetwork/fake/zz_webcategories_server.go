@@ -88,7 +88,7 @@ func (w *WebCategoriesServerTransport) dispatchGet(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (w *WebCategoriesServerTransport) dispatchGet(req *http.Request) (*http.Res
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := w.srv.Get(req.Context(), nameUnescaped, options)
+	respr, errRespr := w.srv.Get(req.Context(), nameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

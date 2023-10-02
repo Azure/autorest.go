@@ -87,11 +87,11 @@ func (e *ExpressRoutePortsLocationsServerTransport) dispatchGet(req *http.Reques
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("locationName")])
+	locationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("locationName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.Get(req.Context(), locationNameUnescaped, nil)
+	respr, errRespr := e.srv.Get(req.Context(), locationNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

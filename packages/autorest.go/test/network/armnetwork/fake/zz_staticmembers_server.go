@@ -104,23 +104,23 @@ func (s *StaticMembersServerTransport) dispatchCreateOrUpdate(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	networkGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
+	networkGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	staticMemberNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
+	staticMemberNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, networkGroupNameUnescaped, staticMemberNameUnescaped, body, nil)
+	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, networkManagerNameParam, networkGroupNameParam, staticMemberNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -145,23 +145,23 @@ func (s *StaticMembersServerTransport) dispatchDelete(req *http.Request) (*http.
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	networkGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
+	networkGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	staticMemberNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
+	staticMemberNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, networkGroupNameUnescaped, staticMemberNameUnescaped, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameParam, networkManagerNameParam, networkGroupNameParam, staticMemberNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -186,23 +186,23 @@ func (s *StaticMembersServerTransport) dispatchGet(req *http.Request) (*http.Res
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	networkGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
+	networkGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	staticMemberNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
+	staticMemberNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("staticMemberName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, networkGroupNameUnescaped, staticMemberNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, networkManagerNameParam, networkGroupNameParam, staticMemberNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -230,15 +230,15 @@ func (s *StaticMembersServerTransport) dispatchNewListPager(req *http.Request) (
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
-		networkGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
+		networkGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkGroupName")])
 		if err != nil {
 			return nil, err
 		}
@@ -268,7 +268,7 @@ func (s *StaticMembersServerTransport) dispatchNewListPager(req *http.Request) (
 				SkipToken: skipTokenParam,
 			}
 		}
-		resp := s.srv.NewListPager(resourceGroupNameUnescaped, networkManagerNameUnescaped, networkGroupNameUnescaped, options)
+		resp := s.srv.NewListPager(resourceGroupNameParam, networkManagerNameParam, networkGroupNameParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.StaticMembersClientListResponse, createLink func() string) {

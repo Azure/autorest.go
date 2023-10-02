@@ -109,19 +109,19 @@ func (v *VirtualRouterPeeringsServerTransport) dispatchBeginCreateOrUpdate(req *
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualRouterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
+		virtualRouterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, virtualRouterNameUnescaped, peeringNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, virtualRouterNameParam, peeringNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (v *VirtualRouterPeeringsServerTransport) dispatchBeginDelete(req *http.Req
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualRouterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
+		virtualRouterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, virtualRouterNameUnescaped, peeringNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, virtualRouterNameParam, peeringNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (v *VirtualRouterPeeringsServerTransport) dispatchGet(req *http.Request) (*
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualRouterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
+	virtualRouterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
 	if err != nil {
 		return nil, err
 	}
-	peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+	peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, virtualRouterNameUnescaped, peeringNameUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, virtualRouterNameParam, peeringNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (v *VirtualRouterPeeringsServerTransport) dispatchNewListPager(req *http.Re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualRouterNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
+		virtualRouterNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualRouterName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, virtualRouterNameUnescaped, nil)
+		resp := v.srv.NewListPager(resourceGroupNameParam, virtualRouterNameParam, nil)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.VirtualRouterPeeringsClientListResponse, createLink func() string) {

@@ -8,6 +8,23 @@
 
 package azalias
 
+type BooleanEnum bool
+
+const (
+	// BooleanEnumDisabled - Disables the thing
+	BooleanEnumDisabled BooleanEnum = false
+	// BooleanEnumEnabled - Enables the thing
+	BooleanEnumEnabled BooleanEnum = true
+)
+
+// PossibleBooleanEnumValues returns the possible values for the BooleanEnum const type.
+func PossibleBooleanEnumValues() []BooleanEnum {
+	return []BooleanEnum{
+		BooleanEnumDisabled,
+		BooleanEnumEnabled,
+	}
+}
+
 // DataSetting - test enum with a default
 type DataSetting string
 
@@ -97,6 +114,28 @@ func PossibleGeographyValues() []Geography {
 	return []Geography{
 		GeographyEu,
 		GeographyUs,
+	}
+}
+
+// IntEnum - List of integer enums
+type IntEnum int32
+
+const (
+	IntEnumFourHundredFive       IntEnum = 405
+	IntEnumFourHundredSix        IntEnum = 406
+	IntEnumFourHundredThree      IntEnum = 403
+	IntEnumFourHundredTwentyNine IntEnum = 429
+	IntEnumTwoHundred            IntEnum = 200
+)
+
+// PossibleIntEnumValues returns the possible values for the IntEnum const type.
+func PossibleIntEnumValues() []IntEnum {
+	return []IntEnum{
+		IntEnumFourHundredFive,
+		IntEnumFourHundredSix,
+		IntEnumFourHundredThree,
+		IntEnumFourHundredTwentyNine,
+		IntEnumTwoHundred,
 	}
 }
 

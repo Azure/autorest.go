@@ -86,15 +86,15 @@ func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.R
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualWANNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
+		virtualWANNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualWANName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDownload(req.Context(), resourceGroupNameUnescaped, virtualWANNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginDownload(req.Context(), resourceGroupNameParam, virtualWANNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

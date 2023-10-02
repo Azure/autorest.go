@@ -98,15 +98,15 @@ func (v *VipSwapServerTransport) dispatchBeginCreate(req *http.Request) (*http.R
 		if err != nil {
 			return nil, err
 		}
-		groupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
+		groupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
+		resourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreate(req.Context(), groupNameUnescaped, resourceNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreate(req.Context(), groupNameParam, resourceNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -140,15 +140,15 @@ func (v *VipSwapServerTransport) dispatchGet(req *http.Request) (*http.Response,
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	groupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
+	groupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
+	resourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), groupNameUnescaped, resourceNameUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), groupNameParam, resourceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -173,15 +173,15 @@ func (v *VipSwapServerTransport) dispatchList(req *http.Request) (*http.Response
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	groupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
+	groupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("groupName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
+	resourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.List(req.Context(), groupNameUnescaped, resourceNameUnescaped, nil)
+	respr, errRespr := v.srv.List(req.Context(), groupNameParam, resourceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
