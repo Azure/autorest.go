@@ -525,9 +525,9 @@ func (p *PathsServerTransport) dispatchEnumNull(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
-		p, err := url.PathUnescape(v)
-		if err != nil {
-			return "", err
+		p, unescapeErr := url.PathUnescape(v)
+		if unescapeErr != nil {
+			return "", unescapeErr
 		}
 		return urlgroup.URIColor(p), nil
 	})
@@ -560,9 +560,9 @@ func (p *PathsServerTransport) dispatchEnumValid(req *http.Request) (*http.Respo
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	enumPathParam, err := parseWithCast(matches[regex.SubexpIndex("enumPath")], func(v string) (urlgroup.URIColor, error) {
-		p, err := url.PathUnescape(v)
-		if err != nil {
-			return "", err
+		p, unescapeErr := url.PathUnescape(v)
+		if unescapeErr != nil {
+			return "", unescapeErr
 		}
 		return urlgroup.URIColor(p), nil
 	})
