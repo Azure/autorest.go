@@ -551,7 +551,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
     if (param.location === 'client' || isLiteralParameter(param)) {
       // client params and parameter literals aren't passed to APIs
       continue;
-    } else if (isResumeTokenParameter(param)) {
+    }
+    if (isResumeTokenParameter(param)) {
       // skip the ResumeToken param as we don't send that back to the caller
       continue;
     }
