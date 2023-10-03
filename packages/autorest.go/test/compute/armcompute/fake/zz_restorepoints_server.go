@@ -100,19 +100,19 @@ func (r *RestorePointsServerTransport) dispatchBeginCreate(req *http.Request) (*
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+		restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 		if err != nil {
 			return nil, err
 		}
-		restorePointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
+		restorePointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginCreate(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, restorePointNameUnescaped, body, nil)
+		respr, errRespr := r.srv.BeginCreate(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, restorePointNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -148,19 +148,19 @@ func (r *RestorePointsServerTransport) dispatchBeginDelete(req *http.Request) (*
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+		restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 		if err != nil {
 			return nil, err
 		}
-		restorePointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
+		restorePointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, restorePointNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, restorePointNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -195,15 +195,15 @@ func (r *RestorePointsServerTransport) dispatchGet(req *http.Request) (*http.Res
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+	restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 	if err != nil {
 		return nil, err
 	}
-	restorePointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
+	restorePointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointName")])
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func (r *RestorePointsServerTransport) dispatchGet(req *http.Request) (*http.Res
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, restorePointNameUnescaped, options)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, restorePointNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

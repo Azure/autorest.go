@@ -133,15 +133,15 @@ func (d *DiskEncryptionSetsServerTransport) dispatchBeginCreateOrUpdate(req *htt
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskEncryptionSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
+		diskEncryptionSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, diskEncryptionSetNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, diskEncryptionSetNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -177,15 +177,15 @@ func (d *DiskEncryptionSetsServerTransport) dispatchBeginDelete(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskEncryptionSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
+		diskEncryptionSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, diskEncryptionSetNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameParam, diskEncryptionSetNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -219,15 +219,15 @@ func (d *DiskEncryptionSetsServerTransport) dispatchGet(req *http.Request) (*htt
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	diskEncryptionSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
+	diskEncryptionSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, diskEncryptionSetNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, diskEncryptionSetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -287,15 +287,15 @@ func (d *DiskEncryptionSetsServerTransport) dispatchNewListAssociatedResourcesPa
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskEncryptionSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
+		diskEncryptionSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListAssociatedResourcesPager(resourceGroupNameUnescaped, diskEncryptionSetNameUnescaped, nil)
+		resp := d.srv.NewListAssociatedResourcesPager(resourceGroupNameParam, diskEncryptionSetNameParam, nil)
 		newListAssociatedResourcesPager = &resp
 		d.newListAssociatedResourcesPager.add(req, newListAssociatedResourcesPager)
 		server.PagerResponderInjectNextLinks(newListAssociatedResourcesPager, req, func(page *armcompute.DiskEncryptionSetsClientListAssociatedResourcesResponse, createLink func() string) {
@@ -328,11 +328,11 @@ func (d *DiskEncryptionSetsServerTransport) dispatchNewListByResourceGroupPager(
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		d.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.DiskEncryptionSetsClientListByResourceGroupResponse, createLink func() string) {
@@ -369,15 +369,15 @@ func (d *DiskEncryptionSetsServerTransport) dispatchBeginUpdate(req *http.Reques
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskEncryptionSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
+		diskEncryptionSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskEncryptionSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, diskEncryptionSetNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameParam, diskEncryptionSetNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

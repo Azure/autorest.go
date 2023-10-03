@@ -104,15 +104,15 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchCreate
 	if err != nil {
 		return nil, err
 	}
-	managementGroupIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
+	managementGroupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), managementGroupIDUnescaped, networkManagerConnectionNameUnescaped, body, nil)
+	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), managementGroupIDParam, networkManagerConnectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -137,15 +137,15 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchDelete
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	managementGroupIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
+	managementGroupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Delete(req.Context(), managementGroupIDUnescaped, networkManagerConnectionNameUnescaped, nil)
+	respr, errRespr := m.srv.Delete(req.Context(), managementGroupIDParam, networkManagerConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -170,15 +170,15 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchGet(re
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	managementGroupIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
+	managementGroupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Get(req.Context(), managementGroupIDUnescaped, networkManagerConnectionNameUnescaped, nil)
+	respr, errRespr := m.srv.Get(req.Context(), managementGroupIDParam, networkManagerConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -206,7 +206,7 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchNewLis
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		managementGroupIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
+		managementGroupIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("managementGroupId")])
 		if err != nil {
 			return nil, err
 		}
@@ -236,7 +236,7 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchNewLis
 				SkipToken: skipTokenParam,
 			}
 		}
-		resp := m.srv.NewListPager(managementGroupIDUnescaped, options)
+		resp := m.srv.NewListPager(managementGroupIDParam, options)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ManagementGroupNetworkManagerConnectionsClientListResponse, createLink func() string) {

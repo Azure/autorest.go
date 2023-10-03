@@ -397,15 +397,15 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentNextLinkPager
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		apiVersionUnescaped, err := url.QueryUnescape(qp.Get("api_version"))
+		apiVersionParam, err := url.QueryUnescape(qp.Get("api_version"))
 		if err != nil {
 			return nil, err
 		}
-		tenantUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
+		tenantParam, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(apiVersionUnescaped, tenantUnescaped, nil)
+		resp := p.srv.NewGetMultiplePagesFragmentNextLinkPager(apiVersionParam, tenantParam, nil)
 		newGetMultiplePagesFragmentNextLinkPager = &resp
 		p.newGetMultiplePagesFragmentNextLinkPager.add(req, newGetMultiplePagesFragmentNextLinkPager)
 		server.PagerResponderInjectNextLinks(newGetMultiplePagesFragmentNextLinkPager, req, func(page *paginggroup.PagingClientGetMultiplePagesFragmentNextLinkResponse, createLink func() string) {
@@ -439,16 +439,14 @@ func (p *PagingServerTransport) dispatchNewGetMultiplePagesFragmentWithGroupingN
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		aPIVersionUnescaped, err := url.QueryUnescape(qp.Get("api_version"))
+		aPIVersionParam, err := url.QueryUnescape(qp.Get("api_version"))
 		if err != nil {
 			return nil, err
 		}
-		aPIVersionParam := aPIVersionUnescaped
-		tenantUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
+		tenantParam, err := url.PathUnescape(matches[regex.SubexpIndex("tenant")])
 		if err != nil {
 			return nil, err
 		}
-		tenantParam := tenantUnescaped
 		customParameterGroup := paginggroup.CustomParameterGroup{
 			APIVersion: aPIVersionParam,
 			Tenant:     tenantParam,
@@ -870,7 +868,7 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewGetWithQueryParamsPager(int32(requiredQueryParameterParam), nil)
+		resp := p.srv.NewGetWithQueryParamsPager(requiredQueryParameterParam, nil)
 		newGetWithQueryParamsPager = &resp
 		p.newGetWithQueryParamsPager.add(req, newGetWithQueryParamsPager)
 		server.PagerResponderInjectNextLinks(newGetWithQueryParamsPager, req, func(page *paginggroup.PagingClientGetWithQueryParamsResponse, createLink func() string) {

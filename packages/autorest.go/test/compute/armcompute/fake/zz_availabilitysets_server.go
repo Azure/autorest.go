@@ -125,15 +125,15 @@ func (a *AvailabilitySetsServerTransport) dispatchCreateOrUpdate(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	availabilitySetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
+	availabilitySetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, availabilitySetNameUnescaped, body, nil)
+	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, availabilitySetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -158,15 +158,15 @@ func (a *AvailabilitySetsServerTransport) dispatchDelete(req *http.Request) (*ht
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	availabilitySetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
+	availabilitySetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameUnescaped, availabilitySetNameUnescaped, nil)
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, availabilitySetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -191,15 +191,15 @@ func (a *AvailabilitySetsServerTransport) dispatchGet(req *http.Request) (*http.
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	availabilitySetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
+	availabilitySetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameUnescaped, availabilitySetNameUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, availabilitySetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -226,11 +226,11 @@ func (a *AvailabilitySetsServerTransport) dispatchNewListPager(req *http.Request
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := a.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.AvailabilitySetsClientListResponse, createLink func() string) {
@@ -263,15 +263,15 @@ func (a *AvailabilitySetsServerTransport) dispatchNewListAvailableSizesPager(req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		availabilitySetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
+		availabilitySetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListAvailableSizesPager(resourceGroupNameUnescaped, availabilitySetNameUnescaped, nil)
+		resp := a.srv.NewListAvailableSizesPager(resourceGroupNameParam, availabilitySetNameParam, nil)
 		newListAvailableSizesPager = &resp
 		a.newListAvailableSizesPager.add(req, newListAvailableSizesPager)
 	}
@@ -348,15 +348,15 @@ func (a *AvailabilitySetsServerTransport) dispatchUpdate(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	availabilitySetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
+	availabilitySetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("availabilitySetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Update(req.Context(), resourceGroupNameUnescaped, availabilitySetNameUnescaped, body, nil)
+	respr, errRespr := a.srv.Update(req.Context(), resourceGroupNameParam, availabilitySetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

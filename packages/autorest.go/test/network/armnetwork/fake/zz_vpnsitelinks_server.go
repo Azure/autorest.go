@@ -87,19 +87,19 @@ func (v *VPNSiteLinksServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vpnSiteNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteName")])
+	vpnSiteNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteName")])
 	if err != nil {
 		return nil, err
 	}
-	vpnSiteLinkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteLinkName")])
+	vpnSiteLinkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteLinkName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, vpnSiteNameUnescaped, vpnSiteLinkNameUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, vpnSiteNameParam, vpnSiteLinkNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -126,15 +126,15 @@ func (v *VPNSiteLinksServerTransport) dispatchNewListByVPNSitePager(req *http.Re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vpnSiteNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteName")])
+		vpnSiteNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vpnSiteName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListByVPNSitePager(resourceGroupNameUnescaped, vpnSiteNameUnescaped, nil)
+		resp := v.srv.NewListByVPNSitePager(resourceGroupNameParam, vpnSiteNameParam, nil)
 		newListByVPNSitePager = &resp
 		v.newListByVPNSitePager.add(req, newListByVPNSitePager)
 		server.PagerResponderInjectNextLinks(newListByVPNSitePager, req, func(page *armnetwork.VPNSiteLinksClientListByVPNSiteResponse, createLink func() string) {

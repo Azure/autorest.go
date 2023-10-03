@@ -82,15 +82,15 @@ func (l *LoadBalancerNetworkInterfacesServerTransport) dispatchNewListPager(req 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := l.srv.NewListPager(resourceGroupNameUnescaped, loadBalancerNameUnescaped, nil)
+		resp := l.srv.NewListPager(resourceGroupNameParam, loadBalancerNameParam, nil)
 		newListPager = &resp
 		l.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.LoadBalancerNetworkInterfacesClientListResponse, createLink func() string) {

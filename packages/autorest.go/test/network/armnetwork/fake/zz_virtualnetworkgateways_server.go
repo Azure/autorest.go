@@ -250,15 +250,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginCreateOrUpdate(req 
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -294,15 +294,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginDelete(req *http.Re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -342,15 +342,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginDisconnectVirtualNe
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDisconnectVirtualNetworkGatewayVPNConnections(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginDisconnectVirtualNetworkGatewayVPNConnections(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -390,15 +390,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGenerateVPNProfile(
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGenerateVPNProfile(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginGenerateVPNProfile(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -438,15 +438,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGeneratevpnclientpa
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGeneratevpnclientpackage(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginGeneratevpnclientpackage(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -480,15 +480,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchGet(req *http.Request) (
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+	virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -516,19 +516,19 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetAdvertisedRoutes
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		peerUnescaped, err := url.QueryUnescape(qp.Get("peer"))
+		peerParam, err := url.QueryUnescape(qp.Get("peer"))
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetAdvertisedRoutes(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, peerUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetAdvertisedRoutes(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, peerParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -565,11 +565,11 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetBgpPeerStatus(re
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
@@ -584,7 +584,7 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetBgpPeerStatus(re
 				Peer: peerParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginGetBgpPeerStatus(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, options)
+		respr, errRespr := v.srv.BeginGetBgpPeerStatus(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -620,15 +620,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetLearnedRoutes(re
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetLearnedRoutes(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetLearnedRoutes(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -664,15 +664,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetVPNProfilePackag
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetVPNProfilePackageURL(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetVPNProfilePackageURL(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -708,15 +708,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetVpnclientConnect
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetVpnclientConnectionHealth(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetVpnclientConnectionHealth(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -752,15 +752,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginGetVpnclientIPSecPa
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetVpnclientIPSecParameters(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetVpnclientIPSecParameters(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -796,11 +796,11 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchNewListPager(req *http.R
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := v.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.VirtualNetworkGatewaysClientListResponse, createLink func() string) {
@@ -833,15 +833,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchNewListConnectionsPager(
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListConnectionsPager(resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		resp := v.srv.NewListConnectionsPager(resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		newListConnectionsPager = &resp
 		v.newListConnectionsPager.add(req, newListConnectionsPager)
 		server.PagerResponderInjectNextLinks(newListConnectionsPager, req, func(page *armnetwork.VirtualNetworkGatewaysClientListConnectionsResponse, createLink func() string) {
@@ -875,11 +875,11 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginReset(req *http.Req
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
@@ -894,7 +894,7 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginReset(req *http.Req
 				GatewayVip: gatewayVipParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginReset(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, options)
+		respr, errRespr := v.srv.BeginReset(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -930,15 +930,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginResetVPNClientShare
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginResetVPNClientSharedKey(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginResetVPNClientSharedKey(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -978,15 +978,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginSetVpnclientIPSecPa
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginSetVpnclientIPSecParameters(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginSetVpnclientIPSecParameters(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1026,11 +1026,11 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginStartPacketCapture(
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
@@ -1040,7 +1040,7 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginStartPacketCapture(
 				Parameters: &body,
 			}
 		}
-		respr, errRespr := v.srv.BeginStartPacketCapture(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, options)
+		respr, errRespr := v.srv.BeginStartPacketCapture(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1080,15 +1080,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginStopPacketCapture(r
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginStopPacketCapture(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginStopPacketCapture(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1122,15 +1122,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchSupportedVPNDevices(req 
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+	virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.SupportedVPNDevices(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, nil)
+	respr, errRespr := v.srv.SupportedVPNDevices(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -1161,15 +1161,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginUpdateTags(req *htt
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
+		virtualNetworkGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginUpdateTags(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginUpdateTags(req.Context(), resourceGroupNameParam, virtualNetworkGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -1207,15 +1207,15 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchVPNDeviceConfigurationSc
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkGatewayConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")])
+	virtualNetworkGatewayConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkGatewayConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.VPNDeviceConfigurationScript(req.Context(), resourceGroupNameUnescaped, virtualNetworkGatewayConnectionNameUnescaped, body, nil)
+	respr, errRespr := v.srv.VPNDeviceConfigurationScript(req.Context(), resourceGroupNameParam, virtualNetworkGatewayConnectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

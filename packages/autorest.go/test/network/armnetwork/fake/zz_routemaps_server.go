@@ -109,19 +109,19 @@ func (r *RouteMapsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		routeMapNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
+		routeMapNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routeMapNameUnescaped, body, nil)
+		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, virtualHubNameParam, routeMapNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (r *RouteMapsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		routeMapNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
+		routeMapNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routeMapNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, virtualHubNameParam, routeMapNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (r *RouteMapsServerTransport) dispatchGet(req *http.Request) (*http.Respons
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+	virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 	if err != nil {
 		return nil, err
 	}
-	routeMapNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
+	routeMapNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeMapName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routeMapNameUnescaped, nil)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, virtualHubNameParam, routeMapNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (r *RouteMapsServerTransport) dispatchNewListPager(req *http.Request) (*htt
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := r.srv.NewListPager(resourceGroupNameUnescaped, virtualHubNameUnescaped, nil)
+		resp := r.srv.NewListPager(resourceGroupNameParam, virtualHubNameParam, nil)
 		newListPager = &resp
 		r.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.RouteMapsClientListResponse, createLink func() string) {

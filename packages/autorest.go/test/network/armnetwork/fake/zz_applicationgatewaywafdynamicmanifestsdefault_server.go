@@ -76,11 +76,11 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchGe
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), locationUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), locationParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

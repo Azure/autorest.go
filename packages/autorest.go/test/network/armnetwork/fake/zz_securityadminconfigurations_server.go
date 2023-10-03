@@ -106,19 +106,19 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchCreateOrUpdate(req 
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	configurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
+	configurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, configurationNameUnescaped, body, nil)
+	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, networkManagerNameParam, configurationNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -146,15 +146,15 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchBeginDelete(req *ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
-		configurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
+		configurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
 		if err != nil {
 			return nil, err
 		}
@@ -172,7 +172,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchBeginDelete(req *ht
 				Force: forceParam,
 			}
 		}
-		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, configurationNameUnescaped, options)
+		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameParam, networkManagerNameParam, configurationNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -206,19 +206,19 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchGet(req *http.Reque
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	configurationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
+	configurationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("configurationName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, configurationNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, networkManagerNameParam, configurationNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -246,11 +246,11 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
@@ -280,7 +280,7 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 				SkipToken: skipTokenParam,
 			}
 		}
-		resp := s.srv.NewListPager(resourceGroupNameUnescaped, networkManagerNameUnescaped, options)
+		resp := s.srv.NewListPager(resourceGroupNameParam, networkManagerNameParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.SecurityAdminConfigurationsClientListResponse, createLink func() string) {

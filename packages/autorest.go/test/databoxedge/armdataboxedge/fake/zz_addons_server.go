@@ -113,23 +113,23 @@ func (a *AddonsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		roleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
+		roleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
 		if err != nil {
 			return nil, err
 		}
-		addonNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
+		addonNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), deviceNameUnescaped, roleNameUnescaped, addonNameUnescaped, resourceGroupNameUnescaped, body, nil)
+		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), deviceNameParam, roleNameParam, addonNameParam, resourceGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -165,23 +165,23 @@ func (a *AddonsServerTransport) dispatchBeginDelete(req *http.Request) (*http.Re
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		roleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
+		roleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
 		if err != nil {
 			return nil, err
 		}
-		addonNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
+		addonNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginDelete(req.Context(), deviceNameUnescaped, roleNameUnescaped, addonNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), deviceNameParam, roleNameParam, addonNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -215,23 +215,23 @@ func (a *AddonsServerTransport) dispatchGet(req *http.Request) (*http.Response, 
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	roleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
+	roleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
 	if err != nil {
 		return nil, err
 	}
-	addonNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
+	addonNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("addonName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), deviceNameUnescaped, roleNameUnescaped, addonNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), deviceNameParam, roleNameParam, addonNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -258,19 +258,19 @@ func (a *AddonsServerTransport) dispatchNewListByRolePager(req *http.Request) (*
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		roleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
+		roleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("roleName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListByRolePager(deviceNameUnescaped, roleNameUnescaped, resourceGroupNameUnescaped, nil)
+		resp := a.srv.NewListByRolePager(deviceNameParam, roleNameParam, resourceGroupNameParam, nil)
 		newListByRolePager = &resp
 		a.newListByRolePager.add(req, newListByRolePager)
 		server.PagerResponderInjectNextLinks(newListByRolePager, req, func(page *armdataboxedge.AddonsClientListByRoleResponse, createLink func() string) {

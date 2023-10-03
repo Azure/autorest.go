@@ -196,11 +196,11 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealth(req *htt
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
@@ -215,7 +215,7 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealth(req *htt
 				Expand: expandParam,
 			}
 		}
-		respr, errRespr := a.srv.BeginBackendHealth(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, options)
+		respr, errRespr := a.srv.BeginBackendHealth(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -256,11 +256,11 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealthOnDemand(
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
@@ -275,7 +275,7 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealthOnDemand(
 				Expand: expandParam,
 			}
 		}
-		respr, errRespr := a.srv.BeginBackendHealthOnDemand(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, body, options)
+		respr, errRespr := a.srv.BeginBackendHealthOnDemand(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, body, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -315,15 +315,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *ht
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, body, nil)
+		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -359,15 +359,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginDelete(req *http.Reque
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -401,15 +401,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchGet(req *http.Request) (*ht
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+	applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -434,11 +434,11 @@ func (a *ApplicationGatewaysServerTransport) dispatchGetSSLPredefinedPolicy(req 
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	predefinedPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("predefinedPolicyName")])
+	predefinedPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("predefinedPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.GetSSLPredefinedPolicy(req.Context(), predefinedPolicyNameUnescaped, nil)
+	respr, errRespr := a.srv.GetSSLPredefinedPolicy(req.Context(), predefinedPolicyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -465,11 +465,11 @@ func (a *ApplicationGatewaysServerTransport) dispatchNewListPager(req *http.Requ
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := a.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ApplicationGatewaysClientListResponse, createLink func() string) {
@@ -693,15 +693,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStart(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginStart(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginStart(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -737,15 +737,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStop(req *http.Request
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+		applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginStop(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginStop(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -783,15 +783,15 @@ func (a *ApplicationGatewaysServerTransport) dispatchUpdateTags(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	applicationGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
+	applicationGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationGatewayName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, applicationGatewayNameUnescaped, body, nil)
+	respr, errRespr := a.srv.UpdateTags(req.Context(), resourceGroupNameParam, applicationGatewayNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

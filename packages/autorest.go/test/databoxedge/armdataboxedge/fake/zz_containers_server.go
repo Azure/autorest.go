@@ -117,23 +117,23 @@ func (c *ContainersServerTransport) dispatchBeginCreateOrUpdate(req *http.Reques
 		if err != nil {
 			return nil, err
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		storageAccountNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
+		storageAccountNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
 		if err != nil {
 			return nil, err
 		}
-		containerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
+		containerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), deviceNameUnescaped, storageAccountNameUnescaped, containerNameUnescaped, resourceGroupNameUnescaped, body, nil)
+		respr, errRespr := c.srv.BeginCreateOrUpdate(req.Context(), deviceNameParam, storageAccountNameParam, containerNameParam, resourceGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -169,23 +169,23 @@ func (c *ContainersServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		storageAccountNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
+		storageAccountNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
 		if err != nil {
 			return nil, err
 		}
-		containerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
+		containerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), deviceNameUnescaped, storageAccountNameUnescaped, containerNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginDelete(req.Context(), deviceNameParam, storageAccountNameParam, containerNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -219,23 +219,23 @@ func (c *ContainersServerTransport) dispatchGet(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	storageAccountNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
+	storageAccountNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
 	if err != nil {
 		return nil, err
 	}
-	containerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
+	containerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Get(req.Context(), deviceNameUnescaped, storageAccountNameUnescaped, containerNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := c.srv.Get(req.Context(), deviceNameParam, storageAccountNameParam, containerNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -262,19 +262,19 @@ func (c *ContainersServerTransport) dispatchNewListByStorageAccountPager(req *ht
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		storageAccountNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
+		storageAccountNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListByStorageAccountPager(deviceNameUnescaped, storageAccountNameUnescaped, resourceGroupNameUnescaped, nil)
+		resp := c.srv.NewListByStorageAccountPager(deviceNameParam, storageAccountNameParam, resourceGroupNameParam, nil)
 		newListByStorageAccountPager = &resp
 		c.newListByStorageAccountPager.add(req, newListByStorageAccountPager)
 		server.PagerResponderInjectNextLinks(newListByStorageAccountPager, req, func(page *armdataboxedge.ContainersClientListByStorageAccountResponse, createLink func() string) {
@@ -307,23 +307,23 @@ func (c *ContainersServerTransport) dispatchBeginRefresh(req *http.Request) (*ht
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		storageAccountNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
+		storageAccountNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("storageAccountName")])
 		if err != nil {
 			return nil, err
 		}
-		containerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
+		containerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("containerName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginRefresh(req.Context(), deviceNameUnescaped, storageAccountNameUnescaped, containerNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := c.srv.BeginRefresh(req.Context(), deviceNameParam, storageAccountNameParam, containerNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

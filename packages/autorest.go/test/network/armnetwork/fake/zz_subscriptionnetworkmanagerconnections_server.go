@@ -104,11 +104,11 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchCreateOrU
 	if err != nil {
 		return nil, err
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), networkManagerConnectionNameUnescaped, body, nil)
+	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), networkManagerConnectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -133,11 +133,11 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchDelete(re
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), networkManagerConnectionNameUnescaped, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), networkManagerConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -162,11 +162,11 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchGet(req *
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	networkManagerConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
+	networkManagerConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), networkManagerConnectionNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), networkManagerConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -220,7 +220,9 @@ export function formatParamValue(param: FormBodyParameter | HeaderParameter | Pa
       imports.add('strings');
       return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
     }
-  } else if (isTimeType(param.type)) {
+  } else if (isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+    // for most time types we call methods on time.Time which is why we remove the dereference.
+    // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!isRequiredParameter(param) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
@@ -296,7 +298,11 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       return `${paramName}.Format(${format})`;
     }
   } else if (isConstantType(type)) {
-    return `string(${star}${paramName})`;
+    if (type.type === 'string') {
+      return `string(${star}${paramName})`;
+    }
+    imports.add('fmt');
+    return `fmt.Sprintf("%v", ${star}${paramName})`;
   }
   return `${star}${paramName}`;
 }

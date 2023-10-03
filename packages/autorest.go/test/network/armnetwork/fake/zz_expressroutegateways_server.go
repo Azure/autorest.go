@@ -120,15 +120,15 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *h
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRouteGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
+		expressRouteGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, expressRouteGatewayNameUnescaped, body, nil)
+		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, expressRouteGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -164,15 +164,15 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchBeginDelete(req *http.Requ
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRouteGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
+		expressRouteGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, expressRouteGatewayNameUnescaped, nil)
+		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameParam, expressRouteGatewayNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -206,15 +206,15 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchGet(req *http.Request) (*h
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	expressRouteGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
+	expressRouteGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameUnescaped, expressRouteGatewayNameUnescaped, nil)
+	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameParam, expressRouteGatewayNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -239,11 +239,11 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchListByResourceGroup(req *h
 	if matches == nil || len(matches) < 2 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.ListByResourceGroup(req.Context(), resourceGroupNameUnescaped, nil)
+	respr, errRespr := e.srv.ListByResourceGroup(req.Context(), resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -299,15 +299,15 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchBeginUpdateTags(req *http.
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		expressRouteGatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
+		expressRouteGatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("expressRouteGatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginUpdateTags(req.Context(), resourceGroupNameUnescaped, expressRouteGatewayNameUnescaped, body, nil)
+		respr, errRespr := e.srv.BeginUpdateTags(req.Context(), resourceGroupNameParam, expressRouteGatewayNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

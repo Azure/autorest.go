@@ -227,11 +227,10 @@ func (p *ParameterGroupingServerTransport) dispatchPostRequired(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	pathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("path")])
+	pathParam, err := url.PathUnescape(matches[regex.SubexpIndex("path")])
 	if err != nil {
 		return nil, err
 	}
-	pathParam := pathUnescaped
 	parameterGroupingClientPostRequiredParameters := paramgroupinggroup.ParameterGroupingClientPostRequiredParameters{
 		CustomHeader: customHeaderParam,
 		Query:        queryParam,

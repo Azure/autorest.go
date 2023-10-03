@@ -109,19 +109,19 @@ func (r *RoutesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeTableNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
+		routeTableNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
 		if err != nil {
 			return nil, err
 		}
-		routeNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
+		routeNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, routeTableNameUnescaped, routeNameUnescaped, body, nil)
+		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, routeTableNameParam, routeNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (r *RoutesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Re
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeTableNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
+		routeTableNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
 		if err != nil {
 			return nil, err
 		}
-		routeNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
+		routeNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, routeTableNameUnescaped, routeNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, routeTableNameParam, routeNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (r *RoutesServerTransport) dispatchGet(req *http.Request) (*http.Response, 
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	routeTableNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
+	routeTableNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
 	if err != nil {
 		return nil, err
 	}
-	routeNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
+	routeNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, routeTableNameUnescaped, routeNameUnescaped, nil)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, routeTableNameParam, routeNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (r *RoutesServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		routeTableNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
+		routeTableNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routeTableName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := r.srv.NewListPager(resourceGroupNameUnescaped, routeTableNameUnescaped, nil)
+		resp := r.srv.NewListPager(resourceGroupNameParam, routeTableNameParam, nil)
 		newListPager = &resp
 		r.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.RoutesClientListResponse, createLink func() string) {

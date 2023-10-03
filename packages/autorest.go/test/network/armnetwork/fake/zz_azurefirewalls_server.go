@@ -133,15 +133,15 @@ func (a *AzureFirewallsServerTransport) dispatchBeginCreateOrUpdate(req *http.Re
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		azureFirewallNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
+		azureFirewallNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, azureFirewallNameUnescaped, body, nil)
+		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, azureFirewallNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -177,15 +177,15 @@ func (a *AzureFirewallsServerTransport) dispatchBeginDelete(req *http.Request) (
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		azureFirewallNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
+		azureFirewallNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, azureFirewallNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameParam, azureFirewallNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -219,15 +219,15 @@ func (a *AzureFirewallsServerTransport) dispatchGet(req *http.Request) (*http.Re
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	azureFirewallNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
+	azureFirewallNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameUnescaped, azureFirewallNameUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, azureFirewallNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -254,11 +254,11 @@ func (a *AzureFirewallsServerTransport) dispatchNewListPager(req *http.Request) 
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := a.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.AzureFirewallsClientListResponse, createLink func() string) {
@@ -324,15 +324,15 @@ func (a *AzureFirewallsServerTransport) dispatchBeginListLearnedPrefixes(req *ht
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		azureFirewallNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
+		azureFirewallNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginListLearnedPrefixes(req.Context(), resourceGroupNameUnescaped, azureFirewallNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginListLearnedPrefixes(req.Context(), resourceGroupNameParam, azureFirewallNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -372,15 +372,15 @@ func (a *AzureFirewallsServerTransport) dispatchBeginUpdateTags(req *http.Reques
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		azureFirewallNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
+		azureFirewallNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureFirewallName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginUpdateTags(req.Context(), resourceGroupNameUnescaped, azureFirewallNameUnescaped, body, nil)
+		respr, errRespr := a.srv.BeginUpdateTags(req.Context(), resourceGroupNameParam, azureFirewallNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

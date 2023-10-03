@@ -114,23 +114,23 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchBeginCreateO
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		instanceIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+		instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 		if err != nil {
 			return nil, err
 		}
-		vmExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
+		vmExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, instanceIDUnescaped, vmExtensionNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, instanceIDParam, vmExtensionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -166,23 +166,23 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchBeginDelete(
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		instanceIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+		instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 		if err != nil {
 			return nil, err
 		}
-		vmExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
+		vmExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, instanceIDUnescaped, vmExtensionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, instanceIDParam, vmExtensionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -217,19 +217,19 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchGet(req *htt
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+	vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 	if err != nil {
 		return nil, err
 	}
-	instanceIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 	if err != nil {
 		return nil, err
 	}
-	vmExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
+	vmExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +244,7 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchGet(req *htt
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, instanceIDUnescaped, vmExtensionNameUnescaped, options)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, instanceIDParam, vmExtensionNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -270,15 +270,15 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchList(req *ht
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+	vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 	if err != nil {
 		return nil, err
 	}
-	instanceIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+	instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 	if err != nil {
 		return nil, err
 	}
@@ -293,7 +293,7 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchList(req *ht
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.List(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, instanceIDUnescaped, options)
+	respr, errRespr := v.srv.List(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, instanceIDParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -324,23 +324,23 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchBeginUpdate(
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		instanceIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
+		instanceIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("instanceId")])
 		if err != nil {
 			return nil, err
 		}
-		vmExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
+		vmExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, instanceIDUnescaped, vmExtensionNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, instanceIDParam, vmExtensionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

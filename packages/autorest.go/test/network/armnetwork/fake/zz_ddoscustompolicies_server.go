@@ -106,15 +106,15 @@ func (d *DdosCustomPoliciesServerTransport) dispatchBeginCreateOrUpdate(req *htt
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		ddosCustomPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
+		ddosCustomPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, ddosCustomPolicyNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, ddosCustomPolicyNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -150,15 +150,15 @@ func (d *DdosCustomPoliciesServerTransport) dispatchBeginDelete(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		ddosCustomPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
+		ddosCustomPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, ddosCustomPolicyNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameParam, ddosCustomPolicyNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -192,15 +192,15 @@ func (d *DdosCustomPoliciesServerTransport) dispatchGet(req *http.Request) (*htt
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	ddosCustomPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
+	ddosCustomPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, ddosCustomPolicyNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, ddosCustomPolicyNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -229,15 +229,15 @@ func (d *DdosCustomPoliciesServerTransport) dispatchUpdateTags(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	ddosCustomPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
+	ddosCustomPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("ddosCustomPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, ddosCustomPolicyNameUnescaped, body, nil)
+	respr, errRespr := d.srv.UpdateTags(req.Context(), resourceGroupNameParam, ddosCustomPolicyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

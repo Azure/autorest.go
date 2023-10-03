@@ -5,10 +5,10 @@
 
 import { Client, GoCodeModel, Method, PageableMethod, Parameter, ParameterGroup, PrimitiveTypeName, isBinaryResult, isConstantType, isFormBodyCollectionParameter, isHeadAsBooleanResult, isHeaderParameter, isInterfaceType, isModelResult, isMonomorphicResult, isMultipartFormBodyParameter, isPathCollectionParameter, isPolymorphicResult, isPrimitiveType, isResumeTokenParameter, isStandardType } from '../../gocodemodel/gocodemodel';
 import { AnyResult, BinaryResult, BodyParameter, MonomorphicResult, PolymorphicResult, ModelResult, isAnyResult, isBytesType, isTimeType } from '../../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isBodyParameter, isFormBodyParameter, isHeaderCollectionParameter, isHeaderMapParameter, isHeaderMapResponse, isLiteralValue, isLROMethod, isPageableMethod, isPathParameter, isQueryCollectionParameter, isQueryParameter, isSliceType, isURIParameter } from '../../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isBodyParameter, isFormBodyParameter, isHeaderCollectionParameter, isHeaderMapParameter, isHeaderMapResponse, isLROMethod, isPageableMethod, isPathParameter, isQueryCollectionParameter, isQueryParameter, isSliceType, isURIParameter } from '../../gocodemodel/gocodemodel';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, dateFormat, formatLiteralValue, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatValue, getDelimiterForCollectionFormat, getMethodParameters, getParentImport, isParameter, isParameterGroup, isLiteralParameter, isRequiredParameter, timeRFC3339Format } from '../helpers';
+import { contentPreamble, dateFormat, formatParameterTypeName, formatStatusCode, formatStatusCodes, formatValue, getDelimiterForCollectionFormat, getMethodParameters, getParentImport, isParameter, isParameterGroup, isLiteralParameter, isRequiredParameter, timeRFC3339Format } from '../helpers';
 import { fixUpMethodName } from '../operations';
 import { ImportManager } from '../imports';
 import { generateServerInternal, RequiredHelpers } from './internal';
@@ -409,8 +409,11 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       }
     }
   }
-  content += createParamGroupParams(clientPkg, method, imports);
-  const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, imports)})`;
+
+  const result = parseHeaderPathQueryParams(clientPkg, method, imports);
+  content += result.content;
+
+  const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, result.params, imports)})`;
   if (isPageableMethod(method) && !isLROMethod(method)) {
     content += `resp ${apiCall}\n`;
     return content;
@@ -504,8 +507,26 @@ function createPathParamsRegex(method: Method): string {
   return urlPath;
 }
 
-function createParamGroupParams(clientPkg: string, method: Method, imports: ImportManager): string {
+interface parseResult {
+  // contains the param parsing code
+  content: string;
+
+  // maps a param name to the var containing the "final" value.
+  // only params that required parsing/casting will have an entry.
+  params: Map<string, string>;
+}
+
+// parses header/path/query params as required.
+// returns the parsing code and the params that contain the parsed values.
+function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: ImportManager): parseResult {
   let content = '';
+  const paramValues = new Map<string, string>();
+
+  const createLocalVariableName = function(param: Parameter, suffix: string): string {
+    const paramName = `${uncapitalize(param.paramName)}${suffix}`;
+    paramValues.set(param.paramName, paramName);
+    return paramName;
+  };
 
   const emitNumericConversion = function(src: string, type: 'float32' | 'float64' | 'int32' | 'int64'): string {
     imports.add('strconv');
@@ -522,77 +543,103 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
     return `strconv.Parse${parseType}(${src}, ${base}${precision})`;
   };
 
-  // create any param groups and populate their values
+  // track the param groups that need to be instantiated/populated.
+  // we track the params separately as it might be a subset of ParameterGroup.params
   const paramGroups = new Map<ParameterGroup, Array<Parameter>>();
+
   for (const param of values(consolidateHostParams(method.parameters))) {
     if (param.location === 'client' || isLiteralParameter(param)) {
       // client params and parameter literals aren't passed to APIs
       continue;
     }
+    if (isResumeTokenParameter(param)) {
+      // skip the ResumeToken param as we don't send that back to the caller
+      continue;
+    }
+
+    // NOTE: param group check must happen before skipping body params.
+    // this is to handle the case where the body param is grouped/optional
     if (param.group) {
-      if (isResumeTokenParameter(param)) {
-        // skip the ResumeToken param as we don't send that back to the caller
-        continue;
-      }
       if (!paramGroups.has(param.group)) {
         paramGroups.set(param.group, new Array<Parameter>());
       }
       const params = paramGroups.get(param.group);
       params!.push(param);
     }
+
     if (isBodyParameter(param) || isFormBodyParameter(param) || isMultipartFormBodyParameter(param)) {
       // body params will be unmarshalled, no need for parsing.
       continue;
     }
 
-    // TODO: this function needs some refactoring
+    // paramValue is initialized with the "raw" source value.
+    // e.g. getHeaderValue(...), qp.Get("foo") etc
+    // since path/query params need to be unescaped, the value
+    // of paramValue will be updated with the var name that
+    // contains the unescaped value.
+    let paramValue = getRawParamValue(param);
 
-    let paramValue = getParamValue(param);
-    if (isPathParameter(param) || isQueryParameter(param)) {
-      // path/query params might be escaped, so we need to unescape them first
+    // path/query params might be escaped, so we need to unescape them first.
+    // must handle query collections first as it's a superset of query param.
+    if (isQueryCollectionParameter(param) && param.collectionFormat === 'multi') {
       imports.add('net/url');
-      const paramVar = createLocalVariableName(param, 'Unescaped');
-      if (isQueryCollectionParameter(param) && param.collectionFormat === 'multi') {
-        // escape the exploded content
-        const escapedParam = createLocalVariableName(param, 'Escaped');
-        content += `\t${escapedParam} := ${paramValue}\n`;
-        content += `\t${paramVar} := make([]string, len(${escapedParam}))\n`;
-        content += `\tfor i, v := range ${escapedParam} {\n`;
-        content += '\t\tu, unescapeErr := url.QueryUnescape(v)\n';
-        content += '\t\tif unescapeErr != nil {\n\t\t\treturn nil, unescapeErr\n\t\t}\n';
-        content += `\t\t${paramVar}[i] = u\n\t}\n`;
+      const escapedParam = createLocalVariableName(param, 'Escaped');
+      content += `\t${escapedParam} := ${paramValue}\n`;
+      let paramVar = createLocalVariableName(param, 'Unescaped');
+      if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+        // by convention, if the value is in its "final form" (i.e. no parsing required)
+        // then its var is to have the "Param" suffix. the only case is string, everything
+        // else requires some amount of parsing/conversion.
+        paramVar = createLocalVariableName(param, 'Param');
+      }
+      content += `\t${paramVar} := make([]string, len(${escapedParam}))\n`;
+      content += `\tfor i, v := range ${escapedParam} {\n`;
+      content += '\t\tu, unescapeErr := url.QueryUnescape(v)\n';
+      content += '\t\tif unescapeErr != nil {\n\t\t\treturn nil, unescapeErr\n\t\t}\n';
+      content += `\t\t${paramVar}[i] = u\n\t}\n`;
+      paramValue = paramVar;
+    } else if (isPathParameter(param) || isQueryParameter(param)) {
+      imports.add('net/url');
+      let where: string;
+      if (isPathParameter(param)) {
+        where = 'Path';
       } else {
-        let where: string;
-        if (isPathParameter(param)) {
-          where = 'Path';
-        } else {
-          where = 'Query';
+        where = 'Query';
+      }
+      let paramVar = createLocalVariableName(param, 'Unescaped');
+      if (isRequiredParameter(param) && isConstantType(param.type) && param.type.type === 'string') {
+        // for string-based enums, we perform the conversion as part of unescaping
+        paramVar = createLocalVariableName(param, 'Param');
+        content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${getTypeDeclaration(param.type, clientPkg)}, error) {\n`;
+        content += `\t\tp, unescapeErr := url.${where}Unescape(v)\n`;
+        content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
+        content += `\t\treturn ${getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
+      } else {
+        if (isRequiredParameter(param) &&
+        ((isPrimitiveType(param.type) && param.type.typeName === 'string') ||
+          (isSliceType(param.type) && isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
+          // by convention, if the value is in its "final form" (i.e. no parsing required)
+          // then its var is to have the "Param" suffix. the only case is string, everything
+          // else requires some amount of parsing/conversion.
+          paramVar = createLocalVariableName(param, 'Param');
         }
         content += `\t${paramVar}, err := url.${where}Unescape(${paramValue})\n`;
-        content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
+      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       paramValue = paramVar;
     }
 
     // parse params as required
     if (isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
       if (isConstantType(param.type.elementType) || (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName !== 'string')) {
-        if (isHeaderCollectionParameter(param)) {
-          // we only need to do this for headers.  for query/path params it was handled earlier
-          paramValue = createLocalVariableName(param, 'Header');
-          requiredHelpers.getHeaderValue = true;
-          content += `\t${paramValue} := getHeaderValue(req.Header, "${param.headerName}")\n`;
-        }
-        const elementsParam = `${paramValue}Elements`;
-        if (param.collectionFormat === 'multi') {
-          // use the content from the exploded, escaped var earlier.
-          // TODO: would be nice to remove this extra var but will require some refactoring
-          content += `\t${elementsParam} := ${paramValue}\n`;
-        } else {
+        // the param requires some parsing (string -> int32) or casting to a const type
+        if (param.collectionFormat !== 'multi') {
           requiredHelpers.splitHelper = true;
+          const elementsParam = createLocalVariableName(param, 'Elements');
           content += `\t${elementsParam} := splitHelper(${paramValue}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
+          paramValue = elementsParam;
         }
-        const localVar = createLocalVariableName(param, 'Param');
+        const paramVar = createLocalVariableName(param, 'Param');
         let elementTypeName: PrimitiveTypeName; // ConstantTypeTypes is a subset of PrimitiveTypeName
         if (isConstantType(param.type.elementType)) {
           elementTypeName = param.type.elementType.type;
@@ -603,36 +650,31 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         if (isConstantType(param.type.elementType)) {
           toType = `${clientPkg}.${toType}`;
         }
-        content += `\t${localVar} := make([]${toType}, len(${elementsParam}))\n`;
-        content += `\tfor i := 0; i < len(${elementsParam}); i++ {\n`;
+        content += `\t${paramVar} := make([]${toType}, len(${paramValue}))\n`;
+        content += `\tfor i := 0; i < len(${paramValue}); i++ {\n`;
         let fromVar: string;
         if (elementTypeName === 'bool') {
           imports.add('strconv');
           fromVar = 'parsedBool';
-          content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${elementsParam}[i])\n`;
+          content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${paramValue}[i])\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
         } else if (elementTypeName === 'float32' || elementTypeName === 'float64' || elementTypeName === 'int32' || elementTypeName === 'int64') {
           fromVar = `parsed${capitalize(elementTypeName)}`;
-          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${elementsParam}[i]`, elementTypeName)}\n`;
+          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${paramValue}[i]`, elementTypeName)}\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
         } else if (elementTypeName === 'string') {
           // we're casting an enum string value to its const type
-          fromVar = `${elementsParam}[i]`;
+          fromVar = `${paramValue}[i]`;
         } else {
           throw new Error(`unhandled array element type ${elementTypeName}`);
         }
-        content += `\t\t${localVar}[i] = ${toType}(${fromVar})\n\t}\n`;
-      } else if (param.group) {
-        // for slices of strings that aren't in a parameter group, the call to splitHelper(...) is inlined
-        // into the invocation of the fake e.g. srv.FakeFunc(splitHelper...). but if it's grouped, then we
-        // need to create a local first which will later be copied into the param group.
-        if (param.collectionFormat === 'multi') {
-          // TODO: this needs some refactoring as I don't think this branch can ever be hit
-          content += `\t${createLocalVariableName(param, 'Param')} := ${paramValue}\n`;
-        } else {
-          requiredHelpers.splitHelper = true;
-          content += `\t${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
-        }
+        content += `\t\t${paramVar}[i] = ${toType}(${fromVar})\n\t}\n`;
+      } else if (!isRequiredParameter(param) && param.collectionFormat !== 'multi') {
+        // for slices of strings that are required, the call to splitHelper(...) is inlined into
+        // the invocation of the fake e.g. srv.FakeFunc(splitHelper...). but if it's optional, we
+        // need to create a local first which will later be copied into the optional param group.
+        requiredHelpers.splitHelper = true;
+        content += `\t${createLocalVariableName(param, 'Param')} := splitHelper(${paramValue}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
       }
     } else if (isPrimitiveType(param.type) && param.type.typeName === 'bool') {
       imports.add('strconv');
@@ -647,16 +689,6 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       imports.add('encoding/base64');
       content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (param.group && (isConstantType(param.type) || isLiteralValue(param.type) || (isPrimitiveType(param.type) && param.type.typeName === 'string'))) {
-      // for params that don't require parsing (all param types that coalesce to string), the value is inlined into the invocation of the fake.
-      // but if it's grouped, then we need to create a local first which will later be copied into the param group.
-      content += `\t${createLocalVariableName(param, 'Param')} := `;
-      let paramValue = getParamValueWithCast(clientPkg, param);
-      if (!isRequiredParameter(param)) {
-        requiredHelpers.getOptional = true;
-        paramValue = `getOptional(${paramValue})`;
-      }
-      content += `${paramValue}\n`;
     } else if (isTimeType(param.type)) {
       if (param.type.dateTimeFormat === 'dateType' || param.type.dateTimeFormat === 'timeRFC3339') {
         imports.add('time');
@@ -686,12 +718,18 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       } else {
         imports.add('strconv');
-        let from = `strconv.ParseInt(${paramValue}, 10, 64)`;
+        let parser: string;
         if (!isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
-          from = `parseOptional(${paramValue}, func(v string) (int64, error) { return strconv.ParseInt(v, 10, 64) })`;
+          parser = 'parseOptional';
+        } else {
+          requiredHelpers.parseWithCast = true;
+          parser = 'parseWithCast';
         }
-        content += `\t${createLocalVariableName(param, 'Param')}, err := ${from}\n`;
+        content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func (v string) (time.Time, error) {\n`;
+        content += '\t\tp, parseErr := strconv.ParseInt(v, 10, 64)\n';
+        content += '\t\tif parseErr != nil {\n\t\t\treturn time.Time{}, parseErr\n\t\t}\n';
+        content += '\t\treturn time.Unix(p, 0).UTC(), nil\n\t})\n';
         content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
       }
     } else if (isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
@@ -721,21 +759,51 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
       const localVar = createLocalVariableName(param, 'Param');
       content += `\tvar ${localVar} map[string]*string\n`;
-      content += '\tfor hh := range req.Header {\n';
+      content += `\tfor hh := range ${paramValue} {\n`;
       const headerPrefix = param.collectionPrefix;
       requiredHelpers.getHeaderValue = true;
       content += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("x-ms-meta-")], "${headerPrefix}") {\n`;
       content += `\t\t\tif ${localVar} == nil {\n\t\t\t\t${localVar} = map[string]*string{}\n\t\t\t}\n`;
       content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
       content += '\t\t}\n\t}\n';
+    } else if (isConstantType(param.type) && param.type.type !== 'string') {
+      let parseHelper = 'parseWithCast';
+      if (!isRequiredParameter(param)) {
+        parseHelper = 'parseOptional';
+      }
+      let parse: string;
+      let zeroValue: string;
+      if (param.type.type === 'bool') {
+        imports.add('strconv');
+        parse = 'strconv.ParseBool(v)';
+        zeroValue = 'false';
+      } else {
+        // emitNumericConversion adds the necessary import of strconv
+        parse = emitNumericConversion('v', param.type.type);
+        zeroValue = '0';
+      }
+      const toConstType = getTypeDeclaration(param.type, clientPkg);
+      content += `\t${createLocalVariableName(param, 'Param')}, err := ${parseHelper}(${paramValue}, func(v string) (${toConstType}, error) {\n`;
+      content += `\t\tp, parseErr := ${parse}\n`;
+      content += `\t\tif parseErr != nil {\n\t\t\treturn ${zeroValue}, parseErr\n\t\t}\n`;
+      content += `\t\treturn ${toConstType}(p), nil\n\t})\n`;
+      content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+    } else if (!isRequiredParameter(param)) {
+      // we check this last as it's a superset of the previous conditions
+      requiredHelpers.getOptional = true;
+      if (isConstantType(param.type)) {
+        paramValue = `${getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
+      }
+      content += `\t${createLocalVariableName(param, 'Param')} := getOptional(${paramValue})\n`;
     }
   }
 
+  // create the param groups and populate their values
   for (const paramGroup of values(paramGroups.keys())) {
-    if (paramGroup.required === true) {
+    if (paramGroup.required) {
       content += `\t${uncapitalize(paramGroup.paramName)} := ${clientPkg}.${paramGroup.groupName}{\n`;
       for (const param of values(paramGroups.get(paramGroup))) {
-        content += `\t\t${capitalize(param.paramName)}: ${createLocalVariableName(param, 'Param')},\n`;
+        content += `\t\t${capitalize(param.paramName)}: ${getFinalParamValue(clientPkg, param, paramValues)},\n`;
       }
       content += '\t}\n';
     } else {
@@ -745,7 +813,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
       for (const param of values(params)) {
         // check array before body in case the body is just an array
         if (isSliceType(param.type)) {
-          paramNilCheck.push(`len(${createLocalVariableName(param, 'Param')}) > 0`);
+          paramNilCheck.push(`len(${getFinalParamValue(clientPkg, param, paramValues)}) > 0`);
         } else if (isBodyParameter(param)) {
           if (param.bodyFormat === 'binary') {
             imports.add('io');
@@ -758,7 +826,7 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
           imports.add('reflect');
           paramNilCheck.push(`!reflect.ValueOf(${param.paramName}).IsZero()`);
         } else {
-          paramNilCheck.push(`${createLocalVariableName(param, 'Param')} != nil`);
+          paramNilCheck.push(`${getFinalParamValue(clientPkg, param, paramValues)} != nil`);
         }
       }
       content += `\tif ${paramNilCheck.join(' || ')} {\n`;
@@ -768,17 +836,21 @@ function createParamGroupParams(clientPkg: string, method: Method, imports: Impo
         if (param.byValue || (!isRequiredParameter(param) && !isBodyParameter(param) && !isFormBodyParameter(param) && !isMultipartFormBodyParameter(param))) {
           byRef = '';
         }
-        content += `\t\t\t${capitalize(param.paramName)}: ${byRef}${createLocalVariableName(param, 'Param')},\n`;
+        content += `\t\t\t${capitalize(param.paramName)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
       }
       content += '\t\t}\n';
       content += '\t}\n';
     }
   }
 
-  return content;
+  return {
+    content: content,
+    params: paramValues
+  };
 }
 
-function populateApiParams(clientPkg: string, method: Method, imports: ImportManager): string {
+// works in conjunction with parseHeaderPathQueryParams
+function populateApiParams(clientPkg: string, method: Method, paramValues: Map<string, string>, imports: ImportManager): string {
   // FooOperation(req.Context(), matches[regex.SubexpIndex("resourceGroupName")], qp.Get("api-version"), nil)
   // this assumes that our caller has created matches and qp as required
   const params = new Array<string>();
@@ -794,32 +866,33 @@ function populateApiParams(clientPkg: string, method: Method, imports: ImportMan
     if (isParameterGroup(param)) {
       if (param.groupName === method.optionalParamsGroup.groupName) {
         // this is the optional params type. in some cases we just pass nil
-        const countParams = values(param.params).where((each: Parameter) => { return each.location === 'method' && !isResumeTokenParameter(each); }).count();
+        const countParams = values(param.params).where((each: Parameter) => { return !isResumeTokenParameter(each); }).count();
         if (countParams === 0) {
           // if the options param is empty or only contains the resume token param just pass nil
           params.push('nil');
           continue;
         }
       }
+      // by convention, for param groups, the param parsing code
+      // creates a local var with the name of the param
       params.push(uncapitalize(param.paramName));
       continue;
     }
     imports.addImportForType(param.type);
-    params.push(`${getParamValueWithCast(clientPkg, param)}`);
+    params.push(getFinalParamValue(clientPkg, param, paramValues));
   }
 
   return params.join(', ');
 }
 
-function getParamValue(param: Parameter): string {
+// getRawParamValue returns the "raw" value for the specified parameter.
+// depending on the type, the value might require parsing before it can be passed to the fake.
+function getRawParamValue(param: Parameter): string {
   if (isFormBodyParameter(param) || isMultipartFormBodyParameter(param)) {
     // multipart form data values have been read and assigned
     // to local params with the same name. must check this first
     // as it's a superset of other cases that follow.
     return param.paramName;
-  } else if (isLiteralValue(param.type) && isLiteralParameter(param)) {
-    // required constants have their values embedded in the generated code
-    return formatLiteralValue(param.type);
   } else if (isPathParameter(param)) {
     // path params are in the matches slice
     return `matches[regex.SubexpIndex("${sanitizeRegexpCaptureGroupName(param.pathSegment)}")]`;
@@ -831,8 +904,7 @@ function getParamValue(param: Parameter): string {
     return `qp.Get("${param.queryParameter}")`;
   } else if (isHeaderParameter(param)) {
     if (isHeaderMapParameter(param) ) {
-      // header map params were parsed earlier
-      return createLocalVariableName(param, 'Param');
+      return 'req.Header';
     }
     // use req
     requiredHelpers.getHeaderValue = true;
@@ -841,74 +913,43 @@ function getParamValue(param: Parameter): string {
     if (param.bodyFormat === 'binary') {
       return 'req.Body.(io.ReadSeekCloser)';
     }
-    // JSON/XML bodies have been unmarshalled into a local named body
+    // JSON/XML/text bodies have been deserialized into a local named body
     return 'body';
   } else if (isURIParameter(param)) {
     return 'req.URL.Host';
-  } else if (param.group) {
-    // this is a parameter group param
-    return uncapitalize(param.paramName);
   } else {
     throw new Error(`unhandled parameter ${param.paramName}`);
   }
 }
 
-function getParamValueWithCast(clientPkg: string, param: Parameter): string {
-  let value = getParamValue(param);
-  if (isBodyParameter(param) || isFormBodyParameter(param) || isFormBodyCollectionParameter(param) || isMultipartFormBodyParameter(param)) {
-    // if the param is in the body, it's already in the correct format
-    if (isTimeType(param.type)) {
-      return `time.Time(${value})`;
-    }
-    return value;
-  } else if (isPathParameter(param) || isQueryParameter(param)) {
-    // path/query params were unescaped earlier
-    value = createLocalVariableName(param, 'Unescaped');
+// getFinalParamValue returns the "final" value of param to be passed to the fake.
+function getFinalParamValue(clientPkg: string, param: Parameter, paramValues: Map<string, string>): string {
+  let paramValue = paramValues.get(param.paramName);
+  if (!paramValue) {
+    // the param didn't require parsing so the "raw" value can be used
+    paramValue = getRawParamValue(param);
   }
 
-  if (isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
-    const asArray = param.type;
-    if (isConstantType(asArray.elementType) || (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName !== 'string')) {
-      return createLocalVariableName(param, 'Param');
-    } else if (isPrimitiveType(asArray.elementType) && asArray.elementType.typeName === 'string') {
-      if (param.collectionFormat === 'multi') {
-        return createLocalVariableName(param, 'Param');
-      } else {
-        requiredHelpers.splitHelper = true;
-        return `splitHelper(${value}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")`;
+  // there are a few corner-cases that require some fix-ups
+
+  if ((isBodyParameter(param) || isFormBodyParameter(param) || isFormBodyCollectionParameter(param) || isMultipartFormBodyParameter(param)) && isTimeType(param.type)) {
+    // time types in the body have been unmarshalled into our time helpers thus require a cast to time.Time
+    return `time.Time(${paramValue})`;
+  } else if (isRequiredParameter(param)) {
+    // optional params are always in their "final" form
+    if (isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
+      // for required params that are collections of strings, we split them inline.
+      // not necessary for optional params as they're already in slice format.
+      if (param.collectionFormat !== 'multi' && isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+        return `splitHelper(${paramValue}, "${getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
-    } else {
-      throw new Error(`unhandled array element type ${getTypeDeclaration(asArray.elementType)}`);
+    } else if (isHeaderParameter(param) && isConstantType(param.type) && param.type.type === 'string') {
+      // since headers aren't escaped, we cast required, string-based enums inline
+      return `${getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
-  } else if (isConstantType(param.type)) {
-    return `${clientPkg}.${getTypeDeclaration(param.type)}(${value})`;
-  } else if ((isPrimitiveType(param.type) && param.type.typeName === 'bool') || isBytesType(param.type) || (isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix')) {
-    return createLocalVariableName(param, 'Param');
-  } else if (isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
-    const numSchema = param.type;
-    // optional params have been parsed/converted into their required bitness
-    if ((numSchema.typeName === 'float32' || numSchema.typeName === 'int32') && isRequiredParameter(param)) {
-      return `${numSchema.typeName}(${createLocalVariableName(param, 'Param')})`;
-    }
-    // parsed ints/numbers have a default type of int64
-    return createLocalVariableName(param, 'Param');
-  } else if (isTimeType(param.type) && param.type.dateTimeFormat === 'timeUnix') {
-    return `time.Unix(${createLocalVariableName(param, 'Param')}, 0)`;
-  } else {
-    return value;
   }
-}
 
-function createLocalVariableName(param: Parameter, suffix: string): string {
-  if (isFormBodyParameter(param) || isMultipartFormBodyParameter(param)) {
-    return param.paramName;
-  } else if (isBodyParameter(param)) {
-    if (param.bodyFormat === 'binary') {
-      return 'req.Body.(io.ReadSeekCloser)';
-    }
-    return 'body';
-  }
-  return `${uncapitalize(param.paramName)}${suffix}`;
+  return paramValue;
 }
 
 // takes multiple host parameters and consolidates them into a single "host" parameter.

@@ -109,19 +109,19 @@ func (i *InboundNatRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.R
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		inboundNatRuleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
+		inboundNatRuleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, inboundNatRuleNameUnescaped, body, nil)
+		respr, errRespr := i.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, loadBalancerNameParam, inboundNatRuleNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (i *InboundNatRulesServerTransport) dispatchBeginDelete(req *http.Request) 
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		inboundNatRuleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
+		inboundNatRuleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := i.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, inboundNatRuleNameUnescaped, nil)
+		respr, errRespr := i.srv.BeginDelete(req.Context(), resourceGroupNameParam, loadBalancerNameParam, inboundNatRuleNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -204,15 +204,15 @@ func (i *InboundNatRulesServerTransport) dispatchGet(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+	loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 	if err != nil {
 		return nil, err
 	}
-	inboundNatRuleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
+	inboundNatRuleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("inboundNatRuleName")])
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +227,7 @@ func (i *InboundNatRulesServerTransport) dispatchGet(req *http.Request) (*http.R
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := i.srv.Get(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, inboundNatRuleNameUnescaped, options)
+	respr, errRespr := i.srv.Get(req.Context(), resourceGroupNameParam, loadBalancerNameParam, inboundNatRuleNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -254,15 +254,15 @@ func (i *InboundNatRulesServerTransport) dispatchNewListPager(req *http.Request)
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := i.srv.NewListPager(resourceGroupNameUnescaped, loadBalancerNameUnescaped, nil)
+		resp := i.srv.NewListPager(resourceGroupNameParam, loadBalancerNameParam, nil)
 		newListPager = &resp
 		i.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.InboundNatRulesClientListResponse, createLink func() string) {

@@ -80,15 +80,15 @@ func (f *FirewallPolicyIdpsSignaturesServerTransport) dispatchList(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	firewallPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
+	firewallPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("firewallPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := f.srv.List(req.Context(), resourceGroupNameUnescaped, firewallPolicyNameUnescaped, body, nil)
+	respr, errRespr := f.srv.List(req.Context(), resourceGroupNameParam, firewallPolicyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

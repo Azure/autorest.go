@@ -139,15 +139,15 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchBeginCreateOrUpdat
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+		crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, body, nil)
+		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, crossConnectionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -181,15 +181,15 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchGet(req *http.Requ
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+	crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, nil)
+	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameParam, crossConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -249,23 +249,23 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchBeginListArpTable(
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+		crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		devicePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
+		devicePathParam, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginListArpTable(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, peeringNameUnescaped, devicePathUnescaped, nil)
+		respr, errRespr := e.srv.BeginListArpTable(req.Context(), resourceGroupNameParam, crossConnectionNameParam, peeringNameParam, devicePathParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -301,11 +301,11 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchNewListByResourceG
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := e.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := e.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		e.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armnetwork.ExpressRouteCrossConnectionsClientListByResourceGroupResponse, createLink func() string) {
@@ -338,23 +338,23 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchBeginListRoutesTab
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+		crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		devicePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
+		devicePathParam, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginListRoutesTable(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, peeringNameUnescaped, devicePathUnescaped, nil)
+		respr, errRespr := e.srv.BeginListRoutesTable(req.Context(), resourceGroupNameParam, crossConnectionNameParam, peeringNameParam, devicePathParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -390,23 +390,23 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchBeginListRoutesTab
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+		crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		devicePathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
+		devicePathParam, err := url.PathUnescape(matches[regex.SubexpIndex("devicePath")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginListRoutesTableSummary(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, peeringNameUnescaped, devicePathUnescaped, nil)
+		respr, errRespr := e.srv.BeginListRoutesTableSummary(req.Context(), resourceGroupNameParam, crossConnectionNameParam, peeringNameParam, devicePathParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -444,15 +444,15 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchUpdateTags(req *ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	crossConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
+	crossConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("crossConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, crossConnectionNameUnescaped, body, nil)
+	respr, errRespr := e.srv.UpdateTags(req.Context(), resourceGroupNameParam, crossConnectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

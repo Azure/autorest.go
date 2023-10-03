@@ -76,23 +76,23 @@ func (c *CommunityGalleryImageVersionsServerTransport) dispatchGet(req *http.Req
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	publicGalleryNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("publicGalleryName")])
+	publicGalleryNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publicGalleryName")])
 	if err != nil {
 		return nil, err
 	}
-	galleryImageNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageName")])
+	galleryImageNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageName")])
 	if err != nil {
 		return nil, err
 	}
-	galleryImageVersionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageVersionName")])
+	galleryImageVersionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("galleryImageVersionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Get(req.Context(), locationUnescaped, publicGalleryNameUnescaped, galleryImageNameUnescaped, galleryImageVersionNameUnescaped, nil)
+	respr, errRespr := c.srv.Get(req.Context(), locationParam, publicGalleryNameParam, galleryImageNameParam, galleryImageVersionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

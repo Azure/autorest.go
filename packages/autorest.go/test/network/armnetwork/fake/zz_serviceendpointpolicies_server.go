@@ -123,15 +123,15 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchBeginCreateOrUpdate(req
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		serviceEndpointPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
+		serviceEndpointPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, serviceEndpointPolicyNameUnescaped, body, nil)
+		respr, errRespr := s.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, serviceEndpointPolicyNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -167,15 +167,15 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchBeginDelete(req *http.R
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		serviceEndpointPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
+		serviceEndpointPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, serviceEndpointPolicyNameUnescaped, nil)
+		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameParam, serviceEndpointPolicyNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -210,11 +210,11 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchGet(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	serviceEndpointPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
+	serviceEndpointPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchGet(req *http.Request) 
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, serviceEndpointPolicyNameUnescaped, options)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, serviceEndpointPolicyNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -289,11 +289,11 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchNewListByResourceGroupP
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		s.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armnetwork.ServiceEndpointPoliciesClientListByResourceGroupResponse, createLink func() string) {
@@ -328,15 +328,15 @@ func (s *ServiceEndpointPoliciesServerTransport) dispatchUpdateTags(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	serviceEndpointPolicyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
+	serviceEndpointPolicyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("serviceEndpointPolicyName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, serviceEndpointPolicyNameUnescaped, body, nil)
+	respr, errRespr := s.srv.UpdateTags(req.Context(), resourceGroupNameParam, serviceEndpointPolicyNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

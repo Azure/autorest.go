@@ -187,15 +187,15 @@ func (d *DevicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.CreateOrUpdate(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.CreateOrUpdate(req.Context(), deviceNameParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -226,15 +226,15 @@ func (d *DevicesServerTransport) dispatchBeginCreateOrUpdateSecuritySettings(req
 		if err != nil {
 			return nil, err
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdateSecuritySettings(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdateSecuritySettings(req.Context(), deviceNameParam, resourceGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -270,15 +270,15 @@ func (d *DevicesServerTransport) dispatchBeginDelete(req *http.Request) (*http.R
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -314,15 +314,15 @@ func (d *DevicesServerTransport) dispatchBeginDownloadUpdates(req *http.Request)
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDownloadUpdates(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDownloadUpdates(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -356,15 +356,15 @@ func (d *DevicesServerTransport) dispatchGenerateCertificate(req *http.Request) 
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GenerateCertificate(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.GenerateCertificate(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -389,15 +389,15 @@ func (d *DevicesServerTransport) dispatchGet(req *http.Request) (*http.Response,
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -422,15 +422,15 @@ func (d *DevicesServerTransport) dispatchGetExtendedInformation(req *http.Reques
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetExtendedInformation(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.GetExtendedInformation(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -455,15 +455,15 @@ func (d *DevicesServerTransport) dispatchGetNetworkSettings(req *http.Request) (
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetNetworkSettings(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.GetNetworkSettings(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -488,15 +488,15 @@ func (d *DevicesServerTransport) dispatchGetUpdateSummary(req *http.Request) (*h
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetUpdateSummary(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := d.srv.GetUpdateSummary(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -523,15 +523,15 @@ func (d *DevicesServerTransport) dispatchBeginInstallUpdates(req *http.Request) 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginInstallUpdates(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginInstallUpdates(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -568,7 +568,7 @@ func (d *DevicesServerTransport) dispatchNewListByResourceGroupPager(req *http.R
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
@@ -583,7 +583,7 @@ func (d *DevicesServerTransport) dispatchNewListByResourceGroupPager(req *http.R
 				Expand: expandParam,
 			}
 		}
-		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, options)
+		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameParam, options)
 		newListByResourceGroupPager = &resp
 		d.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armdataboxedge.DevicesClientListByResourceGroupResponse, createLink func() string) {
@@ -661,15 +661,15 @@ func (d *DevicesServerTransport) dispatchBeginScanForUpdates(req *http.Request) 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginScanForUpdates(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginScanForUpdates(req.Context(), deviceNameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -707,15 +707,15 @@ func (d *DevicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Update(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.Update(req.Context(), deviceNameParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -744,15 +744,15 @@ func (d *DevicesServerTransport) dispatchUpdateExtendedInformation(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.UpdateExtendedInformation(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.UpdateExtendedInformation(req.Context(), deviceNameParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -781,15 +781,15 @@ func (d *DevicesServerTransport) dispatchUploadCertificate(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.UploadCertificate(req.Context(), deviceNameUnescaped, resourceGroupNameUnescaped, body, nil)
+	respr, errRespr := d.srv.UploadCertificate(req.Context(), deviceNameParam, resourceGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

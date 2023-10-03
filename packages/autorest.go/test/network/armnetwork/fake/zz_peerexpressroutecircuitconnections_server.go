@@ -87,23 +87,23 @@ func (p *PeerExpressRouteCircuitConnectionsServerTransport) dispatchGet(req *htt
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+	circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 	if err != nil {
 		return nil, err
 	}
-	peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+	peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 	if err != nil {
 		return nil, err
 	}
-	connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+	connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameUnescaped, circuitNameUnescaped, peeringNameUnescaped, connectionNameUnescaped, nil)
+	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameParam, circuitNameParam, peeringNameParam, connectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -130,19 +130,19 @@ func (p *PeerExpressRouteCircuitConnectionsServerTransport) dispatchNewListPager
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+		circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 		if err != nil {
 			return nil, err
 		}
-		peeringNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
+		peeringNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("peeringName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewListPager(resourceGroupNameUnescaped, circuitNameUnescaped, peeringNameUnescaped, nil)
+		resp := p.srv.NewListPager(resourceGroupNameParam, circuitNameParam, peeringNameParam, nil)
 		newListPager = &resp
 		p.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.PeerExpressRouteCircuitConnectionsClientListResponse, createLink func() string) {

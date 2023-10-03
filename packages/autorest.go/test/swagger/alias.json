@@ -123,6 +123,88 @@
       "x-ms-parameter-location": "method",
       "x-ms-client-default": "8989"
     },
+    "SomeRequiredQueryString": {
+      "name": "stringQuery",
+      "description": "The unique id that references the assigned data item to be aliased.",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
+    "BooleanEnumInHeader": {
+      "name": "boolHeaderEnum",
+      "description": "Some enums that are boolean values.",
+      "type": "boolean",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "enum": [
+        "enabled",
+        "disabled"
+      ],
+      "x-ms-enum": {
+        "name": "BooleanEnum",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "enabled",
+            "value": true,
+            "description": "Enables the thing"
+          },
+          {
+            "name": "disabled",
+            "value": false,
+            "description": "Disables the thing"
+          }
+        ]
+      }
+    },
+    "BooleanEnumInQuery": {
+      "name": "boolHeaderEnum",
+      "description": "Some enums that are boolean values.",
+      "type": "boolean",
+      "in": "query",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "enum": [
+        "enabled",
+        "disabled"
+      ],
+      "x-ms-enum": {
+        "name": "BooleanEnum",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "enabled",
+            "value": true,
+            "description": "Enables the thing"
+          },
+          {
+            "name": "disabled",
+            "value": false,
+            "description": "Disables the thing"
+          }
+        ]
+      }
+    },
+    "OptionalUnixTimeInHeader": {
+      "name": "optionalUnixTime",
+      "description": "Optional unix time passed via header.",
+      "type": "integer",
+      "format": "unixtime",
+      "in": "header",
+      "required": false,
+      "x-ms-parameter-location": "method"
+    },
+    "UnixTimeInQuery": {
+      "name": "unixTimeQuery",
+      "description": "Required unix time passed via query param.",
+      "type": "integer",
+      "format": "unixtime",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
     "AliasId": {
       "name": "aliasId",
       "description": "The unique id that references an existing alias.",
@@ -196,6 +278,27 @@
         "type": "integer"
       }
     },
+    "GroupedHeaderCollection": {
+      "name": "headerStrings",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "csv",
+      "items": {
+        "type": "string"
+      },
+      "x-ms-parameter-grouping": {
+        "name": "some-group"
+      }
+    },
+    "NumericHeader": {
+      "name": "numericHeader",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "integer"
+    },
     "NumericQueryCollection": {
       "name": "queryCounts",
       "in": "query",
@@ -221,6 +324,28 @@
       },
       "x-ms-parameter-grouping": {
         "name": "exploded-group"
+      }
+    },
+    "ExplodedQueryCollection": {
+      "name": "explodedStringStuff",
+      "in": "query",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "multi",
+      "items": {
+        "type": "string"
+      }
+    },
+    "OptionalExplodedQueryCollection": {
+      "name": "optionalExplodedStuff",
+      "in": "query",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "array",
+      "collectionFormat": "multi",
+      "items": {
+        "type": "string"
       }
     }
   },
@@ -251,6 +376,21 @@
             "$ref": "#/parameters/BoolCollection"
           },
           {
+            "$ref": "#/parameters/SomeRequiredQueryString"
+          },
+          {
+            "$ref": "#/parameters/BooleanEnumInHeader"
+          },
+          {
+            "$ref": "#/parameters/BooleanEnumInQuery"
+          },
+          {
+            "$ref": "#/parameters/OptionalUnixTimeInHeader"
+          },
+          {
+            "$ref": "#/parameters/UnixTimeInQuery"
+          },
+          {
             "name": "groupBy",
             "in": "query",
             "type": "array",
@@ -268,6 +408,22 @@
                 "name": "SomethingCount"
               }
             }
+          },
+          {
+            "name": "headerEnum",
+            "in": "header",
+            "required": true,
+            "x-ms-enum": { "name": "SomeEnum", "modelAsString": true },
+            "type": "string",
+            "enum": ["one", "two", "three"]
+          },
+          {
+            "name": "queryEnum",
+            "in": "query",
+            "required": true,
+            "x-ms-enum": { "name": "SomeEnum", "modelAsString": true },
+            "type": "string",
+            "enum": ["one", "two", "three"]
           }
         ],
         "responses": {
@@ -302,6 +458,46 @@
         "parameters": [
           {
             "$ref": "#/parameters/SomeClientVersion"
+          },
+          {
+            "name": "headerEnums",
+            "in": "header",
+            "required": true,
+            "type": "array",
+            "items": {
+              "x-ms-enum": { "name": "IntEnum", "modelAsString": true },
+              "type": "integer",
+              "enum": [200, 403, 405, 406, 429]
+            },
+            "collectionFormat": "csv"
+          },
+          {
+            "name": "queryEnums",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "x-ms-enum": { "name": "IntEnum", "modelAsString": true },
+              "type": "integer",
+              "enum": [200, 403, 405, 406, 429]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "headerEnum",
+            "in": "header",
+            "required": false,
+            "x-ms-enum": { "name": "IntEnum", "modelAsString": true },
+            "type": "integer",
+            "enum": [200, 403, 405, 406, 429]
+          },
+          {
+            "name": "queryEnum",
+            "in": "query",
+            "required": true,
+            "x-ms-enum": { "name": "IntEnum", "modelAsString": true },
+            "type": "integer",
+            "enum": [200, 403, 405, 406, 429]
           },
           {
             "name": "groupBy",
@@ -360,10 +556,22 @@
             "$ref": "#/parameters/NumericHeaderCollection"
           },
           {
+            "$ref": "#/parameters/GroupedHeaderCollection"
+          },
+          {
             "$ref": "#/parameters/NumericQueryCollection"
           },
           {
             "$ref": "#/parameters/GroupedExplodedQueryCollection"
+          },
+          {
+            "$ref": "#/parameters/ExplodedQueryCollection"
+          },
+          {
+            "$ref": "#/parameters/OptionalExplodedQueryCollection"
+          },
+          {
+            "$ref": "#/parameters/NumericHeader"
           },
           {
             "name": "headerTime",
@@ -903,6 +1111,12 @@
           "format": "time"
         }
       }
+    },
+    "IntEnum": {
+      "x-ms-enum": { "name": "IntEnum", "modelAsString": true },
+      "description": "List of integer enums",
+      "type": "integer",
+      "enum": [200, 403, 405, 406, 429]
     }
   }
 }

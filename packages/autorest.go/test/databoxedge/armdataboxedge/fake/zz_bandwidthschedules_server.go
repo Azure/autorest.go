@@ -109,19 +109,19 @@ func (b *BandwidthSchedulesServerTransport) dispatchBeginCreateOrUpdate(req *htt
 		if err != nil {
 			return nil, err
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), deviceNameUnescaped, nameUnescaped, resourceGroupNameUnescaped, body, nil)
+		respr, errRespr := b.srv.BeginCreateOrUpdate(req.Context(), deviceNameParam, nameParam, resourceGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (b *BandwidthSchedulesServerTransport) dispatchBeginDelete(req *http.Reques
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := b.srv.BeginDelete(req.Context(), deviceNameUnescaped, nameUnescaped, resourceGroupNameUnescaped, nil)
+		respr, errRespr := b.srv.BeginDelete(req.Context(), deviceNameParam, nameParam, resourceGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (b *BandwidthSchedulesServerTransport) dispatchGet(req *http.Request) (*htt
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := b.srv.Get(req.Context(), deviceNameUnescaped, nameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := b.srv.Get(req.Context(), deviceNameParam, nameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (b *BandwidthSchedulesServerTransport) dispatchNewListByDataBoxEdgeDevicePa
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+		deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := b.srv.NewListByDataBoxEdgeDevicePager(deviceNameUnescaped, resourceGroupNameUnescaped, nil)
+		resp := b.srv.NewListByDataBoxEdgeDevicePager(deviceNameParam, resourceGroupNameParam, nil)
 		newListByDataBoxEdgeDevicePager = &resp
 		b.newListByDataBoxEdgeDevicePager.add(req, newListByDataBoxEdgeDevicePager)
 		server.PagerResponderInjectNextLinks(newListByDataBoxEdgeDevicePager, req, func(page *armdataboxedge.BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse, createLink func() string) {

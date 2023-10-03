@@ -76,19 +76,19 @@ func (j *JobsServerTransport) dispatchGet(req *http.Request) (*http.Response, er
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	deviceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
+	deviceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deviceName")])
 	if err != nil {
 		return nil, err
 	}
-	nameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := j.srv.Get(req.Context(), deviceNameUnescaped, nameUnescaped, resourceGroupNameUnescaped, nil)
+	respr, errRespr := j.srv.Get(req.Context(), deviceNameParam, nameParam, resourceGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

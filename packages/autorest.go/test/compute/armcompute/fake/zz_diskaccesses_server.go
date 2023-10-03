@@ -161,15 +161,15 @@ func (d *DiskAccessesServerTransport) dispatchBeginCreateOrUpdate(req *http.Requ
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, diskAccessNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -205,15 +205,15 @@ func (d *DiskAccessesServerTransport) dispatchBeginDelete(req *http.Request) (*h
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDelete(req.Context(), resourceGroupNameParam, diskAccessNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -249,19 +249,19 @@ func (d *DiskAccessesServerTransport) dispatchBeginDeleteAPrivateEndpointConnect
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginDeleteAPrivateEndpointConnection(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, privateEndpointConnectionNameUnescaped, nil)
+		respr, errRespr := d.srv.BeginDeleteAPrivateEndpointConnection(req.Context(), resourceGroupNameParam, diskAccessNameParam, privateEndpointConnectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -295,15 +295,15 @@ func (d *DiskAccessesServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+	diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, diskAccessNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -328,19 +328,19 @@ func (d *DiskAccessesServerTransport) dispatchGetAPrivateEndpointConnection(req 
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+	diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 	if err != nil {
 		return nil, err
 	}
-	privateEndpointConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+	privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetAPrivateEndpointConnection(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, privateEndpointConnectionNameUnescaped, nil)
+	respr, errRespr := d.srv.GetAPrivateEndpointConnection(req.Context(), resourceGroupNameParam, diskAccessNameParam, privateEndpointConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -365,15 +365,15 @@ func (d *DiskAccessesServerTransport) dispatchGetPrivateLinkResources(req *http.
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+	diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.GetPrivateLinkResources(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, nil)
+	respr, errRespr := d.srv.GetPrivateLinkResources(req.Context(), resourceGroupNameParam, diskAccessNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -433,11 +433,11 @@ func (d *DiskAccessesServerTransport) dispatchNewListByResourceGroupPager(req *h
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := d.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		d.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.DiskAccessesClientListByResourceGroupResponse, createLink func() string) {
@@ -470,15 +470,15 @@ func (d *DiskAccessesServerTransport) dispatchNewListPrivateEndpointConnectionsP
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListPrivateEndpointConnectionsPager(resourceGroupNameUnescaped, diskAccessNameUnescaped, nil)
+		resp := d.srv.NewListPrivateEndpointConnectionsPager(resourceGroupNameParam, diskAccessNameParam, nil)
 		newListPrivateEndpointConnectionsPager = &resp
 		d.newListPrivateEndpointConnectionsPager.add(req, newListPrivateEndpointConnectionsPager)
 		server.PagerResponderInjectNextLinks(newListPrivateEndpointConnectionsPager, req, func(page *armcompute.DiskAccessesClientListPrivateEndpointConnectionsResponse, createLink func() string) {
@@ -515,15 +515,15 @@ func (d *DiskAccessesServerTransport) dispatchBeginUpdate(req *http.Request) (*h
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginUpdate(req.Context(), resourceGroupNameParam, diskAccessNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -563,19 +563,19 @@ func (d *DiskAccessesServerTransport) dispatchBeginUpdateAPrivateEndpointConnect
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		diskAccessNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
+		diskAccessNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("diskAccessName")])
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
+		privateEndpointConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := d.srv.BeginUpdateAPrivateEndpointConnection(req.Context(), resourceGroupNameUnescaped, diskAccessNameUnescaped, privateEndpointConnectionNameUnescaped, body, nil)
+		respr, errRespr := d.srv.BeginUpdateAPrivateEndpointConnection(req.Context(), resourceGroupNameParam, diskAccessNameParam, privateEndpointConnectionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

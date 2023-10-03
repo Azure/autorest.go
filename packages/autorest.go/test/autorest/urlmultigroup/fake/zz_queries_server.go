@@ -83,15 +83,14 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 	}
 	qp := req.URL.Query()
 	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
 		u, unescapeErr := url.QueryUnescape(v)
 		if unescapeErr != nil {
 			return nil, unescapeErr
 		}
-		arrayQueryUnescaped[i] = u
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := arrayQueryUnescaped
 	var options *urlmultigroup.QueriesClientArrayStringMultiEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiEmptyOptions{
@@ -119,15 +118,14 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 	}
 	qp := req.URL.Query()
 	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
 		u, unescapeErr := url.QueryUnescape(v)
 		if unescapeErr != nil {
 			return nil, unescapeErr
 		}
-		arrayQueryUnescaped[i] = u
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := arrayQueryUnescaped
 	var options *urlmultigroup.QueriesClientArrayStringMultiNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiNullOptions{
@@ -155,15 +153,14 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 	}
 	qp := req.URL.Query()
 	arrayQueryEscaped := qp["arrayQuery"]
-	arrayQueryUnescaped := make([]string, len(arrayQueryEscaped))
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
 	for i, v := range arrayQueryEscaped {
 		u, unescapeErr := url.QueryUnescape(v)
 		if unescapeErr != nil {
 			return nil, unescapeErr
 		}
-		arrayQueryUnescaped[i] = u
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := arrayQueryUnescaped
 	var options *urlmultigroup.QueriesClientArrayStringMultiValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiValidOptions{

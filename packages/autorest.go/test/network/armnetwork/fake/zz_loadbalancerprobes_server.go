@@ -87,19 +87,19 @@ func (l *LoadBalancerProbesServerTransport) dispatchGet(req *http.Request) (*htt
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+	loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 	if err != nil {
 		return nil, err
 	}
-	probeNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("probeName")])
+	probeNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("probeName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := l.srv.Get(req.Context(), resourceGroupNameUnescaped, loadBalancerNameUnescaped, probeNameUnescaped, nil)
+	respr, errRespr := l.srv.Get(req.Context(), resourceGroupNameParam, loadBalancerNameParam, probeNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -126,15 +126,15 @@ func (l *LoadBalancerProbesServerTransport) dispatchNewListPager(req *http.Reque
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		loadBalancerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
+		loadBalancerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("loadBalancerName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := l.srv.NewListPager(resourceGroupNameUnescaped, loadBalancerNameUnescaped, nil)
+		resp := l.srv.NewListPager(resourceGroupNameParam, loadBalancerNameParam, nil)
 		newListPager = &resp
 		l.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.LoadBalancerProbesClientListResponse, createLink func() string) {

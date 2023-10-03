@@ -94,11 +94,11 @@ func (l *LogAnalyticsServerTransport) dispatchBeginExportRequestRateByInterval(r
 		if err != nil {
 			return nil, err
 		}
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := l.srv.BeginExportRequestRateByInterval(req.Context(), locationUnescaped, body, nil)
+		respr, errRespr := l.srv.BeginExportRequestRateByInterval(req.Context(), locationParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -138,11 +138,11 @@ func (l *LogAnalyticsServerTransport) dispatchBeginExportThrottledRequests(req *
 		if err != nil {
 			return nil, err
 		}
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := l.srv.BeginExportThrottledRequests(req.Context(), locationUnescaped, body, nil)
+		respr, errRespr := l.srv.BeginExportThrottledRequests(req.Context(), locationParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

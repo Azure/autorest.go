@@ -120,15 +120,15 @@ func (m *ManagersServerTransport) dispatchCreateOrUpdate(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, nil)
+	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -156,11 +156,11 @@ func (m *ManagersServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
@@ -178,7 +178,7 @@ func (m *ManagersServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 				Force: forceParam,
 			}
 		}
-		respr, errRespr := m.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, options)
+		respr, errRespr := m.srv.BeginDelete(req.Context(), resourceGroupNameParam, networkManagerNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -212,15 +212,15 @@ func (m *ManagersServerTransport) dispatchGet(req *http.Request) (*http.Response
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Get(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, nil)
+	respr, errRespr := m.srv.Get(req.Context(), resourceGroupNameParam, networkManagerNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -248,7 +248,7 @@ func (m *ManagersServerTransport) dispatchNewListPager(req *http.Request) (*http
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
@@ -278,7 +278,7 @@ func (m *ManagersServerTransport) dispatchNewListPager(req *http.Request) (*http
 				SkipToken: skipTokenParam,
 			}
 		}
-		resp := m.srv.NewListPager(resourceGroupNameUnescaped, options)
+		resp := m.srv.NewListPager(resourceGroupNameParam, options)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ManagersClientListResponse, createLink func() string) {
@@ -373,15 +373,15 @@ func (m *ManagersServerTransport) dispatchPatch(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Patch(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, body, nil)
+	respr, errRespr := m.srv.Patch(req.Context(), resourceGroupNameParam, networkManagerNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

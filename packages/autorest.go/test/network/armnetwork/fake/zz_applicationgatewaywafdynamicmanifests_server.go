@@ -82,11 +82,11 @@ func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchNewGetPag
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewGetPager(locationUnescaped, nil)
+		resp := a.srv.NewGetPager(locationParam, nil)
 		newGetPager = &resp
 		a.newGetPager.add(req, newGetPager)
 		server.PagerResponderInjectNextLinks(newGetPager, req, func(page *armnetwork.ApplicationGatewayWafDynamicManifestsClientGetResponse, createLink func() string) {

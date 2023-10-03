@@ -87,19 +87,19 @@ func (d *DefaultSecurityRulesServerTransport) dispatchGet(req *http.Request) (*h
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkSecurityGroupName")])
+	networkSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkSecurityGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	defaultSecurityRuleNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("defaultSecurityRuleName")])
+	defaultSecurityRuleNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("defaultSecurityRuleName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameUnescaped, networkSecurityGroupNameUnescaped, defaultSecurityRuleNameUnescaped, nil)
+	respr, errRespr := d.srv.Get(req.Context(), resourceGroupNameParam, networkSecurityGroupNameParam, defaultSecurityRuleNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -126,15 +126,15 @@ func (d *DefaultSecurityRulesServerTransport) dispatchNewListPager(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkSecurityGroupName")])
+		networkSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkSecurityGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := d.srv.NewListPager(resourceGroupNameUnescaped, networkSecurityGroupNameUnescaped, nil)
+		resp := d.srv.NewListPager(resourceGroupNameParam, networkSecurityGroupNameParam, nil)
 		newListPager = &resp
 		d.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.DefaultSecurityRulesClientListResponse, createLink func() string) {

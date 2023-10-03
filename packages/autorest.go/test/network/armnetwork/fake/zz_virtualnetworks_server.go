@@ -141,19 +141,19 @@ func (v *VirtualNetworksServerTransport) dispatchCheckIPAddressAvailability(req 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
-	ipAddressUnescaped, err := url.QueryUnescape(qp.Get("ipAddress"))
+	ipAddressParam, err := url.QueryUnescape(qp.Get("ipAddress"))
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.CheckIPAddressAvailability(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, ipAddressUnescaped, nil)
+	respr, errRespr := v.srv.CheckIPAddressAvailability(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, ipAddressParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -184,15 +184,15 @@ func (v *VirtualNetworksServerTransport) dispatchBeginCreateOrUpdate(req *http.R
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+		virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -228,15 +228,15 @@ func (v *VirtualNetworksServerTransport) dispatchBeginDelete(req *http.Request) 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+		virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -271,11 +271,11 @@ func (v *VirtualNetworksServerTransport) dispatchGet(req *http.Request) (*http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +290,7 @@ func (v *VirtualNetworksServerTransport) dispatchGet(req *http.Request) (*http.R
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, options)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -317,11 +317,11 @@ func (v *VirtualNetworksServerTransport) dispatchNewListPager(req *http.Request)
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := v.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.VirtualNetworksClientListResponse, createLink func() string) {
@@ -388,11 +388,11 @@ func (v *VirtualNetworksServerTransport) dispatchBeginListDdosProtectionStatus(r
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+		virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 		if err != nil {
 			return nil, err
 		}
@@ -422,7 +422,7 @@ func (v *VirtualNetworksServerTransport) dispatchBeginListDdosProtectionStatus(r
 				SkipToken: skipTokenParam,
 			}
 		}
-		respr, errRespr := v.srv.BeginListDdosProtectionStatus(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, options)
+		respr, errRespr := v.srv.BeginListDdosProtectionStatus(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -458,15 +458,15 @@ func (v *VirtualNetworksServerTransport) dispatchNewListUsagePager(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+		virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListUsagePager(resourceGroupNameUnescaped, virtualNetworkNameUnescaped, nil)
+		resp := v.srv.NewListUsagePager(resourceGroupNameParam, virtualNetworkNameParam, nil)
 		newListUsagePager = &resp
 		v.newListUsagePager.add(req, newListUsagePager)
 		server.PagerResponderInjectNextLinks(newListUsagePager, req, func(page *armnetwork.VirtualNetworksClientListUsageResponse, createLink func() string) {
@@ -501,15 +501,15 @@ func (v *VirtualNetworksServerTransport) dispatchUpdateTags(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualNetworkNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
+	virtualNetworkNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualNetworkName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, virtualNetworkNameUnescaped, body, nil)
+	respr, errRespr := v.srv.UpdateTags(req.Context(), resourceGroupNameParam, virtualNetworkNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

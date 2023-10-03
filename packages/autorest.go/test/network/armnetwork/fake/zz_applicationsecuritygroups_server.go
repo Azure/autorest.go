@@ -123,15 +123,15 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchBeginCreateOrUpdate(r
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
+		applicationSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, applicationSecurityGroupNameUnescaped, body, nil)
+		respr, errRespr := a.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, applicationSecurityGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -167,15 +167,15 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchBeginDelete(req *http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		applicationSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
+		applicationSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, applicationSecurityGroupNameUnescaped, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameParam, applicationSecurityGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -209,15 +209,15 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchGet(req *http.Request
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	applicationSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
+	applicationSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameUnescaped, applicationSecurityGroupNameUnescaped, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, applicationSecurityGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -244,11 +244,11 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchNewListPager(req *htt
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := a.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ApplicationSecurityGroupsClientListResponse, createLink func() string) {
@@ -316,15 +316,15 @@ func (a *ApplicationSecurityGroupsServerTransport) dispatchUpdateTags(req *http.
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	applicationSecurityGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
+	applicationSecurityGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("applicationSecurityGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, applicationSecurityGroupNameUnescaped, body, nil)
+	respr, errRespr := a.srv.UpdateTags(req.Context(), resourceGroupNameParam, applicationSecurityGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

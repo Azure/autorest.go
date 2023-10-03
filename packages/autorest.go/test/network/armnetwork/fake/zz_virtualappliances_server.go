@@ -123,15 +123,15 @@ func (v *VirtualAppliancesServerTransport) dispatchBeginCreateOrUpdate(req *http
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkVirtualApplianceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
+		networkVirtualApplianceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkVirtualApplianceNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, networkVirtualApplianceNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -167,15 +167,15 @@ func (v *VirtualAppliancesServerTransport) dispatchBeginDelete(req *http.Request
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkVirtualApplianceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
+		networkVirtualApplianceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, networkVirtualApplianceNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, networkVirtualApplianceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -210,11 +210,11 @@ func (v *VirtualAppliancesServerTransport) dispatchGet(req *http.Request) (*http
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkVirtualApplianceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
+	networkVirtualApplianceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (v *VirtualAppliancesServerTransport) dispatchGet(req *http.Request) (*http
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, networkVirtualApplianceNameUnescaped, options)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, networkVirtualApplianceNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -289,11 +289,11 @@ func (v *VirtualAppliancesServerTransport) dispatchNewListByResourceGroupPager(r
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := v.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		v.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armnetwork.VirtualAppliancesClientListByResourceGroupResponse, createLink func() string) {
@@ -328,15 +328,15 @@ func (v *VirtualAppliancesServerTransport) dispatchUpdateTags(req *http.Request)
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkVirtualApplianceNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
+	networkVirtualApplianceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkVirtualApplianceName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.UpdateTags(req.Context(), resourceGroupNameUnescaped, networkVirtualApplianceNameUnescaped, body, nil)
+	respr, errRespr := v.srv.UpdateTags(req.Context(), resourceGroupNameParam, networkVirtualApplianceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

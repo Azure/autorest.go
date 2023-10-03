@@ -117,19 +117,19 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginCreateOrU
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		vmssExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
+		vmssExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, vmssExtensionNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, vmssExtensionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -165,19 +165,19 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginDelete(re
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		vmssExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
+		vmssExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, vmssExtensionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginDelete(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, vmssExtensionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -212,15 +212,15 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchGet(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+	vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 	if err != nil {
 		return nil, err
 	}
-	vmssExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
+	vmssExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchGet(req *http.
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, vmssExtensionNameUnescaped, options)
+	respr, errRespr := v.srv.Get(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, vmssExtensionNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -262,15 +262,15 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchNewListPager(r
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListPager(resourceGroupNameUnescaped, vmScaleSetNameUnescaped, nil)
+		resp := v.srv.NewListPager(resourceGroupNameParam, vmScaleSetNameParam, nil)
 		newListPager = &resp
 		v.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.VirtualMachineScaleSetExtensionsClientListResponse, createLink func() string) {
@@ -307,19 +307,19 @@ func (v *VirtualMachineScaleSetExtensionsServerTransport) dispatchBeginUpdate(re
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		vmssExtensionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
+		vmssExtensionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmssExtensionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, vmssExtensionNameUnescaped, body, nil)
+		respr, errRespr := v.srv.BeginUpdate(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, vmssExtensionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

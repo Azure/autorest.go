@@ -89,23 +89,23 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchGet(req *http.Req
 	if matches == nil || len(matches) < 5 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	publisherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
+	publisherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
 	if err != nil {
 		return nil, err
 	}
-	typeParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("type")])
+	typeParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("type")])
 	if err != nil {
 		return nil, err
 	}
-	versionUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("version")])
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("version")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.Get(req.Context(), locationUnescaped, publisherNameUnescaped, typeParamUnescaped, versionUnescaped, nil)
+	respr, errRespr := v.srv.Get(req.Context(), locationParam, publisherNameParam, typeParamParam, versionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -130,15 +130,15 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchListTypes(req *ht
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	publisherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
+	publisherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.ListTypes(req.Context(), locationUnescaped, publisherNameUnescaped, nil)
+	respr, errRespr := v.srv.ListTypes(req.Context(), locationParam, publisherNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -164,15 +164,15 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchListVersions(req 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	locationUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
 	if err != nil {
 		return nil, err
 	}
-	publisherNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
+	publisherNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("publisherName")])
 	if err != nil {
 		return nil, err
 	}
-	typeParamUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("type")])
+	typeParamParam, err := url.PathUnescape(matches[regex.SubexpIndex("type")])
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (v *VirtualMachineExtensionImagesServerTransport) dispatchListVersions(req 
 			Orderby: orderbyParam,
 		}
 	}
-	respr, errRespr := v.srv.ListVersions(req.Context(), locationUnescaped, publisherNameUnescaped, typeParamUnescaped, options)
+	respr, errRespr := v.srv.ListVersions(req.Context(), locationParam, publisherNameParam, typeParamParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

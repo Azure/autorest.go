@@ -119,15 +119,15 @@ func (r *RestorePointCollectionsServerTransport) dispatchCreateOrUpdate(req *htt
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+	restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, body, nil)
+	respr, errRespr := r.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -154,15 +154,15 @@ func (r *RestorePointCollectionsServerTransport) dispatchBeginDelete(req *http.R
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+		restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -197,11 +197,11 @@ func (r *RestorePointCollectionsServerTransport) dispatchGet(req *http.Request) 
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+	restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (r *RestorePointCollectionsServerTransport) dispatchGet(req *http.Request) 
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, options)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -243,11 +243,11 @@ func (r *RestorePointCollectionsServerTransport) dispatchNewListPager(req *http.
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := r.srv.NewListPager(resourceGroupNameUnescaped, nil)
+		resp := r.srv.NewListPager(resourceGroupNameParam, nil)
 		newListPager = &resp
 		r.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armcompute.RestorePointCollectionsClientListResponse, createLink func() string) {
@@ -315,15 +315,15 @@ func (r *RestorePointCollectionsServerTransport) dispatchUpdate(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	restorePointCollectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
+	restorePointCollectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("restorePointCollectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.Update(req.Context(), resourceGroupNameUnescaped, restorePointCollectionNameUnescaped, body, nil)
+	respr, errRespr := r.srv.Update(req.Context(), resourceGroupNameParam, restorePointCollectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

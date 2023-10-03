@@ -77,7 +77,7 @@ func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	keyNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("keyName")])
+	keyNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("keyName")])
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 			KeyVersion: keyVersionParam,
 		}
 	}
-	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, keyNameUnescaped, options)
+	respr, errRespr := p.srv.GetEmpty(req.Context(), req.URL.Host, keyNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -104,15 +104,15 @@ func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchBeginCanc
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginCancel(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginCancel(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -146,15 +146,15 @@ func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchGetLatest
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+	vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := v.srv.GetLatest(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, nil)
+	respr, errRespr := v.srv.GetLatest(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -181,15 +181,15 @@ func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchBeginStar
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginStartExtensionUpgrade(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginStartExtensionUpgrade(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -225,15 +225,15 @@ func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchBeginStar
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		vmScaleSetNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
+		vmScaleSetNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("vmScaleSetName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginStartOSUpgrade(req.Context(), resourceGroupNameUnescaped, vmScaleSetNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginStartOSUpgrade(req.Context(), resourceGroupNameParam, vmScaleSetNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

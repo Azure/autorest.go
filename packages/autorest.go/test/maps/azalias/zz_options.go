@@ -8,9 +8,16 @@
 
 package azalias
 
+import "time"
+
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
 type ClientCreateOptions struct {
-	GroupBy []SomethingCount
+	// Some enums that are boolean values.
+	BoolHeaderEnum1 *BooleanEnum
+	GroupBy         []SomethingCount
+
+	// Optional unix time passed via header.
+	OptionalUnixTime *time.Time
 
 	// The unique id that references the assigned data item to be aliased.
 	AssignedID *float32
@@ -21,7 +28,7 @@ type ClientCreateOptions struct {
 
 // ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
 type ClientGetScriptOptions struct {
-	// placeholder for future optional parameters
+	OptionalExplodedStuff []string
 }
 
 // ClientGroup contains a group of parameters for the Client client.
@@ -35,7 +42,9 @@ type ClientGroup struct {
 
 // ClientListOptions contains the optional parameters for the Client.NewListPager method.
 type ClientListOptions struct {
-	GroupBy []LogMetricsGroupBy
+	GroupBy    []LogMetricsGroupBy
+	HeaderEnum *IntEnum
+	QueryEnums []IntEnum
 }
 
 // ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
@@ -66,4 +75,9 @@ type ClientPolicyAssignmentOptions struct {
 // ExplodedGroup contains a group of parameters for the Client.GetScript method.
 type ExplodedGroup struct {
 	ExplodedStuff []int64
+}
+
+// SomeGroup contains a group of parameters for the Client.GetScript method.
+type SomeGroup struct {
+	HeaderStrings []string
 }

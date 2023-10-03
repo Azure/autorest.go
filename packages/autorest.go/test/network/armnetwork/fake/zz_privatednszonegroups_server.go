@@ -109,19 +109,19 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginCreateOrUpdate(req *h
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
+		privateEndpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
 		if err != nil {
 			return nil, err
 		}
-		privateDNSZoneGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
+		privateDNSZoneGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, privateEndpointNameUnescaped, privateDNSZoneGroupNameUnescaped, body, nil)
+		respr, errRespr := p.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, privateEndpointNameParam, privateDNSZoneGroupNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginDelete(req *http.Requ
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		privateEndpointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
+		privateEndpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
 		if err != nil {
 			return nil, err
 		}
-		privateDNSZoneGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
+		privateDNSZoneGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, privateEndpointNameUnescaped, privateDNSZoneGroupNameUnescaped, nil)
+		respr, errRespr := p.srv.BeginDelete(req.Context(), resourceGroupNameParam, privateEndpointNameParam, privateDNSZoneGroupNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchGet(req *http.Request) (*h
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	privateEndpointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
+	privateEndpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
 	if err != nil {
 		return nil, err
 	}
-	privateDNSZoneGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
+	privateDNSZoneGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateDnsZoneGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameUnescaped, privateEndpointNameUnescaped, privateDNSZoneGroupNameUnescaped, nil)
+	respr, errRespr := p.srv.Get(req.Context(), resourceGroupNameParam, privateEndpointNameParam, privateDNSZoneGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (p *PrivateDNSZoneGroupsServerTransport) dispatchNewListPager(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		privateEndpointNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
+		privateEndpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("privateEndpointName")])
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := p.srv.NewListPager(privateEndpointNameUnescaped, resourceGroupNameUnescaped, nil)
+		resp := p.srv.NewListPager(privateEndpointNameParam, resourceGroupNameParam, nil)
 		newListPager = &resp
 		p.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.PrivateDNSZoneGroupsClientListResponse, createLink func() string) {

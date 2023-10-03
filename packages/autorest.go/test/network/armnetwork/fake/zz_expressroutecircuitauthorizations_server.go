@@ -109,19 +109,19 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchBeginCreateOr
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+		circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 		if err != nil {
 			return nil, err
 		}
-		authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+		authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, circuitNameUnescaped, authorizationNameUnescaped, body, nil)
+		respr, errRespr := e.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, circuitNameParam, authorizationNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchBeginDelete(r
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+		circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 		if err != nil {
 			return nil, err
 		}
-		authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+		authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, circuitNameUnescaped, authorizationNameUnescaped, nil)
+		respr, errRespr := e.srv.BeginDelete(req.Context(), resourceGroupNameParam, circuitNameParam, authorizationNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchGet(req *http
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+	circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 	if err != nil {
 		return nil, err
 	}
-	authorizationNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
+	authorizationNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("authorizationName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameUnescaped, circuitNameUnescaped, authorizationNameUnescaped, nil)
+	respr, errRespr := e.srv.Get(req.Context(), resourceGroupNameParam, circuitNameParam, authorizationNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchNewListPager(
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		circuitNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
+		circuitNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("circuitName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := e.srv.NewListPager(resourceGroupNameUnescaped, circuitNameUnescaped, nil)
+		resp := e.srv.NewListPager(resourceGroupNameParam, circuitNameParam, nil)
 		newListPager = &resp
 		e.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ExpressRouteCircuitAuthorizationsClientListResponse, createLink func() string) {

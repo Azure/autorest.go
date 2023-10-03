@@ -141,15 +141,15 @@ func (s *SnapshotsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+		snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, body, nil)
+		respr, errRespr := s.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, snapshotNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -185,15 +185,15 @@ func (s *SnapshotsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+		snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, nil)
+		respr, errRespr := s.srv.BeginDelete(req.Context(), resourceGroupNameParam, snapshotNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -227,15 +227,15 @@ func (s *SnapshotsServerTransport) dispatchGet(req *http.Request) (*http.Respons
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+	snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, snapshotNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -266,15 +266,15 @@ func (s *SnapshotsServerTransport) dispatchBeginGrantAccess(req *http.Request) (
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+		snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginGrantAccess(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, body, nil)
+		respr, errRespr := s.srv.BeginGrantAccess(req.Context(), resourceGroupNameParam, snapshotNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -343,11 +343,11 @@ func (s *SnapshotsServerTransport) dispatchNewListByResourceGroupPager(req *http
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, nil)
+		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		s.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.SnapshotsClientListByResourceGroupResponse, createLink func() string) {
@@ -380,15 +380,15 @@ func (s *SnapshotsServerTransport) dispatchBeginRevokeAccess(req *http.Request) 
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+		snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginRevokeAccess(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, nil)
+		respr, errRespr := s.srv.BeginRevokeAccess(req.Context(), resourceGroupNameParam, snapshotNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -428,15 +428,15 @@ func (s *SnapshotsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		snapshotNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
+		snapshotNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("snapshotName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginUpdate(req.Context(), resourceGroupNameUnescaped, snapshotNameUnescaped, body, nil)
+		respr, errRespr := s.srv.BeginUpdate(req.Context(), resourceGroupNameParam, snapshotNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

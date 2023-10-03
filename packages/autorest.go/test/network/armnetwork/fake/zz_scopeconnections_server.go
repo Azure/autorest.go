@@ -104,19 +104,19 @@ func (s *ScopeConnectionsServerTransport) dispatchCreateOrUpdate(req *http.Reque
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	scopeConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
+	scopeConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, scopeConnectionNameUnescaped, body, nil)
+	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, networkManagerNameParam, scopeConnectionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -141,19 +141,19 @@ func (s *ScopeConnectionsServerTransport) dispatchDelete(req *http.Request) (*ht
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	scopeConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
+	scopeConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, scopeConnectionNameUnescaped, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameParam, networkManagerNameParam, scopeConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -178,19 +178,19 @@ func (s *ScopeConnectionsServerTransport) dispatchGet(req *http.Request) (*http.
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+	networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 	if err != nil {
 		return nil, err
 	}
-	scopeConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
+	scopeConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("scopeConnectionName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameUnescaped, networkManagerNameUnescaped, scopeConnectionNameUnescaped, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, networkManagerNameParam, scopeConnectionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -218,11 +218,11 @@ func (s *ScopeConnectionsServerTransport) dispatchNewListPager(req *http.Request
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		networkManagerNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
+		networkManagerNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("networkManagerName")])
 		if err != nil {
 			return nil, err
 		}
@@ -252,7 +252,7 @@ func (s *ScopeConnectionsServerTransport) dispatchNewListPager(req *http.Request
 				SkipToken: skipTokenParam,
 			}
 		}
-		resp := s.srv.NewListPager(resourceGroupNameUnescaped, networkManagerNameUnescaped, options)
+		resp := s.srv.NewListPager(resourceGroupNameParam, networkManagerNameParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.ScopeConnectionsClientListResponse, createLink func() string) {

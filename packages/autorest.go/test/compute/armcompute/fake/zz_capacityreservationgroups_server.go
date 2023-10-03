@@ -117,15 +117,15 @@ func (c *CapacityReservationGroupsServerTransport) dispatchCreateOrUpdate(req *h
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	capacityReservationGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
+	capacityReservationGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CreateOrUpdate(req.Context(), resourceGroupNameUnescaped, capacityReservationGroupNameUnescaped, body, nil)
+	respr, errRespr := c.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, capacityReservationGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -150,15 +150,15 @@ func (c *CapacityReservationGroupsServerTransport) dispatchDelete(req *http.Requ
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	capacityReservationGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
+	capacityReservationGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Delete(req.Context(), resourceGroupNameUnescaped, capacityReservationGroupNameUnescaped, nil)
+	respr, errRespr := c.srv.Delete(req.Context(), resourceGroupNameParam, capacityReservationGroupNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -184,11 +184,11 @@ func (c *CapacityReservationGroupsServerTransport) dispatchGet(req *http.Request
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	capacityReservationGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
+	capacityReservationGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchGet(req *http.Request
 			Expand: expandParam,
 		}
 	}
-	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameUnescaped, capacityReservationGroupNameUnescaped, options)
+	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameParam, capacityReservationGroupNameParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -231,7 +231,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListByResourceGrou
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
@@ -246,7 +246,7 @@ func (c *CapacityReservationGroupsServerTransport) dispatchNewListByResourceGrou
 				Expand: expandParam,
 			}
 		}
-		resp := c.srv.NewListByResourceGroupPager(resourceGroupNameUnescaped, options)
+		resp := c.srv.NewListByResourceGroupPager(resourceGroupNameParam, options)
 		newListByResourceGroupPager = &resp
 		c.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcompute.CapacityReservationGroupsClientListByResourceGroupResponse, createLink func() string) {
@@ -326,15 +326,15 @@ func (c *CapacityReservationGroupsServerTransport) dispatchUpdate(req *http.Requ
 	if err != nil {
 		return nil, err
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	capacityReservationGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
+	capacityReservationGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("capacityReservationGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Update(req.Context(), resourceGroupNameUnescaped, capacityReservationGroupNameUnescaped, body, nil)
+	respr, errRespr := c.srv.Update(req.Context(), resourceGroupNameParam, capacityReservationGroupNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

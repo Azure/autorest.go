@@ -99,23 +99,23 @@ func (v *VPNLinkConnectionsServerTransport) dispatchBeginGetIkeSas(req *http.Req
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		gatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
+		gatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+		connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 		if err != nil {
 			return nil, err
 		}
-		linkConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("linkConnectionName")])
+		linkConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("linkConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginGetIkeSas(req.Context(), resourceGroupNameUnescaped, gatewayNameUnescaped, connectionNameUnescaped, linkConnectionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginGetIkeSas(req.Context(), resourceGroupNameParam, gatewayNameParam, connectionNameParam, linkConnectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -151,19 +151,19 @@ func (v *VPNLinkConnectionsServerTransport) dispatchNewListByVPNConnectionPager(
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		gatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
+		gatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+		connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := v.srv.NewListByVPNConnectionPager(resourceGroupNameUnescaped, gatewayNameUnescaped, connectionNameUnescaped, nil)
+		resp := v.srv.NewListByVPNConnectionPager(resourceGroupNameParam, gatewayNameParam, connectionNameParam, nil)
 		newListByVPNConnectionPager = &resp
 		v.newListByVPNConnectionPager.add(req, newListByVPNConnectionPager)
 		server.PagerResponderInjectNextLinks(newListByVPNConnectionPager, req, func(page *armnetwork.VPNLinkConnectionsClientListByVPNConnectionResponse, createLink func() string) {
@@ -196,23 +196,23 @@ func (v *VPNLinkConnectionsServerTransport) dispatchBeginResetConnection(req *ht
 		if matches == nil || len(matches) < 5 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		gatewayNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
+		gatewayNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("gatewayName")])
 		if err != nil {
 			return nil, err
 		}
-		connectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
+		connectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("connectionName")])
 		if err != nil {
 			return nil, err
 		}
-		linkConnectionNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("linkConnectionName")])
+		linkConnectionNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("linkConnectionName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := v.srv.BeginResetConnection(req.Context(), resourceGroupNameUnescaped, gatewayNameUnescaped, connectionNameUnescaped, linkConnectionNameUnescaped, nil)
+		respr, errRespr := v.srv.BeginResetConnection(req.Context(), resourceGroupNameParam, gatewayNameParam, connectionNameParam, linkConnectionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

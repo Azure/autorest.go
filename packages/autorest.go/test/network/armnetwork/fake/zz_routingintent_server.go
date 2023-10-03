@@ -109,19 +109,19 @@ func (r *RoutingIntentServerTransport) dispatchBeginCreateOrUpdate(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		routingIntentNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
+		routingIntentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routingIntentNameUnescaped, body, nil)
+		respr, errRespr := r.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, virtualHubNameParam, routingIntentNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -157,19 +157,19 @@ func (r *RoutingIntentServerTransport) dispatchBeginDelete(req *http.Request) (*
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		routingIntentNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
+		routingIntentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routingIntentNameUnescaped, nil)
+		respr, errRespr := r.srv.BeginDelete(req.Context(), resourceGroupNameParam, virtualHubNameParam, routingIntentNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -203,19 +203,19 @@ func (r *RoutingIntentServerTransport) dispatchGet(req *http.Request) (*http.Res
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
 	}
-	virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+	virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 	if err != nil {
 		return nil, err
 	}
-	routingIntentNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
+	routingIntentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("routingIntentName")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameUnescaped, virtualHubNameUnescaped, routingIntentNameUnescaped, nil)
+	respr, errRespr := r.srv.Get(req.Context(), resourceGroupNameParam, virtualHubNameParam, routingIntentNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -242,15 +242,15 @@ func (r *RoutingIntentServerTransport) dispatchNewListPager(req *http.Request) (
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		resourceGroupNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		virtualHubNameUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
+		virtualHubNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("virtualHubName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := r.srv.NewListPager(resourceGroupNameUnescaped, virtualHubNameUnescaped, nil)
+		resp := r.srv.NewListPager(resourceGroupNameParam, virtualHubNameParam, nil)
 		newListPager = &resp
 		r.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armnetwork.RoutingIntentClientListResponse, createLink func() string) {
