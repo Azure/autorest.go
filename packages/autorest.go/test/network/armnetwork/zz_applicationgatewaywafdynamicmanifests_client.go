@@ -57,22 +57,15 @@ func (client *ApplicationGatewayWafDynamicManifestsClient) NewGetPager(location 
 		},
 		Fetcher: func(ctx context.Context, page *ApplicationGatewayWafDynamicManifestsClientGetResponse) (ApplicationGatewayWafDynamicManifestsClientGetResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewayWafDynamicManifestsClient.NewGetPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getCreateRequest(ctx, location, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getCreateRequest(ctx, location, options)
+			}, nil)
 			if err != nil {
 				return ApplicationGatewayWafDynamicManifestsClientGetResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ApplicationGatewayWafDynamicManifestsClientGetResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ApplicationGatewayWafDynamicManifestsClientGetResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getHandleResponse(resp)
 		},

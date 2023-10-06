@@ -526,22 +526,15 @@ func (client *PublicIPAddressesClient) NewListPager(resourceGroupName string, op
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListResponse) (PublicIPAddressesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -592,22 +585,15 @@ func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddresse
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListAllResponse) (PublicIPAddressesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},
@@ -656,22 +642,15 @@ func (client *PublicIPAddressesClient) NewListCloudServicePublicIPAddressesPager
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListCloudServicePublicIPAddressesResponse) (PublicIPAddressesClientListCloudServicePublicIPAddressesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListCloudServicePublicIPAddressesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCloudServicePublicIPAddressesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCloudServicePublicIPAddressesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListCloudServicePublicIPAddressesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListCloudServicePublicIPAddressesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListCloudServicePublicIPAddressesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listCloudServicePublicIPAddressesHandleResponse(resp)
 		},
@@ -732,22 +711,15 @@ func (client *PublicIPAddressesClient) NewListCloudServiceRoleInstancePublicIPAd
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListCloudServiceRoleInstancePublicIPAddressesResponse) (PublicIPAddressesClientListCloudServiceRoleInstancePublicIPAddressesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListCloudServiceRoleInstancePublicIPAddressesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCloudServiceRoleInstancePublicIPAddressesCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCloudServiceRoleInstancePublicIPAddressesCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListCloudServiceRoleInstancePublicIPAddressesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListCloudServiceRoleInstancePublicIPAddressesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListCloudServiceRoleInstancePublicIPAddressesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listCloudServiceRoleInstancePublicIPAddressesHandleResponse(resp)
 		},
@@ -817,22 +789,15 @@ func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetPublicIPAddr
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse) (PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListVirtualMachineScaleSetPublicIPAddressesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listVirtualMachineScaleSetPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listVirtualMachineScaleSetPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp)
 		},
@@ -893,22 +858,15 @@ func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetVMPublicIPAd
 		},
 		Fetcher: func(ctx context.Context, page *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse) (PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PublicIPAddressesClient.NewListVirtualMachineScaleSetVMPublicIPAddressesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listVirtualMachineScaleSetVMPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listVirtualMachineScaleSetVMPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
+			}, nil)
 			if err != nil {
 				return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp)
 		},

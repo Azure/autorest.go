@@ -58,22 +58,15 @@ func (client *InterfaceLoadBalancersClient) NewListPager(resourceGroupName strin
 		},
 		Fetcher: func(ctx context.Context, page *InterfaceLoadBalancersClientListResponse) (InterfaceLoadBalancersClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfaceLoadBalancersClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
+			}, nil)
 			if err != nil {
 				return InterfaceLoadBalancersClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfaceLoadBalancersClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfaceLoadBalancersClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},

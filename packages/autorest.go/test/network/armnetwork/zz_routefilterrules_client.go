@@ -289,22 +289,15 @@ func (client *RouteFilterRulesClient) NewListByRouteFilterPager(resourceGroupNam
 		},
 		Fetcher: func(ctx context.Context, page *RouteFilterRulesClientListByRouteFilterResponse) (RouteFilterRulesClientListByRouteFilterResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "RouteFilterRulesClient.NewListByRouteFilterPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName, options)
+			}, nil)
 			if err != nil {
 				return RouteFilterRulesClientListByRouteFilterResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return RouteFilterRulesClientListByRouteFilterResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return RouteFilterRulesClientListByRouteFilterResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByRouteFilterHandleResponse(resp)
 		},

@@ -128,6 +128,11 @@ type ListResponse struct {
 	NextLink *string
 }
 
+type PagesOfThings struct {
+	NextLink *string
+	Values   []TypeWithRawJSON
+}
+
 type ParameterMetadataValue struct {
 	// a JSON object
 	Value any

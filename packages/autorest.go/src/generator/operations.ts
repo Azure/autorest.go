@@ -319,18 +319,20 @@ function emitPagerDefinition(client: Client, method: PageableMethod, imports: Im
   text += `\t\tFetcher: func(ctx context.Context, page *${method.responseEnvelope.name}) (${method.responseEnvelope.name}, error) {\n`;
   const reqParams = getCreateRequestParameters(method);
   if (generateFakes) {
-    text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.clientName}.${fixUpMethodName(method)}")\n`;
+    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.clientName}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
-    const isLRO = isLROMethod(method);
-    const defineOrAssign = isLRO ? ':=' : '=';
-    if (!isLRO) {
-      text += '\t\t\tvar req *policy.Request\n';
-      text += '\t\t\tvar err error\n';
-      text += '\t\t\tif page == nil {\n';
-      text += `\t\t\t\treq, err = client.${method.naming.requestMethod}(${reqParams})\n`;
-      text += '\t\t\t} else {\n';
+    let nextLinkVar: string;
+    if (!isLROMethod(method)) {
+      text += '\t\t\tnextLink := ""\n';
+      nextLinkVar = 'nextLink';
+      text += '\t\t\tif page != nil {\n';
+      text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n\t\t\t}\n`;
+    } else {
+      nextLinkVar = `*page.${method.nextLinkName}`;
     }
+    text += `\t\t\tresp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
+    text += `\t\t\t\treturn client.${method.naming.requestMethod}(${reqParams})\n\t\t\t}, `;
     // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
     if (method.nextPageMethod) {
       const nextOpParams = getCreateRequestParametersSig(method.nextPageMethod).split(',');
@@ -339,34 +341,36 @@ function emitPagerDefinition(client: Client, method: PageableMethod, imports: Im
         const paramName = nextOpParams[i].trim().split(' ')[0];
         const paramType = nextOpParams[i].trim().split(' ')[1];
         if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = `*page.${method.nextLinkName}`;
+          nextOpParams[i] = 'encodedNextLink';
         } else {
           nextOpParams[i] = paramName;
         }
       }
-      text += `\t\t\t\treq, err ${defineOrAssign} client.${method.nextPageMethod.methodName}(${nextOpParams.join(', ')})\n`;
+      // add a definition for the nextReq func that uses the nextLinkOperation
+      text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
+      text += `\t\t\t\t\treturn client.${method.nextPageMethod.methodName}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
     } else {
-      text += `\t\t\t\treq, err ${defineOrAssign} runtime.NewRequest(ctx, http.MethodGet, *page.${method.nextLinkName})\n`;
+      text += 'nil)\n';
     }
-    if (!isLRO) {
-      text += '\t\t\t}\n';
-    }
+    text += `\t\t\tif err != nil {\n\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n\t\t\t}\n`;
+    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
+    text += '\t\t\t},\n';
   } else {
-    // this is the singular page case
+    // this is the singular page case, no fetcher helper required
     text += `\t\t\treq, err := client.${method.naming.requestMethod}(${reqParams})\n`;
+    text += '\t\t\tif err != nil {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += '\t\t\t}\n';
+    text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
+    text += '\t\t\tif err != nil {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += '\t\t\t}\n';
+    text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, runtime.NewResponseError(resp)\n`;
+    text += '\t\t\t}\n';
+    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
+    text += '\t\t},\n';
   }
-  text += '\t\t\tif err != nil {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
-  text += '\t\t\t}\n';
-  text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
-  text += '\t\t\tif err != nil {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
-  text += '\t\t\t}\n';
-  text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, runtime.NewResponseError(resp)\n`;
-  text += '\t\t\t}\n';
-  text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
-  text += '\t\t},\n';
   if (injectSpans) {
     text += '\t\tTracer: client.internal.Tracer(),\n';
   }

@@ -523,22 +523,15 @@ func (client *PageBlobClient) NewGetPageRangesPager(containerName string, blob s
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesResponse) (PageBlobClientGetPageRangesResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getPageRangesCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextMarker
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getPageRangesCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)
+			}, nil)
 			if err != nil {
 				return PageBlobClientGetPageRangesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PageBlobClientGetPageRangesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PageBlobClientGetPageRangesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getPageRangesHandleResponse(resp)
 		},
@@ -664,22 +657,15 @@ func (client *PageBlobClient) NewGetPageRangesDiffPager(containerName string, bl
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageBlobClientGetPageRangesDiffResponse) (PageBlobClientGetPageRangesDiffResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getPageRangesDiffCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextMarker
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getPageRangesDiffCreateRequest(ctx, containerName, blob, comp, options, leaseAccessConditions, modifiedAccessConditions)
+			}, nil)
 			if err != nil {
 				return PageBlobClientGetPageRangesDiffResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PageBlobClientGetPageRangesDiffResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PageBlobClientGetPageRangesDiffResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getPageRangesDiffHandleResponse(resp)
 		},

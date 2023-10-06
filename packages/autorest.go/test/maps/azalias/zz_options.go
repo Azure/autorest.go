@@ -10,6 +10,12 @@ package azalias
 
 import "time"
 
+// ClientBeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
+type ClientBeginListLROOptions struct {
+	// Resumes the LRO from the provided token.
+	ResumeToken string
+}
+
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
 type ClientCreateOptions struct {
 	// Some enums that are boolean values.

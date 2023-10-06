@@ -56,22 +56,15 @@ func (client *ReservationsSummariesClient) NewListPager(scope string, grain Data
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListResponse) (ReservationsSummariesClientListResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, scope, grain, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, scope, grain, options)
+			}, nil)
 			if err != nil {
 				return ReservationsSummariesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsSummariesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsSummariesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -131,22 +124,15 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderPager(reserv
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderResponse) (ReservationsSummariesClientListByReservationOrderResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByReservationOrderCreateRequest(ctx, reservationOrderID, grain, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByReservationOrderCreateRequest(ctx, reservationOrderID, grain, options)
+			}, nil)
 			if err != nil {
 				return ReservationsSummariesClientListByReservationOrderResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsSummariesClientListByReservationOrderResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsSummariesClientListByReservationOrderResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByReservationOrderHandleResponse(resp)
 		},
@@ -198,22 +184,15 @@ func (client *ReservationsSummariesClient) NewListByReservationOrderAndReservati
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ReservationsSummariesClientListByReservationOrderAndReservationResponse) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, grain, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, grain, options)
+			}, nil)
 			if err != nil {
 				return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByReservationOrderAndReservationHandleResponse(resp)
 		},

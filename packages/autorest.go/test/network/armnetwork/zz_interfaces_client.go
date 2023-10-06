@@ -588,22 +588,15 @@ func (client *InterfacesClient) NewListPager(resourceGroupName string, options *
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListResponse) (InterfacesClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -653,22 +646,15 @@ func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAll
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListAllResponse) (InterfacesClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},
@@ -717,22 +703,15 @@ func (client *InterfacesClient) NewListCloudServiceNetworkInterfacesPager(resour
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListCloudServiceNetworkInterfacesResponse) (InterfacesClientListCloudServiceNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListCloudServiceNetworkInterfacesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCloudServiceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCloudServiceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListCloudServiceNetworkInterfacesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListCloudServiceNetworkInterfacesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListCloudServiceNetworkInterfacesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listCloudServiceNetworkInterfacesHandleResponse(resp)
 		},
@@ -791,22 +770,15 @@ func (client *InterfacesClient) NewListCloudServiceRoleInstanceNetworkInterfaces
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse) (InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCloudServiceRoleInstanceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCloudServiceRoleInstanceNetworkInterfacesCreateRequest(ctx, resourceGroupName, cloudServiceName, roleInstanceName, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listCloudServiceRoleInstanceNetworkInterfacesHandleResponse(resp)
 		},
@@ -944,22 +916,15 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetIPConfigurationsPag
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse) (InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp)
 		},
@@ -1027,22 +992,15 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPa
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse) (InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp)
 		},
@@ -1101,22 +1059,15 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfaces
 		},
 		Fetcher: func(ctx context.Context, page *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse) (InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, options)
+			}, nil)
 			if err != nil {
 				return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp)
 		},

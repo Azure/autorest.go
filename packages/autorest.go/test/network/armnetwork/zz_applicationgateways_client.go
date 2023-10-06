@@ -493,22 +493,15 @@ func (client *ApplicationGatewaysClient) NewListPager(resourceGroupName string, 
 		},
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListResponse) (ApplicationGatewaysClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return ApplicationGatewaysClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ApplicationGatewaysClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ApplicationGatewaysClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -559,22 +552,15 @@ func (client *ApplicationGatewaysClient) NewListAllPager(options *ApplicationGat
 		},
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAllResponse) (ApplicationGatewaysClientListAllResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListAllPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return ApplicationGatewaysClientListAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ApplicationGatewaysClientListAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ApplicationGatewaysClientListAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAllHandleResponse(resp)
 		},
@@ -786,22 +772,15 @@ func (client *ApplicationGatewaysClient) NewListAvailableSSLPredefinedPoliciesPa
 		},
 		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse) (ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listAvailableSSLPredefinedPoliciesHandleResponse(resp)
 		},
