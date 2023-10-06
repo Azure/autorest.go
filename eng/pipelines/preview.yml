@@ -35,13 +35,13 @@ extends:
   template: eng/pipelines/templates/stages/archetype-autorest-preview.yml@azure-sdk-tools
   parameters:
     RegenerationJobCount: 3
-    BuildAlphaVersion: true
+    BuildPreviewVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     Packages:
     - name: generator
       file: autorest-go-*.tgz
       type: npm
-    PublishTarget: 'internal'
+    PublishTarget: Internal
     SdkInitializationSteps:
     - pwsh: |
         $packageVersions = Get-Content "$(buildArtifactsPath)/package-versions.json" -Raw | ConvertFrom-Json

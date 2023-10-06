@@ -1,10 +1,10 @@
 param(
     [string] $BuildNumber,
     [string] $Output,
-    [string] $BuildAlphaVersion
+    [string] $BuildPreviewVersion
 )
 
-[bool]$BuildAlphaVersion = $BuildAlphaVersion -in 'true', '1', 'yes', 'y'
+[bool]$BuildPreviewVersion = $BuildPreviewVersion -in 'true', '1', 'yes', 'y'
 
 $ErrorActionPreference = 'Stop'
 
@@ -30,7 +30,7 @@ function updatePackage($name, $path) {
   try {
     $version = (Get-Content "./package.json" -Raw | ConvertFrom-Json).version
 
-    if ($BuildAlphaVersion) {
+    if ($BuildPreviewVersion) {
       $version = "$($version.Split('-')[0])-alpha.$BuildNumber"
       invoke "npm version $version --allow-same-version --no-workspaces-update"
       if ($LASTEXITCODE) { exit $LASTEXITCODE }
