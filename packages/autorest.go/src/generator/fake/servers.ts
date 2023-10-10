@@ -609,6 +609,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
       let paramVar = createLocalVariableName(param, 'Unescaped');
       if (isRequiredParameter(param) && isConstantType(param.type) && param.type.type === 'string') {
         // for string-based enums, we perform the conversion as part of unescaping
+        requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
         content += `\t${paramVar}, err := parseWithCast(${paramValue}, func (v string) (${getTypeDeclaration(param.type, clientPkg)}, error) {\n`;
         content += `\t\tp, unescapeErr := url.${where}Unescape(v)\n`;
@@ -767,9 +768,13 @@ function parseHeaderPathQueryParams(clientPkg: string, method: Method, imports: 
       content += `\t\t\t${localVar}[hh[len("${headerPrefix}"):]] = to.Ptr(getHeaderValue(req.Header, hh))\n`;
       content += '\t\t}\n\t}\n';
     } else if (isConstantType(param.type) && param.type.type !== 'string') {
-      let parseHelper = 'parseWithCast';
+      let parseHelper: string;
       if (!isRequiredParameter(param)) {
+        requiredHelpers.parseOptional = true;
         parseHelper = 'parseOptional';
+      } else {
+        requiredHelpers.parseWithCast = true;
+        parseHelper = 'parseWithCast';
       }
       let parse: string;
       let zeroValue: string;
