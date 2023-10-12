@@ -95,7 +95,7 @@ export class MockTestDataRender extends BaseDataRender {
       this.skipPropertyFunc = (exampleValue: ExampleValue): boolean => {
         // mock-test will remove all NextLink param
         // skip any null value
-        if (exampleValue.language?.go?.name === 'NextLink' || (exampleValue.rawValue === null && exampleValue.language?.go?.name !== 'ProvisioningState')) {
+        if (exampleValue.language?.go?.name.includes('NextLink') || (exampleValue.rawValue === null && exampleValue.language?.go?.name !== 'ProvisioningState')) {
           return true;
         }
         return false;
@@ -307,9 +307,7 @@ export class MockTestDataRender extends BaseDataRender {
         const isPolymophismValue =
           value?.schema?.type === SchemaType.Object &&
           ((<ObjectSchema>value.schema).discriminatorValue !== undefined || (<ObjectSchema>value.schema).discriminator?.property.isDiscriminator === true);
-          if (!this.getLanguageName(value).includes('NextLink')) {
-            output += `${this.getLanguageName(value)}: ${this.exampleValueToString(value, isPolymophismValue || !value.language.go?.byValue === true)},\n`;
-          }
+          output += `${this.getLanguageName(value)}: ${this.exampleValueToString(value, isPolymophismValue || !value.language.go?.byValue === true)},\n`;
       }
       output += '}';
       return output;
