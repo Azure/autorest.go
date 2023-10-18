@@ -196,10 +196,14 @@ func (client *CloudServicesUpdateDomainClient) BeginWalkUpdateDomain(ctx context
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CloudServicesUpdateDomainClientWalkUpdateDomainResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CloudServicesUpdateDomainClientWalkUpdateDomainResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CloudServicesUpdateDomainClientWalkUpdateDomainResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

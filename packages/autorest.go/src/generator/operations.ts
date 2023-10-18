@@ -1154,13 +1154,13 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
   }
 
   text += '\t\tpoller, err := runtime.NewPoller';
-  if (finalStateVia === '' && pollerType === 'nil') {
+  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
     text += pollerTypeParam;
   }
   text += '(resp, client.internal.Pipeline(), ';
-  if (finalStateVia === '' && pollerType === 'nil') {
+  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
     // no options
     text += 'nil)\n';
   } else {
@@ -1172,6 +1172,9 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
+    if (injectSpans) {
+      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+    }
     text += '\t\t})\n';
   }
   text += '\t\treturn poller, err\n';
@@ -1180,15 +1183,20 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
   // creating the poller from resume token branch
 
   text += '\t\treturn runtime.NewPollerFromResumeToken';
-  if (pollerType === 'nil') {
+  if (pollerType === 'nil' && !injectSpans) {
     text += pollerTypeParam;
   }
   text += '(options.ResumeToken, client.internal.Pipeline(), ';
-  if (pollerType === 'nil') {
+  if (pollerType === 'nil' && !injectSpans) {
     text += 'nil)\n';
   } else {
     text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
-    text += `\t\t\tResponse: ${pollerType},\n`;
+    if (pollerType !== 'nil') {
+      text += `\t\t\tResponse: ${pollerType},\n`;
+    }
+    if (injectSpans) {
+      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+    }
     text  += '\t\t})\n';
   }
   text += '\t}\n';

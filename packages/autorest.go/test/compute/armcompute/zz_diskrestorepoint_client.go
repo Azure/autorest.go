@@ -137,10 +137,13 @@ func (client *DiskRestorePointClient) BeginGrantAccess(ctx context.Context, reso
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiskRestorePointClientGrantAccessResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskRestorePointClientGrantAccessResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiskRestorePointClientGrantAccessResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -294,10 +297,13 @@ func (client *DiskRestorePointClient) BeginRevokeAccess(ctx context.Context, res
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[DiskRestorePointClientRevokeAccessResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[DiskRestorePointClientRevokeAccessResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[DiskRestorePointClientRevokeAccessResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

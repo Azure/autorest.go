@@ -61,10 +61,13 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LogAnalyticsClientExportRequestRateByIntervalResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LogAnalyticsClientExportRequestRateByIntervalResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LogAnalyticsClientExportRequestRateByIntervalResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -136,10 +139,13 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LogAnalyticsClientExportThrottledRequestsResponse]{
 			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LogAnalyticsClientExportThrottledRequestsResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LogAnalyticsClientExportThrottledRequestsResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

@@ -124,10 +124,13 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientDeleteBastionShareableLinkResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[ManagementClientDeleteBastionShareableLinkResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ManagementClientDeleteBastionShareableLinkResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -332,10 +335,13 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -426,11 +432,13 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 			Response:      &pager,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
 			Response: &pager,
+			Tracer:   client.internal.Tracer(),
 		})
 	}
 }
@@ -885,11 +893,13 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
 			FinalStateVia: runtime.FinalStateViaLocation,
 			Response:      &pager,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
 		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
 			Response: &pager,
+			Tracer:   client.internal.Tracer(),
 		})
 	}
 }

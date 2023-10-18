@@ -61,10 +61,13 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNSitesConfigurationClientDownloadResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNSitesConfigurationClientDownloadResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNSitesConfigurationClientDownloadResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

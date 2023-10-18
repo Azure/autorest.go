@@ -126,10 +126,13 @@ func (client *VirtualHubBgpConnectionsClient) BeginListAdvertisedRoutes(ctx cont
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubBgpConnectionsClientListAdvertisedRoutesResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubBgpConnectionsClientListAdvertisedRoutesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubBgpConnectionsClientListAdvertisedRoutesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -205,10 +208,13 @@ func (client *VirtualHubBgpConnectionsClient) BeginListLearnedRoutes(ctx context
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VirtualHubBgpConnectionsClientListLearnedRoutesResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[VirtualHubBgpConnectionsClientListLearnedRoutesResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VirtualHubBgpConnectionsClientListLearnedRoutesResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

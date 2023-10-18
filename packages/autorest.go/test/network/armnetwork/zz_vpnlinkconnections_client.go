@@ -62,10 +62,13 @@ func (client *VPNLinkConnectionsClient) BeginGetIkeSas(ctx context.Context, reso
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientGetIkeSasResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNLinkConnectionsClientGetIkeSasResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNLinkConnectionsClientGetIkeSasResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -216,10 +219,13 @@ func (client *VPNLinkConnectionsClient) BeginResetConnection(ctx context.Context
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[VPNLinkConnectionsClientResetConnectionResponse]{
 			FinalStateVia: runtime.FinalStateViaLocation,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[VPNLinkConnectionsClientResetConnectionResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[VPNLinkConnectionsClientResetConnectionResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
