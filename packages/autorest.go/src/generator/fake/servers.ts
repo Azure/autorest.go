@@ -38,6 +38,11 @@ export class OperationGroupContent {
 // used to track the helpers we need to emit. they're all false by default.
 const requiredHelpers = new RequiredHelpers();
 
+export function getServerName(client: Client): string {
+  // for the fake server, we use the suffix Server instead of Client
+  return capitalize(client.clientName.replace(/[C|c]lient$/, 'Server'));
+}
+
 export async function generateServers(codeModel: GoCodeModel): Promise<ServerContent> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
@@ -54,8 +59,7 @@ export async function generateServers(codeModel: GoCodeModel): Promise<ServerCon
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
-    // for the fake server, we use the suffix Server instead of Client
-    const serverName = capitalize(client.clientName.replace(/[C|c]lient$/, 'Server'));
+    const serverName = getServerName(client);
 
     let content: string;
     content = `// ${serverName} is a fake server for instances of the ${clientPkg}.${client.clientName} type.\n`;
