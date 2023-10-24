@@ -9,7 +9,7 @@ import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
 
 export function generateServerFactory(codeModel: GoCodeModel): string {
-  // generate client factory only for ARM
+  // generate server factory only for ARM
   if (codeModel.type !== 'azure-arm' || !codeModel.clients) {
     return '';
   }
