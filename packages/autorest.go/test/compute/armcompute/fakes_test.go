@@ -54,6 +54,11 @@ func TestFakeClientFactory(t *testing.T) {
 	})
 	require.NoError(t, err)
 
+	setsClient := factory.NewAvailabilitySetsClient()
+	resp, err := setsClient.Get(context.Background(), "fake-rg", "fake-set-name", nil)
+	require.Error(t, err)
+	require.Zero(t, resp)
+
 	galleriesClient := factory.NewGalleriesClient()
 	galleryResp, err := galleriesClient.Get(context.Background(), "fake-rg", "fake-gallery", nil)
 	require.NoError(t, err)
