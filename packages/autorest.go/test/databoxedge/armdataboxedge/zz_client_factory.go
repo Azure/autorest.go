@@ -37,101 +37,121 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewAddonsClient creates a new instance of the AddonsClient type.
 func (c *ClientFactory) NewAddonsClient() *AddonsClient {
 	subClient, _ := NewAddonsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewAlertsClient creates a new instance of the AlertsClient type.
 func (c *ClientFactory) NewAlertsClient() *AlertsClient {
 	subClient, _ := NewAlertsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewAvailableSKUsClient creates a new instance of the AvailableSKUsClient type.
 func (c *ClientFactory) NewAvailableSKUsClient() *AvailableSKUsClient {
 	subClient, _ := NewAvailableSKUsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewBandwidthSchedulesClient creates a new instance of the BandwidthSchedulesClient type.
 func (c *ClientFactory) NewBandwidthSchedulesClient() *BandwidthSchedulesClient {
 	subClient, _ := NewBandwidthSchedulesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewContainersClient creates a new instance of the ContainersClient type.
 func (c *ClientFactory) NewContainersClient() *ContainersClient {
 	subClient, _ := NewContainersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewDevicesClient creates a new instance of the DevicesClient type.
 func (c *ClientFactory) NewDevicesClient() *DevicesClient {
 	subClient, _ := NewDevicesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewDiagnosticSettingsClient creates a new instance of the DiagnosticSettingsClient type.
 func (c *ClientFactory) NewDiagnosticSettingsClient() *DiagnosticSettingsClient {
 	subClient, _ := NewDiagnosticSettingsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewJobsClient creates a new instance of the JobsClient type.
 func (c *ClientFactory) NewJobsClient() *JobsClient {
 	subClient, _ := NewJobsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewMonitoringConfigClient creates a new instance of the MonitoringConfigClient type.
 func (c *ClientFactory) NewMonitoringConfigClient() *MonitoringConfigClient {
 	subClient, _ := NewMonitoringConfigClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewNodesClient creates a new instance of the NodesClient type.
 func (c *ClientFactory) NewNodesClient() *NodesClient {
 	subClient, _ := NewNodesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewOperationsClient creates a new instance of the OperationsClient type.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	subClient, _ := NewOperationsClient(c.credential, c.options)
 	return subClient
 }
 
+// NewOperationsStatusClient creates a new instance of the OperationsStatusClient type.
 func (c *ClientFactory) NewOperationsStatusClient() *OperationsStatusClient {
 	subClient, _ := NewOperationsStatusClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewOrdersClient creates a new instance of the OrdersClient type.
 func (c *ClientFactory) NewOrdersClient() *OrdersClient {
 	subClient, _ := NewOrdersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewRolesClient creates a new instance of the RolesClient type.
 func (c *ClientFactory) NewRolesClient() *RolesClient {
 	subClient, _ := NewRolesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewSharesClient creates a new instance of the SharesClient type.
 func (c *ClientFactory) NewSharesClient() *SharesClient {
 	subClient, _ := NewSharesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewStorageAccountCredentialsClient creates a new instance of the StorageAccountCredentialsClient type.
 func (c *ClientFactory) NewStorageAccountCredentialsClient() *StorageAccountCredentialsClient {
 	subClient, _ := NewStorageAccountCredentialsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewStorageAccountsClient creates a new instance of the StorageAccountsClient type.
 func (c *ClientFactory) NewStorageAccountsClient() *StorageAccountsClient {
 	subClient, _ := NewStorageAccountsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewSupportPackagesClient creates a new instance of the SupportPackagesClient type.
 func (c *ClientFactory) NewSupportPackagesClient() *SupportPackagesClient {
 	subClient, _ := NewSupportPackagesClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewTriggersClient creates a new instance of the TriggersClient type.
 func (c *ClientFactory) NewTriggersClient() *TriggersClient {
 	subClient, _ := NewTriggersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
+// NewUsersClient creates a new instance of the UsersClient type.
 func (c *ClientFactory) NewUsersClient() *UsersClient {
 	subClient, _ := NewUsersClient(c.subscriptionID, c.credential, c.options)
 	return subClient
