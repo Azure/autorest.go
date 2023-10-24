@@ -67,6 +67,7 @@ export async function generateClientFactory(codeModel: GoCodeModel): Promise<str
 
     // add new sub client method for all operation groups
     for (const client of codeModel.clients) {
+      result += `// ${client.ctorName} creates a new instance of ${client.clientName}.\n`;
       result += `func (c *ClientFactory) ${client.ctorName}() *${client.clientName} {\n`;
       if (client.parameters.length > 0) {
         result += `\tsubClient, _ := ${client.ctorName}(${client.parameters.map(each => { return `c.${each.paramName}`; }).join(', ')}, c.credential, c.options)\n`;
