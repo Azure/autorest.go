@@ -37,109 +37,109 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
-// NewAggregatedCostClient creates a new instance of the AggregatedCostClient type.
+// NewAggregatedCostClient creates a new instance of AggregatedCostClient.
 func (c *ClientFactory) NewAggregatedCostClient() *AggregatedCostClient {
 	subClient, _ := NewAggregatedCostClient(c.credential, c.options)
 	return subClient
 }
 
-// NewBalancesClient creates a new instance of the BalancesClient type.
+// NewBalancesClient creates a new instance of BalancesClient.
 func (c *ClientFactory) NewBalancesClient() *BalancesClient {
 	subClient, _ := NewBalancesClient(c.credential, c.options)
 	return subClient
 }
 
-// NewBudgetsClient creates a new instance of the BudgetsClient type.
+// NewBudgetsClient creates a new instance of BudgetsClient.
 func (c *ClientFactory) NewBudgetsClient() *BudgetsClient {
 	subClient, _ := NewBudgetsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewChargesClient creates a new instance of the ChargesClient type.
+// NewChargesClient creates a new instance of ChargesClient.
 func (c *ClientFactory) NewChargesClient() *ChargesClient {
 	subClient, _ := NewChargesClient(c.credential, c.options)
 	return subClient
 }
 
-// NewCreditsClient creates a new instance of the CreditsClient type.
+// NewCreditsClient creates a new instance of CreditsClient.
 func (c *ClientFactory) NewCreditsClient() *CreditsClient {
 	subClient, _ := NewCreditsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewEventsClient creates a new instance of the EventsClient type.
+// NewEventsClient creates a new instance of EventsClient.
 func (c *ClientFactory) NewEventsClient() *EventsClient {
 	subClient, _ := NewEventsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewForecastsClient creates a new instance of the ForecastsClient type.
+// NewForecastsClient creates a new instance of ForecastsClient.
 func (c *ClientFactory) NewForecastsClient() *ForecastsClient {
 	subClient, _ := NewForecastsClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
-// NewLotsClient creates a new instance of the LotsClient type.
+// NewLotsClient creates a new instance of LotsClient.
 func (c *ClientFactory) NewLotsClient() *LotsClient {
 	subClient, _ := NewLotsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewMarketplacesClient creates a new instance of the MarketplacesClient type.
+// NewMarketplacesClient creates a new instance of MarketplacesClient.
 func (c *ClientFactory) NewMarketplacesClient() *MarketplacesClient {
 	subClient, _ := NewMarketplacesClient(c.credential, c.options)
 	return subClient
 }
 
-// NewOperationsClient creates a new instance of the OperationsClient type.
+// NewOperationsClient creates a new instance of OperationsClient.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	subClient, _ := NewOperationsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewPriceSheetClient creates a new instance of the PriceSheetClient type.
+// NewPriceSheetClient creates a new instance of PriceSheetClient.
 func (c *ClientFactory) NewPriceSheetClient() *PriceSheetClient {
 	subClient, _ := NewPriceSheetClient(c.subscriptionID, c.credential, c.options)
 	return subClient
 }
 
-// NewReservationRecommendationDetailsClient creates a new instance of the ReservationRecommendationDetailsClient type.
+// NewReservationRecommendationDetailsClient creates a new instance of ReservationRecommendationDetailsClient.
 func (c *ClientFactory) NewReservationRecommendationDetailsClient() *ReservationRecommendationDetailsClient {
 	subClient, _ := NewReservationRecommendationDetailsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewReservationRecommendationsClient creates a new instance of the ReservationRecommendationsClient type.
+// NewReservationRecommendationsClient creates a new instance of ReservationRecommendationsClient.
 func (c *ClientFactory) NewReservationRecommendationsClient() *ReservationRecommendationsClient {
 	subClient, _ := NewReservationRecommendationsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewReservationTransactionsClient creates a new instance of the ReservationTransactionsClient type.
+// NewReservationTransactionsClient creates a new instance of ReservationTransactionsClient.
 func (c *ClientFactory) NewReservationTransactionsClient() *ReservationTransactionsClient {
 	subClient, _ := NewReservationTransactionsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewReservationsDetailsClient creates a new instance of the ReservationsDetailsClient type.
+// NewReservationsDetailsClient creates a new instance of ReservationsDetailsClient.
 func (c *ClientFactory) NewReservationsDetailsClient() *ReservationsDetailsClient {
 	subClient, _ := NewReservationsDetailsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewReservationsSummariesClient creates a new instance of the ReservationsSummariesClient type.
+// NewReservationsSummariesClient creates a new instance of ReservationsSummariesClient.
 func (c *ClientFactory) NewReservationsSummariesClient() *ReservationsSummariesClient {
 	subClient, _ := NewReservationsSummariesClient(c.credential, c.options)
 	return subClient
 }
 
-// NewTagsClient creates a new instance of the TagsClient type.
+// NewTagsClient creates a new instance of TagsClient.
 func (c *ClientFactory) NewTagsClient() *TagsClient {
 	subClient, _ := NewTagsClient(c.credential, c.options)
 	return subClient
 }
 
-// NewUsageDetailsClient creates a new instance of the UsageDetailsClient type.
+// NewUsageDetailsClient creates a new instance of UsageDetailsClient.
 func (c *ClientFactory) NewUsageDetailsClient() *UsageDetailsClient {
 	subClient, _ := NewUsageDetailsClient(c.credential, c.options)
 	return subClient
