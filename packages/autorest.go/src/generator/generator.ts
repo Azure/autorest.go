@@ -19,6 +19,7 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 import { generateServers } from './fake/servers';
+import { generateServerFactory } from './fake/factory';
 import { sortAscending } from './helpers';
 
 // The generator emits Go source code files to disk.
@@ -169,6 +170,15 @@ export async function generateCode(host: AutorestExtensionHost) {
         host.writeFile({
           filename: `fake/${filePrefix}${fileName}.go`,
           content: op.content,
+          artifactType: 'source-file-go'
+        });
+      }
+
+      const serverFactory = generateServerFactory(session.model);
+      if (serverFactory !== '') {
+        host.writeFile({
+          filename: `fake/${filePrefix}server_factory.go`,
+          content: serverFactory,
           artifactType: 'source-file-go'
         });
       }
