@@ -114,4 +114,6 @@ help-content:
       - key: slice-elements-byval
         type: boolean
         description: When true, slice elements will not be pointer-to-type. The default is false.
+      - key: head-as-boolean
+        description: When true, HEAD requests will return a boolean value based on the HTTP status code. The default is false, but will be set to true if --azure-arm is true.
 ```
