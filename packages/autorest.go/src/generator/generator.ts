@@ -156,8 +156,7 @@ export async function generateCode(host: AutorestExtensionHost) {
       });
     }
 
-    const generateFakes = await session.getValue('generate-fakes', false);
-    if (generateFakes) {
+    if (session.model.options.generateFakes) {
       const serverContent = await generateServers(session.model);
       for (const op of values(serverContent.servers)) {
         let fileName = op.name.toLowerCase();
