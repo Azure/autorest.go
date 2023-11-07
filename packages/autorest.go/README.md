@@ -57,7 +57,7 @@ pipeline:
   # output the files to disk
   go/emitter:
     input: 
-      - go-transform-m4  # this allows us to dump out the code model after transformation (add --output-artifact:go-code-model on the command line)
+      - go-transform-m4  # this allows us to dump out the code model after transformation (add --output-artifact:code-model-v4 on the command line)
       - go/text-transform # this grabs the outputs after the last step.
       
     is-object: false # tell it that we're not putting an object graph out
@@ -116,4 +116,8 @@ help-content:
         description: When true, slice elements will not be pointer-to-type. The default is false.
       - key: head-as-boolean
         description: When true, HEAD requests will return a boolean value based on the HTTP status code. The default is false, but will be set to true if --azure-arm is true.
+      - key: generate-fakes
+        description: Enables generation of fake servers. The default value is set to the value of --azure-arm.
+      - key: inject-spans
+        description: Enables generation of spans for distributed tracing. The default value is set to the value of --azure-arm.
 ```

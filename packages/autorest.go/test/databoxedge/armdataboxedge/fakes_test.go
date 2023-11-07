@@ -35,7 +35,7 @@ func TestFakeAddonsClientBeginCreateOrUpdate(t *testing.T) {
 			return
 		},
 	}
-	client, err := armdataboxedge.NewAddonsClient("subID", azfake.NewTokenCredential(), &arm.ClientOptions{
+	client, err := armdataboxedge.NewAddonsClient("subID", &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			Transport: fake.NewAddonsServerTransport(&server),
 		},

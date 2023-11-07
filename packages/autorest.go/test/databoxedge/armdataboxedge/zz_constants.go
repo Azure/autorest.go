@@ -9,7 +9,7 @@
 package armdataboxedge
 
 const (
-	moduleName    = "armdataboxedge"
+	moduleName    = "armdataboxedge/v2"
 	moduleVersion = "v2.0.0"
 )
 

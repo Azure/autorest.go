@@ -47,7 +47,7 @@ func TestFakeClientFactory(t *testing.T) {
 			},
 		},
 	}
-	factory, err := armcompute.NewClientFactory("fake-subscription-id", azfake.NewTokenCredential(), &arm.ClientOptions{
+	factory, err := armcompute.NewClientFactory("fake-subscription-id", &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			Transport: fake.NewServerFactoryTransport(&server),
 		},
@@ -84,7 +84,7 @@ func TestFakeDisksClientBeginDeleteConcurrent(t *testing.T) {
 			return
 		},
 	}
-	client, err := armcompute.NewDisksClient("fake-subscription-id", azfake.NewTokenCredential(), &arm.ClientOptions{
+	client, err := armcompute.NewDisksClient("fake-subscription-id", &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			Transport: fake.NewDisksServerTransport(&server),
 		},
@@ -124,7 +124,7 @@ func TestFakeDisksClientNewListByResourceGroupPagerConcurrent(t *testing.T) {
 			return
 		},
 	}
-	client, err := armcompute.NewDisksClient("fake-subscription-id", azfake.NewTokenCredential(), &arm.ClientOptions{
+	client, err := armcompute.NewDisksClient("fake-subscription-id", &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			Transport: fake.NewDisksServerTransport(&server),
 		},

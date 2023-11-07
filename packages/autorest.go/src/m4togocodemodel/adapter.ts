@@ -20,7 +20,8 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
 
     const info = new go.Info(session.model.info.title);
-    const options = new go.Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
+    // fakes and tracing spans are on by default for ARM
+    const options = new go.Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', session.model.language.go!.azureARM), await session.getValue('inject-spans', session.model.language.go!.azureARM));
     const azcoreVersion = await session.getValue('azcore-version', '');
     if (azcoreVersion !== '') {
       options.azcoreVersion = azcoreVersion;
