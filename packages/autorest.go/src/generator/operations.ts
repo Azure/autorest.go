@@ -152,7 +152,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
       }
 
       clientText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
-      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName+".${clientName}", moduleVersion, credential, options)\n`;
+      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName, moduleVersion, credential, options)\n`;
       clientText += '\tif err != nil {\n';
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';

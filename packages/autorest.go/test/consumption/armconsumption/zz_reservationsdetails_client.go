@@ -30,7 +30,7 @@ type ReservationsDetailsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewReservationsDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationsDetailsClient, error) {
-	cl, err := arm.NewClient(moduleName+".ReservationsDetailsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

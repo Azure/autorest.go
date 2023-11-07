@@ -52,7 +52,7 @@ export async function generateClientFactory(codeModel: GoCodeModel): Promise<str
     result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
     result += `func NewClientFactory(${allClientParams.map(each => { return `${each.paramName} ${formatParameterTypeName(each)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
-    result += '\t_, err := arm.NewClient(moduleName+".ClientFactory", moduleVersion, credential, options)\n';
+    result += '\t_, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
     result += '\tif err != nil {\n';
     result += '\t\treturn nil, err\n';
     result += '\t}\n';
