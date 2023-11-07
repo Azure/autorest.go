@@ -121,7 +121,7 @@ export async function generateModels(codeModel: GoCodeModel): Promise<ModelsSerD
 }
 
 function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, codeModel: GoCodeModel): Array<ModelDef> {
-  let models = codeModel.models;
+  const models = codeModel.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
     const modelDef = new ModelDef(model.name, model.format, model.description, model.fields);
@@ -382,7 +382,7 @@ function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, re
     unmarshalBody += emitAddlProps('\t', addlProps);
   } else if (options.disallowUnknownFields) {
     unmarshalBody += '\t\tdefault:\n';
-    unmarshalBody += '\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", e, key)\n';
+    unmarshalBody += `\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
   }
   unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t\tif err != nil {\n';

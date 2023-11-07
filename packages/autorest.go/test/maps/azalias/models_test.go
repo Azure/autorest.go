@@ -72,3 +72,9 @@ func TestTimeFormat(t *testing.T) {
 	require.NotNil(t, dest.Interval)
 	require.EqualValues(t, theTime, *dest.Interval)
 }
+
+func TestDisallowedField(t *testing.T) {
+	resp := &AliasesCreateResponse{}
+	data := `{"aliasId":"theAlias","unknownField":"value"}`
+	require.Error(t, json.Unmarshal([]byte(data), &resp))
+}

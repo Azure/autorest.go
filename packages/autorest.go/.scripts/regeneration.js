@@ -10,7 +10,7 @@ const sem = require('./semaphore')(8);
 const swaggerDir = 'packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
 const goMappings = {
-    'additionalpropsgroup': ['additionalProperties.json', '--remove-unreferenced-types'],
+    'additionalpropsgroup': ['additionalProperties.json', '--remove-unreferenced-types', '--disallow-unknown-fields'],
     'arraygroup': ['body-array.json', '--remove-unreferenced-types'],
     'azurereportgroup': ['azure-report.json', '--remove-unreferenced-types'],
     'azurespecialsgroup': ['azure-special-properties.json', '--head-as-boolean', '--remove-unreferenced-types'],
@@ -128,13 +128,10 @@ generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/da
 const acr = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
 generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes');
 
-const acrDisallowUnknownFields = './swagger/specification/containerregistry/data-plane/Azure.ContainerRegistry/stable/2021-07-01/containerregistry.json';
-generate("azacrdisallowunknown", acrDisallowUnknownFields, 'test/acr/azacr-disallow-unknown', '--module="azacr" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes --generate-fakes --disallow-unknown-fields --azcore-version=1.9.0-beta.1');
-
 const machineLearning = './swagger/specification/machinelearningservices/resource-manager';
 generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
-generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval');
+generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields');
 
 function should_generate(name) {
     if (filter !== undefined) {
