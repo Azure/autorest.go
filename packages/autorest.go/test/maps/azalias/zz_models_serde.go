@@ -48,6 +48,8 @@ func (a *AliasesCreateResponse) UnmarshalJSON(data []byte) error {
 		case "lastUpdatedTimestamp":
 			err = unpopulate(val, "LastUpdatedTimestamp", &a.LastUpdatedTimestamp)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", a, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", a, err)
@@ -79,6 +81,8 @@ func (e *ErrorResponse) UnmarshalJSON(data []byte) error {
 		case "message":
 			err = unpopulate(val, "Message", &e.Message)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", e, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", e, err)
@@ -128,6 +132,8 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 		case "type":
 			err = unpopulate(val, "Type", &g.Type)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", g, err)
@@ -173,6 +179,8 @@ func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 		case "setting":
 			err = unpopulate(val, "Setting", &g.Setting)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", g, err)
@@ -204,6 +212,8 @@ func (g *GeoJSONObject) UnmarshalJSON(data []byte) error {
 		case "type":
 			err = unpopulate(val, "Type", &g.Type)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", g, err)
@@ -235,6 +245,8 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 		case "objects":
 			g.Objects, err = unmarshalGeoJSONObjectClassificationMap(val)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", g, err)
@@ -342,6 +354,8 @@ func (g *GeoJSONRecursiveDisciminators) UnmarshalJSON(data []byte) error {
 			}
 			g.Objects = objects
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", g, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", g, err)
@@ -373,6 +387,8 @@ func (l *ListResponse) UnmarshalJSON(data []byte) error {
 		case "nextLink":
 			err = unpopulate(val, "NextLink", &l.NextLink)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", l, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", l, err)
@@ -404,6 +420,8 @@ func (p *PagesOfThings) UnmarshalJSON(data []byte) error {
 		case "values":
 			err = unpopulate(val, "Values", &p.Values)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -431,6 +449,8 @@ func (p *ParameterMetadataValue) UnmarshalJSON(data []byte) error {
 		case "value":
 			err = unpopulate(val, "Value", &p.Value)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -458,6 +478,8 @@ func (p *ParameterValuesValue) UnmarshalJSON(data []byte) error {
 		case "value":
 			err = unpopulate(val, "Value", &p.Value)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -493,6 +515,8 @@ func (p *PolicyAssignmentProperties) UnmarshalJSON(data []byte) error {
 		case "parameters":
 			err = unpopulate(val, "Parameters", &p.Parameters)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)
@@ -532,6 +556,8 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 		case "startTime":
 			err = unpopulateDateTimeRFC3339(val, "StartTime", &s.StartTime)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", s, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", s, err)
@@ -563,6 +589,8 @@ func (t *TypeWithRawJSON) UnmarshalJSON(data []byte) error {
 		case "anything":
 			err = unpopulate(val, "Anything", &t.Anything)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", t, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", t, err)
@@ -602,6 +630,8 @@ func (t *TypeWithSliceOfTimes) UnmarshalJSON(data []byte) error {
 				t.Times = append(t.Times, (time.Time)(au))
 			}
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", t, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", t, err)

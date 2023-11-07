@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel, ModelType, MapType, ModelField, ModelFormat, PolymorphicType, InterfaceType, PossibleType } from '../gocodemodel/gocodemodel';
+import { GoCodeModel, ModelType, MapType, ModelField, ModelFormat, PolymorphicType, InterfaceType, PossibleType, Options } from '../gocodemodel/gocodemodel';
 import { getLiteralValueTypeName, getTypeDeclaration, isMapType, isBytesType, isInterfaceType, isModelType, isPrimitiveType, isPolymorphicType, isSliceType, isTimeType, isLiteralValue } from '../gocodemodel/gocodemodel';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -23,7 +23,7 @@ export async function generateModels(codeModel: GoCodeModel): Promise<ModelsSerD
   let modelText = contentPreamble(codeModel);
 
   // we do model generation first as it can add imports to the imports list
-  const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel.models);
+  const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel);
 
   modelText += modelImports.text();
 
@@ -120,7 +120,8 @@ export async function generateModels(codeModel: GoCodeModel): Promise<ModelsSerD
   };
 }
 
-function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, models: Array<ModelType | PolymorphicType>): Array<ModelDef> {
+function generateModelDefs(modelImports: ImportManager, serdeImports: ImportManager, codeModel: GoCodeModel): Array<ModelDef> {
+  const models = codeModel.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
     const modelDef = new ModelDef(model.name, model.format, model.description, model.fields);
@@ -170,7 +171,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
     }
     if (!model.annotations.omitSerDeMethods) {
       generateJSONMarshaller(model, modelDef, serdeImports);
-      generateJSONUnmarshaller(model, modelDef, serdeImports);
+      generateJSONUnmarshaller(model, modelDef, serdeImports, codeModel.options);
     }
     modelDefs.push(modelDef);
   }
@@ -296,7 +297,7 @@ function generateJSONMarshallerBody(modelType: ModelType | PolymorphicType, rece
   return marshaller;
 }
 
-function generateJSONUnmarshaller(modelType: ModelType | PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
+function generateJSONUnmarshaller(modelType: ModelType | PolymorphicType, modelDef: ModelDef, imports: ImportManager, options: Options) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (!modelDef.Fields) {
@@ -311,12 +312,12 @@ function generateJSONUnmarshaller(modelType: ModelType | PolymorphicType, modelD
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshaller += '\t}\n';
-  unmarshaller += generateJSONUnmarshallerBody(modelType, receiver, imports);
+  unmarshaller += generateJSONUnmarshallerBody(modelType, receiver, imports, options);
   unmarshaller += '}\n\n';
   modelDef.SerDeMethods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, receiver: string, imports: ImportManager): string {
+function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, receiver: string, imports: ImportManager, options: Options): string {
   const emitAddlProps = function (tab: string, addlProps: MapType): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
@@ -379,6 +380,9 @@ function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, re
   if (addlProps) {
     unmarshalBody += '\t\tdefault:\n';
     unmarshalBody += emitAddlProps('\t', addlProps);
+  } else if (options.disallowUnknownFields) {
+    unmarshalBody += '\t\tdefault:\n';
+    unmarshalBody += `\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", ${receiver}, key)\n`;
   }
   unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t\tif err != nil {\n';

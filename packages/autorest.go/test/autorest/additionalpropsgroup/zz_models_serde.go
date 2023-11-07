@@ -100,6 +100,8 @@ func (p *PetAPInProperties) UnmarshalJSON(data []byte) error {
 		case "status":
 			err = unpopulate(val, "Status", &p.Status)
 			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", p, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", p, err)

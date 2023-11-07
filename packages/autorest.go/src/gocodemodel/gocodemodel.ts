@@ -53,6 +53,10 @@ export interface Options {
 
   injectSpans: boolean;
 
+  // disallowUnknownFields indicates whether or not to disallow unknown fields in the JSON unmarshaller.
+  // reproduce the behavior of https://pkg.go.dev/encoding/json#Decoder.DisallowUnknownFields
+  disallowUnknownFields: boolean;
+
   // NOTE: containingModule and module are mutually exclusive
 
   // the module into which the package is being generated
@@ -907,10 +911,11 @@ export class Info implements Info {
 }
 
 export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean) {
+  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean) {
     this.headerText = headerText;
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
+    this.disallowUnknownFields = disallowUnknownFields;
   }
 }
 
