@@ -32,7 +32,7 @@ type CodeContainersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewCodeContainersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*CodeContainersClient, error) {
-	cl, err := arm.NewClient(moduleName+".CodeContainersClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

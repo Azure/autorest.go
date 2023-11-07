@@ -33,7 +33,7 @@ type BgpServiceCommunitiesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*BgpServiceCommunitiesClient, error) {
-	cl, err := arm.NewClient(moduleName+".BgpServiceCommunitiesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

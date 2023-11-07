@@ -34,7 +34,7 @@ type ServiceTagInformationClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewServiceTagInformationClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ServiceTagInformationClient, error) {
-	cl, err := arm.NewClient(moduleName+".ServiceTagInformationClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
