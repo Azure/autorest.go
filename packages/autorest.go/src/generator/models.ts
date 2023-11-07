@@ -381,7 +381,7 @@ function generateJSONUnmarshallerBody(modelType: ModelType | PolymorphicType, re
     unmarshalBody += emitAddlProps('\t', addlProps);
   } else {
     unmarshalBody += '\t\tdefault:\n';
-    unmarshalBody += '\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", key)\n';
+    unmarshalBody += '\t\t\terr = fmt.Errorf("unmarshalling type %T, unknown field %q", e, key)\n';
   }
   unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t\tif err != nil {\n';
