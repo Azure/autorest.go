@@ -44,7 +44,7 @@ func ExampleDiskRestorePointClient_Get() {
 	// 		OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
 	// 		SourceResourceID: to.Ptr("/subscriptions/d2260d06-e00d-422f-8b63-93df551a59ae/resourceGroups/rg0680fb0c-89f1-41b4-96c0-35733a181558/providers/Microsoft.Compute/disks/TestDisk45ceb03433006d1baee0"),
 	// 		SourceUniqueID: to.Ptr("48e058b1-7eea-4968-b532-10a8a1130c13"),
-	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079872+00:00"); return t}()),
+	// 		TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079Z"); return t}()),
 	// 	},
 	// }
 }
@@ -82,7 +82,7 @@ func ExampleDiskRestorePointClient_NewListByRestorePointPager() {
 		// 				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
 		// 				SourceResourceID: to.Ptr("/subscriptions/d2260d06-e00d-422f-8b63-93df551a59ae/resourceGroups/rg0680fb0c-89f1-41b4-96c0-35733a181558/providers/Microsoft.Compute/disks/TestDisk45ceb03433006d1baee0"),
 		// 				SourceUniqueID: to.Ptr("48e058b1-7eea-4968-b532-10a8a1130c13"),
-		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079872+00:00"); return t}()),
+		// 				TimeCreated: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-09-16T04:41:35.079Z"); return t}()),
 		// 			},
 		// 	}},
 		// }

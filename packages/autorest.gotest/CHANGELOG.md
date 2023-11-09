@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Fri, 28 Jul 2023 07:01:15 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Nov 2023 03:29:34 GMT and should not be manually modified.
+
+## 4.7.0
+Thu, 09 Nov 2023 03:29:34 GMT
+
+### Minor changes
+
+- Update to latest codegen and add fake support
 
 ## 4.6.2
 Fri, 28 Jul 2023 07:01:15 GMT

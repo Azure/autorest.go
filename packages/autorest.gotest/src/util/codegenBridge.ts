@@ -117,7 +117,7 @@ export function getSchemaResponse(op: Operation): SchemaResponse | undefined {
 }
 
 // returns the type name with possible * prefix
-function formatParameterTypeName(param: Parameter): string {
+export function formatParameterTypeName(param: Parameter): string {
   const typeName = param.schema.language.go!.name;
   // client params with default values are treated as optional
   if (param.required && !(param.implementation === ImplementationLocation.Client && param.clientDefaultValue)) {
@@ -127,7 +127,7 @@ function formatParameterTypeName(param: Parameter): string {
 }
 
 // returns the complete collection of method parameters
-function getMethodParameters(op: Operation): Array<Parameter> {
+export function getMethodParameters(op: Operation): Array<Parameter> {
   const params = new Array<Parameter>();
   const paramGroups = new Array<GroupProperty>();
   for (const param of values(aggregateParameters(op))) {
@@ -165,6 +165,6 @@ function getMethodParameters(op: Operation): Array<Parameter> {
 }
 
 // returns the response envelope type name
-function getResponseEnvelopeName(op: Operation): string {
+export function getResponseEnvelopeName(op: Operation): string {
   return op.language.go!.responseEnv.language.go!.name;
 }

@@ -95,7 +95,7 @@ export class MockTestDataRender extends BaseDataRender {
       this.skipPropertyFunc = (exampleValue: ExampleValue): boolean => {
         // mock-test will remove all NextLink param
         // skip any null value
-        if (exampleValue.language?.go?.name === 'NextLink' || (exampleValue.rawValue === null && exampleValue.language?.go?.name !== 'ProvisioningState')) {
+        if (exampleValue.language?.go?.name.includes('NextLink') || (exampleValue.rawValue === null && exampleValue.language?.go?.name !== 'ProvisioningState')) {
           return true;
         }
         return false;
@@ -409,7 +409,7 @@ export class MockTestDataRender extends BaseDataRender {
       } else {
         this.context.importManager.add('time');
         const timeFormat = (<DateTimeSchema>schema).format === 'date-time-rfc1123' ? 'time.RFC1123' : 'time.RFC3339Nano';
-        ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, ${this.getStringValue(rawValue)}); return t}()`;
+        ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, ${formatRFC3339Nano(rawValue)}); return t}()`;
       }
     } else if (goType === 'map[string]any' || goType === 'map[string]interface{}') {
       ret = this.objectToString(rawValue);
@@ -524,4 +524,31 @@ export function elementByValueForParam(param: Parameter): boolean {
     return param.protocol.http!.in === 'header' || param.protocol.http!.in === 'path' || param.protocol.http!.in === 'query';
   }
   return false;
+}
+
+function formatRFC3339Nano(t: string): string {
+  const date = new Date(t);
+  
+  function pad(n: number): string {
+      return n < 10 ? '0' + n : String(n);
+  }
+
+  function pad3(n: number): string {
+      if (n < 10) {
+          return '00' + n;
+      } else if (n < 100) {
+          return '0' + n;
+      } else {
+          return String(n);
+      }
+  }
+
+  return Helper.quotedEscapeString(
+      date.getUTCFullYear() + '-' +
+      pad(date.getUTCMonth() + 1) + '-' +
+      pad(date.getUTCDate()) + 'T' +
+      pad(date.getUTCHours()) + ':' +
+      pad(date.getUTCMinutes()) + ':' +
+      pad(date.getUTCSeconds()) + '.' +
+      pad3(date.getUTCMilliseconds()) + 'Z');
 }

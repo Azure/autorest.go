@@ -71,7 +71,7 @@ func ExampleRestorePointsClient_Get() {
 	// 			ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
 	// 	}},
 	// 	ProvisioningDetails: &armcompute.RestorePointProvisioningDetails{
-	// 		CreationTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.8401519+00:00"); return t}()),
+	// 		CreationTime: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-01-27T20:35:05.840Z"); return t}()),
 	// 		StatusCode: to.Ptr[int32](0),
 	// 		StatusMessage: to.Ptr("{\"jobMessage\":\"\",\"messageStr\":\"1/27/2021 8:35:56 PM , snapshotCreator=guestExtension, hostStatusCodePreSnapshot=200, Plugin enable Succeeded (command: Snapshot) Snapshot command completed \",\"snapshotConsistency\":2}"),
 	// 		TotalUsedSizeInBytes: to.Ptr[int64](10835349504),

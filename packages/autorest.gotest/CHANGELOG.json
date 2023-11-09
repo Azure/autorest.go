@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.7.0",
+      "tag": "@autorest/gotest_v4.7.0",
+      "date": "Thu, 09 Nov 2023 03:29:34 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Update to latest codegen and add fake support"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.6.2",
       "tag": "@autorest/gotest_v4.6.2",
       "date": "Fri, 28 Jul 2023 07:01:15 GMT",
