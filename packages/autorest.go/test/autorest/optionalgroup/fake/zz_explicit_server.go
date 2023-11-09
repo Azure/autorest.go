@@ -20,7 +20,6 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
-	"strings"
 )
 
 // ExplicitServer is a fake server for instances of the optionalgroup.ExplicitClient type.
@@ -210,7 +209,7 @@ func (e *ExplicitServerTransport) dispatchPostOptionalArrayHeader(req *http.Requ
 	if e.srv.PostOptionalArrayHeader == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostOptionalArrayHeader not implemented")}
 	}
-	headerParameterParam := strings.Split(getHeaderValue(req.Header, "headerParameter"), ",")
+	headerParameterParam := splitHelper(getHeaderValue(req.Header, "headerParameter"), ",")
 	var options *optionalgroup.ExplicitClientPostOptionalArrayHeaderOptions
 	if len(headerParameterParam) > 0 {
 		options = &optionalgroup.ExplicitClientPostOptionalArrayHeaderOptions{
@@ -529,7 +528,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredArrayHeader(req *http.Requ
 	if e.srv.PostRequiredArrayHeader == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PostRequiredArrayHeader not implemented")}
 	}
-	respr, errRespr := e.srv.PostRequiredArrayHeader(req.Context(), strings.Split(getHeaderValue(req.Header, "headerParameter"), ","), nil)
+	respr, errRespr := e.srv.PostRequiredArrayHeader(req.Context(), splitHelper(getHeaderValue(req.Header, "headerParameter"), ","), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -650,7 +649,7 @@ func (e *ExplicitServerTransport) dispatchPostRequiredIntegerHeader(req *http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := e.srv.PostRequiredIntegerHeader(req.Context(), int32(headerParameterParam), nil)
+	respr, errRespr := e.srv.PostRequiredIntegerHeader(req.Context(), headerParameterParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

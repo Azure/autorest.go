@@ -128,6 +128,11 @@ type ListResponse struct {
 	NextLink *string
 }
 
+type PagesOfThings struct {
+	NextLink *string
+	Values   []TypeWithRawJSON
+}
+
 type ParameterMetadataValue struct {
 	// a JSON object
 	Value any
@@ -174,5 +179,6 @@ type TypeWithRawJSON struct {
 }
 
 type TypeWithSliceOfTimes struct {
-	Times []time.Time
+	Interval *time.Time
+	Times    []time.Time
 }

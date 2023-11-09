@@ -32,7 +32,7 @@ type SharesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SharesClient, error) {
-	cl, err := arm.NewClient(moduleName+".SharesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -72,6 +72,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // Generated from API version 2021-02-01
 func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharesClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
 		return nil, err
@@ -144,6 +145,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 // Generated from API version 2021-02-01
 func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharesClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -196,6 +198,7 @@ func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - options - SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
 func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (SharesClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharesClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return SharesClientGetResponse{}, err
@@ -261,22 +264,16 @@ func (client *SharesClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *SharesClientListByDataBoxEdgeDeviceResponse) (SharesClientListByDataBoxEdgeDeviceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharesClient.NewListByDataBoxEdgeDevicePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return SharesClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return SharesClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return SharesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
@@ -342,6 +339,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 // Generated from API version 2021-02-01
 func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SharesClient.BeginRefresh")
 	req, err := client.refreshCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err

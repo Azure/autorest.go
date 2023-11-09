@@ -32,7 +32,7 @@ type StorageAccountCredentialsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*StorageAccountCredentialsClient, error) {
-	cl, err := arm.NewClient(moduleName+".StorageAccountCredentialsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -72,6 +72,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 // Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
 	if err != nil {
 		return nil, err
@@ -145,6 +146,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 // Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -198,6 +200,7 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 //     method.
 func (client *StorageAccountCredentialsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientGetOptions) (StorageAccountCredentialsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return StorageAccountCredentialsClientGetResponse{}, err
@@ -263,22 +266,16 @@ func (client *StorageAccountCredentialsClient) NewListByDataBoxEdgeDevicePager(d
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},

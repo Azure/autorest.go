@@ -23,7 +23,10 @@ export async function generateResponses(codeModel: GoCodeModel): Promise<string>
 
   for (const respEnv of codeModel.responseEnvelopes) {
     content += emit(respEnv, imports);
-    content += generateUnmarshallerForResponeEnvelope(respEnv, imports);
+    if (codeModel.options.generateFakes) {
+      content += generateMarshaller(respEnv, imports);
+    }
+    content += generateUnmarshaller(respEnv, imports);
   }
   
   text += imports.text();
@@ -31,8 +34,23 @@ export async function generateResponses(codeModel: GoCodeModel): Promise<string>
   return text;
 }
 
+function generateMarshaller(respEnv: ResponseEnvelope, imports: ImportManager): string {
+  let text = '';
+  if (isLROMethod(respEnv.method) && respEnv.result && isPolymorphicResult(respEnv.result)) {
+    // fakes require a custom marshaller for polymorphics results so that the data is in the correct shape.
+    // without it, the response envelope type name is the outer type which is incorrect.
+    imports.add('encoding/json');
+    const receiver = respEnv.name[0].toLowerCase();
+    text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
+    text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
+    // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
+    text += `\treturn json.Marshal(${receiver}.${getTypeDeclaration(respEnv.result.interfaceType)})\n}\n\n`;
+  }
+  return text;
+}
+
 // check if the response envelope requires an unmarshaller
-function generateUnmarshallerForResponeEnvelope(respEnv: ResponseEnvelope, imports: ImportManager): string {
+function generateUnmarshaller(respEnv: ResponseEnvelope, imports: ImportManager): string {
   // if the response envelope contains a discriminated type we need an unmarshaller
   let polymorphicRes: PolymorphicResult | undefined;
   // in addition, if it's an LRO operation that returns a scalar, we will also need one
@@ -49,7 +67,7 @@ function generateUnmarshallerForResponeEnvelope(respEnv: ResponseEnvelope, impor
   }
 
   const receiver = respEnv.name[0].toLowerCase();
-  let unmarshaller = `\t${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
+  let unmarshaller = `${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
   unmarshaller += `func (${receiver} *${respEnv.name}) UnmarshalJSON(data []byte) error {\n`;
 
   // add a custom unmarshaller to the response envelope

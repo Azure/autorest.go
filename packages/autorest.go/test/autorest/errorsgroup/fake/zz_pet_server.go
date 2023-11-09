@@ -88,11 +88,11 @@ func (p *PetServerTransport) dispatchDoSomething(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	whatActionUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("whatAction")])
+	whatActionParam, err := url.PathUnescape(matches[regex.SubexpIndex("whatAction")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.DoSomething(req.Context(), whatActionUnescaped, nil)
+	respr, errRespr := p.srv.DoSomething(req.Context(), whatActionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -117,11 +117,11 @@ func (p *PetServerTransport) dispatchGetPetByID(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	petIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
+	petIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.GetPetByID(req.Context(), petIDUnescaped, nil)
+	respr, errRespr := p.srv.GetPetByID(req.Context(), petIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

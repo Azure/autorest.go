@@ -32,7 +32,7 @@ type NodesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewNodesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NodesClient, error) {
-	cl, err := arm.NewClient(moduleName+".NodesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -56,22 +56,16 @@ func (client *NodesClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *NodesClientListByDataBoxEdgeDeviceResponse) (NodesClientListByDataBoxEdgeDeviceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "NodesClient.NewListByDataBoxEdgeDevicePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return NodesClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return NodesClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return NodesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},

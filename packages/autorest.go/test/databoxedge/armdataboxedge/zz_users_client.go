@@ -32,7 +32,7 @@ type UsersClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*UsersClient, error) {
-	cl, err := arm.NewClient(moduleName+".UsersClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -73,6 +73,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 // Generated from API version 2021-02-01
 func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
 		return nil, err
@@ -145,6 +146,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 // Generated from API version 2021-02-01
 func (client *UsersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -197,6 +199,7 @@ func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName s
 //   - options - UsersClientGetOptions contains the optional parameters for the UsersClient.Get method.
 func (client *UsersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientGetOptions) (UsersClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return UsersClientGetResponse{}, err
@@ -262,22 +265,16 @@ func (client *UsersClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *UsersClientListByDataBoxEdgeDeviceResponse) (UsersClientListByDataBoxEdgeDeviceResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsersClient.NewListByDataBoxEdgeDevicePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return UsersClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return UsersClientListByDataBoxEdgeDeviceResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return UsersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},

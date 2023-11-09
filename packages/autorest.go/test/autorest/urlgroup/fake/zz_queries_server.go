@@ -20,7 +20,6 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -282,7 +281,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVEmpty(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVEmptyOptions{
@@ -313,7 +312,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVNull(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVNullOptions{
@@ -344,7 +343,7 @@ func (q *QueriesServerTransport) dispatchArrayStringCSVValid(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringCSVValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringCSVValidOptions{
@@ -375,7 +374,7 @@ func (q *QueriesServerTransport) dispatchArrayStringNoCollectionFormatEmpty(req 
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, ",")
 	var options *urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringNoCollectionFormatEmptyOptions{
@@ -406,7 +405,7 @@ func (q *QueriesServerTransport) dispatchArrayStringPipesValid(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, "|")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, "|")
 	var options *urlgroup.QueriesClientArrayStringPipesValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringPipesValidOptions{
@@ -437,7 +436,7 @@ func (q *QueriesServerTransport) dispatchArrayStringSsvValid(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, " ")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, " ")
 	var options *urlgroup.QueriesClientArrayStringSsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringSsvValidOptions{
@@ -468,7 +467,7 @@ func (q *QueriesServerTransport) dispatchArrayStringTsvValid(req *http.Request) 
 	if err != nil {
 		return nil, err
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, "\t")
+	arrayQueryParam := splitHelper(arrayQueryUnescaped, "\t")
 	var options *urlgroup.QueriesClientArrayStringTsvValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlgroup.QueriesClientArrayStringTsvValidOptions{

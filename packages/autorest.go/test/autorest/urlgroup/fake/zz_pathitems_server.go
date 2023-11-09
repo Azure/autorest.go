@@ -95,7 +95,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	pathItemStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 		return nil, err
 	}
 	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
-	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetAllWithValues(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
+	respr, errRespr := p.srv.GetAllWithValues(req.Context(), pathItemStringPathParam, localStringPathParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -146,7 +146,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	pathItemStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 		return nil, err
 	}
 	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
-	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalAndLocalQueryNull(req *http.
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetGlobalAndLocalQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
+	respr, errRespr := p.srv.GetGlobalAndLocalQueryNull(req.Context(), pathItemStringPathParam, localStringPathParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -197,7 +197,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	pathItemStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 		return nil, err
 	}
 	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
-	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func (p *PathItemsServerTransport) dispatchGetGlobalQueryNull(req *http.Request)
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetGlobalQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
+	respr, errRespr := p.srv.GetGlobalQueryNull(req.Context(), pathItemStringPathParam, localStringPathParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -248,7 +248,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	qp := req.URL.Query()
-	pathItemStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
+	pathItemStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathItemStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 		return nil, err
 	}
 	pathItemStringQueryParam := getOptional(pathItemStringQueryUnescaped)
-	localStringPathUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
+	localStringPathParam, err := url.PathUnescape(matches[regex.SubexpIndex("localStringPath")])
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +273,7 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 			LocalStringQuery:    localStringQueryParam,
 		}
 	}
-	respr, errRespr := p.srv.GetLocalPathItemQueryNull(req.Context(), pathItemStringPathUnescaped, localStringPathUnescaped, options)
+	respr, errRespr := p.srv.GetLocalPathItemQueryNull(req.Context(), pathItemStringPathParam, localStringPathParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

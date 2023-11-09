@@ -9,9 +9,9 @@
 package fake
 
 import (
-	"io"
 	"net/http"
 	"reflect"
+	"strings"
 )
 
 type nonRetriableError struct {
@@ -22,11 +22,13 @@ func (nonRetriableError) NonRetriable() {
 	// marker method
 }
 
-func getOptional[T any](v T) *T {
-	if reflect.ValueOf(v).IsZero() {
-		return nil
+func contains[T comparable](s []T, v T) bool {
+	for _, vv := range s {
+		if vv == v {
+			return true
+		}
 	}
-	return &v
+	return false
 }
 
 func getHeaderValue(h http.Header, k string) string {
@@ -35,6 +37,13 @@ func getHeaderValue(h http.Header, k string) string {
 		return ""
 	}
 	return v[0]
+}
+
+func getOptional[T any](v T) *T {
+	if reflect.ValueOf(v).IsZero() {
+		return nil
+	}
+	return &v
 }
 
 func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
@@ -56,23 +65,9 @@ func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) 
 	return t, err
 }
 
-func readRequestBody(req *http.Request) ([]byte, error) {
-	if req.Body == nil {
-		return nil, nil
+func splitHelper(s, sep string) []string {
+	if s == "" {
+		return nil
 	}
-	body, err := io.ReadAll(req.Body)
-	if err != nil {
-		return nil, err
-	}
-	req.Body.Close()
-	return body, nil
-}
-
-func contains[T comparable](s []T, v T) bool {
-	for _, vv := range s {
-		if vv == v {
-			return true
-		}
-	}
-	return false
+	return strings.Split(s, sep)
 }

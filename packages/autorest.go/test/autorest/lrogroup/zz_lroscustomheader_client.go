@@ -36,10 +36,14 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[LROsCustomHeaderClientPost202Retry200Response](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsCustomHeaderClientPost202Retry200Response]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsCustomHeaderClientPost202Retry200Response](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LROsCustomHeaderClientPost202Retry200Response]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -101,10 +105,14 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsCustomHeaderClientPostAsyncRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -167,10 +175,14 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[LROsCustomHeaderClientPut201CreatingSucceeded200Response](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsCustomHeaderClientPut201CreatingSucceeded200Response]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsCustomHeaderClientPut201CreatingSucceeded200Response](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LROsCustomHeaderClientPut201CreatingSucceeded200Response]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
@@ -230,10 +242,14 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[LROsCustomHeaderClientPutAsyncRetrySucceededResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 

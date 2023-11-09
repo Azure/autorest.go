@@ -30,7 +30,7 @@ type BalancesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*BalancesClient, error) {
-	cl, err := arm.NewClient(moduleName+".BalancesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}

@@ -32,7 +32,7 @@ type AddonsClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AddonsClient, error) {
-	cl, err := arm.NewClient(moduleName+".AddonsClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -73,6 +73,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 // Generated from API version 2021-02-01
 func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
 		return nil, err
@@ -150,6 +151,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 // Generated from API version 2021-02-01
 func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -207,6 +209,7 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 //   - options - AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
 func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (AddonsClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
 		return AddonsClientGetResponse{}, err
@@ -276,22 +279,16 @@ func (client *AddonsClient) NewListByRolePager(deviceName string, roleName strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AddonsClientListByRoleResponse) (AddonsClientListByRoleResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByRoleCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AddonsClient.NewListByRolePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByRoleCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return AddonsClientListByRoleResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return AddonsClientListByRoleResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return AddonsClientListByRoleResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByRoleHandleResponse(resp)
 		},

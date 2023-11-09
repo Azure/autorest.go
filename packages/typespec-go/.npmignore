@@ -1,0 +1,9 @@
+.rush/
+.scripts/
+.vscode/
+src/
+test/
+.eslint*
+*.log
+jest.config.js
+tsconfig.json

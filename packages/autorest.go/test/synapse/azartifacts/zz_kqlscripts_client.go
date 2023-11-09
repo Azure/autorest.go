@@ -33,22 +33,15 @@ func (client *KqlScriptsClient) NewGetAllPager(options *KqlScriptsClientGetAllOp
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *KqlScriptsClientGetAllResponse) (KqlScriptsClientGetAllResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getAllCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getAllCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return KqlScriptsClientGetAllResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return KqlScriptsClientGetAllResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return KqlScriptsClientGetAllResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getAllHandleResponse(resp)
 		},

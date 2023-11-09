@@ -956,22 +956,15 @@ func (client *ContainerClient) NewListBlobFlatSegmentPager(containerName string,
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobFlatSegmentResponse) (ContainerClientListBlobFlatSegmentResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listBlobFlatSegmentCreateRequest(ctx, containerName, restype, comp, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextMarker
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listBlobFlatSegmentCreateRequest(ctx, containerName, restype, comp, options)
+			}, nil)
 			if err != nil {
 				return ContainerClientListBlobFlatSegmentResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ContainerClientListBlobFlatSegmentResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ContainerClientListBlobFlatSegmentResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listBlobFlatSegmentHandleResponse(resp)
 		},
@@ -1062,22 +1055,15 @@ func (client *ContainerClient) NewListBlobHierarchySegmentPager(containerName st
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ContainerClientListBlobHierarchySegmentResponse) (ContainerClientListBlobHierarchySegmentResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listBlobHierarchySegmentCreateRequest(ctx, containerName, restype, comp, delimiter, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextMarker
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listBlobHierarchySegmentCreateRequest(ctx, containerName, restype, comp, delimiter, options)
+			}, nil)
 			if err != nil {
 				return ContainerClientListBlobHierarchySegmentResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ContainerClientListBlobHierarchySegmentResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ContainerClientListBlobHierarchySegmentResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listBlobHierarchySegmentHandleResponse(resp)
 		},

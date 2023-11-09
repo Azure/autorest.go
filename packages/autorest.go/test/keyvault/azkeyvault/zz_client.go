@@ -1316,22 +1316,15 @@ func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateIssuersResponse) (ClientGetCertificateIssuersResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetCertificateIssuersResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetCertificateIssuersResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetCertificateIssuersResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getCertificateIssuersHandleResponse(resp)
 		},
@@ -1491,22 +1484,15 @@ func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certif
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificateVersionsResponse) (ClientGetCertificateVersionsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
+			}, nil)
 			if err != nil {
 				return ClientGetCertificateVersionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetCertificateVersionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetCertificateVersionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getCertificateVersionsHandleResponse(resp)
 		},
@@ -1557,22 +1543,15 @@ func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *Clie
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetCertificatesResponse) (ClientGetCertificatesResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetCertificatesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetCertificatesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetCertificatesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getCertificatesHandleResponse(resp)
 		},
@@ -1681,22 +1660,15 @@ func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, option
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedCertificatesResponse) (ClientGetDeletedCertificatesResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetDeletedCertificatesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetDeletedCertificatesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetDeletedCertificatesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDeletedCertificatesHandleResponse(resp)
 		},
@@ -1805,22 +1777,15 @@ func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *Clien
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedKeysResponse) (ClientGetDeletedKeysResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetDeletedKeysResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetDeletedKeysResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetDeletedKeysResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDeletedKeysHandleResponse(resp)
 		},
@@ -1930,22 +1895,15 @@ func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, stor
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSasDefinitionsResponse) (ClientGetDeletedSasDefinitionsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+			}, nil)
 			if err != nil {
 				return ClientGetDeletedSasDefinitionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetDeletedSasDefinitionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetDeletedSasDefinitionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDeletedSasDefinitionsHandleResponse(resp)
 		},
@@ -2051,22 +2009,15 @@ func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *Cl
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedSecretsResponse) (ClientGetDeletedSecretsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetDeletedSecretsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetDeletedSecretsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetDeletedSecretsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDeletedSecretsHandleResponse(resp)
 		},
@@ -2170,22 +2121,15 @@ func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, opt
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetDeletedStorageAccountsResponse) (ClientGetDeletedStorageAccountsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetDeletedStorageAccountsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetDeletedStorageAccountsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetDeletedStorageAccountsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getDeletedStorageAccountsHandleResponse(resp)
 		},
@@ -2294,22 +2238,15 @@ func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeyVersionsResponse) (ClientGetKeyVersionsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
+			}, nil)
 			if err != nil {
 				return ClientGetKeyVersionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetKeyVersionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetKeyVersionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getKeyVersionsHandleResponse(resp)
 		},
@@ -2362,22 +2299,15 @@ func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKey
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetKeysResponse) (ClientGetKeysResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getKeysCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetKeysResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetKeysResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetKeysResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getKeysHandleResponse(resp)
 		},
@@ -2485,22 +2415,15 @@ func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAcco
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSasDefinitionsResponse) (ClientGetSasDefinitionsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+			}, nil)
 			if err != nil {
 				return ClientGetSasDefinitionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetSasDefinitionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetSasDefinitionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getSasDefinitionsHandleResponse(resp)
 		},
@@ -2613,22 +2536,15 @@ func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretVersionsResponse) (ClientGetSecretVersionsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
+			}, nil)
 			if err != nil {
 				return ClientGetSecretVersionsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetSecretVersionsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetSecretVersionsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getSecretVersionsHandleResponse(resp)
 		},
@@ -2680,22 +2596,15 @@ func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGet
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetSecretsResponse) (ClientGetSecretsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetSecretsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetSecretsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetSecretsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getSecretsHandleResponse(resp)
 		},
@@ -2796,22 +2705,15 @@ func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *C
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientGetStorageAccountsResponse) (ClientGetStorageAccountsResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+			}, nil)
 			if err != nil {
 				return ClientGetStorageAccountsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientGetStorageAccountsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientGetStorageAccountsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getStorageAccountsHandleResponse(resp)
 		},

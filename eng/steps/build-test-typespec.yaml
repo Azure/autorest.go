@@ -1,0 +1,9 @@
+steps:
+  - script: |
+      rush rebuild -v
+    displayName: "Build Emitter Sources"
+
+  - script: |
+      npm run eslint
+    displayName: "Run Lint"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go

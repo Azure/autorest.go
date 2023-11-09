@@ -476,7 +476,7 @@ func (h *HeaderServerTransport) dispatchParamFloat(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := h.srv.ParamFloat(req.Context(), getHeaderValue(req.Header, "scenario"), float32(valueParam), nil)
+	respr, errRespr := h.srv.ParamFloat(req.Context(), getHeaderValue(req.Header, "scenario"), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -505,7 +505,7 @@ func (h *HeaderServerTransport) dispatchParamInteger(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := h.srv.ParamInteger(req.Context(), getHeaderValue(req.Header, "scenario"), int32(valueParam), nil)
+	respr, errRespr := h.srv.ParamInteger(req.Context(), getHeaderValue(req.Header, "scenario"), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

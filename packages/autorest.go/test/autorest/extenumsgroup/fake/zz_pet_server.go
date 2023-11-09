@@ -112,11 +112,11 @@ func (p *PetServerTransport) dispatchGetByPetID(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	petIDUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
+	petIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("petId")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.GetByPetID(req.Context(), petIDUnescaped, nil)
+	respr, errRespr := p.srv.GetByPetID(req.Context(), petIDParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

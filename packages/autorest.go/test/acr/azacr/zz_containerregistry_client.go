@@ -432,22 +432,15 @@ func (client *ContainerRegistryClient) NewGetManifestsPager(name string, options
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetManifestsResponse) (ContainerRegistryClientGetManifestsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetManifestsPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getManifestsCreateRequest(ctx, name, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.Link)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.Link
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getManifestsCreateRequest(ctx, name, options)
+			}, nil)
 			if err != nil {
 				return ContainerRegistryClientGetManifestsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ContainerRegistryClientGetManifestsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ContainerRegistryClientGetManifestsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getManifestsHandleResponse(resp)
 		},
@@ -562,22 +555,15 @@ func (client *ContainerRegistryClient) NewGetRepositoriesPager(options *Containe
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetRepositoriesResponse) (ContainerRegistryClientGetRepositoriesResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetRepositoriesPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getRepositoriesCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.Link)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.Link
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getRepositoriesCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return ContainerRegistryClientGetRepositoriesResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ContainerRegistryClientGetRepositoriesResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ContainerRegistryClientGetRepositoriesResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getRepositoriesHandleResponse(resp)
 		},
@@ -691,22 +677,15 @@ func (client *ContainerRegistryClient) NewGetTagsPager(name string, options *Con
 		},
 		Fetcher: func(ctx context.Context, page *ContainerRegistryClientGetTagsResponse) (ContainerRegistryClientGetTagsResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ContainerRegistryClient.NewGetTagsPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.getTagsCreateRequest(ctx, name, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.Link)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.Link
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getTagsCreateRequest(ctx, name, options)
+			}, nil)
 			if err != nil {
 				return ContainerRegistryClientGetTagsResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ContainerRegistryClientGetTagsResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ContainerRegistryClientGetTagsResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getTagsHandleResponse(resp)
 		},

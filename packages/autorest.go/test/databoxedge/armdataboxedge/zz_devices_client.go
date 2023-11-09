@@ -32,7 +32,7 @@ type DevicesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DevicesClient, error) {
-	cl, err := arm.NewClient(moduleName+".DevicesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +53,7 @@ func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, 
 //   - options - DevicesClientCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
 func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesClientCreateOrUpdateOptions) (DevicesClientCreateOrUpdateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.CreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, dataBoxEdgeDevice, options)
 	if err != nil {
 		return DevicesClientCreateOrUpdateResponse{}, err
@@ -132,6 +133,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 // Generated from API version 2021-02-01
 func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.BeginCreateOrUpdateSecuritySettings")
 	req, err := client.createOrUpdateSecuritySettingsCreateRequest(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
 		return nil, err
@@ -199,6 +201,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 // Generated from API version 2021-02-01
 func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -264,6 +267,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 // Generated from API version 2021-02-01
 func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.BeginDownloadUpdates")
 	req, err := client.downloadUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -312,6 +316,7 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 //     method.
 func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGenerateCertificateOptions) (DevicesClientGenerateCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.GenerateCertificate")
 	req, err := client.generateCertificateCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DevicesClientGenerateCertificateResponse{}, err
@@ -369,6 +374,7 @@ func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Respon
 //   - options - DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
 func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetOptions) (DevicesClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DevicesClientGetResponse{}, err
@@ -427,6 +433,7 @@ func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesClie
 //     method.
 func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetExtendedInformationOptions) (DevicesClientGetExtendedInformationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.GetExtendedInformation")
 	req, err := client.getExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DevicesClientGetExtendedInformationResponse{}, err
@@ -485,6 +492,7 @@ func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Res
 //     method.
 func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetNetworkSettingsOptions) (DevicesClientGetNetworkSettingsResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.GetNetworkSettings")
 	req, err := client.getNetworkSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DevicesClientGetNetworkSettingsResponse{}, err
@@ -544,6 +552,7 @@ func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Respons
 //     method.
 func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetUpdateSummaryOptions) (DevicesClientGetUpdateSummaryResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.GetUpdateSummary")
 	req, err := client.getUpdateSummaryCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return DevicesClientGetUpdateSummaryResponse{}, err
@@ -619,6 +628,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 // Generated from API version 2021-02-01
 func (client *DevicesClient) installUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.BeginInstallUpdates")
 	req, err := client.installUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -669,22 +679,16 @@ func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName strin
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DevicesClientListByResourceGroupResponse) (DevicesClientListByResourceGroupResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.NewListByResourceGroupPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return DevicesClientListByResourceGroupResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return DevicesClientListByResourceGroupResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return DevicesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -736,22 +740,16 @@ func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientLi
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *DevicesClientListBySubscriptionResponse) (DevicesClientListBySubscriptionResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listBySubscriptionCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.NewListBySubscriptionPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listBySubscriptionCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return DevicesClientListBySubscriptionResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return DevicesClientListBySubscriptionResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return DevicesClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
@@ -815,6 +813,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 // Generated from API version 2021-02-01
 func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.BeginScanForUpdates")
 	req, err := client.scanForUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -863,6 +862,7 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 //   - options - DevicesClientUpdateOptions contains the optional parameters for the DevicesClient.Update method.
 func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesClientUpdateOptions) (DevicesClientUpdateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.Update")
 	req, err := client.updateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
 		return DevicesClientUpdateResponse{}, err
@@ -925,6 +925,7 @@ func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesC
 //     method.
 func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesClientUpdateExtendedInformationOptions) (DevicesClientUpdateExtendedInformationResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.UpdateExtendedInformation")
 	req, err := client.updateExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
 		return DevicesClientUpdateExtendedInformationResponse{}, err
@@ -987,6 +988,7 @@ func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.
 //     method.
 func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, options *DevicesClientUploadCertificateOptions) (DevicesClientUploadCertificateResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "DevicesClient.UploadCertificate")
 	req, err := client.uploadCertificateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
 		return DevicesClientUploadCertificateResponse{}, err

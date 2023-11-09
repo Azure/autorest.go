@@ -20,22 +20,26 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
+	"time"
 )
 
 // Server is a fake server for instances of the azalias.Client type.
 type Server struct {
 	// Create is the fake for method Client.Create
 	// HTTP status codes to indicate success: http.StatusCreated
-	Create func(ctx context.Context, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder)
+	Create func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
-	GetScript func(ctx context.Context, props azalias.GeoJSONObjectNamedCollection, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
+	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, someGroup azalias.SomeGroup, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method Client.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(options *azalias.ClientListOptions) (resp azfake.PagerResponder[azalias.ClientListResponse])
+	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ClientListOptions) (resp azfake.PagerResponder[azalias.ClientListResponse])
+
+	// BeginListLRO is the fake for method Client.BeginListLRO
+	// HTTP status codes to indicate success: http.StatusAccepted
+	BeginListLRO func(ctx context.Context, options *azalias.ClientBeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]], errResp azfake.ErrorResponder)
 
 	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -57,6 +61,7 @@ func NewServerTransport(srv *Server) *ServerTransport {
 	return &ServerTransport{
 		srv:                           srv,
 		newListPager:                  newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
+		beginListLRO:                  newTracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]](),
 		newListWithSharedNextOnePager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]](),
 		newListWithSharedNextTwoPager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]](),
 	}
@@ -67,6 +72,7 @@ func NewServerTransport(srv *Server) *ServerTransport {
 type ServerTransport struct {
 	srv                           *Server
 	newListPager                  *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
+	beginListLRO                  *tracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]]
 	newListWithSharedNextOnePager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]]
 	newListWithSharedNextTwoPager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]]
 }
@@ -89,6 +95,8 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 		resp, err = s.dispatchGetScript(req)
 	case "Client.NewListPager":
 		resp, err = s.dispatchNewListPager(req)
+	case "Client.BeginListLRO":
+		resp, err = s.dispatchBeginListLRO(req)
 	case "Client.NewListWithSharedNextOnePager":
 		resp, err = s.dispatchNewListWithSharedNextOnePager(req)
 	case "Client.NewListWithSharedNextTwoPager":
@@ -135,29 +143,105 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
+	headerBoolsElements := splitHelper(getHeaderValue(req.Header, "headerBools"), ",")
+	headerBoolsParam := make([]bool, len(headerBoolsElements))
+	for i := 0; i < len(headerBoolsElements); i++ {
+		parsedBool, parseErr := strconv.ParseBool(headerBoolsElements[i])
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		headerBoolsParam[i] = bool(parsedBool)
+	}
+	stringQueryParam, err := url.QueryUnescape(qp.Get("stringQuery"))
 	if err != nil {
 		return nil, err
 	}
-	groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
-	groupByParam := make([]azalias.SomethingCount, len(groupByUnescapedElements))
-	for i := 0; i < len(groupByUnescapedElements); i++ {
-		var parsedInt int64
-		parsedInt, err = strconv.ParseInt(groupByUnescapedElements[i], 10, 32)
-		if err != nil {
-			return nil, err
+	boolHeaderEnumParam, err := parseWithCast(getHeaderValue(req.Header, "boolHeaderEnum"), func(v string) (azalias.BooleanEnum, error) {
+		p, parseErr := strconv.ParseBool(v)
+		if parseErr != nil {
+			return false, parseErr
 		}
-		groupByParam[i] = azalias.SomethingCount(parsedInt)
+		return azalias.BooleanEnum(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	boolHeaderEnum1Unescaped, err := url.QueryUnescape(qp.Get("boolHeaderEnum"))
+	if err != nil {
+		return nil, err
+	}
+	boolHeaderEnum1Param, err := parseOptional(boolHeaderEnum1Unescaped, func(v string) (azalias.BooleanEnum, error) {
+		p, parseErr := strconv.ParseBool(v)
+		if parseErr != nil {
+			return false, parseErr
+		}
+		return azalias.BooleanEnum(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	optionalUnixTimeParam, err := parseOptional(getHeaderValue(req.Header, "optionalUnixTime"), func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	unixTimeQueryUnescaped, err := url.QueryUnescape(qp.Get("unixTimeQuery"))
+	if err != nil {
+		return nil, err
+	}
+	unixTimeQueryParam, err := parseWithCast(unixTimeQueryUnescaped, func(v string) (time.Time, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 64)
+		if parseErr != nil {
+			return time.Time{}, parseErr
+		}
+		return time.Unix(p, 0).UTC(), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	groupByEscaped := qp["groupBy"]
+	groupByUnescaped := make([]string, len(groupByEscaped))
+	for i, v := range groupByEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		groupByUnescaped[i] = u
+	}
+	groupByParam := make([]azalias.SomethingCount, len(groupByUnescaped))
+	for i := 0; i < len(groupByUnescaped); i++ {
+		parsedInt32, parseErr := strconv.ParseInt(groupByUnescaped[i], 10, 32)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		groupByParam[i] = azalias.SomethingCount(parsedInt32)
+	}
+	queryEnumParam, err := parseWithCast(qp.Get("queryEnum"), func(v string) (azalias.SomeEnum, error) {
+		p, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return "", unescapeErr
+		}
+		return azalias.SomeEnum(p), nil
+	})
+	if err != nil {
+		return nil, err
 	}
 	var options *azalias.ClientCreateOptions
-	if creatorIDParam != nil || assignedIDParam != nil || len(groupByParam) > 0 {
+	if creatorIDParam != nil || assignedIDParam != nil || boolHeaderEnum1Param != nil || optionalUnixTimeParam != nil || len(groupByParam) > 0 {
 		options = &azalias.ClientCreateOptions{
-			CreatorID:  creatorIDParam,
-			AssignedID: assignedIDParam,
-			GroupBy:    groupByParam,
+			CreatorID:        creatorIDParam,
+			AssignedID:       assignedIDParam,
+			BoolHeaderEnum1:  boolHeaderEnum1Param,
+			OptionalUnixTime: optionalUnixTimeParam,
+			GroupBy:          groupByParam,
 		}
 	}
-	respr, errRespr := s.srv.Create(req.Context(), options)
+	respr, errRespr := s.srv.Create(req.Context(), headerBoolsParam, stringQueryParam, boolHeaderEnumParam, unixTimeQueryParam, azalias.SomeEnum(getHeaderValue(req.Header, "headerEnum")), queryEnumParam, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -179,11 +263,95 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	if s.srv.GetScript == nil {
 		return nil, &nonRetriableError{errors.New("fake for method GetScript not implemented")}
 	}
+	qp := req.URL.Query()
 	body, err := server.UnmarshalRequestAsJSON[azalias.GeoJSONObjectNamedCollection](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.GetScript(req.Context(), body, nil)
+	headerCountsElements := splitHelper(getHeaderValue(req.Header, "headerCounts"), ",")
+	headerCountsParam := make([]int32, len(headerCountsElements))
+	for i := 0; i < len(headerCountsElements); i++ {
+		parsedInt32, parseErr := strconv.ParseInt(headerCountsElements[i], 10, 32)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		headerCountsParam[i] = int32(parsedInt32)
+	}
+	queryCountsUnescaped, err := url.QueryUnescape(qp.Get("queryCounts"))
+	if err != nil {
+		return nil, err
+	}
+	queryCountsElements := splitHelper(queryCountsUnescaped, ",")
+	queryCountsParam := make([]int64, len(queryCountsElements))
+	for i := 0; i < len(queryCountsElements); i++ {
+		parsedInt64, parseErr := strconv.ParseInt(queryCountsElements[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		queryCountsParam[i] = int64(parsedInt64)
+	}
+	explodedStuffEscaped := qp["explodedStuff"]
+	explodedStuffUnescaped := make([]string, len(explodedStuffEscaped))
+	for i, v := range explodedStuffEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		explodedStuffUnescaped[i] = u
+	}
+	explodedStuffParam := make([]int64, len(explodedStuffUnescaped))
+	for i := 0; i < len(explodedStuffUnescaped); i++ {
+		parsedInt64, parseErr := strconv.ParseInt(explodedStuffUnescaped[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		explodedStuffParam[i] = int64(parsedInt64)
+	}
+	explodedStringStuffEscaped := qp["explodedStringStuff"]
+	explodedStringStuffParam := make([]string, len(explodedStringStuffEscaped))
+	for i, v := range explodedStringStuffEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		explodedStringStuffParam[i] = u
+	}
+	optionalExplodedStuffEscaped := qp["optionalExplodedStuff"]
+	optionalExplodedStuffParam := make([]string, len(optionalExplodedStuffEscaped))
+	for i, v := range optionalExplodedStuffEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		optionalExplodedStuffParam[i] = u
+	}
+	numericHeaderParam, err := parseWithCast(getHeaderValue(req.Header, "numericHeader"), func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
+		}
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	headerTimeParam, err := time.Parse("15:04:05.999999999Z07:00", getHeaderValue(req.Header, "headerTime"))
+	if err != nil {
+		return nil, err
+	}
+	someGroup := azalias.SomeGroup{
+		HeaderStrings: splitHelper(getHeaderValue(req.Header, "headerStrings"), ","),
+	}
+	explodedGroup := azalias.ExplodedGroup{
+		ExplodedStuff: explodedStuffParam,
+	}
+	var options *azalias.ClientGetScriptOptions
+	if len(optionalExplodedStuffParam) > 0 {
+		options = &azalias.ClientGetScriptOptions{
+			OptionalExplodedStuff: optionalExplodedStuffParam,
+		}
+	}
+	respr, errRespr := s.srv.GetScript(req.Context(), headerCountsParam, queryCountsParam, explodedStringStuffParam, numericHeaderParam, headerTimeParam, body, someGroup, explodedGroup, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -205,22 +373,78 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	newListPager := s.newListPager.get(req)
 	if newListPager == nil {
 		qp := req.URL.Query()
-		groupByUnescaped, err := url.QueryUnescape(qp.Get("groupBy"))
+		headerEnumsElements := splitHelper(getHeaderValue(req.Header, "headerEnums"), ",")
+		headerEnumsParam := make([]azalias.IntEnum, len(headerEnumsElements))
+		for i := 0; i < len(headerEnumsElements); i++ {
+			parsedInt32, parseErr := strconv.ParseInt(headerEnumsElements[i], 10, 32)
+			if parseErr != nil {
+				return nil, parseErr
+			}
+			headerEnumsParam[i] = azalias.IntEnum(parsedInt32)
+		}
+		queryEnumsEscaped := qp["queryEnums"]
+		queryEnumsUnescaped := make([]string, len(queryEnumsEscaped))
+		for i, v := range queryEnumsEscaped {
+			u, unescapeErr := url.QueryUnescape(v)
+			if unescapeErr != nil {
+				return nil, unescapeErr
+			}
+			queryEnumsUnescaped[i] = u
+		}
+		queryEnumsParam := make([]azalias.IntEnum, len(queryEnumsUnescaped))
+		for i := 0; i < len(queryEnumsUnescaped); i++ {
+			parsedInt32, parseErr := strconv.ParseInt(queryEnumsUnescaped[i], 10, 32)
+			if parseErr != nil {
+				return nil, parseErr
+			}
+			queryEnumsParam[i] = azalias.IntEnum(parsedInt32)
+		}
+		headerEnumParam, err := parseOptional(getHeaderValue(req.Header, "headerEnum"), func(v string) (azalias.IntEnum, error) {
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
+			}
+			return azalias.IntEnum(p), nil
+		})
 		if err != nil {
 			return nil, err
 		}
-		groupByUnescapedElements := strings.Split(groupByUnescaped, ",")
-		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescapedElements))
-		for i := 0; i < len(groupByUnescapedElements); i++ {
-			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescapedElements[i])
+		queryEnumUnescaped, err := url.QueryUnescape(qp.Get("queryEnum"))
+		if err != nil {
+			return nil, err
+		}
+		queryEnumParam, err := parseWithCast(queryEnumUnescaped, func(v string) (azalias.IntEnum, error) {
+			p, parseErr := strconv.ParseInt(v, 10, 32)
+			if parseErr != nil {
+				return 0, parseErr
+			}
+			return azalias.IntEnum(p), nil
+		})
+		if err != nil {
+			return nil, err
+		}
+		groupByEscaped := qp["groupBy"]
+		groupByUnescaped := make([]string, len(groupByEscaped))
+		for i, v := range groupByEscaped {
+			u, unescapeErr := url.QueryUnescape(v)
+			if unescapeErr != nil {
+				return nil, unescapeErr
+			}
+			groupByUnescaped[i] = u
+		}
+		groupByParam := make([]azalias.LogMetricsGroupBy, len(groupByUnescaped))
+		for i := 0; i < len(groupByUnescaped); i++ {
+			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescaped[i])
 		}
 		var options *azalias.ClientListOptions
-		if len(groupByParam) > 0 {
+		if len(queryEnumsParam) > 0 || headerEnumParam != nil || len(groupByParam) > 0 {
 			options = &azalias.ClientListOptions{
-				GroupBy: groupByParam,
+				QueryEnums: queryEnumsParam,
+				HeaderEnum: headerEnumParam,
+				GroupBy:    groupByParam,
 			}
 		}
-		resp := s.srv.NewListPager(options)
+		resp := s.srv.NewListPager(headerEnumsParam, queryEnumParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *azalias.ClientListResponse, createLink func() string) {
@@ -238,6 +462,36 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 	if !server.PagerResponderMore(newListPager) {
 		s.newListPager.remove(req)
 	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchBeginListLRO(req *http.Request) (*http.Response, error) {
+	if s.srv.BeginListLRO == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginListLRO not implemented")}
+	}
+	beginListLRO := s.beginListLRO.get(req)
+	if beginListLRO == nil {
+		respr, errRespr := s.srv.BeginListLRO(req.Context(), nil)
+		if respErr := server.GetError(errRespr, req); respErr != nil {
+			return nil, respErr
+		}
+		beginListLRO = &respr
+		s.beginListLRO.add(req, beginListLRO)
+	}
+
+	resp, err := server.PollerResponderNext(beginListLRO, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		s.beginListLRO.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginListLRO) {
+		s.beginListLRO.remove(req)
+	}
+
 	return resp, nil
 }
 
@@ -312,10 +566,10 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	thingsUnescapedElements := strings.Split(thingsUnescaped, ",")
-	thingsParam := make([]azalias.Things, len(thingsUnescapedElements))
-	for i := 0; i < len(thingsUnescapedElements); i++ {
-		thingsParam[i] = azalias.Things(thingsUnescapedElements[i])
+	thingsElements := splitHelper(thingsUnescaped, ",")
+	thingsParam := make([]azalias.Things, len(thingsElements))
+	for i := 0; i < len(thingsElements); i++ {
+		thingsParam[i] = azalias.Things(thingsElements[i])
 	}
 	intervalUnescaped, err := url.QueryUnescape(qp.Get("interval"))
 	if err != nil {

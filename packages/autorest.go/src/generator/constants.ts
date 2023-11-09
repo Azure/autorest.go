@@ -24,7 +24,8 @@ export async function generateConstants(codeModel: GoCodeModel): Promise<string>
       throw new Error('--module-version is a required parameter when --azure-arm is set');
     }
     text += 'const (\n';
-    text += `\tmoduleName = "${codeModel.packageName}"\n`;
+    // strip off any major version suffix
+    text += `\tmoduleName = "${codeModel.options.module?.replace(/\/v\d+$/, '')}"\n`;
     text += `\tmoduleVersion = "v${codeModel.options.moduleVersion}"\n`;
     text += ')\n\n';
   }

@@ -32,7 +32,7 @@ type MonitoringConfigClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*MonitoringConfigClient, error) {
-	cl, err := arm.NewClient(moduleName+".MonitoringConfigClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -72,6 +72,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 // Generated from API version 2021-02-01
 func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MonitoringConfigClient.BeginCreateOrUpdate")
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
 		return nil, err
@@ -145,6 +146,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 // Generated from API version 2021-02-01
 func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MonitoringConfigClient.BeginDelete")
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -197,6 +199,7 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 //   - options - MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
 func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (MonitoringConfigClientGetResponse, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MonitoringConfigClient.Get")
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
 		return MonitoringConfigClientGetResponse{}, err
@@ -263,22 +266,16 @@ func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName s
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *MonitoringConfigClientListResponse) (MonitoringConfigClientListResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "MonitoringConfigClient.NewListPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
+			}, nil)
 			if err != nil {
 				return MonitoringConfigClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return MonitoringConfigClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return MonitoringConfigClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},

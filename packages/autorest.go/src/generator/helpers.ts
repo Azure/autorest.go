@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter } from '../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isSliceType, isTimeType } from '../gocodemodel/gocodemodel';
+import { CollectionFormat, ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter, isFormBodyCollectionParameter, isHeaderCollectionParameter, isPathCollectionParameter, isQueryCollectionParameter } from '../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isTimeType } from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports';
@@ -15,6 +15,7 @@ export const commentLength = 120;
 export const dateFormat = '2006-01-02';
 export const datetimeRFC3339Format = 'time.RFC3339Nano';
 export const datetimeRFC1123Format = 'time.RFC1123';
+export const timeRFC3339Format = '15:04:05.999999999Z07:00';
 
 // returns the common source-file preamble (license comment, package name etc)
 export function contentPreamble(codeModel: GoCodeModel, packageName?: string): string {
@@ -206,11 +207,11 @@ export function getParamName(param: Parameter): string {
 
 export function formatParamValue(param: FormBodyParameter | HeaderParameter | PathParameter | QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
-  if (isSliceType(param.type)) {
-    let separator = ',';
-    if (param.delimiter) {
-      separator = param.delimiter;
+  if (isFormBodyCollectionParameter(param) || isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
+    if (param.collectionFormat === 'multi') {
+      throw new Error('multi collection format should have been previously handled');
     }
+    const separator = getDelimiterForCollectionFormat(param.collectionFormat);
     if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
       imports.add('strings');
       return `strings.Join(${paramName}, "${separator}")`;
@@ -219,13 +220,30 @@ export function formatParamValue(param: FormBodyParameter | HeaderParameter | Pa
       imports.add('strings');
       return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
     }
-  } else if (isTimeType(param.type)) {
+  } else if (isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+    // for most time types we call methods on time.Time which is why we remove the dereference.
+    // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!isRequiredParameter(param) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
     }
   }
   return formatValue(paramName, param.type, imports);
+}
+
+export function getDelimiterForCollectionFormat(cf: CollectionFormat): string {
+  switch (cf) {
+    case 'csv':
+      return ',';
+    case 'pipes':
+      return '|';
+    case 'ssv':
+      return ' ';
+    case 'tsv':
+      return '\\t';
+    default:
+      throw new Error(`unhandled CollectionFormat ${cf}`);
+  }
 }
 
 export function formatValue(paramName: string, type: PossibleType, imports: ImportManager, defef?: boolean): string {
@@ -269,16 +287,22 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       return `${paramName}.Format("${dateFormat}")`;
     } else if (type.dateTimeFormat === 'timeUnix') {
       return `timeUnix(${star}${paramName}).String()`;
+    } else if (type.dateTimeFormat === 'timeRFC3339') {
+      return `timeRFC3339(${star}${paramName}).String()`;
     } else {
       imports.add('time');
       let format = datetimeRFC3339Format;
-      if (type.dateTimeFormat === 'timeRFC1123') {
+      if (type.dateTimeFormat === 'dateTimeRFC1123') {
         format = datetimeRFC1123Format;
       }
       return `${paramName}.Format(${format})`;
     }
   } else if (isConstantType(type)) {
-    return `string(${star}${paramName})`;
+    if (type.type === 'string') {
+      return `string(${star}${paramName})`;
+    }
+    imports.add('fmt');
+    return `fmt.Sprintf("%v", ${star}${paramName})`;
   }
   return `${star}${paramName}`;
 }

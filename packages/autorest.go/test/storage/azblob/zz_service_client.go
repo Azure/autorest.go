@@ -424,22 +424,15 @@ func (client *ServiceClient) NewListContainersSegmentPager(comp Enum5, options *
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ServiceClientListContainersSegmentResponse) (ServiceClientListContainersSegmentResponse, error) {
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listContainersSegmentCreateRequest(ctx, comp, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextMarker
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listContainersSegmentCreateRequest(ctx, comp, options)
+			}, nil)
 			if err != nil {
 				return ServiceClientListContainersSegmentResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ServiceClientListContainersSegmentResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ServiceClientListContainersSegmentResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listContainersSegmentHandleResponse(resp)
 		},

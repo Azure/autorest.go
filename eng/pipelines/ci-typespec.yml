@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    exclude:
+      - packages/autorest.go
+      - packages/autorest.gotest
+      - swagger
+
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    exclude:
+      - packages/autorest.go
+      - packages/autorest.gotest
+      - swagger
+
+jobs:
+  - job: "TypeSpec_Go_CI"
+    displayName: "Run TypeSpec Go CI Checks"
+
+    strategy:
+      matrix:
+        Linux_Go120:
+          vm.image: "ubuntu-22.04"
+          go.version: "1.20.3"
+
+    pool:
+      vmImage: "$(vm.image)"
+
+    steps:
+      - template: ../steps/set-env.yaml
+        parameters:
+          NodeVersion: "18.x"
+          GoVersion: "$(go.version)"
+
+      - template: ../steps/build-test-gotest.yaml

@@ -32,7 +32,7 @@ type SupportPackagesClient struct {
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SupportPackagesClient, error) {
-	cl, err := arm.NewClient(moduleName+".SupportPackagesClient", moduleVersion, credential, options)
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
@@ -71,6 +71,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 // Generated from API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	var err error
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "SupportPackagesClient.BeginTriggerSupportPackage")
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
 		return nil, err

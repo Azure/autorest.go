@@ -18,7 +18,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 // QueriesServer is a fake server for instances of the urlmultigroup.QueriesClient type.
@@ -83,11 +82,15 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiEmpty not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
+	arrayQueryEscaped := qp["arrayQuery"]
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
+	for i, v := range arrayQueryEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiEmptyOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiEmptyOptions{
@@ -114,11 +117,15 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiNull(req *http.Request)
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiNull not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
+	arrayQueryEscaped := qp["arrayQuery"]
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
+	for i, v := range arrayQueryEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiNullOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiNullOptions{
@@ -145,11 +152,15 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method ArrayStringMultiValid not implemented")}
 	}
 	qp := req.URL.Query()
-	arrayQueryUnescaped, err := url.QueryUnescape(qp.Get("arrayQuery"))
-	if err != nil {
-		return nil, err
+	arrayQueryEscaped := qp["arrayQuery"]
+	arrayQueryParam := make([]string, len(arrayQueryEscaped))
+	for i, v := range arrayQueryEscaped {
+		u, unescapeErr := url.QueryUnescape(v)
+		if unescapeErr != nil {
+			return nil, unescapeErr
+		}
+		arrayQueryParam[i] = u
 	}
-	arrayQueryParam := strings.Split(arrayQueryUnescaped, ",")
 	var options *urlmultigroup.QueriesClientArrayStringMultiValidOptions
 	if len(arrayQueryParam) > 0 {
 		options = &urlmultigroup.QueriesClientArrayStringMultiValidOptions{

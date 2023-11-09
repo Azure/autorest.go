@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Client contains the methods for the Alias group.
@@ -46,14 +47,17 @@ type Client struct {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
+//   - stringQuery - The unique id that references the assigned data item to be aliased.
+//   - boolHeaderEnum - Some enums that are boolean values.
+//   - unixTimeQuery - Required unix time passed via query param.
 //   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
-func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
+func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, unixTimeQuery time.Time, headerEnum SomeEnum, queryEnum SomeEnum, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	var err error
 	const operationName = "Client.Create"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createCreateRequest(ctx, options)
+	req, err := client.createCreateRequest(ctx, headerBools, stringQuery, boolHeaderEnum, unixTimeQuery, headerEnum, queryEnum, options)
 	if err != nil {
 		return ClientCreateResponse{}, err
 	}
@@ -70,7 +74,7 @@ func (client *Client) Create(ctx context.Context, options *ClientCreateOptions) 
 }
 
 // createCreateRequest creates the Create request.
-func (client *Client) createCreateRequest(ctx context.Context, options *ClientCreateOptions) (*policy.Request, error) {
+func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, unixTimeQuery time.Time, headerEnum SomeEnum, queryEnum SomeEnum, options *ClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -83,11 +87,17 @@ func (client *Client) createCreateRequest(ctx context.Context, options *ClientCr
 		creatorIDDefault = *options.CreatorID
 	}
 	reqQP.Set("creator-id", strconv.FormatInt(int64(creatorIDDefault), 10))
+	reqQP.Set("stringQuery", stringQuery)
+	if options != nil && options.BoolHeaderEnum1 != nil {
+		reqQP.Set("boolHeaderEnum", fmt.Sprintf("%v", *options.BoolHeaderEnum1))
+	}
+	reqQP.Set("unixTimeQuery", timeUnix(unixTimeQuery).String())
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
 		}
 	}
+	reqQP.Set("queryEnum", string(queryEnum))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientGroup.ClientIndex), 10)}
 	assignedIDDefault := float32(8989)
@@ -95,6 +105,12 @@ func (client *Client) createCreateRequest(ctx context.Context, options *ClientCr
 		assignedIDDefault = *options.AssignedID
 	}
 	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
+	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
+	req.Raw().Header["boolHeaderEnum"] = []string{fmt.Sprintf("%v", boolHeaderEnum)}
+	if options != nil && options.OptionalUnixTime != nil {
+		req.Raw().Header["optionalUnixTime"] = []string{timeUnix(*options.OptionalUnixTime).String()}
+	}
+	req.Raw().Header["headerEnum"] = []string{string(headerEnum)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -115,14 +131,16 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
+//   - SomeGroup - SomeGroup contains a group of parameters for the Client.GetScript method.
+//   - ExplodedGroup - ExplodedGroup contains a group of parameters for the Client.GetScript method.
 //   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
+func (client *Client) GetScript(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	var err error
 	const operationName = "Client.GetScript"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getScriptCreateRequest(ctx, props, options)
+	req, err := client.getScriptCreateRequest(ctx, headerCounts, queryCounts, explodedStringStuff, numericHeader, headerTime, props, someGroup, explodedGroup, options)
 	if err != nil {
 		return ClientGetScriptResponse{}, err
 	}
@@ -139,12 +157,30 @@ func (client *Client) GetScript(ctx context.Context, props GeoJSONObjectNamedCol
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *Client) getScriptCreateRequest(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (*policy.Request, error) {
+func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *ClientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
+	for _, qv := range explodedGroup.ExplodedStuff {
+		reqQP.Add("explodedStuff", fmt.Sprintf("%v", qv))
+	}
+	for _, qv := range explodedStringStuff {
+		reqQP.Add("explodedStringStuff", qv)
+	}
+	if options != nil && options.OptionalExplodedStuff != nil {
+		for _, qv := range options.OptionalExplodedStuff {
+			reqQP.Add("optionalExplodedStuff", qv)
+		}
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
+	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
+	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
+	req.Raw().Header["headerTime"] = []string{timeRFC3339(headerTime).String()}
 	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err
@@ -185,29 +221,22 @@ func (client *Client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 //
 // Generated from API version 2.0
 //   - options - ClientListOptions contains the optional parameters for the Client.NewListPager method.
-func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
+func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, options *ClientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ClientListResponse) (ClientListResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listCreateRequest(ctx, options)
-			} else {
-				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, headerEnums, queryEnum, options)
+			}, nil)
 			if err != nil {
 				return ClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -216,7 +245,7 @@ func (client *Client) NewListPager(options *ClientListOptions) *runtime.Pager[Cl
 }
 
 // listCreateRequest creates the List request.
-func (client *Client) listCreateRequest(ctx context.Context, options *ClientListOptions) (*policy.Request, error) {
+func (client *Client) listCreateRequest(ctx context.Context, headerEnums []IntEnum, queryEnum IntEnum, options *ClientListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -224,12 +253,22 @@ func (client *Client) listCreateRequest(ctx context.Context, options *ClientList
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("client-version", client.clientGroup.ClientVersion)
+	if options != nil && options.QueryEnums != nil {
+		for _, qv := range options.QueryEnums {
+			reqQP.Add("queryEnums", fmt.Sprintf("%d", qv))
+		}
+	}
+	reqQP.Set("queryEnum", fmt.Sprintf("%v", queryEnum))
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["headerEnums"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerEnums), "[]")), ",")}
+	if options != nil && options.HeaderEnum != nil {
+		req.Raw().Header["headerEnum"] = []string{fmt.Sprintf("%v", *options.HeaderEnum)}
+	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
@@ -243,6 +282,93 @@ func (client *Client) listHandleResponse(resp *http.Response) (ClientListRespons
 	return result, nil
 }
 
+// BeginListLRO - A long-running paged operation that uses a next link operation
+//
+// Generated from API version 2.0
+//   - options - ClientBeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
+func (client *Client) BeginListLRO(ctx context.Context, options *ClientBeginListLROOptions) (*runtime.Poller[*runtime.Pager[ClientListLROResponse]], error) {
+	pager := runtime.NewPager(runtime.PagingHandler[ClientListLROResponse]{
+		More: func(page ClientListLROResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ClientListLROResponse) (ClientListLROResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.BeginListLRO")
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), *page.NextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listLROCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listLRONextCreateRequest(ctx, encodedNextLink)
+				},
+			})
+			if err != nil {
+				return ClientListLROResponse{}, err
+			}
+			return client.listLROHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listLRO(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[*runtime.Pager[ClientListLROResponse]]{
+			Response: &pager,
+			Tracer:   client.internal.Tracer(),
+		})
+		return poller, err
+	} else {
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[ClientListLROResponse]]{
+			Response: &pager,
+			Tracer:   client.internal.Tracer(),
+		})
+	}
+}
+
+// ListLRO - A long-running paged operation that uses a next link operation
+//
+// Generated from API version 2.0
+func (client *Client) listLRO(ctx context.Context, options *ClientBeginListLROOptions) (*http.Response, error) {
+	var err error
+	const operationName = "Client.BeginListLRO"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.listLROCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusAccepted) {
+		err = runtime.NewResponseError(httpResp)
+		return nil, err
+	}
+	return httpResp, nil
+}
+
+// listLROCreateRequest creates the ListLRO request.
+func (client *Client) listLROCreateRequest(ctx context.Context, options *ClientBeginListLROOptions) (*policy.Request, error) {
+	urlPath := "/paged"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// listLROHandleResponse handles the ListLRO response.
+func (client *Client) listLROHandleResponse(resp *http.Response) (ClientListLROResponse, error) {
+	result := ClientListLROResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PagesOfThings); err != nil {
+		return ClientListLROResponse{}, err
+	}
+	return result, nil
+}
+
 //   - options - ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager
 //     method.
 func (client *Client) NewListWithSharedNextOnePager(options *ClientListWithSharedNextOneOptions) *runtime.Pager[ClientListWithSharedNextOneResponse] {
@@ -252,22 +378,19 @@ func (client *Client) NewListWithSharedNextOnePager(options *ClientListWithShare
 		},
 		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextOneResponse) (ClientListWithSharedNextOneResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextOnePager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listWithSharedNextOneCreateRequest(ctx, options)
-			} else {
-				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithSharedNextOneCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+				},
+			})
 			if err != nil {
 				return ClientListWithSharedNextOneResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListWithSharedNextOneResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListWithSharedNextOneResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithSharedNextOneHandleResponse(resp)
 		},
@@ -304,22 +427,19 @@ func (client *Client) NewListWithSharedNextTwoPager(options *ClientListWithShare
 		},
 		Fetcher: func(ctx context.Context, page *ClientListWithSharedNextTwoResponse) (ClientListWithSharedNextTwoResponse, error) {
 			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "Client.NewListWithSharedNextTwoPager")
-			var req *policy.Request
-			var err error
-			if page == nil {
-				req, err = client.listWithSharedNextTwoCreateRequest(ctx, options)
-			} else {
-				req, err = client.listWithSharedNextCreateRequest(ctx, *page.NextLink)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
 			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithSharedNextTwoCreateRequest(ctx, options)
+			}, &runtime.FetcherForNextLinkOptions{
+				NextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {
+					return client.listWithSharedNextCreateRequest(ctx, encodedNextLink)
+				},
+			})
 			if err != nil {
 				return ClientListWithSharedNextTwoResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return ClientListWithSharedNextTwoResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return ClientListWithSharedNextTwoResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithSharedNextTwoHandleResponse(resp)
 		},
@@ -413,6 +533,18 @@ func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (Clien
 		return ClientPolicyAssignmentResponse{}, err
 	}
 	return result, nil
+}
+
+// listLRONextCreateRequest creates the listLRONextCreateRequest request.
+func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+	urlPath := "/paged"
+	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
 }
 
 // listWithSharedNextCreateRequest creates the listWithSharedNextCreateRequest request.

@@ -6,7 +6,7 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
+import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderMapResponse, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
 import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
@@ -19,7 +19,7 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 import { generateServers } from './fake/servers';
-import { generateServerInternal } from './fake/internal';
+import { generateServerFactory } from './fake/factory';
 import { sortAscending } from './helpers';
 
 // The generator emits Go source code files to disk.
@@ -156,10 +156,9 @@ export async function generateCode(host: AutorestExtensionHost) {
       });
     }
 
-    const generateFakes = await session.getValue('generate-fakes', false);
-    if (generateFakes) {
-      const operations = await generateServers(session.model);
-      for (const op of values(operations)) {
+    if (session.model.options.generateFakes) {
+      const serverContent = await generateServers(session.model);
+      for (const op of values(serverContent.servers)) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
         // insert a _ before Server, i.e. Foo_Server
@@ -174,10 +173,18 @@ export async function generateCode(host: AutorestExtensionHost) {
         });
       }
 
-      const internal = await generateServerInternal(session.model);
+      const serverFactory = generateServerFactory(session.model);
+      if (serverFactory !== '') {
+        host.writeFile({
+          filename: `fake/${filePrefix}server_factory.go`,
+          content: serverFactory,
+          artifactType: 'source-file-go'
+        });
+      }
+
       host.writeFile({
         filename: `fake/${filePrefix}internal.go`,
-        content: internal,
+        content: serverContent.internals,
         artifactType: 'source-file-go'
       });
 
@@ -230,7 +237,7 @@ function sortContent(codeModel: GoCodeModel) {
 
   codeModel.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
   for (const respEnv of values(codeModel.responseEnvelopes)) {
-    respEnv.headers.sort((a: HeaderResponse, b: HeaderResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    respEnv.headers.sort((a: HeaderResponse | HeaderMapResponse, b: HeaderResponse | HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
   codeModel.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });

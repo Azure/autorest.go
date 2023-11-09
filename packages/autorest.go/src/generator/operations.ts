@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Client, ClientSideDefault, GoCodeModel, HeaderParameter, LROMethod, Method, PageableMethod, Parameter, PossibleType, QueryParameter, ResultFormat, BodyParameter, HeaderResponse, PathParameterType, isMonomorphicResult, isPolymorphicResult, isModelResult, isHeadAsBooleanResult, isModelType, NextPageMethod, isMethod } from '../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isBinaryResult, isBodyParameter, isClientSideDefault, isConstantType, isFormBodyParameter, isLROMethod, isMapType, isMultipartFormBodyParameter, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter, isHeaderParameter, isPrimitiveType, isTimeType, isBytesType, isLiteralValue, isAnyResult } from '../gocodemodel/gocodemodel';
+import { Client, ClientSideDefault, GoCodeModel, HeaderParameter, LROMethod, Method, PageableMethod, Parameter, PossibleType, QueryParameter, ResultFormat, BodyParameter, HeaderMapResponse, HeaderResponse, PathParameterType, isMonomorphicResult, isPolymorphicResult, isModelResult, isHeadAsBooleanResult, isModelType, NextPageMethod, isMethod, isQueryCollectionParameter, isHeaderMapParameter } from '../gocodemodel/gocodemodel';
+import { getTypeDeclaration, isBinaryResult, isBodyParameter, isClientSideDefault, isConstantType, isFormBodyParameter, isHeaderMapResponse, isLROMethod, isMapType, isMultipartFormBodyParameter, isPageableMethod, isPathParameter, isQueryParameter, isSliceType, isURIParameter, isHeaderParameter, isPrimitiveType, isTimeType, isBytesType, isLiteralValue, isAnyResult } from '../gocodemodel/gocodemodel';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, formatLiteralValue, isLiteralParameter, isRequiredParameter } from './helpers';
+import { commentLength, formatLiteralValue, isLiteralParameter, isRequiredParameter, timeRFC3339Format } from './helpers';
 import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, formatStatusCodes, formatValue, getResultFieldName, hasSchemaResponse, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
@@ -152,7 +152,7 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
       }
 
       clientText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
-      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName+".${clientName}", moduleVersion, credential, options)\n`;
+      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName, moduleVersion, credential, options)\n`;
       clientText += '\tif err != nil {\n';
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';
@@ -205,9 +205,9 @@ export async function generateOperations(codeModel: GoCodeModel): Promise<Array<
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(headerResp: HeaderResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(headerResp: HeaderResponse | HeaderMapResponse, imports: ImportManager, respObj: string, zeroResp: string): string {
   // dictionaries are handled slightly different so we do that first
-  if (headerResp.collectionPrefix) {
+  if (isHeaderMapResponse(headerResp)) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
     imports.add('strings');
     const headerPrefix = headerResp.collectionPrefix;
@@ -259,9 +259,11 @@ function formatHeaderResponseValue(headerResp: HeaderResponse, imports: ImportMa
     imports.add('time');
     if (headerResp.type.dateTimeFormat === 'dateType') {
       text += `\t\t${name}, err := time.Parse("${dateFormat}", val)\n`;
+    } else if (headerResp.type.dateTimeFormat === 'timeRFC3339') {
+      text += `\t\t${name}, err := time.Parse("${timeRFC3339Format}", val)\n`;
     } else {
       let format = datetimeRFC3339Format;
-      if (headerResp.type.dateTimeFormat === 'timeRFC1123') {
+      if (headerResp.type.dateTimeFormat === 'dateTimeRFC1123') {
         format = datetimeRFC1123Format;
       }
       text += `\t\t${name}, err := time.Parse(${format}, val)\n`;
@@ -317,18 +319,20 @@ function emitPagerDefinition(client: Client, method: PageableMethod, imports: Im
   text += `\t\tFetcher: func(ctx context.Context, page *${method.responseEnvelope.name}) (${method.responseEnvelope.name}, error) {\n`;
   const reqParams = getCreateRequestParameters(method);
   if (generateFakes) {
-    text += `\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.clientName}.${fixUpMethodName(method)}")\n`;
+    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.clientName}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
-    const isLRO = isLROMethod(method);
-    const defineOrAssign = isLRO ? ':=' : '=';
-    if (!isLRO) {
-      text += '\t\t\tvar req *policy.Request\n';
-      text += '\t\t\tvar err error\n';
-      text += '\t\t\tif page == nil {\n';
-      text += `\t\t\t\treq, err = client.${method.naming.requestMethod}(${reqParams})\n`;
-      text += '\t\t\t} else {\n';
+    let nextLinkVar: string;
+    if (!isLROMethod(method)) {
+      text += '\t\t\tnextLink := ""\n';
+      nextLinkVar = 'nextLink';
+      text += '\t\t\tif page != nil {\n';
+      text += `\t\t\t\tnextLink = *page.${method.nextLinkName}\n\t\t\t}\n`;
+    } else {
+      nextLinkVar = `*page.${method.nextLinkName}`;
     }
+    text += `\t\t\tresp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), ${nextLinkVar}, func(ctx context.Context) (*policy.Request, error) {\n`;
+    text += `\t\t\t\treturn client.${method.naming.requestMethod}(${reqParams})\n\t\t\t}, `;
     // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
     if (method.nextPageMethod) {
       const nextOpParams = getCreateRequestParametersSig(method.nextPageMethod).split(',');
@@ -337,34 +341,36 @@ function emitPagerDefinition(client: Client, method: PageableMethod, imports: Im
         const paramName = nextOpParams[i].trim().split(' ')[0];
         const paramType = nextOpParams[i].trim().split(' ')[1];
         if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = `*page.${method.nextLinkName}`;
+          nextOpParams[i] = 'encodedNextLink';
         } else {
           nextOpParams[i] = paramName;
         }
       }
-      text += `\t\t\t\treq, err ${defineOrAssign} client.${method.nextPageMethod.methodName}(${nextOpParams.join(', ')})\n`;
+      // add a definition for the nextReq func that uses the nextLinkOperation
+      text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
+      text += `\t\t\t\t\treturn client.${method.nextPageMethod.methodName}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
     } else {
-      text += `\t\t\t\treq, err ${defineOrAssign} runtime.NewRequest(ctx, http.MethodGet, *page.${method.nextLinkName})\n`;
+      text += 'nil)\n';
     }
-    if (!isLRO) {
-      text += '\t\t\t}\n';
-    }
+    text += `\t\t\tif err != nil {\n\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n\t\t\t}\n`;
+    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
+    text += '\t\t\t},\n';
   } else {
-    // this is the singular page case
+    // this is the singular page case, no fetcher helper required
     text += `\t\t\treq, err := client.${method.naming.requestMethod}(${reqParams})\n`;
+    text += '\t\t\tif err != nil {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += '\t\t\t}\n';
+    text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
+    text += '\t\t\tif err != nil {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
+    text += '\t\t\t}\n';
+    text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
+    text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, runtime.NewResponseError(resp)\n`;
+    text += '\t\t\t}\n';
+    text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
+    text += '\t\t},\n';
   }
-  text += '\t\t\tif err != nil {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
-  text += '\t\t\t}\n';
-  text += '\t\t\tresp, err := client.internal.Pipeline().Do(req)\n';
-  text += '\t\t\tif err != nil {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, err\n`;
-  text += '\t\t\t}\n';
-  text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
-  text += `\t\t\t\treturn ${method.responseEnvelope.name}{}, runtime.NewResponseError(resp)\n`;
-  text += '\t\t\t}\n';
-  text += `\t\t\treturn client.${method.naming.responseMethod}(resp)\n`;
-  text += '\t\t},\n';
   if (injectSpans) {
     text += '\t\tTracer: client.internal.Tracer(),\n';
   }
@@ -525,7 +531,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
         }
         return type.type === 'string';
       };
-      if (((isPrimitiveType(pp.type) && pp.type.typeName === 'string') || choiceIsString(pp.type)) && pp.isURLEncoded) {
+      if (((isPrimitiveType(pp.type) && pp.type.typeName === 'string') || choiceIsString(pp.type)) && pp.isEncoded) {
         const paramName = getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
@@ -533,7 +539,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
         text += '\t}\n';
       }
       let paramValue = formatParamValue(pp, imports);
-      if (pp.isURLEncoded) {
+      if (pp.isEncoded) {
         imports.add('net/url');
         paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }
@@ -567,7 +573,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     if (!isQueryParameter(qp)) {
       continue;
     }
-    if (qp.isURLEncoded) {
+    if (qp.isEncoded) {
       encodedParams.push(qp);
     } else {
       unencodedParams.push(qp);
@@ -596,11 +602,8 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     text += '\treqQP := req.Raw().URL.Query()\n';
     for (const qp of values(encodedParams)) {
       let setter: string;
-      if (qp.explode) {
+      if (isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
-        if (!isSliceType(qp.type)) {
-          throw new Error(`expected SchemaType.Array for query param ${qp.paramName}`);
-        }
         // emit a type conversion for the qv based on the array's element type
         let queryVal: string;
         const arrayQP = qp.type;
@@ -638,7 +641,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     }
     for (const qp of values(unencodedParams)) {
       let setter: string;
-      if (qp.explode === true) {
+      if (isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
         setter += `\t\tunencodedParams = append(unencodedParams, "${qp.queryParameter}="+qv)\n`;
         setter += '\t}';
@@ -660,7 +663,7 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
       return emitClientSideDefault(headerParam, headerParam.paramType, (name, val) => {
         return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
       }, imports);
-    } else if (headerParam.collectionPrefix) {
+    } else if (isHeaderMapParameter(headerParam)) {
       let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
       headerText += `${prefix}\tif v != nil {\n`;
       headerText += `${prefix}\t\treq.Raw().Header["${headerParam.collectionPrefix}"+k] = []string{*v}\n`;
@@ -727,7 +730,10 @@ function createProtocolRequest(client: Client, method: Method | NextPageMethod, 
     } else if (isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'dateType') {
       // wrap the body in the internal dateType
       body = `dateType(${body})`;
-    } else if (isTimeType(bodyParam.type) && (bodyParam.type.dateTimeFormat === 'timeRFC1123' || bodyParam.type.dateTimeFormat === 'timeUnix')) {
+    } else if (isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'timeRFC3339') {
+      // wrap the body in the internal timeRFC3339 type
+      body = `timeRFC3339(${body})`;
+    } else if (isTimeType(bodyParam.type) && (bodyParam.type.dateTimeFormat === 'dateTimeRFC1123' || bodyParam.type.dateTimeFormat === 'timeUnix')) {
       // wrap the body in the custom time type
       text += `\taux := ${bodyParam.type.dateTimeFormat}(${body})\n`;
       body = 'aux';
@@ -866,15 +872,14 @@ function isArrayOfDateTimeForMarshalling(paramType: PossibleType): string | unde
   if (!isTimeType(paramType.elementType)) {
     return undefined;
   }
-  if (!paramType.elementType.dateTimeFormat) {
-    return undefined;
-  }
   switch (paramType.elementType.dateTimeFormat) {
     case 'dateType':
-    case 'timeRFC1123':
+    case 'dateTimeRFC1123':
+    case 'timeRFC3339':
     case 'timeUnix':
       return paramType.elementType.dateTimeFormat;
     default:
+      // dateTimeRFC3339 uses the default marshaller
       return undefined;
   }
 }
@@ -953,7 +958,7 @@ function createProtocolResponse(client: Client, method: Method, imports: ImportM
   let text = `${comment(name, '// ')} handles the ${method.methodName} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
-  const addHeaders = function (headers: Array<HeaderResponse>) {
+  const addHeaders = function (headers: Array<HeaderResponse | HeaderMapResponse>) {
     for (const header of values(headers)) {
       text += formatHeaderResponseValue(header, imports, 'result', `${method.responseEnvelope.name}{}`);
     }
@@ -1149,13 +1154,13 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
   }
 
   text += '\t\tpoller, err := runtime.NewPoller';
-  if (finalStateVia === '' && pollerType === 'nil') {
+  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
     text += pollerTypeParam;
   }
   text += '(resp, client.internal.Pipeline(), ';
-  if (finalStateVia === '' && pollerType === 'nil') {
+  if (finalStateVia === '' && pollerType === 'nil' && !injectSpans) {
     // no options
     text += 'nil)\n';
   } else {
@@ -1167,6 +1172,9 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
     }
+    if (injectSpans) {
+      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+    }
     text += '\t\t})\n';
   }
   text += '\t\treturn poller, err\n';
@@ -1175,15 +1183,20 @@ function generateLROBeginMethod(client: Client, method: LROMethod, imports: Impo
   // creating the poller from resume token branch
 
   text += '\t\treturn runtime.NewPollerFromResumeToken';
-  if (pollerType === 'nil') {
+  if (pollerType === 'nil' && !injectSpans) {
     text += pollerTypeParam;
   }
   text += '(options.ResumeToken, client.internal.Pipeline(), ';
-  if (pollerType === 'nil') {
+  if (pollerType === 'nil' && !injectSpans) {
     text += 'nil)\n';
   } else {
     text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
-    text += `\t\t\tResponse: ${pollerType},\n`;
+    if (pollerType !== 'nil') {
+      text += `\t\t\tResponse: ${pollerType},\n`;
+    }
+    if (injectSpans) {
+      text += '\t\t\tTracer: client.internal.Tracer(),\n';
+    }
     text  += '\t\t})\n';
   }
   text += '\t}\n';

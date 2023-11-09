@@ -124,9 +124,8 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDParamGrouping(req *h
 	if h.srv.CustomNamedRequestIDParamGrouping == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CustomNamedRequestIDParamGrouping not implemented")}
 	}
-	fooClientRequestIDParam := getHeaderValue(req.Header, "foo-client-request-id")
 	headerClientCustomNamedRequestIDParamGroupingParameters := azurespecialsgroup.HeaderClientCustomNamedRequestIDParamGroupingParameters{
-		FooClientRequestID: fooClientRequestIDParam,
+		FooClientRequestID: getHeaderValue(req.Header, "foo-client-request-id"),
 	}
 	respr, errRespr := h.srv.CustomNamedRequestIDParamGrouping(req.Context(), headerClientCustomNamedRequestIDParamGroupingParameters, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

@@ -3,95 +3,71 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { values } from '@azure-tools/linq';
-import { GoCodeModel, isLROMethod, isPageableMethod } from '../../gocodemodel/gocodemodel';
+import { GoCodeModel } from '../../gocodemodel/gocodemodel';
 import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
 
-export async function generateServerInternal(codeModel: GoCodeModel): Promise<string> {
+export class RequiredHelpers {
+  getHeaderValue: boolean;
+  getOptional: boolean;
+  parseOptional: boolean;
+  parseWithCast: boolean;
+  readRequestBody: boolean;
+  splitHelper: boolean;
+  tracker: boolean;
+
+  constructor() {
+    this.getHeaderValue = false;
+    this.getOptional = false;
+    this.parseOptional = false;
+    this.parseWithCast = false;
+    this.readRequestBody = false;
+    this.splitHelper = false;
+    this.tracker = false;
+  }
+}
+
+export function generateServerInternal(codeModel: GoCodeModel, requiredHelpers: RequiredHelpers): string {
   if (codeModel.clients.length === 0) {
     return '';
   }
   const text = contentPreamble(codeModel, 'fake');
   const imports = new ImportManager();
-  imports.add('io');
-  imports.add('net/http');
-  imports.add('reflect');
-  let body = content;
-  // only generate the tracker content if required
-  let needsTracker = false;
-  for (const client of values(codeModel.clients)) {
-    for (const method of values(client.methods)) {
-      if (isLROMethod(method) || isPageableMethod(method)) {
-        needsTracker = true;
-        break;
-      }
-    }
-    if (needsTracker) {
-      break;
-    }
+  let body = alwaysUsed;
+
+  if (requiredHelpers.getHeaderValue) {
+    body += emitGetHeaderValue(imports);
   }
-  if (needsTracker) {
-    imports.add('sync');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
-    body += tracker;
+  if (requiredHelpers.getOptional) {
+    body += emitGetOptional(imports);
   }
+  if (requiredHelpers.parseOptional) {
+    body += emitParseOptional();
+  }
+  if (requiredHelpers.parseWithCast) {
+    body += emitParseWithCast();
+  }
+  if (requiredHelpers.readRequestBody) {
+    body += emitReadRequestBody(imports);
+  }
+  if (requiredHelpers.splitHelper) {
+    body += emitSplitHelper(imports);
+  }
+  if (requiredHelpers.tracker) {
+    body += emitTracker(imports);
+  }
+
   return text + imports.text() + body;
 }
 
-const content = `
+// contains helpers that are used in all servers
+const alwaysUsed = `
 type nonRetriableError struct {
 	error
 }
 
 func (nonRetriableError) NonRetriable() {
 	// marker method
-}
-
-func getOptional[T any](v T) *T {
-	if reflect.ValueOf(v).IsZero() {
-		return nil
-	}
-	return &v
-}
-
-func getHeaderValue(h http.Header, k string) string {
-	v := h[k]
-	if len(v) == 0 {
-		return ""
-	}
-	return v[0]
-}
-
-func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
-	if v == "" {
-		return nil, nil
-	}
-	t, err := parse(v)
-	if err != nil {
-		return nil, err
-	}
-	return &t, err
-}
-
-func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {
-	t, err := parse(v)
-	if err != nil {
-		return *new(T), err
-	}
-	return t, err
-}
-
-func readRequestBody(req *http.Request) ([]byte, error) {
-	if req.Body == nil {
-		return nil, nil
-	}
-	body, err := io.ReadAll(req.Body)
-	if err != nil {
-		return nil, err
-	}
-	req.Body.Close()
-	return body, nil
 }
 
 func contains[T comparable](s []T, v T) bool {
@@ -104,7 +80,93 @@ func contains[T comparable](s []T, v T) bool {
 }
 `;
 
-const tracker = `
+function emitGetOptional(imports: ImportManager): string {
+  imports.add('reflect');
+  return `
+func getOptional[T any](v T) *T {
+	if reflect.ValueOf(v).IsZero() {
+		return nil
+	}
+	return &v
+}
+`;
+}
+
+function emitGetHeaderValue(imports: ImportManager): string {
+  imports.add('net/http');
+  return `
+func getHeaderValue(h http.Header, k string) string {
+	v := h[k]
+	if len(v) == 0 {
+		return ""
+	}
+	return v[0]
+}
+`;
+}
+
+function emitParseOptional(): string {
+  return `
+func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
+	if v == "" {
+		return nil, nil
+	}
+	t, err := parse(v)
+	if err != nil {
+		return nil, err
+	}
+	return &t, err
+}
+`;
+}
+
+function emitParseWithCast(): string {
+  return `
+func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {
+	t, err := parse(v)
+	if err != nil {
+		return *new(T), err
+	}
+	return t, err
+}
+`;
+}
+
+function emitReadRequestBody(imports: ImportManager): string {
+  imports.add('net/http');
+  imports.add('io');
+  return `
+func readRequestBody(req *http.Request) ([]byte, error) {
+	if req.Body == nil {
+		return nil, nil
+	}
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		return nil, err
+	}
+	req.Body.Close()
+	return body, nil
+}
+`;
+}
+
+function emitSplitHelper(imports: ImportManager): string {
+  imports.add('strings');
+  return `
+func splitHelper(s, sep string) []string {
+	if s == "" {
+		return nil
+	}
+	return strings.Split(s, sep)
+}
+`;
+}
+
+function emitTracker(imports: ImportManager): string {
+  imports.add('net/http');
+  imports.add('sync');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
+  return `
 func newTracker[T any]() *tracker[T] {
 	return &tracker[T]{
 		items: map[string]*T{},
@@ -137,3 +199,4 @@ func (p *tracker[T]) remove(req *http.Request) {
 	delete(p.items, server.SanitizePagerPollerPath(req.URL.Path))
 }
 `;
+}

@@ -20,7 +20,11 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
 
     const info = new go.Info(session.model.info.title);
-    const options = new go.Options(await session.getValue('header-text', 'MISSING LICENSE HEADER'), await session.getValue('generate-fakes', false), await session.getValue('inject-spans', false));
+    const options = new go.Options(
+      await session.getValue('header-text', 'MISSING LICENSE HEADER'), 
+      await session.getValue('generate-fakes', session.model.language.go!.azureARM), 
+      await session.getValue('inject-spans', session.model.language.go!.azureARM),
+      await session.getValue('disallow-unknown-fields', false));
     const azcoreVersion = await session.getValue('azcore-version', '');
     if (azcoreVersion !== '') {
       options.azcoreVersion = azcoreVersion;
@@ -35,11 +39,14 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.host) {
       codeModel.host = session.model.language.go!.host;
     }
-    if (session.model.language.go!.generateTimeRFC1123Helper) {
-      codeModel.marshallingRequirements.generateTimeRFC1123Helper = true;
+    if (session.model.language.go!.generateDateTimeRFC1123Helper) {
+      codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
     }
     if (session.model.language.go!.generateTimeRFC3339Helper) {
       codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
+    }
+    if (session.model.language.go!.generateDateTimeRFC3339Helper) {
+      codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
     }
     if (session.model.language.go!.generateUnixTimeHelper) {
       codeModel.marshallingRequirements.generateUnixTimeHelper = true;

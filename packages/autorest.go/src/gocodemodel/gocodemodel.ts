@@ -53,6 +53,10 @@ export interface Options {
 
   injectSpans: boolean;
 
+  // disallowUnknownFields indicates whether or not to disallow unknown fields in the JSON unmarshaller.
+  // reproduce the behavior of https://pkg.go.dev/encoding/json#Decoder.DisallowUnknownFields
+  disallowUnknownFields: boolean;
+
   // NOTE: containingModule and module are mutually exclusive
 
   // the module into which the package is being generated
@@ -70,7 +74,9 @@ export interface Options {
 export interface MarshallingRequirements {
   generateDateHelper: boolean;
 
-  generateTimeRFC1123Helper: boolean;
+  generateDateTimeRFC1123Helper: boolean;
+
+  generateDateTimeRFC3339Helper: boolean;
 
   generateTimeRFC3339Helper: boolean;
 
@@ -379,21 +385,35 @@ export interface ParameterGroup {
   params: Array<Parameter>;
 }
 
-export type HeaderType = BytesType | ConstantType | MapType | PrimitiveType | SliceType | TimeType | LiteralValue;
+export type HeaderType = BytesType | ConstantType | PrimitiveType | TimeType | LiteralValue;
 
 // parameter is sent via an HTTP header
 export interface HeaderParameter extends Parameter {
   headerName: string;
 
   type: HeaderType;
-
-  collectionPrefix?: string;
-
-  // for slice types, this is the delimiter to use instead of the default ','
-  delimiter?: '|' | ' ' | '\\t'
 }
 
-export type PathParameterType = BytesType | ConstantType | PrimitiveType | SliceType | TimeType | LiteralValue;
+export type CollectionFormat = 'csv' | 'ssv' | 'tsv' | 'pipes';
+
+export interface HeaderCollectionParameter extends Parameter {
+  headerName: string;
+
+  type: SliceType;
+
+  collectionFormat: CollectionFormat;
+}
+
+// this is a special type to support x-ms-header-collection-prefix (i.e. storage)
+export interface HeaderMapParameter extends Parameter {
+  headerName: string;
+
+  type: MapType;
+
+  collectionPrefix: string;
+}
+
+export type PathParameterType = BytesType | ConstantType | PrimitiveType | TimeType | LiteralValue;
 
 // parameter is a segment in a path
 export interface PathParameter extends Parameter {
@@ -401,13 +421,20 @@ export interface PathParameter extends Parameter {
 
   type: PathParameterType;
 
-  isURLEncoded: boolean;
-
-  // for slice types, this is the delimiter to use instead of the default ','
-  delimiter?: '|' | ' ' | '\\t'
+  isEncoded: boolean;
 }
 
-export type QueryParameterType = BytesType | ConstantType | PrimitiveType | SliceType | TimeType | LiteralValue;
+export interface PathCollectionParameter extends Parameter {
+  pathSegment: string;
+
+  type: SliceType;
+
+  isEncoded: boolean;
+
+  collectionFormat: CollectionFormat;
+}
+
+export type QueryParameterType = BytesType | ConstantType | PrimitiveType | TimeType | LiteralValue;
 
 // parameter is sent via an HTTP query parameter
 export interface QueryParameter extends Parameter {
@@ -415,12 +442,19 @@ export interface QueryParameter extends Parameter {
 
   type: QueryParameterType;
 
-  isURLEncoded: boolean;
+  isEncoded: boolean;
+}
 
-  explode: boolean;
+export type ExtendedCollectionFormat = CollectionFormat | 'multi';
 
-  // for slice types, this is the delimiter to use instead of the default ','
-  delimiter?: '|' | ' ' | '\\t'
+export interface QueryCollectionParameter extends Parameter {
+  queryParameter: string;
+
+  type: SliceType;
+
+  isEncoded: boolean;
+
+  collectionFormat: ExtendedCollectionFormat;
 }
 
 export type URIParameterType = ConstantType | PrimitiveType;
@@ -444,9 +478,14 @@ export interface BodyParameter extends Parameter {
 
 export interface FormBodyParameter extends Parameter {
   formDataName: string;
+}
 
-  // for slice types, this is the delimiter to use instead of the default ','
-  delimiter?: '|' | ' ' | '\\t'
+export interface FormBodyCollectionParameter extends Parameter {
+  formDataName: string;
+
+  type: SliceType;
+
+  collectionFormat: ExtendedCollectionFormat;
 }
 
 export interface MultipartFormBodyParameter extends Parameter {
@@ -465,6 +504,10 @@ export function isFormBodyParameter(param: Parameter): param is FormBodyParamete
   return (<FormBodyParameter>param).formDataName !== undefined;
 }
 
+export function isFormBodyCollectionParameter(param: Parameter): param is FormBodyCollectionParameter {
+  return (<FormBodyCollectionParameter>param).formDataName !== undefined && (<FormBodyCollectionParameter>param).collectionFormat !== undefined;
+}
+
 export function isMultipartFormBodyParameter(param: Parameter): param is MultipartFormBodyParameter {
   return (<MultipartFormBodyParameter>param).multipartForm !== undefined;
 }
@@ -473,12 +516,28 @@ export function isHeaderParameter(param: Parameter): param is HeaderParameter {
   return (<HeaderParameter>param).headerName !== undefined;
 }
 
+export function isHeaderCollectionParameter(param: Parameter): param is HeaderCollectionParameter {
+  return (<HeaderCollectionParameter>param).headerName !== undefined && (<HeaderCollectionParameter>param).collectionFormat !== undefined;
+}
+
+export function isHeaderMapParameter(param: Parameter): param is HeaderMapParameter {
+  return (<HeaderMapParameter>param).headerName !== undefined && (<HeaderMapParameter>param).collectionPrefix !== undefined;
+}
+
 export function isPathParameter(param: Parameter): param is PathParameter {
   return (<PathParameter>param).pathSegment !== undefined;
 }
 
+export function isPathCollectionParameter(param: Parameter): param is PathCollectionParameter {
+  return (<PathCollectionParameter>param).pathSegment !== undefined && (<PathCollectionParameter>param).collectionFormat !== undefined;
+}
+
 export function isQueryParameter(param: Parameter): param is QueryParameter {
   return (<QueryParameter>param).queryParameter !== undefined;
+}
+
+export function isQueryCollectionParameter(param: Parameter): param is QueryCollectionParameter {
+  return (<QueryCollectionParameter>param).queryParameter !== undefined && (<QueryCollectionParameter>param).collectionFormat !== undefined;
 }
 
 export function isURIParameter(param: Parameter): param is URIParameter {
@@ -501,7 +560,7 @@ export interface ResponseEnvelope {
   result?: ResultType;
 
   // any modeled response headers
-  headers: Array<HeaderResponse>;
+  headers: Array<HeaderResponse | HeaderMapResponse>;
 
   method: Method | LROMethod | PageableMethod | LROPageableMethod;
 }
@@ -648,8 +707,23 @@ export interface HeaderResponse {
 
   // the name of the header sent over the wire
   headerName: string;
+}
 
-  collectionPrefix?: string;
+// this is a special type to support x-ms-header-collection-prefix (i.e. storage)
+export interface HeaderMapResponse {
+  // the name of the field within the response envelope
+  fieldName: string;
+
+  description?: string;
+
+  type: MapType;
+
+  byValue: boolean;
+
+  // the name of the header sent over the wire
+  headerName: string;
+
+  collectionPrefix: string;
 }
 
 export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int32' | 'int64' | 'rune' | 'string';
@@ -684,7 +758,7 @@ export interface StandardType {
   packageName: string;
 }
 
-export type DateTimeFormat = 'dateType' | 'timeRFC1123' | 'timeRFC3339' | 'timeUnix';
+export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
 
 // TimeType is a time.Time type from the standard library with a format specifier.
 export interface TimeType extends StandardType {
@@ -740,6 +814,10 @@ export function isBytesType(type: PossibleType): type is BytesType {
 
 export function isConstantType(type: PossibleType): type is ConstantType {
   return (<ConstantType>type).values !== undefined;
+}
+
+export function isHeaderMapResponse(resp: HeaderResponse | HeaderMapResponse): resp is HeaderMapResponse {
+  return (<HeaderMapResponse>resp).collectionPrefix !== undefined;
 }
 
 export function isLiteralValueType(type: PossibleType): type is LiteralValueType {
@@ -833,17 +911,19 @@ export class Info implements Info {
 }
 
 export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean) {
+  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean) {
     this.headerText = headerText;
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
+    this.disallowUnknownFields = disallowUnknownFields;
   }
 }
 
 export class MarshallingRequirements implements MarshallingRequirements {
   constructor() {
     this.generateDateHelper = false;
-    this.generateTimeRFC1123Helper = false;
+    this.generateDateTimeRFC1123Helper = false;
+    this.generateDateTimeRFC3339Helper = false;
     this.generateTimeRFC3339Helper = false;
     this.generateUnixTimeHelper = false;
     this.generateXMLDictionaryUnmarshallingHelper = false;
@@ -1127,6 +1207,18 @@ export class FormBodyParameter implements FormBodyParameter {
   }
 }
 
+export class FormBodyCollectionParameter implements FormBodyCollectionParameter {
+  constructor(paramName: string, formDataName: string, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean) {
+    this.paramName = paramName;
+    this.formDataName = formDataName;
+    this.type = type;
+    this.collectionFormat = collectionFormat;
+    this.paramType = paramType;
+    this.byValue = byValue;
+    this.location = 'method';
+  }
+}
+
 export class MultipartFormBodyParameter implements MultipartFormBodyParameter {
   constructor(paramName: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
     this.paramName = paramName;
@@ -1149,11 +1241,35 @@ export class HeaderParameter implements HeaderParameter {
   }
 }
 
+export class HeaderCollectionParameter implements HeaderCollectionParameter {
+  constructor(paramName: string, headerName: string, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.paramName = paramName;
+    this.headerName = headerName;
+    this.type = type;
+    this.collectionFormat = collectionFormat;
+    this.paramType = paramType;
+    this.byValue = byValue;
+    this.location = location;
+  }
+}
+
+export class HeaderMapParameter implements HeaderMapParameter {
+  constructor(paramName: string, headerName: string, type: MapType, collectionPrefix: string, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.paramName = paramName;
+    this.headerName = headerName;
+    this.type = type;
+    this.collectionPrefix = collectionPrefix;
+    this.paramType = paramType;
+    this.byValue = byValue;
+    this.location = location;
+  }
+}
+
 export class PathParameter implements PathParameter {
-  constructor(paramName: string, pathSegment: string, isURLEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+  constructor(paramName: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
     this.paramName = paramName;
     this.pathSegment = pathSegment;
-    this.isURLEncoded = isURLEncoded;
+    this.isEncoded = isEncoded;
     this.type = type;
     this.paramType = paramType;
     this.byValue = byValue;
@@ -1161,13 +1277,38 @@ export class PathParameter implements PathParameter {
   }
 }
 
+export class PathCollectionParameter implements PathCollectionParameter {
+  constructor(paramName: string, pathSegment: string, isEncoded: boolean, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.paramName = paramName;
+    this.pathSegment = pathSegment;
+    this.isEncoded = isEncoded;
+    this.type = type;
+    this.collectionFormat = collectionFormat;
+    this.paramType = paramType;
+    this.byValue = byValue;
+    this.location = location;
+  }
+}
+
 export class QueryParameter implements QueryParameter {
-  constructor(paramName: string, queryParam: string, isURLEncoded: boolean, explode: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+  constructor(paramName: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
     this.paramName = paramName;
     this.queryParameter = queryParam;
-    this.isURLEncoded = isURLEncoded;
-    this.explode = explode;
+    this.isEncoded = isEncoded;
     this.type = type;
+    this.paramType = paramType;
+    this.byValue = byValue;
+    this.location = location;
+  }
+}
+
+export class QueryCollectionParameter implements QueryCollectionParameter {
+  constructor(paramName: string, queryParam: string, isEncoded: boolean, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.paramName = paramName;
+    this.queryParameter = queryParam;
+    this.isEncoded = isEncoded;
+    this.type = type;
+    this.collectionFormat = collectionFormat;
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = location;
@@ -1223,7 +1364,7 @@ export class LiteralValue implements LiteralValue {
 export class ResponseEnvelope implements ResponseEnvelope {
   constructor(name: string, description: string, forMethod: Method) {
     this.description = description;
-    this.headers = new Array<HeaderResponse>();
+    this.headers = new Array<HeaderResponse | HeaderMapResponse>();
     this.method = forMethod;
     this.name = name;
   }
@@ -1233,6 +1374,16 @@ export class HeaderResponse implements HeaderResponse {
   constructor(fieldName: string, type: HeaderType, headerName: string, byValue: boolean) {
     this.fieldName = fieldName;
     this.type = type;
+    this.byValue = byValue;
+    this.headerName = headerName;
+  }
+}
+
+export class HeaderMapResponse implements HeaderMapResponse {
+  constructor(fieldName: string, type: MapType, collectionPrefix: string, headerName: string, byValue: boolean) {
+    this.fieldName = fieldName;
+    this.type = type;
+    this.collectionPrefix = collectionPrefix;
     this.byValue = byValue;
     this.headerName = headerName;
   }

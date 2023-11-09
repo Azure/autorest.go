@@ -1304,7 +1304,7 @@ schemas:
         go:
           name: time.Time
           description: The timestamp of resource creation (UTC).
-          internalTimeType: timeRFC3339
+          internalTimeType: dateTimeRFC3339
       protocol: {}
     - &ref_41
       type: date-time
@@ -1318,7 +1318,7 @@ schemas:
         go:
           name: time.Time
           description: The timestamp of resource last modification (UTC)
-          internalTimeType: timeRFC3339
+          internalTimeType: dateTimeRFC3339
       protocol: {}
   uris:
     - &ref_16
@@ -13898,7 +13898,7 @@ language:
     description: ''
     azureARM: true
     containingModule: none
-    generateTimeRFC3339Helper: true
+    generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
     module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/agrifood/armagrifood

@@ -183,11 +183,11 @@ func (i *ImplicitServerTransport) dispatchGetRequiredPath(req *http.Request) (*h
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	pathParameterUnescaped, err := url.PathUnescape(matches[regex.SubexpIndex("pathParameter")])
+	pathParameterParam, err := url.PathUnescape(matches[regex.SubexpIndex("pathParameter")])
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := i.srv.GetRequiredPath(req.Context(), pathParameterUnescaped, nil)
+	respr, errRespr := i.srv.GetRequiredPath(req.Context(), pathParameterParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
