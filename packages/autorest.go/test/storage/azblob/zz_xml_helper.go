@@ -10,7 +10,9 @@ package azblob
 
 import (
 	"encoding/xml"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"io"
 	"strings"
 )
 
@@ -20,7 +22,13 @@ type additionalProperties map[string]*string
 func (ap *additionalProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tokName := ""
 	tokValue := ""
-	for t, err := d.Token(); err == nil; t, err = d.Token() {
+	for {
+		t, err := d.Token()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return err
+		}
 		switch tt := t.(type) {
 		case xml.StartElement:
 			tokName = strings.ToLower(tt.Name.Local)
