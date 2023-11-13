@@ -29,9 +29,6 @@ func (ap *additionalProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if tokName == "" {
 				continue
 			}
-			if *ap == nil {
-				*ap = additionalProperties{}
-			}
 			tokValue = string(tt)
 		case xml.EndElement:
 			if tokName == "" {
