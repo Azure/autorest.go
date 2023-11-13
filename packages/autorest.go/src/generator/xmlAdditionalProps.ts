@@ -17,6 +17,9 @@ export async function generateXMLAdditionalPropsHelpers(codeModel: GoCodeModel):
   // add standard imports
   const imports = new ImportManager();
   imports.add('encoding/xml');
+  imports.add('errors');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+  imports.add('io');
   imports.add('strings');
   text += imports.text();
   text += `
@@ -25,22 +28,32 @@ type additionalProperties map[string]*string
 // UnmarshalXML implements the xml.Unmarshaler interface for additionalProperties.
 func (ap *additionalProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tokName := ""
-	for t, err := d.Token(); err == nil; t, err = d.Token() {
+	tokValue := ""
+	for {
+		t, err := d.Token()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return err
+		}
 		switch tt := t.(type) {
 		case xml.StartElement:
 			tokName = strings.ToLower(tt.Name.Local)
-			break
+			tokValue = ""
 		case xml.CharData:
+			if tokName == "" {
+				continue
+			}
+			tokValue = string(tt)
+		case xml.EndElement:
 			if tokName == "" {
 				continue
 			}
 			if *ap == nil {
 				*ap = additionalProperties{}
 			}
-			s := string(tt)
-			(*ap)[tokName] = &s
+			(*ap)[tokName] = to.Ptr(tokValue)
 			tokName = ""
-			break
 		}
 	}
 	return nil

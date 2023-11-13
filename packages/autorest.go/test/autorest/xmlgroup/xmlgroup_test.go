@@ -5,6 +5,7 @@ package xmlgroup
 
 import (
 	"context"
+	"encoding/xml"
 	"generatortests"
 	"testing"
 	"time"
@@ -637,4 +638,29 @@ func TestPutWrappedLists(t *testing.T) {
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
+}
+
+func TestMetadataWithEmptyValue(t *testing.T) {
+	const data1 = `<Container><Metadata><key1 /><key2>value2</key2></Metadata></Container>`
+	c := Container{}
+	err := xml.Unmarshal([]byte(data1), &c)
+	require.NoError(t, err)
+	require.Len(t, c.Metadata, 2)
+	require.Empty(t, *c.Metadata["key1"])
+	require.EqualValues(t, "value2", *c.Metadata["key2"])
+
+	const data2 = `<Container><Metadata><key2>value2</key2><key1 /></Metadata></Container>`
+	c = Container{}
+	err = xml.Unmarshal([]byte(data2), &c)
+	require.NoError(t, err)
+	require.Len(t, c.Metadata, 2)
+	require.Empty(t, *c.Metadata["key1"])
+	require.EqualValues(t, "value2", *c.Metadata["key2"])
+
+	const data3 = `<Container><Metadata><key1 /></Metadata></Container>`
+	c = Container{}
+	err = xml.Unmarshal([]byte(data3), &c)
+	require.NoError(t, err)
+	require.Len(t, c.Metadata, 1)
+	require.Empty(t, *c.Metadata["key1"])
 }
