@@ -11,7 +11,7 @@ import { commentLength, contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { getStar } from './models';
 
-// Creates the content in response_types.go
+// Creates the content in responses.go
 export async function generateResponses(codeModel: GoCodeModel): Promise<string> {
   if (codeModel.responseEnvelopes. length === 0) {
     return '';

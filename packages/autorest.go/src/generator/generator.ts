@@ -112,7 +112,7 @@ export async function generateCode(host: AutorestExtensionHost) {
     const responses = await generateResponses(session.model);
     if (responses.length > 0) {
       host.writeFile({
-        filename: `${filePrefix}response_types.go`,
+        filename: `${filePrefix}responses.go`,
         content: responses,
         artifactType: 'source-file-go'
       });
