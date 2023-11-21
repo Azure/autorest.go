@@ -138,7 +138,8 @@ export async function generateCode(host: AutorestExtensionHost) {
 
     // don't overwrite an existing go.mod file, update it if required
     const existingGoMod = await host.readFile('go.mod');
-    const gomod = await generateGoModFile(session.model, existingGoMod);
+    // per coding guidelines, undefined is preferred to null
+    const gomod = await generateGoModFile(session.model, existingGoMod !== null ? existingGoMod : undefined);
     if (gomod.length > 0) {
       host.writeFile({
         filename: 'go.mod',
