@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize, uncapitalize } from '@azure-tool
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import * as m4 from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties, recursiveUnwrapArrayDictionary } from './helpers';
+import * as helpers from './helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -47,7 +47,7 @@ async function process(session: Session<m4.CodeModel>) {
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
     dictionary.language.go!.name = schemaTypeToGoType(session.model, dictionary, 'Property');
-    dictionary.language.go!.elementIsPtr = !isTypePassedByValue(dictionary.elementType);
+    dictionary.language.go!.elementIsPtr = !helpers.isTypePassedByValue(dictionary.elementType);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
     }
@@ -88,17 +88,17 @@ async function process(session: Session<m4.CodeModel>) {
       const descriptionMods = new Array<string>();
       if (prop.readOnly) {
         descriptionMods.push('READ-ONLY');
-      } else if (prop.required && (prop.schema.type !== m4.SchemaType.Constant || isOutputOnly(obj))) {
+      } else if (prop.required && (prop.schema.type !== m4.SchemaType.Constant || helpers.isOutputOnly(obj))) {
         descriptionMods.push('REQUIRED');
       } else if (prop.required && prop.schema.type === m4.SchemaType.Constant) {
         descriptionMods.push('CONSTANT');
       }
-      if (prop.required && prop.schema.type === m4.SchemaType.Constant && !isOutputOnly(obj)) {
+      if (prop.required && prop.schema.type === m4.SchemaType.Constant && !helpers.isOutputOnly(obj)) {
         // add a comment with the const value for const properties that are sent over the wire
         if (prop.language.go!.description) {
           prop.language.go!.description += '<br/>';
         }
-        prop.language.go!.description += `Field has constant value ${formatConstantValue(<m4.ConstantSchema>prop.schema)}, any specified value is ignored.`;
+        prop.language.go!.description += `Field has constant value ${helpers.formatConstantValue(<m4.ConstantSchema>prop.schema)}, any specified value is ignored.`;
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));
@@ -110,7 +110,7 @@ async function process(session: Session<m4.CodeModel>) {
       const details = <m4.Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, 'InBody')}`;
       prop.schema = substitueDiscriminator(prop);
-      if (prop.schema.type === m4.SchemaType.Any || prop.schema.type === m4.SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
+      if (prop.schema.type === m4.SchemaType.Any || prop.schema.type === m4.SchemaType.AnyObject || (helpers.isObjectSchema(prop.schema) && prop.schema.discriminator)) {
         prop.language.go!.byValue = true;
       } else if (prop.schema.type === m4.SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
@@ -141,7 +141,7 @@ async function process(session: Session<m4.CodeModel>) {
       // the format to JSON as the vast majority of specs use JSON.
       obj.language.go!.marshallingFormat = 'json';
     }
-    const addPropsSchema = hasAdditionalProperties(obj);
+    const addPropsSchema = helpers.hasAdditionalProperties(obj);
     if (addPropsSchema) {
       // add an 'AdditionalProperties' field to the type
       const addProps = newProperty('AdditionalProperties', 'OPTIONAL; Contains additional key/value pairs not defined in the schema.', addPropsSchema);
@@ -190,8 +190,8 @@ function substitueDiscriminator(item: m4.Property | m4.Parameter | m4.SchemaResp
   if (item.schema.type === m4.SchemaType.Object && item.schema.language.go!.discriminatorInterface) {
     item.language.go!.byValue = true;
     return getDiscriminatorSchema(<m4.ObjectSchema>item.schema);
-  } else if (isArraySchema(item.schema) || isDictionarySchema(item.schema)) {
-    const leafElementSchema = recursiveUnwrapArrayDictionary(item.schema);
+  } else if (helpers.isArraySchema(item.schema) || helpers.isDictionarySchema(item.schema)) {
+    const leafElementSchema = helpers.recursiveUnwrapArrayDictionary(item.schema);
     if (leafElementSchema.type === m4.SchemaType.Object && leafElementSchema.language.go!.discriminatorInterface) {
       return recursiveSubstitueDiscriminator(item.schema);
     }
@@ -210,13 +210,13 @@ function recursiveSubstitueDiscriminator(item: m4.Schema): m4.Schema {
   if (discriminatorSchema) {
     return discriminatorSchema;
   }
-  if (isArraySchema(item)) {
+  if (helpers.isArraySchema(item)) {
     discriminatorSchema = new m4.ArraySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
     discriminatorSchema.language.go! = discriminatorSchema.language.default;
     discriminatorSchema.language.go!.elementIsPtr = false;
     discriminatorSchemas.set(strings.Name, discriminatorSchema);
     return discriminatorSchema;
-  } else if (isDictionarySchema(item)) {
+  } else if (helpers.isDictionarySchema(item)) {
     discriminatorSchema = new m4.DictionarySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
     discriminatorSchema.language.go! = discriminatorSchema.language.default;
     discriminatorSchema.language.go!.elementIsPtr = false;
@@ -236,13 +236,13 @@ interface DiscriminatorStrings {
 // Name: []map[string]DiscriminatorInterface
 // Desc: slice of map of discriminators
 function recursiveBuildDiscriminatorStrings(item: m4.Schema): DiscriminatorStrings {
-  if (isArraySchema(item)) {
+  if (helpers.isArraySchema(item)) {
     const strings = recursiveBuildDiscriminatorStrings(item.elementType);
     return {
       Name: `[]${strings.Name}`,
       Desc: `array of ${strings.Desc}`
     };
-  } else if (isDictionarySchema(item)) {
+  } else if (helpers.isDictionarySchema(item)) {
     const strings = recursiveBuildDiscriminatorStrings(item.elementType);
     return {
       Name: `map[string]${strings.Name}`,
@@ -283,7 +283,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[]byte';
       }
-      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arrayElem) && !<boolean>codeModel.language.go!.sliceElementsByValue;
+      arraySchema.language.go!.elementIsPtr = !helpers.isTypePassedByValue(arrayElem) && !<boolean>codeModel.language.go!.sliceElementsByValue;
       // passing nil for array elements in headers, paths, and query params
       // isn't very useful as we'd just skip nil entries.  so disable it.
       if (type !== 'Property' && type !== 'InBody') {
@@ -340,7 +340,7 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
         dictSchema.elementType = dictionaryElementAnySchema;
         return `map[string]${dictionaryElementAnySchema.language.go!.name}`;
       }
-      dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
+      dictSchema.language.go!.elementIsPtr = !helpers.isTypePassedByValue(dictSchema.elementType);
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, type);
       if (<boolean>dictSchema.language.go!.elementIsPtr) {
         return `map[string]*${dictElem.language.go!.name}`;
@@ -475,8 +475,8 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, 'Property');
         }
       }
-      const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
-      const params = values(aggregateParameters(op));
+      const opName = helpers.isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
+      const params = values(helpers.aggregateParameters(op));
       // create an optional params struct even if the operation contains no optional params.
       // this provides version resiliency in case optional params are added in the future.
       // don't do this for paging next link operation as this isn't part of the public API
@@ -484,7 +484,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
         // create a type named <OperationGroup><Operation>Options
         // the client might not be exported, but the options should be.
         const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
-        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
+        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
         const gp = createGroupProperty(optionalParamsGroupName, desc, false);
         gp.language.go!.name = 'options';
         // if there's an existing parameter with the name options then pick something else
@@ -558,7 +558,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
             paramType = 'Property';
         }
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, paramType);
-        if (isTypePassedByValue(param.schema)) {
+        if (helpers.isTypePassedByValue(param.schema)) {
           param.language.go!.byValue = true;
         }
         param.schema = substitueDiscriminator(param);
@@ -639,7 +639,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
           param.language.go!.paramGroup = op.language.go!.optionalParamGroup;
         }
       }
-      if (isLROOperation(op)) {
+      if (helpers.isLROOperation(op)) {
         // add the ResumeToken to the optional params type
         const tokenParam = newParameter('ResumeToken', 'Resumes the LRO from the provided token.', newString('string', ''));
         tokenParam.language.go!.byValue = true;
@@ -652,7 +652,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(aggregateParameters(op)).where((each: m4.Parameter) => { return each.protocol.http?.in === 'body'; }).first();
+        const bodyParam = values(helpers.aggregateParameters(op)).where((each: m4.Parameter) => { return each.protocol.http?.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
           if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
@@ -708,7 +708,7 @@ function processOperationResponses(session: Session<m4.CodeModel>) {
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') && !isPageableOperation(op)) {
+      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') && !helpers.isPageableOperation(op)) {
         // when head-as-boolean is enabled, no error is returned for 4xx status codes.
         // pager constructors don't return an error
         op.language.go!.description += '\nIf the operation fails it returns an *azcore.ResponseError type.';
@@ -721,7 +721,7 @@ function processOperationResponses(session: Session<m4.CodeModel>) {
           // redirects are transient status codes, they aren't actually returned
           continue;
         }
-        if (isSchemaResponse(resp)) {
+        if (helpers.isSchemaResponse(resp)) {
           if (resp.schema.type === m4.SchemaType.Binary) {
             // don't create response envelopes for binary responses.
             // callers read directly from the *http.Response.Body
@@ -730,7 +730,7 @@ function processOperationResponses(session: Session<m4.CodeModel>) {
           resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, 'InBody');
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
-        if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
+        if (marshallingFormat !== 'na' && helpers.isSchemaResponse(resp)) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
         }
         // fix up schema types for header responses
@@ -800,7 +800,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
   // skip adding headers for LROs for now, this is to avoid adding
   // any LRO-specific polling headers.
   // TODO: maybe switch to skip specific polling ones in the future?
-  if (!isLROOperation(op)) {
+  if (!helpers.isLROOperation(op)) {
     for (const resp of values(op.responses)) {
       // check if the response is expecting information from headers
       for (const header of values(resp.protocol.http!.headers)) {
@@ -822,13 +822,13 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
   const responseEnvelopes = <Array<m4.ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
   const respEnvName = ensureUniqueModelName(codeModel, `${capitalize(group.language.go!.clientName)}${op.language.go!.name}Response`, 'Envelope');
-  const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
-  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName}.`);
+  const opName = helpers.isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
+  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}.`);
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<m4.Property>();
   responseEnvelopes.push(respEnv);
   op.language.go!.responseEnv = respEnv;
-  if (isLROOperation(op)) {
+  if (helpers.isLROOperation(op)) {
     respEnv.language.go!.forLRO = true;
   }
 
@@ -851,12 +851,12 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
     respEnv.language.go!.resultProp = successProp;
     return;
   }
-  if (isMultiRespOperation(op)) {
+  if (helpers.isMultiRespOperation(op)) {
     const resultTypes = new Array<string>();
     for (const response of values(op.responses)) {
       // the operation might contain a mix of schemas and non-schema responses.
       // we only care about the ones that return a schema.
-      if (isSchemaResponse(response)) {
+      if (helpers.isSchemaResponse(response)) {
         resultTypes.push(response.schema.language.go!.name);
       }
     }
@@ -865,7 +865,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
     respEnv.language.go!.resultProp = resultProp;
     return;
   }
-  const response = getSchemaResponse(op);
+  const response = helpers.getSchemaResponse(op);
   // if the response defines a schema then add it to the response envelope
   if (response) {
     const rawJSONAsBytes = <boolean>codeModel.language.go!.rawJSONAsBytes;
@@ -891,7 +891,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
       propName = capitalize(response.schema.serialization.xml.name);
     }
     // we want to pass integral types byref to maintain parity with struct fields
-    const byValue = isTypePassedByValue(response.schema) || response.schema.type === m4.SchemaType.Object;
+    const byValue = helpers.isTypePassedByValue(response.schema) || response.schema.type === m4.SchemaType.Object;
     const resultSchema = substitueDiscriminator(response);
     const resultProp = newRespProperty(propName, response.schema.language.go!.description, resultSchema, byValue);
     if (resultSchema.language.go!.discriminatorInterface) {
@@ -901,7 +901,7 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
     }
     respEnv.properties.push(resultProp);
     respEnv.language.go!.resultProp = resultProp;
-  } else if (isBinaryResponseOperation(op)) {
+  } else if (helpers.isBinaryResponseOperation(op)) {
     const binaryProp = newProperty('Body', 'Body contains the streaming response.', newBinary('binary response'));
     binaryProp.language.go!.byValue = true;
     respEnv.properties.push(binaryProp);
@@ -960,7 +960,7 @@ function newString(name: string, desc: string): m4.StringSchema {
 
 function newProperty(name: string, desc: string, schema: m4.Schema): m4.Property {
   const prop = new m4.Property(name, desc, schema);
-  if (isObjectSchema(schema) && schema.discriminator) {
+  if (helpers.isObjectSchema(schema) && schema.discriminator) {
     prop.isDiscriminator = true;
   }
   prop.language.go = prop.language.default;
@@ -976,7 +976,7 @@ function newParameter(name: string, desc: string, schema: m4.Schema): m4.Paramet
 
 function newRespProperty(name: string, desc: string, schema: m4.Schema, byValue: boolean): m4.Property {
   const prop = newProperty(name, desc, schema);
-  if (isTypePassedByValue(schema)) {
+  if (helpers.isTypePassedByValue(schema)) {
     byValue = true;
   }
   prop.language.go!.byValue = byValue;
@@ -1070,7 +1070,7 @@ function getRootDiscriminator(obj: m4.ObjectSchema): m4.ObjectSchema {
       // there can be parents that aren't part of the hierarchy.
       // e.g. if type Foo is in a DictionaryOfFoo, then one of
       // Foo's parents will be DictionaryOfFoo which we ignore.
-      if (isObjectSchema(parent) && parent.discriminator) {
+      if (helpers.isObjectSchema(parent) && parent.discriminator) {
         root.language.go!.discriminatorParent = parent.language.go!.discriminatorInterface;
         root = parent;
         // update obj with the new root.  this enables us to detect the case
@@ -1172,14 +1172,14 @@ function labelOmitTypes<Type extends m4.Schema>(modelSchemas: Array<Type> | unde
 function iterateOperations(model: m4.CodeModel, referencedTypes: Set<m4.Schema>) {
   for (const group of values(model.operationGroups)) {
     for (const op of values(group.operations)) {
-      for (const param of values(aggregateParameters(op))) {
+      for (const param of values(helpers.aggregateParameters(op))) {
         dfsSchema(param.schema, referencedTypes);
       }
       // We do not use error responses' definition to unmarshal response. So exceptions will be ignored.
       // const responses = values(op.responses).concat(values(op.exceptions));
       const responses = values(op.responses);
       for (const resp of values(responses)) {
-        if (isSchemaResponse(resp)) {
+        if (helpers.isSchemaResponse(resp)) {
           dfsSchema(resp.schema, referencedTypes);
         }
         const httpResponse = <m4.HttpResponse>resp.protocol.http;
@@ -1205,8 +1205,8 @@ function iterateOperations(model: m4.CodeModel, referencedTypes: Set<m4.Schema>)
 function dfsSchema(schema: m4.Schema, referencedTypes: Set<m4.Schema>) {
   if (referencedTypes.has(schema)) return;
   referencedTypes.add(schema);
-  if (isObjectSchema(schema)) {
-    const allProps = aggregateProperties(schema);
+  if (helpers.isObjectSchema(schema)) {
+    const allProps = helpers.aggregateProperties(schema);
     for (const prop of allProps){
       dfsSchema(prop.schema, referencedTypes);
     }
@@ -1218,13 +1218,13 @@ function dfsSchema(schema: m4.Schema, referencedTypes: Set<m4.Schema>) {
     }
     // If schema is has allOf, then reserve all the parents
     for (const parent of values(schema.parents?.immediate)) {
-      if (isObjectSchema(parent) && parent.discriminator) {
+      if (helpers.isObjectSchema(parent) && parent.discriminator) {
         dfsSchema(parent, referencedTypes);
       }
     }
-  } else if (isArraySchema(schema)) {
+  } else if (helpers.isArraySchema(schema)) {
     dfsSchema(schema.elementType, referencedTypes);
-  } else if (isDictionarySchema(schema)) {
+  } else if (helpers.isDictionarySchema(schema)) {
     dfsSchema(schema.elementType, referencedTypes);
   }
 }

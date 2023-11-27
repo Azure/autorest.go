@@ -9,7 +9,7 @@ import { values } from '@azure-tools/linq';
 import { adaptXMLInfo } from './types';
 import { adaptPossibleType, hasDescription } from './types';
 import * as go from '../gocodemodel/gocodemodel';
-import { aggregateParameters, getSchemaResponse, isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse } from '../transform/helpers';
+import * as helpers from '../transform/helpers';
 import { OperationNaming } from '../transform/namer';
 
 // track all of the client and parameter group params across all operations
@@ -28,7 +28,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
       let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
       const naming = adaptMethodNaming(op);
 
-      if (isLROOperation(op) && isPageableOperation(op)) {
+      if (helpers.isLROOperation(op) && helpers.isPageableOperation(op)) {
         method = new go.LROPageableMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
         (<go.LROPageableMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
         (<go.LROPageableMethod>method).nextLinkName = op.language.go!.paging.nextLinkName;
@@ -38,10 +38,10 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel)
           populateMethod(op.language.go!.paging.nextLinkOperation, nextPageMethod, m4CodeModel, codeModel);
           (<go.LROPageableMethod>method).nextPageMethod = nextPageMethod;
         }
-      } else if (isLROOperation(op)) {
+      } else if (helpers.isLROOperation(op)) {
         method = new go.LROMethod(op.language.go!.name, client, httpPath, httpMethod, getStatusCodes(op), naming);
         (<go.LROMethod>method).finalStateVia = (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']);
-      } else if (isPageableOperation(op)) {
+      } else if (helpers.isPageableOperation(op)) {
         if (op.language.go!.paging.isNextOp) {
           continue;
         }
@@ -188,7 +188,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
     return;
   }
 
-  for (const param of values(aggregateParameters(op))) {
+  for (const param of values(helpers.aggregateParameters(op))) {
     const methodParam = adaptMethodParameter(op, param);
     method.parameters.push(methodParam);
   }
@@ -224,7 +224,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
 
   // now add the result field
   const resultProp = <m4.Property>respEnvSchema.language.go!.resultProp;
-  if (isMultiRespOperation(op)) {
+  if (helpers.isMultiRespOperation(op)) {
     respEnv.result = adaptAnyResult(op);
   } else if (resultProp.schema.type === m4.SchemaType.Binary) {
     respEnv.result = new go.BinaryResult(resultProp.language.go!.name, 'binary');
@@ -235,7 +235,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isStandardType(resultType)) {
       throw new Error(`invalid monomorphic result type ${resultType}`);
     }
-    respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
+    respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);
     respEnv.result.xml = adaptXMLInfo(resultProp.schema);
   } else if (resultProp.isDiscriminator) {
     let ifaceResult: go.InterfaceType | undefined;
@@ -249,7 +249,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
       throw new Error(`didn't find InterfaceType for result property ${resultProp.schema.language.go!.name}`);
     }
     respEnv.result = new go.PolymorphicResult(ifaceResult);
-  } else if (getSchemaResponse(op)) {
+  } else if (helpers.getSchemaResponse(op)) {
     let modelType: go.ModelType | undefined;
     for (const model of codeModel.models) {
       if (model.name === resultProp.schema.language.go!.name) {
@@ -260,7 +260,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     if (!modelType) {
       throw new Error(`didn't find type name ${resultProp.schema.language.go!.name} for response envelope ${respEnv.name}`);
     }
-    respEnv.result = new go.ModelResult(modelType, adaptResultFormat(getSchemaResponse(op)!.protocol));
+    respEnv.result = new go.ModelResult(modelType, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol));
   } else {
     throw new Error(`unhandled result type for operation ${op.language.go!.name}`);
   }
@@ -554,7 +554,7 @@ function adaptAnyResult(op: m4.Operation): go.AnyResult {
   const resultTypes: Record<number, go.PossibleType> = {};
   for (const resp of values(op.responses)) {
     let possibleType: go.PossibleType;
-    if (isSchemaResponse(resp)) {
+    if (helpers.isSchemaResponse(resp)) {
       possibleType = adaptPossibleType(resp.schema);
     } else {
       // the operation contains a mix of schemas and non-schema responses
