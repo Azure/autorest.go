@@ -5,13 +5,12 @@
 
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { GoCodeModel, StructType } from '../gocodemodel/gocodemodel';
-import { getLiteralValueTypeName, getTypeDeclaration, isLiteralValue } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { commentLength, contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in options.go
-export async function generateOptions(codeModel: GoCodeModel): Promise<string> {
+export async function generateOptions(codeModel: go.CodeModel): Promise<string> {
   if (codeModel.paramGroups.length === 0) {
     return '';
   }
@@ -29,7 +28,7 @@ export async function generateOptions(codeModel: GoCodeModel): Promise<string> {
   return optionsText;
 }
 
-function emit(struct: StructType, imports: ImportManager): string {
+function emit(struct: go.StructType, imports: ImportManager): string {
   let text = '';
   if (struct.description) {
     text += `${comment(struct.description, '// ', undefined, commentLength)}\n`;
@@ -54,10 +53,10 @@ function emit(struct: StructType, imports: ImportManager): string {
         text += `\t${comment(field.description, '// ', undefined, commentLength)}\n`;
       }
 
-      let typeName = getTypeDeclaration(field.type);
-      if (isLiteralValue(field.type)) {
+      let typeName = go.getTypeDeclaration(field.type);
+      if (go.isLiteralValue(field.type)) {
         // for constants we use the underlying type name
-        typeName = getLiteralValueTypeName(field.type.type);
+        typeName = go.getLiteralValueTypeName(field.type.type);
       }
 
       let pointer = '*';

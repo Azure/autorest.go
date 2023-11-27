@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { isMapType, isSliceType, isStandardType, isTimeType, PossibleType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { sortAscending } from './helpers';
 
@@ -50,14 +50,14 @@ export class ImportManager {
     return text;
   }
 
-  addImportForType(type: PossibleType) {
-    if (isMapType(type)) {
+  addImportForType(type: go.PossibleType) {
+    if (go.isMapType(type)) {
       this.addImportForType(type.valueType);
-    } else if (isSliceType(type)) {
+    } else if (go.isSliceType(type)) {
       this.addImportForType(type.elementType);
-    } else if (isStandardType(type)) {
+    } else if (go.isStandardType(type)) {
       this.add(type.packageName);
-    } else if (isTimeType(type)) {
+    } else if (go.isTimeType(type)) {
       this.add('time');
     }
   }

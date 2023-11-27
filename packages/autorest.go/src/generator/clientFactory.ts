@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel, Parameter } from '../gocodemodel/gocodemodel'; 
+import * as go from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 
 // Creates the content for all <operation>.go files
-export async function generateClientFactory(codeModel: GoCodeModel): Promise<string> {
+export async function generateClientFactory(codeModel: go.CodeModel): Promise<string> {
   let result = '';
   // generate client factory only for ARM
   if (codeModel.type === 'azure-arm' && codeModel.clients) {
@@ -18,7 +18,7 @@ export async function generateClientFactory(codeModel: GoCodeModel): Promise<str
     const imports = new ImportManager();
     
     // there should be at most one client level param: subscriptionID for ARM, any exception is always a wrong swagger definition that we should fix
-    const allClientParams = new Array<Parameter>();
+    const allClientParams = new Array<go.Parameter>();
     for (const clients of codeModel.clients) {
       for (const clientParam of values(clients.parameters)) {
         if (values(allClientParams).where(each => each.paramName === clientParam.paramName).any()) {

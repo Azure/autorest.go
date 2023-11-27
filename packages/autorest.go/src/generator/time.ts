@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { values } from '@azure-tools/linq';
-import { GoCodeModel, isTimeType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
@@ -21,7 +21,7 @@ export class Content {
 
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateTimeHelpers(codeModel: GoCodeModel, packageName?: string): Promise<Array<Content>> {
+export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?: string): Promise<Array<Content>> {
   const content = new Array<Content>();
   if (!codeModel.marshallingRequirements.generateDateTimeRFC1123Helper &&
     !codeModel.marshallingRequirements.generateDateTimeRFC3339Helper &&
@@ -37,7 +37,7 @@ export async function generateTimeHelpers(codeModel: GoCodeModel, packageName?: 
       continue;
     }
     for (const field of values(model.fields)) {
-      if (isTimeType(field.type)) {
+      if (go.isTimeType(field.type)) {
         needsPopulate = true;
         break;
       }

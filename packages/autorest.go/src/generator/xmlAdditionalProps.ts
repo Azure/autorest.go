@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { contentPreamble } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content for required additional properties XML marshalling helpers.
 // Will be empty if no helpers are required.
-export async function generateXMLAdditionalPropsHelpers(codeModel: GoCodeModel): Promise<string> {
+export async function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): Promise<string> {
   if (!codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper) {
     return '';
   }
