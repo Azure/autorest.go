@@ -5,14 +5,13 @@
 
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { GoCodeModel, ResponseEnvelope, PolymorphicResult, MonomorphicResult } from '../gocodemodel/gocodemodel';
-import { getResultPossibleType, getTypeDeclaration, isLROMethod, isMonomorphicResult, isPolymorphicResult, isModelResult } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { commentLength, contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { getStar } from './models';
 
 // Creates the content in responses.go
-export async function generateResponses(codeModel: GoCodeModel): Promise<string> {
+export async function generateResponses(codeModel: go.CodeModel): Promise<string> {
   if (codeModel.responseEnvelopes. length === 0) {
     return '';
   }
@@ -34,9 +33,9 @@ export async function generateResponses(codeModel: GoCodeModel): Promise<string>
   return text;
 }
 
-function generateMarshaller(respEnv: ResponseEnvelope, imports: ImportManager): string {
+function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   let text = '';
-  if (isLROMethod(respEnv.method) && respEnv.result && isPolymorphicResult(respEnv.result)) {
+  if (go.isLROMethod(respEnv.method) && respEnv.result && go.isPolymorphicResult(respEnv.result)) {
     // fakes require a custom marshaller for polymorphics results so that the data is in the correct shape.
     // without it, the response envelope type name is the outer type which is incorrect.
     imports.add('encoding/json');
@@ -44,20 +43,20 @@ function generateMarshaller(respEnv: ResponseEnvelope, imports: ImportManager): 
     text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
-    text += `\treturn json.Marshal(${receiver}.${getTypeDeclaration(respEnv.result.interfaceType)})\n}\n\n`;
+    text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interfaceType)})\n}\n\n`;
   }
   return text;
 }
 
 // check if the response envelope requires an unmarshaller
-function generateUnmarshaller(respEnv: ResponseEnvelope, imports: ImportManager): string {
+function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   // if the response envelope contains a discriminated type we need an unmarshaller
-  let polymorphicRes: PolymorphicResult | undefined;
+  let polymorphicRes: go.PolymorphicResult | undefined;
   // in addition, if it's an LRO operation that returns a scalar, we will also need one
-  let monomorphicRes: MonomorphicResult | undefined;
-  if (respEnv.result && isPolymorphicResult(respEnv.result)) {
+  let monomorphicRes: go.MonomorphicResult | undefined;
+  if (respEnv.result && go.isPolymorphicResult(respEnv.result)) {
     polymorphicRes = respEnv.result;
-  } else if (isLROMethod(respEnv.method) && respEnv.result && isMonomorphicResult(respEnv.result)) {
+  } else if (go.isLROMethod(respEnv.method) && respEnv.result && go.isMonomorphicResult(respEnv.result)) {
     monomorphicRes = respEnv.result;
   }
 
@@ -89,7 +88,7 @@ function generateUnmarshaller(respEnv: ResponseEnvelope, imports: ImportManager)
   return unmarshaller;
 }
 
-function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
+function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
   let text = '';
   if (respEnv.description) {
     text += `${comment(respEnv.description, '// ', undefined, commentLength)}\n`;
@@ -107,12 +106,12 @@ function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
     let first = true;
 
     if (respEnv.result) {
-      if (isModelResult(respEnv.result) || isPolymorphicResult(respEnv.result)) {
+      if (go.isModelResult(respEnv.result) || go.isPolymorphicResult(respEnv.result)) {
         // anonymously embedded type always goes first
         if (respEnv.result.description) {
           text += `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
         }
-        text += `\t${getTypeDeclaration(getResultPossibleType(respEnv.result))}\n`;
+        text += `\t${go.getTypeDeclaration(go.getResultPossibleType(respEnv.result))}\n`;
         first = false;
       } else {
         let desc: string | undefined;
@@ -120,11 +119,11 @@ function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
           desc = `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
         }
 
-        const type = getResultPossibleType(respEnv.result);
+        const type = go.getResultPossibleType(respEnv.result);
         imports.addImportForType(type);
 
         let tag = '';
-        if (isMonomorphicResult(respEnv.result) && respEnv.result.format === 'XML') {
+        if (go.isMonomorphicResult(respEnv.result) && respEnv.result.format === 'XML') {
           // only emit tags for XML; JSON uses custom marshallers/unmarshallers
           if (respEnv.result.xml?.wraps) {
             tag = ` \`xml:"${respEnv.result.xml.wraps}"\``;
@@ -133,7 +132,7 @@ function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
           }
         }
 
-        fields.push({desc: desc, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${getTypeDeclaration(type)}${tag}\n`});
+        fields.push({desc: desc, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
       }
     }
 
@@ -143,7 +142,7 @@ function emit(respEnv: ResponseEnvelope, imports: ImportManager): string {
       if (header.description) {
         desc = `\t${comment(header.description, '// ', undefined, commentLength)}\n`;
       }
-      fields.push({desc: desc, field: `\t${header.fieldName} ${getStar(header.byValue)}${getTypeDeclaration(header.type)}\n`});
+      fields.push({desc: desc, field: `\t${header.fieldName} ${getStar(header.byValue)}${go.getTypeDeclaration(header.type)}\n`});
     }
 
     fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return sortAscending(a.field, b.field); });

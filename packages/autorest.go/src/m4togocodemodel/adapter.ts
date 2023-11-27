@@ -35,7 +35,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       type = 'azure-arm';
     }
     
-    const codeModel = new go.GoCodeModel(info, type, session.model.language.go!.packageName, options);
+    const codeModel = new go.CodeModel(info, type, session.model.language.go!.packageName, options);
     if (session.model.language.go!.host) {
       codeModel.host = session.model.language.go!.host;
     }
@@ -111,7 +111,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
   }
 }
 
-function adaptConstantTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.GoCodeModel) {
+function adaptConstantTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
   // group all enum categories into a single array so they can be sorted
   for (const choice of values(m4CodeModel.schemas.choices)) {
     if (choice.language.go!.omitType) {
@@ -156,7 +156,7 @@ interface InterfaceTypeObjectSchema {
   obj: m4.ObjectSchema;
 }
 
-function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.GoCodeModel) {
+function adaptInterfaceTypes(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
   if (!m4CodeModel.language.go!.discriminators) {
     return;
   }
@@ -206,7 +206,7 @@ interface ModelTypeObjectSchema {
   obj: m4.ObjectSchema;
 }
 
-function adaptModels(m4CodeModel: m4.CodeModel, goCodeModel: go.GoCodeModel) {
+function adaptModels(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
   const modelObjs = new Array<ModelTypeObjectSchema>();
   for (const obj of values(m4CodeModel.schemas.objects)) {
     if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {

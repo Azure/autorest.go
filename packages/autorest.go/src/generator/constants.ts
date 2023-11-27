@@ -6,10 +6,10 @@
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { commentLength, contentPreamble } from './helpers';
-import { GoCodeModel } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 
 // Creates the content in constants.go
-export async function generateConstants(codeModel: GoCodeModel): Promise<string> {
+export async function generateConstants(codeModel: go.CodeModel): Promise<string> {
   // lack of operation groups indicates model-only mode.
   if (!codeModel.clients || (codeModel.constants.length === 0 && !codeModel.host && codeModel.type !== 'azure-arm')) {
     return '';

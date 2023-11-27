@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { comment } from '@azure-tools/codegen';
 import { contentPreamble, sortAscending } from './helpers';
 
 // Creates the content in interfaces.go
-export async function generateInterfaces(codeModel: GoCodeModel): Promise<string> {
+export async function generateInterfaces(codeModel: go.CodeModel): Promise<string> {
   if (codeModel.interfaceTypes.length === 0) {
     // no polymorphic types
     return '';

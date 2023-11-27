@@ -3,8 +3,8 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-// GoCodeModel contains a Go-specific abstraction over an OpenAPI (or other) description of REST endpoints.
-export interface GoCodeModel {
+// CodeModel contains a Go-specific abstraction over an OpenAPI (or other) description of REST endpoints.
+export interface CodeModel {
   info: Info;
 
   host?: string;
@@ -930,7 +930,7 @@ export class MarshallingRequirements implements MarshallingRequirements {
   }
 }
 
-export class GoCodeModel implements GoCodeModel {
+export class CodeModel implements CodeModel {
   constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
     this.clients = new Array<Client>();
     this.constants = new Array<ConstantType>();

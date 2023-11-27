@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel, isMapType, isPolymorphicResult, isInterfaceType, isSliceType, isMonomorphicResult, PossibleType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, getParentImport } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in polymorphic_helpers.go
-export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeServerPkg?: string): Promise<string> {
+export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeServerPkg?: string): Promise<string> {
   if (codeModel.interfaceTypes.length === 0) {
     // no polymorphic types
     return '';
@@ -32,18 +32,18 @@ export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeSer
   // we know there are polymorphic types but we don't know how they're used.
   // i.e. are they vanilla fields, elements in a slice, or values in a map.
   // polymorphic types within maps/slices will also need the scalar helpers.
-  const trackDisciminator = function(type: PossibleType) {
-    if (isInterfaceType(type)) {
+  const trackDisciminator = function(type: go.PossibleType) {
+    if (go.isInterfaceType(type)) {
       scalars.add(type.name);
-    } else if (isSliceType(type)) {
+    } else if (go.isSliceType(type)) {
       const leafType = recursiveUnwrapMapSlice(type);
-      if (isInterfaceType(leafType)) {
+      if (go.isInterfaceType(leafType)) {
         scalars.add(leafType.name);
         arrays.add(leafType.name);
       }
-    } else if (isMapType(type)) {
+    } else if (go.isMapType(type)) {
       const leafType = recursiveUnwrapMapSlice(type);
-      if (isInterfaceType(leafType)) {
+      if (go.isInterfaceType(leafType)) {
         scalars.add(leafType.name);
         maps.add(leafType.name);
       }
@@ -73,13 +73,13 @@ export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeSer
         continue;
       }
 
-      if (isMonomorphicResult(respEnv.result)) {
-        if (isMapType(respEnv.result.monomorphicType)) {
+      if (go.isMonomorphicResult(respEnv.result)) {
+        if (go.isMapType(respEnv.result.monomorphicType)) {
           trackDisciminator(respEnv.result.monomorphicType.valueType);
-        } else if (isSliceType(respEnv.result.monomorphicType)) {
+        } else if (go.isSliceType(respEnv.result.monomorphicType)) {
           trackDisciminator(respEnv.result.monomorphicType.elementType);
         }
-      } else if (isPolymorphicResult(respEnv.result)) {
+      } else if (go.isPolymorphicResult(respEnv.result)) {
         trackDisciminator(respEnv.result.interfaceType);
       }
     }
@@ -178,10 +178,10 @@ export async function generatePolymorphicHelpers(codeModel: GoCodeModel, fakeSer
   return text;
 }
 
-function recursiveUnwrapMapSlice(item: PossibleType): PossibleType {
-  if (isMapType(item)) {
+function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType {
+  if (go.isMapType(item)) {
     return recursiveUnwrapMapSlice(item.valueType);
-  } else if (isSliceType(item)) {
+  } else if (go.isSliceType(item)) {
     return recursiveUnwrapMapSlice(item.elementType);
   }
   return item;

@@ -18,7 +18,7 @@ import { OperationNaming } from '../transform/namer';
 const clientParams = new Map<string, go.Parameter>();
 const paramGroups = new Map<string, go.ParameterGroup>();
 
-export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel) {
+export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   for (const group of values(m4CodeModel.operationGroups)) {
     const client = adaptClient(group);
 
@@ -80,7 +80,7 @@ export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeMode
 // only adaptNextPageMethod should touch this!
 const adaptedNextPageMethods = new Map<string, go.NextPageMethod>();
 
-function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, codeModel: go.GoCodeModel): go.NextPageMethod {
+function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client: go.Client, codeModel: go.CodeModel): go.NextPageMethod {
   const nextPageMethodName = op.language.go!.paging.nextLinkOperation.language.go.name;
   let nextPageMethod = adaptedNextPageMethods.get(nextPageMethodName);
   if (!nextPageMethod) {
@@ -93,7 +93,7 @@ function adaptNextPageMethod(op: m4.Operation, m4CodeModel: m4.CodeModel, client
   return nextPageMethod;
 }
 
-function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel) {
+function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod, m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   if (go.isMethod(method)) {
     if (hasDescription(op.language.go!)) {
       method.description = op.language.go!.description;
@@ -194,7 +194,7 @@ function adaptMethodParameters(op: m4.Operation, method: go.Method | go.NextPage
   }
 }
 
-function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.GoCodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
+function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel, op: m4.Operation, forMethod: go.Method): go.ResponseEnvelope {
   const respEnvSchema = <m4.ObjectSchema>op.language.go!.responseEnv;
   const respEnv = new go.ResponseEnvelope(respEnvSchema.language.go!.name, respEnvSchema.language.go!.description, forMethod);
 

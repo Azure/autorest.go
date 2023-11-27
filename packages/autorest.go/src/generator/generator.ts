@@ -6,7 +6,7 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import { Client, ConstantType, ConstantValue, GoCodeModel, HeaderMapResponse, HeaderResponse, InterfaceType, Method, ModelField, ModelType, PolymorphicType, ResponseEnvelope, StructField, StructType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { generateClientFactory } from './clientFactory';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
@@ -28,7 +28,7 @@ export async function generateCode(host: AutorestExtensionHost) {
 
   try {
     // get the code model from the core
-    const session = await startSession<GoCodeModel>(host);
+    const session = await startSession<go.CodeModel>(host);
     sortContent(session.model);
 
     const operations = await generateOperations(session.model);
@@ -215,34 +215,34 @@ export async function generateCode(host: AutorestExtensionHost) {
   }
 }
 
-function sortContent(codeModel: GoCodeModel) {
-  codeModel.constants.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
+function sortContent(codeModel: go.CodeModel) {
+  codeModel.constants.sort((a: go.ConstantType, b: go.ConstantType) => { return sortAscending(a.name, b.name); });
   for (const enm of values(codeModel.constants)) {
-    enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
+    enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
   }
 
-  codeModel.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
+  codeModel.interfaceTypes.sort((a: go.InterfaceType, b: go.InterfaceType) => { return sortAscending(a.name, b.name); });
   for (const iface of values(codeModel.interfaceTypes)) {
-    iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
+    iface.possibleTypes.sort((a: go.PolymorphicType, b: go.PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
   }
 
-  codeModel.models.sort((a: ModelType | PolymorphicType, b: ModelType | PolymorphicType) => { return sortAscending(a.name, b.name); });
+  codeModel.models.sort((a: go.ModelType | go.PolymorphicType, b: go.ModelType | go.PolymorphicType) => { return sortAscending(a.name, b.name); });
   for (const model of values(codeModel.models)) {
-    model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
+    model.fields.sort((a: go.ModelField, b: go.ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.paramGroups.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
+  codeModel.paramGroups.sort((a: go.StructType, b: go.StructType) => { return sortAscending(a.name, b.name); });
   for (const paramGroup of values(codeModel.paramGroups)) {
-    paramGroup.fields.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
+    paramGroup.fields.sort((a: go.StructField, b: go.StructField) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+  codeModel.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
   for (const respEnv of values(codeModel.responseEnvelopes)) {
-    respEnv.headers.sort((a: HeaderResponse | HeaderMapResponse, b: HeaderResponse | HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    respEnv.headers.sort((a: go.HeaderResponse | go.HeaderMapResponse, b: go.HeaderResponse | go.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
   }
 
-  codeModel.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
+  codeModel.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.clientName, b.clientName); });
   for (const client of values(codeModel.clients)) {
-    client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
+    client.methods.sort((a: go.Method, b: go.Method) => { return sortAscending(a.methodName, b.methodName); });
   }
 }

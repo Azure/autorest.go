@@ -5,7 +5,7 @@
 
 import { capitalize, KnownMediaType, serialize, uncapitalize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
-import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
+import * as m4 from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties, recursiveUnwrapArrayDictionary } from './helpers';
 import { namer, protocolMethods } from './namer';
@@ -17,7 +17,7 @@ export async function transformM4(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
 
   try {
-    const session = await startSession<CodeModel>(host, codeModelSchema);
+    const session = await startSession<m4.CodeModel>(host, m4.codeModelSchema);
 
     // run the namer first, so that any transformations are applied on proper names
     await namer(session);
@@ -39,7 +39,7 @@ export async function transformM4(host: AutorestExtensionHost) {
   }
 }
 
-async function process(session: Session<CodeModel>) {
+async function process(session: Session<m4.CodeModel>) {
   await processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
@@ -63,9 +63,9 @@ async function process(session: Session<CodeModel>) {
     if (obj.discriminator) {
       // discriminators will contain the root type of each discriminated type hierarchy
       if (!session.model.language.go!.discriminators) {
-        session.model.language.go!.discriminators = new Array<ObjectSchema>();
+        session.model.language.go!.discriminators = new Array<m4.ObjectSchema>();
       }
-      const defs = <Array<ObjectSchema>>session.model.language.go!.discriminators;
+      const defs = <Array<m4.ObjectSchema>>session.model.language.go!.discriminators;
       const rootDiscriminator = getRootDiscriminator(obj);
       if (defs.indexOf(rootDiscriminator) < 0) {
         rootDiscriminator.language.go!.rootDiscriminator = true;
@@ -74,7 +74,7 @@ async function process(session: Session<CodeModel>) {
         const discriminatorEnums = getDiscriminatorEnums(rootDiscriminator);
         // for each child type in the hierarchy, fix up the discriminator value
         for (const child of values(rootDiscriminator.children?.all)) {
-          const asObj = <ObjectSchema>child;
+          const asObj = <m4.ObjectSchema>child;
           let discValue = getEnumForDiscriminatorValue(asObj.discriminatorValue!, discriminatorEnums);
           if (!discValue) {
             discValue = quoteString(asObj.discriminatorValue!);
@@ -88,17 +88,17 @@ async function process(session: Session<CodeModel>) {
       const descriptionMods = new Array<string>();
       if (prop.readOnly) {
         descriptionMods.push('READ-ONLY');
-      } else if (prop.required && (prop.schema.type !== SchemaType.Constant || isOutputOnly(obj))) {
+      } else if (prop.required && (prop.schema.type !== m4.SchemaType.Constant || isOutputOnly(obj))) {
         descriptionMods.push('REQUIRED');
-      } else if (prop.required && prop.schema.type === SchemaType.Constant) {
+      } else if (prop.required && prop.schema.type === m4.SchemaType.Constant) {
         descriptionMods.push('CONSTANT');
       }
-      if (prop.required && prop.schema.type === SchemaType.Constant && !isOutputOnly(obj)) {
+      if (prop.required && prop.schema.type === m4.SchemaType.Constant && !isOutputOnly(obj)) {
         // add a comment with the const value for const properties that are sent over the wire
         if (prop.language.go!.description) {
           prop.language.go!.description += '<br/>';
         }
-        prop.language.go!.description += `Field has constant value ${formatConstantValue(<ConstantSchema>prop.schema)}, any specified value is ignored.`;
+        prop.language.go!.description += `Field has constant value ${formatConstantValue(<m4.ConstantSchema>prop.schema)}, any specified value is ignored.`;
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));
@@ -107,29 +107,29 @@ async function process(session: Session<CodeModel>) {
         descriptionMods.push('The contents of this field are raw JSON.');
       }
       prop.language.go!.description = descriptionMods.join('; ');
-      const details = <Language>prop.schema.language.go;
+      const details = <m4.Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, 'InBody')}`;
       prop.schema = substitueDiscriminator(prop);
-      if (prop.schema.type === SchemaType.Any || prop.schema.type === SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
+      if (prop.schema.type === m4.SchemaType.Any || prop.schema.type === m4.SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
         prop.language.go!.byValue = true;
-      } else if (prop.schema.type === SchemaType.DateTime) {
+      } else if (prop.schema.type === m4.SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
-      } else if (prop.schema.type === SchemaType.Date) {
+      } else if (prop.schema.type === m4.SchemaType.Date) {
         obj.language.go!.needsDateMarshalling = true;
-      } else if (prop.schema.type === SchemaType.UnixTime) {
+      } else if (prop.schema.type === m4.SchemaType.UnixTime) {
         obj.language.go!.needsUnixTimeMarshalling = true;
-      } else if (prop.schema.type === SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
+      } else if (prop.schema.type === m4.SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
         // mark that we need custom XML unmarshalling for a dictionary
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;
         session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
-      } else if (prop.schema.type === SchemaType.ByteArray) {
+      } else if (prop.schema.type === m4.SchemaType.ByteArray) {
         prop.language.go!.byValue = true;
-        obj.language.go!.byteArrayFormat = (<ByteArraySchema>prop.schema).format;
+        obj.language.go!.byteArrayFormat = (<m4.ByteArraySchema>prop.schema).format;
       }
-      if (prop.schema.type === SchemaType.Array || prop.schema.type === SchemaType.Dictionary) {
+      if (prop.schema.type === m4.SchemaType.Array || prop.schema.type === m4.SchemaType.Dictionary) {
         obj.language.go!.hasArrayMap = true;
         prop.language.go!.byValue = true;
-        if (prop.schema.type !== SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
+        if (prop.schema.type !== m4.SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
           prop.language.go!.needsXMLArrayMarshalling = true;
         }
       }
@@ -166,14 +166,14 @@ async function process(session: Session<CodeModel>) {
 }
 
 // used by getDiscriminatorSchema and substitueDiscriminator
-const discriminatorSchemas = new Map<string, Schema>();
+const discriminatorSchemas = new Map<string, m4.Schema>();
 
 // creates/gets an ObjectSchema for a discriminated type.
 // NOTE: assumes schema is a discriminator.
-function getDiscriminatorSchema(schema: ObjectSchema): Schema {
+function getDiscriminatorSchema(schema: m4.ObjectSchema): m4.Schema {
   const discriminatorInterface = schema.language.go!.discriminatorInterface;
   if (!discriminatorSchemas.has(discriminatorInterface)) {
-    const discriminatorSchema = new ObjectSchema(discriminatorInterface, 'discriminated type');
+    const discriminatorSchema = new m4.ObjectSchema(discriminatorInterface, 'discriminated type');
     discriminatorSchema.language.go! = discriminatorSchema.language.default;
     discriminatorSchema.language.go!.discriminatorInterface = discriminatorInterface;
     // copy over fields from the original
@@ -186,13 +186,13 @@ function getDiscriminatorSchema(schema: ObjectSchema): Schema {
 }
 
 // replaces item's schema with the appropriate discriminator schema as required
-function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Schema {
-  if (item.schema.type === SchemaType.Object && item.schema.language.go!.discriminatorInterface) {
+function substitueDiscriminator(item: m4.Property | m4.Parameter | m4.SchemaResponse): m4.Schema {
+  if (item.schema.type === m4.SchemaType.Object && item.schema.language.go!.discriminatorInterface) {
     item.language.go!.byValue = true;
-    return getDiscriminatorSchema(<ObjectSchema>item.schema);
+    return getDiscriminatorSchema(<m4.ObjectSchema>item.schema);
   } else if (isArraySchema(item.schema) || isDictionarySchema(item.schema)) {
     const leafElementSchema = recursiveUnwrapArrayDictionary(item.schema);
-    if (leafElementSchema.type === SchemaType.Object && leafElementSchema.language.go!.discriminatorInterface) {
+    if (leafElementSchema.type === m4.SchemaType.Object && leafElementSchema.language.go!.discriminatorInterface) {
       return recursiveSubstitueDiscriminator(item.schema);
     }
   }
@@ -204,26 +204,26 @@ function substitueDiscriminator(item: Property | Parameter | SchemaResponse): Sc
 // constructs a new schema for arrays/maps with a leaf element that's a discriminator
 // NOTE: assumes that the leaf element type is a discriminated type
 // e.g. []map[string]DiscriminatorInterface
-function recursiveSubstitueDiscriminator(item: Schema): Schema {
+function recursiveSubstitueDiscriminator(item: m4.Schema): m4.Schema {
   const strings = recursiveBuildDiscriminatorStrings(item);
   let discriminatorSchema = discriminatorSchemas.get(strings.Name);
   if (discriminatorSchema) {
     return discriminatorSchema;
   }
   if (isArraySchema(item)) {
-    discriminatorSchema = new ArraySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
+    discriminatorSchema = new m4.ArraySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
     discriminatorSchema.language.go! = discriminatorSchema.language.default;
     discriminatorSchema.language.go!.elementIsPtr = false;
     discriminatorSchemas.set(strings.Name, discriminatorSchema);
     return discriminatorSchema;
   } else if (isDictionarySchema(item)) {
-    discriminatorSchema = new DictionarySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
+    discriminatorSchema = new m4.DictionarySchema(strings.Name, strings.Desc, recursiveSubstitueDiscriminator(item.elementType));
     discriminatorSchema.language.go! = discriminatorSchema.language.default;
     discriminatorSchema.language.go!.elementIsPtr = false;
     discriminatorSchemas.set(strings.Name, discriminatorSchema);
     return discriminatorSchema;
   }
-  return getDiscriminatorSchema(<ObjectSchema>item);
+  return getDiscriminatorSchema(<m4.ObjectSchema>item);
 }
 
 interface DiscriminatorStrings {
@@ -235,7 +235,7 @@ interface DiscriminatorStrings {
 // NOTE: assumes that the leaf element type is a discriminated type
 // Name: []map[string]DiscriminatorInterface
 // Desc: slice of map of discriminators
-function recursiveBuildDiscriminatorStrings(item: Schema): DiscriminatorStrings {
+function recursiveBuildDiscriminatorStrings(item: m4.Schema): DiscriminatorStrings {
   if (isArraySchema(item)) {
     const strings = recursiveBuildDiscriminatorStrings(item.elementType);
     return {
@@ -250,36 +250,36 @@ function recursiveBuildDiscriminatorStrings(item: Schema): DiscriminatorStrings 
     };
   }
   return {
-    Name: getDiscriminatorSchema(<ObjectSchema>item).language.go!.discriminatorInterface,
+    Name: getDiscriminatorSchema(<m4.ObjectSchema>item).language.go!.discriminatorInterface,
     Desc: 'discriminators'
   };
 }
 
-const dictionaryElementAnySchema = new AnySchema('any schema for maps');
+const dictionaryElementAnySchema = new m4.AnySchema('any schema for maps');
 dictionaryElementAnySchema.language.go = dictionaryElementAnySchema.language.default;
 dictionaryElementAnySchema.language.go!.name = 'any';
 
-function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam'): string {
+function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'Property' | 'InBody' | 'HeaderParam' | 'PathParam' | 'QueryParam'): string {
   const rawJSONAsBytes = <boolean>codeModel.language.go!.rawJSONAsBytes;
   switch (schema.type) {
-    case SchemaType.Any:
+    case m4.SchemaType.Any:
       if (rawJSONAsBytes) {
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[]byte';
       }
       return 'any';
-    case SchemaType.AnyObject:
+    case m4.SchemaType.AnyObject:
       if (rawJSONAsBytes) {
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[]byte';
       }
       return 'map[string]any';
-    case SchemaType.ArmId:
+    case m4.SchemaType.ArmId:
       return 'string';
-    case SchemaType.Array: {
-      const arraySchema = <ArraySchema>schema;
-      const arrayElem = <Schema>arraySchema.elementType;
-      if (rawJSONAsBytes && (arrayElem.type === SchemaType.Any || arrayElem.type === SchemaType.AnyObject)) {
+    case m4.SchemaType.Array: {
+      const arraySchema = <m4.ArraySchema>schema;
+      const arrayElem = <m4.Schema>arraySchema.elementType;
+      if (rawJSONAsBytes && (arrayElem.type === m4.SchemaType.Any || arrayElem.type === m4.SchemaType.AnyObject)) {
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
         return '[]byte';
       }
@@ -295,21 +295,21 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       }
       return `[]${arrayElem.language.go!.name}`;
     }
-    case SchemaType.Binary:
+    case m4.SchemaType.Binary:
       return 'io.ReadSeekCloser';
-    case SchemaType.Boolean:
+    case m4.SchemaType.Boolean:
       return 'bool';
-    case SchemaType.ByteArray:
+    case m4.SchemaType.ByteArray:
       return '[]byte';
-    case SchemaType.Char:
+    case m4.SchemaType.Char:
       return 'rune';
-    case SchemaType.Constant: {
-      const constSchema = <ConstantSchema>schema;
+    case m4.SchemaType.Constant: {
+      const constSchema = <m4.ConstantSchema>schema;
       constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, type);
       return constSchema.valueType.language.go!.name;
     }
-    case SchemaType.DateTime: {
-      const dateTime = <DateTimeSchema>schema;
+    case m4.SchemaType.DateTime: {
+      const dateTime = <m4.DateTimeSchema>schema;
       if (dateTime.format === 'date-time-rfc1123') {
         schema.language.go!.internalTimeType = 'dateTimeRFC1123';
       } else {
@@ -328,15 +328,15 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       }
       return 'time.Time';
     }
-    case SchemaType.UnixTime:
+    case m4.SchemaType.UnixTime:
       // unix time always requires the helper time type
       codeModel.language.go!.generateUnixTimeHelper = true;
       schema.language.go!.internalTimeType = 'timeUnix';
       return 'time.Time';
-    case SchemaType.Dictionary: {
-      const dictSchema = <DictionarySchema>schema;
-      const dictElem = <Schema>dictSchema.elementType;
-      if (rawJSONAsBytes && (dictElem.type === SchemaType.Any || dictElem.type === SchemaType.AnyObject)) {
+    case m4.SchemaType.Dictionary: {
+      const dictSchema = <m4.DictionarySchema>schema;
+      const dictElem = <m4.Schema>dictSchema.elementType;
+      if (rawJSONAsBytes && (dictElem.type === m4.SchemaType.Any || dictElem.type === m4.SchemaType.AnyObject)) {
         dictSchema.elementType = dictionaryElementAnySchema;
         return `map[string]${dictionaryElementAnySchema.language.go!.name}`;
       }
@@ -347,48 +347,48 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, type: 'Propert
       }
       return `map[string]${dictElem.language.go!.name}`;
     }
-    case SchemaType.Integer:
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Integer:
+      if ((<m4.NumberSchema>schema).precision === 32) {
         return 'int32';
       }
       return 'int64';
-    case SchemaType.Number:
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Number:
+      if ((<m4.NumberSchema>schema).precision === 32) {
         return 'float32';
       }
       return 'float64';
-    case SchemaType.Credential:
-    case SchemaType.Duration:
-    case SchemaType.ODataQuery:
-    case SchemaType.String:
-    case SchemaType.Uuid:
-    case SchemaType.Uri:
+    case m4.SchemaType.Credential:
+    case m4.SchemaType.Duration:
+    case m4.SchemaType.ODataQuery:
+    case m4.SchemaType.String:
+    case m4.SchemaType.Uuid:
+    case m4.SchemaType.Uri:
       return 'string';
-    case SchemaType.Date:
+    case m4.SchemaType.Date:
       schema.language.go!.internalTimeType = 'dateType';
       if (type === 'InBody') {
         codeModel.language.go!.generateDateHelper = true;
       }
       return 'time.Time';
-    case SchemaType.Time:
+    case m4.SchemaType.Time:
       schema.language.go!.internalTimeType = 'timeRFC3339';
       if (type === 'InBody') {
         codeModel.language.go!.generateTimeRFC3339Helper = true;
       }
       return 'time.Time';
-    case SchemaType.Choice:
-    case SchemaType.SealedChoice:
-    case SchemaType.Object:
+    case m4.SchemaType.Choice:
+    case m4.SchemaType.SealedChoice:
+    case m4.SchemaType.Object:
       return schema.language.go!.name;
     default:
       throw new Error(`unhandled schema type ${schema.type}`);
   }
 }
 
-function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json' | 'xml') {
+function recursiveAddMarshallingFormat(schema: m4.Schema, marshallingFormat: 'json' | 'xml') {
   // only recurse if the schema isn't a primitive type
-  const shouldRecurse = function (schema: Schema): boolean {
-    return schema.type === SchemaType.Array || schema.type === SchemaType.Dictionary || schema.type === SchemaType.Object;
+  const shouldRecurse = function (schema: m4.Schema): boolean {
+    return schema.type === m4.SchemaType.Array || schema.type === m4.SchemaType.Dictionary || schema.type === m4.SchemaType.Object;
   };
   if (schema.language.go!.marshallingFormat) {
     // this schema has already been processed, don't do it again
@@ -396,22 +396,22 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
   }
   schema.language.go!.marshallingFormat = marshallingFormat;
   switch (schema.type) {
-    case SchemaType.Array: {
-      const arraySchema = <ArraySchema>schema;
+    case m4.SchemaType.Array: {
+      const arraySchema = <m4.ArraySchema>schema;
       if (shouldRecurse(arraySchema.elementType)) {
         recursiveAddMarshallingFormat(arraySchema.elementType, marshallingFormat);
       }
       break;
     }
-    case SchemaType.Dictionary: {
-      const dictSchema = <DictionarySchema>schema;
+    case m4.SchemaType.Dictionary: {
+      const dictSchema = <m4.DictionarySchema>schema;
       if (shouldRecurse(dictSchema.elementType)) {
         recursiveAddMarshallingFormat(dictSchema.elementType, marshallingFormat);
       }
       break;
     }
-    case SchemaType.Object: {
-      const os = <ObjectSchema>schema;
+    case m4.SchemaType.Object: {
+      const os = <m4.ObjectSchema>schema;
       for (const prop of values(os.properties)) {
         if (shouldRecurse(prop.schema)) {
           recursiveAddMarshallingFormat(prop.schema, marshallingFormat);
@@ -430,7 +430,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 }
 
 // we will transform operation request parameter schema types to Go types
-async function processOperationRequests(session: Session<CodeModel>) {
+async function processOperationRequests(session: Session<m4.CodeModel>) {
   // pre-process multi-request operations as it can add operations to the operations
   // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
@@ -461,9 +461,9 @@ async function processOperationRequests(session: Session<CodeModel>) {
     }
   }
   // track any client-level parameterized host params.
-  const hostParams = new Array<Parameter>();
+  const hostParams = new Array<m4.Parameter>();
   // track any parameter groups and/or optional parameters
-  const paramGroups = new Map<string, GroupProperty>();
+  const paramGroups = new Map<string, m4.GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.language.go!.description) {
@@ -471,7 +471,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
       }
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {
-          const head = <HttpHeader>header;
+          const head = <m4.HttpHeader>header;
           head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, 'Property');
         }
       }
@@ -503,7 +503,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         if (param.language.go!.description) {
           param.language.go!.description = parseComments(param.language.go!.description);
         }
-        if (param.clientDefaultValue && param.implementation === ImplementationLocation.Method) {
+        if (param.clientDefaultValue && param.implementation === m4.ImplementationLocation.Method) {
           // we treat method params with a client-side default as optional
           // since if you don't specify a value, a default is sent and the
           // zero-value is ambiguous.
@@ -511,11 +511,11 @@ async function processOperationRequests(session: Session<CodeModel>) {
           // the proper default values are being set in the client (hand-written) constructor.
           param.required = false;
         }
-        if (!param.required && param.schema.type === SchemaType.Constant && !param.language.go!.amendedDesc) {
+        if (!param.required && param.schema.type === m4.SchemaType.Constant && !param.language.go!.amendedDesc) {
           if (param.language.go!.description) {
             param.language.go!.description += '. ';
           }
-          param.language.go!.description += `Specifying any value will set the value to ${(<ConstantSchema>param.schema).value.value}.`;
+          param.language.go!.description += `Specifying any value will set the value to ${(<m4.ConstantSchema>param.schema).value.value}.`;
           param.language.go!.amendedDesc = true;
         }
         // this is to work around M4 bug #202
@@ -523,7 +523,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         // the one from our operation group so that things like parameter
         // groups/types etc are consistent.
         if (op.language.go!.paging && op.language.go!.paging.nextLinkOperation) {
-          const dupeOp = <Operation>op.language.go!.paging.nextLinkOperation;
+          const dupeOp = <m4.Operation>op.language.go!.paging.nextLinkOperation;
           for (const internalOp of values(group.operations)) {
             if (internalOp.language.default.name === dupeOp.language.default.name) {
               op.language.go!.paging.nextLinkOperation = internalOp;
@@ -566,7 +566,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         if (param.extensions?.['x-ms-header-collection-prefix']) {
           param.schema.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
         }
-        if (param.implementation === ImplementationLocation.Client && (param.schema.type !== SchemaType.Constant || !param.required) && param.language.default.name !== '$host') {
+        if (param.implementation === m4.ImplementationLocation.Client && (param.schema.type !== m4.SchemaType.Constant || !param.required) && param.language.default.name !== '$host') {
           if (param.protocol.http!.in === 'uri') {
             // this is a parameterized host param.
             // use the param name to avoid reference equality checks.
@@ -577,15 +577,15 @@ async function processOperationRequests(session: Session<CodeModel>) {
           }
           // add global param info to the operation group
           if (group.language.go!.clientParams === undefined) {
-            group.language.go!.clientParams = new Array<Parameter>();
+            group.language.go!.clientParams = new Array<m4.Parameter>();
           }
-          const clientParams = <Array<Parameter>>group.language.go!.clientParams;
+          const clientParams = <Array<m4.Parameter>>group.language.go!.clientParams;
           // check if this global param has already been added
           if (values(clientParams).where(cp => cp.language.go!.name === param.language.go!.name).any()) {
             continue;
           }
           clientParams.push(param);
-        } else if (param.implementation === ImplementationLocation.Method && param.protocol.http!.in === 'uri') {
+        } else if (param.implementation === m4.ImplementationLocation.Method && param.protocol.http!.in === 'uri') {
           // at least one method contains a parameterized host param, bye-bye simple case
           group.language.go!.complexHostParams = true;
         }
@@ -604,7 +604,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
           if (!paramGroups.has(paramGroupName)) {
             let subtext = `.${opName} method`;
             let groupedClientParams = false;
-            if (param.implementation === ImplementationLocation.Client) {
+            if (param.implementation === m4.ImplementationLocation.Client) {
               subtext = ' client';
               groupedClientParams = true;
             }
@@ -616,7 +616,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
           const paramGroup = paramGroups.get(paramGroupName);
           param.language.go!.paramGroup = paramGroup;
           // check for a duplicate, if it has the same schema then skip it
-          const dupe = values(paramGroup!.originalParameter).first((each: Parameter) => { return each.language.go!.name === param.language.go!.name; });
+          const dupe = values(paramGroup!.originalParameter).first((each: m4.Parameter) => { return each.language.go!.name === param.language.go!.name; });
           if (!dupe) {
             paramGroup!.originalParameter.push(param);
             if (param.required) {
@@ -632,9 +632,9 @@ async function processOperationRequests(session: Session<CodeModel>) {
               throw new Error(`parameter group ${paramGroupName} contains client and method parameters`);
             }
           }
-        } else if (param.implementation === ImplementationLocation.Method && param.required !== true) {
+        } else if (param.implementation === m4.ImplementationLocation.Method && param.required !== true) {
           // include all non-required method params in the optional values struct.
-          (<GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(param);
+          (<m4.GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(param);
           // associate the group with the param
           param.language.go!.paramGroup = op.language.go!.optionalParamGroup;
         }
@@ -647,12 +647,12 @@ async function processOperationRequests(session: Session<CodeModel>) {
         tokenParam.required = false;
         op.parameters?.push(tokenParam);
         tokenParam.language.go!.paramGroup = op.language.go!.optionalParamGroup;
-        (<GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(tokenParam);
+        (<m4.GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(tokenParam);
       }
       // recursively add the marshalling format to the body param if applicable
       const marshallingFormat = getMarshallingFormat(op.requests![0].protocol);
       if (marshallingFormat !== 'na') {
-        const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http?.in === 'body'; }).first();
+        const bodyParam = values(aggregateParameters(op)).where((each: m4.Parameter) => { return each.protocol.http?.in === 'body'; }).first();
         if (bodyParam) {
           recursiveAddMarshallingFormat(bodyParam.schema, marshallingFormat);
           if (marshallingFormat === 'xml' && bodyParam.schema.serialization?.xml?.name) {
@@ -682,19 +682,19 @@ async function processOperationRequests(session: Session<CodeModel>) {
   // emit any param groups
   if (paramGroups.size > 0) {
     if (!session.model.language.go!.parameterGroups) {
-      session.model.language.go!.parameterGroups = new Array<GroupProperty>();
+      session.model.language.go!.parameterGroups = new Array<m4.GroupProperty>();
     }
-    const pg = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
+    const pg = <Array<m4.GroupProperty>>session.model.language.go!.parameterGroups;
     for (const items of paramGroups.entries()) {
       pg.push(items[1]);
     }
   }  
 }
 
-function createGroupProperty(name: string, description: string, groupedClientParams: boolean): GroupProperty {
-  const schema = new ObjectSchema(name, description);
+function createGroupProperty(name: string, description: string, groupedClientParams: boolean): m4.GroupProperty {
+  const schema = new m4.ObjectSchema(name, description);
   schema.language.go = schema.language.default;
-  const gp = new GroupProperty(name, description, schema);
+  const gp = new m4.GroupProperty(name, description, schema);
   gp.language.go = gp.language.default;
   if (groupedClientParams) {
     gp.language.go!.groupedClientParams = true;
@@ -702,9 +702,9 @@ function createGroupProperty(name: string, description: string, groupedClientPar
   return gp;
 }
 
-function processOperationResponses(session: Session<CodeModel>) {
+function processOperationResponses(session: Session<m4.CodeModel>) {
   if (session.model.language.go!.responseEnvelopes === undefined) {
-    session.model.language.go!.responseEnvelopes = new Array<Schema>();
+    session.model.language.go!.responseEnvelopes = new Array<m4.Schema>();
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
@@ -715,14 +715,14 @@ function processOperationResponses(session: Session<CodeModel>) {
       }
       // recursively add the marshalling format to the responses if applicable.
       // also remove any HTTP redirects from the list of responses.
-      const filtered = new Array<Response>();
+      const filtered = new Array<m4.Response>();
       for (const resp of values(op.responses)) {
         if (skipRedirectStatusCode(<string>op.requests![0].protocol.http!.method, resp)) {
           // redirects are transient status codes, they aren't actually returned
           continue;
         }
         if (isSchemaResponse(resp)) {
-          if (resp.schema.type === SchemaType.Binary) {
+          if (resp.schema.type === m4.SchemaType.Binary) {
             // don't create response envelopes for binary responses.
             // callers read directly from the *http.Response.Body
             continue;
@@ -734,7 +734,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           recursiveAddMarshallingFormat(resp.schema, marshallingFormat);
         }
         // fix up schema types for header responses
-        const httpResponse = <HttpResponse>resp.protocol.http;
+        const httpResponse = <m4.HttpResponse>resp.protocol.http;
         for (const header of values(httpResponse.headers)) {
           header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, 'Property');
           // check if this is a header collection
@@ -763,7 +763,7 @@ function processOperationResponses(session: Session<CodeModel>) {
 // certain redirects are automatically handled by the HTTP stack and thus are
 // transient so they are never actually returned to the caller.  we skip them
 // so they aren't included in the potential result set of an operation.
-function skipRedirectStatusCode(verb: string, resp: Response): boolean {
+function skipRedirectStatusCode(verb: string, resp: m4.Response): boolean {
   const statusCodes = <Array<string>>resp.protocol.http!.statusCodes;
   if (statusCodes.length > 1) {
     return false;
@@ -784,7 +784,7 @@ function skipRedirectStatusCode(verb: string, resp: Response): boolean {
   return false;
 }
 
-interface HttpHeaderWithDescription extends HttpHeader {
+interface HttpHeaderWithDescription extends m4.HttpHeader {
   description: string;
 }
 
@@ -792,7 +792,7 @@ interface HttpHeaderWithDescription extends HttpHeader {
 const scalarResponsePropName = 'Value';
 
 // creates the response envelope type to be returned from an operation and updates the operation.
-function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGroup, op: m4.Operation) {
   // create the `type <type>Response struct` response
 
   // aggregate headers from all responses as all of them will go into the same result envelope
@@ -804,7 +804,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     for (const resp of values(op.responses)) {
       // check if the response is expecting information from headers
       for (const header of values(resp.protocol.http!.headers)) {
-        const head = <HttpHeader>header;
+        const head = <m4.HttpHeader>header;
         // convert each header to a property and append it to the response properties list
         const name = head.language.go!.name;
         if (!headers.has(name)) {
@@ -819,13 +819,13 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   }
 
   // contains all the response envelopes
-  const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
+  const responseEnvelopes = <Array<m4.ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
   const respEnvName = ensureUniqueModelName(codeModel, `${capitalize(group.language.go!.clientName)}${op.language.go!.name}Response`, 'Envelope');
   const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
   const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${isPageableOperation(op) && !isLROOperation(op) ? `New${opName}Pager` : opName}.`);
   respEnv.language.go!.responseType = true;
-  respEnv.properties = new Array<Property>();
+  respEnv.properties = new Array<m4.Property>();
   responseEnvelopes.push(respEnv);
   op.language.go!.responseEnv = respEnv;
   if (isLROOperation(op)) {
@@ -873,17 +873,17 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     respEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
     // for operations that return scalar types we use a fixed field name
     let propName = scalarResponsePropName;
-    if (response.schema.type === SchemaType.Object) {
+    if (response.schema.type === m4.SchemaType.Object) {
       // for object types use the type's name as the field name
       propName = response.schema.language.go!.name;
-    } else if (response.schema.type === SchemaType.Array) {
+    } else if (response.schema.type === m4.SchemaType.Array) {
       // for array types use the element type's name
       propName = recursiveTypeName(response.schema);
-    } else if (rawJSONAsBytes && (response.schema.type === SchemaType.Any || response.schema.type === SchemaType.AnyObject)) {
+    } else if (rawJSONAsBytes && (response.schema.type === m4.SchemaType.Any || response.schema.type === m4.SchemaType.AnyObject)) {
       propName = 'RawJSON';
-    } else if (response.schema.type === SchemaType.Any) {
+    } else if (response.schema.type === m4.SchemaType.Any) {
       propName = 'Interface';
-    } else if (response.schema.type === SchemaType.AnyObject) {
+    } else if (response.schema.type === m4.SchemaType.AnyObject) {
       propName = 'Object';
     }
     if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
@@ -891,7 +891,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       propName = capitalize(response.schema.serialization.xml.name);
     }
     // we want to pass integral types byref to maintain parity with struct fields
-    const byValue = isTypePassedByValue(response.schema) || response.schema.type === SchemaType.Object;
+    const byValue = isTypePassedByValue(response.schema) || response.schema.type === m4.SchemaType.Object;
     const resultSchema = substitueDiscriminator(response);
     const resultProp = newRespProperty(propName, response.schema.language.go!.description, resultSchema, byValue);
     if (resultSchema.language.go!.discriminatorInterface) {
@@ -907,7 +907,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     respEnv.properties.push(binaryProp);
     respEnv.language.go!.resultProp = binaryProp;
   }
-  if ((<Array<Property>>respEnv.properties).length === 0) {
+  if ((<Array<m4.Property>>respEnv.properties).length === 0) {
     // if we get here it means the operation doesn't return anything. we set
     // this to undefined to simplify detection of an empty response envelope
     respEnv.properties = undefined;
@@ -915,7 +915,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
 }
 
 // appends suffix to name if name is an existing model type
-function ensureUniqueModelName(codeModel: CodeModel, name: string, suffix: string): string {
+function ensureUniqueModelName(codeModel: m4.CodeModel, name: string, suffix: string): string {
   for (const obj of values(codeModel.schemas.objects)) {
     if (obj.language.go!.name === name) {
       return name + suffix;
@@ -924,42 +924,42 @@ function ensureUniqueModelName(codeModel: CodeModel, name: string, suffix: strin
   return name;
 }
 
-function newObject(name: string, desc: string): ObjectSchema {
-  const obj = new ObjectSchema(name, desc);
+function newObject(name: string, desc: string): m4.ObjectSchema {
+  const obj = new m4.ObjectSchema(name, desc);
   obj.language.go = obj.language.default;
   return obj;
 }
 
-function newAny(desc: string): AnySchema {
-  const any = new AnySchema(desc);
+function newAny(desc: string): m4.AnySchema {
+  const any = new m4.AnySchema(desc);
   any.language.go = any.language.default;
   any.language.go!.name = 'any';
   return any;
 }
 
-function newBoolean(name: string, desc: string): BooleanSchema {
-  const bool = new BooleanSchema(name, desc);
+function newBoolean(name: string, desc: string): m4.BooleanSchema {
+  const bool = new m4.BooleanSchema(name, desc);
   bool.language.go = bool.language.default;
   bool.language.go!.name = 'bool';
   return bool;
 }
 
-function newBinary(desc: string): BinarySchema {
-  const binary = new BinarySchema(desc);
+function newBinary(desc: string): m4.BinarySchema {
+  const binary = new m4.BinarySchema(desc);
   binary.language.go = binary.language.default;
   binary.language.go!.name = 'io.ReadCloser';
   return binary;
 }
 
-function newString(name: string, desc: string): StringSchema {
-  const string = new StringSchema(name, desc);
+function newString(name: string, desc: string): m4.StringSchema {
+  const string = new m4.StringSchema(name, desc);
   string.language.go = string.language.default;
   string.language.go!.name = 'string';
   return string;
 }
 
-function newProperty(name: string, desc: string, schema: Schema): Property {
-  const prop = new Property(name, desc, schema);
+function newProperty(name: string, desc: string, schema: m4.Schema): m4.Property {
+  const prop = new m4.Property(name, desc, schema);
   if (isObjectSchema(schema) && schema.discriminator) {
     prop.isDiscriminator = true;
   }
@@ -967,20 +967,20 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
   return prop;
 }
 
-function newParameter(name: string, desc: string, schema: Schema): Parameter {
-  const param = new Parameter(name, desc, schema);
+function newParameter(name: string, desc: string, schema: m4.Schema): m4.Parameter {
+  const param = new m4.Parameter(name, desc, schema);
   param.language.go! = param.language.default;
-  param.implementation = ImplementationLocation.Method;
+  param.implementation = m4.ImplementationLocation.Method;
   return param;
 }
 
-function newRespProperty(name: string, desc: string, schema: Schema, byValue: boolean): Property {
+function newRespProperty(name: string, desc: string, schema: m4.Schema, byValue: boolean): m4.Property {
   const prop = newProperty(name, desc, schema);
   if (isTypePassedByValue(schema)) {
     byValue = true;
   }
   prop.language.go!.byValue = byValue;
-  if (schema.type === SchemaType.Object) {
+  if (schema.type === m4.SchemaType.Object) {
     // indicates we should anonymously embed this type into the containing type
     prop.language.go!.embeddedType = true;
   }
@@ -989,8 +989,8 @@ function newRespProperty(name: string, desc: string, schema: Schema, byValue: bo
 
 // returns the format used for marshallling/unmarshalling.
 // if the media type isn't applicable then 'na' is returned.
-function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
-  switch ((<Protocol>protocol).http.knownMediaType) {
+function getMarshallingFormat(protocol: m4.Protocols): 'json' | 'xml' | 'na' {
+  switch ((<m4.Protocol>protocol).http.knownMediaType) {
     case KnownMediaType.Json:
       return 'json';
     case KnownMediaType.Xml:
@@ -1000,63 +1000,63 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
   }
 }
 
-function recursiveTypeName(schema: Schema): string {
+function recursiveTypeName(schema: m4.Schema): string {
   const rawJSON = 'RawJSON';
   switch (schema.type) {
-    case SchemaType.Any:
+    case m4.SchemaType.Any:
       if (schema.language.go!.rawJSONAsBytes) {
         return rawJSON;
       }
       return 'Interface';
-    case SchemaType.AnyObject:
+    case m4.SchemaType.AnyObject:
       if (schema.language.go!.rawJSONAsBytes) {
         return rawJSON;
       }
       return 'Object';
-    case SchemaType.Array: {
-      const arraySchema = <ArraySchema>schema;
-      const arrayElem = <Schema>arraySchema.elementType;
+    case m4.SchemaType.Array: {
+      const arraySchema = <m4.ArraySchema>schema;
+      const arrayElem = <m4.Schema>arraySchema.elementType;
       return `${recursiveTypeName(arrayElem)}Array`;
     }
-    case SchemaType.Boolean:
+    case m4.SchemaType.Boolean:
       return 'Bool';
-    case SchemaType.ByteArray:
+    case m4.SchemaType.ByteArray:
       return 'ByteArray';
-    case SchemaType.Choice:
-      return (<ChoiceSchema>schema).language.go!.name;
-    case SchemaType.SealedChoice:
-      return (<SealedChoiceSchema>schema).language.go!.name;
-    case SchemaType.Date:
-    case SchemaType.DateTime:
-    case SchemaType.UnixTime:
+    case m4.SchemaType.Choice:
+      return (<m4.ChoiceSchema>schema).language.go!.name;
+    case m4.SchemaType.SealedChoice:
+      return (<m4.SealedChoiceSchema>schema).language.go!.name;
+    case m4.SchemaType.Date:
+    case m4.SchemaType.DateTime:
+    case m4.SchemaType.UnixTime:
       return 'Time';
-    case SchemaType.Dictionary: {
-      const dictSchema = <DictionarySchema>schema;
-      const dictElem = <Schema>dictSchema.elementType;
+    case m4.SchemaType.Dictionary: {
+      const dictSchema = <m4.DictionarySchema>schema;
+      const dictElem = <m4.Schema>dictSchema.elementType;
       return `MapOf${recursiveTypeName(dictElem)}`;
     }
-    case SchemaType.Integer:
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Integer:
+      if ((<m4.NumberSchema>schema).precision === 32) {
         return 'Int32';
       }
       return 'Int64';
-    case SchemaType.Number:
-      if ((<NumberSchema>schema).precision === 32) {
+    case m4.SchemaType.Number:
+      if ((<m4.NumberSchema>schema).precision === 32) {
         return 'Float32';
       }
       return 'Float64';
-    case SchemaType.Object:
+    case m4.SchemaType.Object:
       return schema.language.go!.name;
-    case SchemaType.Duration:
-    case SchemaType.String:
-    case SchemaType.Uuid:
+    case m4.SchemaType.Duration:
+    case m4.SchemaType.String:
+    case m4.SchemaType.Uuid:
       return 'String';
     default:
       throw new Error(`unhandled response schema type ${schema.type}`);
   }
 }
 
-function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
+function getRootDiscriminator(obj: m4.ObjectSchema): m4.ObjectSchema {
   // discriminators can be a root or an "intermediate" root (Salmon in the test server)
 
   // walk to the root
@@ -1093,11 +1093,11 @@ function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {
 }
 
 // returns the set of enum values used for discriminators
-function getDiscriminatorEnums(obj: ObjectSchema): Array<ChoiceValue> | undefined {
-  if (obj.discriminator?.property.schema.type === SchemaType.Choice) {
-    return (<ChoiceSchema>obj.discriminator!.property.schema).choices;
-  } else if (obj.discriminator?.property.schema.type === SchemaType.SealedChoice) {
-    return (<SealedChoiceSchema>obj.discriminator!.property.schema).choices;
+function getDiscriminatorEnums(obj: m4.ObjectSchema): Array<m4.ChoiceValue> | undefined {
+  if (obj.discriminator?.property.schema.type === m4.SchemaType.Choice) {
+    return (<m4.ChoiceSchema>obj.discriminator!.property.schema).choices;
+  } else if (obj.discriminator?.property.schema.type === m4.SchemaType.SealedChoice) {
+    return (<m4.SealedChoiceSchema>obj.discriminator!.property.schema).choices;
   }
   return undefined;
 }
@@ -1111,7 +1111,7 @@ function quoteString(s: string): string {
 }
 
 // returns the enum name for the specified discriminator value, or undefined if missing.
-function getEnumForDiscriminatorValue(discValue: string, enums: Array<ChoiceValue> | undefined): string | undefined {
+function getEnumForDiscriminatorValue(discValue: string, enums: Array<m4.ChoiceValue> | undefined): string | undefined {
   if (!enums) {
     // some discriminator values are already quoted
     return quoteString(discValue);
@@ -1138,14 +1138,14 @@ function parseComments(comment: string): string {
 
 
 // This function try to label all unreferenced types before doing transform.
-async function labelUnreferencedTypes(session: Session<CodeModel>) {
+async function labelUnreferencedTypes(session: Session<m4.CodeModel>) {
   const model = session.model;
 
   const isRemoveUnreferencedTypes = await session.getValue('remove-unreferenced-types', false);
 
   if (!isRemoveUnreferencedTypes) return;
 
-  const referencedTypes = new Set<Schema>();
+  const referencedTypes = new Set<m4.Schema>();
 
   iterateOperations(model, referencedTypes);
 
@@ -1155,7 +1155,7 @@ async function labelUnreferencedTypes(session: Session<CodeModel>) {
 }
 
 // This function help to label omit types according to the referencedTypes set.
-function labelOmitTypes<Type extends Schema>(modelSchemas: Array<Type> | undefined, referencedSet: Set<Type>) {
+function labelOmitTypes<Type extends m4.Schema>(modelSchemas: Array<Type> | undefined, referencedSet: Set<Type>) {
   if (modelSchemas){
     for (const schema of modelSchemas){
       if (!referencedSet.has(schema)){
@@ -1169,7 +1169,7 @@ function labelOmitTypes<Type extends Schema>(modelSchemas: Array<Type> | undefin
 // For each operation, we will aggregate all the parameters' type of the operation and put them into the referencedTypes set.
 // Also, all responses body types and header types will be put into the referencedTypes set.
 // Some special cases: exceptions response types, x-ms-odata types.
-function iterateOperations(model: CodeModel, referencedTypes: Set<Schema>) {
+function iterateOperations(model: m4.CodeModel, referencedTypes: Set<m4.Schema>) {
   for (const group of values(model.operationGroups)) {
     for (const op of values(group.operations)) {
       for (const param of values(aggregateParameters(op))) {
@@ -1182,7 +1182,7 @@ function iterateOperations(model: CodeModel, referencedTypes: Set<Schema>) {
         if (isSchemaResponse(resp)) {
           dfsSchema(resp.schema, referencedTypes);
         }
-        const httpResponse = <HttpResponse>resp.protocol.http;
+        const httpResponse = <m4.HttpResponse>resp.protocol.http;
         for (const header of values(httpResponse.headers)) {
           dfsSchema(header.schema, referencedTypes);
         }
@@ -1202,7 +1202,7 @@ function iterateOperations(model: CodeModel, referencedTypes: Set<Schema>) {
 // This function will do a depth first search for the root types.
 // All visited types will be put into referencedTypes set.
 // Objects children/parents will also be searched.
-function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
+function dfsSchema(schema: m4.Schema, referencedTypes: Set<m4.Schema>) {
   if (referencedTypes.has(schema)) return;
   referencedTypes.add(schema);
   if (isObjectSchema(schema)) {
@@ -1229,11 +1229,11 @@ function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
   }
 }
 
-function separateOperationByRequestsProtocol(group: OperationGroup, op: Operation, defaultTypes: Array<KnownMediaType>) {
+function separateOperationByRequestsProtocol(group: m4.OperationGroup, op: m4.Operation, defaultTypes: Array<KnownMediaType>) {
   for (const req of values(op.requests)) {
-    const newOp = <Operation>{...op};
+    const newOp = <m4.Operation>{...op};
     newOp.language = clone(op.language);
-    newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
+    newOp.requests = (<Array<m4.Request>>op.requests).filter(r => r === req);
     let name = op.language.go!.name;
     if (req.protocol.http!.knownMediaType && !defaultTypes.includes(req.protocol.http!.knownMediaType)) {
       let suffix: string;

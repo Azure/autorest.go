@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel } from '../../gocodemodel/gocodemodel';
+import * as go from '../../gocodemodel/gocodemodel';
 import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
 
@@ -27,7 +27,7 @@ export class RequiredHelpers {
   }
 }
 
-export function generateServerInternal(codeModel: GoCodeModel, requiredHelpers: RequiredHelpers): string {
+export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers: RequiredHelpers): string {
   if (codeModel.clients.length === 0) {
     return '';
   }

@@ -3,8 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CollectionFormat, ConstantValue, FormBodyParameter, GoCodeModel, HeaderParameter, LiteralValue, Method, NextPageMethod, Parameter, ParameterGroup, isHeadAsBooleanResult, isMonomorphicResult, isPolymorphicResult, isModelResult, PossibleType, PathParameter, QueryParameter, isFormBodyCollectionParameter, isHeaderCollectionParameter, isPathCollectionParameter, isQueryCollectionParameter } from '../gocodemodel/gocodemodel';
-import { getTypeDeclaration, isAnyResult, isBinaryResult, isBytesType, isClientSideDefault, isConstantType, isLiteralValue, isMethod, isPrimitiveType, isTimeType } from '../gocodemodel/gocodemodel';
+import * as go from '../gocodemodel/gocodemodel';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports';
@@ -18,7 +17,7 @@ export const datetimeRFC1123Format = 'time.RFC1123';
 export const timeRFC3339Format = '15:04:05.999999999Z07:00';
 
 // returns the common source-file preamble (license comment, package name etc)
-export function contentPreamble(codeModel: GoCodeModel, packageName?: string): string {
+export function contentPreamble(codeModel: go.CodeModel, packageName?: string): string {
   if (!packageName) {
     packageName = codeModel.packageName;
   }
@@ -39,31 +38,31 @@ export function sortAscending(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-export function isParameter(param: Parameter | ParameterGroup): param is Parameter {
-  return (<ParameterGroup>param).groupName === undefined;
+export function isParameter(param: go.Parameter | go.ParameterGroup): param is go.Parameter {
+  return (<go.ParameterGroup>param).groupName === undefined;
 }
 
-export function isParameterGroup(param: Parameter | ParameterGroup): param is ParameterGroup {
-  return (<ParameterGroup>param).groupName !== undefined;
+export function isParameterGroup(param: go.Parameter | go.ParameterGroup): param is go.ParameterGroup {
+  return (<go.ParameterGroup>param).groupName !== undefined;
 }
 
-export function isRequiredParameter(param: Parameter): boolean {
+export function isRequiredParameter(param: go.Parameter): boolean {
   // parameters with a client-side default value are always optional
-  if (isClientSideDefault(param.paramType)) {
+  if (go.isClientSideDefault(param.paramType)) {
     return false;
   }
   return param.paramType === 'required';
 }
 
-export function isLiteralParameter(param: Parameter): boolean {
-  if (isClientSideDefault(param.paramType)) {
+export function isLiteralParameter(param: go.Parameter): boolean {
+  if (go.isClientSideDefault(param.paramType)) {
     return false;
   }
   return param.paramType === 'literal';
 }
 
 // returns the type name with possible * prefix
-export function formatParameterTypeName(param: Parameter | ParameterGroup, pkgName?: string): string {
+export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
   if (isParameterGroup(param)) {
     typeName = param.groupName;
@@ -74,8 +73,8 @@ export function formatParameterTypeName(param: Parameter | ParameterGroup, pkgNa
       return typeName;
     }
   } else {
-    typeName = getTypeDeclaration(param.type, pkgName);
-    if (isRequiredParameter(param) || (param.location === 'client' && isClientSideDefault(param.paramType))) {
+    typeName = go.getTypeDeclaration(param.type, pkgName);
+    if (isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.paramType))) {
       // client parameters with default values aren't emitted as pointer-to-type
       return typeName;
     }
@@ -84,7 +83,7 @@ export function formatParameterTypeName(param: Parameter | ParameterGroup, pkgNa
 }
 
 // sorts parameters by their required state, ordering required before optional
-export function sortParametersByRequired(a: Parameter | ParameterGroup, b: Parameter | ParameterGroup): number {
+export function sortParametersByRequired(a: go.Parameter | go.ParameterGroup, b: go.Parameter | go.ParameterGroup): number {
   let aRequired = false;
   let bRequired = false;
 
@@ -110,7 +109,7 @@ export function sortParametersByRequired(a: Parameter | ParameterGroup, b: Param
 
 // returns the parameters for the internal request creator method.
 // e.g. "i int, s string"
-export function getCreateRequestParametersSig(method: Method | NextPageMethod): string {
+export function getCreateRequestParametersSig(method: go.Method | go.NextPageMethod): string {
   const methodParams = getMethodParameters(method);
   const params = new Array<string>();
   params.push('ctx context.Context');
@@ -122,7 +121,7 @@ export function getCreateRequestParametersSig(method: Method | NextPageMethod): 
 
 // returns the parameter names for an operation (excludes the param types).
 // e.g. "i, s"
-export function getCreateRequestParameters(method: Method): string {
+export function getCreateRequestParameters(method: go.Method): string {
   // split param list into individual params
   const reqParams = getCreateRequestParametersSig(method).split(',');
   // keep the parameter names from the name/type tuples
@@ -133,9 +132,9 @@ export function getCreateRequestParameters(method: Method): string {
 }
 
 // returns the complete collection of method parameters
-export function getMethodParameters(method: Method | NextPageMethod, paramsFilter?: (p: Array<Parameter>) => Array<Parameter>): Array<Parameter | ParameterGroup> {
-  const params = new Array<Parameter>();
-  const paramGroups = new Array<ParameterGroup>();
+export function getMethodParameters(method: go.Method | go.NextPageMethod, paramsFilter?: (p: Array<go.Parameter>) => Array<go.Parameter>): Array<go.Parameter | go.ParameterGroup> {
+  const params = new Array<go.Parameter>();
+  const paramGroups = new Array<go.ParameterGroup>();
   let methodParams = method.parameters;
   if (paramsFilter) {
     methodParams = paramsFilter(methodParams);
@@ -150,7 +149,7 @@ export function getMethodParameters(method: Method | NextPageMethod, paramsFilte
       if (!paramGroups.includes(param.group)) {
         paramGroups.push(param.group);
       }
-    } else if (isLiteralValue(param.type)) {
+    } else if (go.isLiteralValue(param.type)) {
       // don't generate a parameter for a constant
       // NOTE: this check must come last as non-required optional constants
       // in header/query params get dumped into the optional params group
@@ -162,7 +161,7 @@ export function getMethodParameters(method: Method | NextPageMethod, paramsFilte
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
   // add any parameter groups.  optional groups go last
-  paramGroups.sort((a: ParameterGroup, b: ParameterGroup) => {
+  paramGroups.sort((a: go.ParameterGroup, b: go.ParameterGroup) => {
     if (a.required === b.required) {
       return 0;
     }
@@ -172,12 +171,12 @@ export function getMethodParameters(method: Method | NextPageMethod, paramsFilte
     return 1;
   });
   // add the optional param group last if it's not already in the list.
-  if (isMethod(method)) {
+  if (go.isMethod(method)) {
     if (!values(paramGroups).any(gp => { return gp.groupName === method.optionalParamsGroup.groupName; })) {
       paramGroups.push(method.optionalParamsGroup);
     }
   }
-  const combined = new Array<Parameter | ParameterGroup>();
+  const combined = new Array<go.Parameter | go.ParameterGroup>();
   for (const param of params) {
     combined.push(param);
   }
@@ -189,7 +188,7 @@ export function getMethodParameters(method: Method | NextPageMethod, paramsFilte
 
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
-export function getParamName(param: Parameter): string {
+export function getParamName(param: go.Parameter): string {
   let paramName = param.paramName;
   // must check paramGroup first as client params can also be grouped
   if (param.group) {
@@ -199,20 +198,20 @@ export function getParamName(param: Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!isRequiredParameter(param) && !(param.location === 'client' && isClientSideDefault(param.paramType)) && !(isParameter(param) && param.byValue)) {
+  if (!isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.paramType)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
 }
 
-export function formatParamValue(param: FormBodyParameter | HeaderParameter | PathParameter | QueryParameter, imports: ImportManager): string {
+export function formatParamValue(param: go.FormBodyParameter | go.HeaderParameter | go.PathParameter | go.QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
-  if (isFormBodyCollectionParameter(param) || isHeaderCollectionParameter(param) || isPathCollectionParameter(param) || isQueryCollectionParameter(param)) {
+  if (go.isFormBodyCollectionParameter(param) || go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
     if (param.collectionFormat === 'multi') {
       throw new Error('multi collection format should have been previously handled');
     }
     const separator = getDelimiterForCollectionFormat(param.collectionFormat);
-    if (isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+    if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
       imports.add('strings');
       return `strings.Join(${paramName}, "${separator}")`;
     } else {
@@ -220,7 +219,7 @@ export function formatParamValue(param: FormBodyParameter | HeaderParameter | Pa
       imports.add('strings');
       return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
     }
-  } else if (isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
+  } else if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
     if (!isRequiredParameter(param) && paramName[0] === '*') {
@@ -231,7 +230,7 @@ export function formatParamValue(param: FormBodyParameter | HeaderParameter | Pa
   return formatValue(paramName, param.type, imports);
 }
 
-export function getDelimiterForCollectionFormat(cf: CollectionFormat): string {
+export function getDelimiterForCollectionFormat(cf: go.CollectionFormat): string {
   switch (cf) {
     case 'csv':
       return ',';
@@ -246,7 +245,7 @@ export function getDelimiterForCollectionFormat(cf: CollectionFormat): string {
   }
 }
 
-export function formatValue(paramName: string, type: PossibleType, imports: ImportManager, defef?: boolean): string {
+export function formatValue(paramName: string, type: go.PossibleType, imports: ImportManager, defef?: boolean): string {
   // callers don't have enough context to know if paramName needs to be
   // deferenced so we track that here when specified. note that not all
   // cases will require paramName to be dereferenced.
@@ -254,10 +253,10 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
   if (defef === true) {
     star = '*';
   }
-  if (isLiteralValue(type)) {
+  if (go.isLiteralValue(type)) {
     // cannot use formatLiteralValue() since all values are treated as strings
     return `"${type.literal}"`;
-  } else if (isBytesType(type)) {
+  } else if (go.isBytesType(type)) {
     // ByteArray is a base-64 encoded value in string format
     imports.add('encoding/base64');
     let byteFormat = 'Std';
@@ -265,7 +264,7 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       byteFormat = 'RawURL';
     }
     return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
-  } else if (isPrimitiveType(type)) {
+  } else if (go.isPrimitiveType(type)) {
     if (type.typeName === 'bool') {
       imports.add('strconv');
       return `strconv.FormatBool(${star}${paramName})`;
@@ -282,7 +281,7 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       imports.add('strconv');
       return `strconv.FormatFloat(${star}${paramName}, 'f', -1, 64)`;
     }
-  } else if (isTimeType(type)) {
+  } else if (go.isTimeType(type)) {
     if (type.dateTimeFormat === 'dateType') {
       return `${paramName}.Format("${dateFormat}")`;
     } else if (type.dateTimeFormat === 'timeUnix') {
@@ -297,7 +296,7 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
       }
       return `${paramName}.Format(${format})`;
     }
-  } else if (isConstantType(type)) {
+  } else if (go.isConstantType(type)) {
     if (type.type === 'string') {
       return `string(${star}${paramName})`;
     }
@@ -310,10 +309,10 @@ export function formatValue(paramName: string, type: PossibleType, imports: Impo
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-export function formatLiteralValue(value: LiteralValue): string {
-  if (isConstantType(value.type)) {
-    return (<ConstantValue>value.literal).valueName;
-  } else if (isPrimitiveType(value.type)) {
+export function formatLiteralValue(value: go.LiteralValue): string {
+  if (go.isConstantType(value.type)) {
+    return (<go.ConstantValue>value.literal).valueName;
+  } else if (go.isPrimitiveType(value.type)) {
     switch (value.type.typeName) {
       case 'float32':
         return `float32(${value.literal})`;
@@ -332,31 +331,31 @@ export function formatLiteralValue(value: LiteralValue): string {
       default:
         return value.literal;
     }
-  } else if (isTimeType(value.type)) {
+  } else if (go.isTimeType(value.type)) {
     return `"${value.literal}"`;
   }
   return value.literal;
 }
 
 // returns true if at least one of the responses has a schema
-export function hasSchemaResponse(method: Method): boolean {
+export function hasSchemaResponse(method: go.Method): boolean {
   const result = method.responseEnvelope.result;
   if (!result) {
     return false;
   }
-  return isAnyResult(result) || isMonomorphicResult(result) || isPolymorphicResult(result) || isModelResult(result);
+  return go.isAnyResult(result) || go.isMonomorphicResult(result) || go.isPolymorphicResult(result) || go.isModelResult(result);
 }
 
 // returns the name of the response field within the response envelope
-export function getResultFieldName(method: Method): string {
+export function getResultFieldName(method: go.Method): string {
   const result = method.responseEnvelope.result;
   if (!result) {
     throw new Error(`missing result for method ${method.methodName}`);
-  } else if (isAnyResult(result) || isBinaryResult(result) || isHeadAsBooleanResult(result) || isMonomorphicResult(result)) {
+  } else if (go.isAnyResult(result) || go.isBinaryResult(result) || go.isHeadAsBooleanResult(result) || go.isMonomorphicResult(result)) {
     return result.fieldName;
-  } else if (isPolymorphicResult(result)) {
+  } else if (go.isPolymorphicResult(result)) {
     return result.interfaceType.name;
-  } else if (isModelResult(result)) {
+  } else if (go.isModelResult(result)) {
     return result.modelType.name;
   } else {
     throw new Error(`unhandled result type for method ${method.client.clientName}.${method.methodName}`);
@@ -527,7 +526,7 @@ export function formatCommentAsBulletItem(description: string): string {
   return chunks.join('\n');
 }
 
-export function getParentImport(codeModel: GoCodeModel): string {
+export function getParentImport(codeModel: go.CodeModel): string {
   const clientPkg = codeModel.packageName;
   if (codeModel.options.module) {
     return codeModel.options.module;

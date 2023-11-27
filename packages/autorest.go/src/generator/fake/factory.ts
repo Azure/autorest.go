@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoCodeModel } from '../../gocodemodel/gocodemodel';
+import * as go from '../../gocodemodel/gocodemodel';
 import { getServerName } from './servers';
 import { contentPreamble } from '../helpers';
 import { ImportManager } from '../imports';
 
-export function generateServerFactory(codeModel: GoCodeModel): string {
+export function generateServerFactory(codeModel: go.CodeModel): string {
   // generate server factory only for ARM
   if (codeModel.type !== 'azure-arm' || !codeModel.clients) {
     return '';
