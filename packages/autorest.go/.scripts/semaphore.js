@@ -1,5 +1,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // original sources can be found at https://github.com/abrkn/semaphore.js
+
+var nextTick = function (fn) { setTimeout(fn, 0); }
+if (typeof process != 'undefined' && process && typeof process.nextTick == 'function') {
+  // node.js and the like
+  nextTick = process.nextTick;
+}
+
 export function semaphore(capacity) {
   var semaphore = {
     capacity: capacity || 1,
