@@ -22,4 +22,4 @@ const config = {
   testMatch: ['<rootDir>/src/**/*.test.ts', '<rootDir>/test/**/*.test.ts'],
 };
   
-module.exports = config;
+export default config;
