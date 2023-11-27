@@ -5,10 +5,10 @@
 
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as go from '../gocodemodel/gocodemodel';
-import { commentLength, contentPreamble, sortAscending } from './helpers';
-import { ImportManager } from './imports';
-import { getStar } from './models';
+import * as go from '../codemodel.go/gocodemodel.js';
+import { commentLength, contentPreamble, sortAscending } from './helpers.js';
+import { ImportManager } from './imports.js';
+import { getStar } from './models.js';
 
 // Creates the content in responses.go
 export async function generateResponses(codeModel: go.CodeModel): Promise<string> {

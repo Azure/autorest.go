@@ -5,9 +5,9 @@
 
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as go from '../gocodemodel/gocodemodel';
-import { commentLength, contentPreamble } from './helpers';
-import { ImportManager } from './imports';
+import * as go from '../codemodel.go/gocodemodel.js';
+import { commentLength, contentPreamble } from './helpers.js';
+import { ImportManager } from './imports.js';
 
 // Creates the content in options.go
 export async function generateOptions(codeModel: go.CodeModel): Promise<string> {

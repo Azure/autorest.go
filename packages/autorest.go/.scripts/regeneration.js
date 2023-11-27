@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-const exec = require('child_process').exec;
-const execSync = require('child_process').execSync;
-const fs = require('fs');
+import { exec } from 'child_process';
+import { execSync } from 'child_process';
+import * as fs from 'fs';
+import { semaphore } from './semaphore.js';
 
 // limit to 8 concurrent builds
-const sem = require('./semaphore')(8);
+const sem = semaphore(8);
 
 const swaggerDir = 'packages/autorest.go/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
@@ -87,7 +88,7 @@ if (filter !== undefined) {
 }
 
 // loop through all of the namespaces in goMappings
-for (namespace in goMappings) {
+for (const namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     const entry = goMappings[namespace];
     const inputFile = swaggerDir + entry[0];

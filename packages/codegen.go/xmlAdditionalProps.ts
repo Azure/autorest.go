@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
-import { contentPreamble } from './helpers';
-import { ImportManager } from './imports';
+import * as go from '../codemodel.go/gocodemodel.js';
+import { contentPreamble } from './helpers.js';
+import { ImportManager } from './imports.js';
 
 // Creates the content for required additional properties XML marshalling helpers.
 // Will be empty if no helpers are required.

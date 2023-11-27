@@ -95,6 +95,18 @@
   "telemetryEnabled": false,
   "projects": [
     {
+      "packageName": "@azure-tools/codemodel.go",
+      "projectFolder": "packages/codemodel.go",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/codegen.go",
+      "projectFolder": "packages/codegen.go",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@autorest/go",
       "projectFolder": "packages/autorest.go",
       "reviewCategory": "production",

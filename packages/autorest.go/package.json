@@ -2,8 +2,9 @@
   "name": "@autorest/go",
   "version": "4.0.0-preview.61",
   "description": "AutoRest Go Generator",
-  "main": "dist/exports.js",
-  "typings": "dist/exports.d.ts",
+  "main": "dist/autorest.go/src/main.js",
+  "type": "module",
+  "typings": "dist/autorest.go/src/main.d.ts",
   "directories": {
     "doc": "docs"
   },
@@ -11,8 +12,8 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "node --max_old_space_size=4096 ./dist/src/main.js",
-    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/main.js",
+    "start": "node --max_old_space_size=4096 ./dist/autorest.go/src/main.js",
+    "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/autorest.go/src/main.js",
     "eslint-fix": "eslint  . --fix --ext .ts",
     "eslint": "eslint  . --ext .ts",
     "build": "tsc -p .",
@@ -69,6 +70,6 @@
     "html-to-text": "^5.1.1",
     "js-yaml": "~4.1.0",
     "showdown": "^1.9.1",
-    "source-map-support": "0.5.13"
+    "source-map-support": "0.5.21"
   }
 }

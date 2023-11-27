@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../codemodel.go/gocodemodel.js';
 import { values } from '@azure-tools/linq';
-import { sortAscending } from './helpers';
+import { sortAscending } from './helpers.js';
 
 type importEntry = { imp: string, alias?: string };
 

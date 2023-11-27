@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../gocodemodel/gocodemodel';
+import * as go from '../../codemodel.go/gocodemodel.js';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as helpers from '../helpers';
-import { fixUpMethodName } from '../operations';
-import { ImportManager } from '../imports';
-import { generateServerInternal, RequiredHelpers } from './internal';
+import * as helpers from '../helpers.js';
+import { fixUpMethodName } from '../operations.js';
+import { ImportManager } from '../imports.js';
+import { generateServerInternal, RequiredHelpers } from './internal.js';
 
 // contains the generated content for all servers and the required helpers
 export class ServerContent {

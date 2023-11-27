@@ -7,10 +7,10 @@ import * as m4 from '@autorest/codemodel';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
-import * as go from '../gocodemodel/gocodemodel';
-import { adaptClients } from './clients';
-import { adaptConstantType, adaptInterfaceType, adaptModel, adaptModelField } from './types';
-import { aggregateProperties } from '../transform/helpers';
+import * as go from '../../../codemodel.go/gocodemodel.js';
+import { adaptClients } from './clients.js';
+import { adaptConstantType, adaptInterfaceType, adaptModel, adaptModelField } from './types.js';
+import { aggregateProperties } from '../transform/helpers.js';
 
 // converts an M4 code model into a GoCodeModel
 export async function m4ToGoCodeModel(host: AutorestExtensionHost) {

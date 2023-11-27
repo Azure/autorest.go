@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../gocodemodel/gocodemodel';
-import { getServerName } from './servers';
-import { contentPreamble } from '../helpers';
-import { ImportManager } from '../imports';
+import * as go from '../../codemodel.go/gocodemodel.js';
+import { getServerName } from './servers.js';
+import { contentPreamble } from '../helpers.js';
+import { ImportManager } from '../imports.js';
 
 export function generateServerFactory(codeModel: go.CodeModel): string {
   // generate server factory only for ARM

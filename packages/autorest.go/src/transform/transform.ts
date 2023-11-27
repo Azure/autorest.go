@@ -7,10 +7,11 @@ import { capitalize, KnownMediaType, serialize, uncapitalize } from '@azure-tool
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import * as m4 from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import * as helpers from './helpers';
-import { namer, protocolMethods } from './namer';
+import * as helpers from './helpers.js';
+import { namer, protocolMethods } from './namer.js';
 import { fromString } from 'html-to-text';
-import { Converter } from 'showdown';
+import showdown from 'showdown';
+const { Converter } = showdown;
 
 // The transformer adds Go-specific information to the code model.
 export async function transformM4(host: AutorestExtensionHost) {

@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { GroupProperty, ImplementationLocation, Operation, OperationGroup, Parameter, SchemaResponse, SchemaType } from '@autorest/codemodel';
-import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/dist/src/transform/helpers';
 import { values } from '@azure-tools/linq';
-import { sortParametersByRequired } from '../common/helpers';
+import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse, sortParametersByRequired } from '../common/helpers';
 
 // homo structureed with getAPIParametersSig() in autorest.go
 export function getAPIParametersSig(op: Operation): Array<[string, string, Parameter]> {

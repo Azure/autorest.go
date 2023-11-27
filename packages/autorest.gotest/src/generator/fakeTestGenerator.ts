@@ -1,8 +1,8 @@
 import { ArraySchema, DictionarySchema, Operation, Parameter, Schema, SchemaType } from '@autorest/codemodel';
-import { isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse } from '@autorest/go/dist/src/transform/helpers';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from 'lodash';
 import { Config } from '../common/constant';
+import { isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse } from '../common/helpers';
 import { ParameterOutput } from '../common/model';
 import { getMethodParameters, getResponseEnvelopeName } from '../util/codegenBridge';
 import { BaseCodeGenerator } from './baseGenerator';

@@ -6,11 +6,11 @@
 import * as m4 from '@autorest/codemodel';
 import { KnownMediaType } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { adaptXMLInfo } from './types';
-import { adaptPossibleType, hasDescription } from './types';
-import * as go from '../gocodemodel/gocodemodel';
-import * as helpers from '../transform/helpers';
-import { OperationNaming } from '../transform/namer';
+import { adaptXMLInfo } from './types.js';
+import { adaptPossibleType, hasDescription } from './types.js';
+import * as go from '../../../codemodel.go/gocodemodel.js';
+import * as helpers from '../transform/helpers.js';
+import { OperationNaming } from '../transform/namer.js';
 
 // track all of the client and parameter group params across all operations
 // as not every option might contain them, and parameter groups can be shared

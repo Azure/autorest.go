@@ -11,6 +11,8 @@ dependencies:
   '@azure-tools/typespec-azure-core': 0.34.0_8c63efaa759afb24b0748b070dd45680
   '@azure-tools/typespec-client-generator-core': 0.35.0-dev.7_aa4b4c2ec9c7b6055ddcd074022da057
   '@microsoft.azure/autorest.testserver': 3.3.5_dcd46a67382ad8ac81613202dfea5646
+  '@rush-temp/codegen.go': 'file:projects/codegen.go.tgz'
+  '@rush-temp/codemodel.go': 'file:projects/codemodel.go.tgz'
   '@rush-temp/go': 'file:projects/go.tgz'
   '@rush-temp/gotest': 'file:projects/gotest.tgz'
   '@rush-temp/typespec-go': 'file:projects/typespec-go.tgz'
@@ -19,7 +21,7 @@ dependencies:
   '@types/js-yaml': 4.0.6
   '@types/lodash': 4.14.183
   '@types/node': 18.17.18
-  '@types/showdown': 1.9.3
+  '@types/showdown': 1.9.4
   '@typescript-eslint/eslint-plugin': 4.1.1_85b8c2fad0dc15c9782f80e74d5cbd0a
   '@typescript-eslint/parser': 4.1.1_eslint@6.6.0+typescript@5.1.6
   '@typespec/compiler': 0.48.1
@@ -45,7 +47,7 @@ dependencies:
   prettier: 2.7.1
   reflect-metadata: 0.1.13
   showdown: 1.9.1
-  source-map-support: 0.5.13
+  source-map-support: 0.5.21
   ts-jest: 27.0.5_52fa92844832ff210eae749d261ffa64
   typescript: 5.1.6
 lockfileVersion: 5.1
@@ -1814,10 +1816,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XISRgDJ2Tc5q4TRqvgJtzsRkFYNJzZrhTdtMoGVBttwzzQJkPnS3WWTFc7kuDRoPtPakl+T+OfdEUjYJj7Jbow==
-  /@types/showdown/1.9.3:
+  /@types/showdown/1.9.4:
     dev: false
     resolution:
-      integrity: sha512-akvzSmrvY4J5d3tHzUUiQr0xpjd4Nb3uzWW6dtwzYJ+qW/KdWw5F8NLatnor5q/1LURHnzDA1ReEwCVqcatRnw==
+      integrity: sha512-50ehC3IAijfkvoNqmQ+VL73S7orOxmAK8ljQAFBv8o7G66lAZyxQj1L3BAv2dD86myLXI+sgKP1kcxAaxW356w==
   /@types/stack-utils/2.0.0:
     dev: false
     resolution:
@@ -5559,7 +5561,7 @@ packages:
     engines:
       node: '>=4'
     resolution:
-      integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=
+      integrity: sha512-VHskAKYM8RfSFXwee5t5cbN5PZeq1Wrh6qd5bkyiXIf6UQcN6w/A0eXM9r6t8d+GYOh+o6ZhiEnb88LN/Y8m2w==
   /is-fullwidth-code-point/3.0.0:
     dev: false
     engines:
@@ -8403,7 +8405,7 @@ packages:
     engines:
       node: '>=4'
     resolution:
-      integrity: sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=
+      integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==
   /path-exists/4.0.0:
     dev: false
     engines:
@@ -9441,13 +9443,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==
-  /source-map-support/0.5.13:
-    dependencies:
-      buffer-from: 1.1.1
-      source-map: 0.6.1
-    dev: false
-    resolution:
-      integrity: sha512-SHSKFHadjVA5oR4PPqhtAVdcBWwRYVd6g6cAXnIbRiIwc2EhPrTuKUBdSLvlEKyIP3GCf89fltvcZiP9MMFA1w==
   /source-map-support/0.5.19:
     dependencies:
       buffer-from: 1.1.1
@@ -10766,13 +10761,13 @@ packages:
       node: '>= 14'
     resolution:
       integrity: sha512-N/lyzTPaJasoDmfV7YTrYCI0G/3ivm/9wdG0aHuheKowWQwGTsK0Eoiw6utmzAnI6pkJa0DUVygvp3spqqEKXg==
-  /yargs-parser/15.0.1:
+  /yargs-parser/15.0.3:
     dependencies:
       camelcase: 5.3.1
       decamelize: 1.2.0
     dev: false
     resolution:
-      integrity: sha512-0OAMV2mAZQrs3FkNpDQcBk1x5HXb8X4twADss4S0Iuk+2dGnLOE/fRHrsYm542GduMveyA77OF4wrNJuanRCWw==
+      integrity: sha512-/MVEVjTXy/cGAjdtQf8dW3V9b97bPN7rNn8ETj6BmAQL7ibC7O1Q9SPJbGjgh3SlwoBNXMzj/ZGIj8mBgl12YA==
   /yargs-parser/18.1.3:
     dependencies:
       camelcase: 5.3.1
@@ -10841,7 +10836,7 @@ packages:
       string-width: 3.1.0
       which-module: 2.0.0
       y18n: 4.0.0
-      yargs-parser: 15.0.1
+      yargs-parser: 15.0.3
     dev: false
     resolution:
       integrity: sha512-ZbotRWhF+lkjijC/VhmOT9wSgyBQ7+zr13+YLkhfsSiTriYsMzkTUFP18pFhWwBeMa5gUc1MzbhrO6/VB7c9Xg==
@@ -10981,6 +10976,23 @@ packages:
       commander: 2.20.3
     resolution:
       integrity: sha512-sGvEcBOTNum68x9jCpCVGPFJ6mWnkD0YxOcddDlJHRx3tKdB2q8pCHExMVZo/AV/6geuVJXG7hljDaWG8+5GDw==
+  'file:projects/codegen.go.tgz':
+    dependencies:
+      '@azure-tools/codegen': 2.9.2
+      '@azure-tools/linq': 3.1.263
+    dev: false
+    name: '@rush-temp/codegen.go'
+    resolution:
+      integrity: sha512-tI7mInai+l8sxOrwqVPpgc/npwgZ8JI9QVu41h+p0XSblYkqYmg5bjzpyraotXjOyIawb7DduLsNXHG/+qmAtg==
+      tarball: 'file:projects/codegen.go.tgz'
+    version: 0.0.0
+  'file:projects/codemodel.go.tgz':
+    dev: false
+    name: '@rush-temp/codemodel.go'
+    resolution:
+      integrity: sha512-bIxO4sCiUDSONJ8eSRwozrxavSZ7//0U4n3dDndkFH+WHrKn140iwESF3skUoGfZP/HEqrop8gQdQ9HIAATBYg==
+      tarball: 'file:projects/codemodel.go.tgz'
+    version: 0.0.0
   'file:projects/go.tgz':
     dependencies:
       '@autorest/autorest': 3.0.6187
@@ -10998,7 +11010,7 @@ packages:
       '@types/js-yaml': 4.0.6
       '@types/mocha': 5.2.5
       '@types/node': 18.17.18
-      '@types/showdown': 1.9.3
+      '@types/showdown': 1.9.4
       '@typescript-eslint/eslint-plugin': 4.1.1_85b8c2fad0dc15c9782f80e74d5cbd0a
       '@typescript-eslint/parser': 4.1.1_eslint@6.6.0+typescript@5.1.6
       eslint: 6.6.0
@@ -11008,13 +11020,13 @@ packages:
       mocha: 5.2.0
       mocha-typescript: 1.1.17
       showdown: 1.9.1
-      source-map-support: 0.5.13
+      source-map-support: 0.5.21
       ts-jest: 27.0.5_52fa92844832ff210eae749d261ffa64
       typescript: 5.1.6
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-uwU4PA0OK/CwDxxRbANKee6IQQl2I/ye001pFT/+H21ZoyMMeWWxj8Qj1WWdeOr7Ngf9vxF92Tj0I3f7xpAkHw==
+      integrity: sha512-Z/JcLT/ChrCy38Tl0BaFL8Q+70SvVcVDXjNNGdEjd1tyWwkqPlEZtaHzCda3TZkVyYh4GV6LaP38XpPqDF1Rbw==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
   'file:projects/gotest.tgz':
@@ -11051,7 +11063,7 @@ packages:
     dev: false
     name: '@rush-temp/gotest'
     resolution:
-      integrity: sha512-cINyet/+rqr95IDzwD/1TXJ/Rl6X6upKRTTWgPi/3OvvRYQJIFkKFBLAPSttT3rENCN0Rpxi1t0MZUBwon9EQw==
+      integrity: sha512-XB5RxX/3OJZgJlq3h7dq4dDOYAM/vQW6uniAh8mpin5TN8WXbrhY7gr9eR+FONIFEkvt0mcYitZG0gQ5tOmtvA==
       tarball: 'file:projects/gotest.tgz'
     version: 0.0.0
   'file:projects/typespec-go.tgz':
@@ -11094,6 +11106,8 @@ specifiers:
   '@azure-tools/typespec-azure-core': '>=0.34.0 <1.0.0'
   '@azure-tools/typespec-client-generator-core': '>=0.35.0-dev.3 <1.0.0'
   '@microsoft.azure/autorest.testserver': 3.3.5
+  '@rush-temp/codegen.go': 'file:./projects/codegen.go.tgz'
+  '@rush-temp/codemodel.go': 'file:./projects/codemodel.go.tgz'
   '@rush-temp/go': 'file:./projects/go.tgz'
   '@rush-temp/gotest': 'file:./projects/gotest.tgz'
   '@rush-temp/typespec-go': 'file:./projects/typespec-go.tgz'
@@ -11128,6 +11142,6 @@ specifiers:
   prettier: ^2.2.1
   reflect-metadata: ~0.1.13
   showdown: ^1.9.1
-  source-map-support: 0.5.13
+  source-map-support: 0.5.21
   ts-jest: ~27.0.4
   typescript: ~5.1.3
