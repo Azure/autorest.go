@@ -39,7 +39,21 @@
      * The default value is false to avoid legacy compatibility issues.
      * It is strongly recommended to set strictPeerDependencies=true.
      */
-    "strictPeerDependencies": false
+     "strictPeerDependencies": false,
+
+     /**
+      * If true, then `rush install` and `rush update` will use the PNPM workspaces feature
+      * to perform the install, instead of the old model where Rush generated the symlinks
+      * for each projects's node_modules folder.
+      *
+      * When using workspaces, Rush will generate a `common/temp/pnpm-workspace.yaml` file referencing
+      * all local projects to install. Rush will also generate a `.pnpmfile.cjs` shim which implements
+      * Rush-specific features such as preferred versions.  The user's `common/config/rush/.pnpmfile.cjs`
+      * is invoked by the shim.
+      *
+      * This option is strongly recommended. The default value is false.
+      */
+     "useWorkspaces": true
   },
   /**
    * Older releases of the NodeJS engine may be missing features required by your system.

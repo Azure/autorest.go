@@ -8,5 +8,8 @@
   "dependencies": {
     "@azure-tools/codegen": "~2.9.2",
     "@azure-tools/linq": "~3.1.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.1.3"
   }
 }
