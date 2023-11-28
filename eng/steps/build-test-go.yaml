@@ -4,6 +4,7 @@ parameters:
 
 steps:
   - script: |
+      rush install
       rush rebuild -v
     displayName: "Build Generator Sources"
 
