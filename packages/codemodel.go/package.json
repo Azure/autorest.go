@@ -1,5 +1,6 @@
 {
     "name": "@azure-tools/codemodel.go",
+    "version": "0.1.0",
     "type": "module",
     "scripts": {
       "build": "tsc -p ."
