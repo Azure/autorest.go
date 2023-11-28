@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { values } from '@azure-tools/linq';
-import * as go from '../gocodemodel/gocodemodel';
-import { contentPreamble } from './helpers';
-import { ImportManager } from './imports';
+import * as go from '../codemodel.go/gocodemodel.js';
+import { contentPreamble } from './helpers.js';
+import { ImportManager } from './imports.js';
 
 // represents the generated content for an operation group
 export class Content {

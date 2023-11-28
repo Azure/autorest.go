@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../codemodel.go/gocodemodel.js';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, contentPreamble, formatLiteralValue, sortAscending } from './helpers';
-import { ImportManager } from './imports';
+import { commentLength, contentPreamble, formatLiteralValue, sortAscending } from './helpers.js';
+import { ImportManager } from './imports.js';
 
 export interface ModelsSerDe {
   models: string;

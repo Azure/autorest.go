@@ -6,21 +6,21 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import * as go from '../gocodemodel/gocodemodel';
-import { generateClientFactory } from './clientFactory';
-import { generateOperations } from './operations';
-import { generateModels } from './models';
-import { generateOptions } from './options';
-import { generateInterfaces } from './interfaces';
-import { generateResponses } from './responses';
-import { generateConstants } from './constants';
-import { generateTimeHelpers } from './time';
-import { generatePolymorphicHelpers } from './polymorphics';
-import { generateGoModFile } from './gomod';
-import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
-import { generateServers } from './fake/servers';
-import { generateServerFactory } from './fake/factory';
-import { sortAscending } from './helpers';
+import * as go from '../../../codemodel.go/gocodemodel.js';
+import { generateClientFactory } from '../../../codegen.go/clientFactory.js';
+import { generateOperations } from '../../../codegen.go/operations.js';
+import { generateModels } from '../../../codegen.go/models.js';
+import { generateOptions } from '../../../codegen.go/options.js';
+import { generateInterfaces } from '../../../codegen.go/interfaces.js';
+import { generateResponses } from '../../../codegen.go/responses.js';
+import { generateConstants } from '../../../codegen.go/constants.js';
+import { generateTimeHelpers } from '../../../codegen.go/time.js';
+import { generatePolymorphicHelpers } from '../../../codegen.go/polymorphics.js';
+import { generateGoModFile } from '../../../codegen.go/gomod.js';
+import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/xmlAdditionalProps.js';
+import { generateServers } from '../../../codegen.go/fake/servers.js';
+import { generateServerFactory } from '../../../codegen.go/fake/factory.js';
+import { sortAscending } from '../../../codegen.go/helpers.js';
 
 // The generator emits Go source code files to disk.
 export async function generateCode(host: AutorestExtensionHost) {

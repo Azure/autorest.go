@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../codemodel.go/gocodemodel.js';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import * as helpers from './helpers';
-import { ImportManager } from './imports';
+import * as helpers from './helpers.js';
+import { ImportManager } from './imports.js';
 
 // represents the generated content for an operation group
 export class OperationGroupContent {

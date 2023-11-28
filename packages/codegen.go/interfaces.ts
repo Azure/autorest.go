@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../codemodel.go/gocodemodel.js';
 import { comment } from '@azure-tools/codegen';
-import { contentPreamble, sortAscending } from './helpers';
+import { contentPreamble, sortAscending } from './helpers.js';
 
 // Creates the content in interfaces.go
 export async function generateInterfaces(codeModel: go.CodeModel): Promise<string> {

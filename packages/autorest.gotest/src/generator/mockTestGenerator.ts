@@ -23,7 +23,7 @@ import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../c
 import { GoHelper } from '../util/goHelper';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { generateReturnsInfo, getAPIParametersSig, getClientParametersSig, getSchemaResponse } from '../util/codegenBridge';
-import { isLROOperation, isMultiRespOperation, isPageableOperation } from '@autorest/go/dist/src/transform/helpers';
+import { isLROOperation, isMultiRespOperation, isPageableOperation } from '../common/helpers';
 import _ = require('lodash');
 export class MockTestDataRender extends BaseDataRender {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -530,21 +530,21 @@ function formatRFC3339Nano(t: string): string {
   const date = new Date(t);
   
   function pad(n: number): string {
-      return n < 10 ? '0' + n : String(n);
+    return n < 10 ? '0' + n : String(n);
   }
 
   function pad3(n: number): string {
-      if (n < 10) {
-          return '00' + n;
-      } else if (n < 100) {
-          return '0' + n;
-      } else {
-          return String(n);
-      }
+    if (n < 10) {
+      return '00' + n;
+    } else if (n < 100) {
+      return '0' + n;
+    } else {
+      return String(n);
+    }
   }
 
   return Helper.quotedEscapeString(
-      date.getUTCFullYear() + '-' +
+    date.getUTCFullYear() + '-' +
       pad(date.getUTCMonth() + 1) + '-' +
       pad(date.getUTCDate()) + 'T' +
       pad(date.getUTCHours()) + ':' +

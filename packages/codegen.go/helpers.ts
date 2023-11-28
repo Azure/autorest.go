@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../codemodel.go/gocodemodel.js';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
-import { ImportManager } from './imports';
+import { ImportManager } from './imports.js';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 120;

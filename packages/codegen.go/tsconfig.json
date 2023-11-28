@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": false,
     "lib": ["ES2019"],
-    "module": "NodeNext",
+    "module": "Node16",
     "newLine": "LF",
     "noEmitHelpers": false,
     "noEmitOnError": true,
@@ -24,9 +24,8 @@
     "strictNullChecks": true,
     "stripInternal": true,
     "target": "es6",
-    "types": ["node", "jest"],
     "useUnknownInCatchVariables": false
   },
-  "include": ["src/**/*"],
-  "exclude": ["dist", "resources", "node_modules", "**/*.d.ts", "generated"]
+  "include": ["./**/*"],
+  "exclude": ["dist", "node_modules", "**/*.d.ts"]
 }

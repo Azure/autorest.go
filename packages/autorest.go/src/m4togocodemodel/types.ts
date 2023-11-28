@@ -5,7 +5,7 @@
 
 import * as m4 from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import * as go from '../gocodemodel/gocodemodel';
+import * as go from '../../../codemodel.go/gocodemodel.js';
 
 // returns true if the language contains a description
 export function hasDescription(lang: m4.Language): boolean {
