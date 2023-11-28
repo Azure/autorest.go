@@ -8,6 +8,8 @@ trigger:
   paths:
     exclude:
       - packages/autorest.go
+      - packages/codegen.go
+      - packages/codemodel.go
       - packages/typespec-go
 
 pr:
@@ -20,6 +22,8 @@ pr:
   paths:
     exclude:
       - packages/autorest.go
+      - packages/codegen.go
+      - packages/codemodel.go
       - packages/typespec-go
 
 jobs:
@@ -28,9 +32,9 @@ jobs:
 
     strategy:
       matrix:
-        Linux_Go120:
+        Linux_Go121:
           vm.image: "ubuntu-22.04"
-          go.version: "1.20.3"
+          go.version: "1.21.4"
 
     pool:
       vmImage: "$(vm.image)"
