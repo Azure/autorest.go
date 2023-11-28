@@ -30,9 +30,9 @@ jobs:
 
     strategy:
       matrix:
-        Linux_Go120:
+        Linux_Go121:
           vm.image: "ubuntu-22.04"
-          go.version: "1.20.3"
+          go.version: "1.21.4
 
     pool:
       vmImage: "$(vm.image)"
@@ -43,4 +43,4 @@ jobs:
           NodeVersion: "18.x"
           GoVersion: "$(go.version)"
 
-      - template: ../steps/build-test-gotest.yaml
+      - template: ../steps/build-test-typespec.yaml
