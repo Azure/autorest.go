@@ -20,7 +20,6 @@ import { generateGoModFile } from '../../../codegen.go/gomod.js';
 import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/xmlAdditionalProps.js';
 import { generateServers } from '../../../codegen.go/fake/servers.js';
 import { generateServerFactory } from '../../../codegen.go/fake/factory.js';
-import { sortAscending } from '../../../codegen.go/helpers.js';
 
 // The generator emits Go source code files to disk.
 export async function generateCode(host: AutorestExtensionHost) {
@@ -29,7 +28,6 @@ export async function generateCode(host: AutorestExtensionHost) {
   try {
     // get the code model from the core
     const session = await startSession<go.CodeModel>(host);
-    sortContent(session.model);
 
     const operations = await generateOperations(session.model);
     let filePrefix = await session.getValue('file-prefix', '');
@@ -212,37 +210,5 @@ export async function generateCode(host: AutorestExtensionHost) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
-  }
-}
-
-function sortContent(codeModel: go.CodeModel) {
-  codeModel.constants.sort((a: go.ConstantType, b: go.ConstantType) => { return sortAscending(a.name, b.name); });
-  for (const enm of values(codeModel.constants)) {
-    enm.values.sort((a: go.ConstantValue, b: go.ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
-  }
-
-  codeModel.interfaceTypes.sort((a: go.InterfaceType, b: go.InterfaceType) => { return sortAscending(a.name, b.name); });
-  for (const iface of values(codeModel.interfaceTypes)) {
-    iface.possibleTypes.sort((a: go.PolymorphicType, b: go.PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
-  }
-
-  codeModel.models.sort((a: go.ModelType | go.PolymorphicType, b: go.ModelType | go.PolymorphicType) => { return sortAscending(a.name, b.name); });
-  for (const model of values(codeModel.models)) {
-    model.fields.sort((a: go.ModelField, b: go.ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
-  }
-
-  codeModel.paramGroups.sort((a: go.StructType, b: go.StructType) => { return sortAscending(a.name, b.name); });
-  for (const paramGroup of values(codeModel.paramGroups)) {
-    paramGroup.fields.sort((a: go.StructField, b: go.StructField) => { return sortAscending(a.fieldName, b.fieldName); });
-  }
-
-  codeModel.responseEnvelopes.sort((a: go.ResponseEnvelope, b: go.ResponseEnvelope) => { return sortAscending(a.name, b.name); });
-  for (const respEnv of values(codeModel.responseEnvelopes)) {
-    respEnv.headers.sort((a: go.HeaderResponse | go.HeaderMapResponse, b: go.HeaderResponse | go.HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
-  }
-
-  codeModel.clients.sort((a: go.Client, b: go.Client) => { return sortAscending(a.clientName, b.clientName); });
-  for (const client of values(codeModel.clients)) {
-    client.methods.sort((a: go.Method, b: go.Method) => { return sortAscending(a.methodName, b.methodName); });
   }
 }

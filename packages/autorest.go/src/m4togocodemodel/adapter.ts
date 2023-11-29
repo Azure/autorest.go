@@ -97,6 +97,8 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       }
     }
 
+    codeModel.sortContent();
+
     // output the model to the pipeline
     host.writeFile({
       filename: 'go-code-model.yaml',
