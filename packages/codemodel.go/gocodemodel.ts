@@ -944,6 +944,42 @@ export class CodeModel implements CodeModel {
     this.responseEnvelopes = new Array<ResponseEnvelope>();
     this.type = type;
   }
+
+  sortContent() {
+    const sortAscending = function(a: string, b: string): number {
+      return a < b ? -1 : a > b ? 1 : 0;
+    };
+
+    this.constants.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
+    for (const enm of this.constants) {
+      enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
+    }
+  
+    this.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
+    for (const iface of this.interfaceTypes) {
+      iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
+    }
+  
+    this.models.sort((a: ModelType | PolymorphicType, b: ModelType | PolymorphicType) => { return sortAscending(a.name, b.name); });
+    for (const model of this.models) {
+      model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
+    }
+  
+    this.paramGroups.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
+    for (const paramGroup of this.paramGroups) {
+      paramGroup.fields.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
+    }
+  
+    this.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
+    for (const respEnv of this.responseEnvelopes) {
+      respEnv.headers.sort((a: HeaderResponse | HeaderMapResponse, b: HeaderResponse | HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
+    }
+  
+    this.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
+    for (const client of this.clients) {
+      client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
+    }
+  }
 }
 
 export class Client implements Client {
