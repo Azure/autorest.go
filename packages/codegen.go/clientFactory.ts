@@ -37,8 +37,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
     for (const clientParam of values(allClientParams)) {
       result += `\t${clientParam.paramName} ${formatParameterTypeName(clientParam)}\n`;
     }
-    result += '\tcredential azcore.TokenCredential\n';
-    result += '\toptions *arm.ClientOptions\n';
+    result += '\tinternal *arm.Client\n';
     result += '}\n\n';
 
     // add factory CTOR
@@ -52,16 +51,15 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
     result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
     result += `func NewClientFactory(${allClientParams.map(each => { return `${each.paramName} ${formatParameterTypeName(each)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
-    result += '\t_, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
+    result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
     result += '\tif err != nil {\n';
     result += '\t\treturn nil, err\n';
     result += '\t}\n';
     result += '\treturn &ClientFactory{\n';
     for (const clientParam of values(allClientParams)) {
-      result += `\t\t${clientParam.paramName}: \t${clientParam.paramName},`;
+      result += `\t\t${clientParam.paramName}: ${clientParam.paramName},\n`;
     }
-    result += '\t\tcredential: credential,\n';
-    result += '\t\toptions: options.Clone(),\n';
+    result += '\t\tinternal: internal,\n';
     result += '\t}, nil\n';
     result += '}\n\n';
 
@@ -69,13 +67,17 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
     for (const client of codeModel.clients) {
       result += `// ${client.ctorName} creates a new instance of ${client.clientName}.\n`;
       result += `func (c *ClientFactory) ${client.ctorName}() *${client.clientName} {\n`;
+      result += `\treturn &${client.clientName}{\n`;
+
+      // some clients (e.g. operations client) don't utilize the client params
       if (client.parameters.length > 0) {
-        result += `\tsubClient, _ := ${client.ctorName}(${client.parameters.map(each => { return `c.${each.paramName}`; }).join(', ')}, c.credential, c.options)\n`;
-      } else {
-        result += `\tsubClient, _ := ${client.ctorName}(c.credential, c.options)\n`;
+        for (const clientParam of values(allClientParams)) {
+          result += `\t\t${clientParam.paramName}: c.${clientParam.paramName},\n`;
+        }
       }
-      
-      result += '\treturn subClient\n';
+
+      result += '\t\tinternal: c.internal,\n';
+      result += '\t}\n';
       result += '}\n\n';
     }
 
