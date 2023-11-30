@@ -62,20 +62,16 @@ const switches = [];
 for (var i = 0 ; i < args.length; i += 1) {
   switch (args[i]) {
     case '--filter':
-    case '-f':
       filter = args[i + 1]
       i += 1
       break;
     case '--verbose':
-    case '-v':
       switches.push('--debug');
       break;
     case '--debugger':
-    case '-d':
       switches.push('--go.debugger');
       break;
     case '--dump-code-model':
-    case '-c':
       switches.push('--output-artifact:code-model-v4');
       break;
     default:

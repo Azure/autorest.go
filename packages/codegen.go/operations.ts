@@ -736,10 +736,14 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       text += `\taux := ${bodyParam.type.dateTimeFormat}(${body})\n`;
       body = 'aux';
     } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {
-      const timeType = isArrayOfDateTimeForMarshalling(bodyParam.type);
-      text += `\taux := make([]*${timeType}, len(${body}))\n`;
+      const timeInfo = isArrayOfDateTimeForMarshalling(bodyParam.type);
+      let elementPtr = '*';
+      if (timeInfo?.elemByVal) {
+        elementPtr = '';
+      }
+      text += `\taux := make([]${elementPtr}${timeInfo?.format}, len(${body}))\n`;
       text += `\tfor i := 0; i < len(${body}); i++ {\n`;
-      text += `\t\taux[i] = (*${timeType})(${body}[i])\n`;
+      text += `\t\taux[i] = (${elementPtr}${timeInfo?.format})(${body}[i])\n`;
       text += '\t}\n';
       body = 'aux';
     } else if (isMapOfDateTime(bodyParam.type)) {
@@ -863,7 +867,7 @@ function getMediaFormat(type: go.PossibleType, mediaType: 'JSON' | 'XML', param:
   return `${marshaller}(${param}${format})`;
 }
 
-function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): string | undefined {
+function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: go.DateTimeFormat, elemByVal: boolean } | undefined {
   if (!go.isSliceType(paramType)) {
     return undefined;
   }
@@ -875,7 +879,10 @@ function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): string | u
     case 'dateTimeRFC1123':
     case 'timeRFC3339':
     case 'timeUnix':
-      return paramType.elementType.dateTimeFormat;
+      return {
+        format: paramType.elementType.dateTimeFormat,
+        elemByVal: paramType.elementTypeByValue
+      };
     default:
       // dateTimeRFC3339 uses the default marshaller
       return undefined;
@@ -899,13 +906,18 @@ function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, 
     return unmarshallerText;
   } else if (isArrayOfDateTime(type)) {
     // unmarshalling arrays of date/time is a little more involved
-    unmarshallerText += `\tvar aux []*${isArrayOfDateTime(type)}\n`;
+    const timeInfo = isArrayOfDateTime(type);
+    let elementPtr = '*';
+    if (timeInfo?.elemByVal) {
+      elementPtr = '';
+    }
+    unmarshallerText += `\tvar aux []${elementPtr}${timeInfo?.format}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${format}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += '\tcp := make([]*time.Time, len(aux))\n';
+    unmarshallerText += `\tcp := make([]${elementPtr}time.Time, len(aux))\n`;
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
-    unmarshallerText += '\t\tcp[i] = (*time.Time)(aux[i])\n';
+    unmarshallerText += `\t\tcp[i] = (${elementPtr}time.Time)(aux[i])\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tresult.${helpers.getResultFieldName(method)} = cp\n`;
     return unmarshallerText;
@@ -1018,14 +1030,17 @@ function createProtocolResponse(client: go.Client, method: go.Method, imports: I
   return text;
 }
 
-function isArrayOfDateTime(paramType: go.PossibleType): string | undefined {
+function isArrayOfDateTime(paramType: go.PossibleType): { format: go.DateTimeFormat, elemByVal: boolean } | undefined {
   if (!go.isSliceType(paramType)) {
     return undefined;
   }
   if (!go.isTimeType(paramType.elementType)) {
     return undefined;
   }
-  return paramType.elementType.dateTimeFormat;
+  return {
+    format: paramType.elementType.dateTimeFormat,
+    elemByVal: paramType.elementTypeByValue
+  };
 }
 
 function isMapOfDateTime(paramType: go.PossibleType): string | undefined {

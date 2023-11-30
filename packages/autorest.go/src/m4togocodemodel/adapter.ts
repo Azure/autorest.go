@@ -221,7 +221,6 @@ function adaptModels(m4CodeModel: m4.CodeModel, goCodeModel: go.CodeModel) {
   }
 
   for (const modelObj of values(modelObjs)) {
-    modelObj.type.fields = new Array<go.ModelField>();
     const props = aggregateProperties(modelObj.obj);
     for (const prop of values(props)) {
       const field = adaptModelField(prop, modelObj.obj);
