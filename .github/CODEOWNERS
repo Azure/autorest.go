@@ -1,13 +1,15 @@
 # Default
 * @chlowell     @jhendrixMSFT @RickWinter @ArcturusZhang @lirenhe @tadelesh
 
-# autorest.go
+# codegen (autorest and typespec)
 /packages/autorest.go         @chlowell @jhendrixMSFT @RickWinter
+/packages/codegen.go          @chlowell @jhendrixMSFT @RickWinter
+/packages/codemodel.go        @chlowell @jhendrixMSFT @RickWinter
+/packages/typespec-go         @chlowell @jhendrixMSFT @RickWinter
 
 # autorest.gotest
 /packages/autorest.gotest     @ArcturusZhang @lirenhe @tadelesh
 /swagger                      @ArcturusZhang @lirenhe @tadelesh
-
 
 # Git Hub bot rules
 /.github/CODEOWNERS  @jsquire @ronniegeraghty
