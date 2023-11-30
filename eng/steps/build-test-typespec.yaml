@@ -19,7 +19,7 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
 
   - script: |
-      rush tspcompile
+      rush tspcompile --verbose
       git add -A ./test/.
       git diff --staged -w 1>&2
     displayName: "Regenerate Cadl Tests"

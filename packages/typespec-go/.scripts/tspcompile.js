@@ -73,7 +73,7 @@ function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs
     additionalArgs = [];
   } else {
     for (let i = 0; i < additionalArgs.length; ++i) {
-      additionalArgs[i] = `--option="@azure-tools/typespec-go.${additionalArgs[i]}`;
+      additionalArgs[i] = `--option="@azure-tools/typespec-go.${additionalArgs[i]}"`;
     }
   }
   sem.take(function() {
