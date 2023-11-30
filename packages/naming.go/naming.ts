@@ -14,6 +14,17 @@ export function getEscapedReservedName(name: string, appendValue: string): strin
   return name;
 }
 
+// returns the leaf folder name from the provided folder
+export function packageNameFromOutputFolder(folder: string): string {
+  for (let i = folder.length - 1; i > -1; --i) {
+    if (folder[i] === '/' || folder[i] === '\\') {
+      return folder.substring(i + 1);
+    }
+  }
+  // no path separator
+  return folder;
+}
+
 // used in ensureNameCase() to track which names have already been transformed.
 const gRenamed = new Map<string, boolean>();
 

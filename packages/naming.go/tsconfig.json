@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": false,
+    "lib": ["ES2019"],
+    "module": "Node16",
+    "newLine": "LF",
+    "noEmitHelpers": false,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "stripInternal": true,
+    "target": "es6",
+    "useUnknownInCatchVariables": false
+  },
+  "include": ["./**/*"],
+  "exclude": ["dist", "node_modules", "**/*.d.ts"]
+}

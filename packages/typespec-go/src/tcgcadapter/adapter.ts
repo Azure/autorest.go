@@ -7,6 +7,7 @@ import { clientAdapter } from './clients.js';
 import { typeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
 import * as go from '../../../codemodel.go/gocodemodel.js';
+import { packageNameFromOutputFolder } from '../../../naming.go/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
 
@@ -43,15 +44,4 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   ca.adaptClients(sdkContext.sdkPackage);
   codeModel.sortContent();
   return codeModel;
-}
-
-// returns the leaf folder name from the provided folder
-function packageNameFromOutputFolder(folder: string): string {
-  for (let i = folder.length - 1; i > -1; --i) {
-    if (folder[i] === '/' || folder[i] === '\\') {
-      return folder.substring(i + 1);
-    }
-  }
-  // no path separator
-  return folder;
 }
