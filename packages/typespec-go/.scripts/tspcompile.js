@@ -96,10 +96,9 @@ function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs
       exec(command, function(error, stdout, stderr) {
         // print any output or error from the tsp compile command
         logResult(error, stdout, stderr);
-        // format and tidy on success
+        // format on success
         if (error === null && stderr === '') {
           execSync('gofmt -w .', { cwd: fullOutputDir});
-          execSync('go mod tidy', { cwd: fullOutputDir});
         }
         sem.leave();
       });

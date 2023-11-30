@@ -26,6 +26,22 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
     failOnStderr: true
 
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing go mod tidy in $md"
+        go mod tidy
+        $diff = (git diff -w .)
+        write-host ($diff -join "`n")
+        if ($diff.Length -gt 0) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Mod Tidy"
+
   - script: |
       set -e
       go version
