@@ -5,13 +5,13 @@
 
 import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
-import { generateConstants } from '../../codegen.go/constants.js';
-import { generateGoModFile } from '../../codegen.go/gomod.js';
-import { generateModels } from '../../codegen.go/models.js';
-import { generateOperations } from '../../codegen.go/operations.js';
-import { generateOptions } from '../../codegen.go/options.js';
-import { generateResponses } from '../../codegen.go/responses.js';
-import { generateTimeHelpers } from '../../codegen.go/time.js';
+import { generateConstants } from '../../codegen.go/src/constants.js';
+import { generateGoModFile } from '../../codegen.go/src/gomod.js';
+import { generateModels } from '../../codegen.go/src/models.js';
+import { generateOperations } from '../../codegen.go/src/operations.js';
+import { generateOptions } from '../../codegen.go/src/options.js';
+import { generateResponses } from '../../codegen.go/src/responses.js';
+import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';

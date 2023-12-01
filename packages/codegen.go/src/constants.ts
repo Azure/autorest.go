@@ -6,7 +6,7 @@
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { commentLength, contentPreamble } from './helpers.js';
-import * as go from '../codemodel.go/gocodemodel.js';
+import * as go from '../../codemodel.go/src/gocodemodel.js';
 
 // Creates the content in constants.go
 export async function generateConstants(codeModel: go.CodeModel): Promise<string> {

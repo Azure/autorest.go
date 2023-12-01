@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
-import { ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/naming.js';
+import { ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
 
 const requestMethodSuffix = 'CreateRequest';

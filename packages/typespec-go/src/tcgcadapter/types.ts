@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize } from '../../../naming.go/naming.js';
-import * as go from '../../../codemodel.go/gocodemodel.js';
+import { capitalize } from '../../../naming.go/src/naming.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import { values } from '@azure-tools/linq';
