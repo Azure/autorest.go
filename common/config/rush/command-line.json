@@ -57,6 +57,12 @@
     },
     {
       "commandKind": "global",
+      "name": "tspcompile",
+      "summary": "run node packages/typespec-go/.scripts/tspcompile.js to regenerate all TypeSpec test content",
+      "shellCommand": "node packages/typespec-go/.scripts/tspcompile.js"
+    },
+    {
+      "commandKind": "global",
       "name": "modtidy",
       "summary": "run node packages/autorest.go/.scripts/modtidy.js to perform tidy up all go.mod files",
       "shellCommand": "node packages/autorest.go/.scripts/modtidy.js"
@@ -79,28 +85,24 @@
       "parameterKind": "string",
       "argumentName": "FILTER",
       "longName": "--filter",
-      "shortName": "-f",
       "description": "Filter of which projects regenerate",
-      "associatedCommands": ["regenerate"]
+      "associatedCommands": ["regenerate", "tspcompile"]
     },
     {
       "parameterKind": "flag",
       "longName": "--verbose",
-      "shortName": "-v",
       "description": "Enables debug spew",
-      "associatedCommands": ["regenerate"]
+      "associatedCommands": ["regenerate", "tspcompile"]
     },
     {
       "parameterKind": "flag",
       "longName": "--debugger",
-      "shortName": "-d",
       "description": "Starts the build and waits for the debugger to attach",
-      "associatedCommands": ["regenerate"]
+      "associatedCommands": ["regenerate", "tspcompile"]
     },
     {
       "parameterKind": "flag",
       "longName": "--dump-code-model",
-      "shortName": "-c",
       "description": "Dumps the M4 code model yaml file",
       "associatedCommands": ["regenerate"]
     }

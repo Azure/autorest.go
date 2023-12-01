@@ -68,6 +68,10 @@ export interface Options {
   moduleVersion?: string;
 
   azcoreVersion?: string;
+
+  rawJSONAsBytes: boolean;
+
+  sliceElementsByval: boolean;
 }
 
 // MarshallingRequirements contains flags for required marshalling helpers
@@ -1123,6 +1127,7 @@ export class ModelType implements ModelType {
     this.name = name;
     this.format = format;
     this.annotations = annotations;
+    this.fields = new Array<ModelField>();
   }
 }
 
@@ -1156,6 +1161,7 @@ export class PolymorphicType implements PolymorphicType {
     this.name = name;
     this.interface = iface;
     this.annotations = annotations;
+    this.fields = new Array<ModelField>();
   }
 }
 

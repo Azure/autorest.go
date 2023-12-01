@@ -1,33 +1,37 @@
-import {
-  createTypeSpecLibrary,
-  JSONSchemaType
-} from '@typespec/compiler';
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+import { createTypeSpecLibrary, JSONSchemaType } from '@typespec/compiler';
 
 export interface GoEmitterOptions {
-    'basic-setup-py'?: boolean;
-    'package-version'?: string;
-    'package-name'?: string;
-    'output-dir'?: string;
-    'package-mode'?: string;
-    'package-pprint-name'?: string;
-    'head-as-boolean'?: boolean;
-    'models-mode'?: string;
-    'debug'?: boolean;
+  'azcore-version'?: string;
+  'disallow-unknown-fields'?: boolean;
+  'file-prefix'?: string;
+  'generate-fakes'?: boolean;
+  'inject-spans'?: boolean;
+  'module'?: string;
+  'module-version'?: string;
+  'package-name'?: string;
+  'rawjson-as-bytes'?: boolean;
+  'slice-elements-byval'?: boolean;
 }
 
 const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
   type: 'object',
   additionalProperties: true,
   properties: {
-    'basic-setup-py': { type: 'boolean', nullable: true },
-    'package-version': { type: 'string', nullable: true },
+    'azcore-version': { type: 'string', nullable: true },
+    'disallow-unknown-fields': { type: 'boolean', nullable: true },
+    'file-prefix': { type: 'string', nullable: true },
+    'generate-fakes': { type: 'boolean', nullable: true },
+    'inject-spans': { type: 'boolean', nullable: true },
+    'module': { type: 'string', nullable: true },
+    'module-version': { type: 'string', nullable: true },
     'package-name': { type: 'string', nullable: true },
-    'output-dir': { type: 'string', nullable: true },
-    'package-mode': { type: 'string', nullable: true },
-    'package-pprint-name': { type: 'string', nullable: true },
-    'head-as-boolean': { type: 'boolean', nullable: true },
-    'models-mode': { type: 'string', nullable: true },
-    'debug': { type: 'boolean', nullable: true },
+    'rawjson-as-bytes': { type: 'boolean', nullable: true },
+    'slice-elements-byval': { type: 'boolean', nullable: true }
   },
   required: [],
 };

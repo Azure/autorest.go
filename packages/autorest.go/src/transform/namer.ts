@@ -4,10 +4,9 @@
  *  --------------------------------------------------------------------------------------------  */
 
 import { Session } from '@autorest/extension-base';
-import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
-import { CommonAcronyms, ReservedWords } from './mappings.js';
+import { ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
 
 const requestMethodSuffix = 'CreateRequest';
@@ -35,17 +34,6 @@ export class protocolMethods implements protocolNaming {
     this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
     this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
   }
-}
-
-// returns the leaf folder name from the provided folder
-function packageNameFromOutputFolder(folder: string): string {
-  for (let i = folder.length - 1; i > -1; --i) {
-    if (folder[i] === '/' || folder[i] === '\\') {
-      return folder.substring(i + 1);
-    }
-  }
-  // no path separator
-  return folder;
 }
 
 // The namer creates idiomatic Go names for types, properties, operations etc.
@@ -302,86 +290,6 @@ function cloneLanguageInfo(graph: any) {
   }
 }
 
-// make sure that reserved words are escaped
-function getEscapedReservedName(name: string, appendValue: string): string {
-  if (ReservedWords.includes(name)) {
-    name += appendValue;
-  }
-
-  return name;
-}
-
-// used in ensureNameCase() to track which names have already been transformed.
-const gRenamed = new Map<string, boolean>();
-
-// case-preserving version of deconstruct() that also splits on more path-separator characters
-function deconstruct(identifier: string): Array<string> {
-  return `${identifier}`.
-    replace(/([a-z]+)([A-Z])/g, '$1 $2').
-    replace(/(\d+)([a-z|A-Z]+)/g, '$1 $2').
-    replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3').
-    split(/[\W|_|.|@|-|\s|$]+/);
-}
-
-function ensureNameCase(name: string, lowerFirst?: boolean): string {
-  if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
-    return name;
-  }
-  // XMS prefix requires special handling due to too many permutations that cause weird splits in the word
-  name = name.replace(new RegExp('^(xms)', 'i'), 'XMS');
-  let reconstructed = '';
-  const words = deconstruct(name);
-  for (let i = 0; i < words.length; ++i) {
-    let word = words[i];
-    // for params, lower-case the first segment
-    if (lowerFirst && i === 0) {
-      word = word.toLowerCase();
-    } else {
-      for (const tla of values(CommonAcronyms)) {
-        // perform a case-insensitive match against the list of TLAs
-        const match = word.match(new RegExp(tla, 'i'));
-        if (match) {
-          // replace the match with its upper-case version
-          let toReplace = match[0];
-          if (match.length === 2) {
-            // a capture group was specified, use it instead
-            toReplace = match[1];
-          }
-          word = word.replace(toReplace, toReplace.toUpperCase());
-        }
-      }
-      // note that capitalize() will convert the following acronyms to all upper-case
-      // 'ip', 'os', 'ms', 'vm'
-      word = capitalize(word);
-    }
-    reconstructed += word;
-  }
-  gRenamed.set(reconstructed, lowerFirst === true);
-  return reconstructed;
-}
-
 function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';
-}
-
-// removes pkg from val based on some heuristics
-function trimPackagePrefix(pkg: string, val: string): string {
-  // foo.Foo doesn't stutter.
-  if (val.length <= pkg.length) {
-    return val;
-  }
-
-  // pkg is already upper-case
-  if (pkg !== val.substring(0, pkg.length).toUpperCase()) {
-    return val;
-  }
-
-  // we cannot simply remove pkg from val, consider the following case:
-  //   pkg = tables, val = TableServicesClient; we'd end up with ervicesClient
-  // we have to ensure that pkg ends on a word-boundary, i.e. the next
-  // character is upper-case.
-  if (val.charAt(pkg.length) !== val.charAt(pkg.length).toUpperCase()) {
-    return val;
-  }
-  return val.substring(pkg.length);
 }

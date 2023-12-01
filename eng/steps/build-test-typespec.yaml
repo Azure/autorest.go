@@ -1,4 +1,13 @@
+parameters:
+  GoTestPath: "$(System.DefaultWorkingDirectory)/packages/typespec-go/test"
+  PublishAutorestCoverage: false
+
 steps:
+  - script: |
+      npm install -g @typespec/compiler
+      npm install -g @azure-tools/cadl-ranch
+    displayName: "Prepare TypeSpec Environment"
+
   - script: |
       rush install
       rush rebuild -v
@@ -8,3 +17,74 @@ steps:
       npm run eslint
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+
+  - script: |
+      rush tspcompile --verbose
+      git add -A ./test/.
+      git diff --staged -w 1>&2
+    displayName: "Regenerate Cadl Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    failOnStderr: true
+
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing go mod tidy in $md"
+        go mod tidy
+        $diff = (git diff -w .)
+        write-host ($diff -join "`n")
+        if ($diff.Length -gt 0) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Mod Tidy"
+
+  - script: |
+      set -e
+      go version
+      go install github.com/jstemmer/go-junit-report@v1.0.0
+      go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
+      curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.2
+      ~/go/bin/golangci-lint --version
+    displayName: "Install Test Tools"
+    workingDirectory: "${{ parameters.GoTestPath }}"
+
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing golangci-lint run in $md"
+        ~/go/bin/golangci-lint run ./...
+        if (!$?) {
+          $exit = 1
+        }
+        Write-Host "##[command]Executing shadow in $md"
+        ~/go/bin/shadow ./...
+        if (!$?) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Lint Generated Content"
+
+  - pwsh: |
+      cadl-ranch server start $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs/http
+      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      foreach ($td in $testDirs) {
+        pushd $td
+        Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
+        go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
+        popd
+      }
+      cadl-ranch server stop
+    displayName: "Run All Tests"
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
+      failTaskOnFailedTests: true
