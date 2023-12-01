@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/naming.js';
+import { capitalize, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
-import * as go from '../../../codemodel.go/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { values } from '@azure-tools/linq';
 

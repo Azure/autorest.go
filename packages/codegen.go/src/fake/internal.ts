@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import { contentPreamble } from '../helpers.js';
 import { ImportManager } from '../imports.js';
 

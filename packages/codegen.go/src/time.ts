@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { values } from '@azure-tools/linq';
-import * as go from '../codemodel.go/gocodemodel.js';
+import * as go from '../../codemodel.go/src/gocodemodel.js';
 import { contentPreamble } from './helpers.js';
 import { ImportManager } from './imports.js';
 

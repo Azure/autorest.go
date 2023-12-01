@@ -8,7 +8,7 @@ import { KnownMediaType } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { adaptXMLInfo } from './types.js';
 import { adaptPossibleType, hasDescription } from './types.js';
-import * as go from '../../../codemodel.go/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as helpers from '../transform/helpers.js';
 import { OperationNaming } from '../transform/namer.js';
 

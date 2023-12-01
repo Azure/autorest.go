@@ -26,6 +26,6 @@
     "target": "es6",
     "useUnknownInCatchVariables": false
   },
-  "include": ["./**/*"],
+  "include": ["src/**/*"],
   "exclude": ["dist", "node_modules", "**/*.d.ts"]
 }
