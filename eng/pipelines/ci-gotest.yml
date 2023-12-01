@@ -10,6 +10,7 @@ trigger:
       - packages/autorest.go
       - packages/codegen.go
       - packages/codemodel.go
+      - packages/naming.go
       - packages/typespec-go
 
 pr:
@@ -24,6 +25,7 @@ pr:
       - packages/autorest.go
       - packages/codegen.go
       - packages/codemodel.go
+      - packages/naming.go
       - packages/typespec-go
 
 jobs:
