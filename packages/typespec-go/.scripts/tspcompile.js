@@ -14,16 +14,26 @@ const pkgRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/
 const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 
 // the format is as follows
-// 'moduleName': [ 'moduleVersion', 'inputDir', 'additional arg 1', 'additional arg N...' ]
+// 'moduleName': [ 'inputDir', 'additional arg 1', 'additional arg N...' ]
 const cadlRanch = {
-  'arraygroup': ['0.1.1', 'type/array', 'slice-elements-byval=true'],
-  'dictionarygroup': ['0.1.1', 'type/dictionary'],
-  'enumextensiblegroup': ['0.1.1', 'type/enum/extensible'],
-  'enumfixedgroup': ['0.1.1', 'type/enum/fixed'],
-  'modelemptygroup': ['0.1.1', 'type/model/empty'],
-  //'singlediscriminatorgroup': ['0.1.1', 'type/model/inheritance/single-discriminator'],
-  'modelusagegroup': ['0.1.1', 'type/model/usage'],
-  'modelvisibilitygroup': ['0.1.1', 'type/model/visibility']
+  'arraygroup': ['type/array', 'slice-elements-byval=true'],
+  'dictionarygroup': ['type/dictionary'],
+  'extensiblegroup': ['type/enum/extensible'],
+  'fixedgroup': ['type/enum/fixed'],
+  'emptygroup': ['type/model/empty'],
+  //'enumdiscriminatorgroup': ['type/model/inheritance/enum-discriminator'],
+  //'nesteddiscriminatorgroup': ['type/model/inheritance/nested-discriminator'],
+  //'nodiscriminatedgroup': ['type/model/inheritance/not-discriminated'],
+  //'recursivegroup': ['type/model/inheritance/recursive'],
+  //'singlediscriminatorgroup': ['type/model/inheritance/single-discriminator'],
+  'usagegroup': ['type/model/usage'],
+  'visibilitygroup': ['type/model/visibility'],
+  //'addlpropsgroup': ['type/property/additional-properties'],
+  //'nullablegroup': ['type/property/nullable'],
+  //'optionalitygroup': ['type/property/optionality'],
+  //'valuetypesgroup': ['type/property/value-types'],
+  //'scalargroup': ['type/scalar'],
+  //'uniongroup': ['type/union'],
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
@@ -62,13 +72,16 @@ function should_generate(name) {
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let additionalArgs;
-  if (values.length > 2) {
-    additionalArgs = values.slice(2);
+  if (values.length > 1) {
+    additionalArgs = values.slice(1);
   }
-  generate(module, values[0], tspRoot + values[1], 'test/cadlranch/' + module, additionalArgs);
+  // keep the output directory structure similar to the cadl input directory.
+  // remove the last dir from the input path as we'll use the module name instead
+  const shortend = values[0].substring(0, values[0].lastIndexOf('/'));
+  generate(module, tspRoot + values[0], `test/cadlranch/${shortend}/` + module, additionalArgs);
 }
 
-function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs) {
+function generate(moduleName, inputDir, outputDir, additionalArgs) {
   if (!should_generate(moduleName)) {
     return
   }
@@ -85,7 +98,6 @@ function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs
     try {
       const options = [];
       options.push(`--option="@azure-tools/typespec-go.module=${moduleName}"`);
-      options.push(`--option="@azure-tools/typespec-go.module-version=${moduleVersion}"`);
       options.push(`--option="@azure-tools/typespec-go.emitter-output-dir=${fullOutputDir}"`);
       options.push(`--option="@azure-tools/typespec-go.file-prefix=zz_"`);
       if (switches.includes('--debugger')) {
