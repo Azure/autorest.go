@@ -4,21 +4,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package visibilitygroup_test
+package modelvisibilitygroup_test
 
 import (
 	"context"
+	"modelvisibilitygroup"
 	"testing"
-	"visibilitygroup"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func TestVisibilityClientDeleteModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.DeleteModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.DeleteModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		DeleteProp: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
@@ -26,21 +26,21 @@ func TestVisibilityClientDeleteModel(t *testing.T) {
 }
 
 func TestVisibilityClientGetModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.GetModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		QueryProp: to.Ptr[int32](123),
 	}, nil)
 	require.NoError(t, err)
-	require.EqualValues(t, visibilitygroup.VisibilityModel{
+	require.EqualValues(t, modelvisibilitygroup.VisibilityModel{
 		ReadProp: to.Ptr("abc"),
 	}, resp.VisibilityModel)
 }
 
 func TestVisibilityClientHeadModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.HeadModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.HeadModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		QueryProp: to.Ptr[int32](123),
 	}, nil)
 	require.NoError(t, err)
@@ -48,9 +48,9 @@ func TestVisibilityClientHeadModel(t *testing.T) {
 }
 
 func TestVisibilityClientPatchModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PatchModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.PatchModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		UpdateProp: []*int32{
 			to.Ptr[int32](1),
 			to.Ptr[int32](2),
@@ -61,9 +61,9 @@ func TestVisibilityClientPatchModel(t *testing.T) {
 }
 
 func TestVisibilityClientPostModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PostModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.PostModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		CreateProp: []*string{
 			to.Ptr("foo"),
 			to.Ptr("bar"),
@@ -74,9 +74,9 @@ func TestVisibilityClientPostModel(t *testing.T) {
 }
 
 func TestVisibilityClientPutModel(t *testing.T) {
-	client, err := visibilitygroup.NewVisibilityClient(nil)
+	client, err := modelvisibilitygroup.NewVisibilityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PutModel(context.Background(), visibilitygroup.VisibilityModel{
+	resp, err := client.PutModel(context.Background(), modelvisibilitygroup.VisibilityModel{
 		CreateProp: []*string{
 			to.Ptr("foo"),
 			to.Ptr("bar"),

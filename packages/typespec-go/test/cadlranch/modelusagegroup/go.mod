@@ -1,4 +1,4 @@
-module extensibleenumgroup
+module modelusagegroup
 
 go 1.18
 

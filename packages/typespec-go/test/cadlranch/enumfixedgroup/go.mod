@@ -1,4 +1,4 @@
-module visibilitygroup
+module enumfixedgroup
 
 go 1.18
 

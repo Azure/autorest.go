@@ -18,9 +18,12 @@ const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 const cadlRanch = {
   'arraygroup': ['0.1.1', 'type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['0.1.1', 'type/dictionary'],
-  'extensibleenumgroup': ['0.1.1', 'type/enum/extensible'],
+  'enumextensiblegroup': ['0.1.1', 'type/enum/extensible'],
+  'enumfixedgroup': ['0.1.1', 'type/enum/fixed'],
+  'modelemptygroup': ['0.1.1', 'type/model/empty'],
   //'singlediscriminatorgroup': ['0.1.1', 'type/model/inheritance/single-discriminator'],
-  'visibilitygroup': ['0.1.1', 'type/model/visibility']
+  'modelusagegroup': ['0.1.1', 'type/model/usage'],
+  'modelvisibilitygroup': ['0.1.1', 'type/model/visibility']
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
