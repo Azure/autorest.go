@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/gocodemodel.js';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, getParentImport } from './helpers.js';
+import { contentPreamble, formatLiteralValue, getParentImport } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
@@ -115,9 +115,9 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
       text += `\tvar b ${prefix}${interfaceType.name}\n`;
       text += `\tswitch m["${interfaceType.discriminatorField}"] {\n`;
       for (const possibleType of interfaceType.possibleTypes) {
-        let disc = possibleType.discriminatorValue;
+        let disc = formatLiteralValue(possibleType.discriminatorValue!);
         // when the discriminator value is an enum, cast the const as a string
-        if (disc![0] !== '"') {
+        if (go.isConstantType(possibleType.discriminatorValue!.type)) {
           disc = `string(${prefix}${disc})`;
         }
         text += `\tcase ${disc}:\n`;

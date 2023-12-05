@@ -135,7 +135,7 @@ export interface PolymorphicType extends StructType {
   // the value in the JSON that indicates what type was sent over the wire (e.g. goblin, salmon, shark)
   // note that for "root" types (Fish), there is no discriminatorValue. however, "sub-root" types (e.g. Salmon)
   // will have this populated.
-  discriminatorValue?: string;
+  discriminatorValue?: LiteralValue;
 }
 
 // PossibleType describes what can be modeled e.g. in an OpenAPI specification
@@ -961,7 +961,7 @@ export class CodeModel implements CodeModel {
   
     this.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
     for (const iface of this.interfaceTypes) {
-      iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!, b.discriminatorValue!); });
+      iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
     }
   
     this.models.sort((a: ModelType | PolymorphicType, b: ModelType | PolymorphicType) => { return sortAscending(a.name, b.name); });
