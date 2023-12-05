@@ -123,7 +123,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
   const models = codeModel.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
-    const modelDef = new ModelDef(model.name, model.format, model.description, model.fields);
+    const modelDef = new ModelDef(model.name, model.format, model.fields, model.description);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
       if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
@@ -299,7 +299,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
 function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager, options: go.Options) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
-  if (!modelDef.Fields) {
+  if (modelDef.Fields.length === 0) {
     return;
   }
   imports.add('encoding/json');
@@ -618,13 +618,13 @@ class ModelDef {
   readonly Name: string;
   readonly Format: go.ModelFormat;
   readonly Description?: string;
-  readonly Fields?: Array<go.ModelField>;
+  readonly Fields: Array<go.ModelField>;
   readonly SerDeMethods: Array<ModelMethod>;
   readonly Methods: Array<ModelMethod>;
   HasJSONByteArray: boolean;
   HasAny: boolean;
 
-  constructor(name: string, format: go.ModelFormat, description?: string, fields?: Array<go.ModelField>) {
+  constructor(name: string, format: go.ModelFormat, fields: Array<go.ModelField>, description?: string) {
     this.Name = name;
     this.Format = format;
     this.Description = description;

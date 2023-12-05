@@ -1,4 +1,4 @@
-module extensibleenumgroup
+module emptygroup
 
 go 1.18
 
