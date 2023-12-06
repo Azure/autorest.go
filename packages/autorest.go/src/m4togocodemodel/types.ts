@@ -109,7 +109,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     modelType = new go.PolymorphicType(obj.language.go!.name, <go.InterfaceType>iface, annotations);
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
-      (<go.PolymorphicType>modelType).discriminatorValue = obj.discriminatorValue;
+      (<go.PolymorphicType>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
     }
   } else {
     modelType = new go.ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations);
@@ -124,6 +124,39 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
   return modelType;
 }
 
+function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {
+  const createLiteralValue = function(type: go.LiteralValueType, value: string | go.ConstantValue): go.LiteralValue {
+    let valueKey: any;
+    if (typeof value === 'string') {
+      valueKey = value;
+    } else {
+      valueKey = value.value;
+    }
+    const keyName = `literal-${go.getTypeDeclaration(type)}-${valueKey}`;
+    let literalString = types.get(keyName);
+    if (literalString) {
+      return <go.LiteralValue>literalString;
+    }
+    literalString = new go.LiteralValue(type, value);
+    types.set(keyName, literalString);
+    return literalString;
+  };
+
+  let discriminatorLiteral: go.LiteralValue;
+  // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
+  if (discriminatorValue[0] === '"') {
+    discriminatorLiteral = createLiteralValue(new go.PrimitiveType('string'), discriminatorValue);
+  } else {
+    // find the corresponding constant value
+    const value = constValues.get(discriminatorValue);
+    if (!value) {
+      throw new Error(`didn't find a constant value for discriminator value ${discriminatorValue}`);
+    }
+    discriminatorLiteral = createLiteralValue(value.type, value);
+  }
+  return discriminatorLiteral;
+}
+
 export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
   const annotations = new go.ModelFieldAnnotations(prop.required === true, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
   const field = new go.ModelField(prop.language.go!.name, adaptPossibleType(prop.schema), prop.language.go!.byValue === true, prop.serializedName, annotations);
@@ -131,23 +164,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
     field.description = prop.language.go!.description;
   }
   if (prop.isDiscriminator && obj.discriminatorValue) {
-    const keyName = `discriminator-value-${obj.discriminatorValue}`;
-    let discriminatorLiteral = <go.LiteralValue>types.get(keyName);
-    if (!discriminatorLiteral) {
-      // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
-      if (obj.discriminatorValue[0] === '"') {
-        discriminatorLiteral = new go.LiteralValue(new go.PrimitiveType('string'), obj.discriminatorValue);
-      } else {
-        // find the corresponding constant value
-        const value = constValues.get(obj.discriminatorValue);
-        if (!value) {
-          throw new Error(`didn't find a constant value for discriminator value ${obj.discriminatorValue}`);
-        }
-        discriminatorLiteral = new go.LiteralValue(value.type, value);
-      }
-    }
-    types.set(keyName, discriminatorLiteral);
-    field.defaultValue = discriminatorLiteral;
+    field.defaultValue = getDiscriminatorLiteral(obj.discriminatorValue);
   } else if (prop.clientDefaultValue) {
     if (!go.isLiteralValueType(field.type)) {
       throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.fieldName}`);
@@ -492,7 +509,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
     }
     case m4.SchemaType.Choice:
     case m4.SchemaType.SealedChoice: {
-      const keyName = `literal-choice-${constSchema.value.value}`;
+      const keyName = `literal-${constSchema.language.go!.name}-${constSchema.value.value}`;
       let literalConst = types.get(keyName);
       if (literalConst) {
         return <go.LiteralValue>literalConst;
