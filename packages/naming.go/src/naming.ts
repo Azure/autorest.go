@@ -114,3 +114,7 @@ export function capitalize(str: string): string {
 export function uncapitalize(str: string): string {
   return str ? `${str.charAt(0).toLowerCase()}${str.slice(1)}` : str;
 }
+
+export function createPolymorphicInterfaceName(base: string): string {
+  return base + 'Classification';
+}

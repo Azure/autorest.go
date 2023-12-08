@@ -1172,7 +1172,7 @@ export class InterfaceType implements InterfaceType {
   constructor(name: string, discriminatorField: string) {
     this.name = name;
     this.discriminatorField = discriminatorField;
-    //this.possibleTypes = possibleTypes;
+    this.possibleTypes = new Array<PolymorphicType>();
     //this.rootType = rootType;
   }
 }

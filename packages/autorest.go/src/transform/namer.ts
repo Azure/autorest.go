@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
-import { ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
+import { createPolymorphicInterfaceName, ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
 
 const requestMethodSuffix = 'CreateRequest';
@@ -288,8 +288,4 @@ function cloneLanguageInfo(graph: any) {
       instance.go = clone(instance.default, false, undefined, undefined, ['schema', 'origin']);
     }
   }
-}
-
-function createPolymorphicInterfaceName(base: string): string {
-  return base + 'Classification';
 }

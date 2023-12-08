@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize } from '../../../naming.go/src/naming.js';
+import * as naming from '../../../naming.go/src/naming.js';
 import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
@@ -31,32 +31,48 @@ export class typeAdapter {
       this.codeModel.constants.push(constType);
     }
   
-    // we must adapt all model types first. this is because models can contain cyclic references
-    const modelObjs = new Array<ModelTypeSdkModelType>();
+    // we must adapt all interface/model types first. this is because models can contain cyclic references
+    const modelTypes = new Array<ModelTypeSdkModelType>();
+    const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.sdkPackage.models) {
+      if (modelType.discriminatedSubtypes) {
+        // this is a root discriminated type
+        const iface = this.getInterfaceType(modelType);
+        this.codeModel.interfaceTypes.push(iface);
+        ifaceTypes.push({go: iface, tcgc: modelType});
+      }
       // TODO: what's the equivalent of x-ms-external?
       const model = this.getModel(modelType);
-      modelObjs.push({type: model, obj: modelType});
+      modelTypes.push({go: model, tcgc: modelType});
     }
   
+    // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
+    for (const ifaceType of ifaceTypes) {
+      ifaceType.go.rootType = <go.PolymorphicType>this.getModel(ifaceType.tcgc);
+      for (const subType of values(ifaceType.tcgc.discriminatedSubtypes)) {
+        const possibleType = <go.PolymorphicType>this.getModel(subType);
+        ifaceType.go.possibleTypes.push(possibleType);
+      }
+    }
+
     // now adapt model fields
-    for (const modelObj of modelObjs) {
-      const props = aggregateProperties(modelObj.obj);
+    for (const modelType of modelTypes) {
+      const props = aggregateProperties(modelType.tcgc);
       for (const prop of values(props)) {
         if (prop.kind !== 'property') {
-          throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelObj.obj.name}`);
+          throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.tcgc.name}`);
         }
-        const field = this.getModelField(prop, modelObj.obj);
-        modelObj.type.fields.push(field);
+        const field = this.getModelField(prop, modelType.tcgc);
+        modelType.go.fields.push(field);
       }
-      this.codeModel.models.push(modelObj.type);
+      this.codeModel.models.push(modelType.go);
     }
   }
 
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean): go.PossibleType {
+  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
       case 'any': {
         if (this.codeModel.options.rawJSONAsBytes) {
@@ -81,12 +97,12 @@ export class typeAdapter {
       case 'array': {
         // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
         const myElementTypeByValue = elementTypeByValue ? true : type.valueType.nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(type.valueType);
-        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, type.valueType);
+        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, type.valueType, substituteDiscriminator);
         let arrayType = this.types.get(keyName);
         if (arrayType) {
           return arrayType;
         }
-        arrayType = new go.SliceType(this.getPossibleType(type.valueType, elementTypeByValue), myElementTypeByValue);
+        arrayType = new go.SliceType(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
         this.types.set(keyName, arrayType);
         return arrayType;
       }
@@ -123,6 +139,7 @@ export class typeAdapter {
       case 'enum':
         return this.getConstantType(type);
       case 'constant':
+      case 'enumvalue':
         return this.getLiteralValue(type);
       /*case m4.SchemaType.Credential: {
         let credType = types.get(m4.SchemaType.Credential);
@@ -186,12 +203,12 @@ export class typeAdapter {
       }
       case 'dict': {
         const valueTypeByValue = isTypePassedByValue(type.valueType);
-        const keyName = recursiveKeyName(`dict-${valueTypeByValue}`, type.valueType);
+        const keyName = recursiveKeyName(`dict-${valueTypeByValue}`, type.valueType, substituteDiscriminator);
         let mapType = this.types.get(keyName);
         if (mapType) {
           return mapType;
         }
-        mapType = new go.MapType(this.getPossibleType(type.valueType, elementTypeByValue), valueTypeByValue);
+        mapType = new go.MapType(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), valueTypeByValue);
         this.types.set(keyName, mapType);
         return mapType;
       }
@@ -236,6 +253,9 @@ export class typeAdapter {
         return float64;
       }
       case 'model':
+        if (type.discriminatedSubtypes && substituteDiscriminator) {
+          return this.getInterfaceType(type);
+        }
         return this.getModel(type);
       case 'armId':
       case 'duration':
@@ -288,6 +308,34 @@ export class typeAdapter {
     return constType;
   }
 
+  private getInterfaceType(model: tcgc.SdkModelType, parent?: go.InterfaceType): go.InterfaceType {
+    if (!model.discriminatedSubtypes) {
+      throw new Error(`type ${model.name} isn't a discriminator root`);
+    }
+    const ifaceName = naming.createPolymorphicInterfaceName(model.name);
+    let iface = this.types.get(ifaceName);
+    if (iface) {
+      return <go.InterfaceType>iface;
+    }
+    // find the discriminator field
+    let discriminatorField: string | undefined;
+    for (const prop of model.properties) {
+      if (prop.kind === 'property' && prop.discriminator) {
+        discriminatorField = prop.serializedName;
+        break;
+      }
+    }
+    if (!discriminatorField) {
+      throw new Error(`failed to find discriminator field for type ${model.name}`);
+    }
+    iface = new go.InterfaceType(ifaceName, discriminatorField);
+    if (parent) {
+      iface.parent = parent;
+    }
+    this.types.set(ifaceName, iface);
+    return iface;
+  }
+
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
     let modelType = this.types.get(model.name);
@@ -298,7 +346,37 @@ export class typeAdapter {
     // TODO: what's the extension equivalent in TS?
     const annotations = new go.ModelAnnotations(false);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
-      throw new Error('discriminators nyi');
+      let iface: go.InterfaceType | undefined;
+      let discriminatorLiteral: go.LiteralValue | undefined;
+
+      if (model.discriminatedSubtypes) {
+        // root type, we can get the InterfaceType directly from it
+        iface = this.getInterfaceType(model);
+      } else {
+        // walk the parents until we find the first root type
+        let parent = model.baseModel;
+        while (parent) {
+          if (parent.discriminatedSubtypes) {
+            iface = this.getInterfaceType(parent);
+            break;
+          }
+          parent = parent.baseModel;
+        }
+        if (!iface) {
+          throw new Error(`failed to find discriminator interface name for type ${model.name}`);
+        }
+
+        // find the discriminator property and create the discriminator literal based on it
+        for (const prop of model.properties) {
+          if (prop.kind === 'property' && prop.discriminator) {
+            discriminatorLiteral = this.getDiscriminatorLiteral(prop);
+            break;
+          }
+        }
+      }
+
+      modelType = new go.PolymorphicType(model.name, iface, annotations);
+      (<go.PolymorphicType>modelType).discriminatorValue = discriminatorLiteral;
     } else {
       // TODO: hard-coded format
       modelType = new go.ModelType(model.name, 'json', annotations);
@@ -310,29 +388,26 @@ export class typeAdapter {
     return modelType;
   }
 
-  private getModelField(prop: tcgc.SdkBodyModelPropertyType, obj: tcgc.SdkModelType): go.ModelField {
+  private getDiscriminatorLiteral(sdkProp: tcgc.SdkBodyModelPropertyType): go.LiteralValue {
+    switch (sdkProp.type.kind) {
+      case 'constant':
+      case 'enumvalue':
+        return this.getLiteralValue(sdkProp.type);
+      default:
+        throw new Error(`unhandled kind ${sdkProp.type.kind} for discriminator property ${sdkProp.nameInClient}`);
+    }
+  }
+
+  private getModelField(prop: tcgc.SdkBodyModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     // TODO: hard-coded values
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    const field = new go.ModelField(capitalize(prop.nameInClient), this.getPossibleType(prop.type, false), isTypePassedByValue(prop.type), prop.serializedName, annotations);
+    const field = new go.ModelField(naming.capitalize(prop.nameInClient), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
-    if (prop.discriminator && obj.discriminatorValue) {
-      const keyName = `discriminator-value-${obj.discriminatorValue}`;
-      let discriminatorLiteral = <go.LiteralValue>this.types.get(keyName);
-      if (!discriminatorLiteral) {
-        // the discriminatorValue is either a quoted string or a constant (i.e. enum) value
-        if (obj.discriminatorValue[0] === '"') {
-          discriminatorLiteral = new go.LiteralValue(new go.PrimitiveType('string'), obj.discriminatorValue);
-        } else {
-          // find the corresponding constant value
-          const value = this.constValues.get(obj.discriminatorValue);
-          if (!value) {
-            throw new Error(`didn't find a constant value for discriminator value ${obj.discriminatorValue}`);
-          }
-          discriminatorLiteral = new go.LiteralValue(value.type, value);
-        }
-      }
-      this.types.set(keyName, discriminatorLiteral);
-      field.defaultValue = discriminatorLiteral;
+    // the presence of modelType.discriminatorValue tells us that this
+    // property is on a model that's not the root discriminator
+    if (prop.discriminator && modelType.discriminatorValue) {
+      annotations.isDiscriminator = true;
+      field.defaultValue = this.getDiscriminatorLiteral(prop);
     } /*else if (prop.clientDefaultValue) {
       if (!go.isLiteralValueType(field.type)) {
         throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.fieldName}`);
@@ -406,7 +481,22 @@ export class typeAdapter {
     return bytesType;
   }
 
-  private getLiteralValue(constType: tcgc.SdkConstantType): go.LiteralValue {
+  private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.LiteralValue {
+    if (constType.kind === 'enumvalue') {
+      const keyName = `literal-${constType.enumType.name}-${constType.name}`;
+      let literalConst = this.types.get(keyName);
+      if (literalConst) {
+        return <go.LiteralValue>literalConst;
+      }
+      const constValue = this.constValues.get(constType.name);
+      if (!constValue) {
+        throw new Error(`failed to find const value for ${constType.name}`);
+      }
+      literalConst = new go.LiteralValue(this.getConstantType(constType.enumType), constValue);
+      this.types.set(keyName, literalConst);
+      return literalConst;
+    }
+
     switch (constType.valueType.kind) {
       case 'boolean': {
         const keyName = `literal-boolean-${constType.value}`;
@@ -427,28 +517,18 @@ export class typeAdapter {
         literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constType.valueType), constType.value.value);
         types.set(keyName, literalByteArray);
         return literalByteArray;
-      }
-      case m4.SchemaType.Choice:
-      case m4.SchemaType.SealedChoice: {
-        const keyName = `literal-choice-${constType.value.value}`;
-        let literalConst = types.get(keyName);
-        if (literalConst) {
-          return <go.LiteralValue>literalConst;
-        }
-        literalConst = new go.LiteralValue(adaptConstantType(<m4.ChoiceSchema>constType.valueType), constType.value.value);
-        types.set(keyName, literalConst);
-        return literalConst;
-      }
-      case m4.SchemaType.Date:
-      case m4.SchemaType.DateTime:
-      case m4.SchemaType.UnixTime: {
-        const keyName = `literal-${constType.valueType.language.go!.internalTimeType}-${constType.value.value}`;
-        let literalTime = types.get(keyName);
+      }*/
+      /*case 'date':
+      case 'datetime': {
+        // TODO: tcgc doesn't expose the encoding for date/datetime constant types
+        const encoding = getDateTimeEncoding(constType.encode);
+        const keyName = `literal-${encoding}-${constType.value}`;
+        let literalTime = this.types.get(keyName);
         if (literalTime) {
           return <go.LiteralValue>literalTime;
         }
-        literalTime = new go.LiteralValue(new go.TimeType(constType.valueType.language.go!.internalTimeType), constType.value.value);
-        types.set(keyName, literalTime);
+        literalTime = new go.LiteralValue(new go.TimeType(encoding), constType.value);
+        this.types.set(keyName, literalTime);
         return literalTime;
       }*/
       case 'int32':
@@ -519,12 +599,16 @@ function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.DateTimeFo
   }
 }
 
-function recursiveKeyName(root: string, obj: tcgc.SdkType): string {
+function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminator: boolean): string {
   switch (obj.kind) {
     case 'array':
-      return recursiveKeyName(`${root}-array`, obj.valueType);
+      return recursiveKeyName(`${root}-array`, obj.valueType, substituteDiscriminator);
+    case 'enum':
+      return `${root}-${obj.name}`;
+    case 'enumvalue':
+      return `${root}-${obj.enumType.name}-${obj.value}`;
     case 'dict':
-      return recursiveKeyName(`${root}-dict`, obj.valueType);
+      return recursiveKeyName(`${root}-dict`, obj.valueType, substituteDiscriminator);
     case 'date':
       if (obj.encode !== 'rfc3339') {
         throw new Error(`unsupported date encoding ${obj.encode}`);
@@ -532,6 +616,11 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType): string {
       return `${root}-dateRFC3339`;
     case 'datetime':
       return `${root}-${getDateTimeEncoding(obj.encode)}`;
+    case 'model':
+      if (substituteDiscriminator) {
+        return `${root}-${naming.createPolymorphicInterfaceName(obj.name)}`;
+      }
+      return `${root}-${obj.name}`;
     case 'time':
       if (obj.encode !== 'rfc3339') {
         throw new Error(`unsupported time encoding ${obj.encode}`);
@@ -549,8 +638,13 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
 }
 
 interface ModelTypeSdkModelType {
-  type: go.ModelType | go.PolymorphicType;
-  obj: tcgc.SdkModelType;
+  go: go.ModelType | go.PolymorphicType;
+  tcgc: tcgc.SdkModelType;
+}
+
+interface InterfaceTypeSdkModelType {
+  go: go.InterfaceType;
+  tcgc: tcgc.SdkModelType;
 }
 
 // aggregate the properties from the provided type and its parent types
@@ -559,17 +653,14 @@ function aggregateProperties(model: tcgc.SdkModelType): Array<tcgc.SdkModelPrope
   for (const prop of model.properties) {
     allProps.push(prop);
   }
+
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
-      // ensure that the parent doesn't contain any properties with the same name but different type
       const exists = values(allProps).where(p => { return p.nameInClient === parentProp.nameInClient; }).first();
       if (exists) {
-        if (exists.type !== parentProp.type) {
-          const msg = `type ${model.name} contains duplicate property ${exists.nameInClient} with mismatched types`;
-          throw new Error(msg);
-        }
-        // don't add the duplicate
+        // don't add the duplicate. the TS compiler has better enforcement than OpenAPI
+        // to ensure that duplicate fields with different types aren't added.
         continue;
       }
       allProps.push(parentProp);
