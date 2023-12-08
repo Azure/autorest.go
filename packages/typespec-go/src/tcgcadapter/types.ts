@@ -56,7 +56,7 @@ export class typeAdapter {
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue?: boolean): go.PossibleType {
+  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean): go.PossibleType {
     switch (type.kind) {
       case 'any': {
         if (this.codeModel.options.rawJSONAsBytes) {
@@ -79,8 +79,8 @@ export class typeAdapter {
         return anyType;
       }
       case 'array': {
-        // if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
-        const myElementTypeByValue = type.valueType.nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(type.valueType);
+        // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
+        const myElementTypeByValue = elementTypeByValue ? true : type.valueType.nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(type.valueType);
         const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, type.valueType);
         let arrayType = this.types.get(keyName);
         if (arrayType) {
@@ -271,7 +271,7 @@ export class typeAdapter {
         return uuid;
       }
       default:
-        throw new Error(`unhandled property schema type ${type.kind}`);
+        throw new Error(`unhandled property kind ${type.kind}`);
     }
   }
 
@@ -313,7 +313,7 @@ export class typeAdapter {
   private getModelField(prop: tcgc.SdkBodyModelPropertyType, obj: tcgc.SdkModelType): go.ModelField {
     // TODO: hard-coded values
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    const field = new go.ModelField(capitalize(prop.nameInClient), this.getPossibleType(prop.type), isTypePassedByValue(prop.type), prop.serializedName, annotations);
+    const field = new go.ModelField(capitalize(prop.nameInClient), this.getPossibleType(prop.type, false), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
     if (prop.discriminator && obj.discriminatorValue) {
       const keyName = `discriminator-value-${obj.discriminatorValue}`;
@@ -391,9 +391,9 @@ export class typeAdapter {
     return values;
   }
 
-  private adaptBytesType(schema: tcgc.SdkBuiltInType): go.BytesType {
+  private adaptBytesType(sdkType: tcgc.SdkBuiltInType): go.BytesType {
     let format: go.BytesEncoding = 'Std';
-    if (schema.encode === 'base64url') {
+    if (sdkType.encode === 'base64url') {
       format = 'URL';
     }
     const keyName = `bytes-${format}`;
@@ -406,87 +406,87 @@ export class typeAdapter {
     return bytesType;
   }
 
-  private getLiteralValue(constSchema: tcgc.SdkConstantType): go.LiteralValue {
-    switch (constSchema.valueType.kind) {
+  private getLiteralValue(constType: tcgc.SdkConstantType): go.LiteralValue {
+    switch (constType.valueType.kind) {
       case 'boolean': {
-        const keyName = `literal-boolean-${constSchema.value}`;
+        const keyName = `literal-boolean-${constType.value}`;
         let literalBool = this.types.get(keyName);
         if (literalBool) {
           return <go.LiteralValue>literalBool;
         }
-        literalBool = new go.LiteralValue(new go.PrimitiveType('bool'), constSchema.value);
+        literalBool = new go.LiteralValue(new go.PrimitiveType('bool'), constType.value);
         this.types.set(keyName, literalBool);
         return literalBool;
       }
       /*case m4.SchemaType.ByteArray: {
-        const keyName = `literal-${m4.SchemaType.ByteArray}-${constSchema.value.value}`;
+        const keyName = `literal-${m4.SchemaType.ByteArray}-${constType.value.value}`;
         let literalByteArray = types.get(keyName);
         if (literalByteArray) {
           return <go.LiteralValue>literalByteArray;
         }
-        literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constSchema.valueType), constSchema.value.value);
+        literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constType.valueType), constType.value.value);
         types.set(keyName, literalByteArray);
         return literalByteArray;
       }
       case m4.SchemaType.Choice:
       case m4.SchemaType.SealedChoice: {
-        const keyName = `literal-choice-${constSchema.value.value}`;
+        const keyName = `literal-choice-${constType.value.value}`;
         let literalConst = types.get(keyName);
         if (literalConst) {
           return <go.LiteralValue>literalConst;
         }
-        literalConst = new go.LiteralValue(adaptConstantType(<m4.ChoiceSchema>constSchema.valueType), constSchema.value.value);
+        literalConst = new go.LiteralValue(adaptConstantType(<m4.ChoiceSchema>constType.valueType), constType.value.value);
         types.set(keyName, literalConst);
         return literalConst;
       }
       case m4.SchemaType.Date:
       case m4.SchemaType.DateTime:
       case m4.SchemaType.UnixTime: {
-        const keyName = `literal-${constSchema.valueType.language.go!.internalTimeType}-${constSchema.value.value}`;
+        const keyName = `literal-${constType.valueType.language.go!.internalTimeType}-${constType.value.value}`;
         let literalTime = types.get(keyName);
         if (literalTime) {
           return <go.LiteralValue>literalTime;
         }
-        literalTime = new go.LiteralValue(new go.TimeType(constSchema.valueType.language.go!.internalTimeType), constSchema.value.value);
+        literalTime = new go.LiteralValue(new go.TimeType(constType.valueType.language.go!.internalTimeType), constType.value.value);
         types.set(keyName, literalTime);
         return literalTime;
       }*/
       case 'int32':
       case 'int64': {
-        const keyName = `literal-${constSchema.valueType.kind}-${constSchema.value}`;
+        const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalInt = this.types.get(keyName);
         if (literalInt) {
           return <go.LiteralValue>literalInt;
         }
-        literalInt = new go.LiteralValue(new go.PrimitiveType(constSchema.valueType.kind), constSchema.value);
+        literalInt = new go.LiteralValue(new go.PrimitiveType(constType.valueType.kind), constType.value);
         this.types.set(keyName, literalInt);
         return literalInt;
       }
       case 'float32':
       case 'float64': {
-        const keyName = `literal-${constSchema.valueType.kind}-${constSchema.value}`;
+        const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalFloat = this.types.get(keyName);
         if (literalFloat) {
           return <go.LiteralValue>literalFloat;
         }
-        literalFloat = new go.LiteralValue(new go.PrimitiveType(constSchema.valueType.kind), constSchema.value);
+        literalFloat = new go.LiteralValue(new go.PrimitiveType(constType.valueType.kind), constType.value);
         this.types.set(keyName, literalFloat);
         return literalFloat;
       }
       case 'string':
       case 'guid':
       case 'uuid': {
-        const keyName = `literal-string-${constSchema.value}`;
+        const keyName = `literal-string-${constType.value}`;
         let literalString = this.types.get(keyName);
         if (literalString) {
           return <go.LiteralValue>literalString;
         }
-        literalString = new go.LiteralValue(new go.PrimitiveType('string'), constSchema.value);
+        literalString = new go.LiteralValue(new go.PrimitiveType('string'), constType.value);
         this.types.set(keyName, literalString);
         return literalString;
       }
       default:
-        throw new Error(`unsupported scheam type ${constSchema.valueType.kind} for LiteralValue`);
+        throw new Error(`unsupported kind ${constType.valueType.kind} for LiteralValue`);
     }
   
     // TODO: tcgc doesn't support duration as a literal value
