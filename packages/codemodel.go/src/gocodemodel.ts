@@ -961,6 +961,8 @@ export class CodeModel implements CodeModel {
   
     this.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
     for (const iface of this.interfaceTypes) {
+      // we sort by literal value so that the switch/case statements in polymorphic_helpers.go
+      // are ordered by the literal value which can be somewhat different from the model name.
       iface.possibleTypes.sort((a: PolymorphicType, b: PolymorphicType) => { return sortAscending(a.discriminatorValue!.literal, b.discriminatorValue!.literal); });
     }
   
