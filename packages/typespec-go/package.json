@@ -70,6 +70,7 @@
     "@typespec/http": ">=0.50.0 <1.0.0",
     "@typespec/rest": ">=0.50.0 <1.0.0",
     "@typespec/versioning": ">=0.50.0 <1.0.0",
-    "js-yaml": "~4.1.0"
+    "js-yaml": "~4.1.0",
+    "source-map-support": "0.5.21"
   }
 }
