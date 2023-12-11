@@ -343,6 +343,13 @@ export class typeAdapter {
       return <go.ModelType | go.PolymorphicType>modelType;
     }
   
+    let usage = go.UsageFlags.None;
+    if (model.usage & tsp.UsageFlags.Input) {
+      usage = go.UsageFlags.Input;
+    }
+    if (model.usage & tsp.UsageFlags.Output) {
+      usage |= go.UsageFlags.Output;
+    }
     // TODO: what's the extension equivalent in TS?
     const annotations = new go.ModelAnnotations(false);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
@@ -375,11 +382,11 @@ export class typeAdapter {
         }
       }
 
-      modelType = new go.PolymorphicType(model.name, iface, annotations);
+      modelType = new go.PolymorphicType(model.name, iface, annotations, usage);
       (<go.PolymorphicType>modelType).discriminatorValue = discriminatorLiteral;
     } else {
       // TODO: hard-coded format
-      modelType = new go.ModelType(model.name, 'json', annotations);
+      modelType = new go.ModelType(model.name, 'json', annotations, usage);
       // polymorphic types don't have XMLInfo
       // TODO: XMLInfo
     }

@@ -106,13 +106,13 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     if (!iface) {
       throw new Error(`didn't find InterfaceType for discriminator interface ${ifaceName} on type ${obj.language.go!.name}`);
     }
-    modelType = new go.PolymorphicType(obj.language.go!.name, <go.InterfaceType>iface, annotations);
+    modelType = new go.PolymorphicType(obj.language.go!.name, <go.InterfaceType>iface, annotations, adaptUsage(obj));
     // only non-root and sub-root discriminators will have a discriminatorValue
     if (obj.discriminatorValue) {
       (<go.PolymorphicType>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
     }
   } else {
-    modelType = new go.ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations);
+    modelType = new go.ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations, adaptUsage(obj));
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
@@ -122,6 +122,18 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
 
   types.set(obj.language.go!.name, modelType);
   return modelType;
+}
+
+// returns the usage flags for this schema
+function adaptUsage(obj: m4.ObjectSchema): go.UsageFlags {
+  let flags = go.UsageFlags.None;
+  if (values(obj.usage).any((u) => { return u === m4.SchemaContext.Input; })) {
+    flags = go.UsageFlags.Input;
+  }
+  if (values(obj.usage).any((u) => { return u === m4.SchemaContext.Output; })) {
+    flags |= go.UsageFlags.Output;
+  }
+  return flags;
 }
 
 function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {

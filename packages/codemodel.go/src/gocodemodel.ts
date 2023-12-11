@@ -114,11 +114,25 @@ export interface ModelType extends StructType {
 
   annotations: ModelAnnotations;
 
+  usage: UsageFlags;
+
   xml?: XMLInfo;
 }
 
 export interface ModelAnnotations {
   omitSerDeMethods: boolean;
+}
+
+// UsageFlags are bit flags indicating how a model/polymorphic type is used
+export enum UsageFlags {
+  // the type is unreferenced
+  None = 0,
+
+  // the type is received over the wire
+  Input = 1,
+
+  // the type is sent over the wire
+  Output = 2
 }
 
 // PolymorphicType is a discriminated type
@@ -128,6 +142,8 @@ export interface PolymorphicType extends StructType {
   format: 'json';
 
   annotations: ModelAnnotations;
+
+  usage: UsageFlags;
 
   // this denotes the polymorphic interface this type implements
   interface: InterfaceType;
@@ -1125,10 +1141,11 @@ export class StructField implements StructField {
 }
 
 export class ModelType implements ModelType {
-  constructor(name: string, format: ModelFormat, annotations: ModelAnnotations) {
+  constructor(name: string, format: ModelFormat, annotations: ModelAnnotations, usage: UsageFlags) {
     this.name = name;
     this.format = format;
     this.annotations = annotations;
+    this.usage = usage;
     this.fields = new Array<ModelField>();
   }
 }
@@ -1159,10 +1176,11 @@ export class ModelFieldAnnotations implements ModelFieldAnnotations {
 }
 
 export class PolymorphicType implements PolymorphicType {
-  constructor(name: string, iface: InterfaceType, annotations: ModelAnnotations) {
+  constructor(name: string, iface: InterfaceType, annotations: ModelAnnotations, usage: UsageFlags) {
     this.name = name;
     this.interface = iface;
     this.annotations = annotations;
+    this.usage = usage;
     this.fields = new Array<ModelField>();
   }
 }

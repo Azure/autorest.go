@@ -27622,7 +27622,8 @@ type Workspace struct {
 
 // WorkspaceIdentity - Identity properties of the workspace resource.
 type WorkspaceIdentity struct {
-	// REQUIRED; The identity type. Currently the only supported type is 'SystemAssigned'.
+	// CONSTANT; The identity type. Currently the only supported type is 'SystemAssigned'.
+	// Field has constant value "SystemAssigned", any specified value is ignored.
 	Type *string
 
 	// READ-ONLY; The principal id of the identity.

@@ -9,15 +9,18 @@ package usagegroup
 
 // Record used both as operation parameter and return type
 type InputOutputRecord struct {
+	// REQUIRED
 	RequiredProp *string
 }
 
 // Record used in operation parameters
 type InputRecord struct {
+	// REQUIRED
 	RequiredProp *string
 }
 
 // Record used in operation return type
 type OutputRecord struct {
+	// REQUIRED
 	RequiredProp *string
 }

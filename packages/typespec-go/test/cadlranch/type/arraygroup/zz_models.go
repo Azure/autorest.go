@@ -9,7 +9,7 @@ package arraygroup
 
 // Array inner model
 type InnerModel struct {
-	// Required string property
+	// REQUIRED; Required string property
 	Property *string
 	Children []InnerModel
 }

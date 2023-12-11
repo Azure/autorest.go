@@ -115,7 +115,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
       text += `\tvar b ${prefix}${interfaceType.name}\n`;
       text += `\tswitch m["${interfaceType.discriminatorField}"] {\n`;
       for (const possibleType of interfaceType.possibleTypes) {
-        let disc = formatLiteralValue(possibleType.discriminatorValue!);
+        let disc = formatLiteralValue(possibleType.discriminatorValue!, true);
         // when the discriminator value is an enum, cast the const as a string
         if (go.isConstantType(possibleType.discriminatorValue!.type)) {
           disc = `string(${prefix}${disc})`;

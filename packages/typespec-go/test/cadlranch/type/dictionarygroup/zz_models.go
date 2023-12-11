@@ -9,7 +9,7 @@ package dictionarygroup
 
 // Dictionary inner model
 type InnerModel struct {
-	// Required string property
+	// REQUIRED; Required string property
 	Property *string
 	Children map[string]*InnerModel
 }

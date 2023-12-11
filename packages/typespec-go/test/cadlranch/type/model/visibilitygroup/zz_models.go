@@ -9,18 +9,18 @@ package visibilitygroup
 
 // Output model with visibility properties.
 type VisibilityModel struct {
-	// Required string[], illustrating a create property.
+	// REQUIRED; Required string[], illustrating a create property.
 	CreateProp []*string
 
-	// Required bool, illustrating a delete property.
+	// REQUIRED; Required bool, illustrating a delete property.
 	DeleteProp *bool
 
-	// Required int32, illustrating a query property.
+	// REQUIRED; Required int32, illustrating a query property.
 	QueryProp *int32
 
-	// Required string, illustrating a readonly property.
+	// REQUIRED; Required string, illustrating a readonly property.
 	ReadProp *string
 
-	// Required int32[], illustrating a update property.
+	// REQUIRED; Required int32[], illustrating a update property.
 	UpdateProp []*int32
 }
