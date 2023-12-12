@@ -9,7 +9,10 @@ package singlediscgroup
 
 // This is base model for polymorphic single level inheritance with a discriminator.
 type Bird struct {
-	Kind     *string
+	// REQUIRED
+	Kind *string
+
+	// REQUIRED
 	Wingspan *int32
 }
 
@@ -18,7 +21,10 @@ func (b *Bird) GetBird() *Bird { return b }
 
 // Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
 type Dinosaur struct {
+	// REQUIRED
 	Kind *string
+
+	// REQUIRED
 	Size *int32
 }
 
@@ -27,7 +33,10 @@ func (d *Dinosaur) GetDinosaur() *Dinosaur { return d }
 
 // The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances.
 type Eagle struct {
-	Kind     *string
+	// CONSTANT; undefinedField has constant value "eagle", any specified value is ignored.
+	Kind *string
+
+	// REQUIRED
 	Wingspan *int32
 	Friends  []BirdClassification
 	Hate     map[string]BirdClassification
@@ -44,7 +53,10 @@ func (e *Eagle) GetBird() *Bird {
 
 // The second level model in polymorphic single level inheritance.
 type Goose struct {
-	Kind     *string
+	// CONSTANT; undefinedField has constant value "goose", any specified value is ignored.
+	Kind *string
+
+	// REQUIRED
 	Wingspan *int32
 }
 
@@ -58,7 +70,10 @@ func (g *Goose) GetBird() *Bird {
 
 // The second level model in polymorphic single level inheritance.
 type SeaGull struct {
-	Kind     *string
+	// CONSTANT; undefinedField has constant value "seagull", any specified value is ignored.
+	Kind *string
+
+	// REQUIRED
 	Wingspan *int32
 }
 
@@ -72,7 +87,10 @@ func (s *SeaGull) GetBird() *Bird {
 
 // The second level model in polymorphic single level inheritance.
 type Sparrow struct {
-	Kind     *string
+	// CONSTANT; undefinedField has constant value "sparrow", any specified value is ignored.
+	Kind *string
+
+	// REQUIRED
 	Wingspan *int32
 }
 
@@ -86,7 +104,10 @@ func (s *Sparrow) GetBird() *Bird {
 
 // The second level legacy model in polymorphic single level inheritance.
 type TRex struct {
+	// REQUIRED
 	Kind *string
+
+	// REQUIRED
 	Size *int32
 }
 

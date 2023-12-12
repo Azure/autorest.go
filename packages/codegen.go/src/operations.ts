@@ -703,7 +703,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     let body = helpers.getParamName(bodyParam);
     if (go.isLiteralValue(bodyParam.type)) {
       // if the value is constant, embed it directly
-      body = helpers.formatLiteralValue(bodyParam.type);
+      body = helpers.formatLiteralValue(bodyParam.type, true);
     } else if (bodyParam.bodyFormat === 'XML' && go.isSliceType(bodyParam.type)) {
       // for XML payloads, create a wrapper type if the payload is an array
       imports.add('encoding/xml');
@@ -843,7 +843,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
 
 function emitClientSideDefault(param: go.HeaderParameter | go.QueryParameter, csd: go.ClientSideDefault, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
   const defaultVar = uncapitalize(param.paramName) + 'Default';
-  let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue)}\n`;
+  let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
   text += `\tif options != nil && options.${capitalize(param.paramName)} != nil {\n`;
   text += `\t\t${defaultVar} = *options.${capitalize(param.paramName)}\n`;
   text += '}\n';

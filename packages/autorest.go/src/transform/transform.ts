@@ -86,28 +86,9 @@ async function process(session: Session<m4.CodeModel>) {
     }
 
     for (const prop of values(obj.properties)) {
-      const descriptionMods = new Array<string>();
-      if (prop.readOnly) {
-        descriptionMods.push('READ-ONLY');
-      } else if (prop.required && (prop.schema.type !== m4.SchemaType.Constant || helpers.isOutputOnly(obj))) {
-        descriptionMods.push('REQUIRED');
-      } else if (prop.required && prop.schema.type === m4.SchemaType.Constant) {
-        descriptionMods.push('CONSTANT');
-      }
-      if (prop.required && prop.schema.type === m4.SchemaType.Constant && !helpers.isOutputOnly(obj)) {
-        // add a comment with the const value for const properties that are sent over the wire
-        if (prop.language.go!.description) {
-          prop.language.go!.description += '<br/>';
-        }
-        prop.language.go!.description += `Field has constant value ${helpers.formatConstantValue(<m4.ConstantSchema>prop.schema)}, any specified value is ignored.`;
-      }
       if (prop.language.go!.description) {
-        descriptionMods.push(parseComments(prop.language.go!.description));
-      } else if (prop.schema.language.go!.rawJSONAsBytes) {
-        // add a basic description if one isn't available
-        descriptionMods.push('The contents of this field are raw JSON.');
+        prop.language.go!.description = parseComments(prop.language.go!.description);
       }
-      prop.language.go!.description = descriptionMods.join('; ');
       const details = <m4.Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, 'InBody')}`;
       prop.schema = substitueDiscriminator(prop);

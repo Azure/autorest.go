@@ -123,6 +123,31 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
   const models = codeModel.models;
   const modelDefs = new Array<ModelDef>();
   for (const model of models) {
+    for (const field of model.fields) {
+      const descriptionMods = new Array<string>();
+      if (field.annotations.readOnly) {
+        descriptionMods.push('READ-ONLY');
+      } else if (field.annotations.required && (!go.isLiteralValue(field.type) || model.usage === go.UsageFlags.Output)) {
+        descriptionMods.push('REQUIRED');
+      } else if (field.annotations.required && go.isLiteralValue(field.type)) {
+        descriptionMods.push('CONSTANT');
+      }
+      if (field.annotations.required && go.isLiteralValue(field.type) && model.usage !== go.UsageFlags.Output) {
+        // add a comment with the const value for const properties that are sent over the wire
+        if (field.description) {
+          field.description += '\n';
+        }
+        field.description += `Field has constant value ${formatLiteralValue(field.type, false)}, any specified value is ignored.`;
+      }
+      if (field.description) {
+        descriptionMods.push(field.description);
+      } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
+        // add a basic description if one isn't available
+        descriptionMods.push('The contents of this field are raw JSON.');
+      }
+      field.description = descriptionMods.join('; ');
+    }
+
     const modelDef = new ModelDef(model.name, model.format, model.fields, model.description);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
@@ -244,7 +269,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
     }
     if (field.annotations.isDiscriminator) {
       if (field.defaultValue) {
-        marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.defaultValue)}\n`;
+        marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.defaultValue, true)}\n`;
       } else {
         // if there's no discriminator value (e.g. Fish in test server), use the field's value.
         // this will enable support for custom types that aren't (yet) described in the swagger.
@@ -265,13 +290,13 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
     } else if (go.isLiteralValue(field.type)) {
-      marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.type)}\n`;
+      marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.type, true)}\n`;
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.fieldName}))\n`;
     } else {
       if (field.defaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        marshaller += `\tif ${receiver}.${field.fieldName} == nil {\n\t\t${receiver}.${field.fieldName} = to.Ptr(${formatLiteralValue(field.defaultValue)})\n\t}\n`;
+        marshaller += `\tif ${receiver}.${field.fieldName} == nil {\n\t\t${receiver}.${field.fieldName} = to.Ptr(${formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
       }
       let populate = 'populate';
       if (go.isTimeType(field.type)) {

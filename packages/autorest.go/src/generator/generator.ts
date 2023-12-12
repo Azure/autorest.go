@@ -207,7 +207,7 @@ export async function generateCode(host: AutorestExtensionHost) {
     }
   } catch (E) {
     if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
+      console.error(`${import.meta.url} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }

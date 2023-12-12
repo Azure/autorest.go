@@ -9,10 +9,11 @@ package enumdiscgroup
 
 // Cobra model
 type Cobra struct {
-	// discriminator property
+	// CONSTANT; discriminator property
+	// Field has constant value SnakeKindCobra, any specified value is ignored.
 	Kind *SnakeKind
 
-	// Length of the snake
+	// REQUIRED; Length of the snake
 	Length *int32
 }
 
@@ -26,10 +27,10 @@ func (c *Cobra) GetSnake() *Snake {
 
 // Test extensible enum type for discriminator
 type Dog struct {
-	// discriminator property
+	// REQUIRED; discriminator property
 	Kind *DogKind
 
-	// Weight of the dog
+	// REQUIRED; Weight of the dog
 	Weight *int32
 }
 
@@ -38,10 +39,11 @@ func (d *Dog) GetDog() *Dog { return d }
 
 // Golden dog model
 type Golden struct {
-	// discriminator property
+	// CONSTANT; discriminator property
+	// Field has constant value DogKindGolden, any specified value is ignored.
 	Kind *DogKind
 
-	// Weight of the dog
+	// REQUIRED; Weight of the dog
 	Weight *int32
 }
 
@@ -55,10 +57,10 @@ func (g *Golden) GetDog() *Dog {
 
 // Test fixed enum type for discriminator
 type Snake struct {
-	// discriminator property
+	// REQUIRED; discriminator property
 	Kind *SnakeKind
 
-	// Length of the snake
+	// REQUIRED; Length of the snake
 	Length *int32
 }
 
