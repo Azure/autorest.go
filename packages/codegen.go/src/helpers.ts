@@ -309,7 +309,6 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-// specify withCast: false for doc comments
 export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): string {
   if (go.isConstantType(value.type)) {
     return (<go.ConstantValue>value.literal).valueName;
