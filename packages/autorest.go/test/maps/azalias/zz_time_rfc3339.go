@@ -61,6 +61,10 @@ func (t *dateTimeRFC3339) Parse(layout, value string) error {
 	return err
 }
 
+func (t dateTimeRFC3339) String() string {
+	return time.Time(t).Format(time.RFC3339Nano)
+}
+
 func populateDateTimeRFC3339(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return

@@ -45,6 +45,10 @@ func (t *dateTimeRFC1123) UnmarshalText(data []byte) error {
 	return err
 }
 
+func (t dateTimeRFC1123) String() string {
+	return time.Time(t).Format(time.RFC1123)
+}
+
 func populateDateTimeRFC1123(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
