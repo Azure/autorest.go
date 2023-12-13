@@ -214,6 +214,21 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
     if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
       imports.add('strings');
       return `strings.Join(${paramName}, "${separator}")`;
+    } else if (go.isBytesType(param.type.elementType)) {
+      imports.add('encoding/base64');
+      imports.add('strings');
+      const encodedVar = `encoded${capitalize(param.paramName)}`;
+      let content =  'strings.Join(func() []string {\n';
+      content += `\t\t${encodedVar} := make([]string, len(${param.paramName}))\n`;
+      content += `\t\tfor i := 0; i < len(${param.paramName}); i++ {\n`;
+      let byteFormat = 'Std';
+      if (param.type.elementType.encoding === 'URL') {
+        byteFormat = 'RawURL';
+      }
+      content += `\t\t\t${encodedVar}[i] = base64.${byteFormat}Encoding.EncodeToString(${param.paramName}[i])\n\t\t}\n`;
+      content += `\t\treturn ${encodedVar}\n`;
+      content += `\t}(), "${separator}")`;
+      return content;
     } else {
       imports.add('fmt');
       imports.add('strings');

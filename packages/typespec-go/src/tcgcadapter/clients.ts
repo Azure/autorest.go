@@ -116,38 +116,61 @@ export class clientAdapter {
   }
 
   private adaptMethodParameters(httpOp: tcgc.SdkHttpOperation, method: go.Method | go.NextPageMethod) {
-    let adaptedParam: go.Parameter | undefined;
-  
     if (httpOp.bodyParams.length > 1) {
       throw new Error('multipart body NYI');
     } else if (httpOp.bodyParams.length === 1) {
       const bodyParam = httpOp.bodyParams[0];
       // TODO: hard-coded format type
-      adaptedParam = new go.BodyParameter(bodyParam.nameInClient, 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
+      const adaptedParam = new go.BodyParameter(bodyParam.nameInClient, 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
         this.adaptParameterType(bodyParam), isTypePassedByValue(bodyParam.type));
       adaptedParam.description = bodyParam.description;
+      method.parameters.push(adaptedParam);
     }
   
     for (const headerParam of httpOp.headerParams) {
-      adaptedParam = new go.HeaderParameter(headerParam.nameInClient, headerParam.serializedName, this.adaptHeaderType(headerParam.type, true),
-        this.adaptParameterType(headerParam), isTypePassedByValue(headerParam.type), 'method');
+      let adaptedParam: go.Parameter;
+      const paramType = this.adaptParameterType(headerParam);
+      const byVal = isTypePassedByValue(headerParam.type);
+      if (headerParam.collectionFormat) {
+        if (headerParam.collectionFormat === 'multi') {
+          throw new Error('unexpected collection format multi for HeaderCollectionParameter');
+        }
+        // TODO: is hard-coded false for element type by value correct?
+        const type = this.ta.getPossibleType(headerParam.type, false, false);
+        if (!go.isSliceType(type)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${headerParam.nameInClient}`);
+        }
+        adaptedParam = new go.HeaderCollectionParameter(headerParam.nameInClient, headerParam.serializedName, type, headerParam.collectionFormat, paramType, byVal, 'method');
+      } else {
+        adaptedParam = new go.HeaderParameter(headerParam.nameInClient, headerParam.serializedName, this.adaptHeaderType(headerParam.type, true), paramType, byVal, 'method');
+      }
       adaptedParam.description = headerParam.description;
+      method.parameters.push(adaptedParam);
     }
   
     for (const pathParam of httpOp.pathParams) {
-      adaptedParam = new go.PathParameter(pathParam.nameInClient, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
+      const adaptedParam = new go.PathParameter(pathParam.nameInClient, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
         this.adaptParameterType(pathParam), isTypePassedByValue(pathParam.type), 'method');
       adaptedParam.description = pathParam.description;
+      method.parameters.push(adaptedParam);
     }
   
     for (const queryParam of httpOp.queryParams) {
-      // TODO: encoded query param
-      adaptedParam = new go.QueryParameter(queryParam.nameInClient, queryParam.serializedName, false, this.adaptQueryParameterType(queryParam.type),
-        this.adaptParameterType(queryParam), isTypePassedByValue(queryParam.type), 'method');
+      let adaptedParam: go.Parameter;
+      const paramType = this.adaptParameterType(queryParam);
+      const byVal = isTypePassedByValue(queryParam.type);
+      if (queryParam.collectionFormat) {
+        // TODO: is hard-coded false for element type by value correct?
+        const type = this.ta.getPossibleType(queryParam.type, false, false);
+        if (!go.isSliceType(type)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${queryParam.nameInClient}`);
+        }
+        adaptedParam = new go.QueryCollectionParameter(queryParam.nameInClient, queryParam.serializedName, false, type, queryParam.collectionFormat, paramType, byVal, 'method');
+      } else {
+        // TODO: encoded query param
+        adaptedParam = new go.QueryParameter(queryParam.nameInClient, queryParam.serializedName, false, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
+      }
       adaptedParam.description = queryParam.description;
-    }
-  
-    if (adaptedParam) {
       method.parameters.push(adaptedParam);
     }
   }

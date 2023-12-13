@@ -128,7 +128,9 @@ func (a *Attributes) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type BackupCertificateResult.
 func (b BackupCertificateResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, func() any {
+		return runtime.EncodeByteArray(b.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -155,7 +157,9 @@ func (b *BackupCertificateResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type BackupKeyResult.
 func (b BackupKeyResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, func() any {
+		return runtime.EncodeByteArray(b.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -182,7 +186,9 @@ func (b *BackupKeyResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type BackupSecretResult.
 func (b BackupSecretResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, func() any {
+		return runtime.EncodeByteArray(b.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -209,7 +215,9 @@ func (b *BackupSecretResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type BackupStorageResult.
 func (b BackupStorageResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, func() any {
+		return runtime.EncodeByteArray(b.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -288,14 +296,18 @@ func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
 func (c CertificateBundle) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", c.Attributes)
-	populateByteArray(objectMap, "cer", c.Cer, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "cer", c.Cer, func() any {
+		return runtime.EncodeByteArray(c.Cer, runtime.Base64StdFormat)
+	})
 	populate(objectMap, "contentType", c.ContentType)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "kid", c.Kid)
 	populate(objectMap, "policy", c.Policy)
 	populate(objectMap, "sid", c.Sid)
 	populate(objectMap, "tags", c.Tags)
-	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", c.X509Thumbprint, func() any {
+		return runtime.EncodeByteArray(c.X509Thumbprint, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -598,7 +610,9 @@ func (c CertificateItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "attributes", c.Attributes)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "tags", c.Tags)
-	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", c.X509Thumbprint, func() any {
+		return runtime.EncodeByteArray(c.X509Thumbprint, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -667,7 +681,13 @@ func (c CertificateMergeParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", c.CertificateAttributes)
 	populate(objectMap, "tags", c.Tags)
-	populate(objectMap, "x5c", c.X509Certificates)
+	populateByteArray(objectMap, "x5c", c.X509Certificates, func() any {
+		encodedValue := make([]string, len(c.X509Certificates))
+		for i := 0; i < len(c.X509Certificates); i++ {
+			encodedValue[i] = runtime.EncodeByteArray(c.X509Certificates[i], runtime.Base64StdFormat)
+		}
+		return encodedValue
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -687,7 +707,14 @@ func (c *CertificateMergeParameters) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &c.Tags)
 			delete(rawMsg, key)
 		case "x5c":
-			err = unpopulate(val, "X509Certificates", &c.X509Certificates)
+			var encodedValue []string
+			err = unpopulate(val, "X509Certificates", &encodedValue)
+			if err == nil {
+				c.X509Certificates = make([][]byte, len(encodedValue))
+				for i := 0; i < len(encodedValue) && err == nil; i++ {
+					err = runtime.DecodeByteArray(encodedValue[i], &c.X509Certificates[i], runtime.Base64StdFormat)
+				}
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -701,7 +728,9 @@ func (c *CertificateMergeParameters) UnmarshalJSON(data []byte) error {
 func (c CertificateOperation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "cancellation_requested", c.CancellationRequested)
-	populateByteArray(objectMap, "csr", c.Csr, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "csr", c.Csr, func() any {
+		return runtime.EncodeByteArray(c.Csr, runtime.Base64StdFormat)
+	})
 	populate(objectMap, "error", c.Error)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "issuer", c.IssuerParameters)
@@ -837,7 +866,9 @@ func (c *CertificatePolicy) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type CertificateRestoreParameters.
 func (c CertificateRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", c.CertificateBundleBackup, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", c.CertificateBundleBackup, func() any {
+		return runtime.EncodeByteArray(c.CertificateBundleBackup, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -966,7 +997,9 @@ func (c *Contacts) UnmarshalJSON(data []byte) error {
 func (d DeletedCertificateBundle) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "attributes", d.Attributes)
-	populateByteArray(objectMap, "cer", d.Cer, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "cer", d.Cer, func() any {
+		return runtime.EncodeByteArray(d.Cer, runtime.Base64StdFormat)
+	})
 	populate(objectMap, "contentType", d.ContentType)
 	populateTimeUnix(objectMap, "deletedDate", d.DeletedDate)
 	populate(objectMap, "id", d.ID)
@@ -976,7 +1009,9 @@ func (d DeletedCertificateBundle) MarshalJSON() ([]byte, error) {
 	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "sid", d.Sid)
 	populate(objectMap, "tags", d.Tags)
-	populateByteArray(objectMap, "x5t", d.X509Thumbprint, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", d.X509Thumbprint, func() any {
+		return runtime.EncodeByteArray(d.X509Thumbprint, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -1042,7 +1077,9 @@ func (d DeletedCertificateItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populateTimeUnix(objectMap, "scheduledPurgeDate", d.ScheduledPurgeDate)
 	populate(objectMap, "tags", d.Tags)
-	populateByteArray(objectMap, "x5t", d.X509Thumbprint, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", d.X509Thumbprint, func() any {
+		return runtime.EncodeByteArray(d.X509Thumbprint, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -1948,21 +1985,45 @@ func (i *IssuerParameters) UnmarshalJSON(data []byte) error {
 func (j JSONWebKey) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "crv", j.Crv)
-	populateByteArray(objectMap, "d", j.D, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "dp", j.DP, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "dq", j.DQ, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "e", j.E, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "k", j.K, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "d", j.D, func() any {
+		return runtime.EncodeByteArray(j.D, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "dp", j.DP, func() any {
+		return runtime.EncodeByteArray(j.DP, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "dq", j.DQ, func() any {
+		return runtime.EncodeByteArray(j.DQ, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "e", j.E, func() any {
+		return runtime.EncodeByteArray(j.E, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "k", j.K, func() any {
+		return runtime.EncodeByteArray(j.K, runtime.Base64URLFormat)
+	})
 	populate(objectMap, "key_ops", j.KeyOps)
 	populate(objectMap, "kid", j.Kid)
 	populate(objectMap, "kty", j.Kty)
-	populateByteArray(objectMap, "n", j.N, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "p", j.P, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "q", j.Q, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "qi", j.QI, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "key_hsm", j.T, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "x", j.X, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "y", j.Y, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "n", j.N, func() any {
+		return runtime.EncodeByteArray(j.N, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "p", j.P, func() any {
+		return runtime.EncodeByteArray(j.P, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "q", j.Q, func() any {
+		return runtime.EncodeByteArray(j.Q, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "qi", j.QI, func() any {
+		return runtime.EncodeByteArray(j.QI, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "key_hsm", j.T, func() any {
+		return runtime.EncodeByteArray(j.T, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "x", j.X, func() any {
+		return runtime.EncodeByteArray(j.X, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "y", j.Y, func() any {
+		return runtime.EncodeByteArray(j.Y, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -2284,11 +2345,19 @@ func (k *KeyListResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type KeyOperationResult.
 func (k KeyOperationResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "aad", k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "tag", k.AuthenticationTag, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "iv", k.Iv, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "aad", k.AdditionalAuthenticatedData, func() any {
+		return runtime.EncodeByteArray(k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "tag", k.AuthenticationTag, func() any {
+		return runtime.EncodeByteArray(k.AuthenticationTag, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "iv", k.Iv, func() any {
+		return runtime.EncodeByteArray(k.Iv, runtime.Base64URLFormat)
+	})
 	populate(objectMap, "kid", k.Kid)
-	populateByteArray(objectMap, "value", k.Result, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Result, func() any {
+		return runtime.EncodeByteArray(k.Result, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -2327,11 +2396,19 @@ func (k *KeyOperationResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type KeyOperationsParameters.
 func (k KeyOperationsParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "aad", k.AAD, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "aad", k.AAD, func() any {
+		return runtime.EncodeByteArray(k.AAD, runtime.Base64URLFormat)
+	})
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "iv", k.Iv, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "tag", k.Tag, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "value", k.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "iv", k.Iv, func() any {
+		return runtime.EncodeByteArray(k.Iv, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "tag", k.Tag, func() any {
+		return runtime.EncodeByteArray(k.Tag, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "value", k.Value, func() any {
+		return runtime.EncodeByteArray(k.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -2413,7 +2490,9 @@ func (k *KeyProperties) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type KeyRestoreParameters.
 func (k KeyRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", k.KeyBundleBackup, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.KeyBundleBackup, func() any {
+		return runtime.EncodeByteArray(k.KeyBundleBackup, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -2441,7 +2520,9 @@ func (k *KeyRestoreParameters) UnmarshalJSON(data []byte) error {
 func (k KeySignParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "value", k.Value, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Value, func() any {
+		return runtime.EncodeByteArray(k.Value, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -2507,8 +2588,12 @@ func (k *KeyUpdateParameters) UnmarshalJSON(data []byte) error {
 func (k KeyVerifyParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "digest", k.Digest, runtime.Base64URLFormat)
-	populateByteArray(objectMap, "value", k.Signature, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "digest", k.Digest, func() any {
+		return runtime.EncodeByteArray(k.Digest, runtime.Base64URLFormat)
+	})
+	populateByteArray(objectMap, "value", k.Signature, func() any {
+		return runtime.EncodeByteArray(k.Signature, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -3615,7 +3700,9 @@ func (s *SecretProperties) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type SecretRestoreParameters.
 func (s SecretRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", s.SecretBundleBackup, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", s.SecretBundleBackup, func() any {
+		return runtime.EncodeByteArray(s.SecretBundleBackup, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -4196,7 +4283,9 @@ func (s *StorageListResult) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type StorageRestoreParameters.
 func (s StorageRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "value", s.StorageBundleBackup, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", s.StorageBundleBackup, func() any {
+		return runtime.EncodeByteArray(s.StorageBundleBackup, runtime.Base64URLFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -4370,13 +4459,13 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {
+func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
 		return
 	} else {
-		m[k] = runtime.EncodeByteArray(b, f)
+		m[k] = convert()
 	}
 }
 
