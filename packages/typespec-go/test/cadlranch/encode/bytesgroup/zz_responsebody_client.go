@@ -58,26 +58,26 @@ func (client *ResponseBodyClient) base64HandleResponse(resp *http.Response) (Res
 	return result, nil
 }
 
-func (client *ResponseBodyClient) Base64url(ctx context.Context, options *ResponseBodyClientBase64urlOptions) (ResponseBodyClientBase64urlResponse, error) {
+func (client *ResponseBodyClient) Base64URL(ctx context.Context, options *ResponseBodyClientBase64URLOptions) (ResponseBodyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, options)
 	if err != nil {
-		return ResponseBodyClientBase64urlResponse{}, err
+		return ResponseBodyClientBase64URLResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ResponseBodyClientBase64urlResponse{}, err
+		return ResponseBodyClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ResponseBodyClientBase64urlResponse{}, err
+		return ResponseBodyClientBase64URLResponse{}, err
 	}
 	resp, err := client.base64URLHandleResponse(httpResp)
 	return resp, err
 }
 
-// base64URLCreateRequest creates the Base64url request.
-func (client *ResponseBodyClient) base64URLCreateRequest(ctx context.Context, options *ResponseBodyClientBase64urlOptions) (*policy.Request, error) {
+// base64URLCreateRequest creates the Base64URL request.
+func (client *ResponseBodyClient) base64URLCreateRequest(ctx context.Context, options *ResponseBodyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/response/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,11 +86,11 @@ func (client *ResponseBodyClient) base64URLCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// base64URLHandleResponse handles the Base64url response.
-func (client *ResponseBodyClient) base64URLHandleResponse(resp *http.Response) (ResponseBodyClientBase64urlResponse, error) {
-	result := ResponseBodyClientBase64urlResponse{}
+// base64URLHandleResponse handles the Base64URL response.
+func (client *ResponseBodyClient) base64URLHandleResponse(resp *http.Response) (ResponseBodyClientBase64URLResponse, error) {
+	result := ResponseBodyClientBase64URLResponse{}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return ResponseBodyClientBase64urlResponse{}, err
+		return ResponseBodyClientBase64URLResponse{}, err
 	}
 	return result, nil
 }

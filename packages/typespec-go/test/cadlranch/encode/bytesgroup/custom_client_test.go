@@ -22,18 +22,18 @@ func TestHeaderClientBase64(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestHeaderClientBase64url(t *testing.T) {
+func TestHeaderClientBase64URL(t *testing.T) {
 	client, err := bytesgroup.NewHeaderClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64url(context.Background(), []byte("test"), nil)
+	resp, err := client.Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestHeaderClientBase64urlArray(t *testing.T) {
+func TestHeaderClientBase64URLArray(t *testing.T) {
 	client, err := bytesgroup.NewHeaderClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64urlArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
+	resp, err := client.Base64URLArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -57,10 +57,10 @@ func TestPropertyClientBase64(t *testing.T) {
 	require.EqualValues(t, []byte("test"), resp.Value)
 }
 
-func TestPropertyClientBase64url(t *testing.T) {
+func TestPropertyClientBase64URL(t *testing.T) {
 	client, err := bytesgroup.NewPropertyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64url(context.Background(), bytesgroup.Base64urlBytesProperty{
+	resp, err := client.Base64URL(context.Background(), bytesgroup.Base64URLBytesProperty{
 		Value: []byte("test"),
 	}, nil)
 	require.NoError(t, err)
@@ -68,10 +68,10 @@ func TestPropertyClientBase64url(t *testing.T) {
 	require.EqualValues(t, []byte("test"), resp.Value)
 }
 
-func TestPropertyClientBase64urlArray(t *testing.T) {
+func TestPropertyClientBase64URLArray(t *testing.T) {
 	client, err := bytesgroup.NewPropertyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64urlArray(context.Background(), bytesgroup.Base64urlArrayBytesProperty{
+	resp, err := client.Base64URLArray(context.Background(), bytesgroup.Base64URLArrayBytesProperty{
 		Value: [][]byte{[]byte("test"), []byte("test")},
 	}, nil)
 	require.NoError(t, err)
@@ -98,18 +98,18 @@ func TestQueryClientBase64(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestQueryClientBase64url(t *testing.T) {
+func TestQueryClientBase64URL(t *testing.T) {
 	client, err := bytesgroup.NewQueryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64url(context.Background(), []byte("test"), nil)
+	resp, err := client.Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestQueryClientBase64urlArray(t *testing.T) {
+func TestQueryClientBase64URLArray(t *testing.T) {
 	client, err := bytesgroup.NewQueryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64urlArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
+	resp, err := client.Base64URLArray(context.Background(), [][]byte{[]byte("test"), []byte("test")}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -130,10 +130,10 @@ func TestRequestBodyClientBase64(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestRequestBodyClientBase64url(t *testing.T) {
+func TestRequestBodyClientBase64URL(t *testing.T) {
 	client, err := bytesgroup.NewRequestBodyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64url(context.Background(), []byte("test"), nil)
+	resp, err := client.Base64URL(context.Background(), []byte("test"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -163,10 +163,10 @@ func TestResponseBodyClientBase64(t *testing.T) {
 	require.EqualValues(t, []byte("test"), resp.Value)
 }
 
-func TestResponseBodyClientBase64url(t *testing.T) {
+func TestResponseBodyClientBase64URL(t *testing.T) {
 	client, err := bytesgroup.NewResponseBodyClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Base64url(context.Background(), nil)
+	resp, err := client.Base64URL(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, []byte("test"), resp.Value)

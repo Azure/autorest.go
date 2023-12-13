@@ -51,25 +51,25 @@ func (client *RequestBodyClient) base64CreateRequest(ctx context.Context, value 
 	return req, nil
 }
 
-func (client *RequestBodyClient) Base64url(ctx context.Context, value []byte, options *RequestBodyClientBase64urlOptions) (RequestBodyClientBase64urlResponse, error) {
+func (client *RequestBodyClient) Base64URL(ctx context.Context, value []byte, options *RequestBodyClientBase64URLOptions) (RequestBodyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, value, options)
 	if err != nil {
-		return RequestBodyClientBase64urlResponse{}, err
+		return RequestBodyClientBase64URLResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RequestBodyClientBase64urlResponse{}, err
+		return RequestBodyClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return RequestBodyClientBase64urlResponse{}, err
+		return RequestBodyClientBase64URLResponse{}, err
 	}
-	return RequestBodyClientBase64urlResponse{}, nil
+	return RequestBodyClientBase64URLResponse{}, nil
 }
 
-// base64URLCreateRequest creates the Base64url request.
-func (client *RequestBodyClient) base64URLCreateRequest(ctx context.Context, value []byte, options *RequestBodyClientBase64urlOptions) (*policy.Request, error) {
+// base64URLCreateRequest creates the Base64URL request.
+func (client *RequestBodyClient) base64URLCreateRequest(ctx context.Context, value []byte, options *RequestBodyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
