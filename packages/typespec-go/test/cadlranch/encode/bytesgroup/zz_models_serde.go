@@ -43,8 +43,8 @@ func (b *Base64BytesProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Base64urlArrayBytesProperty.
-func (b Base64urlArrayBytesProperty) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Base64URLArrayBytesProperty.
+func (b Base64URLArrayBytesProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populateByteArray(objectMap, "value", b.Value, func() any {
 		encodedValue := make([]string, len(b.Value))
@@ -56,8 +56,8 @@ func (b Base64urlArrayBytesProperty) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Base64urlArrayBytesProperty.
-func (b *Base64urlArrayBytesProperty) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Base64URLArrayBytesProperty.
+func (b *Base64URLArrayBytesProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
@@ -83,8 +83,8 @@ func (b *Base64urlArrayBytesProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Base64urlBytesProperty.
-func (b Base64urlBytesProperty) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Base64URLBytesProperty.
+func (b Base64URLBytesProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populateByteArray(objectMap, "value", b.Value, func() any {
 		return runtime.EncodeByteArray(b.Value, runtime.Base64URLFormat)
@@ -92,8 +92,8 @@ func (b Base64urlBytesProperty) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type Base64urlBytesProperty.
-func (b *Base64urlBytesProperty) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Base64URLBytesProperty.
+func (b *Base64URLBytesProperty) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)

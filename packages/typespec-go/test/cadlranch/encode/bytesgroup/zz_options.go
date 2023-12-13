@@ -11,11 +11,11 @@ type HeaderClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-type HeaderClientBase64urlArrayOptions struct {
+type HeaderClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-type HeaderClientBase64urlOptions struct {
+type HeaderClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -27,11 +27,11 @@ type PropertyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-type PropertyClientBase64urlArrayOptions struct {
+type PropertyClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-type PropertyClientBase64urlOptions struct {
+type PropertyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -43,11 +43,11 @@ type QueryClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-type QueryClientBase64urlArrayOptions struct {
+type QueryClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-type QueryClientBase64urlOptions struct {
+type QueryClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -59,7 +59,7 @@ type RequestBodyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-type RequestBodyClientBase64urlOptions struct {
+type RequestBodyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -79,7 +79,7 @@ type ResponseBodyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-type ResponseBodyClientBase64urlOptions struct {
+type ResponseBodyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 

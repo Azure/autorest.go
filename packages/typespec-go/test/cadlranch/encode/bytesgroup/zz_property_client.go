@@ -61,26 +61,26 @@ func (client *PropertyClient) base64HandleResponse(resp *http.Response) (Propert
 	return result, nil
 }
 
-func (client *PropertyClient) Base64url(ctx context.Context, body Base64urlBytesProperty, options *PropertyClientBase64urlOptions) (PropertyClientBase64urlResponse, error) {
+func (client *PropertyClient) Base64URL(ctx context.Context, body Base64URLBytesProperty, options *PropertyClientBase64URLOptions) (PropertyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, body, options)
 	if err != nil {
-		return PropertyClientBase64urlResponse{}, err
+		return PropertyClientBase64URLResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PropertyClientBase64urlResponse{}, err
+		return PropertyClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return PropertyClientBase64urlResponse{}, err
+		return PropertyClientBase64URLResponse{}, err
 	}
 	resp, err := client.base64URLHandleResponse(httpResp)
 	return resp, err
 }
 
-// base64URLCreateRequest creates the Base64url request.
-func (client *PropertyClient) base64URLCreateRequest(ctx context.Context, body Base64urlBytesProperty, options *PropertyClientBase64urlOptions) (*policy.Request, error) {
+// base64URLCreateRequest creates the Base64URL request.
+func (client *PropertyClient) base64URLCreateRequest(ctx context.Context, body Base64URLBytesProperty, options *PropertyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,35 +92,35 @@ func (client *PropertyClient) base64URLCreateRequest(ctx context.Context, body B
 	return req, nil
 }
 
-// base64URLHandleResponse handles the Base64url response.
-func (client *PropertyClient) base64URLHandleResponse(resp *http.Response) (PropertyClientBase64urlResponse, error) {
-	result := PropertyClientBase64urlResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Base64urlBytesProperty); err != nil {
-		return PropertyClientBase64urlResponse{}, err
+// base64URLHandleResponse handles the Base64URL response.
+func (client *PropertyClient) base64URLHandleResponse(resp *http.Response) (PropertyClientBase64URLResponse, error) {
+	result := PropertyClientBase64URLResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Base64URLBytesProperty); err != nil {
+		return PropertyClientBase64URLResponse{}, err
 	}
 	return result, nil
 }
 
-func (client *PropertyClient) Base64urlArray(ctx context.Context, body Base64urlArrayBytesProperty, options *PropertyClientBase64urlArrayOptions) (PropertyClientBase64urlArrayResponse, error) {
+func (client *PropertyClient) Base64URLArray(ctx context.Context, body Base64URLArrayBytesProperty, options *PropertyClientBase64URLArrayOptions) (PropertyClientBase64URLArrayResponse, error) {
 	var err error
 	req, err := client.base64URLArrayCreateRequest(ctx, body, options)
 	if err != nil {
-		return PropertyClientBase64urlArrayResponse{}, err
+		return PropertyClientBase64URLArrayResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return PropertyClientBase64urlArrayResponse{}, err
+		return PropertyClientBase64URLArrayResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return PropertyClientBase64urlArrayResponse{}, err
+		return PropertyClientBase64URLArrayResponse{}, err
 	}
 	resp, err := client.base64URLArrayHandleResponse(httpResp)
 	return resp, err
 }
 
-// base64URLArrayCreateRequest creates the Base64urlArray request.
-func (client *PropertyClient) base64URLArrayCreateRequest(ctx context.Context, body Base64urlArrayBytesProperty, options *PropertyClientBase64urlArrayOptions) (*policy.Request, error) {
+// base64URLArrayCreateRequest creates the Base64URLArray request.
+func (client *PropertyClient) base64URLArrayCreateRequest(ctx context.Context, body Base64URLArrayBytesProperty, options *PropertyClientBase64URLArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/base64url-array"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -132,11 +132,11 @@ func (client *PropertyClient) base64URLArrayCreateRequest(ctx context.Context, b
 	return req, nil
 }
 
-// base64URLArrayHandleResponse handles the Base64urlArray response.
-func (client *PropertyClient) base64URLArrayHandleResponse(resp *http.Response) (PropertyClientBase64urlArrayResponse, error) {
-	result := PropertyClientBase64urlArrayResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Base64urlArrayBytesProperty); err != nil {
-		return PropertyClientBase64urlArrayResponse{}, err
+// base64URLArrayHandleResponse handles the Base64URLArray response.
+func (client *PropertyClient) base64URLArrayHandleResponse(resp *http.Response) (PropertyClientBase64URLArrayResponse, error) {
+	result := PropertyClientBase64URLArrayResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Base64URLArrayBytesProperty); err != nil {
+		return PropertyClientBase64URLArrayResponse{}, err
 	}
 	return result, nil
 }

@@ -53,25 +53,25 @@ func (client *QueryClient) base64CreateRequest(ctx context.Context, value []byte
 	return req, nil
 }
 
-func (client *QueryClient) Base64url(ctx context.Context, value []byte, options *QueryClientBase64urlOptions) (QueryClientBase64urlResponse, error) {
+func (client *QueryClient) Base64URL(ctx context.Context, value []byte, options *QueryClientBase64URLOptions) (QueryClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, value, options)
 	if err != nil {
-		return QueryClientBase64urlResponse{}, err
+		return QueryClientBase64URLResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueryClientBase64urlResponse{}, err
+		return QueryClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return QueryClientBase64urlResponse{}, err
+		return QueryClientBase64URLResponse{}, err
 	}
-	return QueryClientBase64urlResponse{}, nil
+	return QueryClientBase64URLResponse{}, nil
 }
 
-// base64URLCreateRequest creates the Base64url request.
-func (client *QueryClient) base64URLCreateRequest(ctx context.Context, value []byte, options *QueryClientBase64urlOptions) (*policy.Request, error) {
+// base64URLCreateRequest creates the Base64URL request.
+func (client *QueryClient) base64URLCreateRequest(ctx context.Context, value []byte, options *QueryClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -83,25 +83,25 @@ func (client *QueryClient) base64URLCreateRequest(ctx context.Context, value []b
 	return req, nil
 }
 
-func (client *QueryClient) Base64urlArray(ctx context.Context, value [][]byte, options *QueryClientBase64urlArrayOptions) (QueryClientBase64urlArrayResponse, error) {
+func (client *QueryClient) Base64URLArray(ctx context.Context, value [][]byte, options *QueryClientBase64URLArrayOptions) (QueryClientBase64URLArrayResponse, error) {
 	var err error
 	req, err := client.base64URLArrayCreateRequest(ctx, value, options)
 	if err != nil {
-		return QueryClientBase64urlArrayResponse{}, err
+		return QueryClientBase64URLArrayResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return QueryClientBase64urlArrayResponse{}, err
+		return QueryClientBase64URLArrayResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return QueryClientBase64urlArrayResponse{}, err
+		return QueryClientBase64URLArrayResponse{}, err
 	}
-	return QueryClientBase64urlArrayResponse{}, nil
+	return QueryClientBase64URLArrayResponse{}, nil
 }
 
-// base64URLArrayCreateRequest creates the Base64urlArray request.
-func (client *QueryClient) base64URLArrayCreateRequest(ctx context.Context, value [][]byte, options *QueryClientBase64urlArrayOptions) (*policy.Request, error) {
+// base64URLArrayCreateRequest creates the Base64URLArray request.
+func (client *QueryClient) base64URLArrayCreateRequest(ctx context.Context, value [][]byte, options *QueryClientBase64URLArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/query/base64url-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

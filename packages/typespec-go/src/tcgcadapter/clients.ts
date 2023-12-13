@@ -59,7 +59,7 @@ export class clientAdapter {
 
   private adaptMethod(sdkMethod: tcgc.SdkMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
     let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
-    const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(sdkMethod.name), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
+    const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
   
     const getStatusCodes = function(httpOp: tcgc.SdkHttpOperation): Array<number> {
@@ -71,7 +71,7 @@ export class clientAdapter {
     };
   
     if (sdkMethod.kind === 'basic') {
-      method = new go.Method(capitalize(sdkMethod.name), goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      method = new go.Method(capitalize(ensureNameCase(sdkMethod.name)), goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
     } else if (sdkMethod.kind === 'paging') {
       throw new Error('paged NYI');
       //method = new go.PageableMethod(capitalize(sdkMethod.name), goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
@@ -121,7 +121,7 @@ export class clientAdapter {
     } else if (httpOp.bodyParams.length === 1) {
       const bodyParam = httpOp.bodyParams[0];
       // TODO: hard-coded format type
-      const adaptedParam = new go.BodyParameter(bodyParam.nameInClient, 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
+      const adaptedParam = new go.BodyParameter(uncapitalize(ensureNameCase(bodyParam.nameInClient)), 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
         this.adaptParameterType(bodyParam), isTypePassedByValue(bodyParam.type));
       adaptedParam.description = bodyParam.description;
       method.parameters.push(adaptedParam);
@@ -129,6 +129,7 @@ export class clientAdapter {
   
     for (const headerParam of httpOp.headerParams) {
       let adaptedParam: go.Parameter;
+      const paramName = uncapitalize(ensureNameCase(headerParam.nameInClient));
       const paramType = this.adaptParameterType(headerParam);
       const byVal = isTypePassedByValue(headerParam.type);
       if (headerParam.collectionFormat) {
@@ -140,16 +141,17 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${headerParam.nameInClient}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(headerParam.nameInClient, headerParam.serializedName, type, headerParam.collectionFormat, paramType, byVal, 'method');
+        adaptedParam = new go.HeaderCollectionParameter(paramName, headerParam.serializedName, type, headerParam.collectionFormat, paramType, byVal, 'method');
       } else {
-        adaptedParam = new go.HeaderParameter(headerParam.nameInClient, headerParam.serializedName, this.adaptHeaderType(headerParam.type, true), paramType, byVal, 'method');
+        adaptedParam = new go.HeaderParameter(paramName, headerParam.serializedName, this.adaptHeaderType(headerParam.type, true), paramType, byVal, 'method');
       }
       adaptedParam.description = headerParam.description;
       method.parameters.push(adaptedParam);
     }
   
     for (const pathParam of httpOp.pathParams) {
-      const adaptedParam = new go.PathParameter(pathParam.nameInClient, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
+      const paramName = uncapitalize(ensureNameCase(pathParam.nameInClient));
+      const adaptedParam = new go.PathParameter(paramName, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
         this.adaptParameterType(pathParam), isTypePassedByValue(pathParam.type), 'method');
       adaptedParam.description = pathParam.description;
       method.parameters.push(adaptedParam);
@@ -157,6 +159,7 @@ export class clientAdapter {
   
     for (const queryParam of httpOp.queryParams) {
       let adaptedParam: go.Parameter;
+      const paramName = uncapitalize(ensureNameCase(queryParam.nameInClient));
       const paramType = this.adaptParameterType(queryParam);
       const byVal = isTypePassedByValue(queryParam.type);
       if (queryParam.collectionFormat) {
@@ -165,10 +168,10 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${queryParam.nameInClient}`);
         }
-        adaptedParam = new go.QueryCollectionParameter(queryParam.nameInClient, queryParam.serializedName, false, type, queryParam.collectionFormat, paramType, byVal, 'method');
+        adaptedParam = new go.QueryCollectionParameter(paramName, queryParam.serializedName, false, type, queryParam.collectionFormat, paramType, byVal, 'method');
       } else {
         // TODO: encoded query param
-        adaptedParam = new go.QueryParameter(queryParam.nameInClient, queryParam.serializedName, false, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
+        adaptedParam = new go.QueryParameter(paramName, queryParam.serializedName, false, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
       }
       adaptedParam.description = queryParam.description;
       method.parameters.push(adaptedParam);
@@ -213,7 +216,7 @@ export class clientAdapter {
     } else if (bodyResponses[0].kind === 'model') {
       let modelType: go.ModelType | undefined;
       for (const model of this.ta.codeModel.models) {
-        if (model.name === bodyResponses[0].name) {
+        if (model.name === ensureNameCase(bodyResponses[0].name)) {
           modelType = model;
           break;
         }

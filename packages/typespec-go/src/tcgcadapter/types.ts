@@ -297,14 +297,15 @@ export class typeAdapter {
 
   // converts an SdkEnumType to a go.ConstantType
   private getConstantType(enumType: tcgc.SdkEnumType): go.ConstantType {
-    let constType = this.types.get(enumType.name);
+    const constTypeName = naming.ensureNameCase(enumType.name);
+    let constType = this.types.get(constTypeName);
     if (constType) {
       return <go.ConstantType>constType;
     }
-    constType = new go.ConstantType(enumType.name, getPrimitiveType(enumType.valueType.kind), `Possible${enumType.name}Values`);
+    constType = new go.ConstantType(naming.ensureNameCase(constTypeName), getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.description = enumType.description;
-    this.types.set(enumType.name, constType);
+    this.types.set(constTypeName, constType);
     return constType;
   }
 
@@ -312,7 +313,7 @@ export class typeAdapter {
     if (!model.discriminatedSubtypes) {
       throw new Error(`type ${model.name} isn't a discriminator root`);
     }
-    const ifaceName = naming.createPolymorphicInterfaceName(model.name);
+    const ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
     let iface = this.types.get(ifaceName);
     if (iface) {
       return <go.InterfaceType>iface;
@@ -338,7 +339,8 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    let modelType = this.types.get(model.name);
+    const modelName = naming.ensureNameCase(model.name);
+    let modelType = this.types.get(modelName);
     if (modelType) {
       return <go.ModelType | go.PolymorphicType>modelType;
     }
@@ -382,16 +384,16 @@ export class typeAdapter {
         }
       }
 
-      modelType = new go.PolymorphicType(model.name, iface, annotations, usage);
+      modelType = new go.PolymorphicType(modelName, iface, annotations, usage);
       (<go.PolymorphicType>modelType).discriminatorValue = discriminatorLiteral;
     } else {
       // TODO: hard-coded format
-      modelType = new go.ModelType(model.name, 'json', annotations, usage);
+      modelType = new go.ModelType(modelName, 'json', annotations, usage);
       // polymorphic types don't have XMLInfo
       // TODO: XMLInfo
     }
     modelType.description = model.description;
-    this.types.set(model.name, modelType);
+    this.types.set(modelName, modelType);
     return modelType;
   }
 
@@ -408,7 +410,7 @@ export class typeAdapter {
   private getModelField(prop: tcgc.SdkBodyModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     // TODO: hard-coded values
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    const field = new go.ModelField(naming.capitalize(prop.nameInClient), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
+    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.nameInClient)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
     // the presence of modelType.discriminatorValue tells us that this
     // property is on a model that's not the root discriminator
@@ -462,11 +464,12 @@ export class typeAdapter {
   private getConstantValues(type: go.ConstantType, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
     const values = new Array<go.ConstantValue>();
     for (const valueType of valueTypes) {
-      let value = this.constValues.get(valueType.name);
+      const valueTypeName = naming.ensureNameCase(valueType.name);
+      let value = this.constValues.get(valueTypeName);
       if (!value) {
-        value = new go.ConstantValue(`${type.name}${valueType.name}`, type, valueType.value);
+        value = new go.ConstantValue(`${type.name}${valueTypeName}`, type, valueType.value);
         value.description = valueType.description;
-        this.constValues.set(valueType.name, value);
+        this.constValues.set(valueTypeName, value);
       }
       values.push(value);
     }

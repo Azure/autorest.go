@@ -12,12 +12,12 @@ type Base64BytesProperty struct {
 	Value []byte
 }
 
-type Base64urlArrayBytesProperty struct {
+type Base64URLArrayBytesProperty struct {
 	// REQUIRED
 	Value [][]byte
 }
 
-type Base64urlBytesProperty struct {
+type Base64URLBytesProperty struct {
 	// REQUIRED
 	Value []byte
 }
