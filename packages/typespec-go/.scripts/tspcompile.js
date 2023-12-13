@@ -16,6 +16,9 @@ const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 // the format is as follows
 // 'moduleName': [ 'inputDir', 'additional arg 1', 'additional arg N...' ]
 const cadlRanch = {
+  'bytesgroup': ['encode/bytes'],
+  //'datetimegroup': ['encode/datetime'],
+  //'durationgroup': ['encode/duration'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],

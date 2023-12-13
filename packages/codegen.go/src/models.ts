@@ -43,21 +43,23 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
       modelText += method.text;
     }
 
-    modelDef.SerDeMethods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
-    for (const method of values(modelDef.SerDeMethods)) {
+    modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
+    for (const method of values(modelDef.SerDe.methods)) {
       if (method.desc.length > 0) {
         serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
       serdeTextBody += method.text;
     }
-    if (modelDef.SerDeMethods.length > 0) {
+    if (modelDef.SerDe.needsJSONPopulate) {
       needsJSONPopulate = true;
+    }
+    if (modelDef.SerDe.needsJSONUnpopulate) {
       needsJSONUnpopulate = true;
     }
-    if (modelDef.HasJSONByteArray) {
+    if (modelDef.SerDe.needsJSONPopulateByteArray) {
       needsJSONPopulateByteArray = true;
     }
-    if (modelDef.HasAny) {
+    if (modelDef.SerDe.needsJSONPopulateAny) {
       needsJSONPopulateAny = true;
     }
   }
@@ -85,13 +87,13 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   }
   if (needsJSONPopulateByteArray) {
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    serdeTextBody += 'func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {\n';
+    serdeTextBody += 'func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {\n';
     serdeTextBody += '\tif azcore.IsNullValue(b) {\n';
     serdeTextBody += '\t\tm[k] = nil\n';
     serdeTextBody += '\t} else if len(b) == 0 {\n';
     serdeTextBody += '\t\treturn\n';
     serdeTextBody += '\t} else {\n';
-    serdeTextBody += '\t\tm[k] = runtime.EncodeByteArray(b, f)\n';
+    serdeTextBody += '\t\tm[k] = convert()\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '}\n\n';
   }
@@ -151,9 +153,6 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
     const modelDef = new ModelDef(model.name, model.format, model.fields, model.description);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
-      if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
-        modelDef.HasAny = true;
-      }
     }
 
     if (go.isModelType(model) && model.format === 'xml' && !model.annotations.omitSerDeMethods) {
@@ -186,16 +185,16 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         generateDiscriminatorMarkerMethod(parent, modelDef);
       }
     }
-    serdeImports.add('reflect');
-    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    for (const field of values(model.fields)) {
-      if (go.isBytesType(field.type)) {
-        modelDef.HasJSONByteArray = true;
-      }
-    }
     if (!model.annotations.omitSerDeMethods) {
       generateJSONMarshaller(model, modelDef, serdeImports);
       generateJSONUnmarshaller(model, modelDef, serdeImports, codeModel.options);
+    }
+    if (modelDef.SerDe.needsJSONPopulate) {
+      serdeImports.add('reflect');
+      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    }
+    if (modelDef.SerDe.needsJSONPopulateAny || modelDef.SerDe.needsJSONPopulateByteArray) {
+      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     }
     modelDefs.push(modelDef);
   }
@@ -253,13 +252,13 @@ function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, mo
   const receiver = modelDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += '\tobjectMap := make(map[string]any)\n';
-  marshaller += generateJSONMarshallerBody(modelType, receiver, imports);
+  marshaller += generateJSONMarshallerBody(modelType, modelDef, receiver, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
-  modelDef.SerDeMethods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
+  modelDef.SerDe.methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType, receiver: string, imports: ImportManager): string {
+function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager): string {
   let marshaller = '';
   let addlProps: go.MapType | undefined;
   for (const field of values(modelType.fields)) {
@@ -277,7 +276,17 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       }
     } else if (go.isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName}, func() any {\n`;
+      marshaller += `\t\treturn runtime.EncodeByteArray(${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n\t})\n`;
+      modelDef.SerDe.needsJSONPopulateByteArray = true;
+    } else if (go.isSliceType(field.type) && go.isBytesType(field.type.elementType)) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      marshaller += `\tpopulateByteArray(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName}, func() any {\n`;
+      marshaller += `\t\tencodedValue := make([]string, len(${receiver}.${field.fieldName}))\n`;
+      marshaller += `\t\tfor i := 0; i < len(${receiver}.${field.fieldName}); i++ {\n`;
+      marshaller += `\t\t\tencodedValue[i] = runtime.EncodeByteArray(${receiver}.${field.fieldName}[i], runtime.Base64${field.type.elementType.encoding}Format)\n\t\t}\n`;
+      marshaller += '\t\treturn encodedValue\n\t})\n';
+      modelDef.SerDe.needsJSONPopulateByteArray = true;
     } else if (go.isSliceType(field.type) && go.isTimeType(field.type.elementType)) {
       const source = `${receiver}.${field.fieldName}`;
       let elementPtr = '*';
@@ -289,10 +298,12 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       marshaller += `\t\taux[i] = (${elementPtr}${field.type.elementType.dateTimeFormat})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
+      modelDef.SerDe.needsJSONPopulate = true;
     } else if (go.isLiteralValue(field.type)) {
       marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.type, true)}\n`;
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.fieldName}))\n`;
+      modelDef.SerDe.needsJSONPopulate = true;
     } else {
       if (field.defaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
@@ -301,8 +312,12 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       let populate = 'populate';
       if (go.isTimeType(field.type)) {
         populate += capitalize(field.type.dateTimeFormat);
+        modelDef.SerDe.needsJSONPopulate = true;
       } else if (go.isPrimitiveType(field.type) && field.type.typeName === 'any') {
         populate += 'Any';
+        modelDef.SerDe.needsJSONPopulateAny = true;
+      } else {
+        modelDef.SerDe.needsJSONPopulate = true;
       }
       marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.fieldName})\n`;
     }
@@ -336,12 +351,12 @@ function generateJSONUnmarshaller(modelType: go.ModelType | go.PolymorphicType, 
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshaller += '\t}\n';
-  unmarshaller += generateJSONUnmarshallerBody(modelType, receiver, imports, options);
+  unmarshaller += generateJSONUnmarshallerBody(modelType, modelDef, receiver, imports, options);
   unmarshaller += '}\n\n';
-  modelDef.SerDeMethods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
+  modelDef.SerDe.methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicType, receiver: string, imports: ImportManager, options: go.Options): string {
+function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, receiver: string, imports: ImportManager, options: go.Options): string {
   const emitAddlProps = function (tab: string, addlProps: go.MapType): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ref = '';
@@ -380,6 +395,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += generateDiscriminatorUnmarshaller(field, receiver);
     } else if (go.isTimeType(field.type)) {
       unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(field.type.dateTimeFormat)}(val, "${field.fieldName}", &${receiver}.${field.fieldName})\n`;
+      modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isSliceType(field.type) && go.isTimeType(field.type.elementType)) {
       imports.add('time');
       let elementPtr = '*';
@@ -391,13 +407,25 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.fieldName} = append(${receiver}.${field.fieldName}, (${elementPtr}time.Time)(au))\n`;
       unmarshalBody += '\t\t\t}\n';
+      modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+    } else if (go.isSliceType(field.type) && go.isBytesType(field.type.elementType)) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      unmarshalBody += '\t\t\tvar encodedValue []string\n';
+      unmarshalBody += `\t\t\terr = unpopulate(val, "${field.fieldName}", &encodedValue)\n`;
+      unmarshalBody += '\t\t\tif err == nil {\n';
+      unmarshalBody += `\t\t\t\t${receiver}.${field.fieldName} = make([][]byte, len(encodedValue))\n`;
+      unmarshalBody += '\t\t\t\tfor i := 0; i < len(encodedValue) && err == nil; i++ {\n';
+      unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.fieldName}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;
+      unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
+      modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
       unmarshalBody += `\t\t\t${receiver}.${field.fieldName} = val\n`;
     } else {
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.fieldName}", &${receiver}.${field.fieldName})\n`;
+      modelDef.SerDe.needsJSONUnpopulate = true;
     }
     unmarshalBody += '\t\t\tdelete(rawMsg, key)\n';
   }
@@ -564,7 +592,7 @@ function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, impo
   }
   text += '\treturn enc.EncodeElement(aux, start)\n';
   text += '}\n\n';
-  modelDef.SerDeMethods.push({ name: 'MarshalXML', desc: desc, text: text });
+  modelDef.SerDe.methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
 function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
@@ -592,7 +620,7 @@ function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, im
   }
   text += '\treturn nil\n';
   text += '}\n\n';
-  modelDef.SerDeMethods.push({ name: 'UnmarshalXML', desc: desc, text: text });
+  modelDef.SerDe.methods.push({ name: 'UnmarshalXML', desc: desc, text: text });
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller
@@ -638,26 +666,38 @@ interface ModelMethod {
   text: string;
 }
 
+class SerDeInfo {
+  methods: Array<ModelMethod>;
+  needsJSONPopulate: boolean;
+  needsJSONUnpopulate: boolean;
+  needsJSONPopulateByteArray: boolean;
+  needsJSONPopulateAny: boolean;
+
+  constructor() {
+    this.methods = new Array<ModelMethod>();
+    this.needsJSONPopulate = false;
+    this.needsJSONUnpopulate = false;
+    this.needsJSONPopulateByteArray = false;
+    this.needsJSONPopulateAny = false;
+  }
+}
+
 // represents model definition as a Go struct
 class ModelDef {
   readonly Name: string;
   readonly Format: go.ModelFormat;
   readonly Description?: string;
   readonly Fields: Array<go.ModelField>;
-  readonly SerDeMethods: Array<ModelMethod>;
+  readonly SerDe: SerDeInfo;
   readonly Methods: Array<ModelMethod>;
-  HasJSONByteArray: boolean;
-  HasAny: boolean;
 
   constructor(name: string, format: go.ModelFormat, fields: Array<go.ModelField>, description?: string) {
     this.Name = name;
     this.Format = format;
     this.Description = description;
     this.Fields = fields;
-    this.SerDeMethods = new Array<ModelMethod>();
+    this.SerDe = new SerDeInfo();
     this.Methods = new Array<ModelMethod>();
-    this.HasJSONByteArray = false;
-    this.HasAny = false;
   }
 
   text(): string {

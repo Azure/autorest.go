@@ -112,7 +112,9 @@ func (b *BooleanWrapper) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
 func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "field", b.Field, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "field", b.Field, func() any {
+		return runtime.EncodeByteArray(b.Field, runtime.Base64StdFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -878,7 +880,9 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	populateDateTimeRFC3339(objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "sawshark"
 	populate(objectMap, "length", s.Length)
-	populateByteArray(objectMap, "picture", s.Picture, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "picture", s.Picture, func() any {
+		return runtime.EncodeByteArray(s.Picture, runtime.Base64StdFormat)
+	})
 	populate(objectMap, "siblings", s.Siblings)
 	populate(objectMap, "species", s.Species)
 	return json.Marshal(objectMap)
@@ -1123,13 +1127,13 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {
+func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
 		return
 	} else {
-		m[k] = runtime.EncodeByteArray(b, f)
+		m[k] = convert()
 	}
 }
 
