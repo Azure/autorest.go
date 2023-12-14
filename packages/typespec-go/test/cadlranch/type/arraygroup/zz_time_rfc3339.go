@@ -55,3 +55,7 @@ func (t *dateTimeRFC3339) Parse(layout, value string) error {
 	*t = dateTimeRFC3339(p)
 	return err
 }
+
+func (t dateTimeRFC3339) String() string {
+	return time.Time(t).Format(time.RFC3339Nano)
+}

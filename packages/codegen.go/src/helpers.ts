@@ -204,11 +204,29 @@ export function getParamName(param: go.Parameter): string {
   return paramName;
 }
 
+// converts the Go code model encoding type to the type name in the standard library
+export function formatBytesEncoding(enc: go.BytesEncoding): string {
+  if (enc === 'URL') {
+    return 'RawURL';
+  }
+  return 'Std';
+}
+
 export function formatParamValue(param: go.FormBodyParameter | go.HeaderParameter | go.PathParameter | go.QueryParameter, imports: ImportManager): string {
   let paramName = getParamName(param);
   if (go.isFormBodyCollectionParameter(param) || go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
     if (param.collectionFormat === 'multi') {
       throw new Error('multi collection format should have been previously handled');
+    }
+    const emitConvertOver = function(paramName: string, format: string): string {
+      const encodedVar = `encoded${capitalize(paramName)}`;
+      let content = 'strings.Join(func() []string {\n';
+      content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
+      content += `\t\tfor i := 0; i < len(${paramName}); i++ {\n`;
+      content += `\t\t\t${encodedVar}[i] = ${format}\n\t\t}\n`;
+      content += `\t\treturn ${encodedVar}\n`;
+      content += `\t}(), "${separator}")`;
+      return content;
     }
     const separator = getDelimiterForCollectionFormat(param.collectionFormat);
     if (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
@@ -217,18 +235,10 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
     } else if (go.isBytesType(param.type.elementType)) {
       imports.add('encoding/base64');
       imports.add('strings');
-      const encodedVar = `encoded${capitalize(param.paramName)}`;
-      let content =  'strings.Join(func() []string {\n';
-      content += `\t\t${encodedVar} := make([]string, len(${param.paramName}))\n`;
-      content += `\t\tfor i := 0; i < len(${param.paramName}); i++ {\n`;
-      let byteFormat = 'Std';
-      if (param.type.elementType.encoding === 'URL') {
-        byteFormat = 'RawURL';
-      }
-      content += `\t\t\t${encodedVar}[i] = base64.${byteFormat}Encoding.EncodeToString(${param.paramName}[i])\n\t\t}\n`;
-      content += `\t\treturn ${encodedVar}\n`;
-      content += `\t}(), "${separator}")`;
-      return content;
+      return emitConvertOver(param.paramName, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.paramName}[i])`);
+    } else if (go.isTimeType(param.type.elementType)) {
+      imports.add('strings');
+      return emitConvertOver(param.paramName, `${param.type.elementType.dateTimeFormat}(${param.paramName}[i]).String()`);
     } else {
       imports.add('fmt');
       imports.add('strings');
@@ -274,11 +284,7 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
   } else if (go.isBytesType(type)) {
     // ByteArray is a base-64 encoded value in string format
     imports.add('encoding/base64');
-    let byteFormat = 'Std';
-    if (type.encoding === 'URL') {
-      byteFormat = 'RawURL';
-    }
-    return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
+    return `base64.${formatBytesEncoding(type.encoding)}Encoding.EncodeToString(${paramName})`;
   } else if (go.isPrimitiveType(type)) {
     if (type.typeName === 'bool') {
       imports.add('strconv');

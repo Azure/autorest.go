@@ -269,11 +269,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
   } else if (go.isBytesType(headerResp.type)) {
     // ByteArray is a base-64 encoded value in string format
     imports.add('encoding/base64');
-    let byteFormat = 'Std';
-    if (headerResp.type.encoding === 'URL') {
-      byteFormat = 'RawURL';
-    }
-    text += `\t\t${name}, err := base64.${byteFormat}Encoding.DecodeString(val)\n`;
+    text += `\t\t${name}, err := base64.${helpers.formatBytesEncoding(headerResp.type.encoding)}Encoding.DecodeString(val)\n`;
     byRef = '';
   } else if (go.isLiteralValue(headerResp.type)) {
     text += `\t\t${respObj}.${headerResp.fieldName} = &val\n`;

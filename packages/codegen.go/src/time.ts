@@ -103,6 +103,10 @@ func (t *dateTimeRFC1123) UnmarshalText(data []byte) error {
 	*t = dateTimeRFC1123(p)
 	return err
 }
+
+func (t dateTimeRFC1123) String() string {
+	return time.Time(t).Format(time.RFC1123)
+}
 `;
   if (needsPopulate) {
     text +=
@@ -196,6 +200,10 @@ func (t *dateTimeRFC3339) Parse(layout, value string) error {
 	p, err := time.Parse(layout, strings.ToUpper(value))
 	*t = dateTimeRFC3339(p)
 	return err
+}
+
+func (t dateTimeRFC3339) String() string {
+	return time.Time(t).Format(time.RFC3339Nano)
 }
 `;
     if (needsPopulate) {
