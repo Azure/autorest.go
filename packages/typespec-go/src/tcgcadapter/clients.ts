@@ -137,7 +137,7 @@ export class clientAdapter {
           throw new Error('unexpected collection format multi for HeaderCollectionParameter');
         }
         // TODO: is hard-coded false for element type by value correct?
-        const type = this.ta.getPossibleType(headerParam.type, false, false);
+        const type = this.ta.getPossibleType(headerParam.type, true, false);
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${headerParam.nameInClient}`);
         }
@@ -163,8 +163,7 @@ export class clientAdapter {
       const paramType = this.adaptParameterType(queryParam);
       const byVal = isTypePassedByValue(queryParam.type);
       if (queryParam.collectionFormat) {
-        // TODO: is hard-coded false for element type by value correct?
-        const type = this.ta.getPossibleType(queryParam.type, false, false);
+        const type = this.ta.getPossibleType(queryParam.type, true, false);
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${queryParam.nameInClient}`);
         }
