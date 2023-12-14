@@ -168,10 +168,11 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${queryParam.nameInClient}`);
         }
-        adaptedParam = new go.QueryCollectionParameter(paramName, queryParam.serializedName, false, type, queryParam.collectionFormat, paramType, byVal, 'method');
+        // TODO: unencoded query param
+        adaptedParam = new go.QueryCollectionParameter(paramName, queryParam.serializedName, true, type, queryParam.collectionFormat, paramType, byVal, 'method');
       } else {
-        // TODO: encoded query param
-        adaptedParam = new go.QueryParameter(paramName, queryParam.serializedName, false, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
+        // TODO: unencoded query param
+        adaptedParam = new go.QueryParameter(paramName, queryParam.serializedName, true, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
       }
       adaptedParam.description = queryParam.description;
       method.parameters.push(adaptedParam);

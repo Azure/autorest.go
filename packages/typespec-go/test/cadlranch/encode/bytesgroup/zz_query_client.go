@@ -47,9 +47,9 @@ func (client *QueryClient) base64CreateRequest(ctx context.Context, value []byte
 	if err != nil {
 		return nil, err
 	}
-	unencodedParams := []string{}
-	unencodedParams = append(unencodedParams, "value="+base64.StdEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("value", base64.StdEncoding.EncodeToString(value))
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -77,9 +77,9 @@ func (client *QueryClient) base64URLCreateRequest(ctx context.Context, value []b
 	if err != nil {
 		return nil, err
 	}
-	unencodedParams := []string{}
-	unencodedParams = append(unencodedParams, "value="+base64.RawURLEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("value", base64.RawURLEncoding.EncodeToString(value))
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -107,15 +107,15 @@ func (client *QueryClient) base64URLArrayCreateRequest(ctx context.Context, valu
 	if err != nil {
 		return nil, err
 	}
-	unencodedParams := []string{}
-	unencodedParams = append(unencodedParams, "value="+strings.Join(func() []string {
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("value", strings.Join(func() []string {
 		encodedValue := make([]string, len(value))
 		for i := 0; i < len(value); i++ {
 			encodedValue[i] = base64.RawURLEncoding.EncodeToString(value[i])
 		}
 		return encodedValue
 	}(), ","))
-	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
@@ -143,8 +143,8 @@ func (client *QueryClient) defaultCreateRequest(ctx context.Context, value []byt
 	if err != nil {
 		return nil, err
 	}
-	unencodedParams := []string{}
-	unencodedParams = append(unencodedParams, "value="+base64.StdEncoding.EncodeToString(value))
-	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("value", base64.StdEncoding.EncodeToString(value))
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
