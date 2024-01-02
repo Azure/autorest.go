@@ -74,26 +74,21 @@ export class typeAdapter {
   // returns the same instance of the converted type.
   getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
-      case 'any': {
-        if (this.codeModel.options.rawJSONAsBytes) {
-          const anyRawJSONKey = 'any-raw-json';
-          let anyRawJSON = this.types.get(anyRawJSONKey);
-          if (anyRawJSON) {
-            return anyRawJSON;
-          }
-          anyRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
-          anyRawJSON.rawJSONAsBytes = true;
-          this.types.set(anyRawJSONKey, anyRawJSON);
-          return anyRawJSON;
-        }
-        let anyType = this.types.get('any');
-        if (anyType) {
-          return anyType;
-        }
-        anyType = new go.PrimitiveType('any');
-        this.types.set('any', anyType);
-        return anyType;
-      }
+      case 'any':
+      case 'armId':
+      case 'boolean':
+      case 'bytes':
+      case 'date':
+      case 'float32':
+      case 'float64':
+      case 'guid':
+      case 'int32':
+      case 'int64':
+      case 'string':
+      case 'time':
+      case 'url':
+      case 'uuid':
+        return this.getBuiltInType(type);
       case 'array': {
         // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
         const myElementTypeByValue = elementTypeByValue ? true : type.valueType.nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(type.valueType);
@@ -115,18 +110,6 @@ export class typeAdapter {
         types.set(m4.SchemaType.Binary, binaryType);
         return binaryType;
       }*/
-      case 'boolean': {
-        const boolKey = 'boolean';
-        let primitiveBool = this.types.get(boolKey);
-        if (primitiveBool) {
-          return primitiveBool;
-        }
-        primitiveBool = new go.PrimitiveType('bool');
-        this.types.set(boolKey, primitiveBool);
-        return primitiveBool;
-      }
-      case 'bytes':
-        return this.adaptBytesType(type);
       /*case m4.SchemaType.Char: {
         let rune = types.get(m4.SchemaType.Char);
         if (rune) {
@@ -150,20 +133,6 @@ export class typeAdapter {
         types.set(m4.SchemaType.Credential, credType);
         return credType;
       }*/
-      case 'date': {
-        if (type.encode !== 'rfc3339') {
-          throw new Error(`unsupported date encoding ${type.encode}`);
-        }
-        const dateKey = `date-${type.encode}`;
-        let date = this.types.get(dateKey);
-        if (date) {
-          return date;
-        }
-        date = new go.TimeType('dateType');
-        this.types.set(dateKey, date);
-        this.codeModel.marshallingRequirements.generateDateHelper = true;
-        return date;
-      }
       case 'datetime': {
         const encoding = getDateTimeEncoding(type.encode);
         let datetime = this.types.get(encoding);
@@ -187,20 +156,6 @@ export class typeAdapter {
         }
         return datetime;
       }
-      case 'time': {
-        if (type.encode !== 'rfc3339') {
-          throw new Error(`unsupported time encoding ${type.encode}`);
-        }
-        const encoding = 'timeRFC3339';
-        let time = this.types.get(encoding);
-        if (time) {
-          return time;
-        }
-        time = new go.TimeType(encoding);
-        this.types.set(encoding, time);
-        this.codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
-        return time;
-      }
       case 'dict': {
         const valueTypeByValue = isTypePassedByValue(type.valueType);
         const keyName = recursiveKeyName(`dict-${valueTypeByValue}`, type.valueType, substituteDiscriminator);
@@ -212,25 +167,75 @@ export class typeAdapter {
         this.types.set(keyName, mapType);
         return mapType;
       }
-      case 'int32': {
-        const int32Key = 'int32';
-        let int32 = this.types.get(int32Key);
-        if (int32) {
-          return int32;
+      case 'duration': {
+        switch (type.wireType.kind) {
+          case 'float32':
+          case 'float64':
+          case 'int32':
+          case 'int64':
+          case 'string':
+            return this.getBuiltInType(type.wireType);
+          default:
+            throw new Error(`unhandled duration wireType.kind ${type.wireType.kind}`);
         }
-        int32 = new go.PrimitiveType(int32Key);
-        this.types.set(int32Key, int32);
-        return int32;
       }
-      case 'int64': {
-        const int64Key = 'int64';
-        let int64 = this.types.get(int64Key);
-        if (int64) {
-          return int64;
+      case 'model':
+        if (type.discriminatedSubtypes && substituteDiscriminator) {
+          return this.getInterfaceType(type);
         }
-        int64 = new go.PrimitiveType(int64Key);
-        this.types.set(int64Key, int64);
-        return int64;
+        return this.getModel(type);
+      default:
+        throw new Error(`unhandled property kind ${type.kind}`);
+    }
+  }
+
+  private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
+    switch (type.kind) {
+      case 'any': {
+        if (this.codeModel.options.rawJSONAsBytes) {
+          const anyRawJSONKey = 'any-raw-json';
+          let anyRawJSON = this.types.get(anyRawJSONKey);
+          if (anyRawJSON) {
+            return anyRawJSON;
+          }
+          anyRawJSON = new go.SliceType(new go.PrimitiveType('byte'), true);
+          anyRawJSON.rawJSONAsBytes = true;
+          this.types.set(anyRawJSONKey, anyRawJSON);
+          return anyRawJSON;
+        }
+        let anyType = this.types.get('any');
+        if (anyType) {
+          return anyType;
+        }
+        anyType = new go.PrimitiveType('any');
+        this.types.set('any', anyType);
+        return anyType;
+      }
+      case 'boolean': {
+        const boolKey = 'boolean';
+        let primitiveBool = this.types.get(boolKey);
+        if (primitiveBool) {
+          return primitiveBool;
+        }
+        primitiveBool = new go.PrimitiveType('bool');
+        this.types.set(boolKey, primitiveBool);
+        return primitiveBool;
+      }
+      case 'bytes':
+        return this.adaptBytesType(type);
+      case 'date': {
+        if (type.encode !== 'rfc3339') {
+          throw new Error(`unsupported date encoding ${type.encode}`);
+        }
+        const dateKey = `date-${type.encode}`;
+        let date = this.types.get(dateKey);
+        if (date) {
+          return date;
+        }
+        date = new go.TimeType('dateType');
+        this.types.set(dateKey, date);
+        this.codeModel.marshallingRequirements.generateDateHelper = true;
+        return date;
       }
       case 'float32': {
         const float32Key = 'float32';
@@ -252,13 +257,27 @@ export class typeAdapter {
         this. types.set(float64Key, float64);
         return float64;
       }
-      case 'model':
-        if (type.discriminatedSubtypes && substituteDiscriminator) {
-          return this.getInterfaceType(type);
+      case 'int32': {
+        const int32Key = 'int32';
+        let int32 = this.types.get(int32Key);
+        if (int32) {
+          return int32;
         }
-        return this.getModel(type);
+        int32 = new go.PrimitiveType(int32Key);
+        this.types.set(int32Key, int32);
+        return int32;
+      }
+      case 'int64': {
+        const int64Key = 'int64';
+        let int64 = this.types.get(int64Key);
+        if (int64) {
+          return int64;
+        }
+        int64 = new go.PrimitiveType(int64Key);
+        this.types.set(int64Key, int64);
+        return int64;
+      }
       case 'armId':
-      case 'duration':
       case 'string': {
         const stringKey = 'string';
         let stringType = this.types.get(stringKey);
@@ -268,6 +287,20 @@ export class typeAdapter {
         stringType = new go.PrimitiveType('string');
         this.types.set(stringKey, stringType);
         return stringType;
+      }
+      case 'time': {
+        if (type.encode !== 'rfc3339') {
+          throw new Error(`unsupported time encoding ${type.encode}`);
+        }
+        const encoding = 'timeRFC3339';
+        let time = this.types.get(encoding);
+        if (time) {
+          return time;
+        }
+        time = new go.TimeType(encoding);
+        this.types.set(encoding, time);
+        this.codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
+        return time;
       }
       case 'url': {
         const urlKey = 'url';
@@ -626,6 +659,8 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
       return `${root}-dateRFC3339`;
     case 'datetime':
       return `${root}-${getDateTimeEncoding(obj.encode)}`;
+    case 'duration':
+      return `${root}-${obj.wireType.kind}`;
     case 'model':
       if (substituteDiscriminator) {
         return `${root}-${naming.createPolymorphicInterfaceName(obj.name)}`;
