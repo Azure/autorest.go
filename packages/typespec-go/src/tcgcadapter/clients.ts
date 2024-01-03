@@ -233,7 +233,7 @@ export class clientAdapter {
       respEnv.result.description = bodyResponses[0].description;
     } else {
       const resultType = this.ta.getPossibleType(bodyResponses[0], false, false);
-      if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isStandardType(resultType)) {
+      if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
         throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
       respEnv.result = new go.MonomorphicResult('Value', 'JSON', resultType, isTypePassedByValue(bodyResponses[0]));
@@ -265,7 +265,7 @@ export class clientAdapter {
   private adaptHeaderType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderType {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
-    if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isStandardType(type)) {
+    if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new Error(`unexpected header parameter type ${sdkType.kind}`);
     }
     return type;
@@ -273,7 +273,7 @@ export class clientAdapter {
   
   private adaptPathParameterType(sdkType: tcgc.SdkType): go.PathParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
+    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
       throw new Error(`unexpected path parameter type ${sdkType.kind}`);
     }
     return type;
@@ -281,7 +281,7 @@ export class clientAdapter {
   
   private adaptQueryParameterType(sdkType: tcgc.SdkType): go.QueryParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
+    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
       throw new Error(`unexpected query parameter type ${sdkType.kind}`);
     } else if (go.isSliceType(type)) {
       type.elementTypeByValue = true;

@@ -343,7 +343,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (binaryType) {
         return binaryType;
       }
-      binaryType = new go.StandardType('io.ReadSeekCloser', 'io');
+      binaryType = new go.QualifiedType('ReadSeekCloser', 'io');
       types.set(m4.SchemaType.Binary, binaryType);
       return binaryType;
     }

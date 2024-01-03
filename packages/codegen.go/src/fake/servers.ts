@@ -325,14 +325,14 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         content += '\t\t\tcontent, err = io.ReadAll(part)\n';
         content += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
         let assignedValue: string;
-        if (go.isStandardType(param.type) && param.type.typeName === 'io.ReadSeekCloser') {
+        if (go.isQualifiedType(param.type) && param.type.typeName === 'ReadSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
         } else if (go.isConstantType(param.type) || (go.isPrimitiveType(param.type) && param.type.typeName === 'string')) {
           assignedValue = 'string(content)';
         } else if (go.isSliceType(param.type)) {
-          if (go.isStandardType(param.type.elementType) && param.type.elementType.typeName === 'io.ReadSeekCloser') {
+          if (go.isQualifiedType(param.type.elementType) && param.type.elementType.typeName === 'ReadSeekCloser') {
             imports.add('bytes');
             imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
             assignedValue = `append(${param.paramName}, streaming.NopCloser(bytes.NewReader(content)))`;
