@@ -19,7 +19,7 @@ steps:
       git add -A ./test/.
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go/test
     failOnStderr: true
 
   - script: |

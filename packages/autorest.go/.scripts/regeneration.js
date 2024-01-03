@@ -3,7 +3,7 @@
 import { exec } from 'child_process';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
-import { semaphore } from './semaphore.js';
+import semaphore from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
 const sem = semaphore(8);

@@ -64,14 +64,14 @@
     {
       "commandKind": "global",
       "name": "modtidy",
-      "summary": "run node packages/autorest.go/.scripts/modtidy.js to perform tidy up all go.mod files",
-      "shellCommand": "node packages/autorest.go/.scripts/modtidy.js"
+      "summary": "run node .scripts/modtidy.js to tidy up all go.mod files under the current directory",
+      "shellCommand": "node .scripts/modtidy.js"
     },
     {
       "commandKind": "global",
       "name": "buildvet",
-      "summary": "run node packages/autorest.go/.scripts/buildvet.js to build and vet all modules",
-      "shellCommand": "node packages/autorest.go/.scripts/buildvet.js"
+      "summary": "run node .scripts/buildvet.js to build and vet all modules under the current directory",
+      "shellCommand": "node .scripts/buildvet.js"
     },
     {
       "commandKind": "global",

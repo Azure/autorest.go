@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-import { execSync } from 'child_process';
-import * as fs from 'fs';
+const execSync = require('child_process').execSync;
+const fs = require('fs');
+const path = require('path');
 
-recursiveFindGoMod('./packages/autorest.go/test');
+recursiveFindGoMod(process.env.RUSH_INVOKED_FOLDER);
 
 function recursiveFindGoMod(cur) {
   const dir = fs.opendirSync(cur);
@@ -13,10 +14,15 @@ function recursiveFindGoMod(cur) {
       break;
     }
     if (dirEnt.isFile() && dirEnt.name === 'go.mod') {
-      console.log('go mod tidy ' + cur);
-      execSync('go mod tidy', { cwd: cur });
+      console.log('go build && go vet ' + cur);
+      try {
+        execSync('go build ./...', { cwd: cur });
+        execSync('go vet ./...', { cwd: cur });
+      } catch (err) {
+        console.error(err);
+      }
     } else if (dirEnt.isDirectory()) {
-      recursiveFindGoMod(cur + '/' + dirEnt.name);
+      recursiveFindGoMod(path.join(cur, dirEnt.name));
     }
   }
   dir.close();
