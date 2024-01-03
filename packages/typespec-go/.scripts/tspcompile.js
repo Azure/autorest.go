@@ -14,9 +14,38 @@ const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 // the format is as follows
 // 'moduleName': [ 'inputDir', 'additional arg 1', 'additional arg N...' ]
 const cadlRanch = {
+  'apikeygroup': ['authentication/api-key'],
+  'customgroup': ['authentication/http/custom'],
+  'oauth2group': ['authentication/oauth2'],
+  'unionauthgroup': ['authentication/union'],
+  'accessgroup': ['azure/client-generator-core/access'],
+  'coreusagegroup': ['azure/client-generator-core/usage'],
+  //'basicgroup': ['azure/core/basic'],
+  //'lrorpcgroup': ['azure/core/lro/rpc'],
+  //'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
+  //'lrostdgroup': ['azure/core/lro/standard'],
+  //'traitsgroup': ['azure/core/traits'],
+  //'commongroup': ['client/structure/common'],
+  //'defaultgroup': ['client/structure/default'],
+  //'multiclientgroup': ['client/structure/multi-client'],
+  //'renamedopgroup': ['client/structure/renamed-operation'],
+  //'twoopgroup': ['client/structure/two-operation-group'],
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
+  'bodyoptionalgroup': ['parameters/body-optionality'],
+  'collectionfmtgroup': ['parameters/collection-format'],
+  //'spreadgroup': ['parameters/spread'],
+  //'contentneggroup': ['payload/content-negotiation'],
+  //'pageablegroup': ['payload/pageable'],
+  'projectednamegroup': ['projection/projected-name'],
+  //'srvdrivengroup': ['resiliency/srv-driven'],
+  'multiplegroup': ['server/path/multiple'],
+  'singlegroup': ['server/path/single'],
+  //'clientreqidgroup': ['special-headers/client-request-id'],
+  //'condreqgroup': ['special-headers/conditional-request'],
+  //'repeatabilitygroup': ['special-headers/repeatability'],
+  //'specialwordsgroup': ['special-words'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],
@@ -116,10 +145,11 @@ function generate(moduleName, inputDir, outputDir, additionalArgs) {
         if (error === null && stderr === '') {
           execSync('gofmt -w .', { cwd: fullOutputDir});
         }
-        sem.leave();
       });
     } catch (err) {
       console.error(err.output.toString());
+    } finally {
+      sem.leave();
     }
   });
 }
