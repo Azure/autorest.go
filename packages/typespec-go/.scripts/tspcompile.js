@@ -38,11 +38,11 @@ const cadlRanch = {
   //'contentneggroup': ['payload/content-negotiation'], // unexpected kind header for property contentType in model PngImageAsJson
   //'pageablegroup': ['payload/pageable'], // support for paging
   'projectednamegroup': ['projection/projected-name'],
-  //'srvdrivengroup': ['resiliency/srv-driven'], // fix optional parameters
+  'srvdrivengroup': ['resiliency/srv-driven'],
   'multiplegroup': ['server/path/multiple'],
   'singlegroup': ['server/path/single'],
-  //'clientreqidgroup': ['special-headers/client-request-id'], // fix optional parameters
-  //'condreqgroup': ['special-headers/conditional-request'],   // fix optional parameters
+  'clientreqidgroup': ['special-headers/client-request-id'],
+  'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
