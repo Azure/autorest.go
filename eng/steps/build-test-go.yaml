@@ -16,10 +16,10 @@ steps:
   - script: |
       rush regenerate
       rush modtidy 2>&1
-      git add -A ./test/.
+      git add -A .
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go/test
     failOnStderr: true
 
   - script: |

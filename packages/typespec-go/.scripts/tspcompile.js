@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-
 import { existsSync, opendirSync, unlinkSync } from 'fs';
-
-import { semaphore } from './semaphore.js';
+import semaphore from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
 const sem = semaphore(8);

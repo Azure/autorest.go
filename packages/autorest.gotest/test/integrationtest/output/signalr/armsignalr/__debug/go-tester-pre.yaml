@@ -1728,7 +1728,7 @@ schemas:
                 description: Get the principal id for the user assigned identity
               go:
                 name: PrincipalID
-                description: READ-ONLY; Get the principal id for the user assigned identity
+                description: Get the principal id for the user assigned identity
             protocol: {}
           - schema: *ref_3
             readOnly: true
@@ -1739,7 +1739,7 @@ schemas:
                 description: Get the client id for the user assigned identity
               go:
                 name: ClientID
-                description: READ-ONLY; Get the client id for the user assigned identity
+                description: Get the client id for the user assigned identity
             protocol: {}
         serializationFormats:
           - json
@@ -2347,7 +2347,7 @@ schemas:
                     description: The error code.
                   go:
                     name: Code
-                    description: READ-ONLY; The error code.
+                    description: The error code.
                 protocol: {}
               - schema: *ref_33
                 readOnly: true
@@ -2358,7 +2358,7 @@ schemas:
                     description: The error message.
                   go:
                     name: Message
-                    description: READ-ONLY; The error message.
+                    description: The error message.
                 protocol: {}
               - schema: *ref_34
                 readOnly: true
@@ -2369,7 +2369,7 @@ schemas:
                     description: The error target.
                   go:
                     name: Target
-                    description: READ-ONLY; The error target.
+                    description: The error target.
                 protocol: {}
               - schema: &ref_153
                   type: array
@@ -2393,7 +2393,7 @@ schemas:
                     description: The error details.
                   go:
                     name: Details
-                    description: READ-ONLY; The error details.
+                    description: The error details.
                     byValue: true
                 protocol: {}
               - schema: &ref_154
@@ -2414,7 +2414,7 @@ schemas:
                             description: The additional info type.
                           go:
                             name: Type
-                            description: READ-ONLY; The additional info type.
+                            description: The additional info type.
                         protocol: {}
                       - schema: *ref_37
                         readOnly: true
@@ -2425,7 +2425,7 @@ schemas:
                             description: The additional info.
                           go:
                             name: Info
-                            description: READ-ONLY; The additional info.
+                            description: The additional info.
                             byValue: true
                         protocol: {}
                     serializationFormats:
@@ -2460,7 +2460,7 @@ schemas:
                     description: The error additional info.
                   go:
                     name: AdditionalInfo
-                    description: READ-ONLY; The error additional info.
+                    description: The error additional info.
                     byValue: true
                 protocol: {}
             serializationFormats:
@@ -2522,7 +2522,7 @@ schemas:
               description: The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub"
             go:
               name: Type
-              description: REQUIRED; The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub"
+              description: The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub"
           protocol: {}
         - schema: *ref_40
           required: true
@@ -2533,7 +2533,7 @@ schemas:
               description: The resource name to validate. e.g."my-resource-name"
             go:
               name: Name
-              description: REQUIRED; The resource name to validate. e.g."my-resource-name"
+              description: The resource name to validate. e.g."my-resource-name"
           protocol: {}
       serializationFormats:
         - json
@@ -2905,7 +2905,7 @@ schemas:
                                               description: Metadata pertaining to creation and last modification of the resource.
                                             go:
                                               name: SystemData
-                                              description: READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+                                              description: Metadata pertaining to creation and last modification of the resource.
                                           protocol: {}
                                         - schema: &ref_124
                                             type: object
@@ -2921,7 +2921,7 @@ schemas:
                                                     description: Provisioning state of the private endpoint connection
                                                   go:
                                                     name: ProvisioningState
-                                                    description: READ-ONLY; Provisioning state of the private endpoint connection
+                                                    description: Provisioning state of the private endpoint connection
                                                 protocol: {}
                                               - schema: &ref_125
                                                   type: object
@@ -3086,7 +3086,7 @@ schemas:
                                               description: Metadata pertaining to creation and last modification of the resource.
                                             go:
                                               name: SystemData
-                                              description: READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+                                              description: Metadata pertaining to creation and last modification of the resource.
                                           protocol: {}
                                         - schema: &ref_127
                                             type: object
@@ -3102,7 +3102,7 @@ schemas:
                                                     description: The group id from the provider of resource the shared private link resource is for
                                                   go:
                                                     name: GroupID
-                                                    description: REQUIRED; The group id from the provider of resource the shared private link resource is for
+                                                    description: The group id from the provider of resource the shared private link resource is for
                                                 protocol: {}
                                               - schema: *ref_68
                                                 required: true
@@ -3113,7 +3113,7 @@ schemas:
                                                     description: The resource id of the resource the shared private link resource is for
                                                   go:
                                                     name: PrivateLinkResourceID
-                                                    description: REQUIRED; The resource id of the resource the shared private link resource is for
+                                                    description: The resource id of the resource the shared private link resource is for
                                                 protocol: {}
                                               - schema: *ref_61
                                                 readOnly: true
@@ -3125,7 +3125,7 @@ schemas:
                                                     description: Provisioning state of the shared private link resource
                                                   go:
                                                     name: ProvisioningState
-                                                    description: READ-ONLY; Provisioning state of the shared private link resource
+                                                    description: Provisioning state of the shared private link resource
                                                 protocol: {}
                                               - schema: *ref_69
                                                 required: false
@@ -3148,7 +3148,7 @@ schemas:
                                                     description: Status of the shared private link resource
                                                   go:
                                                     name: Status
-                                                    description: READ-ONLY; Status of the shared private link resource
+                                                    description: Status of the shared private link resource
                                                 protocol: {}
                                             serializationFormats:
                                               - json
@@ -3471,7 +3471,7 @@ schemas:
                                   description: Fully qualified resource Id for the resource.
                                 go:
                                   name: ID
-                                  description: READ-ONLY; Fully qualified resource Id for the resource.
+                                  description: Fully qualified resource Id for the resource.
                               protocol: {}
                             - schema: *ref_83
                               readOnly: true
@@ -3482,7 +3482,7 @@ schemas:
                                   description: The name of the resource.
                                 go:
                                   name: Name
-                                  description: READ-ONLY; The name of the resource.
+                                  description: The name of the resource.
                               protocol: {}
                             - schema: *ref_84
                               readOnly: true
@@ -3493,7 +3493,7 @@ schemas:
                                   description: The type of the resource - e.g. "Microsoft.SignalRService/SignalR"
                                 go:
                                   name: Type
-                                  description: READ-ONLY; The type of the resource - e.g. "Microsoft.SignalRService/SignalR"
+                                  description: The type of the resource - e.g. "Microsoft.SignalRService/SignalR"
                               protocol: {}
                           serializationFormats:
                             - json
@@ -3577,7 +3577,7 @@ schemas:
                           go:
                             name: Name
                             description: |-
-                              REQUIRED; The name of the SKU. Required.
+                              The name of the SKU. Required.
 
                               Allowed values: StandardS1, FreeF1
                         protocol: {}
@@ -3605,7 +3605,7 @@ schemas:
                             description: Not used. Retained for future use.
                           go:
                             name: Size
-                            description: READ-ONLY; Not used. Retained for future use.
+                            description: Not used. Retained for future use.
                         protocol: {}
                       - schema: *ref_90
                         readOnly: true
@@ -3617,7 +3617,7 @@ schemas:
                             description: Not used. Retained for future use.
                           go:
                             name: Family
-                            description: READ-ONLY; Not used. Retained for future use.
+                            description: Not used. Retained for future use.
                         protocol: {}
                       - schema: *ref_91
                         required: false
@@ -3672,7 +3672,7 @@ schemas:
                             description: Provisioning state of the resource.
                           go:
                             name: ProvisioningState
-                            description: READ-ONLY; Provisioning state of the resource.
+                            description: Provisioning state of the resource.
                         protocol: {}
                       - schema: *ref_92
                         readOnly: true
@@ -3683,7 +3683,7 @@ schemas:
                             description: The publicly accessible IP of the resource.
                           go:
                             name: ExternalIP
-                            description: READ-ONLY; The publicly accessible IP of the resource.
+                            description: The publicly accessible IP of the resource.
                         protocol: {}
                       - schema: *ref_93
                         readOnly: true
@@ -3694,7 +3694,7 @@ schemas:
                             description: FQDN of the service instance.
                           go:
                             name: HostName
-                            description: READ-ONLY; FQDN of the service instance.
+                            description: FQDN of the service instance.
                         protocol: {}
                       - schema: *ref_94
                         readOnly: true
@@ -3705,7 +3705,7 @@ schemas:
                             description: The publicly accessible port of the resource which is designed for browser/client side usage.
                           go:
                             name: PublicPort
-                            description: READ-ONLY; The publicly accessible port of the resource which is designed for browser/client side usage.
+                            description: The publicly accessible port of the resource which is designed for browser/client side usage.
                         protocol: {}
                       - schema: *ref_95
                         readOnly: true
@@ -3716,7 +3716,7 @@ schemas:
                             description: The publicly accessible port of the resource which is designed for customer server side usage.
                           go:
                             name: ServerPort
-                            description: READ-ONLY; The publicly accessible port of the resource which is designed for customer server side usage.
+                            description: The publicly accessible port of the resource which is designed for customer server side usage.
                         protocol: {}
                       - schema: *ref_96
                         readOnly: true
@@ -3727,7 +3727,7 @@ schemas:
                             description: Version of the resource. Probably you need the same or higher version of client SDKs.
                           go:
                             name: Version
-                            description: READ-ONLY; Version of the resource. Probably you need the same or higher version of client SDKs.
+                            description: Version of the resource. Probably you need the same or higher version of client SDKs.
                         protocol: {}
                       - schema: &ref_156
                           type: array
@@ -3752,7 +3752,7 @@ schemas:
                             description: Private endpoint connections to the resource.
                           go:
                             name: PrivateEndpointConnections
-                            description: READ-ONLY; Private endpoint connections to the resource.
+                            description: Private endpoint connections to the resource.
                             byValue: true
                         protocol: {}
                       - schema: &ref_157
@@ -3778,7 +3778,7 @@ schemas:
                             description: The list of shared private link resources.
                           go:
                             name: SharedPrivateLinkResources
-                            description: READ-ONLY; The list of shared private link resources.
+                            description: The list of shared private link resources.
                             byValue: true
                         protocol: {}
                       - schema: &ref_128
@@ -3840,7 +3840,7 @@ schemas:
                                   go:
                                     name: Flag
                                     description: |-
-                                      REQUIRED; FeatureFlags is the supported features of Azure SignalR service.
+                                      FeatureFlags is the supported features of Azure SignalR service.
 
                                        * ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for
                                          backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
@@ -3859,7 +3859,7 @@ schemas:
                                     description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
                                   go:
                                     name: Value
-                                    description: REQUIRED; Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
+                                    description: Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values.
                                 protocol: {}
                               - schema: *ref_100
                                 required: false
@@ -4036,12 +4036,9 @@ schemas:
                                           description: "Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.\r\nFor example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`."
                                         go:
                                           name: URLTemplate
-                                          description: >-
-                                            REQUIRED; Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when
-                                            the client
-
+                                          description: |-
+                                            Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client
                                             request comes in. For example, if the urlTemplate is http://example.com/{hub}/api/{event}, with a client request from hub chat connects, it will first POST to this URL: 
-
                                             http://example.com/chat/api/connect.
                                       protocol: {}
                                     - schema: &ref_133
@@ -4231,7 +4228,7 @@ schemas:
                                               description: Name of the private endpoint connection
                                             go:
                                               name: Name
-                                              description: REQUIRED; Name of the private endpoint connection
+                                              description: Name of the private endpoint connection
                                           protocol: {}
                                       serializationFormats:
                                         - json
@@ -4488,7 +4485,7 @@ schemas:
                             description: "Get the principal id for the system assigned identity.\r\nOnly be used in response."
                           go:
                             name: PrincipalID
-                            description: READ-ONLY; Get the principal id for the system assigned identity. Only be used in response.
+                            description: Get the principal id for the system assigned identity. Only be used in response.
                         protocol: {}
                       - schema: *ref_120
                         readOnly: true
@@ -4499,7 +4496,7 @@ schemas:
                             description: "Get the tenant id for the system assigned identity.\r\nOnly be used in response"
                           go:
                             name: TenantID
-                            description: READ-ONLY; Get the tenant id for the system assigned identity. Only be used in response
+                            description: Get the tenant id for the system assigned identity. Only be used in response
                         protocol: {}
                     serializationFormats:
                       - json
@@ -4536,7 +4533,7 @@ schemas:
                       description: Metadata pertaining to creation and last modification of the resource.
                     go:
                       name: SystemData
-                      description: READ-ONLY; Metadata pertaining to creation and last modification of the resource.
+                      description: Metadata pertaining to creation and last modification of the resource.
                   protocol: {}
               serializationFormats:
                 - json
@@ -5067,7 +5064,7 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2021-06-01-preview
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
               responses:
                 '200':
                   body:
@@ -5278,7 +5275,7 @@ operationGroups:
                   name: mySignalRService
                   type: Microsoft.SignalRService/SignalR
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
               responses:
                 '200':
                   body:
@@ -5421,7 +5418,7 @@ operationGroups:
               parameters:
                 api-version: 2021-06-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
               responses:
                 '200':
                   body:
@@ -5667,7 +5664,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
               responses:
                 '200':
                   body:
@@ -5931,7 +5928,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
               responses:
                 '200':
                   body:
@@ -6329,7 +6326,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -6721,7 +6718,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -6997,7 +6994,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
               responses:
                 '200':
                   body:
@@ -7245,7 +7242,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
               responses:
                 '200':
                   body: {}
@@ -7483,7 +7480,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
               responses:
                 '202':
                   body: {}
@@ -7694,7 +7691,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
               responses:
                 '202':
                   headers: &ref_505
@@ -7844,7 +7841,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
               responses:
                 '200':
                   body:
@@ -8056,7 +8053,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
               responses:
                 '200':
                   body:
@@ -8273,7 +8270,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
               responses:
                 '200':
                   body:
@@ -8514,7 +8511,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
               responses:
                 '200':
                   body:
@@ -8785,7 +8782,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -8952,7 +8949,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -9165,7 +9162,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -9373,7 +9370,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
               responses:
                 '200':
                   body:
@@ -9656,7 +9653,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -9914,7 +9911,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
               responses:
                 '200': {}
                 '202':
