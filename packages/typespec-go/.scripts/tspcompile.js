@@ -20,31 +20,30 @@ const cadlRanch = {
   'unionauthgroup': ['authentication/union'],
   'accessgroup': ['azure/client-generator-core/access'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  //'basicgroup': ['azure/core/basic'],
-  //'lrorpcgroup': ['azure/core/lro/rpc'],
-  //'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
-  //'lrostdgroup': ['azure/core/lro/standard'],
-  //'traitsgroup': ['azure/core/traits'],
-  //'commongroup': ['client/structure/common'],
-  //'defaultgroup': ['client/structure/default'],
-  //'multiclientgroup': ['client/structure/multi-client'],
-  //'renamedopgroup': ['client/structure/renamed-operation'],
-  //'twoopgroup': ['client/structure/two-operation-group'],
+  //'basicgroup': ['azure/core/basic'], // requires etag, paging support
+  //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
+  //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
+  //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
+  //'traitsgroup': ['azure/core/traits'],            // requires union support
+  //'defaultgroup': ['client/structure/default'],             // needs more investigation
+  //'multiclientgroup': ['client/structure/multi-client'],    // needs more investigation
+  //'renamedopgroup': ['client/structure/renamed-operation'], // needs more investigation
+  //'twoopgroup': ['client/structure/two-operation-group'],   // needs more investigation
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
-  //'spreadgroup': ['parameters/spread'],
-  //'contentneggroup': ['payload/content-negotiation'],
-  //'pageablegroup': ['payload/pageable'],
+  //'spreadgroup': ['parameters/spread'], // needs more investigation
+  //'contentneggroup': ['payload/content-negotiation'], // unexpected kind header for property contentType in model PngImageAsJson
+  //'pageablegroup': ['payload/pageable'], // support for paging
   'projectednamegroup': ['projection/projected-name'],
-  //'srvdrivengroup': ['resiliency/srv-driven'],
+  //'srvdrivengroup': ['resiliency/srv-driven'], // fix optional parameters
   'multiplegroup': ['server/path/multiple'],
   'singlegroup': ['server/path/single'],
-  //'clientreqidgroup': ['special-headers/client-request-id'],
-  //'condreqgroup': ['special-headers/conditional-request'],
-  //'repeatabilitygroup': ['special-headers/repeatability'],
+  //'clientreqidgroup': ['special-headers/client-request-id'], // fix optional parameters
+  //'condreqgroup': ['special-headers/conditional-request'],   // fix optional parameters
+  //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
@@ -52,18 +51,18 @@ const cadlRanch = {
   'fixedgroup': ['type/enum/fixed'],
   'emptygroup': ['type/model/empty'],
   'enumdiscgroup': ['type/model/inheritance/enum-discriminator'],
-  //'nesteddiscgroup': ['type/model/inheritance/nested-discriminator'],
+  //'nesteddiscgroup': ['type/model/inheritance/nested-discriminator'], // not a real scenario
   'nodiscgroup': ['type/model/inheritance/not-discriminated'],
   'recursivegroup': ['type/model/inheritance/recursive', 'slice-elements-byval=true'],
   'singlediscgroup': ['type/model/inheritance/single-discriminator'],
   'usagegroup': ['type/model/usage'],
   'visibilitygroup': ['type/model/visibility'],
-  //'addlpropsgroup': ['type/property/additional-properties'],
-  //'nullablegroup': ['type/property/nullable'],
-  //'optionalitygroup': ['type/property/optionality'],
-  //'valuetypesgroup': ['type/property/value-types'],
-  //'scalargroup': ['type/scalar'],
-  //'uniongroup': ['type/union'],
+  'addlpropsgroup': ['type/property/additional-properties'],
+  'nullablegroup': ['type/property/nullable'],
+  //'optionalitygroup': ['type/property/optionality'], // requires union support
+  //'valuetypesgroup': ['type/property/value-types'], // requires decimal support
+  //'scalargroup': ['type/scalar'],                   // requires decimal support
+  //'uniongroup': ['type/union'], // requires union support
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
