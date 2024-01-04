@@ -55,7 +55,7 @@ export class ImportManager {
       this.addImportForType(type.valueType);
     } else if (go.isSliceType(type)) {
       this.addImportForType(type.elementType);
-    } else if (go.isStandardType(type)) {
+    } else if (go.isQualifiedType(type)) {
       this.add(type.packageName);
     } else if (go.isTimeType(type)) {
       this.add('time');

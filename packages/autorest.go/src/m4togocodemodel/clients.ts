@@ -119,7 +119,7 @@ function populateMethod(op: m4.Operation, method: go.Method | go.NextPageMethod,
 function adaptHeaderType(schema: m4.Schema, forParam: boolean): go.HeaderType {
   // for header params, we never pass the element type by pointer
   const type = adaptPossibleType(schema, forParam);
-  if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isStandardType(type)) {
+  if (go.isInterfaceType(type) || go.isMapType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
     throw new Error(`unexpected header parameter type ${schema.type}`);
   }
   return type;
@@ -127,7 +127,7 @@ function adaptHeaderType(schema: m4.Schema, forParam: boolean): go.HeaderType {
 
 function adaptPathParameterType(schema: m4.Schema): go.PathParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
+  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected path parameter type ${schema.type}`);
   }
   return type;
@@ -135,7 +135,7 @@ function adaptPathParameterType(schema: m4.Schema): go.PathParameterType {
 
 function adaptQueryParameterType(schema: m4.Schema): go.QueryParameterType {
   const type = adaptPossibleType(schema);
-  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isStandardType(type)) {
+  if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
     throw new Error(`unexpected query parameter type ${schema.type}`);
   } else if (go.isSliceType(type)) {
     type.elementTypeByValue = true;
@@ -232,7 +232,7 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     respEnv.result = new go.HeadAsBooleanResult(resultProp.language.go!.name);
   } else if (!resultProp.language.go!.embeddedType) {
     const resultType = adaptPossibleType(resultProp.schema);
-    if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isStandardType(resultType)) {
+    if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
       throw new Error(`invalid monomorphic result type ${resultType}`);
     }
     respEnv.result = new go.MonomorphicResult(resultProp.language.go!.name, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol), resultType, resultProp.language.go!.byValue);

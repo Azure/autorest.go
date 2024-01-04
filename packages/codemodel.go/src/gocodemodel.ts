@@ -155,7 +155,7 @@ export interface PolymorphicType extends StructType {
 }
 
 // PossibleType describes what can be modeled e.g. in an OpenAPI specification
-export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralValue | MapType | ModelType | PolymorphicType | PrimitiveType | SliceType | StandardType | TimeType;
+export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralValue | MapType | ModelType | PolymorphicType | PrimitiveType | SliceType | QualifiedType | TimeType;
 
 // StructField describes a field definition within a struct
 export interface StructField {
@@ -701,7 +701,7 @@ export function getResultPossibleType(resultType: ResultType): PossibleType {
   if (isAnyResult(resultType)) {
     return new PrimitiveType('any');
   } else if (isBinaryResult(resultType)) {
-    return new StandardType('io.ReadCloser', 'io');
+    return new QualifiedType('ReadCloser', 'io');
   } else if (isHeadAsBooleanResult(resultType)) {
     return new PrimitiveType('bool');
   } else if (isMonomorphicResult(resultType)) {
@@ -769,9 +769,9 @@ export interface LiteralValue {
   literal: any;
 }
 
-// StandardType is a type from the Go standard library (excluding time.Time)
-export interface StandardType {
-  // this is the fully-qualified name (e.g. io.Reader)
+// QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
+export interface QualifiedType {
+  // this is the type name minus any package qualifier (e.g. URL)
   typeName: string;
 
   // the full name of the package to import (e.g. "net/url")
@@ -781,8 +781,8 @@ export interface StandardType {
 export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
 
 // TimeType is a time.Time type from the standard library with a format specifier.
-export interface TimeType extends StandardType {
-  typeName: 'time.Time';
+export interface TimeType extends QualifiedType {
+  typeName: 'Time';
 
   packageName: 'time';
 
@@ -845,11 +845,11 @@ export function isLiteralValueType(type: PossibleType): type is LiteralValueType
 }
 
 export function isPrimitiveType(type: PossibleType): type is PrimitiveType {
-  return (<PrimitiveType>type).typeName !== undefined && !isStandardType(type) && !isTimeType(type);
+  return (<PrimitiveType>type).typeName !== undefined && !isQualifiedType(type) && !isTimeType(type);
 }
 
-export function isStandardType(type: PossibleType): type is StandardType {
-  return (<StandardType>type).packageName !== undefined && !isTimeType(type);
+export function isQualifiedType(type: PossibleType): type is QualifiedType {
+  return (<QualifiedType>type).packageName !== undefined && !isTimeType(type);
 }
 
 export function isTimeType(type: PossibleType): type is TimeType {
@@ -891,8 +891,15 @@ export function getLiteralValueTypeName(literal: LiteralValueType): string {
 }
 
 export function getTypeDeclaration(type: PossibleType, pkgName?: string): string {
-  if (isPrimitiveType(type) || isStandardType(type)) {
+  if (isPrimitiveType(type)) {
     return type.typeName;
+  } else if (isQualifiedType(type)) {
+    let pkg = type.packageName;
+    const pathChar = pkg.lastIndexOf('/');
+    if (pathChar) {
+      pkg = pkg.substring(pathChar+1);
+    }
+    return pkg + '.' + type.typeName;
   } else if (isConstantType(type) || isInterfaceType(type) || isModelType(type) || isPolymorphicType(type)) {
     if (pkgName) {
       return `${pkgName}.${type.name}`;
@@ -1209,7 +1216,7 @@ export class PrimitiveType implements PrimitiveType {
   }
 }
 
-export class StandardType implements StandardType {
+export class QualifiedType implements QualifiedType {
   constructor(typeName: string, packageName: string) {
     this.typeName = typeName;
     this.packageName = packageName;
