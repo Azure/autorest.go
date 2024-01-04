@@ -45,7 +45,7 @@ const cadlRanch = {
   //'clientreqidgroup': ['special-headers/client-request-id'],
   //'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],
-  //'specialwordsgroup': ['special-words'],
+  'specialwordsgroup': ['special-words'],
   'arraygroup': ['type/array', 'slice-elements-byval=true'],
   'dictionarygroup': ['type/dictionary'],
   'extensiblegroup': ['type/enum/extensible'],

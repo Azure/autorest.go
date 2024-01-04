@@ -121,7 +121,7 @@ export class clientAdapter {
     } else if (httpOp.bodyParams.length === 1) {
       const bodyParam = httpOp.bodyParams[0];
       // TODO: hard-coded format type
-      const adaptedParam = new go.BodyParameter(uncapitalize(ensureNameCase(bodyParam.nameInClient)), 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
+      const adaptedParam = new go.BodyParameter(getEscapedReservedName(ensureNameCase(bodyParam.nameInClient, true), 'Param'), 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
         this.adaptParameterType(bodyParam), isTypePassedByValue(bodyParam.type));
       adaptedParam.description = bodyParam.description;
       method.parameters.push(adaptedParam);
@@ -129,7 +129,7 @@ export class clientAdapter {
   
     for (const headerParam of httpOp.headerParams) {
       let adaptedParam: go.Parameter;
-      const paramName = uncapitalize(ensureNameCase(headerParam.nameInClient));
+      const paramName = getEscapedReservedName(ensureNameCase(headerParam.nameInClient, true), 'Param');
       const paramType = this.adaptParameterType(headerParam);
       const byVal = isTypePassedByValue(headerParam.type);
       if (headerParam.collectionFormat) {
@@ -150,7 +150,7 @@ export class clientAdapter {
     }
   
     for (const pathParam of httpOp.pathParams) {
-      const paramName = uncapitalize(ensureNameCase(pathParam.nameInClient));
+      const paramName = getEscapedReservedName(ensureNameCase(pathParam.nameInClient, true), 'Param');
       const adaptedParam = new go.PathParameter(paramName, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
         this.adaptParameterType(pathParam), isTypePassedByValue(pathParam.type), 'method');
       adaptedParam.description = pathParam.description;
@@ -159,7 +159,7 @@ export class clientAdapter {
   
     for (const queryParam of httpOp.queryParams) {
       let adaptedParam: go.Parameter;
-      const paramName = uncapitalize(ensureNameCase(queryParam.nameInClient));
+      const paramName = getEscapedReservedName(ensureNameCase(queryParam.nameInClient, true), 'Param');
       const paramType = this.adaptParameterType(queryParam);
       const byVal = isTypePassedByValue(queryParam.type);
       if (queryParam.collectionFormat) {
