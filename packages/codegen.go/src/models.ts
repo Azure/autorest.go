@@ -16,6 +16,13 @@ export interface ModelsSerDe {
 
 // Creates the content in models.go
 export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSerDe> {
+  if (codeModel.models.length === 0) {
+    return {
+      models: '',
+      serDe: ''
+    };
+  }
+
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();

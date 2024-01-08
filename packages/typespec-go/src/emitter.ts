@@ -63,7 +63,9 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   }
 
   const models = await generateModels(codeModel);
-  writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
+  if (models.models.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
+  }
   if (models.serDe.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}models_serde.go`, models.serDe);
   }
