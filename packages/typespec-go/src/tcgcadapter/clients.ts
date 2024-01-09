@@ -99,10 +99,7 @@ export class clientAdapter {
     if (go.isMethod(method)) {
       const optionalParamsGroupName = `${method.client.clientName}${method.methodName}Options`;
       // TODO: ensure param name is unique
-      const optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
-      this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(optionalParamsGroup));
-  
-      method.optionalParamsGroup = optionalParamsGroup;
+      method.optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
       method.responseEnvelope = this.adaptResponseEnvelope(httpOp, method);
     } else {
       throw new Error('NYI');
@@ -113,69 +110,91 @@ export class clientAdapter {
     /*for (const apiver of values(op.apiVersions)) {
       method.apiVersions.push(apiver.version);
     }*/
+
+    // we must do this after adapting method params as it can add optional params
+    this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
   }
 
   private adaptMethodParameters(httpOp: tcgc.SdkHttpOperation, method: go.Method | go.NextPageMethod) {
+    let optionalGroup: go.ParameterGroup | undefined;
+    if (go.isMethod(method)) {
+      // NextPageMethods don't have optional params
+      optionalGroup = method.optionalParamsGroup;
+    }
+
     if (httpOp.bodyParams.length > 1) {
       throw new Error('multipart body NYI');
     } else if (httpOp.bodyParams.length === 1) {
       const bodyParam = httpOp.bodyParams[0];
-      // TODO: hard-coded format type
-      const adaptedParam = new go.BodyParameter(getEscapedReservedName(ensureNameCase(bodyParam.nameInClient, true), 'Param'), 'JSON', bodyParam.defaultContentType, this.ta.getPossibleType(bodyParam.type, false, true),
-        this.adaptParameterType(bodyParam), isTypePassedByValue(bodyParam.type));
-      adaptedParam.description = bodyParam.description;
-      method.parameters.push(adaptedParam);
+      method.parameters.push(this.adaptMethodParameter(bodyParam, optionalGroup));
     }
   
     for (const headerParam of httpOp.headerParams) {
-      let adaptedParam: go.Parameter;
-      const paramName = getEscapedReservedName(ensureNameCase(headerParam.nameInClient, true), 'Param');
-      const paramType = this.adaptParameterType(headerParam);
-      const byVal = isTypePassedByValue(headerParam.type);
-      if (headerParam.collectionFormat) {
-        if (headerParam.collectionFormat === 'multi') {
-          throw new Error('unexpected collection format multi for HeaderCollectionParameter');
-        }
-        // TODO: is hard-coded false for element type by value correct?
-        const type = this.ta.getPossibleType(headerParam.type, true, false);
-        if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${headerParam.nameInClient}`);
-        }
-        adaptedParam = new go.HeaderCollectionParameter(paramName, headerParam.serializedName, type, headerParam.collectionFormat, paramType, byVal, 'method');
-      } else {
-        adaptedParam = new go.HeaderParameter(paramName, headerParam.serializedName, this.adaptHeaderType(headerParam.type, true), paramType, byVal, 'method');
-      }
-      adaptedParam.description = headerParam.description;
+      const adaptedParam = this.adaptMethodParameter(headerParam, optionalGroup);
       method.parameters.push(adaptedParam);
     }
   
     for (const pathParam of httpOp.pathParams) {
-      const paramName = getEscapedReservedName(ensureNameCase(pathParam.nameInClient, true), 'Param');
-      const adaptedParam = new go.PathParameter(paramName, pathParam.serializedName, pathParam.urlEncode, this.adaptPathParameterType(pathParam.type),
-        this.adaptParameterType(pathParam), isTypePassedByValue(pathParam.type), 'method');
-      adaptedParam.description = pathParam.description;
+      const adaptedParam = this.adaptMethodParameter(pathParam, optionalGroup);
       method.parameters.push(adaptedParam);
     }
   
     for (const queryParam of httpOp.queryParams) {
-      let adaptedParam: go.Parameter;
-      const paramName = getEscapedReservedName(ensureNameCase(queryParam.nameInClient, true), 'Param');
-      const paramType = this.adaptParameterType(queryParam);
-      const byVal = isTypePassedByValue(queryParam.type);
-      if (queryParam.collectionFormat) {
-        const type = this.ta.getPossibleType(queryParam.type, true, false);
-        if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${queryParam.nameInClient}`);
-        }
-        // TODO: unencoded query param
-        adaptedParam = new go.QueryCollectionParameter(paramName, queryParam.serializedName, true, type, queryParam.collectionFormat, paramType, byVal, 'method');
-      } else {
-        // TODO: unencoded query param
-        adaptedParam = new go.QueryParameter(paramName, queryParam.serializedName, true, this.adaptQueryParameterType(queryParam.type), paramType, byVal, 'method');
-      }
-      adaptedParam.description = queryParam.description;
+      const adaptedParam = this.adaptMethodParameter(queryParam, optionalGroup);
       method.parameters.push(adaptedParam);
     }
+  }
+
+  private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+    let adaptedParam: go.Parameter;
+    const paramName = getEscapedReservedName(ensureNameCase(param.nameInClient, true), 'Param');
+    const paramType = this.adaptParameterType(param);
+    const byVal = isTypePassedByValue(param.type);
+
+    if (param.kind === 'body') {
+      // TODO: hard-coded format type
+      adaptedParam = new go.BodyParameter(paramName, 'JSON', param.defaultContentType, this.ta.getPossibleType(param.type, false, true), paramType, byVal);
+    } else if (param.kind === 'header') {
+      if (param.collectionFormat) {
+        if (param.collectionFormat === 'multi') {
+          throw new Error('unexpected collection format multi for HeaderCollectionParameter');
+        }
+        // TODO: is hard-coded false for element type by value correct?
+        const type = this.ta.getPossibleType(param.type, true, false);
+        if (!go.isSliceType(type)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.nameInClient}`);
+        }
+        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramType, byVal, 'method');
+      } else {
+        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramType, byVal, 'method');
+      }
+    } else if (param.kind === 'path') {
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramType, byVal, 'method');
+    } else {
+      if (param.collectionFormat) {
+        const type = this.ta.getPossibleType(param.type, true, false);
+        if (!go.isSliceType(type)) {
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.nameInClient}`);
+        }
+        // TODO: unencoded query param
+        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramType, byVal, 'method');
+      } else {
+        // TODO: unencoded query param
+        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramType, byVal, 'method');
+      }
+    }
+
+    adaptedParam.description = param.description;
+
+    if (param.optional) {
+      if (!optionalGroup) {
+        throw new Error(`optional parameter ${param.nameInClient} has no optional parameter group`);
+      }
+      adaptedParam.group = optionalGroup;
+      optionalGroup.params.push(adaptedParam);
+    }
+
+    return adaptedParam;
   }
 
   private adaptResponseEnvelope(httpOp: tcgc.SdkHttpOperation, method: go.Method): go.ResponseEnvelope {
