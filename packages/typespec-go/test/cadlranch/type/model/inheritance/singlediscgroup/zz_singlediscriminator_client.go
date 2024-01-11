@@ -46,6 +46,7 @@ func (client *SingleDiscriminatorClient) getLegacyModelCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -83,6 +84,7 @@ func (client *SingleDiscriminatorClient) getMissingDiscriminatorCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -120,6 +122,7 @@ func (client *SingleDiscriminatorClient) getModelCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -157,6 +160,7 @@ func (client *SingleDiscriminatorClient) getRecursiveModelCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -194,6 +198,7 @@ func (client *SingleDiscriminatorClient) getWrongDiscriminatorCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -230,6 +235,7 @@ func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -260,6 +266,7 @@ func (client *SingleDiscriminatorClient) putRecursiveModelCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}

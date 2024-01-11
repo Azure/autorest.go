@@ -45,6 +45,7 @@ func (client *OptionalExplicitClient) omitCreateRequest(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -75,6 +76,7 @@ func (client *OptionalExplicitClient) setCreateRequest(ctx context.Context, body
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

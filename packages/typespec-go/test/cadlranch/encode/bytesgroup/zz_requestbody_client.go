@@ -45,6 +45,7 @@ func (client *RequestBodyClient) base64CreateRequest(ctx context.Context, value 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
 		return nil, err
 	}
@@ -75,6 +76,7 @@ func (client *RequestBodyClient) base64URLCreateRequest(ctx context.Context, val
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64URLFormat); err != nil {
 		return nil, err
 	}
@@ -136,6 +138,7 @@ func (client *RequestBodyClient) defaultCreateRequest(ctx context.Context, value
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
 		return nil, err
 	}

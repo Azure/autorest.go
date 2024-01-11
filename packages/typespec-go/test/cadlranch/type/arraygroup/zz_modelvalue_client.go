@@ -46,6 +46,7 @@ func (client *ModelValueClient) getCreateRequest(ctx context.Context, options *M
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -82,6 +83,7 @@ func (client *ModelValueClient) putCreateRequest(ctx context.Context, body []Inn
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

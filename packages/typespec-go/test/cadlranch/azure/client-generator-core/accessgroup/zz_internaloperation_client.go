@@ -49,6 +49,7 @@ func (client *InternalOperationClient) internalDecoratorInInternalCreateRequest(
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -89,6 +90,7 @@ func (client *InternalOperationClient) noDecoratorInInternalCreateRequest(ctx co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -129,6 +131,7 @@ func (client *InternalOperationClient) publicDecoratorInInternalCreateRequest(ct
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

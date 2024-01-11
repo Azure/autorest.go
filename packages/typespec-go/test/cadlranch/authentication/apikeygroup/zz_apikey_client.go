@@ -32,12 +32,11 @@ func (client *ApiKeyClient) Invalid(ctx context.Context, options *ApiKeyClientIn
 	if err != nil {
 		return ApiKeyClientInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusForbidden) {
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
 		return ApiKeyClientInvalidResponse{}, err
 	}
-	resp, err := client.invalidHandleResponse(httpResp)
-	return resp, err
+	return ApiKeyClientInvalidResponse{}, nil
 }
 
 // invalidCreateRequest creates the Invalid request.
@@ -47,16 +46,8 @@ func (client *ApiKeyClient) invalidCreateRequest(ctx context.Context, options *A
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
-}
-
-// invalidHandleResponse handles the Invalid response.
-func (client *ApiKeyClient) invalidHandleResponse(resp *http.Response) (ApiKeyClientInvalidResponse, error) {
-	result := ApiKeyClientInvalidResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.InvalidAuth); err != nil {
-		return ApiKeyClientInvalidResponse{}, err
-	}
-	return result, nil
 }
 
 // Valid - Check whether client is authenticated

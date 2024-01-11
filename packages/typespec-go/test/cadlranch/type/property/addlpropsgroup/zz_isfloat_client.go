@@ -47,6 +47,7 @@ func (client *IsFloatClient) getCreateRequest(ctx context.Context, options *IsFl
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *IsFloatClient) putCreateRequest(ctx context.Context, body IsFloatA
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

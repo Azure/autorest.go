@@ -32,12 +32,11 @@ func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientIn
 	if err != nil {
 		return OAuth2ClientInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusForbidden) {
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
 		return OAuth2ClientInvalidResponse{}, err
 	}
-	resp, err := client.invalidHandleResponse(httpResp)
-	return resp, err
+	return OAuth2ClientInvalidResponse{}, nil
 }
 
 // invalidCreateRequest creates the Invalid request.
@@ -47,16 +46,8 @@ func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, options *O
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
-}
-
-// invalidHandleResponse handles the Invalid response.
-func (client *OAuth2Client) invalidHandleResponse(resp *http.Response) (OAuth2ClientInvalidResponse, error) {
-	result := OAuth2ClientInvalidResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.InvalidAuth); err != nil {
-		return OAuth2ClientInvalidResponse{}, err
-	}
-	return result, nil
 }
 
 // Valid - Check whether client is authenticated

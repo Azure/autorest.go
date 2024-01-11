@@ -47,6 +47,7 @@ func (client *CollectionsModelClient) getNonNullCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *CollectionsModelClient) getNullCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

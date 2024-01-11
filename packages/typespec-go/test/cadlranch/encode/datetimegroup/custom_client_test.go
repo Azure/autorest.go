@@ -178,13 +178,12 @@ func TestQueryClientUnixTimestampArray(t *testing.T) {
 }
 
 func TestResponseHeaderClientDefault(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/pull/6/files?show-viewed-files=true&file-filters%5B%5D=#r1427306977")
 	client, err := datetimegroup.NewResponseHeaderClient(nil)
 	require.NoError(t, err)
 	resp, err := client.Default(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
-	require.WithinDuration(t, time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC), *resp.Value, 0)
+	require.WithinDuration(t, time.Date(2022, time.August, 26, 14, 38, 0, 0, time.UTC), *resp.Value, 0)
 }
 
 func TestResponseHeaderClientRFC3339(t *testing.T) {
@@ -197,7 +196,6 @@ func TestResponseHeaderClientRFC3339(t *testing.T) {
 }
 
 func TestResponseHeaderClientRFC7231(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/pull/6/files?show-viewed-files=true&file-filters%5B%5D=#r1427306977")
 	client, err := datetimegroup.NewResponseHeaderClient(nil)
 	require.NoError(t, err)
 	resp, err := client.RFC7231(context.Background(), nil)
@@ -209,7 +207,6 @@ func TestResponseHeaderClientRFC7231(t *testing.T) {
 }
 
 func TestResponseHeaderClientUnixTimestamp(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/pull/6/files?show-viewed-files=true&file-filters%5B%5D=#r1427306977")
 	client, err := datetimegroup.NewResponseHeaderClient(nil)
 	require.NoError(t, err)
 	resp, err := client.UnixTimestamp(context.Background(), nil)

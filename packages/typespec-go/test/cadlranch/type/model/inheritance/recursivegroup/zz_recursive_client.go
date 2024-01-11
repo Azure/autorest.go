@@ -46,6 +46,7 @@ func (client *RecursiveClient) getCreateRequest(ctx context.Context, options *Re
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -82,6 +83,7 @@ func (client *RecursiveClient) putCreateRequest(ctx context.Context, input Exten
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}

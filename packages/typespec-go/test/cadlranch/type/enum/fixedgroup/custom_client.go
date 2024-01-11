@@ -11,12 +11,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewFixedClient(options *azcore.ClientOptions) (*FixedClient, error) {
+func NewStringClient(options *azcore.ClientOptions) (*StringClient, error) {
 	internal, err := azcore.NewClient("fixedenumgroup", "v0.1.1", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &FixedClient{
+	return &StringClient{
 		internal: internal,
 	}, nil
 }

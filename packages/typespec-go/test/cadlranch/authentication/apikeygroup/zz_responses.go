@@ -9,7 +9,7 @@ package apikeygroup
 
 // ApiKeyClientInvalidResponse contains the response from method ApiKeyClient.Invalid.
 type ApiKeyClientInvalidResponse struct {
-	InvalidAuth
+	// placeholder for future response values
 }
 
 // ApiKeyClientValidResponse contains the response from method ApiKeyClient.Valid.

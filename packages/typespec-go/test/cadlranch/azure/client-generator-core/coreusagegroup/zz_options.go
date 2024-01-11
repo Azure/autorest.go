@@ -7,10 +7,10 @@
 
 package coreusagegroup
 
-type UsageClientInputToInputOutputOptions struct {
+type ModelInOperationClientInputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }
 
-type UsageClientOutputToInputOutputOptions struct {
+type ModelInOperationClientOutputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }

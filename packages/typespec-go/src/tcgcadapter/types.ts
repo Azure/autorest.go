@@ -46,6 +46,32 @@ export class typeAdapter {
       modelTypes.push({go: model, tcgc: modelType});
     }
   
+    // add the synthesized models from TCGC for paged results
+    const pagedResponses = new Array<tcgc.SdkModelType>();
+    for (const sdkClient of sdkContext.sdkPackage.clients) {
+      for (const sdkMethod of sdkClient.methods) {
+        if (sdkMethod.kind !== 'paging') {
+          continue;
+        }
+
+        for (const httpResp of Object.values(sdkMethod.operation.responses)) {
+          if (!httpResp.type || httpResp.type.kind !== 'model') {
+            continue;
+          }
+
+          // tsp allows custom paged responses, so we must check both the synthesized list and the models list
+          if (!values(pagedResponses).any(each => { return each.name === (<tcgc.SdkModelType>httpResp.type).name; }) && !values(modelTypes).any(each => { return each.tcgc.name === (<tcgc.SdkModelType>httpResp.type).name; })) {
+            pagedResponses.push(httpResp.type);
+          }
+        }
+      }
+    }
+    for (const pagedResponse of pagedResponses) {
+      const model = this.getModel(pagedResponse);
+      modelTypes.push({go: model, tcgc: pagedResponse});
+    }
+
+
     // now that the interface/model types have been generated, we can populate the rootType and possibleTypes
     for (const ifaceType of ifaceTypes) {
       ifaceType.go.rootType = <go.PolymorphicType>this.getModel(ifaceType.tcgc);
@@ -79,6 +105,7 @@ export class typeAdapter {
       case 'boolean':
       case 'bytes':
       case 'date':
+      case 'etag':
       case 'float32':
       case 'float64':
       case 'guid':
@@ -236,6 +263,16 @@ export class typeAdapter {
         this.types.set(dateKey, date);
         this.codeModel.marshallingRequirements.generateDateHelper = true;
         return date;
+      }
+      case 'etag': {
+        const etagKey = 'etag';
+        let etag = this.types.get(etagKey);
+        if (etag) {
+          return etag;
+        }
+        etag = new go.QualifiedType('ETag', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+        this.types.set(etagKey, etag);
+        return etag;
       }
       case 'float32': {
         const float32Key = 'float32';

@@ -47,6 +47,7 @@ func (client *CollectionsByteClient) getNonNullCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *CollectionsByteClient) getNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

@@ -32,12 +32,11 @@ func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientIn
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
 	}
-	if !runtime.HasStatusCode(httpResp, http.StatusNoContent, http.StatusForbidden) {
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
 		return CustomClientInvalidResponse{}, err
 	}
-	resp, err := client.invalidHandleResponse(httpResp)
-	return resp, err
+	return CustomClientInvalidResponse{}, nil
 }
 
 // invalidCreateRequest creates the Invalid request.
@@ -47,16 +46,8 @@ func (client *CustomClient) invalidCreateRequest(ctx context.Context, options *C
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
-}
-
-// invalidHandleResponse handles the Invalid response.
-func (client *CustomClient) invalidHandleResponse(resp *http.Response) (CustomClientInvalidResponse, error) {
-	result := CustomClientInvalidResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.InvalidAuth); err != nil {
-		return CustomClientInvalidResponse{}, err
-	}
-	return result, nil
 }
 
 // Valid - Check whether client is authenticated

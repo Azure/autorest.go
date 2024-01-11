@@ -16,8 +16,8 @@ function recursiveFindGoMod(cur) {
     if (dirEnt.isFile() && dirEnt.name === 'go.mod') {
       console.log('go build && go vet ' + cur);
       try {
-        execSync('go build ./...', { cwd: cur });
-        execSync('go vet ./...', { cwd: cur });
+        execSync('go build ./...', { cwd: cur, encoding: 'ascii' });
+        execSync('go vet ./...', { cwd: cur, encoding: 'ascii' });
       } catch (err) {
         console.error(err);
       }

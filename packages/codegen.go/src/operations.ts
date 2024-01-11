@@ -220,7 +220,7 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
     return text;
   }
   let text = `\tif val := resp.Header.Get("${headerResp.headerName}"); val != "" {\n`;
-  const name = uncapitalize(headerResp.fieldName);
+  let name = uncapitalize(headerResp.fieldName);
   let byRef = '&';
   if (go.isConstantType(headerResp.type)) {
     text += `\t\t${respObj}.${headerResp.fieldName} = (*${headerResp.type.name})(&val)\n`;
@@ -259,6 +259,12 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
       text += `\t\t${name}, err := time.Parse("${helpers.dateFormat}", val)\n`;
     } else if (headerResp.type.dateTimeFormat === 'timeRFC3339') {
       text += `\t\t${name}, err := time.Parse("${helpers.timeRFC3339Format}", val)\n`;
+    } else if (headerResp.type.dateTimeFormat === 'timeUnix') {
+      imports.add('strconv');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+      text += '\t\tsec, err := strconv.ParseInt(val, 10, 64)\n';
+      name = 'to.Ptr(time.Unix(sec, 0))';
+      byRef = '';
     } else {
       let format = helpers.datetimeRFC3339Format;
       if (headerResp.type.dateTimeFormat === 'dateTimeRFC1123') {

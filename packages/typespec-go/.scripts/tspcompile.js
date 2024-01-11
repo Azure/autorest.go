@@ -20,23 +20,23 @@ const cadlRanch = {
   'unionauthgroup': ['authentication/union'],
   'accessgroup': ['azure/client-generator-core/access'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
-  //'basicgroup': ['azure/core/basic'], // requires etag, paging support
+  'basicgroup': ['azure/core/basic'],
   //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
   //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
   //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
   //'traitsgroup': ['azure/core/traits'],            // requires union support
-  //'defaultgroup': ['client/structure/default'],             // needs more investigation
-  //'multiclientgroup': ['client/structure/multi-client'],    // needs more investigation
-  //'renamedopgroup': ['client/structure/renamed-operation'], // needs more investigation
-  //'twoopgroup': ['client/structure/two-operation-group'],   // needs more investigation
+  //'defaultgroup': ['client/structure/default'],             // https://github.com/microsoft/typespec/issues/2783
+  //'multiclientgroup': ['client/structure/multi-client'],    // https://github.com/microsoft/typespec/issues/2783
+  //'renamedopgroup': ['client/structure/renamed-operation'], // https://github.com/microsoft/typespec/issues/2783
+  //'twoopgroup': ['client/structure/two-operation-group'],   // https://github.com/microsoft/typespec/issues/2783
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
   //'spreadgroup': ['parameters/spread'], // needs more investigation
-  //'contentneggroup': ['payload/content-negotiation'], // unexpected kind header for property contentType in model PngImageAsJson
-  //'pageablegroup': ['payload/pageable'], // support for paging
+  //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
+  'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'],
   'multiplegroup': ['server/path/multiple'],

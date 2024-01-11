@@ -7,14 +7,14 @@
 
 package fixedgroup
 
-type FixedClientGetKnownValueOptions struct {
+type StringClientGetKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-type FixedClientPutKnownValueOptions struct {
+type StringClientPutKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-type FixedClientPutUnknownValueOptions struct {
+type StringClientPutUnknownValueOptions struct {
 	// placeholder for future optional parameters
 }

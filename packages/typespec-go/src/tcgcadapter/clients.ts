@@ -57,7 +57,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptMethod(sdkMethod: tcgc.SdkMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
+  private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
     let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
@@ -70,18 +70,19 @@ export class clientAdapter {
       return statusCodes;
     };
   
+    const methodName = capitalize(ensureNameCase(sdkMethod.name));
+
     if (sdkMethod.kind === 'basic') {
-      method = new go.Method(capitalize(ensureNameCase(sdkMethod.name)), goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
     } else if (sdkMethod.kind === 'paging') {
-      throw new Error('paged NYI');
-      //method = new go.PageableMethod(capitalize(sdkMethod.name), goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }
   
     method.description = sdkMethod.description;
     goClient.methods.push(method);
-    this.populateMethod(sdkMethod.operation, method);
+    this.populateMethod(sdkMethod, method);
   
     // if any client parameters were adapted, add them to the client
     /*if (group.language.go!.clientParams) {
@@ -95,17 +96,17 @@ export class clientAdapter {
     }*/
   }
 
-  private populateMethod(httpOp: tcgc.SdkHttpOperation, method: go.Method | go.NextPageMethod) {
+  private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
     if (go.isMethod(method)) {
       const optionalParamsGroupName = `${method.client.clientName}${method.methodName}Options`;
       // TODO: ensure param name is unique
       method.optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
-      method.responseEnvelope = this.adaptResponseEnvelope(httpOp, method);
+      method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
     } else {
       throw new Error('NYI');
     }
   
-    this.adaptMethodParameters(httpOp, method);
+    this.adaptMethodParameters(sdkMethod, method);
   
     /*for (const apiver of values(op.apiVersions)) {
       method.apiVersions.push(apiver.version);
@@ -115,37 +116,41 @@ export class clientAdapter {
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
   }
 
-  private adaptMethodParameters(httpOp: tcgc.SdkHttpOperation, method: go.Method | go.NextPageMethod) {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
     let optionalGroup: go.ParameterGroup | undefined;
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
       optionalGroup = method.optionalParamsGroup;
     }
 
-    if (httpOp.bodyParams.length > 1) {
+    if (sdkMethod.operation.bodyParams.length > 1) {
       throw new Error('multipart body NYI');
-    } else if (httpOp.bodyParams.length === 1) {
-      const bodyParam = httpOp.bodyParams[0];
+    } else if (sdkMethod.operation.bodyParams.length === 1) {
+      const bodyParam = sdkMethod.operation.bodyParams[0];
       method.parameters.push(this.adaptMethodParameter(bodyParam, optionalGroup));
     }
   
-    for (const headerParam of httpOp.headerParams) {
-      const adaptedParam = this.adaptMethodParameter(headerParam, optionalGroup);
+    for (const param of sdkMethod.operation.parameters) {
+      const adaptedParam = this.adaptMethodParameter(param, optionalGroup);
       method.parameters.push(adaptedParam);
-    }
-  
-    for (const pathParam of httpOp.pathParams) {
-      const adaptedParam = this.adaptMethodParameter(pathParam, optionalGroup);
-      method.parameters.push(adaptedParam);
-    }
-  
-    for (const queryParam of httpOp.queryParams) {
-      const adaptedParam = this.adaptMethodParameter(queryParam, optionalGroup);
-      method.parameters.push(adaptedParam);
+      if (adaptedParam.location === 'client' && !method.client.parameters.includes(adaptedParam)) {
+        method.client.parameters.push(adaptedParam);
+      }
     }
   }
 
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+    let location: go.ParameterLocation = 'method';
+    if (param.onClient) {
+      // check if we've already adapted this client parameter
+      // TODO: grouped client params
+      const clientParam = this.clientParams.get(param.nameInClient);
+      if (clientParam) {
+        return clientParam;
+      }
+      location = 'client';
+    }
+
     let adaptedParam: go.Parameter;
     const paramName = getEscapedReservedName(ensureNameCase(param.nameInClient, true), 'Param');
     const paramType = this.adaptParameterType(param);
@@ -164,12 +169,12 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.nameInClient}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramType, byVal, 'method');
+        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramType, byVal, location);
       } else {
-        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramType, byVal, 'method');
+        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramType, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramType, byVal, 'method');
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramType, byVal, location);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
@@ -177,16 +182,20 @@ export class clientAdapter {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.nameInClient}`);
         }
         // TODO: unencoded query param
-        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramType, byVal, 'method');
+        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramType, byVal, location);
       } else {
         // TODO: unencoded query param
-        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramType, byVal, 'method');
+        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramType, byVal, location);
       }
     }
 
     adaptedParam.description = param.description;
 
-    if (param.optional) {
+    if (adaptedParam.location === 'client') {
+      // track client parameter for later use
+      this.clientParams.set(param.nameInClient, adaptedParam);
+    } else if (paramType !== 'required' && paramType !== 'literal') {
+      // add optional method param to the options param group
       if (!optionalGroup) {
         throw new Error(`optional parameter ${param.nameInClient} has no optional parameter group`);
       }
@@ -197,7 +206,7 @@ export class clientAdapter {
     return adaptedParam;
   }
 
-  private adaptResponseEnvelope(httpOp: tcgc.SdkHttpOperation, method: go.Method): go.ResponseEnvelope {
+  private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
     const respEnvName = `${method.client.clientName}${method.methodName}Response`;
     // TODO: proper name for paged methods in doc comment
@@ -206,9 +215,9 @@ export class clientAdapter {
     this.ta.codeModel.responseEnvelopes.push(respEnv);
   
     const bodyResponses = new Array<tcgc.SdkType>();
-  
+
     // add any headers
-    for (const httpResp of Object.values(httpOp.responses)) {
+    for (const httpResp of Object.values(sdkMethod.operation.responses)) {
       const addedHeaders = new Set<string>();
       if (httpResp.type && !bodyResponses.includes(httpResp.type)) {
         bodyResponses.push(httpResp.type);
@@ -234,8 +243,9 @@ export class clientAdapter {
       throw new Error('any response NYI');
     } else if (bodyResponses[0].kind === 'model') {
       let modelType: go.ModelType | undefined;
+      const modelName = ensureNameCase(bodyResponses[0].name);
       for (const model of this.ta.codeModel.models) {
-        if (model.name === ensureNameCase(bodyResponses[0].name)) {
+        if (model.name === modelName) {
           modelType = model;
           break;
         }
@@ -309,6 +319,20 @@ export class clientAdapter {
   }
   
   private adaptParameterType(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterType {
+    // workaround until https://github.com/Azure/typespec-azure/issues/102 is fixed
+    if (param.kind === 'header' && param.clientDefaultValue && (param.serializedName === 'Accept' || param.serializedName === 'Content-Type')) {
+      // convert the param type into a constant string
+      param.type.kind = 'constant';
+      (<tcgc.SdkConstantType>param.type).valueType = {
+        kind: 'string',
+        encode: 'string',
+        nullable: false
+      };
+      (<tcgc.SdkConstantType>param.type).value = param.clientDefaultValue;
+      param.clientDefaultValue = undefined;
+    }
+    // end workaround
+
     if (param.clientDefaultValue) {
       const adaptedType = this.ta.getPossibleType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
