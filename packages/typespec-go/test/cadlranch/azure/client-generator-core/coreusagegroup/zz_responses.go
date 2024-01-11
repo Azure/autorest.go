@@ -7,13 +7,13 @@
 
 package coreusagegroup
 
-// UsageClientInputToInputOutputResponse contains the response from method UsageClient.InputToInputOutput.
-type UsageClientInputToInputOutputResponse struct {
+// ModelInOperationClientInputToInputOutputResponse contains the response from method ModelInOperationClient.InputToInputOutput.
+type ModelInOperationClientInputToInputOutputResponse struct {
 	// placeholder for future response values
 }
 
-// UsageClientOutputToInputOutputResponse contains the response from method UsageClient.OutputToInputOutput.
-type UsageClientOutputToInputOutputResponse struct {
+// ModelInOperationClientOutputToInputOutputResponse contains the response from method ModelInOperationClient.OutputToInputOutput.
+type ModelInOperationClientOutputToInputOutputResponse struct {
 	// Usage override to roundtrip.
 	OutputModel
 }

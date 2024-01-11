@@ -47,6 +47,7 @@ func (client *ExtendsUnknownClient) getCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *ExtendsUnknownClient) putCreateRequest(ctx context.Context, body E
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

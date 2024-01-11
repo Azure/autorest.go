@@ -9,7 +9,7 @@ package oauth2group
 
 // OAuth2ClientInvalidResponse contains the response from method OAuth2Client.Invalid.
 type OAuth2ClientInvalidResponse struct {
-	InvalidAuth
+	// placeholder for future response values
 }
 
 // OAuth2ClientValidResponse contains the response from method OAuth2Client.Valid.

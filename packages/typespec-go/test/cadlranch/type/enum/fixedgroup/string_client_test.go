@@ -17,7 +17,7 @@ import (
 )
 
 func TestFixedClientGetKnownValue(t *testing.T) {
-	client, err := fixedgroup.NewFixedClient(nil)
+	client, err := fixedgroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.GetKnownValue(context.Background(), nil)
 	require.NoError(t, err)
@@ -26,7 +26,7 @@ func TestFixedClientGetKnownValue(t *testing.T) {
 }
 
 func TestFixedClientPutKnownValue(t *testing.T) {
-	client, err := fixedgroup.NewFixedClient(nil)
+	client, err := fixedgroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutKnownValue(context.Background(), fixedgroup.DaysOfWeekEnumMonday, nil)
 	require.NoError(t, err)
@@ -34,7 +34,7 @@ func TestFixedClientPutKnownValue(t *testing.T) {
 }
 
 func TestFixedClientPutUnknownValue(t *testing.T) {
-	client, err := fixedgroup.NewFixedClient(nil)
+	client, err := fixedgroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutUnknownValue(context.Background(), fixedgroup.DaysOfWeekEnum("Weekend"), nil)
 	var respErr *azcore.ResponseError

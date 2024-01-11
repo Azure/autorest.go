@@ -12,7 +12,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -54,7 +56,7 @@ func (client *ResponseHeaderClient) defaultCreateRequest(ctx context.Context, op
 func (client *ResponseHeaderClient) defaultHandleResponse(resp *http.Response) (ResponseHeaderClientDefaultResponse, error) {
 	result := ResponseHeaderClientDefaultResponse{}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.Parse(time.RFC3339Nano, val)
+		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ResponseHeaderClientDefaultResponse{}, err
 		}
@@ -136,7 +138,7 @@ func (client *ResponseHeaderClient) rfc7231CreateRequest(ctx context.Context, op
 func (client *ResponseHeaderClient) rfc7231HandleResponse(resp *http.Response) (ResponseHeaderClientRFC7231Response, error) {
 	result := ResponseHeaderClientRFC7231Response{}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.Parse(time.RFC3339Nano, val)
+		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
 			return ResponseHeaderClientRFC7231Response{}, err
 		}
@@ -177,11 +179,11 @@ func (client *ResponseHeaderClient) unixTimestampCreateRequest(ctx context.Conte
 func (client *ResponseHeaderClient) unixTimestampHandleResponse(resp *http.Response) (ResponseHeaderClientUnixTimestampResponse, error) {
 	result := ResponseHeaderClientUnixTimestampResponse{}
 	if val := resp.Header.Get("value"); val != "" {
-		value, err := time.Parse(time.RFC3339Nano, val)
+		sec, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
 			return ResponseHeaderClientUnixTimestampResponse{}, err
 		}
-		result.Value = &value
+		result.Value = to.Ptr(time.Unix(sec, 0))
 	}
 	return result, nil
 }

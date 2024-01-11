@@ -45,6 +45,7 @@ func (client *PropertyClient) clientCreateRequest(ctx context.Context, body Clie
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -75,6 +76,7 @@ func (client *PropertyClient) jsonCreateRequest(ctx context.Context, body JSONPr
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -105,6 +107,7 @@ func (client *PropertyClient) jsonAndClientCreateRequest(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -135,6 +138,7 @@ func (client *PropertyClient) languageCreateRequest(ctx context.Context, body La
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

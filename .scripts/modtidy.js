@@ -15,7 +15,11 @@ function recursiveFindGoMod(cur) {
     }
     if (dirEnt.isFile() && dirEnt.name === 'go.mod') {
       console.log('go mod tidy ' + cur);
-      execSync('go mod tidy', { cwd: cur });
+      try {
+        execSync('go mod tidy', { cwd: cur, encoding: 'ascii' });
+      } catch (err) {
+        console.error(err);
+      }
     } else if (dirEnt.isDirectory()) {
       recursiveFindGoMod(path.join(cur, dirEnt.name));
     }

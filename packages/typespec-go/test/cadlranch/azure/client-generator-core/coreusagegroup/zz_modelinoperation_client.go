@@ -15,9 +15,9 @@ import (
 	"net/http"
 )
 
-// UsageClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Usage group.
+// ModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Usage group.
 // Don't use this type directly, use a constructor function instead.
-type UsageClient struct {
+type ModelInOperationClient struct {
 	internal *azcore.Client
 }
 
@@ -27,30 +27,31 @@ type UsageClient struct {
 // "name": <any string>
 // }
 // ```
-func (client *UsageClient) InputToInputOutput(ctx context.Context, body InputModel, options *UsageClientInputToInputOutputOptions) (UsageClientInputToInputOutputResponse, error) {
+func (client *ModelInOperationClient) InputToInputOutput(ctx context.Context, body InputModel, options *ModelInOperationClientInputToInputOutputOptions) (ModelInOperationClientInputToInputOutputResponse, error) {
 	var err error
 	req, err := client.inputToInputOutputCreateRequest(ctx, body, options)
 	if err != nil {
-		return UsageClientInputToInputOutputResponse{}, err
+		return ModelInOperationClientInputToInputOutputResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return UsageClientInputToInputOutputResponse{}, err
+		return ModelInOperationClientInputToInputOutputResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return UsageClientInputToInputOutputResponse{}, err
+		return ModelInOperationClientInputToInputOutputResponse{}, err
 	}
-	return UsageClientInputToInputOutputResponse{}, nil
+	return ModelInOperationClientInputToInputOutputResponse{}, nil
 }
 
 // inputToInputOutputCreateRequest creates the InputToInputOutput request.
-func (client *UsageClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, options *UsageClientInputToInputOutputOptions) (*policy.Request, error) {
+func (client *ModelInOperationClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, options *ModelInOperationClientInputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/inputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -63,39 +64,40 @@ func (client *UsageClient) inputToInputOutputCreateRequest(ctx context.Context, 
 // "name": <any string>
 // }
 // ```
-func (client *UsageClient) OutputToInputOutput(ctx context.Context, options *UsageClientOutputToInputOutputOptions) (UsageClientOutputToInputOutputResponse, error) {
+func (client *ModelInOperationClient) OutputToInputOutput(ctx context.Context, options *ModelInOperationClientOutputToInputOutputOptions) (ModelInOperationClientOutputToInputOutputResponse, error) {
 	var err error
 	req, err := client.outputToInputOutputCreateRequest(ctx, options)
 	if err != nil {
-		return UsageClientOutputToInputOutputResponse{}, err
+		return ModelInOperationClientOutputToInputOutputResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return UsageClientOutputToInputOutputResponse{}, err
+		return ModelInOperationClientOutputToInputOutputResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return UsageClientOutputToInputOutputResponse{}, err
+		return ModelInOperationClientOutputToInputOutputResponse{}, err
 	}
 	resp, err := client.outputToInputOutputHandleResponse(httpResp)
 	return resp, err
 }
 
 // outputToInputOutputCreateRequest creates the OutputToInputOutput request.
-func (client *UsageClient) outputToInputOutputCreateRequest(ctx context.Context, options *UsageClientOutputToInputOutputOptions) (*policy.Request, error) {
+func (client *ModelInOperationClient) outputToInputOutputCreateRequest(ctx context.Context, options *ModelInOperationClientOutputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/outputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
 // outputToInputOutputHandleResponse handles the OutputToInputOutput response.
-func (client *UsageClient) outputToInputOutputHandleResponse(resp *http.Response) (UsageClientOutputToInputOutputResponse, error) {
-	result := UsageClientOutputToInputOutputResponse{}
+func (client *ModelInOperationClient) outputToInputOutputHandleResponse(resp *http.Response) (ModelInOperationClientOutputToInputOutputResponse, error) {
+	result := ModelInOperationClientOutputToInputOutputResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OutputModel); err != nil {
-		return UsageClientOutputToInputOutputResponse{}, err
+		return ModelInOperationClientOutputToInputOutputResponse{}, err
 	}
 	return result, nil
 }

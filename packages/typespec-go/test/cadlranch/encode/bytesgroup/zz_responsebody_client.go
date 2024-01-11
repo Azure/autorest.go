@@ -46,6 +46,7 @@ func (client *ResponseBodyClient) base64CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -83,6 +84,7 @@ func (client *ResponseBodyClient) base64URLCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -120,6 +122,7 @@ func (client *ResponseBodyClient) customContentTypeCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"image/png"}
 	return req, nil
 }
 
@@ -157,6 +160,7 @@ func (client *ResponseBodyClient) defaultCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -194,6 +198,7 @@ func (client *ResponseBodyClient) octetStreamCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
 }
 

@@ -47,6 +47,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelMissingDiscriminatorCre
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -123,6 +125,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelWrongDiscriminatorCreat
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -161,6 +164,7 @@ func (client *EnumDiscriminatorClient) getFixedModelCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -199,6 +203,7 @@ func (client *EnumDiscriminatorClient) getFixedModelMissingDiscriminatorCreateRe
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -237,6 +242,7 @@ func (client *EnumDiscriminatorClient) getFixedModelWrongDiscriminatorCreateRequ
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -275,6 +281,7 @@ func (client *EnumDiscriminatorClient) putExtensibleModelCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -307,6 +314,7 @@ func (client *EnumDiscriminatorClient) putFixedModelCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}

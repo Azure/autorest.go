@@ -7,18 +7,18 @@
 
 package extensiblegroup
 
-type ExtensibleClientGetKnownValueOptions struct {
+type StringClientGetKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-type ExtensibleClientGetUnknownValueOptions struct {
+type StringClientGetUnknownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-type ExtensibleClientPutKnownValueOptions struct {
+type StringClientPutKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-type ExtensibleClientPutUnknownValueOptions struct {
+type StringClientPutUnknownValueOptions struct {
 	// placeholder for future optional parameters
 }

@@ -45,6 +45,7 @@ func (client *ModelsClient) withAndCreateRequest(ctx context.Context, body And, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -75,6 +76,7 @@ func (client *ModelsClient) withAsCreateRequest(ctx context.Context, body As, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -105,6 +107,7 @@ func (client *ModelsClient) withAssertCreateRequest(ctx context.Context, body As
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -135,6 +138,7 @@ func (client *ModelsClient) withAsyncCreateRequest(ctx context.Context, body Asy
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -165,6 +169,7 @@ func (client *ModelsClient) withAwaitCreateRequest(ctx context.Context, body Awa
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -195,6 +200,7 @@ func (client *ModelsClient) withBreakCreateRequest(ctx context.Context, body Bre
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -225,6 +231,7 @@ func (client *ModelsClient) withClassCreateRequest(ctx context.Context, body Cla
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -255,6 +262,7 @@ func (client *ModelsClient) withConstructorCreateRequest(ctx context.Context, bo
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -285,6 +293,7 @@ func (client *ModelsClient) withContinueCreateRequest(ctx context.Context, body 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -315,6 +324,7 @@ func (client *ModelsClient) withDefCreateRequest(ctx context.Context, body Def, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -345,6 +355,7 @@ func (client *ModelsClient) withDelCreateRequest(ctx context.Context, body Del, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -375,6 +386,7 @@ func (client *ModelsClient) withElifCreateRequest(ctx context.Context, body Elif
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -405,6 +417,7 @@ func (client *ModelsClient) withElseCreateRequest(ctx context.Context, body Else
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -435,6 +448,7 @@ func (client *ModelsClient) withExceptCreateRequest(ctx context.Context, body Ex
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -465,6 +479,7 @@ func (client *ModelsClient) withExecCreateRequest(ctx context.Context, body Exec
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -495,6 +510,7 @@ func (client *ModelsClient) withFinallyCreateRequest(ctx context.Context, body F
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -525,6 +541,7 @@ func (client *ModelsClient) withForCreateRequest(ctx context.Context, body For, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -555,6 +572,7 @@ func (client *ModelsClient) withFromCreateRequest(ctx context.Context, body From
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -585,6 +603,7 @@ func (client *ModelsClient) withGlobalCreateRequest(ctx context.Context, body Gl
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -615,6 +634,7 @@ func (client *ModelsClient) withIfCreateRequest(ctx context.Context, body If, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -645,6 +665,7 @@ func (client *ModelsClient) withImportCreateRequest(ctx context.Context, body Im
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -675,6 +696,7 @@ func (client *ModelsClient) withInCreateRequest(ctx context.Context, body In, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -705,6 +727,7 @@ func (client *ModelsClient) withIsCreateRequest(ctx context.Context, body Is, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -735,6 +758,7 @@ func (client *ModelsClient) withLambdaCreateRequest(ctx context.Context, body La
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -765,6 +789,7 @@ func (client *ModelsClient) withNotCreateRequest(ctx context.Context, body Not, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -795,6 +820,7 @@ func (client *ModelsClient) withOrCreateRequest(ctx context.Context, body Or, op
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -825,6 +851,7 @@ func (client *ModelsClient) withPassCreateRequest(ctx context.Context, body Pass
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -855,6 +882,7 @@ func (client *ModelsClient) withRaiseCreateRequest(ctx context.Context, body Rai
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -885,6 +913,7 @@ func (client *ModelsClient) withReturnCreateRequest(ctx context.Context, body Re
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -915,6 +944,7 @@ func (client *ModelsClient) withTryCreateRequest(ctx context.Context, body Try, 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -945,6 +975,7 @@ func (client *ModelsClient) withWhileCreateRequest(ctx context.Context, body Whi
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -975,6 +1006,7 @@ func (client *ModelsClient) withWithCreateRequest(ctx context.Context, body With
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -1005,6 +1037,7 @@ func (client *ModelsClient) withYieldCreateRequest(ctx context.Context, body Yie
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

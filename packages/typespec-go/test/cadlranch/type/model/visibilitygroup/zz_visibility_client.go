@@ -45,6 +45,7 @@ func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, in
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -76,6 +77,8 @@ func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, input
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -115,6 +118,7 @@ func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, inpu
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -145,6 +149,7 @@ func (client *VisibilityClient) patchModelCreateRequest(ctx context.Context, inp
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -175,6 +180,7 @@ func (client *VisibilityClient) postModelCreateRequest(ctx context.Context, inpu
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}
@@ -205,6 +211,7 @@ func (client *VisibilityClient) putModelCreateRequest(ctx context.Context, input
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}

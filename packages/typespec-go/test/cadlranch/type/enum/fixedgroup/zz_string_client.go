@@ -15,76 +15,78 @@ import (
 	"net/http"
 )
 
-// FixedClient contains the methods for the Type.Enum.Fixed group.
+// StringClient contains the methods for the Type.Enum.Fixed group.
 // Don't use this type directly, use a constructor function instead.
-type FixedClient struct {
+type StringClient struct {
 	internal *azcore.Client
 }
 
 // GetKnownValue - getKnownValue
-func (client *FixedClient) GetKnownValue(ctx context.Context, options *FixedClientGetKnownValueOptions) (FixedClientGetKnownValueResponse, error) {
+func (client *StringClient) GetKnownValue(ctx context.Context, options *StringClientGetKnownValueOptions) (StringClientGetKnownValueResponse, error) {
 	var err error
 	req, err := client.getKnownValueCreateRequest(ctx, options)
 	if err != nil {
-		return FixedClientGetKnownValueResponse{}, err
+		return StringClientGetKnownValueResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FixedClientGetKnownValueResponse{}, err
+		return StringClientGetKnownValueResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return FixedClientGetKnownValueResponse{}, err
+		return StringClientGetKnownValueResponse{}, err
 	}
 	resp, err := client.getKnownValueHandleResponse(httpResp)
 	return resp, err
 }
 
 // getKnownValueCreateRequest creates the GetKnownValue request.
-func (client *FixedClient) getKnownValueCreateRequest(ctx context.Context, options *FixedClientGetKnownValueOptions) (*policy.Request, error) {
+func (client *StringClient) getKnownValueCreateRequest(ctx context.Context, options *StringClientGetKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
 // getKnownValueHandleResponse handles the GetKnownValue response.
-func (client *FixedClient) getKnownValueHandleResponse(resp *http.Response) (FixedClientGetKnownValueResponse, error) {
-	result := FixedClientGetKnownValueResponse{}
+func (client *StringClient) getKnownValueHandleResponse(resp *http.Response) (StringClientGetKnownValueResponse, error) {
+	result := StringClientGetKnownValueResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FixedClientGetKnownValueResponse{}, err
+		return StringClientGetKnownValueResponse{}, err
 	}
 	return result, nil
 }
 
 // PutKnownValue - putKnownValue
 //   - body - _
-func (client *FixedClient) PutKnownValue(ctx context.Context, body DaysOfWeekEnum, options *FixedClientPutKnownValueOptions) (FixedClientPutKnownValueResponse, error) {
+func (client *StringClient) PutKnownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutKnownValueOptions) (StringClientPutKnownValueResponse, error) {
 	var err error
 	req, err := client.putKnownValueCreateRequest(ctx, body, options)
 	if err != nil {
-		return FixedClientPutKnownValueResponse{}, err
+		return StringClientPutKnownValueResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FixedClientPutKnownValueResponse{}, err
+		return StringClientPutKnownValueResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return FixedClientPutKnownValueResponse{}, err
+		return StringClientPutKnownValueResponse{}, err
 	}
-	return FixedClientPutKnownValueResponse{}, nil
+	return StringClientPutKnownValueResponse{}, nil
 }
 
 // putKnownValueCreateRequest creates the PutKnownValue request.
-func (client *FixedClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *FixedClientPutKnownValueOptions) (*policy.Request, error) {
+func (client *StringClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -93,30 +95,31 @@ func (client *FixedClient) putKnownValueCreateRequest(ctx context.Context, body 
 
 // PutUnknownValue - putUnknownValue
 //   - body - _
-func (client *FixedClient) PutUnknownValue(ctx context.Context, body DaysOfWeekEnum, options *FixedClientPutUnknownValueOptions) (FixedClientPutUnknownValueResponse, error) {
+func (client *StringClient) PutUnknownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutUnknownValueOptions) (StringClientPutUnknownValueResponse, error) {
 	var err error
 	req, err := client.putUnknownValueCreateRequest(ctx, body, options)
 	if err != nil {
-		return FixedClientPutUnknownValueResponse{}, err
+		return StringClientPutUnknownValueResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FixedClientPutUnknownValueResponse{}, err
+		return StringClientPutUnknownValueResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return FixedClientPutUnknownValueResponse{}, err
+		return StringClientPutUnknownValueResponse{}, err
 	}
-	return FixedClientPutUnknownValueResponse{}, nil
+	return StringClientPutUnknownValueResponse{}, nil
 }
 
 // putUnknownValueCreateRequest creates the PutUnknownValue request.
-func (client *FixedClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *FixedClientPutUnknownValueOptions) (*policy.Request, error) {
+func (client *StringClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutUnknownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/unknown-value"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

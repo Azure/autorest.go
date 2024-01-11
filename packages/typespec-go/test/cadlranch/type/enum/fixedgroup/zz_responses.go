@@ -7,17 +7,17 @@
 
 package fixedgroup
 
-// FixedClientGetKnownValueResponse contains the response from method FixedClient.GetKnownValue.
-type FixedClientGetKnownValueResponse struct {
+// StringClientGetKnownValueResponse contains the response from method StringClient.GetKnownValue.
+type StringClientGetKnownValueResponse struct {
 	Value *DaysOfWeekEnum
 }
 
-// FixedClientPutKnownValueResponse contains the response from method FixedClient.PutKnownValue.
-type FixedClientPutKnownValueResponse struct {
+// StringClientPutKnownValueResponse contains the response from method StringClient.PutKnownValue.
+type StringClientPutKnownValueResponse struct {
 	// placeholder for future response values
 }
 
-// FixedClientPutUnknownValueResponse contains the response from method FixedClient.PutUnknownValue.
-type FixedClientPutUnknownValueResponse struct {
+// StringClientPutUnknownValueResponse contains the response from method StringClient.PutUnknownValue.
+type StringClientPutUnknownValueResponse struct {
 	// placeholder for future response values
 }

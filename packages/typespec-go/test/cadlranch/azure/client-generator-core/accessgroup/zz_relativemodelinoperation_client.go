@@ -57,6 +57,7 @@ func (client *RelativeModelInOperationClient) discriminatorCreateRequest(ctx con
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("kind", kind)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -108,6 +109,7 @@ func (client *RelativeModelInOperationClient) operationCreateRequest(ctx context
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

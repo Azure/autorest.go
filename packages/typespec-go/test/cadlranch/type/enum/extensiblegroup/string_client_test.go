@@ -15,7 +15,7 @@ import (
 )
 
 func TestExtensibleClientGetKnownValue(t *testing.T) {
-	client, err := extensiblegroup.NewExtensibleClient(nil)
+	client, err := extensiblegroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.GetKnownValue(context.Background(), nil)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestExtensibleClientGetKnownValue(t *testing.T) {
 }
 
 func TestExtensibleClientGetUnknownValue(t *testing.T) {
-	client, err := extensiblegroup.NewExtensibleClient(nil)
+	client, err := extensiblegroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.GetUnknownValue(context.Background(), nil)
 	require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestExtensibleClientGetUnknownValue(t *testing.T) {
 }
 
 func TestExtensibleClientPutKnownValue(t *testing.T) {
-	client, err := extensiblegroup.NewExtensibleClient(nil)
+	client, err := extensiblegroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutKnownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnumMonday, nil)
 	require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestExtensibleClientPutKnownValue(t *testing.T) {
 }
 
 func TestExtensibleClientPutUnknownValue(t *testing.T) {
-	client, err := extensiblegroup.NewExtensibleClient(nil)
+	client, err := extensiblegroup.NewStringClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutUnknownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnum("Weekend"), nil)
 	require.NoError(t, err)

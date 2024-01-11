@@ -78,6 +78,12 @@
       "name": "gogetu",
       "summary": "run node .scripts/gogetu.js to update and tidy all go.mod files",
       "shellCommand": "node .scripts/gogetu.js"
+    },
+    {
+      "commandKind": "global",
+      "name": "gotest",
+      "summary": "run node .scripts/gotest.js to go test every module under the current directory",
+      "shellCommand": "node .scripts/gotest.js"
     }
   ],
   "parameters": [

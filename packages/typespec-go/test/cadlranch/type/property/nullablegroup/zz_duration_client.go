@@ -47,6 +47,7 @@ func (client *DurationClient) getNonNullCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -85,6 +86,7 @@ func (client *DurationClient) getNullCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

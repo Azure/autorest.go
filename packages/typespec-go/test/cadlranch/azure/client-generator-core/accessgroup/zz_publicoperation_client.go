@@ -49,6 +49,7 @@ func (client *PublicOperationClient) noDecoratorInPublicCreateRequest(ctx contex
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -89,6 +90,7 @@ func (client *PublicOperationClient) publicDecoratorInPublicCreateRequest(ctx co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("name", name)
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
