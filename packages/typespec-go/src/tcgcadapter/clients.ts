@@ -76,6 +76,10 @@ export class clientAdapter {
       method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
     } else if (sdkMethod.kind === 'paging') {
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      if (sdkMethod.nextLinkLogicalPath) {
+        // TODO: this assumes that nextLink is the first element. and what does it mean to have more than one entry?
+        (<go.PageableMethod>method).nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkLogicalPath[0]));
+      }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }
@@ -83,17 +87,6 @@ export class clientAdapter {
     method.description = sdkMethod.description;
     goClient.methods.push(method);
     this.populateMethod(sdkMethod, method);
-  
-    // if any client parameters were adapted, add them to the client
-    /*if (group.language.go!.clientParams) {
-      for (const param of <Array<m4.Parameter>>group.language.go!.clientParams) {
-        const adaptedParam = clientParams.get(param.language.go!.name);
-        if (!adaptedParam) {
-          throw new Error(`missing adapted client parameter ${param.language.go!.name}`);
-        }
-        goClient.parameters.push(adaptedParam);
-      }
-    }*/
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
