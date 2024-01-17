@@ -27,19 +27,18 @@ type TwoModelsAsPageItemClient struct {
 func (client *TwoModelsAsPageItemClient) NewListFirstItemPager(options *TwoModelsAsPageItemClientListFirstItemOptions) *runtime.Pager[TwoModelsAsPageItemClientListFirstItemResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TwoModelsAsPageItemClientListFirstItemResponse]{
 		More: func(page TwoModelsAsPageItemClientListFirstItemResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TwoModelsAsPageItemClientListFirstItemResponse) (TwoModelsAsPageItemClientListFirstItemResponse, error) {
-			req, err := client.listFirstItemCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listFirstItemCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return TwoModelsAsPageItemClientListFirstItemResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return TwoModelsAsPageItemClientListFirstItemResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return TwoModelsAsPageItemClientListFirstItemResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listFirstItemHandleResponse(resp)
 		},
@@ -74,19 +73,18 @@ func (client *TwoModelsAsPageItemClient) listFirstItemHandleResponse(resp *http.
 func (client *TwoModelsAsPageItemClient) NewListSecondItemPager(options *TwoModelsAsPageItemClientListSecondItemOptions) *runtime.Pager[TwoModelsAsPageItemClientListSecondItemResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TwoModelsAsPageItemClientListSecondItemResponse]{
 		More: func(page TwoModelsAsPageItemClientListSecondItemResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TwoModelsAsPageItemClientListSecondItemResponse) (TwoModelsAsPageItemClientListSecondItemResponse, error) {
-			req, err := client.listSecondItemCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listSecondItemCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return TwoModelsAsPageItemClientListSecondItemResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return TwoModelsAsPageItemClientListSecondItemResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return TwoModelsAsPageItemClientListSecondItemResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listSecondItemHandleResponse(resp)
 		},
