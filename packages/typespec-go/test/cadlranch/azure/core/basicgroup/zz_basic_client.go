@@ -251,19 +251,18 @@ func (client *BasicClient) getHandleResponse(resp *http.Response) (BasicClientGe
 func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtime.Pager[BasicClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListResponse]{
 		More: func(page BasicClientListResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListResponse) (BasicClientListResponse, error) {
-			req, err := client.listCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return BasicClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return BasicClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return BasicClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -324,19 +323,18 @@ func (client *BasicClient) listHandleResponse(resp *http.Response) (BasicClientL
 func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientListWithCustomPageModelOptions) *runtime.Pager[BasicClientListWithCustomPageModelResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithCustomPageModelResponse]{
 		More: func(page BasicClientListWithCustomPageModelResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithCustomPageModelResponse) (BasicClientListWithCustomPageModelResponse, error) {
-			req, err := client.listWithCustomPageModelCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithCustomPageModelCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return BasicClientListWithCustomPageModelResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return BasicClientListWithCustomPageModelResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return BasicClientListWithCustomPageModelResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithCustomPageModelHandleResponse(resp)
 		},
@@ -370,19 +368,18 @@ func (client *BasicClient) listWithCustomPageModelHandleResponse(resp *http.Resp
 func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPageOptions) *runtime.Pager[BasicClientListWithPageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithPageResponse]{
 		More: func(page BasicClientListWithPageResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithPageResponse) (BasicClientListWithPageResponse, error) {
-			req, err := client.listWithPageCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithPageCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return BasicClientListWithPageResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return BasicClientListWithPageResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return BasicClientListWithPageResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithPageHandleResponse(resp)
 		},
@@ -417,19 +414,18 @@ func (client *BasicClient) listWithPageHandleResponse(resp *http.Response) (Basi
 func (client *BasicClient) NewListWithParametersPager(bodyInput ListItemInputBody, options *BasicClientListWithParametersOptions) *runtime.Pager[BasicClientListWithParametersResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithParametersResponse]{
 		More: func(page BasicClientListWithParametersResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithParametersResponse) (BasicClientListWithParametersResponse, error) {
-			req, err := client.listWithParametersCreateRequest(ctx, bodyInput, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listWithParametersCreateRequest(ctx, bodyInput, options)
+			}, nil)
 			if err != nil {
 				return BasicClientListWithParametersResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return BasicClientListWithParametersResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return BasicClientListWithParametersResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listWithParametersHandleResponse(resp)
 		},

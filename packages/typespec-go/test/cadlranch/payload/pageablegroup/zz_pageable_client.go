@@ -26,19 +26,18 @@ type PageableClient struct {
 func (client *PageableClient) NewListPager(options *PageableClientListOptions) *runtime.Pager[PageableClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableClientListResponse]{
 		More: func(page PageableClientListResponse) bool {
-			return false
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableClientListResponse) (PageableClientListResponse, error) {
-			req, err := client.listCreateRequest(ctx, options)
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.listCreateRequest(ctx, options)
+			}, nil)
 			if err != nil {
 				return PageableClientListResponse{}, err
-			}
-			resp, err := client.internal.Pipeline().Do(req)
-			if err != nil {
-				return PageableClientListResponse{}, err
-			}
-			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return PageableClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
