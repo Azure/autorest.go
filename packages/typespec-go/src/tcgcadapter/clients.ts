@@ -319,31 +319,18 @@ export class clientAdapter {
   }
   
   private adaptParameterType(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterType {
-    // workaround until https://github.com/Azure/typespec-azure/issues/102 is fixed
-    if (param.kind === 'header' && param.clientDefaultValue && (param.serializedName === 'Accept' || param.serializedName === 'Content-Type')) {
-      // convert the param type into a constant string
-      param.type.kind = 'constant';
-      (<tcgc.SdkConstantType>param.type).valueType = {
-        kind: 'string',
-        encode: 'string',
-        nullable: false
-      };
-      (<tcgc.SdkConstantType>param.type).value = param.clientDefaultValue;
-      param.clientDefaultValue = undefined;
-    }
-    // end workaround
-
-    if (param.clientDefaultValue) {
+    // NOTE: must check for constant type first as it will also set clientDefaultValue
+    if (param.type.kind === 'constant') {
+      if (param.optional) {
+        return 'flag';
+      }
+      return 'literal';
+    } else if (param.clientDefaultValue) {
       const adaptedType = this.ta.getPossibleType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
         throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.nameInClient}`);
       }
       return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
-    } else if (param.type.kind === 'constant') {
-      if (param.optional) {
-        return 'flag';
-      }
-      return 'literal';
     } else if (param.optional) {
       return 'optional';
     } else {

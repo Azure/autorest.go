@@ -84,7 +84,7 @@ type ResponseBodyClientBase64URLOptions struct {
 }
 
 type ResponseBodyClientCustomContentTypeOptions struct {
-	// placeholder for future optional parameters
+	Accept *string
 }
 
 type ResponseBodyClientDefaultOptions struct {
@@ -92,5 +92,5 @@ type ResponseBodyClientDefaultOptions struct {
 }
 
 type ResponseBodyClientOctetStreamOptions struct {
-	// placeholder for future optional parameters
+	Accept *string
 }

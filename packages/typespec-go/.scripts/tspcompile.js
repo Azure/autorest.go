@@ -11,6 +11,8 @@ const pkgRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/
 
 const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 
+const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/tsp';
+
 // the format is as follows
 // 'moduleName': [ 'inputDir', 'additional arg 1', 'additional arg N...' ]
 const cadlRanch = {
@@ -132,7 +134,7 @@ function generate(moduleName, inputDir, outputDir, additionalArgs) {
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
-      const command = `tsp compile ${inputDir}/main.tsp --emit=${pkgRoot} ${options.join(' ')} ${additionalArgs.join(' ')}`;
+      const command = `${compiler} compile ${inputDir}/main.tsp --emit=${pkgRoot} ${options.join(' ')} ${additionalArgs.join(' ')}`;
       if (switches.includes('--verbose')) {
         console.log(command);
       }
