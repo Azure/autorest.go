@@ -15,6 +15,8 @@ import (
 	"time"
 )
 
+const jsonNull = "null"
+
 // MarshalJSON implements the json.Marshaller interface for type DefaultDatetimeProperty.
 func (d DefaultDatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -29,6 +31,10 @@ func (d *DefaultDatetimeProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -56,6 +62,10 @@ func (r *RFC3339DatetimeProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -83,6 +93,10 @@ func (r *RFC7231DatetimeProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -114,6 +128,10 @@ func (u *UnixTimestampArrayDatetimeProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", u, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -145,6 +163,10 @@ func (u *UnixTimestampDatetimeProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", u, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":

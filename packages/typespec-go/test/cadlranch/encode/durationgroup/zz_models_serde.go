@@ -14,6 +14,8 @@ import (
 	"reflect"
 )
 
+const jsonNull = "null"
+
 // MarshalJSON implements the json.Marshaller interface for type DefaultDurationProperty.
 func (d DefaultDurationProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -28,6 +30,10 @@ func (d *DefaultDurationProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -55,6 +61,10 @@ func (f *FloatSecondsDurationArrayProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -82,6 +92,10 @@ func (f *FloatSecondsDurationProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -109,6 +123,10 @@ func (i *ISO8601DurationProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":
@@ -136,6 +154,10 @@ func (i *Int32SecondsDurationProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "value":

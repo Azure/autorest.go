@@ -14,6 +14,8 @@ import (
 	"reflect"
 )
 
+const jsonNull = "null"
+
 // MarshalJSON implements the json.Marshaller interface for type BodyModel.
 func (b BodyModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -28,6 +30,10 @@ func (b *BodyModel) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "name":

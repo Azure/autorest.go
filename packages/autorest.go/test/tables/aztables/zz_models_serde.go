@@ -17,6 +17,8 @@ import (
 	"time"
 )
 
+const jsonNull = "null"
+
 // MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
 func (a AccessPolicy) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias AccessPolicy
@@ -65,6 +67,10 @@ func (e *EntityQueryResponse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", e, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "odata.metadata":
@@ -124,6 +130,10 @@ func (p *Properties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "TableName":
@@ -152,6 +162,10 @@ func (q *QueryResponse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", q, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "odata.metadata":
@@ -186,6 +200,10 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "odata.editLink":
@@ -228,6 +246,10 @@ func (r *ResponseProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "odata.editLink":
@@ -264,6 +286,10 @@ func (s *ServiceError) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
+		if string(val) == jsonNull {
+			delete(rawMsg, key)
+			continue
+		}
 		var err error
 		switch key {
 		case "Message":

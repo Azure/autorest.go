@@ -120,6 +120,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   if (serdeTextBody.length > 0) {
     serdeText = contentPreamble(codeModel);
     serdeText += serdeImports.text();
+    serdeText += '\nconst jsonNull = "null"\n\n';
     serdeText += serdeTextBody;
   }
   return {
@@ -389,6 +390,9 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
   };
   let unmarshalBody = '';
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
+  // a JSON null will show up as the unqoted string null.
+  // in this case, remove the entry from the map and carry on.
+  unmarshalBody += '\t\tif string(val) == jsonNull {\n\t\t\tdelete(rawMsg, key)\n\t\t\tcontinue\n\t\t}\n';
   unmarshalBody += '\t\tvar err error\n';
   unmarshalBody += '\t\tswitch key {\n';
   let addlProps: go.MapType | undefined;
