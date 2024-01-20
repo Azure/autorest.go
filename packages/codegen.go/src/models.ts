@@ -430,7 +430,8 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += '\t\t\t\t}\n\t\t\t}\n';
       modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
-      unmarshalBody += `\t\t\t${receiver}.${field.fieldName} = val\n`;
+      unmarshalBody += '\t\t\tif string(val) != "null" {\n';
+      unmarshalBody += `\t\t\t\t${receiver}.${field.fieldName} = val\n\t\t\t}\n`;
     } else {
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.fieldName}", &${receiver}.${field.fieldName})\n`;
       modelDef.SerDe.needsJSONUnpopulate = true;
