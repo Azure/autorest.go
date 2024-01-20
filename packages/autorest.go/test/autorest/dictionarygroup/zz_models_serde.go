@@ -15,8 +15,6 @@ import (
 	"reflect"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type Widget.
 func (w Widget) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -32,10 +30,6 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", w, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "integer":
@@ -63,7 +57,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

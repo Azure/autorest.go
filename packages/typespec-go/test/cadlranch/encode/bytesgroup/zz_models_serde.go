@@ -14,8 +14,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type Base64BytesProperty.
 func (b Base64BytesProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -32,14 +30,12 @@ func (b *Base64BytesProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -69,16 +65,12 @@ func (b *Base64URLArrayBytesProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
 			var encodedValue []string
 			err = unpopulate(val, "Value", &encodedValue)
-			if err == nil {
+			if err == nil && len(encodedValue) > 0 {
 				b.Value = make([][]byte, len(encodedValue))
 				for i := 0; i < len(encodedValue) && err == nil; i++ {
 					err = runtime.DecodeByteArray(encodedValue[i], &b.Value[i], runtime.Base64URLFormat)
@@ -109,14 +101,12 @@ func (b *Base64URLBytesProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -142,14 +132,12 @@ func (d *DefaultBytesProperty) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &d.Value, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.Value, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -170,7 +158,7 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

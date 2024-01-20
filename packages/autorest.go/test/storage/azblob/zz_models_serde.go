@@ -18,8 +18,6 @@ import (
 	"time"
 )
 
-const jsonNull = "null"
-
 // MarshalXML implements the xml.Marshaller interface for type ArrowConfiguration.
 func (a ArrowConfiguration) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	type alias ArrowConfiguration
@@ -333,10 +331,6 @@ func (s *StorageError) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "Message":
@@ -425,7 +419,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

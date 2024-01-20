@@ -125,7 +125,7 @@ func populateDateTimeRFC1123(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateDateTimeRFC1123(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux dateTimeRFC1123
@@ -223,7 +223,7 @@ func populateDateTimeRFC3339(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateDateTimeRFC3339(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux dateTimeRFC3339
@@ -299,7 +299,7 @@ func populateTimeRFC3339(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateTimeRFC3339(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux timeRFC3339
@@ -364,7 +364,7 @@ func populateTimeUnix(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateTimeUnix(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux timeUnix
@@ -426,7 +426,7 @@ func populateDateType(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateDateType(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux dateType

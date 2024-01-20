@@ -105,7 +105,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     // scalar unmarshaller
     if (scalars.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}(rawMsg json.RawMessage) (${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil {\n';
+      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
       text += '\tvar m map[string]any\n';
@@ -134,7 +134,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     // array unmarshaller
     if (arrays.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}Array(rawMsg json.RawMessage) ([]${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil {\n';
+      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
       text += '\tvar rawMessages []json.RawMessage\n';
@@ -156,7 +156,7 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     // map unmarshaller
     if (maps.has(interfaceType.name)) {
       text += `func unmarshal${interfaceType.name}Map(rawMsg json.RawMessage) (map[string]${prefix}${interfaceType.name}, error) {\n`;
-      text += '\tif rawMsg == nil {\n';
+      text += '\tif rawMsg == nil || string(rawMsg) == "null" {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
       text += '\tvar rawMessages map[string]json.RawMessage\n';

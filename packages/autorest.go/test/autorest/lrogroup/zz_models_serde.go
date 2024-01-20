@@ -15,8 +15,6 @@ import (
 	"reflect"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -36,10 +34,6 @@ func (p *Product) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -83,10 +77,6 @@ func (p *ProductProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "provisioningState":
@@ -118,10 +108,6 @@ func (s *SKU) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -153,10 +139,6 @@ func (s *SubProduct) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -188,10 +170,6 @@ func (s *SubProductProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "provisioningState":
@@ -219,7 +197,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

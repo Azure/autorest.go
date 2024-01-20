@@ -107,7 +107,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   if (needsJSONUnpopulate) {
     serdeImports.add('fmt');
     serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v any) error {\n';
-    serdeTextBody += '\tif data == nil {\n';
+    serdeTextBody += '\tif data == nil || string(data) == "null" {\n';
     serdeTextBody += '\t\treturn nil\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '\tif err := json.Unmarshal(data, v); err != nil {\n';
@@ -120,7 +120,6 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   if (serdeTextBody.length > 0) {
     serdeText = contentPreamble(codeModel);
     serdeText += serdeImports.text();
-    serdeText += '\nconst jsonNull = "null"\n\n';
     serdeText += serdeTextBody;
   }
   return {
@@ -390,9 +389,6 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
   };
   let unmarshalBody = '';
   unmarshalBody = '\tfor key, val := range rawMsg {\n';
-  // a JSON null will show up as the unqoted string null.
-  // in this case, remove the entry from the map and carry on.
-  unmarshalBody += '\t\tif string(val) == jsonNull {\n\t\t\tdelete(rawMsg, key)\n\t\t\tcontinue\n\t\t}\n';
   unmarshalBody += '\t\tvar err error\n';
   unmarshalBody += '\t\tswitch key {\n';
   let addlProps: go.MapType | undefined;
@@ -421,12 +417,13 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       modelDef.SerDe.needsJSONUnpopulate = true;
     } else if (go.isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-      unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n`;
+      unmarshalBody += '\t\tif val != nil && string(val) != "null" {\n';
+      unmarshalBody += `\t\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${field.fieldName}, runtime.Base64${field.type.encoding}Format)\n\t\t}\n`;
     } else if (go.isSliceType(field.type) && go.isBytesType(field.type.elementType)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += '\t\t\tvar encodedValue []string\n';
       unmarshalBody += `\t\t\terr = unpopulate(val, "${field.fieldName}", &encodedValue)\n`;
-      unmarshalBody += '\t\t\tif err == nil {\n';
+      unmarshalBody += '\t\t\tif err == nil && len(encodedValue) > 0 {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.fieldName} = make([][]byte, len(encodedValue))\n`;
       unmarshalBody += '\t\t\t\tfor i := 0; i < len(encodedValue) && err == nil; i++ {\n';
       unmarshalBody += `\t\t\t\t\terr = runtime.DecodeByteArray(encodedValue[i], &${receiver}.${field.fieldName}[i], runtime.Base64${field.type.elementType.encoding}Format)\n`;

@@ -16,8 +16,6 @@ import (
 	"reflect"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type Action.
 func (a Action) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -32,10 +30,6 @@ func (a *Action) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "action_type":
@@ -66,10 +60,6 @@ func (a *AdministratorDetails) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "email":
@@ -110,10 +100,6 @@ func (a *Attributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -155,14 +141,12 @@ func (b *BackupCertificateResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -188,14 +172,12 @@ func (b *BackupKeyResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -221,14 +203,12 @@ func (b *BackupSecretResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -254,14 +234,12 @@ func (b *BackupStorageResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -291,10 +269,6 @@ func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -352,17 +326,15 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
 			err = unpopulate(val, "Attributes", &c.Attributes)
 			delete(rawMsg, key)
 		case "cer":
-			err = runtime.DecodeByteArray(string(val), &c.Cer, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.Cer, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "contentType":
 			err = unpopulate(val, "ContentType", &c.ContentType)
@@ -383,7 +355,9 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -409,10 +383,6 @@ func (c *CertificateCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -450,10 +420,6 @@ func (c *CertificateImportParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
@@ -494,10 +460,6 @@ func (c *CertificateInfoObject) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "certificates":
@@ -529,10 +491,6 @@ func (c *CertificateIssuerItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -564,10 +522,6 @@ func (c *CertificateIssuerListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -601,10 +555,6 @@ func (c *CertificateIssuerSetParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -644,10 +594,6 @@ func (c *CertificateIssuerUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -689,10 +635,6 @@ func (c *CertificateItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -705,7 +647,9 @@ func (c *CertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -730,10 +674,6 @@ func (c *CertificateListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -772,10 +712,6 @@ func (c *CertificateMergeParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -787,7 +723,7 @@ func (c *CertificateMergeParameters) UnmarshalJSON(data []byte) error {
 		case "x5c":
 			var encodedValue []string
 			err = unpopulate(val, "X509Certificates", &encodedValue)
-			if err == nil {
+			if err == nil && len(encodedValue) > 0 {
 				c.X509Certificates = make([][]byte, len(encodedValue))
 				for i := 0; i < len(encodedValue) && err == nil; i++ {
 					err = runtime.DecodeByteArray(encodedValue[i], &c.X509Certificates[i], runtime.Base64StdFormat)
@@ -826,17 +762,15 @@ func (c *CertificateOperation) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "cancellation_requested":
 			err = unpopulate(val, "CancellationRequested", &c.CancellationRequested)
 			delete(rawMsg, key)
 		case "csr":
-			err = runtime.DecodeByteArray(string(val), &c.Csr, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.Csr, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, "Error", &c.Error)
@@ -881,10 +815,6 @@ func (c *CertificateOperationUpdateParameter) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "cancellation_requested":
@@ -918,10 +848,6 @@ func (c *CertificatePolicy) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -969,14 +895,12 @@ func (c *CertificateRestoreParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &c.CertificateBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.CertificateBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1002,10 +926,6 @@ func (c *CertificateUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1041,10 +961,6 @@ func (c *Contact) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "email":
@@ -1079,10 +995,6 @@ func (c *Contacts) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "contacts":
@@ -1128,17 +1040,15 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "cer":
-			err = runtime.DecodeByteArray(string(val), &d.Cer, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.Cer, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "contentType":
 			err = unpopulate(val, "ContentType", &d.ContentType)
@@ -1168,7 +1078,9 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &d.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1200,10 +1112,6 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1225,7 +1133,9 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &d.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1250,10 +1160,6 @@ func (d *DeletedCertificateListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -1290,10 +1196,6 @@ func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1345,10 +1247,6 @@ func (d *DeletedKeyItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1395,10 +1293,6 @@ func (d *DeletedKeyListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -1438,10 +1332,6 @@ func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1502,10 +1392,6 @@ func (d *DeletedSasDefinitionItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1552,10 +1438,6 @@ func (d *DeletedSasDefinitionListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -1595,10 +1477,6 @@ func (d *DeletedSecretBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1660,10 +1538,6 @@ func (d *DeletedSecretItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1713,10 +1587,6 @@ func (d *DeletedSecretListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -1753,10 +1623,6 @@ func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -1811,10 +1677,6 @@ func (d *DeletedStorageBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "activeKeyName":
@@ -1870,10 +1732,6 @@ func (d *DeletedStorageListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -1904,10 +1762,6 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", e, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "error":
@@ -1937,10 +1791,6 @@ func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", e, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "code":
@@ -1980,10 +1830,6 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "azureStorageBlobContainerUri":
@@ -2031,10 +1877,6 @@ func (i *IssuerAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -2072,10 +1914,6 @@ func (i *IssuerBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -2116,10 +1954,6 @@ func (i *IssuerCredentials) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "account_id":
@@ -2152,10 +1986,6 @@ func (i *IssuerParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "cert_transparency":
@@ -2228,29 +2058,35 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", j, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "crv":
 			err = unpopulate(val, "Crv", &j.Crv)
 			delete(rawMsg, key)
 		case "d":
-			err = runtime.DecodeByteArray(string(val), &j.D, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.D, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "dp":
-			err = runtime.DecodeByteArray(string(val), &j.DP, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.DP, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "dq":
-			err = runtime.DecodeByteArray(string(val), &j.DQ, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.DQ, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "e":
-			err = runtime.DecodeByteArray(string(val), &j.E, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.E, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "k":
-			err = runtime.DecodeByteArray(string(val), &j.K, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.K, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "key_ops":
 			err = unpopulate(val, "KeyOps", &j.KeyOps)
@@ -2262,25 +2098,39 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Kty", &j.Kty)
 			delete(rawMsg, key)
 		case "n":
-			err = runtime.DecodeByteArray(string(val), &j.N, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.N, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "p":
-			err = runtime.DecodeByteArray(string(val), &j.P, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.P, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "q":
-			err = runtime.DecodeByteArray(string(val), &j.Q, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.Q, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "qi":
-			err = runtime.DecodeByteArray(string(val), &j.QI, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.QI, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "key_hsm":
-			err = runtime.DecodeByteArray(string(val), &j.T, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.T, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "x":
-			err = runtime.DecodeByteArray(string(val), &j.X, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.X, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "y":
-			err = runtime.DecodeByteArray(string(val), &j.Y, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.Y, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2310,10 +2160,6 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -2362,10 +2208,6 @@ func (k *KeyBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -2408,10 +2250,6 @@ func (k *KeyCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "crv":
@@ -2460,10 +2298,6 @@ func (k *KeyImportParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "Hsm":
@@ -2503,10 +2337,6 @@ func (k *KeyItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -2544,10 +2374,6 @@ func (k *KeyListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -2590,26 +2416,30 @@ func (k *KeyOperationResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "aad":
-			err = runtime.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "tag":
-			err = runtime.DecodeByteArray(string(val), &k.AuthenticationTag, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AuthenticationTag, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "iv":
-			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "kid":
 			err = unpopulate(val, "Kid", &k.Kid)
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Result, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Result, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2645,26 +2475,30 @@ func (k *KeyOperationsParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "aad":
-			err = runtime.DecodeByteArray(string(val), &k.AAD, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AAD, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "alg":
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "iv":
-			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "tag":
-			err = runtime.DecodeByteArray(string(val), &k.Tag, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Tag, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2692,10 +2526,6 @@ func (k *KeyProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "crv":
@@ -2737,14 +2567,12 @@ func (k *KeyRestoreParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.KeyBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.KeyBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2771,17 +2599,15 @@ func (k *KeySignParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "alg":
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2807,10 +2633,6 @@ func (k *KeyUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -2850,20 +2672,20 @@ func (k *KeyVerifyParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "alg":
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "digest":
-			err = runtime.DecodeByteArray(string(val), &k.Digest, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Digest, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Signature, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Signature, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2887,10 +2709,6 @@ func (k *KeyVerifyResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
@@ -2919,10 +2737,6 @@ func (l *LifetimeAction) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "action":
@@ -2954,10 +2768,6 @@ func (o *OrganizationDetails) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", o, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "admin_details":
@@ -2988,10 +2798,6 @@ func (p *PendingCertificateSigningRequestResult) UnmarshalJSON(data []byte) erro
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
@@ -3022,10 +2828,6 @@ func (p *Permission) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "actions":
@@ -3067,10 +2869,6 @@ func (r *RestoreOperation) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "endTime":
@@ -3114,10 +2912,6 @@ func (r *RestoreOperationParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "folderToRestore":
@@ -3151,10 +2945,6 @@ func (r *RoleAssignment) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -3191,10 +2981,6 @@ func (r *RoleAssignmentCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "properties":
@@ -3222,10 +3008,6 @@ func (r *RoleAssignmentFilter) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "principalId":
@@ -3254,10 +3036,6 @@ func (r *RoleAssignmentListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -3289,10 +3067,6 @@ func (r *RoleAssignmentProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "principalId":
@@ -3325,10 +3099,6 @@ func (r *RoleAssignmentPropertiesWithScope) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "principalId":
@@ -3365,10 +3135,6 @@ func (r *RoleDefinition) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "id":
@@ -3405,10 +3171,6 @@ func (r *RoleDefinitionCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "properties":
@@ -3436,10 +3198,6 @@ func (r *RoleDefinitionFilter) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "roleName":
@@ -3468,10 +3226,6 @@ func (r *RoleDefinitionListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -3506,10 +3260,6 @@ func (r *RoleDefinitionProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "assignableScopes":
@@ -3550,10 +3300,6 @@ func (s *SASTokenParameter) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "storageResourceUri":
@@ -3588,10 +3334,6 @@ func (s *SasDefinitionAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -3637,10 +3379,6 @@ func (s *SasDefinitionBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -3690,10 +3428,6 @@ func (s *SasDefinitionCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -3736,10 +3470,6 @@ func (s *SasDefinitionItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -3777,10 +3507,6 @@ func (s *SasDefinitionListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -3815,10 +3541,6 @@ func (s *SasDefinitionUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -3864,10 +3586,6 @@ func (s *SecretAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -3919,10 +3637,6 @@ func (s *SecretBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -3972,10 +3686,6 @@ func (s *SecretItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -4016,10 +3726,6 @@ func (s *SecretListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -4050,10 +3756,6 @@ func (s *SecretProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "contentType":
@@ -4083,14 +3785,12 @@ func (s *SecretRestoreParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &s.SecretBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.SecretBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4117,10 +3817,6 @@ func (s *SecretSetParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "contentType":
@@ -4159,10 +3855,6 @@ func (s *SecretUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "contentType":
@@ -4205,10 +3897,6 @@ func (s *SecurityDomainJSONWebKey) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "alg":
@@ -4263,10 +3951,6 @@ func (s *SecurityDomainObject) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
@@ -4295,10 +3979,6 @@ func (s *SecurityDomainOperationStatus) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "status":
@@ -4334,10 +4014,6 @@ func (s *SelectiveKeyRestoreOperation) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "endTime":
@@ -4381,10 +4057,6 @@ func (s *SelectiveKeyRestoreOperationParameters) UnmarshalJSON(data []byte) erro
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "folder":
@@ -4419,10 +4091,6 @@ func (s *StorageAccountAttributes) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "created":
@@ -4467,10 +4135,6 @@ func (s *StorageAccountCreateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "activeKeyName":
@@ -4516,10 +4180,6 @@ func (s *StorageAccountItem) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "attributes":
@@ -4556,10 +4216,6 @@ func (s *StorageAccountRegenerteKeyParameters) UnmarshalJSON(data []byte) error 
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "keyName":
@@ -4591,10 +4247,6 @@ func (s *StorageAccountUpdateParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "activeKeyName":
@@ -4640,10 +4292,6 @@ func (s *StorageBundle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "activeKeyName":
@@ -4690,10 +4338,6 @@ func (s *StorageListResult) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "nextLink":
@@ -4726,14 +4370,12 @@ func (s *StorageRestoreParameters) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &s.StorageBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.StorageBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4759,10 +4401,6 @@ func (s *SubjectAlternativeNames) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "dns_names":
@@ -4797,10 +4435,6 @@ func (t *TransferKey) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", t, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "key_format":
@@ -4832,10 +4466,6 @@ func (t *Trigger) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", t, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "days_before_expiry":
@@ -4870,10 +4500,6 @@ func (x *X509CertificateProperties) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", x, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "ekus":
@@ -4920,7 +4546,7 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

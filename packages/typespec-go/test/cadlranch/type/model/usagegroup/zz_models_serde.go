@@ -14,8 +14,6 @@ import (
 	"reflect"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type InputOutputRecord.
 func (i InputOutputRecord) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -30,10 +28,6 @@ func (i *InputOutputRecord) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "requiredProp":
@@ -61,10 +55,6 @@ func (i *InputRecord) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", i, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "requiredProp":
@@ -92,10 +82,6 @@ func (o *OutputRecord) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", o, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "requiredProp":
@@ -120,7 +106,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

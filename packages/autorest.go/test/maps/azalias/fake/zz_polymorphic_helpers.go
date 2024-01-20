@@ -14,7 +14,7 @@ import (
 )
 
 func unmarshalGeoJSONObjectClassification(rawMsg json.RawMessage) (azalias.GeoJSONObjectClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

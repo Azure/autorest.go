@@ -15,8 +15,6 @@ import (
 	"reflect"
 )
 
-const jsonNull = "null"
-
 // MarshalJSON implements the json.Marshaller interface for type Cat.
 func (c Cat) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -34,10 +32,6 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "hisses":
@@ -75,10 +69,6 @@ func (f *Feline) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "hisses":
@@ -110,10 +100,6 @@ func (h *Horse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", h, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "isAShowHorse":
@@ -148,10 +134,6 @@ func (k *Kitten) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", k, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "eatsMiceYet":
@@ -191,10 +173,6 @@ func (p *Pet) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
-		if string(val) == jsonNull {
-			delete(rawMsg, key)
-			continue
-		}
 		var err error
 		switch key {
 		case "name":
@@ -219,7 +197,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {
