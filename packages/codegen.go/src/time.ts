@@ -323,7 +323,6 @@ function generateUnixTimeHelper(preamble: string, needsPopulate: boolean): strin
   if (needsPopulate) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('reflect');
-    imports.add('strings');
   }
   let text = `${preamble}
 
@@ -387,7 +386,6 @@ function generateDateHelper(preamble: string, needsPopulate: boolean): string {
     imports.add('encoding/json');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('reflect');
-    imports.add('strings');
   }
   let text = `${preamble}
 

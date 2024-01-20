@@ -13,7 +13,6 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
-	"strings"
 	"time"
 )
 
