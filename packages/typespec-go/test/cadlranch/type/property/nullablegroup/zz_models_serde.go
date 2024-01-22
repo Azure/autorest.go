@@ -35,7 +35,9 @@ func (b *BytesProperty) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "nullableProperty":
-			err = runtime.DecodeByteArray(string(val), &b.NullableProperty, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.NullableProperty, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "requiredProperty":
 			err = unpopulate(val, "RequiredProperty", &b.RequiredProperty)
@@ -74,7 +76,7 @@ func (c *CollectionsByteProperty) UnmarshalJSON(data []byte) error {
 		case "nullableProperty":
 			var encodedValue []string
 			err = unpopulate(val, "NullableProperty", &encodedValue)
-			if err == nil {
+			if err == nil && len(encodedValue) > 0 {
 				c.NullableProperty = make([][]byte, len(encodedValue))
 				for i := 0; i < len(encodedValue) && err == nil; i++ {
 					err = runtime.DecodeByteArray(encodedValue[i], &c.NullableProperty[i], runtime.Base64StdFormat)
@@ -264,7 +266,7 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

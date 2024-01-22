@@ -128,7 +128,9 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = runtime.DecodeByteArray(string(val), &b.Field, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Field, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -910,7 +912,9 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "picture":
-			err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "siblings":
 			s.Siblings, err = unmarshalFishClassificationArray(val)
@@ -1138,7 +1142,7 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

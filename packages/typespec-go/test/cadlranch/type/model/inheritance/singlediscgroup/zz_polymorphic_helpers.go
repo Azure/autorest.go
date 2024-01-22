@@ -10,7 +10,7 @@ package singlediscgroup
 import "encoding/json"
 
 func unmarshalBirdClassification(rawMsg json.RawMessage) (BirdClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -37,7 +37,7 @@ func unmarshalBirdClassification(rawMsg json.RawMessage) (BirdClassification, er
 }
 
 func unmarshalBirdClassificationArray(rawMsg json.RawMessage) ([]BirdClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -56,7 +56,7 @@ func unmarshalBirdClassificationArray(rawMsg json.RawMessage) ([]BirdClassificat
 }
 
 func unmarshalBirdClassificationMap(rawMsg json.RawMessage) (map[string]BirdClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages map[string]json.RawMessage
@@ -75,7 +75,7 @@ func unmarshalBirdClassificationMap(rawMsg json.RawMessage) (map[string]BirdClas
 }
 
 func unmarshalDinosaurClassification(rawMsg json.RawMessage) (DinosaurClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

@@ -11,7 +11,7 @@ package azalias
 import "encoding/json"
 
 func unmarshalGeoJSONObjectClassification(rawMsg json.RawMessage) (GeoJSONObjectClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -32,7 +32,7 @@ func unmarshalGeoJSONObjectClassification(rawMsg json.RawMessage) (GeoJSONObject
 }
 
 func unmarshalGeoJSONObjectClassificationArray(rawMsg json.RawMessage) ([]GeoJSONObjectClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -51,7 +51,7 @@ func unmarshalGeoJSONObjectClassificationArray(rawMsg json.RawMessage) ([]GeoJSO
 }
 
 func unmarshalGeoJSONObjectClassificationMap(rawMsg json.RawMessage) (map[string]GeoJSONObjectClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages map[string]json.RawMessage

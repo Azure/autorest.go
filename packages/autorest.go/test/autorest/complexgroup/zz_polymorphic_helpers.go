@@ -11,7 +11,7 @@ package complexgroup
 import "encoding/json"
 
 func unmarshalDotFishClassification(rawMsg json.RawMessage) (DotFishClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -32,7 +32,7 @@ func unmarshalDotFishClassification(rawMsg json.RawMessage) (DotFishClassificati
 }
 
 func unmarshalDotFishClassificationArray(rawMsg json.RawMessage) ([]DotFishClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -51,7 +51,7 @@ func unmarshalDotFishClassificationArray(rawMsg json.RawMessage) ([]DotFishClass
 }
 
 func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -82,7 +82,7 @@ func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, er
 }
 
 func unmarshalFishClassificationArray(rawMsg json.RawMessage) ([]FishClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -101,7 +101,7 @@ func unmarshalFishClassificationArray(rawMsg json.RawMessage) ([]FishClassificat
 }
 
 func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (MyBaseTypeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -122,7 +122,7 @@ func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (MyBaseTypeClassi
 }
 
 func unmarshalSalmonClassification(rawMsg json.RawMessage) (SalmonClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

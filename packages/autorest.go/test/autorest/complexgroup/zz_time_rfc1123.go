@@ -62,7 +62,7 @@ func populateDateTimeRFC1123(m map[string]any, k string, t *time.Time) {
 }
 
 func unpopulateDateTimeRFC1123(data json.RawMessage, fn string, t **time.Time) error {
-	if data == nil || strings.EqualFold(string(data), "null") {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	var aux dateTimeRFC1123

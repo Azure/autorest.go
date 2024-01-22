@@ -11,7 +11,7 @@ package armmachinelearning
 import "encoding/json"
 
 func unmarshalAssetReferenceBaseClassification(rawMsg json.RawMessage) (AssetReferenceBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -36,7 +36,7 @@ func unmarshalAssetReferenceBaseClassification(rawMsg json.RawMessage) (AssetRef
 }
 
 func unmarshalAutoMLVerticalClassification(rawMsg json.RawMessage) (AutoMLVerticalClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -75,7 +75,7 @@ func unmarshalAutoMLVerticalClassification(rawMsg json.RawMessage) (AutoMLVertic
 }
 
 func unmarshalComputeClassification(rawMsg json.RawMessage) (ComputeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -114,7 +114,7 @@ func unmarshalComputeClassification(rawMsg json.RawMessage) (ComputeClassificati
 }
 
 func unmarshalComputeSecretsClassification(rawMsg json.RawMessage) (ComputeSecretsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -139,7 +139,7 @@ func unmarshalComputeSecretsClassification(rawMsg json.RawMessage) (ComputeSecre
 }
 
 func unmarshalDataVersionBaseDetailsClassification(rawMsg json.RawMessage) (DataVersionBaseDetailsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -164,7 +164,7 @@ func unmarshalDataVersionBaseDetailsClassification(rawMsg json.RawMessage) (Data
 }
 
 func unmarshalDatastoreCredentialsClassification(rawMsg json.RawMessage) (DatastoreCredentialsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -197,7 +197,7 @@ func unmarshalDatastoreCredentialsClassification(rawMsg json.RawMessage) (Datast
 }
 
 func unmarshalDatastoreDetailsClassification(rawMsg json.RawMessage) (DatastoreDetailsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -226,7 +226,7 @@ func unmarshalDatastoreDetailsClassification(rawMsg json.RawMessage) (DatastoreD
 }
 
 func unmarshalDatastoreSecretsClassification(rawMsg json.RawMessage) (DatastoreSecretsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -257,7 +257,7 @@ func unmarshalDatastoreSecretsClassification(rawMsg json.RawMessage) (DatastoreS
 }
 
 func unmarshalDistributionConfigurationClassification(rawMsg json.RawMessage) (DistributionConfigurationClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -282,7 +282,7 @@ func unmarshalDistributionConfigurationClassification(rawMsg json.RawMessage) (D
 }
 
 func unmarshalEarlyTerminationPolicyClassification(rawMsg json.RawMessage) (EarlyTerminationPolicyClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -307,7 +307,7 @@ func unmarshalEarlyTerminationPolicyClassification(rawMsg json.RawMessage) (Earl
 }
 
 func unmarshalForecastHorizonClassification(rawMsg json.RawMessage) (ForecastHorizonClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -330,7 +330,7 @@ func unmarshalForecastHorizonClassification(rawMsg json.RawMessage) (ForecastHor
 }
 
 func unmarshalIdentityConfigurationClassification(rawMsg json.RawMessage) (IdentityConfigurationClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -355,7 +355,7 @@ func unmarshalIdentityConfigurationClassification(rawMsg json.RawMessage) (Ident
 }
 
 func unmarshalJobBaseDetailsClassification(rawMsg json.RawMessage) (JobBaseDetailsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -382,7 +382,7 @@ func unmarshalJobBaseDetailsClassification(rawMsg json.RawMessage) (JobBaseDetai
 }
 
 func unmarshalJobInputClassification(rawMsg json.RawMessage) (JobInputClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -415,7 +415,7 @@ func unmarshalJobInputClassification(rawMsg json.RawMessage) (JobInputClassifica
 }
 
 func unmarshalJobInputClassificationMap(rawMsg json.RawMessage) (map[string]JobInputClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages map[string]json.RawMessage
@@ -434,7 +434,7 @@ func unmarshalJobInputClassificationMap(rawMsg json.RawMessage) (map[string]JobI
 }
 
 func unmarshalJobOutputClassification(rawMsg json.RawMessage) (JobOutputClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -465,7 +465,7 @@ func unmarshalJobOutputClassification(rawMsg json.RawMessage) (JobOutputClassifi
 }
 
 func unmarshalJobOutputClassificationMap(rawMsg json.RawMessage) (map[string]JobOutputClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages map[string]json.RawMessage
@@ -484,7 +484,7 @@ func unmarshalJobOutputClassificationMap(rawMsg json.RawMessage) (map[string]Job
 }
 
 func unmarshalNCrossValidationsClassification(rawMsg json.RawMessage) (NCrossValidationsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -507,7 +507,7 @@ func unmarshalNCrossValidationsClassification(rawMsg json.RawMessage) (NCrossVal
 }
 
 func unmarshalOnlineDeploymentDetailsClassification(rawMsg json.RawMessage) (OnlineDeploymentDetailsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -530,7 +530,7 @@ func unmarshalOnlineDeploymentDetailsClassification(rawMsg json.RawMessage) (Onl
 }
 
 func unmarshalOnlineScaleSettingsClassification(rawMsg json.RawMessage) (OnlineScaleSettingsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -553,7 +553,7 @@ func unmarshalOnlineScaleSettingsClassification(rawMsg json.RawMessage) (OnlineS
 }
 
 func unmarshalPartialAssetReferenceBaseClassification(rawMsg json.RawMessage) (PartialAssetReferenceBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -578,7 +578,7 @@ func unmarshalPartialAssetReferenceBaseClassification(rawMsg json.RawMessage) (P
 }
 
 func unmarshalPartialOnlineDeploymentClassification(rawMsg json.RawMessage) (PartialOnlineDeploymentClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -601,7 +601,7 @@ func unmarshalPartialOnlineDeploymentClassification(rawMsg json.RawMessage) (Par
 }
 
 func unmarshalSamplingAlgorithmClassification(rawMsg json.RawMessage) (SamplingAlgorithmClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -626,7 +626,7 @@ func unmarshalSamplingAlgorithmClassification(rawMsg json.RawMessage) (SamplingA
 }
 
 func unmarshalScheduleBaseClassification(rawMsg json.RawMessage) (ScheduleBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -649,7 +649,7 @@ func unmarshalScheduleBaseClassification(rawMsg json.RawMessage) (ScheduleBaseCl
 }
 
 func unmarshalSeasonalityClassification(rawMsg json.RawMessage) (SeasonalityClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -672,7 +672,7 @@ func unmarshalSeasonalityClassification(rawMsg json.RawMessage) (SeasonalityClas
 }
 
 func unmarshalTargetLagsClassification(rawMsg json.RawMessage) (TargetLagsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -695,7 +695,7 @@ func unmarshalTargetLagsClassification(rawMsg json.RawMessage) (TargetLagsClassi
 }
 
 func unmarshalTargetRollingWindowSizeClassification(rawMsg json.RawMessage) (TargetRollingWindowSizeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

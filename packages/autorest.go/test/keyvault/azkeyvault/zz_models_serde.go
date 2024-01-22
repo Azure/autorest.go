@@ -144,7 +144,9 @@ func (b *BackupCertificateResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -173,7 +175,9 @@ func (b *BackupKeyResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -202,7 +206,9 @@ func (b *BackupSecretResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -231,7 +237,9 @@ func (b *BackupStorageResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -324,7 +332,9 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &c.Attributes)
 			delete(rawMsg, key)
 		case "cer":
-			err = runtime.DecodeByteArray(string(val), &c.Cer, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.Cer, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "contentType":
 			err = unpopulate(val, "ContentType", &c.ContentType)
@@ -345,7 +355,9 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -635,7 +647,9 @@ func (c *CertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -709,7 +723,7 @@ func (c *CertificateMergeParameters) UnmarshalJSON(data []byte) error {
 		case "x5c":
 			var encodedValue []string
 			err = unpopulate(val, "X509Certificates", &encodedValue)
-			if err == nil {
+			if err == nil && len(encodedValue) > 0 {
 				c.X509Certificates = make([][]byte, len(encodedValue))
 				for i := 0; i < len(encodedValue) && err == nil; i++ {
 					err = runtime.DecodeByteArray(encodedValue[i], &c.X509Certificates[i], runtime.Base64StdFormat)
@@ -754,7 +768,9 @@ func (c *CertificateOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "CancellationRequested", &c.CancellationRequested)
 			delete(rawMsg, key)
 		case "csr":
-			err = runtime.DecodeByteArray(string(val), &c.Csr, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.Csr, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, "Error", &c.Error)
@@ -882,7 +898,9 @@ func (c *CertificateRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &c.CertificateBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &c.CertificateBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1028,7 +1046,9 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Attributes", &d.Attributes)
 			delete(rawMsg, key)
 		case "cer":
-			err = runtime.DecodeByteArray(string(val), &d.Cer, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.Cer, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "contentType":
 			err = unpopulate(val, "ContentType", &d.ContentType)
@@ -1058,7 +1078,9 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &d.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1111,7 +1133,9 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Tags", &d.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &d.X509Thumbprint, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2040,19 +2064,29 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Crv", &j.Crv)
 			delete(rawMsg, key)
 		case "d":
-			err = runtime.DecodeByteArray(string(val), &j.D, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.D, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "dp":
-			err = runtime.DecodeByteArray(string(val), &j.DP, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.DP, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "dq":
-			err = runtime.DecodeByteArray(string(val), &j.DQ, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.DQ, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "e":
-			err = runtime.DecodeByteArray(string(val), &j.E, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.E, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "k":
-			err = runtime.DecodeByteArray(string(val), &j.K, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.K, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "key_ops":
 			err = unpopulate(val, "KeyOps", &j.KeyOps)
@@ -2064,25 +2098,39 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Kty", &j.Kty)
 			delete(rawMsg, key)
 		case "n":
-			err = runtime.DecodeByteArray(string(val), &j.N, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.N, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "p":
-			err = runtime.DecodeByteArray(string(val), &j.P, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.P, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "q":
-			err = runtime.DecodeByteArray(string(val), &j.Q, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.Q, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "qi":
-			err = runtime.DecodeByteArray(string(val), &j.QI, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.QI, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "key_hsm":
-			err = runtime.DecodeByteArray(string(val), &j.T, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.T, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "x":
-			err = runtime.DecodeByteArray(string(val), &j.X, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.X, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "y":
-			err = runtime.DecodeByteArray(string(val), &j.Y, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &j.Y, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2371,19 +2419,27 @@ func (k *KeyOperationResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "aad":
-			err = runtime.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "tag":
-			err = runtime.DecodeByteArray(string(val), &k.AuthenticationTag, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AuthenticationTag, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "iv":
-			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "kid":
 			err = unpopulate(val, "Kid", &k.Kid)
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Result, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Result, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2422,19 +2478,27 @@ func (k *KeyOperationsParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "aad":
-			err = runtime.DecodeByteArray(string(val), &k.AAD, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.AAD, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "alg":
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "iv":
-			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "tag":
-			err = runtime.DecodeByteArray(string(val), &k.Tag, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Tag, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2506,7 +2570,9 @@ func (k *KeyRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.KeyBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.KeyBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2539,7 +2605,9 @@ func (k *KeySignParameters) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2610,10 +2678,14 @@ func (k *KeyVerifyParameters) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Algorithm", &k.Algorithm)
 			delete(rawMsg, key)
 		case "digest":
-			err = runtime.DecodeByteArray(string(val), &k.Digest, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Digest, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &k.Signature, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &k.Signature, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3716,7 +3788,9 @@ func (s *SecretRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &s.SecretBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.SecretBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4299,7 +4373,9 @@ func (s *StorageRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = runtime.DecodeByteArray(string(val), &s.StorageBundleBackup, runtime.Base64URLFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.StorageBundleBackup, runtime.Base64URLFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4470,7 +4546,7 @@ func populateByteArray[T any](m map[string]any, k string, b []T, convert func() 
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

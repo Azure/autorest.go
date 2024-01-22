@@ -10,7 +10,7 @@ package enumdiscgroup
 import "encoding/json"
 
 func unmarshalDogClassification(rawMsg json.RawMessage) (DogClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -31,7 +31,7 @@ func unmarshalDogClassification(rawMsg json.RawMessage) (DogClassification, erro
 }
 
 func unmarshalSnakeClassification(rawMsg json.RawMessage) (SnakeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
