@@ -18,6 +18,9 @@ import (
 
 func TestClientRequestIdClient_Get(t *testing.T) {
 	// TODO: https://github.com/Azure/typespec-azure/issues/155 causes ClientRequestID optional param
+	_ = clientreqidgroup.ClientRequestIdClientGetOptions{
+		ClientRequestID: nil, // this should evaporate
+	}
 	client, err := clientreqidgroup.NewClientRequestIdClient(nil)
 	require.NoError(t, err)
 	var httpResp *http.Response
