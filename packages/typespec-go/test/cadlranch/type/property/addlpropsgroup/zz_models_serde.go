@@ -18,6 +18,11 @@ import (
 func (e ExtendsFloatAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "id", e.ID)
+	if e.AdditionalProperties != nil {
+		for key, val := range e.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -33,6 +38,92 @@ func (e *ExtendsFloatAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "id":
 			err = unpopulate(val, "ID", &e.ID)
 			delete(rawMsg, key)
+		default:
+			if e.AdditionalProperties == nil {
+				e.AdditionalProperties = map[string]*float32{}
+			}
+			if val != nil {
+				var aux float32
+				err = json.Unmarshal(val, &aux)
+				e.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", e, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExtendsModelAdditionalProperties.
+func (e ExtendsModelAdditionalProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	if e.AdditionalProperties != nil {
+		for key, val := range e.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ExtendsModelAdditionalProperties.
+func (e *ExtendsModelAdditionalProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", e, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		default:
+			if e.AdditionalProperties == nil {
+				e.AdditionalProperties = map[string]*ModelForRecord{}
+			}
+			if val != nil {
+				var aux ModelForRecord
+				err = json.Unmarshal(val, &aux)
+				e.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", e, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExtendsModelArrayAdditionalProperties.
+func (e ExtendsModelArrayAdditionalProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	if e.AdditionalProperties != nil {
+		for key, val := range e.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ExtendsModelArrayAdditionalProperties.
+func (e *ExtendsModelArrayAdditionalProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", e, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		default:
+			if e.AdditionalProperties == nil {
+				e.AdditionalProperties = map[string][]*ModelForRecord{}
+			}
+			if val != nil {
+				var aux []*ModelForRecord
+				err = json.Unmarshal(val, &aux)
+				e.AdditionalProperties[key] = aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", e, err)
@@ -45,6 +136,11 @@ func (e *ExtendsFloatAdditionalProperties) UnmarshalJSON(data []byte) error {
 func (e ExtendsStringAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "name", e.Name)
+	if e.AdditionalProperties != nil {
+		for key, val := range e.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -60,6 +156,16 @@ func (e *ExtendsStringAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "name":
 			err = unpopulate(val, "Name", &e.Name)
 			delete(rawMsg, key)
+		default:
+			if e.AdditionalProperties == nil {
+				e.AdditionalProperties = map[string]*string{}
+			}
+			if val != nil {
+				var aux string
+				err = json.Unmarshal(val, &aux)
+				e.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", e, err)
@@ -72,6 +178,11 @@ func (e *ExtendsStringAdditionalProperties) UnmarshalJSON(data []byte) error {
 func (e ExtendsUnknownAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "name", e.Name)
+	if e.AdditionalProperties != nil {
+		for key, val := range e.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -87,6 +198,16 @@ func (e *ExtendsUnknownAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "name":
 			err = unpopulate(val, "Name", &e.Name)
 			delete(rawMsg, key)
+		default:
+			if e.AdditionalProperties == nil {
+				e.AdditionalProperties = map[string]any{}
+			}
+			if val != nil {
+				var aux any
+				err = json.Unmarshal(val, &aux)
+				e.AdditionalProperties[key] = aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", e, err)
@@ -99,6 +220,11 @@ func (e *ExtendsUnknownAdditionalProperties) UnmarshalJSON(data []byte) error {
 func (i IsFloatAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "id", i.ID)
+	if i.AdditionalProperties != nil {
+		for key, val := range i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -114,6 +240,92 @@ func (i *IsFloatAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "id":
 			err = unpopulate(val, "ID", &i.ID)
 			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = map[string]*float32{}
+			}
+			if val != nil {
+				var aux float32
+				err = json.Unmarshal(val, &aux)
+				i.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IsModelAdditionalProperties.
+func (i IsModelAdditionalProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	if i.AdditionalProperties != nil {
+		for key, val := range i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IsModelAdditionalProperties.
+func (i *IsModelAdditionalProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = map[string]*ModelForRecord{}
+			}
+			if val != nil {
+				var aux ModelForRecord
+				err = json.Unmarshal(val, &aux)
+				i.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IsModelArrayAdditionalProperties.
+func (i IsModelArrayAdditionalProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	if i.AdditionalProperties != nil {
+		for key, val := range i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IsModelArrayAdditionalProperties.
+func (i *IsModelArrayAdditionalProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", i, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = map[string][]*ModelForRecord{}
+			}
+			if val != nil {
+				var aux []*ModelForRecord
+				err = json.Unmarshal(val, &aux)
+				i.AdditionalProperties[key] = aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", i, err)
@@ -126,6 +338,11 @@ func (i *IsFloatAdditionalProperties) UnmarshalJSON(data []byte) error {
 func (i IsStringAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "name", i.Name)
+	if i.AdditionalProperties != nil {
+		for key, val := range i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -141,6 +358,16 @@ func (i *IsStringAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "name":
 			err = unpopulate(val, "Name", &i.Name)
 			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = map[string]*string{}
+			}
+			if val != nil {
+				var aux string
+				err = json.Unmarshal(val, &aux)
+				i.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", i, err)
@@ -153,6 +380,11 @@ func (i *IsStringAdditionalProperties) UnmarshalJSON(data []byte) error {
 func (i IsUnknownAdditionalProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "name", i.Name)
+	if i.AdditionalProperties != nil {
+		for key, val := range i.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
 	return json.Marshal(objectMap)
 }
 
@@ -168,9 +400,46 @@ func (i *IsUnknownAdditionalProperties) UnmarshalJSON(data []byte) error {
 		case "name":
 			err = unpopulate(val, "Name", &i.Name)
 			delete(rawMsg, key)
+		default:
+			if i.AdditionalProperties == nil {
+				i.AdditionalProperties = map[string]any{}
+			}
+			if val != nil {
+				var aux any
+				err = json.Unmarshal(val, &aux)
+				i.AdditionalProperties[key] = aux
+			}
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", i, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ModelForRecord.
+func (m ModelForRecord) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "state", m.State)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ModelForRecord.
+func (m *ModelForRecord) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "state":
+			err = unpopulate(val, "State", &m.State)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil

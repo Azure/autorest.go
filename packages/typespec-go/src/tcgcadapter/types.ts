@@ -44,6 +44,17 @@ export class typeAdapter {
       // TODO: what's the equivalent of x-ms-external?
       const model = this.getModel(modelType);
       modelTypes.push({go: model, tcgc: modelType});
+      // workaround until https://github.com/Azure/typespec-azure/issues/153 is fixed
+      if (modelType.additionalProperties) {
+        const leafType = recursiveGetType(modelType.additionalProperties);
+        if (leafType.kind === 'model') {
+          const model = this.getModel(leafType);
+          if (!values(modelTypes).any(e => { return e.tcgc.name === model.name; })) {
+            modelTypes.push({go: model, tcgc: leafType});
+          }
+        }
+      }
+      // end workaround
     }
   
     // add the synthesized models from TCGC for paged results
@@ -90,6 +101,12 @@ export class typeAdapter {
         }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
+      }
+      if (modelType.tcgc.additionalProperties) {
+        const annotations = new go.ModelFieldAnnotations(false, false, true, false);
+        const addlPropsType = new go.MapType(this.getPossibleType(modelType.tcgc.additionalProperties, false, false), isTypePassedByValue(modelType.tcgc.additionalProperties));
+        const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
+        modelType.go.fields.push(addlProps);
       }
       this.codeModel.models.push(modelType.go);
     }
@@ -677,6 +694,13 @@ function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.DateTimeFo
     case 'unixTimestamp':
       return 'timeUnix';
   }
+}
+
+function recursiveGetType(sdkType: tcgc.SdkType): tcgc.SdkType {
+  if (sdkType.kind !== 'array' && sdkType.kind !== 'dict') {
+    return sdkType;
+  }
+  return recursiveGetType(sdkType.valueType);
 }
 
 function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminator: boolean): string {
