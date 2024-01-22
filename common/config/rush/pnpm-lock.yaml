@@ -219,22 +219,22 @@ importers:
         version: link:../naming.go
       '@azure-tools/typespec-azure-core':
         specifier: '>=0.37.2 <1.0.0'
-        version: 0.37.2(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)
+        version: 0.37.2(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)
       '@azure-tools/typespec-client-generator-core':
         specifier: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz
-        version: '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)'
+        version: '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%25252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)'
       '@typespec/compiler':
-        specifier: '>=0.52.0-dev.14 <1.0.0'
-        version: 0.52.0-dev.14
+        specifier: '>=0.52.0-dev.18 <1.0.0'
+        version: 0.52.0-dev.18
       '@typespec/http':
         specifier: '>=0.51.0 <1.0.0'
-        version: 0.51.0(@typespec/compiler@0.52.0-dev.14)
+        version: 0.51.0(@typespec/compiler@0.52.0-dev.18)
       '@typespec/rest':
         specifier: '>=0.51.0 <1.0.0'
-        version: 0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)
+        version: 0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)
       '@typespec/versioning':
         specifier: '>=0.51.0 <1.0.0'
-        version: 0.51.0(@typespec/compiler@0.52.0-dev.14)
+        version: 0.51.0(@typespec/compiler@0.52.0-dev.18)
       js-yaml:
         specifier: ~4.1.0
         version: 4.1.0
@@ -244,10 +244,10 @@ importers:
     devDependencies:
       '@azure-tools/cadl-ranch-expect':
         specifier: ~0.9.0
-        version: 0.9.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
+        version: 0.9.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
       '@azure-tools/cadl-ranch-specs':
         specifier: ~0.26.2
-        version: 0.26.2(@azure-tools/cadl-ranch-expect@0.9.0)(@azure-tools/typespec-azure-core@0.37.2)(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
+        version: 0.26.2(@azure-tools/cadl-ranch-expect@0.9.0)(@azure-tools/typespec-azure-core@0.37.2)(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
       '@types/jest':
         specifier: ~26.0.24
         version: 26.0.24
@@ -419,10 +419,10 @@ packages:
       '@typespec/compiler': 0.50.0
       '@typespec/http': 0.50.0(@typespec/compiler@0.50.0)
       '@typespec/rest': 0.50.0(@typespec/compiler@0.50.0)(@typespec/http@0.50.0)
-      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.14)
+      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.18)
     dev: true
 
-  /@azure-tools/cadl-ranch-expect@0.9.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0):
+  /@azure-tools/cadl-ranch-expect@0.9.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0):
     resolution: {integrity: sha512-4abMAWBmgygSpxzae+aqFpFpjg5RxqOWyLkNrCoTuCiOvNd72j60LVi6ri8H3CBmDZ8sTxan+lKumw67U+QW5Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -431,13 +431,13 @@ packages:
       '@typespec/rest': ~0.50.0
       '@typespec/versioning': ~0.50.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
-      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.14)
-      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)
-      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.14)
+      '@typespec/compiler': 0.52.0-dev.18
+      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.18)
+      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)
+      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.18)
     dev: true
 
-  /@azure-tools/cadl-ranch-specs@0.26.2(@azure-tools/cadl-ranch-expect@0.9.0)(@azure-tools/typespec-azure-core@0.37.2)(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0):
+  /@azure-tools/cadl-ranch-specs@0.26.2(@azure-tools/cadl-ranch-expect@0.9.0)(@azure-tools/typespec-azure-core@0.37.2)(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0):
     resolution: {integrity: sha512-752/7At1Fs51i4LOLByD6voV4cqf7cgIZuNZkqAROza8mFk+KVqEOTGdRM9JbMspTTUwDM+z5dx6dxN9ARhNnA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -450,12 +450,12 @@ packages:
     dependencies:
       '@azure-tools/cadl-ranch': 0.10.1(@typespec/versioning@0.51.0)
       '@azure-tools/cadl-ranch-api': 0.4.2
-      '@azure-tools/cadl-ranch-expect': 0.9.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
-      '@azure-tools/typespec-azure-core': 0.37.2(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)
-      '@typespec/compiler': 0.52.0-dev.14
-      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.14)
-      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)
-      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.14)
+      '@azure-tools/cadl-ranch-expect': 0.9.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)
+      '@azure-tools/typespec-azure-core': 0.37.2(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)
+      '@typespec/compiler': 0.52.0-dev.18
+      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.18)
+      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)
+      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.18)
     transitivePeerDependencies:
       - '@types/express'
       - encoding
@@ -532,7 +532,7 @@ packages:
     engines: {node: '>=10.12.0'}
     dev: false
 
-  /@azure-tools/typespec-azure-core@0.37.2(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0):
+  /@azure-tools/typespec-azure-core@0.37.2(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0):
     resolution: {integrity: sha512-/503w3jnRnStowsI7etaDynwQcz7ecNqhFKZErBYGbKVZKoEwJIr5d59m52sjJs8cmr2336es6jw2n2TdfotrA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -540,9 +540,9 @@ packages:
       '@typespec/http': ~0.51.0
       '@typespec/rest': ~0.51.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
-      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.14)
-      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)
+      '@typespec/compiler': 0.52.0-dev.18
+      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.18)
+      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)
 
   /@azure/abort-controller@1.1.0:
     resolution: {integrity: sha512-TrRLIoSQVzfAJX9H1JeFjzAoDGcoK1IYX1UImfceTZpsyYfWr09Ss1aHW1y5TrrR3iq6RZLBwJ3E24uwPhwahw==}
@@ -1935,8 +1935,8 @@ packages:
       yargs: 17.7.2
     dev: true
 
-  /@typespec/compiler@0.52.0-dev.14:
-    resolution: {integrity: sha512-YbqUtapO7g7jZptM6AyHee6d5WcWO7e+KxFv7XOxsFQxJrCHCBFUpY9SBV/1OmC2NW0DRRma8eQjSRe10ZIsQQ==}
+  /@typespec/compiler@0.52.0-dev.18:
+    resolution: {integrity: sha512-9nd3y4etqsfFTEvBRT16/XsL+Q362iMo7G5ulqmEVX262d5N3NEMpGV8bnBGDGZ+CJdQnjytlg71RKVu5dPpCQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
@@ -1963,13 +1963,13 @@ packages:
       '@typespec/compiler': 0.50.0
     dev: true
 
-  /@typespec/http@0.51.0(@typespec/compiler@0.52.0-dev.14):
+  /@typespec/http@0.51.0(@typespec/compiler@0.52.0-dev.18):
     resolution: {integrity: sha512-9YtcIPzUP0ELf/ZFBfhgLCPIyERn+DrYJTtEtaWkcO+qEkdFxO5eahwgh1FPuS6iJrW6pUPBuAfGDOAH1+N/PQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@typespec/compiler': ~0.51.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
+      '@typespec/compiler': 0.52.0-dev.18
 
   /@typespec/rest@0.50.0(@typespec/compiler@0.50.0)(@typespec/http@0.50.0):
     resolution: {integrity: sha512-nkFfPh4z9z2a46f6HgjuZM7e2+k5bgPDshuwQjjo82mEuSqrMUaeaUs5nx63L2FmacvIvhAvRrd3f8kMpBD5vw==}
@@ -1982,23 +1982,23 @@ packages:
       '@typespec/http': 0.50.0(@typespec/compiler@0.50.0)
     dev: true
 
-  /@typespec/rest@0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0):
+  /@typespec/rest@0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0):
     resolution: {integrity: sha512-swigbWjdewmKg+DtHj/a2r8jyX810JYkcIcVHkqdnkCq6TqlyNP0VSSUM39BmXmkCHMUumlSm2cOMieESRfNlg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@typespec/compiler': ~0.51.0
       '@typespec/http': ~0.51.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
-      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.14)
+      '@typespec/compiler': 0.52.0-dev.18
+      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.18)
 
-  /@typespec/versioning@0.51.0(@typespec/compiler@0.52.0-dev.14):
+  /@typespec/versioning@0.51.0(@typespec/compiler@0.52.0-dev.18):
     resolution: {integrity: sha512-eja0epBhtmJRO+Jq0Zdb2eRcSTsU+uq/X0xgD5SM+KB97nxFtaRkOJYd59QBN+XysvkcfVRrLOGJjzcpNMa0cw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@typespec/compiler': ~0.51.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
+      '@typespec/compiler': 0.52.0-dev.18
 
   /a-sync-waterfall@1.0.1:
     resolution: {integrity: sha512-RYTOHHdWipFUliRFMCS4X2Yn2X8M87V/OpSqWzKKOGhzqyUxzyVmhHDH9sAvG+ZuQf/TAOFsLCpMw09I1ufUnA==}
@@ -8923,9 +8923,9 @@ packages:
       commander: 9.5.0
     dev: false
 
-  '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)':
+  '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%25252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)(@typespec/rest@0.51.0)(@typespec/versioning@0.51.0)':
     resolution: {tarball: https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz}
-    id: '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz'
+    id: '@artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQxMDI3MS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%25252525252525252Fazure-tools-typespec-client-generator-core-0.38.0-pr-6.20240116.7.tgz'
     name: '@azure-tools/typespec-client-generator-core'
     version: 0.38.0-pr-6.20240116.7
     engines: {node: '>=18.0.0'}
@@ -8935,10 +8935,10 @@ packages:
       '@typespec/rest': ~0.51.0
       '@typespec/versioning': ~0.51.0
     dependencies:
-      '@typespec/compiler': 0.52.0-dev.14
-      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.14)
-      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.14)(@typespec/http@0.51.0)
-      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.14)
+      '@typespec/compiler': 0.52.0-dev.18
+      '@typespec/http': 0.51.0(@typespec/compiler@0.52.0-dev.18)
+      '@typespec/rest': 0.51.0(@typespec/compiler@0.52.0-dev.18)(@typespec/http@0.51.0)
+      '@typespec/versioning': 0.51.0(@typespec/compiler@0.52.0-dev.18)
       change-case: 5.3.0
       pluralize: 8.0.0
     dev: false
