@@ -200,8 +200,8 @@ func (client *AuthenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("service", service)
 	reqQP.Set("scope", scope)
+	reqQP.Set("service", service)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

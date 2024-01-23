@@ -352,24 +352,24 @@ func (client *JobsClient) listCreateRequest(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.Skip != nil {
 		reqQP.Set("$skip", *options.Skip)
 	}
+	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.JobType != nil {
 		reqQP.Set("jobType", *options.JobType)
-	}
-	if options != nil && options.Tag != nil {
-		reqQP.Set("tag", *options.Tag)
 	}
 	if options != nil && options.ListViewType != nil {
 		reqQP.Set("listViewType", string(*options.ListViewType))
 	}
+	if options != nil && options.ScheduleID != nil {
+		reqQP.Set("scheduleId", *options.ScheduleID)
+	}
 	if options != nil && options.Scheduled != nil {
 		reqQP.Set("scheduled", strconv.FormatBool(*options.Scheduled))
 	}
-	if options != nil && options.ScheduleID != nil {
-		reqQP.Set("scheduleId", *options.ScheduleID)
+	if options != nil && options.Tag != nil {
+		reqQP.Set("tag", *options.Tag)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

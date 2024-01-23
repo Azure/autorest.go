@@ -109,11 +109,11 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if options != nil && options.Parameter != nil {
-		reqQP.Set("parameter", *options.Parameter)
-	}
 	if options != nil && options.NewParameter != nil {
 		reqQP.Set("new-parameter", *options.NewParameter)
+	}
+	if options != nil && options.Parameter != nil {
+		reqQP.Set("parameter", *options.Parameter)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
@@ -147,10 +147,10 @@ func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("parameter", parameter)
 	if options != nil && options.NewParameter != nil {
 		reqQP.Set("new-parameter", *options.NewParameter)
 	}
+	reqQP.Set("parameter", parameter)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

@@ -285,11 +285,11 @@ func (client *WorkspaceConnectionsClient) listCreateRequest(ctx context.Context,
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2022-02-01-preview")
-	if options != nil && options.Target != nil {
-		reqQP.Set("target", *options.Target)
-	}
 	if options != nil && options.Category != nil {
 		reqQP.Set("category", *options.Category)
+	}
+	if options != nil && options.Target != nil {
+		reqQP.Set("target", *options.Target)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

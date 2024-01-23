@@ -57,10 +57,10 @@ func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-12-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.ClientRequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, gitHubAccessTokenRequest); err != nil {
 		return nil, err
 	}

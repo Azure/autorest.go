@@ -83,18 +83,18 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2019-10-01")
-	if options != nil && options.StartDate != nil {
-		reqQP.Set("startDate", *options.StartDate)
-	}
-	if options != nil && options.EndDate != nil {
-		reqQP.Set("endDate", *options.EndDate)
+	if options != nil && options.Apply != nil {
+		reqQP.Set("$apply", *options.Apply)
 	}
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	if options != nil && options.Apply != nil {
-		reqQP.Set("$apply", *options.Apply)
+	reqQP.Set("api-version", "2019-10-01")
+	if options != nil && options.EndDate != nil {
+		reqQP.Set("endDate", *options.EndDate)
+	}
+	if options != nil && options.StartDate != nil {
+		reqQP.Set("startDate", *options.StartDate)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
