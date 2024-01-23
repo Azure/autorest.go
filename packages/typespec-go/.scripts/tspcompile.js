@@ -27,10 +27,10 @@ const cadlRanch = {
   //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
   //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
   //'traitsgroup': ['azure/core/traits'],            // requires union support
-  //'defaultgroup': ['client/structure/default'],             // https://github.com/microsoft/typespec/issues/2783
-  //'multiclientgroup': ['client/structure/multi-client'],    // https://github.com/microsoft/typespec/issues/2783
-  //'renamedopgroup': ['client/structure/renamed-operation'], // https://github.com/microsoft/typespec/issues/2783
-  //'twoopgroup': ['client/structure/two-operation-group'],   // https://github.com/microsoft/typespec/issues/2783
+  'defaultgroup': ['client/structure/default'],
+  'multiclientgroup': ['client/structure/multi-client'],
+  'renamedopgroup': ['client/structure/renamed-operation'],
+  'twoopgroup': ['client/structure/two-operation-group'],
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
