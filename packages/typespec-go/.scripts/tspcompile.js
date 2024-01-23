@@ -62,8 +62,8 @@ const cadlRanch = {
   'addlpropsgroup': ['type/property/additional-properties'],
   'nullablegroup': ['type/property/nullable'],
   //'optionalitygroup': ['type/property/optionality'], // requires union support
-  //'valuetypesgroup': ['type/property/value-types'], // requires decimal support
-  //'scalargroup': ['type/scalar'],                   // requires decimal support
+  //'valuetypesgroup': ['type/property/value-types'], // requires decimal/union support
+  'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support
 };
 
