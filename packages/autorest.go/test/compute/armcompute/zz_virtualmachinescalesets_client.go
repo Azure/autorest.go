@@ -340,10 +340,10 @@ func (client *VirtualMachineScaleSetsClient) deleteCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-11-01")
 	if options != nil && options.ForceDeletion != nil {
 		reqQP.Set("forceDeletion", strconv.FormatBool(*options.ForceDeletion))
 	}
-	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -420,10 +420,10 @@ func (client *VirtualMachineScaleSetsClient) deleteInstancesCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-11-01")
 	if options != nil && options.ForceDeletion != nil {
 		reqQP.Set("forceDeletion", strconv.FormatBool(*options.ForceDeletion))
 	}
-	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, vmInstanceIDs); err != nil {
@@ -485,12 +485,12 @@ func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformU
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-11-01")
+	if options != nil && options.PlacementGroupID != nil {
+		reqQP.Set("placementGroupId", *options.PlacementGroupID)
+	}
 	reqQP.Set("platformUpdateDomain", strconv.FormatInt(int64(platformUpdateDomain), 10))
 	if options != nil && options.Zone != nil {
 		reqQP.Set("zone", *options.Zone)
-	}
-	if options != nil && options.PlacementGroupID != nil {
-		reqQP.Set("placementGroupId", *options.PlacementGroupID)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -556,10 +556,10 @@ func (client *VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-11-01")
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", string(*options.Expand))
 	}
+	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1107,10 +1107,10 @@ func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-11-01")
 	if options != nil && options.SkipShutdown != nil {
 		reqQP.Set("skipShutdown", strconv.FormatBool(*options.SkipShutdown))
 	}
-	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.VMInstanceIDs != nil {

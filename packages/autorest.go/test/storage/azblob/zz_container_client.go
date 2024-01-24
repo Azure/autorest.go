@@ -81,6 +81,16 @@ func (client *ContainerClient) acquireLeaseCreateRequest(ctx context.Context, co
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
+	}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
 	req.Raw().Header["x-ms-lease-action"] = []string{"acquire"}
 	if options != nil && options.Duration != nil {
 		req.Raw().Header["x-ms-lease-duration"] = []string{strconv.FormatInt(int64(*options.Duration), 10)}
@@ -88,17 +98,7 @@ func (client *ContainerClient) acquireLeaseCreateRequest(ctx context.Context, co
 	if options != nil && options.ProposedLeaseID != nil {
 		req.Raw().Header["x-ms-proposed-lease-id"] = []string{*options.ProposedLeaseID}
 	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
-	}
 	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -185,21 +185,21 @@ func (client *ContainerClient) breakLeaseCreateRequest(ctx context.Context, cont
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-lease-action"] = []string{"break"}
-	if options != nil && options.BreakPeriod != nil {
-		req.Raw().Header["x-ms-lease-break-period"] = []string{strconv.FormatInt(int64(*options.BreakPeriod), 10)}
-	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-lease-action"] = []string{"break"}
+	if options != nil && options.BreakPeriod != nil {
+		req.Raw().Header["x-ms-lease-break-period"] = []string{strconv.FormatInt(int64(*options.BreakPeriod), 10)}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -295,20 +295,20 @@ func (client *ContainerClient) changeLeaseCreateRequest(ctx context.Context, con
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-lease-action"] = []string{"change"}
-	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
-	req.Raw().Header["x-ms-proposed-lease-id"] = []string{proposedLeaseID}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-lease-action"] = []string{"change"}
+	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
+	req.Raw().Header["x-ms-proposed-lease-id"] = []string{proposedLeaseID}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -393,17 +393,10 @@ func (client *ContainerClient) createCreateRequest(ctx context.Context, containe
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	if options != nil && options.Metadata != nil {
-		for k, v := range options.Metadata {
-			if v != nil {
-				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
-			}
-		}
-	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.Access != nil {
 		req.Raw().Header["x-ms-blob-public-access"] = []string{string(*options.Access)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
@@ -413,7 +406,14 @@ func (client *ContainerClient) createCreateRequest(ctx context.Context, containe
 	if containerCpkScopeInfo != nil && containerCpkScopeInfo.PreventEncryptionScopeOverride != nil {
 		req.Raw().Header["x-ms-deny-encryption-scope-override"] = []string{strconv.FormatBool(*containerCpkScopeInfo.PreventEncryptionScopeOverride)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if options != nil && options.Metadata != nil {
+		for k, v := range options.Metadata {
+			if v != nil {
+				req.Raw().Header["x-ms-meta-"+k] = []string{*v}
+			}
+		}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -496,20 +496,20 @@ func (client *ContainerClient) deleteCreateRequest(ctx context.Context, containe
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
-	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -576,13 +576,9 @@ func (client *ContainerClient) filterBlobsCreateRequest(ctx context.Context, con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if options != nil && options.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
-	}
-	if options != nil && options.Where != nil {
-		reqQP.Set("where", *options.Where)
+	if options != nil && options.Include != nil {
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
@@ -590,15 +586,19 @@ func (client *ContainerClient) filterBlobsCreateRequest(ctx context.Context, con
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	reqQP.Set("restype", string(restype))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	if options != nil && options.Where != nil {
+		reqQP.Set("where", *options.Where)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -670,20 +670,20 @@ func (client *ContainerClient) getAccessPolicyCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -766,11 +766,11 @@ func (client *ContainerClient) getAccountInfoCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -848,14 +848,14 @@ func (client *ContainerClient) getPropertiesCreateRequest(ctx context.Context, c
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -984,10 +984,9 @@ func (client *ContainerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if options != nil && options.Prefix != nil {
-		reqQP.Set("prefix", *options.Prefix)
+	if options != nil && options.Include != nil {
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
@@ -995,18 +994,19 @@ func (client *ContainerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	if options != nil && options.Prefix != nil {
+		reqQP.Set("prefix", *options.Prefix)
 	}
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1083,30 +1083,30 @@ func (client *ContainerClient) listBlobHierarchySegmentCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if options != nil && options.Prefix != nil {
-		reqQP.Set("prefix", *options.Prefix)
-	}
 	reqQP.Set("delimiter", delimiter)
+	if options != nil && options.Include != nil {
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	}
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
 	}
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	if options != nil && options.Prefix != nil {
+		reqQP.Set("prefix", *options.Prefix)
 	}
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1187,19 +1187,19 @@ func (client *ContainerClient) releaseLeaseCreateRequest(ctx context.Context, co
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-lease-action"] = []string{"release"}
-	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-lease-action"] = []string{"release"}
+	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1276,13 +1276,13 @@ func (client *ContainerClient) renameCreateRequest(ctx context.Context, containe
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
@@ -1290,7 +1290,7 @@ func (client *ContainerClient) renameCreateRequest(ctx context.Context, containe
 	if options != nil && options.SourceLeaseID != nil {
 		req.Raw().Header["x-ms-source-lease-id"] = []string{*options.SourceLeaseID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1365,19 +1365,19 @@ func (client *ContainerClient) renewLeaseCreateRequest(ctx context.Context, cont
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-lease-action"] = []string{"renew"}
-	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-lease-action"] = []string{"renew"}
+	req.Raw().Header["x-ms-lease-id"] = []string{leaseID}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1456,13 +1456,13 @@ func (client *ContainerClient) restoreCreateRequest(ctx context.Context, contain
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
@@ -1472,7 +1472,7 @@ func (client *ContainerClient) restoreCreateRequest(ctx context.Context, contain
 	if options != nil && options.DeletedContainerVersion != nil {
 		req.Raw().Header["x-ms-deleted-container-version"] = []string{*options.DeletedContainerVersion}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -1542,29 +1542,29 @@ func (client *ContainerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
-	}
-	if options != nil && options.Access != nil {
-		req.Raw().Header["x-ms-blob-public-access"] = []string{string(*options.Access)}
-	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
 		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	if options != nil && options.Access != nil {
+		req.Raw().Header["x-ms-blob-public-access"] = []string{string(*options.Access)}
+	}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	type wrapper struct {
 		XMLName      xml.Name             `xml:"SignedIdentifiers"`
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
@@ -1652,12 +1652,19 @@ func (client *ContainerClient) setMetadataCreateRequest(ctx context.Context, con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
+	}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
@@ -1668,14 +1675,7 @@ func (client *ContainerClient) setMetadataCreateRequest(ctx context.Context, con
 			}
 		}
 	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
-	}
 	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -1755,20 +1755,20 @@ func (client *ContainerClient) submitBatchCreateRequest(ctx context.Context, con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	runtime.SkipBodyDownload(req)
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
 	req.Raw().Header["Content-Type"] = []string{multipartContentType}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if err := req.SetBody(body, "application/xml"); err != nil {
 		return nil, err
 	}

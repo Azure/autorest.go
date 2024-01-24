@@ -96,8 +96,8 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("ipAddress", ipAddress)
 	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("ipAddress", ipAddress)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -319,10 +319,10 @@ func (client *VirtualNetworksClient) getCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-09-01")
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", *options.Expand)
 	}
+	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -539,13 +539,13 @@ func (client *VirtualNetworksClient) listDdosProtectionStatusCreateRequest(ctx c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if options != nil && options.Top != nil {
-		reqQP.Set("top", strconv.FormatInt(int64(*options.Top), 10))
-	}
+	reqQP.Set("api-version", "2022-09-01")
 	if options != nil && options.SkipToken != nil {
 		reqQP.Set("skipToken", *options.SkipToken)
 	}
-	reqQP.Set("api-version", "2022-09-01")
+	if options != nil && options.Top != nil {
+		reqQP.Set("top", strconv.FormatInt(int64(*options.Top), 10))
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -81,37 +81,37 @@ func (client *Client) createCreateRequest(ctx context.Context, headerBools []boo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if options != nil && options.BoolHeaderEnum1 != nil {
+		reqQP.Set("boolHeaderEnum", fmt.Sprintf("%v", *options.BoolHeaderEnum1))
+	}
 	reqQP.Set("client-version", client.clientGroup.ClientVersion)
 	creatorIDDefault := int32(123)
 	if options != nil && options.CreatorID != nil {
 		creatorIDDefault = *options.CreatorID
 	}
 	reqQP.Set("creator-id", strconv.FormatInt(int64(creatorIDDefault), 10))
-	reqQP.Set("stringQuery", stringQuery)
-	if options != nil && options.BoolHeaderEnum1 != nil {
-		reqQP.Set("boolHeaderEnum", fmt.Sprintf("%v", *options.BoolHeaderEnum1))
-	}
-	reqQP.Set("unixTimeQuery", timeUnix(unixTimeQuery).String())
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
 		}
 	}
 	reqQP.Set("queryEnum", string(queryEnum))
+	reqQP.Set("stringQuery", stringQuery)
+	reqQP.Set("unixTimeQuery", timeUnix(unixTimeQuery).String())
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientGroup.ClientIndex), 10)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	assignedIDDefault := float32(8989)
 	if options != nil && options.AssignedID != nil {
 		assignedIDDefault = *options.AssignedID
 	}
 	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
-	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
 	req.Raw().Header["boolHeaderEnum"] = []string{fmt.Sprintf("%v", boolHeaderEnum)}
+	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientGroup.ClientIndex), 10)}
+	req.Raw().Header["headerBools"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerBools), "[]")), ",")}
+	req.Raw().Header["headerEnum"] = []string{string(headerEnum)}
 	if options != nil && options.OptionalUnixTime != nil {
 		req.Raw().Header["optionalUnixTime"] = []string{timeUnix(*options.OptionalUnixTime).String()}
 	}
-	req.Raw().Header["headerEnum"] = []string{string(headerEnum)}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -164,24 +164,24 @@ func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts [
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
-	for _, qv := range explodedGroup.ExplodedStuff {
-		reqQP.Add("explodedStuff", fmt.Sprintf("%v", qv))
-	}
 	for _, qv := range explodedStringStuff {
 		reqQP.Add("explodedStringStuff", qv)
+	}
+	for _, qv := range explodedGroup.ExplodedStuff {
+		reqQP.Add("explodedStuff", fmt.Sprintf("%v", qv))
 	}
 	if options != nil && options.OptionalExplodedStuff != nil {
 		for _, qv := range options.OptionalExplodedStuff {
 			reqQP.Add("optionalExplodedStuff", qv)
 		}
 	}
+	reqQP.Set("queryCounts", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(queryCounts), "[]")), ","))
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	req.Raw().Header["headerCounts"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerCounts), "[]")), ",")}
 	req.Raw().Header["headerStrings"] = []string{strings.Join(someGroup.HeaderStrings, ",")}
-	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
 	req.Raw().Header["headerTime"] = []string{timeRFC3339(headerTime).String()}
-	req.Raw().Header["Accept"] = []string{"text/powershell"}
+	req.Raw().Header["numericHeader"] = []string{strconv.FormatInt(int64(numericHeader), 10)}
 	if err := runtime.MarshalAsJSON(req, props); err != nil {
 		return nil, err
 	}
@@ -253,23 +253,23 @@ func (client *Client) listCreateRequest(ctx context.Context, headerEnums []IntEn
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("client-version", client.clientGroup.ClientVersion)
-	if options != nil && options.QueryEnums != nil {
-		for _, qv := range options.QueryEnums {
-			reqQP.Add("queryEnums", fmt.Sprintf("%d", qv))
-		}
-	}
-	reqQP.Set("queryEnum", fmt.Sprintf("%v", queryEnum))
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))
 		}
 	}
+	reqQP.Set("queryEnum", fmt.Sprintf("%v", queryEnum))
+	if options != nil && options.QueryEnums != nil {
+		for _, qv := range options.QueryEnums {
+			reqQP.Add("queryEnums", fmt.Sprintf("%d", qv))
+		}
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["headerEnums"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerEnums), "[]")), ",")}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.HeaderEnum != nil {
 		req.Raw().Header["headerEnum"] = []string{fmt.Sprintf("%v", *options.HeaderEnum)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["headerEnums"] = []string{strings.Join(strings.Fields(strings.Trim(fmt.Sprint(headerEnums), "[]")), ",")}
 	return req, nil
 }
 
@@ -502,24 +502,24 @@ func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Interval != nil {
+		reqQP.Set("interval", *options.Interval)
+	}
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalVersion != nil {
 		reqQP.Set("optional-version", *client.clientOptionalGroup.OptionalVersion)
 	}
 	reqQP.Set("things", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(things), "[]")), ","))
-	if options != nil && options.Interval != nil {
-		reqQP.Set("interval", *options.Interval)
-	}
 	if options != nil && options.Unique != nil {
 		reqQP.Set("unique", *options.Unique)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if client.clientOptionalGroup != nil && client.clientOptionalGroup.OptionalIndex != nil {
 		req.Raw().Header["optional-index"] = []string{strconv.FormatInt(int64(*client.clientOptionalGroup.OptionalIndex), 10)}
 	}
 	if client.optionalString != nil {
 		req.Raw().Header["optional-string"] = []string{*client.optionalString}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, polymorphicParam); err != nil {
 		return nil, err
 	}
@@ -554,7 +554,7 @@ func (client *Client) listWithSharedNextCreateRequest(ctx context.Context, nextL
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["nextLink"] = []string{nextLink}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["nextLink"] = []string{nextLink}
 	return req, nil
 }

@@ -79,14 +79,12 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if options != nil && options.StartDate != nil {
-		reqQP.Set("startDate", *options.StartDate)
-	}
-	if options != nil && options.EndDate != nil {
-		reqQP.Set("endDate", *options.EndDate)
-	}
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
+	}
+	reqQP.Set("api-version", "2019-10-01")
+	if options != nil && options.EndDate != nil {
+		reqQP.Set("endDate", *options.EndDate)
 	}
 	if options != nil && options.ReservationID != nil {
 		reqQP.Set("reservationId", *options.ReservationID)
@@ -94,7 +92,9 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 	if options != nil && options.ReservationOrderID != nil {
 		reqQP.Set("reservationOrderId", *options.ReservationOrderID)
 	}
-	reqQP.Set("api-version", "2019-10-01")
+	if options != nil && options.StartDate != nil {
+		reqQP.Set("startDate", *options.StartDate)
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

@@ -319,10 +319,10 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.QueryParameter != nil {
 		req.Raw().Header["queryParameter"] = []string{*options.QueryParameter}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

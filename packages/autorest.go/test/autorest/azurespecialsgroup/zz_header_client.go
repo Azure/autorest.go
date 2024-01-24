@@ -58,8 +58,8 @@ func (client *HeaderClient) customNamedRequestIDCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["foo-client-request-id"] = []string{fooClientRequestID}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["foo-client-request-id"] = []string{fooClientRequestID}
 	return req, nil
 }
 
@@ -107,8 +107,8 @@ func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["foo-client-request-id"] = []string{fooClientRequestID}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["foo-client-request-id"] = []string{fooClientRequestID}
 	return req, nil
 }
 
@@ -159,8 +159,8 @@ func (client *HeaderClient) customNamedRequestIDParamGroupingCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["foo-client-request-id"] = []string{headerClientCustomNamedRequestIDParamGroupingParameters.FooClientRequestID}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["foo-client-request-id"] = []string{headerClientCustomNamedRequestIDParamGroupingParameters.FooClientRequestID}
 	return req, nil
 }
 

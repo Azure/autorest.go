@@ -303,16 +303,16 @@ func (client *EnvironmentVersionsClient) listCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.OrderBy != nil {
 		reqQP.Set("$orderBy", *options.OrderBy)
-	}
-	if options != nil && options.Top != nil {
-		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
 	if options != nil && options.Skip != nil {
 		reqQP.Set("$skip", *options.Skip)
 	}
+	if options != nil && options.Top != nil {
+		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+	}
+	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.ListViewType != nil {
 		reqQP.Set("listViewType", string(*options.ListViewType))
 	}

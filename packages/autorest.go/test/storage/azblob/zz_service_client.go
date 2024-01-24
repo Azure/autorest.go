@@ -65,11 +65,8 @@ func (client *ServiceClient) filterBlobsCreateRequest(ctx context.Context, comp 
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
-	if options != nil && options.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
-	}
-	if options != nil && options.Where != nil {
-		reqQP.Set("where", *options.Where)
+	if options != nil && options.Include != nil {
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
@@ -77,15 +74,18 @@ func (client *ServiceClient) filterBlobsCreateRequest(ctx context.Context, comp 
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	if options != nil && options.Where != nil {
+		reqQP.Set("where", *options.Where)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -148,11 +148,11 @@ func (client *ServiceClient) getAccountInfoCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -226,17 +226,17 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -293,17 +293,17 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -369,17 +369,17 @@ func (client *ServiceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if err := runtime.MarshalAsXML(req, keyInfo); err != nil {
 		return nil, err
 	}
@@ -448,8 +448,8 @@ func (client *ServiceClient) listContainersSegmentCreateRequest(ctx context.Cont
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
-	if options != nil && options.Prefix != nil {
-		reqQP.Set("prefix", *options.Prefix)
+	if options != nil && options.Include != nil {
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Marker != nil {
 		reqQP.Set("marker", *options.Marker)
@@ -457,18 +457,18 @@ func (client *ServiceClient) listContainersSegmentCreateRequest(ctx context.Cont
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
+	if options != nil && options.Prefix != nil {
+		reqQP.Set("prefix", *options.Prefix)
 	}
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	return req, nil
 }
 
@@ -526,17 +526,17 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
+	reqQP.Set("restype", string(restype))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if err := runtime.MarshalAsXML(req, storageServiceProperties); err != nil {
 		return nil, err
 	}
@@ -601,13 +601,13 @@ func (client *ServiceClient) submitBatchCreateRequest(ctx context.Context, comp 
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	runtime.SkipBodyDownload(req)
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
 	req.Raw().Header["Content-Type"] = []string{multipartContentType}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if err := req.SetBody(body, "application/xml"); err != nil {
 		return nil, err
 	}

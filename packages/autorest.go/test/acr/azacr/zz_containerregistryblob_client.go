@@ -180,8 +180,8 @@ func (client *ContainerRegistryBlobClient) checkChunkExistsCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Range"] = []string{rangeParam}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Range"] = []string{rangeParam}
 	return req, nil
 }
 
@@ -440,8 +440,8 @@ func (client *ContainerRegistryBlobClient) getChunkCreateRequest(ctx context.Con
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header["Range"] = []string{rangeParam}
 	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
+	req.Raw().Header["Range"] = []string{rangeParam}
 	return req, nil
 }
 

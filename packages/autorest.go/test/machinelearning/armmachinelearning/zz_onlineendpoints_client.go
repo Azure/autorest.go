@@ -373,27 +373,27 @@ func (client *OnlineEndpointsClient) listCreateRequest(ctx context.Context, reso
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Skip != nil {
+		reqQP.Set("$skip", *options.Skip)
+	}
 	reqQP.Set("api-version", "2022-02-01-preview")
-	if options != nil && options.Name != nil {
-		reqQP.Set("name", *options.Name)
+	if options != nil && options.ComputeType != nil {
+		reqQP.Set("computeType", string(*options.ComputeType))
 	}
 	if options != nil && options.Count != nil {
 		reqQP.Set("count", strconv.FormatInt(int64(*options.Count), 10))
 	}
-	if options != nil && options.ComputeType != nil {
-		reqQP.Set("computeType", string(*options.ComputeType))
+	if options != nil && options.Name != nil {
+		reqQP.Set("name", *options.Name)
 	}
-	if options != nil && options.Skip != nil {
-		reqQP.Set("$skip", *options.Skip)
-	}
-	if options != nil && options.Tags != nil {
-		reqQP.Set("tags", *options.Tags)
+	if options != nil && options.OrderBy != nil {
+		reqQP.Set("orderBy", string(*options.OrderBy))
 	}
 	if options != nil && options.Properties != nil {
 		reqQP.Set("properties", *options.Properties)
 	}
-	if options != nil && options.OrderBy != nil {
-		reqQP.Set("orderBy", string(*options.OrderBy))
+	if options != nil && options.Tags != nil {
+		reqQP.Set("tags", *options.Tags)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

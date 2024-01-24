@@ -57,8 +57,8 @@ func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, res
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", client.apiVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, resource); err != nil {
 		return nil, err
 	}
@@ -106,8 +106,8 @@ func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, reso
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", client.apiVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
 	if err := runtime.MarshalAsJSON(req, resource); err != nil {
 		return nil, err
 	}
@@ -278,11 +278,13 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", client.apiVersion)
-	if options != nil && options.Top != nil {
-		reqQP.Set("top", strconv.FormatInt(int64(*options.Top), 10))
+	if options != nil && options.Expand != nil {
+		for _, qv := range options.Expand {
+			reqQP.Add("expand", qv)
+		}
 	}
-	if options != nil && options.Skip != nil {
-		reqQP.Set("skip", strconv.FormatInt(int64(*options.Skip), 10))
+	if options != nil && options.Filter != nil {
+		reqQP.Set("filter", *options.Filter)
 	}
 	if options != nil && options.Maxpagesize != nil {
 		reqQP.Set("maxpagesize", strconv.FormatInt(int64(*options.Maxpagesize), 10))
@@ -292,18 +294,16 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 			reqQP.Add("orderby", qv)
 		}
 	}
-	if options != nil && options.Filter != nil {
-		reqQP.Set("filter", *options.Filter)
-	}
 	if options != nil && options.SelectParam != nil {
 		for _, qv := range options.SelectParam {
 			reqQP.Add("select", qv)
 		}
 	}
-	if options != nil && options.Expand != nil {
-		for _, qv := range options.Expand {
-			reqQP.Add("expand", qv)
-		}
+	if options != nil && options.Skip != nil {
+		reqQP.Set("skip", strconv.FormatInt(int64(*options.Skip), 10))
+	}
+	if options != nil && options.Top != nil {
+		reqQP.Set("top", strconv.FormatInt(int64(*options.Top), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -440,13 +440,13 @@ func (client *BasicClient) listWithParametersCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
 	if options != nil && options.Another != nil {
 		reqQP.Set("another", string(*options.Another))
 	}
+	reqQP.Set("api-version", client.apiVersion)
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, bodyInput); err != nil {
 		return nil, err
 	}

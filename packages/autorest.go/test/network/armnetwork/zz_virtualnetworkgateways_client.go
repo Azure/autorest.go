@@ -590,8 +590,8 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("peer", peer)
 	reqQP.Set("api-version", "2022-09-01")
+	reqQP.Set("peer", peer)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -668,10 +668,10 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusCreateRequest(ctx co
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2022-09-01")
 	if options != nil && options.Peer != nil {
 		reqQP.Set("peer", *options.Peer)
 	}
-	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -1191,10 +1191,10 @@ func (client *VirtualNetworkGatewaysClient) resetCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2022-09-01")
 	if options != nil && options.GatewayVip != nil {
 		reqQP.Set("gatewayVip", *options.GatewayVip)
 	}
-	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

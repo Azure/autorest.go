@@ -342,10 +342,10 @@ func (client *ContainerRegistryClient) getManifestCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Accept != nil {
 		req.Raw().Header["accept"] = []string{*options.Accept}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -460,6 +460,7 @@ func (client *ContainerRegistryClient) getManifestsCreateRequest(ctx context.Con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-07-01")
 	if options != nil && options.Last != nil {
 		reqQP.Set("last", *options.Last)
 	}
@@ -469,7 +470,6 @@ func (client *ContainerRegistryClient) getManifestsCreateRequest(ctx context.Con
 	if options != nil && options.Orderby != nil {
 		reqQP.Set("orderby", *options.Orderby)
 	}
-	reqQP.Set("api-version", "2021-07-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -579,13 +579,13 @@ func (client *ContainerRegistryClient) getRepositoriesCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-07-01")
 	if options != nil && options.Last != nil {
 		reqQP.Set("last", *options.Last)
 	}
 	if options != nil && options.N != nil {
 		reqQP.Set("n", strconv.FormatInt(int64(*options.N), 10))
 	}
-	reqQP.Set("api-version", "2021-07-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -705,6 +705,10 @@ func (client *ContainerRegistryClient) getTagsCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-07-01")
+	if options != nil && options.Digest != nil {
+		reqQP.Set("digest", *options.Digest)
+	}
 	if options != nil && options.Last != nil {
 		reqQP.Set("last", *options.Last)
 	}
@@ -714,10 +718,6 @@ func (client *ContainerRegistryClient) getTagsCreateRequest(ctx context.Context,
 	if options != nil && options.Orderby != nil {
 		reqQP.Set("orderby", *options.Orderby)
 	}
-	if options != nil && options.Digest != nil {
-		reqQP.Set("digest", *options.Digest)
-	}
-	reqQP.Set("api-version", "2021-07-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

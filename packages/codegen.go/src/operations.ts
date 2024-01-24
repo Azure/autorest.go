@@ -600,7 +600,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
   // emit encoded params first
   if (encodedParams.length > 0) {
     text += '\treqQP := req.Raw().URL.Query()\n';
-    for (const qp of values(encodedParams)) {
+    for (const qp of values(encodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); }))) {
       let setter: string;
       if (go.isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -639,7 +639,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     } else {
       text += '\tunencodedParams := []string{}\n';
     }
-    for (const qp of values(unencodedParams)) {
+    for (const qp of values(unencodedParams.sort((a: go.QueryParameter, b: go.QueryParameter) => { return helpers.sortAscending(a.queryParameter, b.queryParameter); }))) {
       let setter: string;
       if (go.isQueryCollectionParameter(qp) && qp.collectionFormat === 'multi') {
         setter = `\tfor _, qv := range ${helpers.getParamName(qp)} {\n`;
@@ -674,11 +674,13 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       return `${prefix}req.Raw().Header["${headerParam.headerName}"] = []string{${helpers.formatParamValue(headerParam, imports)}}\n`;
     }
   };
+  const headerParams = new Array<go.HeaderParameter>();
   for (const param of values(method.parameters)) {
-    if (!go.isHeaderParameter(param)) {
-      continue;
+    if (go.isHeaderParameter(param)) {
+      headerParams.push(param);
     }
-
+  }
+  for (const param of headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => { return helpers.sortAscending(a.headerName, b.headerName);})) {
     if (helpers.isRequiredParameter(param) || helpers.isLiteralParameter(param) || go.isClientSideDefault(param.paramType)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {

@@ -84,11 +84,11 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-10-01")
-	reqQP.Set("scope", string(scope))
-	reqQP.Set("region", region)
-	reqQP.Set("term", string(term))
 	reqQP.Set("lookBackPeriod", string(lookBackPeriod))
 	reqQP.Set("product", product)
+	reqQP.Set("region", region)
+	reqQP.Set("scope", string(scope))
+	reqQP.Set("term", string(term))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

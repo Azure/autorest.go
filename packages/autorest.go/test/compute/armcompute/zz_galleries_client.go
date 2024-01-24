@@ -249,13 +249,13 @@ func (client *GalleriesClient) getCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2021-10-01")
-	if options != nil && options.Select != nil {
-		reqQP.Set("$select", string(*options.Select))
-	}
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", string(*options.Expand))
 	}
+	if options != nil && options.Select != nil {
+		reqQP.Set("$select", string(*options.Select))
+	}
+	reqQP.Set("api-version", "2021-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

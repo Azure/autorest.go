@@ -301,36 +301,36 @@ func (client *ModelVersionsClient) listCreateRequest(ctx context.Context, resour
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
-	if options != nil && options.Skip != nil {
-		reqQP.Set("$skip", *options.Skip)
-	}
 	if options != nil && options.OrderBy != nil {
 		reqQP.Set("$orderBy", *options.OrderBy)
+	}
+	if options != nil && options.Skip != nil {
+		reqQP.Set("$skip", *options.Skip)
 	}
 	if options != nil && options.Top != nil {
 		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
 	}
-	if options != nil && options.Version != nil {
-		reqQP.Set("version", *options.Version)
-	}
+	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.Description != nil {
 		reqQP.Set("description", *options.Description)
-	}
-	if options != nil && options.Offset != nil {
-		reqQP.Set("offset", strconv.FormatInt(int64(*options.Offset), 10))
-	}
-	if options != nil && options.Tags != nil {
-		reqQP.Set("tags", *options.Tags)
-	}
-	if options != nil && options.Properties != nil {
-		reqQP.Set("properties", *options.Properties)
 	}
 	if options != nil && options.Feed != nil {
 		reqQP.Set("feed", *options.Feed)
 	}
 	if options != nil && options.ListViewType != nil {
 		reqQP.Set("listViewType", string(*options.ListViewType))
+	}
+	if options != nil && options.Offset != nil {
+		reqQP.Set("offset", strconv.FormatInt(int64(*options.Offset), 10))
+	}
+	if options != nil && options.Properties != nil {
+		reqQP.Set("properties", *options.Properties)
+	}
+	if options != nil && options.Tags != nil {
+		reqQP.Set("tags", *options.Tags)
+	}
+	if options != nil && options.Version != nil {
+		reqQP.Set("version", *options.Version)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

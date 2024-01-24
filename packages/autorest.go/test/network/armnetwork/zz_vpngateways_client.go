@@ -449,10 +449,10 @@ func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourc
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2022-09-01")
 	if options != nil && options.IPConfigurationID != nil {
 		reqQP.Set("ipConfigurationId", *options.IPConfigurationID)
 	}
-	reqQP.Set("api-version", "2022-09-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

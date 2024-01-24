@@ -46,8 +46,8 @@ func (client *PropertyClient) defaultCreateRequest(ctx context.Context, body Def
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -88,8 +88,8 @@ func (client *PropertyClient) floatSecondsCreateRequest(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -130,8 +130,8 @@ func (client *PropertyClient) floatSecondsArrayCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -172,8 +172,8 @@ func (client *PropertyClient) iso8601CreateRequest(ctx context.Context, body ISO
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -214,8 +214,8 @@ func (client *PropertyClient) int32SecondsCreateRequest(ctx context.Context, bod
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

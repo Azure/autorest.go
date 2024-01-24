@@ -77,8 +77,8 @@ func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, input
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, input); err != nil {
 		return nil, err
 	}

@@ -205,14 +205,14 @@ func (client *BatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Detailed != nil {
+		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
+	}
 	if options != nil && options.From != nil {
 		reqQP.Set("from", strconv.FormatInt(int64(*options.From), 10))
 	}
 	if options != nil && options.Size != nil {
 		reqQP.Set("size", strconv.FormatInt(int64(*options.Size), 10))
-	}
-	if options != nil && options.Detailed != nil {
-		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
