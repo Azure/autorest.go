@@ -16,33 +16,33 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/ts
 // the format is as follows
 // 'moduleName': [ 'inputDir', 'additional arg 1', 'additional arg N...' ]
 const cadlRanch = {
-  'apikeygroup': ['authentication/api-key'],
-  'customgroup': ['authentication/http/custom'],
-  'oauth2group': ['authentication/oauth2'],
-  'unionauthgroup': ['authentication/union'],
-  'accessgroup': ['azure/client-generator-core/access'],
-  'coreusagegroup': ['azure/client-generator-core/usage'],
-  'basicgroup': ['azure/core/basic'],
+  'apikeygroup': ['authentication/api-key'],     // missing tests
+  'customgroup': ['authentication/http/custom'], // missing tests
+  'oauth2group': ['authentication/oauth2'],      // missing tests
+  'unionauthgroup': ['authentication/union'],    // missing tests
+  'accessgroup': ['azure/client-generator-core/access'],   // missing tests
+  'coreusagegroup': ['azure/client-generator-core/usage'], // missing tests
+  'basicgroup': ['azure/core/basic'], // missing tests
   //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
   //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
   //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
   //'traitsgroup': ['azure/core/traits'],            // requires union support
-  'defaultgroup': ['client/structure/default'],
-  'multiclientgroup': ['client/structure/multi-client'],
-  'renamedopgroup': ['client/structure/renamed-operation'],
-  'twoopgroup': ['client/structure/two-operation-group'],
+  'defaultgroup': ['client/structure/default'], // missing tests
+  'multiclientgroup': ['client/structure/multi-client'],    // missing tests
+  'renamedopgroup': ['client/structure/renamed-operation'], // missing tests
+  'twoopgroup': ['client/structure/two-operation-group'],   // missing tests
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
-  'bodyoptionalgroup': ['parameters/body-optionality'],
-  'collectionfmtgroup': ['parameters/collection-format'],
+  'bodyoptionalgroup': ['parameters/body-optionality'],   // missing tests
+  'collectionfmtgroup': ['parameters/collection-format'], // missing tests
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
   'pageablegroup': ['payload/pageable'],
-  'projectednamegroup': ['projection/projected-name'],
-  'srvdrivengroup': ['resiliency/srv-driven'],
-  'multiplegroup': ['server/path/multiple'],
-  'singlegroup': ['server/path/single'],
+  'projectednamegroup': ['projection/projected-name'], // missing tests
+  'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
+  'multiplegroup': ['server/path/multiple'],   // missing tests
+  'singlegroup': ['server/path/single'],       // missing tests
   'clientreqidgroup': ['special-headers/client-request-id'],
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
@@ -62,8 +62,8 @@ const cadlRanch = {
   'addlpropsgroup': ['type/property/additional-properties'],
   'nullablegroup': ['type/property/nullable'],
   //'optionalitygroup': ['type/property/optionality'], // requires union support
-  //'valuetypesgroup': ['type/property/value-types'], // requires decimal support
-  //'scalargroup': ['type/scalar'],                   // requires decimal support
+  //'valuetypesgroup': ['type/property/value-types'], // requires union support
+  'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support
 };
 

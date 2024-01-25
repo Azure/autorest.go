@@ -122,6 +122,8 @@ export class typeAdapter {
       case 'boolean':
       case 'bytes':
       case 'date':
+      case 'decimal':
+      case 'decimal128':
       case 'etag':
       case 'float32':
       case 'float64':
@@ -280,6 +282,17 @@ export class typeAdapter {
         this.types.set(dateKey, date);
         this.codeModel.marshallingRequirements.generateDateHelper = true;
         return date;
+      }
+      case 'decimal':
+      case 'decimal128': {
+        const decimalKey = 'float64';
+        let decimalType = this.types.get(decimalKey);
+        if (decimalType) {
+          return decimalType;
+        }
+        decimalType = new go.PrimitiveType(decimalKey);
+        this. types.set(decimalKey, decimalType);
+        return decimalType;
       }
       case 'etag': {
         const etagKey = 'etag';
