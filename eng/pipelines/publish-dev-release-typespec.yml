@@ -1,0 +1,22 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: "ubuntu-22.04"
+
+steps:
+  - template: ../steps/set-env.yaml
+    parameters:
+      NodeVersion: "18.x"
+      GoVersion: "1.21.4"
+
+  - template: ../steps/build-test-typespec.yaml
+
+  - pwsh: |
+      $currentVersion = node -p -e "require('./packages/typespec-go/package.json').version";
+      $currentVersion="$currentVersion-$(Build.BuildNumber)";
+      cd packages/typespec-go
+      npm version --no-git-tag-version $currentVersion
+      npm pack;
+      npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "TypeSpec emitter for Go v$currentVersion" --tag v$currentVersion --notes='Beta version of TypeSpec emitter for Go SDKs' --prerelease --editRelease false --assets azure-tools-typespec-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
+    displayName: "Publish Dev Release"
