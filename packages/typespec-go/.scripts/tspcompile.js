@@ -34,7 +34,7 @@ const cadlRanch = {
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
-  'bodyoptionalgroup': ['parameters/body-optionality'],   // missing tests
+  'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'], // missing tests
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107

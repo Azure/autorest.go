@@ -21,9 +21,9 @@ type OptionalExplicitClient struct {
 	internal *azcore.Client
 }
 
-func (client *OptionalExplicitClient) Omit(ctx context.Context, body BodyModel, options *OptionalExplicitClientOmitOptions) (OptionalExplicitClientOmitResponse, error) {
+func (client *OptionalExplicitClient) Omit(ctx context.Context, options *OptionalExplicitClientOmitOptions) (OptionalExplicitClientOmitResponse, error) {
 	var err error
-	req, err := client.omitCreateRequest(ctx, body, options)
+	req, err := client.omitCreateRequest(ctx, options)
 	if err != nil {
 		return OptionalExplicitClientOmitResponse{}, err
 	}
@@ -39,22 +39,25 @@ func (client *OptionalExplicitClient) Omit(ctx context.Context, body BodyModel, 
 }
 
 // omitCreateRequest creates the Omit request.
-func (client *OptionalExplicitClient) omitCreateRequest(ctx context.Context, body BodyModel, options *OptionalExplicitClientOmitOptions) (*policy.Request, error) {
+func (client *OptionalExplicitClient) omitCreateRequest(ctx context.Context, options *OptionalExplicitClientOmitOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/optional-explicit/omit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
+	if options != nil && options.Body != nil {
+		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }
 
-func (client *OptionalExplicitClient) Set(ctx context.Context, body BodyModel, options *OptionalExplicitClientSetOptions) (OptionalExplicitClientSetResponse, error) {
+func (client *OptionalExplicitClient) Set(ctx context.Context, options *OptionalExplicitClientSetOptions) (OptionalExplicitClientSetResponse, error) {
 	var err error
-	req, err := client.setCreateRequest(ctx, body, options)
+	req, err := client.setCreateRequest(ctx, options)
 	if err != nil {
 		return OptionalExplicitClientSetResponse{}, err
 	}
@@ -70,15 +73,18 @@ func (client *OptionalExplicitClient) Set(ctx context.Context, body BodyModel, o
 }
 
 // setCreateRequest creates the Set request.
-func (client *OptionalExplicitClient) setCreateRequest(ctx context.Context, body BodyModel, options *OptionalExplicitClientSetOptions) (*policy.Request, error) {
+func (client *OptionalExplicitClient) setCreateRequest(ctx context.Context, options *OptionalExplicitClientSetOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/optional-explicit/set"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
-		return nil, err
+	if options != nil && options.Body != nil {
+		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
+			return nil, err
+		}
+		return req, nil
 	}
 	return req, nil
 }

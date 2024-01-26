@@ -122,11 +122,7 @@ func (client *ResponseBodyClient) customContentTypeCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	acceptDefault := "image/png"
-	if options != nil && options.Accept != nil {
-		acceptDefault = *options.Accept
-	}
-	req.Raw().Header["Accept"] = []string{acceptDefault}
+	req.Raw().Header["Accept"] = []string{"image/png"}
 	return req, nil
 }
 
@@ -202,11 +198,7 @@ func (client *ResponseBodyClient) octetStreamCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	acceptDefault := "application/octet-stream"
-	if options != nil && options.Accept != nil {
-		acceptDefault = *options.Accept
-	}
-	req.Raw().Header["Accept"] = []string{acceptDefault}
+	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
 }
 

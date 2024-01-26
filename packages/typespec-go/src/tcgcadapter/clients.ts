@@ -76,9 +76,9 @@ export class clientAdapter {
       method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
     } else if (sdkMethod.kind === 'paging') {
       method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
-      if (sdkMethod.nextLinkLogicalPath) {
-        // TODO: this assumes that nextLink is the first element. and what does it mean to have more than one entry?
-        (<go.PageableMethod>method).nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkLogicalPath[0]));
+      if (sdkMethod.nextLinkPath) {
+        // TODO: handle nested next link
+        (<go.PageableMethod>method).nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
       }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
