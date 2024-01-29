@@ -16,9 +16,9 @@ type BodyOptionalityClientRequiredImplicitOptions struct {
 }
 
 type OptionalExplicitClientOmitOptions struct {
-	// placeholder for future optional parameters
+	Body *BodyModel
 }
 
 type OptionalExplicitClientSetOptions struct {
-	// placeholder for future optional parameters
+	Body *BodyModel
 }
