@@ -402,7 +402,7 @@ export class typeAdapter {
     if (constType) {
       return <go.ConstantType>constType;
     }
-    constType = new go.ConstantType(naming.ensureNameCase(constTypeName), getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
+    constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
     constType.description = enumType.description;
     this.types.set(constTypeName, constType);
@@ -564,10 +564,10 @@ export class typeAdapter {
   private getConstantValues(type: go.ConstantType, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
     const values = new Array<go.ConstantValue>();
     for (const valueType of valueTypes) {
-      const valueTypeName = naming.ensureNameCase(valueType.name);
+      const valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
       let value = this.constValues.get(valueTypeName);
       if (!value) {
-        value = new go.ConstantValue(`${type.name}${valueTypeName}`, type, valueType.value);
+        value = new go.ConstantValue(valueTypeName, type, valueType.value);
         value.description = valueType.description;
         this.constValues.set(valueTypeName, value);
       }
@@ -593,14 +593,15 @@ export class typeAdapter {
 
   private getLiteralValue(constType: tcgc.SdkConstantType | tcgc.SdkEnumValueType): go.LiteralValue {
     if (constType.kind === 'enumvalue') {
-      const keyName = `literal-${constType.enumType.name}-${constType.name}`;
+      const valueName = `${naming.ensureNameCase(constType.enumType.name)}${naming.ensureNameCase(constType.name)}`;
+      const keyName = `literal-${valueName}`;
       let literalConst = this.types.get(keyName);
       if (literalConst) {
         return <go.LiteralValue>literalConst;
       }
-      const constValue = this.constValues.get(constType.name);
+      const constValue = this.constValues.get(valueName);
       if (!constValue) {
-        throw new Error(`failed to find const value for ${constType.name}`);
+        throw new Error(`failed to find const value for ${constType.name} in enum ${constType.enumType.name}`);
       }
       literalConst = new go.LiteralValue(this.getConstantType(constType.enumType), constValue);
       this.types.set(keyName, literalConst);
