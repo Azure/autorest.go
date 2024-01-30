@@ -23,6 +23,7 @@ type QueryClient struct {
 	internal *azcore.Client
 }
 
+// - options - QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
 func (client *QueryClient) Default(ctx context.Context, value time.Time, options *QueryClientDefaultOptions) (QueryClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, value, options)
@@ -53,6 +54,7 @@ func (client *QueryClient) defaultCreateRequest(ctx context.Context, value time.
 	return req, nil
 }
 
+// - options - QueryClientRFC3339Options contains the optional parameters for the QueryClient.RFC3339 method.
 func (client *QueryClient) RFC3339(ctx context.Context, value time.Time, options *QueryClientRFC3339Options) (QueryClientRFC3339Response, error) {
 	var err error
 	req, err := client.rfc3339CreateRequest(ctx, value, options)
@@ -83,6 +85,7 @@ func (client *QueryClient) rfc3339CreateRequest(ctx context.Context, value time.
 	return req, nil
 }
 
+// - options - QueryClientRFC7231Options contains the optional parameters for the QueryClient.RFC7231 method.
 func (client *QueryClient) RFC7231(ctx context.Context, value time.Time, options *QueryClientRFC7231Options) (QueryClientRFC7231Response, error) {
 	var err error
 	req, err := client.rfc7231CreateRequest(ctx, value, options)
@@ -113,6 +116,7 @@ func (client *QueryClient) rfc7231CreateRequest(ctx context.Context, value time.
 	return req, nil
 }
 
+// - options - QueryClientUnixTimestampOptions contains the optional parameters for the QueryClient.UnixTimestamp method.
 func (client *QueryClient) UnixTimestamp(ctx context.Context, value time.Time, options *QueryClientUnixTimestampOptions) (QueryClientUnixTimestampResponse, error) {
 	var err error
 	req, err := client.unixTimestampCreateRequest(ctx, value, options)
@@ -143,6 +147,8 @@ func (client *QueryClient) unixTimestampCreateRequest(ctx context.Context, value
 	return req, nil
 }
 
+//   - options - QueryClientUnixTimestampArrayOptions contains the optional parameters for the QueryClient.UnixTimestampArray
+//     method.
 func (client *QueryClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *QueryClientUnixTimestampArrayOptions) (QueryClientUnixTimestampArrayResponse, error) {
 	var err error
 	req, err := client.unixTimestampArrayCreateRequest(ctx, value, options)

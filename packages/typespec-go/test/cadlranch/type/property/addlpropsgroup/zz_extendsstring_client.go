@@ -22,6 +22,7 @@ type ExtendsStringClient struct {
 }
 
 // Get - Get call
+//   - options - ExtendsStringClientGetOptions contains the optional parameters for the ExtendsStringClient.Get method.
 func (client *ExtendsStringClient) Get(ctx context.Context, options *ExtendsStringClientGetOptions) (ExtendsStringClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *ExtendsStringClient) getHandleResponse(resp *http.Response) (Exten
 
 // Put - Put operation
 //   - body - body
+//   - options - ExtendsStringClientPutOptions contains the optional parameters for the ExtendsStringClient.Put method.
 func (client *ExtendsStringClient) Put(ctx context.Context, body ExtendsStringAdditionalProperties, options *ExtendsStringClientPutOptions) (ExtendsStringClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

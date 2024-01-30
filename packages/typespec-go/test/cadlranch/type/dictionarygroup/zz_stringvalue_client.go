@@ -21,6 +21,7 @@ type StringValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - StringValueClientGetOptions contains the optional parameters for the StringValueClient.Get method.
 func (client *StringValueClient) Get(ctx context.Context, options *StringValueClientGetOptions) (StringValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *StringValueClient) getHandleResponse(resp *http.Response) (StringV
 	return result, nil
 }
 
+// - options - StringValueClientPutOptions contains the optional parameters for the StringValueClient.Put method.
 func (client *StringValueClient) Put(ctx context.Context, body map[string]*string, options *StringValueClientPutOptions) (StringValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

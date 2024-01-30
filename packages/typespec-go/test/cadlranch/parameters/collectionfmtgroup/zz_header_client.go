@@ -23,6 +23,7 @@ type HeaderClient struct {
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - HeaderClientCSVOptions contains the optional parameters for the HeaderClient.CSV method.
 func (client *HeaderClient) CSV(ctx context.Context, colors []string, options *HeaderClientCSVOptions) (HeaderClientCSVResponse, error) {
 	var err error
 	req, err := client.csvCreateRequest(ctx, colors, options)

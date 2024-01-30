@@ -7,10 +7,14 @@
 
 package coreusagegroup
 
+// ModelInOperationClientInputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.InputToInputOutput
+// method.
 type ModelInOperationClientInputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.OutputToInputOutput
+// method.
 type ModelInOperationClientOutputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }

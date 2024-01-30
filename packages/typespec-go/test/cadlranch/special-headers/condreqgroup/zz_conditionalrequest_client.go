@@ -22,6 +22,8 @@ type ConditionalRequestClient struct {
 }
 
 // PostIfMatch - Check when only If-Match in header is defined.
+//   - options - ConditionalRequestClientPostIfMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfMatch
+//     method.
 func (client *ConditionalRequestClient) PostIfMatch(ctx context.Context, options *ConditionalRequestClientPostIfMatchOptions) (ConditionalRequestClientPostIfMatchResponse, error) {
 	var err error
 	req, err := client.postIfMatchCreateRequest(ctx, options)
@@ -53,6 +55,8 @@ func (client *ConditionalRequestClient) postIfMatchCreateRequest(ctx context.Con
 }
 
 // PostIfNoneMatch - Check when only If-None-Match in header is defined.
+//   - options - ConditionalRequestClientPostIfNoneMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfNoneMatch
+//     method.
 func (client *ConditionalRequestClient) PostIfNoneMatch(ctx context.Context, options *ConditionalRequestClientPostIfNoneMatchOptions) (ConditionalRequestClientPostIfNoneMatchResponse, error) {
 	var err error
 	req, err := client.postIfNoneMatchCreateRequest(ctx, options)

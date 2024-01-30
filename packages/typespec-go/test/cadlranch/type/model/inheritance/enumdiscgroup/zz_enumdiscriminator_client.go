@@ -22,6 +22,8 @@ type EnumDiscriminatorClient struct {
 }
 
 // GetExtensibleModel - Receive model with extensible enum discriminator type.
+//   - options - EnumDiscriminatorClientGetExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModel
+//     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModel(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelOptions) (EnumDiscriminatorClientGetExtensibleModelResponse, error) {
 	var err error
 	req, err := client.getExtensibleModelCreateRequest(ctx, options)
@@ -61,6 +63,8 @@ func (client *EnumDiscriminatorClient) getExtensibleModelHandleResponse(resp *ht
 }
 
 // GetExtensibleModelMissingDiscriminator - Get a model omitting the discriminator.
+//   - options - EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions contains the optional parameters for the
+//     EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getExtensibleModelMissingDiscriminatorCreateRequest(ctx, options)
@@ -100,6 +104,8 @@ func (client *EnumDiscriminatorClient) getExtensibleModelMissingDiscriminatorHan
 }
 
 // GetExtensibleModelWrongDiscriminator - Get a model containing discriminator value never defined.
+//   - options - EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator
+//     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getExtensibleModelWrongDiscriminatorCreateRequest(ctx, options)
@@ -139,6 +145,8 @@ func (client *EnumDiscriminatorClient) getExtensibleModelWrongDiscriminatorHandl
 }
 
 // GetFixedModel - Receive model with fixed enum discriminator type.
+//   - options - EnumDiscriminatorClientGetFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModel
+//     method.
 func (client *EnumDiscriminatorClient) GetFixedModel(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelOptions) (EnumDiscriminatorClientGetFixedModelResponse, error) {
 	var err error
 	req, err := client.getFixedModelCreateRequest(ctx, options)
@@ -178,6 +186,8 @@ func (client *EnumDiscriminatorClient) getFixedModelHandleResponse(resp *http.Re
 }
 
 // GetFixedModelMissingDiscriminator - Get a model omitting the discriminator.
+//   - options - EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelMissingDiscriminator
+//     method.
 func (client *EnumDiscriminatorClient) GetFixedModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getFixedModelMissingDiscriminatorCreateRequest(ctx, options)
@@ -217,6 +227,8 @@ func (client *EnumDiscriminatorClient) getFixedModelMissingDiscriminatorHandleRe
 }
 
 // GetFixedModelWrongDiscriminator - Get a model containing discriminator value never defined.
+//   - options - EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelWrongDiscriminator
+//     method.
 func (client *EnumDiscriminatorClient) GetFixedModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getFixedModelWrongDiscriminatorCreateRequest(ctx, options)
@@ -257,6 +269,8 @@ func (client *EnumDiscriminatorClient) getFixedModelWrongDiscriminatorHandleResp
 
 // PutExtensibleModel - Send model with extensible enum discriminator type.
 //   - input - Dog to create
+//   - options - EnumDiscriminatorClientPutExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutExtensibleModel
+//     method.
 func (client *EnumDiscriminatorClient) PutExtensibleModel(ctx context.Context, input DogClassification, options *EnumDiscriminatorClientPutExtensibleModelOptions) (EnumDiscriminatorClientPutExtensibleModelResponse, error) {
 	var err error
 	req, err := client.putExtensibleModelCreateRequest(ctx, input, options)
@@ -290,6 +304,8 @@ func (client *EnumDiscriminatorClient) putExtensibleModelCreateRequest(ctx conte
 
 // PutFixedModel - Send model with fixed enum discriminator type.
 //   - input - Snake to create
+//   - options - EnumDiscriminatorClientPutFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutFixedModel
+//     method.
 func (client *EnumDiscriminatorClient) PutFixedModel(ctx context.Context, input SnakeClassification, options *EnumDiscriminatorClientPutFixedModelOptions) (EnumDiscriminatorClientPutFixedModelResponse, error) {
 	var err error
 	req, err := client.putFixedModelCreateRequest(ctx, input, options)

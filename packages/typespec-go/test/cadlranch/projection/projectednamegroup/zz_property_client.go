@@ -21,6 +21,7 @@ type PropertyClient struct {
 	internal *azcore.Client
 }
 
+// - options - PropertyClientClientOptions contains the optional parameters for the PropertyClient.Client method.
 func (client *PropertyClient) Client(ctx context.Context, body ClientProjectedNameModel, options *PropertyClientClientOptions) (PropertyClientClientResponse, error) {
 	var err error
 	req, err := client.clientCreateRequest(ctx, body, options)
@@ -52,6 +53,7 @@ func (client *PropertyClient) clientCreateRequest(ctx context.Context, body Clie
 	return req, nil
 }
 
+// - options - PropertyClientJSONOptions contains the optional parameters for the PropertyClient.JSON method.
 func (client *PropertyClient) JSON(ctx context.Context, body JSONProjectedNameModel, options *PropertyClientJSONOptions) (PropertyClientJSONResponse, error) {
 	var err error
 	req, err := client.jsonCreateRequest(ctx, body, options)
@@ -83,6 +85,7 @@ func (client *PropertyClient) jsonCreateRequest(ctx context.Context, body JSONPr
 	return req, nil
 }
 
+// - options - PropertyClientJSONAndClientOptions contains the optional parameters for the PropertyClient.JSONAndClient method.
 func (client *PropertyClient) JSONAndClient(ctx context.Context, body JSONAndClientProjectedNameModel, options *PropertyClientJSONAndClientOptions) (PropertyClientJSONAndClientResponse, error) {
 	var err error
 	req, err := client.jsonAndClientCreateRequest(ctx, body, options)
@@ -114,6 +117,7 @@ func (client *PropertyClient) jsonAndClientCreateRequest(ctx context.Context, bo
 	return req, nil
 }
 
+// - options - PropertyClientLanguageOptions contains the optional parameters for the PropertyClient.Language method.
 func (client *PropertyClient) Language(ctx context.Context, body LanguageProjectedNameModel, options *PropertyClientLanguageOptions) (PropertyClientLanguageResponse, error) {
 	var err error
 	req, err := client.languageCreateRequest(ctx, body, options)

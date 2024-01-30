@@ -21,6 +21,7 @@ type NullableFloatValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - NullableFloatValueClientGetOptions contains the optional parameters for the NullableFloatValueClient.Get method.
 func (client *NullableFloatValueClient) Get(ctx context.Context, options *NullableFloatValueClientGetOptions) (NullableFloatValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *NullableFloatValueClient) getHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
+// - options - NullableFloatValueClientPutOptions contains the optional parameters for the NullableFloatValueClient.Put method.
 func (client *NullableFloatValueClient) Put(ctx context.Context, body []*float32, options *NullableFloatValueClientPutOptions) (NullableFloatValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

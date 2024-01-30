@@ -21,6 +21,7 @@ type Int64ValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - Int64ValueClientGetOptions contains the optional parameters for the Int64ValueClient.Get method.
 func (client *Int64ValueClient) Get(ctx context.Context, options *Int64ValueClientGetOptions) (Int64ValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *Int64ValueClient) getHandleResponse(resp *http.Response) (Int64Val
 	return result, nil
 }
 
+// - options - Int64ValueClientPutOptions contains the optional parameters for the Int64ValueClient.Put method.
 func (client *Int64ValueClient) Put(ctx context.Context, body map[string]*int64, options *Int64ValueClientPutOptions) (Int64ValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

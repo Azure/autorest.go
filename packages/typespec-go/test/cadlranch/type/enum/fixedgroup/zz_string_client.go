@@ -22,6 +22,7 @@ type StringClient struct {
 }
 
 // GetKnownValue - getKnownValue
+//   - options - StringClientGetKnownValueOptions contains the optional parameters for the StringClient.GetKnownValue method.
 func (client *StringClient) GetKnownValue(ctx context.Context, options *StringClientGetKnownValueOptions) (StringClientGetKnownValueResponse, error) {
 	var err error
 	req, err := client.getKnownValueCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *StringClient) getKnownValueHandleResponse(resp *http.Response) (St
 
 // PutKnownValue - putKnownValue
 //   - body - _
+//   - options - StringClientPutKnownValueOptions contains the optional parameters for the StringClient.PutKnownValue method.
 func (client *StringClient) PutKnownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutKnownValueOptions) (StringClientPutKnownValueResponse, error) {
 	var err error
 	req, err := client.putKnownValueCreateRequest(ctx, body, options)
@@ -95,6 +97,7 @@ func (client *StringClient) putKnownValueCreateRequest(ctx context.Context, body
 
 // PutUnknownValue - putUnknownValue
 //   - body - _
+//   - options - StringClientPutUnknownValueOptions contains the optional parameters for the StringClient.PutUnknownValue method.
 func (client *StringClient) PutUnknownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutUnknownValueOptions) (StringClientPutUnknownValueResponse, error) {
 	var err error
 	req, err := client.putUnknownValueCreateRequest(ctx, body, options)

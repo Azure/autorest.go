@@ -23,6 +23,7 @@ type HeaderClient struct {
 	internal *azcore.Client
 }
 
+// - options - HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
 func (client *HeaderClient) Default(ctx context.Context, duration string, options *HeaderClientDefaultOptions) (HeaderClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, duration, options)
@@ -51,6 +52,7 @@ func (client *HeaderClient) defaultCreateRequest(ctx context.Context, duration s
 	return req, nil
 }
 
+// - options - HeaderClientFloatSecondsOptions contains the optional parameters for the HeaderClient.FloatSeconds method.
 func (client *HeaderClient) FloatSeconds(ctx context.Context, duration float32, options *HeaderClientFloatSecondsOptions) (HeaderClientFloatSecondsResponse, error) {
 	var err error
 	req, err := client.floatSecondsCreateRequest(ctx, duration, options)
@@ -79,6 +81,7 @@ func (client *HeaderClient) floatSecondsCreateRequest(ctx context.Context, durat
 	return req, nil
 }
 
+// - options - HeaderClientISO8601Options contains the optional parameters for the HeaderClient.ISO8601 method.
 func (client *HeaderClient) ISO8601(ctx context.Context, duration string, options *HeaderClientISO8601Options) (HeaderClientISO8601Response, error) {
 	var err error
 	req, err := client.iso8601CreateRequest(ctx, duration, options)
@@ -107,6 +110,7 @@ func (client *HeaderClient) iso8601CreateRequest(ctx context.Context, duration s
 	return req, nil
 }
 
+// - options - HeaderClientISO8601ArrayOptions contains the optional parameters for the HeaderClient.ISO8601Array method.
 func (client *HeaderClient) ISO8601Array(ctx context.Context, duration []string, options *HeaderClientISO8601ArrayOptions) (HeaderClientISO8601ArrayResponse, error) {
 	var err error
 	req, err := client.iso8601ArrayCreateRequest(ctx, duration, options)
@@ -135,6 +139,7 @@ func (client *HeaderClient) iso8601ArrayCreateRequest(ctx context.Context, durat
 	return req, nil
 }
 
+// - options - HeaderClientInt32SecondsOptions contains the optional parameters for the HeaderClient.Int32Seconds method.
 func (client *HeaderClient) Int32Seconds(ctx context.Context, duration int32, options *HeaderClientInt32SecondsOptions) (HeaderClientInt32SecondsResponse, error) {
 	var err error
 	req, err := client.int32SecondsCreateRequest(ctx, duration, options)

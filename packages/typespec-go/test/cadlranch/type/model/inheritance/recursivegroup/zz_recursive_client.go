@@ -21,6 +21,7 @@ type RecursiveClient struct {
 	internal *azcore.Client
 }
 
+// - options - RecursiveClientGetOptions contains the optional parameters for the RecursiveClient.Get method.
 func (client *RecursiveClient) Get(ctx context.Context, options *RecursiveClientGetOptions) (RecursiveClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *RecursiveClient) getHandleResponse(resp *http.Response) (Recursive
 	return result, nil
 }
 
+// - options - RecursiveClientPutOptions contains the optional parameters for the RecursiveClient.Put method.
 func (client *RecursiveClient) Put(ctx context.Context, input Extension, options *RecursiveClientPutOptions) (RecursiveClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, input, options)

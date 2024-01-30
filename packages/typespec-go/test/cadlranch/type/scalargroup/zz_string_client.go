@@ -22,6 +22,7 @@ type StringClient struct {
 }
 
 // Get - get string value
+//   - options - StringClientGetOptions contains the optional parameters for the StringClient.Get method.
 func (client *StringClient) Get(ctx context.Context, options *StringClientGetOptions) (StringClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *StringClient) getHandleResponse(resp *http.Response) (StringClient
 
 // Put - put string value
 //   - body - _
+//   - options - StringClientPutOptions contains the optional parameters for the StringClient.Put method.
 func (client *StringClient) Put(ctx context.Context, body string, options *StringClientPutOptions) (StringClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

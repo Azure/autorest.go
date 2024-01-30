@@ -22,6 +22,7 @@ type UnionClient struct {
 }
 
 // ValidKey - Check whether client is authenticated
+//   - options - UnionClientValidKeyOptions contains the optional parameters for the UnionClient.ValidKey method.
 func (client *UnionClient) ValidKey(ctx context.Context, options *UnionClientValidKeyOptions) (UnionClientValidKeyResponse, error) {
 	var err error
 	req, err := client.validKeyCreateRequest(ctx, options)
@@ -50,6 +51,7 @@ func (client *UnionClient) validKeyCreateRequest(ctx context.Context, options *U
 }
 
 // ValidToken - Check whether client is authenticated
+//   - options - UnionClientValidTokenOptions contains the optional parameters for the UnionClient.ValidToken method.
 func (client *UnionClient) ValidToken(ctx context.Context, options *UnionClientValidTokenOptions) (UnionClientValidTokenResponse, error) {
 	var err error
 	req, err := client.validTokenCreateRequest(ctx, options)

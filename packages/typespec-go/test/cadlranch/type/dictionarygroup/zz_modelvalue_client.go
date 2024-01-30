@@ -21,6 +21,7 @@ type ModelValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - ModelValueClientGetOptions contains the optional parameters for the ModelValueClient.Get method.
 func (client *ModelValueClient) Get(ctx context.Context, options *ModelValueClientGetOptions) (ModelValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *ModelValueClient) getHandleResponse(resp *http.Response) (ModelVal
 	return result, nil
 }
 
+// - options - ModelValueClientPutOptions contains the optional parameters for the ModelValueClient.Put method.
 func (client *ModelValueClient) Put(ctx context.Context, body map[string]*InnerModel, options *ModelValueClientPutOptions) (ModelValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

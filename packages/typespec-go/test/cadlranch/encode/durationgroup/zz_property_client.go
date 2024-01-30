@@ -21,6 +21,7 @@ type PropertyClient struct {
 	internal *azcore.Client
 }
 
+// - options - PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
 func (client *PropertyClient) Default(ctx context.Context, body DefaultDurationProperty, options *PropertyClientDefaultOptions) (PropertyClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, body, options)
@@ -63,6 +64,7 @@ func (client *PropertyClient) defaultHandleResponse(resp *http.Response) (Proper
 	return result, nil
 }
 
+// - options - PropertyClientFloatSecondsOptions contains the optional parameters for the PropertyClient.FloatSeconds method.
 func (client *PropertyClient) FloatSeconds(ctx context.Context, body FloatSecondsDurationProperty, options *PropertyClientFloatSecondsOptions) (PropertyClientFloatSecondsResponse, error) {
 	var err error
 	req, err := client.floatSecondsCreateRequest(ctx, body, options)
@@ -105,6 +107,8 @@ func (client *PropertyClient) floatSecondsHandleResponse(resp *http.Response) (P
 	return result, nil
 }
 
+//   - options - PropertyClientFloatSecondsArrayOptions contains the optional parameters for the PropertyClient.FloatSecondsArray
+//     method.
 func (client *PropertyClient) FloatSecondsArray(ctx context.Context, body FloatSecondsDurationArrayProperty, options *PropertyClientFloatSecondsArrayOptions) (PropertyClientFloatSecondsArrayResponse, error) {
 	var err error
 	req, err := client.floatSecondsArrayCreateRequest(ctx, body, options)
@@ -147,6 +151,7 @@ func (client *PropertyClient) floatSecondsArrayHandleResponse(resp *http.Respons
 	return result, nil
 }
 
+// - options - PropertyClientISO8601Options contains the optional parameters for the PropertyClient.ISO8601 method.
 func (client *PropertyClient) ISO8601(ctx context.Context, body ISO8601DurationProperty, options *PropertyClientISO8601Options) (PropertyClientISO8601Response, error) {
 	var err error
 	req, err := client.iso8601CreateRequest(ctx, body, options)
@@ -189,6 +194,7 @@ func (client *PropertyClient) iso8601HandleResponse(resp *http.Response) (Proper
 	return result, nil
 }
 
+// - options - PropertyClientInt32SecondsOptions contains the optional parameters for the PropertyClient.Int32Seconds method.
 func (client *PropertyClient) Int32Seconds(ctx context.Context, body Int32SecondsDurationProperty, options *PropertyClientInt32SecondsOptions) (PropertyClientInt32SecondsResponse, error) {
 	var err error
 	req, err := client.int32SecondsCreateRequest(ctx, body, options)

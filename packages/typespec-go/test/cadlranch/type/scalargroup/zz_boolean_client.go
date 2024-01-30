@@ -22,6 +22,7 @@ type BooleanClient struct {
 }
 
 // Get - get boolean value
+//   - options - BooleanClientGetOptions contains the optional parameters for the BooleanClient.Get method.
 func (client *BooleanClient) Get(ctx context.Context, options *BooleanClientGetOptions) (BooleanClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *BooleanClient) getHandleResponse(resp *http.Response) (BooleanClie
 
 // Put - put boolean value
 //   - body - _
+//   - options - BooleanClientPutOptions contains the optional parameters for the BooleanClient.Put method.
 func (client *BooleanClient) Put(ctx context.Context, body bool, options *BooleanClientPutOptions) (BooleanClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

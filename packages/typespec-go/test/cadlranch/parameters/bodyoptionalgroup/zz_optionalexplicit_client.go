@@ -21,6 +21,7 @@ type OptionalExplicitClient struct {
 	internal *azcore.Client
 }
 
+// - options - OptionalExplicitClientOmitOptions contains the optional parameters for the OptionalExplicitClient.Omit method.
 func (client *OptionalExplicitClient) Omit(ctx context.Context, options *OptionalExplicitClientOmitOptions) (OptionalExplicitClientOmitResponse, error) {
 	var err error
 	req, err := client.omitCreateRequest(ctx, options)
@@ -55,6 +56,7 @@ func (client *OptionalExplicitClient) omitCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
+// - options - OptionalExplicitClientSetOptions contains the optional parameters for the OptionalExplicitClient.Set method.
 func (client *OptionalExplicitClient) Set(ctx context.Context, options *OptionalExplicitClientSetOptions) (OptionalExplicitClientSetResponse, error) {
 	var err error
 	req, err := client.setCreateRequest(ctx, options)

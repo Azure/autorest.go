@@ -22,6 +22,8 @@ type Decimal128TypeClient struct {
 	internal *azcore.Client
 }
 
+//   - options - Decimal128TypeClientRequestBodyOptions contains the optional parameters for the Decimal128TypeClient.RequestBody
+//     method.
 func (client *Decimal128TypeClient) RequestBody(ctx context.Context, body float64, options *Decimal128TypeClientRequestBodyOptions) (Decimal128TypeClientRequestBodyResponse, error) {
 	var err error
 	req, err := client.requestBodyCreateRequest(ctx, body, options)
@@ -53,6 +55,8 @@ func (client *Decimal128TypeClient) requestBodyCreateRequest(ctx context.Context
 	return req, nil
 }
 
+//   - options - Decimal128TypeClientRequestParameterOptions contains the optional parameters for the Decimal128TypeClient.RequestParameter
+//     method.
 func (client *Decimal128TypeClient) RequestParameter(ctx context.Context, value float64, options *Decimal128TypeClientRequestParameterOptions) (Decimal128TypeClientRequestParameterResponse, error) {
 	var err error
 	req, err := client.requestParameterCreateRequest(ctx, value, options)
@@ -83,6 +87,8 @@ func (client *Decimal128TypeClient) requestParameterCreateRequest(ctx context.Co
 	return req, nil
 }
 
+//   - options - Decimal128TypeClientResponseBodyOptions contains the optional parameters for the Decimal128TypeClient.ResponseBody
+//     method.
 func (client *Decimal128TypeClient) ResponseBody(ctx context.Context, options *Decimal128TypeClientResponseBodyOptions) (Decimal128TypeClientResponseBodyResponse, error) {
 	var err error
 	req, err := client.responseBodyCreateRequest(ctx, options)

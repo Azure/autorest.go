@@ -7,19 +7,19 @@
 
 package emptygroup
 
-// EmptyClientGetEmptyResponse contains the response from method EmptyClient.GetEmpty.
-type EmptyClientGetEmptyResponse struct {
+// GetEmptyResponse contains the response from method EmptyClient.GetEmpty.
+type GetEmptyResponse struct {
 	// Empty model used in operation return type
 	EmptyOutput
 }
 
-// EmptyClientPostRoundTripEmptyResponse contains the response from method EmptyClient.PostRoundTripEmpty.
-type EmptyClientPostRoundTripEmptyResponse struct {
+// PostRoundTripEmptyResponse contains the response from method EmptyClient.PostRoundTripEmpty.
+type PostRoundTripEmptyResponse struct {
 	// Empty model used in both parameter and return type
 	EmptyInputOutput
 }
 
-// EmptyClientPutEmptyResponse contains the response from method EmptyClient.PutEmpty.
-type EmptyClientPutEmptyResponse struct {
+// PutEmptyResponse contains the response from method EmptyClient.PutEmpty.
+type PutEmptyResponse struct {
 	// placeholder for future response values
 }

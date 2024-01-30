@@ -120,4 +120,7 @@ help-content:
         description: Enables generation of fake servers. The default value is set to the value of --azure-arm.
       - key: inject-spans
         description: Enables generation of spans for distributed tracing. The default value is set to the value of --azure-arm.
+      - key: single-client
+        type: boolean
+        description: Indicates package has a single client. This will omit the Client prefix from options and response types. If multiple clients are detected, an error is returned.
 ```

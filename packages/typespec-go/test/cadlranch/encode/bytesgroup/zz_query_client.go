@@ -23,6 +23,7 @@ type QueryClient struct {
 	internal *azcore.Client
 }
 
+// - options - QueryClientBase64Options contains the optional parameters for the QueryClient.Base64 method.
 func (client *QueryClient) Base64(ctx context.Context, value []byte, options *QueryClientBase64Options) (QueryClientBase64Response, error) {
 	var err error
 	req, err := client.base64CreateRequest(ctx, value, options)
@@ -53,6 +54,7 @@ func (client *QueryClient) base64CreateRequest(ctx context.Context, value []byte
 	return req, nil
 }
 
+// - options - QueryClientBase64URLOptions contains the optional parameters for the QueryClient.Base64URL method.
 func (client *QueryClient) Base64URL(ctx context.Context, value []byte, options *QueryClientBase64URLOptions) (QueryClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, value, options)
@@ -83,6 +85,7 @@ func (client *QueryClient) base64URLCreateRequest(ctx context.Context, value []b
 	return req, nil
 }
 
+// - options - QueryClientBase64URLArrayOptions contains the optional parameters for the QueryClient.Base64URLArray method.
 func (client *QueryClient) Base64URLArray(ctx context.Context, value [][]byte, options *QueryClientBase64URLArrayOptions) (QueryClientBase64URLArrayResponse, error) {
 	var err error
 	req, err := client.base64URLArrayCreateRequest(ctx, value, options)
@@ -119,6 +122,7 @@ func (client *QueryClient) base64URLArrayCreateRequest(ctx context.Context, valu
 	return req, nil
 }
 
+// - options - QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
 func (client *QueryClient) Default(ctx context.Context, value []byte, options *QueryClientDefaultOptions) (QueryClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, value, options)

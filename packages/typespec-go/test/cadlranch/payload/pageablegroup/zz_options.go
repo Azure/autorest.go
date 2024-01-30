@@ -7,6 +7,7 @@
 
 package pageablegroup
 
+// PageableClientListOptions contains the optional parameters for the PageableClient.NewListPager method.
 type PageableClientListOptions struct {
 	// The maximum number of result items per page.
 	Maxpagesize *int32

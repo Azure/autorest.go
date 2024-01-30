@@ -22,6 +22,7 @@ type DurationClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+//   - options - DurationClientGetNonNullOptions contains the optional parameters for the DurationClient.GetNonNull method.
 func (client *DurationClient) GetNonNull(ctx context.Context, options *DurationClientGetNonNullOptions) (DurationClientGetNonNullResponse, error) {
 	var err error
 	req, err := client.getNonNullCreateRequest(ctx, options)
@@ -61,6 +62,7 @@ func (client *DurationClient) getNonNullHandleResponse(resp *http.Response) (Dur
 }
 
 // GetNull - Get models that will return the default object
+//   - options - DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationClientGetNullOptions) (DurationClientGetNullResponse, error) {
 	var err error
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -100,6 +102,7 @@ func (client *DurationClient) getNullHandleResponse(resp *http.Response) (Durati
 }
 
 // PatchNonNull - Put a body with all properties present.
+//   - options - DurationClientPatchNonNullOptions contains the optional parameters for the DurationClient.PatchNonNull method.
 func (client *DurationClient) PatchNonNull(ctx context.Context, body DurationProperty, options *DurationClientPatchNonNullOptions) (DurationClientPatchNonNullResponse, error) {
 	var err error
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
@@ -132,6 +135,7 @@ func (client *DurationClient) patchNonNullCreateRequest(ctx context.Context, bod
 }
 
 // PatchNull - Put a body with default properties.
+//   - options - DurationClientPatchNullOptions contains the optional parameters for the DurationClient.PatchNull method.
 func (client *DurationClient) PatchNull(ctx context.Context, body DurationProperty, options *DurationClientPatchNullOptions) (DurationClientPatchNullResponse, error) {
 	var err error
 	req, err := client.patchNullCreateRequest(ctx, body, options)

@@ -36,36 +36,36 @@ type BasicClientGetResponse struct {
 	User
 }
 
-// BasicClientListResponse contains the response from method BasicClient.List.
+// BasicClientListResponse contains the response from method BasicClient.NewListPager.
 type BasicClientListResponse struct {
 	// Paged collection of User items
 	PagedUser
 }
 
-// BasicClientListWithCustomPageModelResponse contains the response from method BasicClient.ListWithCustomPageModel.
+// BasicClientListWithCustomPageModelResponse contains the response from method BasicClient.NewListWithCustomPageModelPager.
 type BasicClientListWithCustomPageModelResponse struct {
 	UserListResults
 }
 
-// BasicClientListWithPageResponse contains the response from method BasicClient.ListWithPage.
+// BasicClientListWithPageResponse contains the response from method BasicClient.NewListWithPagePager.
 type BasicClientListWithPageResponse struct {
 	// Paged collection of User items
 	PagedUser
 }
 
-// BasicClientListWithParametersResponse contains the response from method BasicClient.ListWithParameters.
+// BasicClientListWithParametersResponse contains the response from method BasicClient.NewListWithParametersPager.
 type BasicClientListWithParametersResponse struct {
 	// Paged collection of User items
 	PagedUser
 }
 
-// TwoModelsAsPageItemClientListFirstItemResponse contains the response from method TwoModelsAsPageItemClient.ListFirstItem.
+// TwoModelsAsPageItemClientListFirstItemResponse contains the response from method TwoModelsAsPageItemClient.NewListFirstItemPager.
 type TwoModelsAsPageItemClientListFirstItemResponse struct {
 	// Paged collection of FirstItem items
 	PagedFirstItem
 }
 
-// TwoModelsAsPageItemClientListSecondItemResponse contains the response from method TwoModelsAsPageItemClient.ListSecondItem.
+// TwoModelsAsPageItemClientListSecondItemResponse contains the response from method TwoModelsAsPageItemClient.NewListSecondItemPager.
 type TwoModelsAsPageItemClientListSecondItemResponse struct {
 	// Paged collection of SecondItem items
 	PagedSecondItem

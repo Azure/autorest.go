@@ -40,7 +40,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
 
-  const ca = new clientAdapter(ta);
+  const ca = new clientAdapter(ta, context.options);
   ca.adaptClients(sdkContext.sdkPackage);
   codeModel.sortContent();
   return codeModel;

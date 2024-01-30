@@ -22,6 +22,7 @@ type IsUnknownClient struct {
 }
 
 // Get - Get call
+//   - options - IsUnknownClientGetOptions contains the optional parameters for the IsUnknownClient.Get method.
 func (client *IsUnknownClient) Get(ctx context.Context, options *IsUnknownClientGetOptions) (IsUnknownClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *IsUnknownClient) getHandleResponse(resp *http.Response) (IsUnknown
 
 // Put - Put operation
 //   - body - body
+//   - options - IsUnknownClientPutOptions contains the optional parameters for the IsUnknownClient.Put method.
 func (client *IsUnknownClient) Put(ctx context.Context, body IsUnknownAdditionalProperties, options *IsUnknownClientPutOptions) (IsUnknownClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

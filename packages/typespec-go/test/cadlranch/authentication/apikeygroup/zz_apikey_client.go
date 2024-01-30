@@ -22,6 +22,7 @@ type ApiKeyClient struct {
 }
 
 // Invalid - Check whether client is authenticated.
+//   - options - ApiKeyClientInvalidOptions contains the optional parameters for the ApiKeyClient.Invalid method.
 func (client *ApiKeyClient) Invalid(ctx context.Context, options *ApiKeyClientInvalidOptions) (ApiKeyClientInvalidResponse, error) {
 	var err error
 	req, err := client.invalidCreateRequest(ctx, options)
@@ -51,6 +52,7 @@ func (client *ApiKeyClient) invalidCreateRequest(ctx context.Context, options *A
 }
 
 // Valid - Check whether client is authenticated
+//   - options - ApiKeyClientValidOptions contains the optional parameters for the ApiKeyClient.Valid method.
 func (client *ApiKeyClient) Valid(ctx context.Context, options *ApiKeyClientValidOptions) (ApiKeyClientValidResponse, error) {
 	var err error
 	req, err := client.validCreateRequest(ctx, options)

@@ -27,6 +27,8 @@ type ModelInOperationClient struct {
 // "name": <any string>
 // }
 // ```
+//   - options - ModelInOperationClientInputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.InputToInputOutput
+//     method.
 func (client *ModelInOperationClient) InputToInputOutput(ctx context.Context, body InputModel, options *ModelInOperationClientInputToInputOutputOptions) (ModelInOperationClientInputToInputOutputResponse, error) {
 	var err error
 	req, err := client.inputToInputOutputCreateRequest(ctx, body, options)
@@ -64,6 +66,8 @@ func (client *ModelInOperationClient) inputToInputOutputCreateRequest(ctx contex
 // "name": <any string>
 // }
 // ```
+//   - options - ModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.OutputToInputOutput
+//     method.
 func (client *ModelInOperationClient) OutputToInputOutput(ctx context.Context, options *ModelInOperationClientOutputToInputOutputOptions) (ModelInOperationClientOutputToInputOutputResponse, error) {
 	var err error
 	req, err := client.outputToInputOutputCreateRequest(ctx, options)

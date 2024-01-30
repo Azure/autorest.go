@@ -7,26 +7,32 @@
 
 package visibilitygroup
 
+// VisibilityClientDeleteModelOptions contains the optional parameters for the VisibilityClient.DeleteModel method.
 type VisibilityClientDeleteModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
 type VisibilityClientGetModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VisibilityClientHeadModelOptions contains the optional parameters for the VisibilityClient.HeadModel method.
 type VisibilityClientHeadModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VisibilityClientPatchModelOptions contains the optional parameters for the VisibilityClient.PatchModel method.
 type VisibilityClientPatchModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VisibilityClientPostModelOptions contains the optional parameters for the VisibilityClient.PostModel method.
 type VisibilityClientPostModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VisibilityClientPutModelOptions contains the optional parameters for the VisibilityClient.PutModel method.
 type VisibilityClientPutModelOptions struct {
 	// placeholder for future optional parameters
 }

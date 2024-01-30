@@ -21,6 +21,7 @@ type PropertyClient struct {
 	internal *azcore.Client
 }
 
+// - options - PropertyClientBase64Options contains the optional parameters for the PropertyClient.Base64 method.
 func (client *PropertyClient) Base64(ctx context.Context, body Base64BytesProperty, options *PropertyClientBase64Options) (PropertyClientBase64Response, error) {
 	var err error
 	req, err := client.base64CreateRequest(ctx, body, options)
@@ -63,6 +64,7 @@ func (client *PropertyClient) base64HandleResponse(resp *http.Response) (Propert
 	return result, nil
 }
 
+// - options - PropertyClientBase64URLOptions contains the optional parameters for the PropertyClient.Base64URL method.
 func (client *PropertyClient) Base64URL(ctx context.Context, body Base64URLBytesProperty, options *PropertyClientBase64URLOptions) (PropertyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, body, options)
@@ -105,6 +107,7 @@ func (client *PropertyClient) base64URLHandleResponse(resp *http.Response) (Prop
 	return result, nil
 }
 
+// - options - PropertyClientBase64URLArrayOptions contains the optional parameters for the PropertyClient.Base64URLArray method.
 func (client *PropertyClient) Base64URLArray(ctx context.Context, body Base64URLArrayBytesProperty, options *PropertyClientBase64URLArrayOptions) (PropertyClientBase64URLArrayResponse, error) {
 	var err error
 	req, err := client.base64URLArrayCreateRequest(ctx, body, options)
@@ -147,6 +150,7 @@ func (client *PropertyClient) base64URLArrayHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
+// - options - PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
 func (client *PropertyClient) Default(ctx context.Context, body DefaultBytesProperty, options *PropertyClientDefaultOptions) (PropertyClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, body, options)

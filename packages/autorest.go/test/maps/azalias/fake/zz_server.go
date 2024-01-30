@@ -27,31 +27,31 @@ import (
 type Server struct {
 	// Create is the fake for method Client.Create
 	// HTTP status codes to indicate success: http.StatusCreated
-	Create func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder)
+	Create func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.CreateOptions) (resp azfake.Responder[azalias.CreateResponse], errResp azfake.ErrorResponder)
 
 	// GetScript is the fake for method Client.GetScript
 	// HTTP status codes to indicate success: http.StatusOK
-	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, someGroup azalias.SomeGroup, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder)
+	GetScript func(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, someGroup azalias.SomeGroup, explodedGroup azalias.ExplodedGroup, options *azalias.GetScriptOptions) (resp azfake.Responder[azalias.GetScriptResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method Client.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ClientListOptions) (resp azfake.PagerResponder[azalias.ClientListResponse])
+	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ListOptions) (resp azfake.PagerResponder[azalias.ListResponseEnvelope])
 
 	// BeginListLRO is the fake for method Client.BeginListLRO
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginListLRO func(ctx context.Context, options *azalias.ClientBeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]], errResp azfake.ErrorResponder)
+	BeginListLRO func(ctx context.Context, options *azalias.BeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ListLROResponse]], errResp azfake.ErrorResponder)
 
 	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithSharedNextOnePager func(options *azalias.ClientListWithSharedNextOneOptions) (resp azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse])
+	NewListWithSharedNextOnePager func(options *azalias.ListWithSharedNextOneOptions) (resp azfake.PagerResponder[azalias.ListWithSharedNextOneResponse])
 
 	// NewListWithSharedNextTwoPager is the fake for method Client.NewListWithSharedNextTwoPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithSharedNextTwoPager func(options *azalias.ClientListWithSharedNextTwoOptions) (resp azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse])
+	NewListWithSharedNextTwoPager func(options *azalias.ListWithSharedNextTwoOptions) (resp azfake.PagerResponder[azalias.ListWithSharedNextTwoResponse])
 
 	// PolicyAssignment is the fake for method Client.PolicyAssignment
 	// HTTP status codes to indicate success: http.StatusOK
-	PolicyAssignment func(ctx context.Context, things []azalias.Things, polymorphicParam azalias.GeoJSONObjectClassification, options *azalias.ClientPolicyAssignmentOptions) (resp azfake.Responder[azalias.ClientPolicyAssignmentResponse], errResp azfake.ErrorResponder)
+	PolicyAssignment func(ctx context.Context, things []azalias.Things, polymorphicParam azalias.GeoJSONObjectClassification, options *azalias.PolicyAssignmentOptions) (resp azfake.Responder[azalias.PolicyAssignmentResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
@@ -60,10 +60,10 @@ type Server struct {
 func NewServerTransport(srv *Server) *ServerTransport {
 	return &ServerTransport{
 		srv:                           srv,
-		newListPager:                  newTracker[azfake.PagerResponder[azalias.ClientListResponse]](),
-		beginListLRO:                  newTracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]](),
-		newListWithSharedNextOnePager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]](),
-		newListWithSharedNextTwoPager: newTracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]](),
+		newListPager:                  newTracker[azfake.PagerResponder[azalias.ListResponseEnvelope]](),
+		beginListLRO:                  newTracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ListLROResponse]]](),
+		newListWithSharedNextOnePager: newTracker[azfake.PagerResponder[azalias.ListWithSharedNextOneResponse]](),
+		newListWithSharedNextTwoPager: newTracker[azfake.PagerResponder[azalias.ListWithSharedNextTwoResponse]](),
 	}
 }
 
@@ -71,10 +71,10 @@ func NewServerTransport(srv *Server) *ServerTransport {
 // Don't use this type directly, use NewServerTransport instead.
 type ServerTransport struct {
 	srv                           *Server
-	newListPager                  *tracker[azfake.PagerResponder[azalias.ClientListResponse]]
-	beginListLRO                  *tracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ClientListLROResponse]]]
-	newListWithSharedNextOnePager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextOneResponse]]
-	newListWithSharedNextTwoPager *tracker[azfake.PagerResponder[azalias.ClientListWithSharedNextTwoResponse]]
+	newListPager                  *tracker[azfake.PagerResponder[azalias.ListResponseEnvelope]]
+	beginListLRO                  *tracker[azfake.PollerResponder[azfake.PagerResponder[azalias.ListLROResponse]]]
+	newListWithSharedNextOnePager *tracker[azfake.PagerResponder[azalias.ListWithSharedNextOneResponse]]
+	newListWithSharedNextTwoPager *tracker[azfake.PagerResponder[azalias.ListWithSharedNextTwoResponse]]
 }
 
 // Do implements the policy.Transporter interface for ServerTransport.
@@ -231,9 +231,9 @@ func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, err
 	if err != nil {
 		return nil, err
 	}
-	var options *azalias.ClientCreateOptions
+	var options *azalias.CreateOptions
 	if creatorIDParam != nil || assignedIDParam != nil || boolHeaderEnum1Param != nil || optionalUnixTimeParam != nil || len(groupByParam) > 0 {
-		options = &azalias.ClientCreateOptions{
+		options = &azalias.CreateOptions{
 			CreatorID:        creatorIDParam,
 			AssignedID:       assignedIDParam,
 			BoolHeaderEnum1:  boolHeaderEnum1Param,
@@ -345,9 +345,9 @@ func (s *ServerTransport) dispatchGetScript(req *http.Request) (*http.Response, 
 	explodedGroup := azalias.ExplodedGroup{
 		ExplodedStuff: explodedStuffParam,
 	}
-	var options *azalias.ClientGetScriptOptions
+	var options *azalias.GetScriptOptions
 	if len(optionalExplodedStuffParam) > 0 {
-		options = &azalias.ClientGetScriptOptions{
+		options = &azalias.GetScriptOptions{
 			OptionalExplodedStuff: optionalExplodedStuffParam,
 		}
 	}
@@ -436,9 +436,9 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		for i := 0; i < len(groupByUnescaped); i++ {
 			groupByParam[i] = azalias.LogMetricsGroupBy(groupByUnescaped[i])
 		}
-		var options *azalias.ClientListOptions
+		var options *azalias.ListOptions
 		if len(queryEnumsParam) > 0 || headerEnumParam != nil || len(groupByParam) > 0 {
-			options = &azalias.ClientListOptions{
+			options = &azalias.ListOptions{
 				QueryEnums: queryEnumsParam,
 				HeaderEnum: headerEnumParam,
 				GroupBy:    groupByParam,
@@ -447,7 +447,7 @@ func (s *ServerTransport) dispatchNewListPager(req *http.Request) (*http.Respons
 		resp := s.srv.NewListPager(headerEnumsParam, queryEnumParam, options)
 		newListPager = &resp
 		s.newListPager.add(req, newListPager)
-		server.PagerResponderInjectNextLinks(newListPager, req, func(page *azalias.ClientListResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListPager, req, func(page *azalias.ListResponseEnvelope, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -504,7 +504,7 @@ func (s *ServerTransport) dispatchNewListWithSharedNextOnePager(req *http.Reques
 		resp := s.srv.NewListWithSharedNextOnePager(nil)
 		newListWithSharedNextOnePager = &resp
 		s.newListWithSharedNextOnePager.add(req, newListWithSharedNextOnePager)
-		server.PagerResponderInjectNextLinks(newListWithSharedNextOnePager, req, func(page *azalias.ClientListWithSharedNextOneResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListWithSharedNextOnePager, req, func(page *azalias.ListWithSharedNextOneResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -531,7 +531,7 @@ func (s *ServerTransport) dispatchNewListWithSharedNextTwoPager(req *http.Reques
 		resp := s.srv.NewListWithSharedNextTwoPager(nil)
 		newListWithSharedNextTwoPager = &resp
 		s.newListWithSharedNextTwoPager.add(req, newListWithSharedNextTwoPager)
-		server.PagerResponderInjectNextLinks(newListWithSharedNextTwoPager, req, func(page *azalias.ClientListWithSharedNextTwoResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListWithSharedNextTwoPager, req, func(page *azalias.ListWithSharedNextTwoResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -581,9 +581,9 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 		return nil, err
 	}
 	uniqueParam := getOptional(uniqueUnescaped)
-	var options *azalias.ClientPolicyAssignmentOptions
+	var options *azalias.PolicyAssignmentOptions
 	if intervalParam != nil || uniqueParam != nil {
-		options = &azalias.ClientPolicyAssignmentOptions{
+		options = &azalias.PolicyAssignmentOptions{
 			Interval: intervalParam,
 			Unique:   uniqueParam,
 		}

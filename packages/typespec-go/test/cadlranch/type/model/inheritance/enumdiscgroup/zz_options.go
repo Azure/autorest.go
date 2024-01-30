@@ -7,34 +7,50 @@
 
 package enumdiscgroup
 
+// EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator
+// method.
 type EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientGetExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModel
+// method.
 type EnumDiscriminatorClientGetExtensibleModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator
+// method.
 type EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelMissingDiscriminator
+// method.
 type EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientGetFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModel
+// method.
 type EnumDiscriminatorClientGetFixedModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelWrongDiscriminator
+// method.
 type EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientPutExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutExtensibleModel
+// method.
 type EnumDiscriminatorClientPutExtensibleModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// EnumDiscriminatorClientPutFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutFixedModel
+// method.
 type EnumDiscriminatorClientPutFixedModelOptions struct {
 	// placeholder for future optional parameters
 }

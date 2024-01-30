@@ -21,6 +21,8 @@ type InternalOperationClient struct {
 	internal *azcore.Client
 }
 
+//   - options - InternalOperationClientInternalDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.InternalDecoratorInInternal
+//     method.
 func (client *InternalOperationClient) InternalDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientInternalDecoratorInInternalOptions) (InternalOperationClientInternalDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.internalDecoratorInInternalCreateRequest(ctx, name, options)
@@ -62,6 +64,8 @@ func (client *InternalOperationClient) internalDecoratorInInternalHandleResponse
 	return result, nil
 }
 
+//   - options - InternalOperationClientNoDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.NoDecoratorInInternal
+//     method.
 func (client *InternalOperationClient) NoDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientNoDecoratorInInternalOptions) (InternalOperationClientNoDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.noDecoratorInInternalCreateRequest(ctx, name, options)
@@ -103,6 +107,8 @@ func (client *InternalOperationClient) noDecoratorInInternalHandleResponse(resp 
 	return result, nil
 }
 
+//   - options - InternalOperationClientPublicDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.PublicDecoratorInInternal
+//     method.
 func (client *InternalOperationClient) PublicDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientPublicDecoratorInInternalOptions) (InternalOperationClientPublicDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.publicDecoratorInInternalCreateRequest(ctx, name, options)

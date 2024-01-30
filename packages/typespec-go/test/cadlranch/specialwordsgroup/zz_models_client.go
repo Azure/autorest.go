@@ -21,6 +21,7 @@ type ModelsClient struct {
 	internal *azcore.Client
 }
 
+// - options - ModelsClientWithAndOptions contains the optional parameters for the ModelsClient.WithAnd method.
 func (client *ModelsClient) WithAnd(ctx context.Context, body And, options *ModelsClientWithAndOptions) (ModelsClientWithAndResponse, error) {
 	var err error
 	req, err := client.withAndCreateRequest(ctx, body, options)
@@ -52,6 +53,7 @@ func (client *ModelsClient) withAndCreateRequest(ctx context.Context, body And, 
 	return req, nil
 }
 
+// - options - ModelsClientWithAsOptions contains the optional parameters for the ModelsClient.WithAs method.
 func (client *ModelsClient) WithAs(ctx context.Context, body As, options *ModelsClientWithAsOptions) (ModelsClientWithAsResponse, error) {
 	var err error
 	req, err := client.withAsCreateRequest(ctx, body, options)
@@ -83,6 +85,7 @@ func (client *ModelsClient) withAsCreateRequest(ctx context.Context, body As, op
 	return req, nil
 }
 
+// - options - ModelsClientWithAssertOptions contains the optional parameters for the ModelsClient.WithAssert method.
 func (client *ModelsClient) WithAssert(ctx context.Context, body Assert, options *ModelsClientWithAssertOptions) (ModelsClientWithAssertResponse, error) {
 	var err error
 	req, err := client.withAssertCreateRequest(ctx, body, options)
@@ -114,6 +117,7 @@ func (client *ModelsClient) withAssertCreateRequest(ctx context.Context, body As
 	return req, nil
 }
 
+// - options - ModelsClientWithAsyncOptions contains the optional parameters for the ModelsClient.WithAsync method.
 func (client *ModelsClient) WithAsync(ctx context.Context, body Async, options *ModelsClientWithAsyncOptions) (ModelsClientWithAsyncResponse, error) {
 	var err error
 	req, err := client.withAsyncCreateRequest(ctx, body, options)
@@ -145,6 +149,7 @@ func (client *ModelsClient) withAsyncCreateRequest(ctx context.Context, body Asy
 	return req, nil
 }
 
+// - options - ModelsClientWithAwaitOptions contains the optional parameters for the ModelsClient.WithAwait method.
 func (client *ModelsClient) WithAwait(ctx context.Context, body Await, options *ModelsClientWithAwaitOptions) (ModelsClientWithAwaitResponse, error) {
 	var err error
 	req, err := client.withAwaitCreateRequest(ctx, body, options)
@@ -176,6 +181,7 @@ func (client *ModelsClient) withAwaitCreateRequest(ctx context.Context, body Awa
 	return req, nil
 }
 
+// - options - ModelsClientWithBreakOptions contains the optional parameters for the ModelsClient.WithBreak method.
 func (client *ModelsClient) WithBreak(ctx context.Context, body Break, options *ModelsClientWithBreakOptions) (ModelsClientWithBreakResponse, error) {
 	var err error
 	req, err := client.withBreakCreateRequest(ctx, body, options)
@@ -207,6 +213,7 @@ func (client *ModelsClient) withBreakCreateRequest(ctx context.Context, body Bre
 	return req, nil
 }
 
+// - options - ModelsClientWithClassOptions contains the optional parameters for the ModelsClient.WithClass method.
 func (client *ModelsClient) WithClass(ctx context.Context, body Class, options *ModelsClientWithClassOptions) (ModelsClientWithClassResponse, error) {
 	var err error
 	req, err := client.withClassCreateRequest(ctx, body, options)
@@ -238,6 +245,7 @@ func (client *ModelsClient) withClassCreateRequest(ctx context.Context, body Cla
 	return req, nil
 }
 
+// - options - ModelsClientWithConstructorOptions contains the optional parameters for the ModelsClient.WithConstructor method.
 func (client *ModelsClient) WithConstructor(ctx context.Context, body Constructor, options *ModelsClientWithConstructorOptions) (ModelsClientWithConstructorResponse, error) {
 	var err error
 	req, err := client.withConstructorCreateRequest(ctx, body, options)
@@ -269,6 +277,7 @@ func (client *ModelsClient) withConstructorCreateRequest(ctx context.Context, bo
 	return req, nil
 }
 
+// - options - ModelsClientWithContinueOptions contains the optional parameters for the ModelsClient.WithContinue method.
 func (client *ModelsClient) WithContinue(ctx context.Context, body Continue, options *ModelsClientWithContinueOptions) (ModelsClientWithContinueResponse, error) {
 	var err error
 	req, err := client.withContinueCreateRequest(ctx, body, options)
@@ -300,6 +309,7 @@ func (client *ModelsClient) withContinueCreateRequest(ctx context.Context, body 
 	return req, nil
 }
 
+// - options - ModelsClientWithDefOptions contains the optional parameters for the ModelsClient.WithDef method.
 func (client *ModelsClient) WithDef(ctx context.Context, body Def, options *ModelsClientWithDefOptions) (ModelsClientWithDefResponse, error) {
 	var err error
 	req, err := client.withDefCreateRequest(ctx, body, options)
@@ -331,6 +341,7 @@ func (client *ModelsClient) withDefCreateRequest(ctx context.Context, body Def, 
 	return req, nil
 }
 
+// - options - ModelsClientWithDelOptions contains the optional parameters for the ModelsClient.WithDel method.
 func (client *ModelsClient) WithDel(ctx context.Context, body Del, options *ModelsClientWithDelOptions) (ModelsClientWithDelResponse, error) {
 	var err error
 	req, err := client.withDelCreateRequest(ctx, body, options)
@@ -362,6 +373,7 @@ func (client *ModelsClient) withDelCreateRequest(ctx context.Context, body Del, 
 	return req, nil
 }
 
+// - options - ModelsClientWithElifOptions contains the optional parameters for the ModelsClient.WithElif method.
 func (client *ModelsClient) WithElif(ctx context.Context, body Elif, options *ModelsClientWithElifOptions) (ModelsClientWithElifResponse, error) {
 	var err error
 	req, err := client.withElifCreateRequest(ctx, body, options)
@@ -393,6 +405,7 @@ func (client *ModelsClient) withElifCreateRequest(ctx context.Context, body Elif
 	return req, nil
 }
 
+// - options - ModelsClientWithElseOptions contains the optional parameters for the ModelsClient.WithElse method.
 func (client *ModelsClient) WithElse(ctx context.Context, body Else, options *ModelsClientWithElseOptions) (ModelsClientWithElseResponse, error) {
 	var err error
 	req, err := client.withElseCreateRequest(ctx, body, options)
@@ -424,6 +437,7 @@ func (client *ModelsClient) withElseCreateRequest(ctx context.Context, body Else
 	return req, nil
 }
 
+// - options - ModelsClientWithExceptOptions contains the optional parameters for the ModelsClient.WithExcept method.
 func (client *ModelsClient) WithExcept(ctx context.Context, body Except, options *ModelsClientWithExceptOptions) (ModelsClientWithExceptResponse, error) {
 	var err error
 	req, err := client.withExceptCreateRequest(ctx, body, options)
@@ -455,6 +469,7 @@ func (client *ModelsClient) withExceptCreateRequest(ctx context.Context, body Ex
 	return req, nil
 }
 
+// - options - ModelsClientWithExecOptions contains the optional parameters for the ModelsClient.WithExec method.
 func (client *ModelsClient) WithExec(ctx context.Context, body Exec, options *ModelsClientWithExecOptions) (ModelsClientWithExecResponse, error) {
 	var err error
 	req, err := client.withExecCreateRequest(ctx, body, options)
@@ -486,6 +501,7 @@ func (client *ModelsClient) withExecCreateRequest(ctx context.Context, body Exec
 	return req, nil
 }
 
+// - options - ModelsClientWithFinallyOptions contains the optional parameters for the ModelsClient.WithFinally method.
 func (client *ModelsClient) WithFinally(ctx context.Context, body Finally, options *ModelsClientWithFinallyOptions) (ModelsClientWithFinallyResponse, error) {
 	var err error
 	req, err := client.withFinallyCreateRequest(ctx, body, options)
@@ -517,6 +533,7 @@ func (client *ModelsClient) withFinallyCreateRequest(ctx context.Context, body F
 	return req, nil
 }
 
+// - options - ModelsClientWithForOptions contains the optional parameters for the ModelsClient.WithFor method.
 func (client *ModelsClient) WithFor(ctx context.Context, body For, options *ModelsClientWithForOptions) (ModelsClientWithForResponse, error) {
 	var err error
 	req, err := client.withForCreateRequest(ctx, body, options)
@@ -548,6 +565,7 @@ func (client *ModelsClient) withForCreateRequest(ctx context.Context, body For, 
 	return req, nil
 }
 
+// - options - ModelsClientWithFromOptions contains the optional parameters for the ModelsClient.WithFrom method.
 func (client *ModelsClient) WithFrom(ctx context.Context, body From, options *ModelsClientWithFromOptions) (ModelsClientWithFromResponse, error) {
 	var err error
 	req, err := client.withFromCreateRequest(ctx, body, options)
@@ -579,6 +597,7 @@ func (client *ModelsClient) withFromCreateRequest(ctx context.Context, body From
 	return req, nil
 }
 
+// - options - ModelsClientWithGlobalOptions contains the optional parameters for the ModelsClient.WithGlobal method.
 func (client *ModelsClient) WithGlobal(ctx context.Context, body Global, options *ModelsClientWithGlobalOptions) (ModelsClientWithGlobalResponse, error) {
 	var err error
 	req, err := client.withGlobalCreateRequest(ctx, body, options)
@@ -610,6 +629,7 @@ func (client *ModelsClient) withGlobalCreateRequest(ctx context.Context, body Gl
 	return req, nil
 }
 
+// - options - ModelsClientWithIfOptions contains the optional parameters for the ModelsClient.WithIf method.
 func (client *ModelsClient) WithIf(ctx context.Context, body If, options *ModelsClientWithIfOptions) (ModelsClientWithIfResponse, error) {
 	var err error
 	req, err := client.withIfCreateRequest(ctx, body, options)
@@ -641,6 +661,7 @@ func (client *ModelsClient) withIfCreateRequest(ctx context.Context, body If, op
 	return req, nil
 }
 
+// - options - ModelsClientWithImportOptions contains the optional parameters for the ModelsClient.WithImport method.
 func (client *ModelsClient) WithImport(ctx context.Context, body Import, options *ModelsClientWithImportOptions) (ModelsClientWithImportResponse, error) {
 	var err error
 	req, err := client.withImportCreateRequest(ctx, body, options)
@@ -672,6 +693,7 @@ func (client *ModelsClient) withImportCreateRequest(ctx context.Context, body Im
 	return req, nil
 }
 
+// - options - ModelsClientWithInOptions contains the optional parameters for the ModelsClient.WithIn method.
 func (client *ModelsClient) WithIn(ctx context.Context, body In, options *ModelsClientWithInOptions) (ModelsClientWithInResponse, error) {
 	var err error
 	req, err := client.withInCreateRequest(ctx, body, options)
@@ -703,6 +725,7 @@ func (client *ModelsClient) withInCreateRequest(ctx context.Context, body In, op
 	return req, nil
 }
 
+// - options - ModelsClientWithIsOptions contains the optional parameters for the ModelsClient.WithIs method.
 func (client *ModelsClient) WithIs(ctx context.Context, body Is, options *ModelsClientWithIsOptions) (ModelsClientWithIsResponse, error) {
 	var err error
 	req, err := client.withIsCreateRequest(ctx, body, options)
@@ -734,6 +757,7 @@ func (client *ModelsClient) withIsCreateRequest(ctx context.Context, body Is, op
 	return req, nil
 }
 
+// - options - ModelsClientWithLambdaOptions contains the optional parameters for the ModelsClient.WithLambda method.
 func (client *ModelsClient) WithLambda(ctx context.Context, body Lambda, options *ModelsClientWithLambdaOptions) (ModelsClientWithLambdaResponse, error) {
 	var err error
 	req, err := client.withLambdaCreateRequest(ctx, body, options)
@@ -765,6 +789,7 @@ func (client *ModelsClient) withLambdaCreateRequest(ctx context.Context, body La
 	return req, nil
 }
 
+// - options - ModelsClientWithNotOptions contains the optional parameters for the ModelsClient.WithNot method.
 func (client *ModelsClient) WithNot(ctx context.Context, body Not, options *ModelsClientWithNotOptions) (ModelsClientWithNotResponse, error) {
 	var err error
 	req, err := client.withNotCreateRequest(ctx, body, options)
@@ -796,6 +821,7 @@ func (client *ModelsClient) withNotCreateRequest(ctx context.Context, body Not, 
 	return req, nil
 }
 
+// - options - ModelsClientWithOrOptions contains the optional parameters for the ModelsClient.WithOr method.
 func (client *ModelsClient) WithOr(ctx context.Context, body Or, options *ModelsClientWithOrOptions) (ModelsClientWithOrResponse, error) {
 	var err error
 	req, err := client.withOrCreateRequest(ctx, body, options)
@@ -827,6 +853,7 @@ func (client *ModelsClient) withOrCreateRequest(ctx context.Context, body Or, op
 	return req, nil
 }
 
+// - options - ModelsClientWithPassOptions contains the optional parameters for the ModelsClient.WithPass method.
 func (client *ModelsClient) WithPass(ctx context.Context, body Pass, options *ModelsClientWithPassOptions) (ModelsClientWithPassResponse, error) {
 	var err error
 	req, err := client.withPassCreateRequest(ctx, body, options)
@@ -858,6 +885,7 @@ func (client *ModelsClient) withPassCreateRequest(ctx context.Context, body Pass
 	return req, nil
 }
 
+// - options - ModelsClientWithRaiseOptions contains the optional parameters for the ModelsClient.WithRaise method.
 func (client *ModelsClient) WithRaise(ctx context.Context, body Raise, options *ModelsClientWithRaiseOptions) (ModelsClientWithRaiseResponse, error) {
 	var err error
 	req, err := client.withRaiseCreateRequest(ctx, body, options)
@@ -889,6 +917,7 @@ func (client *ModelsClient) withRaiseCreateRequest(ctx context.Context, body Rai
 	return req, nil
 }
 
+// - options - ModelsClientWithReturnOptions contains the optional parameters for the ModelsClient.WithReturn method.
 func (client *ModelsClient) WithReturn(ctx context.Context, body Return, options *ModelsClientWithReturnOptions) (ModelsClientWithReturnResponse, error) {
 	var err error
 	req, err := client.withReturnCreateRequest(ctx, body, options)
@@ -920,6 +949,7 @@ func (client *ModelsClient) withReturnCreateRequest(ctx context.Context, body Re
 	return req, nil
 }
 
+// - options - ModelsClientWithTryOptions contains the optional parameters for the ModelsClient.WithTry method.
 func (client *ModelsClient) WithTry(ctx context.Context, body Try, options *ModelsClientWithTryOptions) (ModelsClientWithTryResponse, error) {
 	var err error
 	req, err := client.withTryCreateRequest(ctx, body, options)
@@ -951,6 +981,7 @@ func (client *ModelsClient) withTryCreateRequest(ctx context.Context, body Try, 
 	return req, nil
 }
 
+// - options - ModelsClientWithWhileOptions contains the optional parameters for the ModelsClient.WithWhile method.
 func (client *ModelsClient) WithWhile(ctx context.Context, body While, options *ModelsClientWithWhileOptions) (ModelsClientWithWhileResponse, error) {
 	var err error
 	req, err := client.withWhileCreateRequest(ctx, body, options)
@@ -982,6 +1013,7 @@ func (client *ModelsClient) withWhileCreateRequest(ctx context.Context, body Whi
 	return req, nil
 }
 
+// - options - ModelsClientWithWithOptions contains the optional parameters for the ModelsClient.WithWith method.
 func (client *ModelsClient) WithWith(ctx context.Context, body With, options *ModelsClientWithWithOptions) (ModelsClientWithWithResponse, error) {
 	var err error
 	req, err := client.withWithCreateRequest(ctx, body, options)
@@ -1013,6 +1045,7 @@ func (client *ModelsClient) withWithCreateRequest(ctx context.Context, body With
 	return req, nil
 }
 
+// - options - ModelsClientWithYieldOptions contains the optional parameters for the ModelsClient.WithYield method.
 func (client *ModelsClient) WithYield(ctx context.Context, body Yield, options *ModelsClientWithYieldOptions) (ModelsClientWithYieldResponse, error) {
 	var err error
 	req, err := client.withYieldCreateRequest(ctx, body, options)

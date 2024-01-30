@@ -7,6 +7,7 @@
 
 package singlegroup
 
+// SingleClientMyOpOptions contains the optional parameters for the SingleClient.MyOp method.
 type SingleClientMyOpOptions struct {
 	// placeholder for future optional parameters
 }

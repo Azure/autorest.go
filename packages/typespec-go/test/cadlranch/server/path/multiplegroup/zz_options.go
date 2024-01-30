@@ -7,10 +7,13 @@
 
 package multiplegroup
 
+// MultipleClientNoOperationParamsOptions contains the optional parameters for the MultipleClient.NoOperationParams method.
 type MultipleClientNoOperationParamsOptions struct {
 	// placeholder for future optional parameters
 }
 
+// MultipleClientWithOperationPathParamOptions contains the optional parameters for the MultipleClient.WithOperationPathParam
+// method.
 type MultipleClientWithOperationPathParamOptions struct {
 	// placeholder for future optional parameters
 }

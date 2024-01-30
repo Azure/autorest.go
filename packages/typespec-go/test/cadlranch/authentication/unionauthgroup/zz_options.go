@@ -7,10 +7,12 @@
 
 package unionauthgroup
 
+// UnionClientValidKeyOptions contains the optional parameters for the UnionClient.ValidKey method.
 type UnionClientValidKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
+// UnionClientValidTokenOptions contains the optional parameters for the UnionClient.ValidToken method.
 type UnionClientValidTokenOptions struct {
 	// placeholder for future optional parameters
 }

@@ -22,6 +22,7 @@ type ExtendsFloatClient struct {
 }
 
 // Get - Get call
+//   - options - ExtendsFloatClientGetOptions contains the optional parameters for the ExtendsFloatClient.Get method.
 func (client *ExtendsFloatClient) Get(ctx context.Context, options *ExtendsFloatClientGetOptions) (ExtendsFloatClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *ExtendsFloatClient) getHandleResponse(resp *http.Response) (Extend
 
 // Put - Put operation
 //   - body - body
+//   - options - ExtendsFloatClientPutOptions contains the optional parameters for the ExtendsFloatClient.Put method.
 func (client *ExtendsFloatClient) Put(ctx context.Context, body ExtendsFloatAdditionalProperties, options *ExtendsFloatClientPutOptions) (ExtendsFloatClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

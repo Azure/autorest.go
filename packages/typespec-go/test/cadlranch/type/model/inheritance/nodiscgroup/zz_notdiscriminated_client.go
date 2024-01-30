@@ -21,6 +21,8 @@ type NotDiscriminatedClient struct {
 	internal *azcore.Client
 }
 
+//   - options - NotDiscriminatedClientGetValidOptions contains the optional parameters for the NotDiscriminatedClient.GetValid
+//     method.
 func (client *NotDiscriminatedClient) GetValid(ctx context.Context, options *NotDiscriminatedClientGetValidOptions) (NotDiscriminatedClientGetValidResponse, error) {
 	var err error
 	req, err := client.getValidCreateRequest(ctx, options)
@@ -59,6 +61,8 @@ func (client *NotDiscriminatedClient) getValidHandleResponse(resp *http.Response
 	return result, nil
 }
 
+//   - options - NotDiscriminatedClientPostValidOptions contains the optional parameters for the NotDiscriminatedClient.PostValid
+//     method.
 func (client *NotDiscriminatedClient) PostValid(ctx context.Context, input Siamese, options *NotDiscriminatedClientPostValidOptions) (NotDiscriminatedClientPostValidResponse, error) {
 	var err error
 	req, err := client.postValidCreateRequest(ctx, input, options)
@@ -90,6 +94,8 @@ func (client *NotDiscriminatedClient) postValidCreateRequest(ctx context.Context
 	return req, nil
 }
 
+//   - options - NotDiscriminatedClientPutValidOptions contains the optional parameters for the NotDiscriminatedClient.PutValid
+//     method.
 func (client *NotDiscriminatedClient) PutValid(ctx context.Context, input Siamese, options *NotDiscriminatedClientPutValidOptions) (NotDiscriminatedClientPutValidResponse, error) {
 	var err error
 	req, err := client.putValidCreateRequest(ctx, input, options)

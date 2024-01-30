@@ -7,26 +7,32 @@
 
 package collectionfmtgroup
 
+// HeaderClientCSVOptions contains the optional parameters for the HeaderClient.CSV method.
 type HeaderClientCSVOptions struct {
 	// placeholder for future optional parameters
 }
 
+// QueryClientCSVOptions contains the optional parameters for the QueryClient.CSV method.
 type QueryClientCSVOptions struct {
 	// placeholder for future optional parameters
 }
 
+// QueryClientMultiOptions contains the optional parameters for the QueryClient.Multi method.
 type QueryClientMultiOptions struct {
 	// placeholder for future optional parameters
 }
 
+// QueryClientPipesOptions contains the optional parameters for the QueryClient.Pipes method.
 type QueryClientPipesOptions struct {
 	// placeholder for future optional parameters
 }
 
+// QueryClientSsvOptions contains the optional parameters for the QueryClient.Ssv method.
 type QueryClientSsvOptions struct {
 	// placeholder for future optional parameters
 }
 
+// QueryClientTsvOptions contains the optional parameters for the QueryClient.Tsv method.
 type QueryClientTsvOptions struct {
 	// placeholder for future optional parameters
 }

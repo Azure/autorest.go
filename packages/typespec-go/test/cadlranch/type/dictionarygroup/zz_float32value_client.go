@@ -21,6 +21,7 @@ type Float32ValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - Float32ValueClientGetOptions contains the optional parameters for the Float32ValueClient.Get method.
 func (client *Float32ValueClient) Get(ctx context.Context, options *Float32ValueClientGetOptions) (Float32ValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *Float32ValueClient) getHandleResponse(resp *http.Response) (Float3
 	return result, nil
 }
 
+// - options - Float32ValueClientPutOptions contains the optional parameters for the Float32ValueClient.Put method.
 func (client *Float32ValueClient) Put(ctx context.Context, body map[string]*float32, options *Float32ValueClientPutOptions) (Float32ValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

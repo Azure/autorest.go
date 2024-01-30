@@ -24,6 +24,8 @@ type TwoModelsAsPageItemClient struct {
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for FirstItem.
+//   - options - TwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListFirstItemPager
+//     method.
 func (client *TwoModelsAsPageItemClient) NewListFirstItemPager(options *TwoModelsAsPageItemClientListFirstItemOptions) *runtime.Pager[TwoModelsAsPageItemClientListFirstItemResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TwoModelsAsPageItemClientListFirstItemResponse]{
 		More: func(page TwoModelsAsPageItemClientListFirstItemResponse) bool {
@@ -70,6 +72,8 @@ func (client *TwoModelsAsPageItemClient) listFirstItemHandleResponse(resp *http.
 
 // NewListSecondItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for SecondItem.
+//   - options - TwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListSecondItemPager
+//     method.
 func (client *TwoModelsAsPageItemClient) NewListSecondItemPager(options *TwoModelsAsPageItemClientListSecondItemOptions) *runtime.Pager[TwoModelsAsPageItemClientListSecondItemResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TwoModelsAsPageItemClientListSecondItemResponse]{
 		More: func(page TwoModelsAsPageItemClientListSecondItemResponse) bool {

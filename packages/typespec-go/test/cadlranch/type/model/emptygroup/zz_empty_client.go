@@ -21,26 +21,27 @@ type EmptyClient struct {
 	internal *azcore.Client
 }
 
-func (client *EmptyClient) GetEmpty(ctx context.Context, options *EmptyClientGetEmptyOptions) (EmptyClientGetEmptyResponse, error) {
+// - options - GetEmptyOptions contains the optional parameters for the EmptyClient.GetEmpty method.
+func (client *EmptyClient) GetEmpty(ctx context.Context, options *GetEmptyOptions) (GetEmptyResponse, error) {
 	var err error
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return EmptyClientGetEmptyResponse{}, err
+		return GetEmptyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return EmptyClientGetEmptyResponse{}, err
+		return GetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return EmptyClientGetEmptyResponse{}, err
+		return GetEmptyResponse{}, err
 	}
 	resp, err := client.getEmptyHandleResponse(httpResp)
 	return resp, err
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, options *EmptyClientGetEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, options *GetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -51,34 +52,35 @@ func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, options *E
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *EmptyClient) getEmptyHandleResponse(resp *http.Response) (EmptyClientGetEmptyResponse, error) {
-	result := EmptyClientGetEmptyResponse{}
+func (client *EmptyClient) getEmptyHandleResponse(resp *http.Response) (GetEmptyResponse, error) {
+	result := GetEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EmptyOutput); err != nil {
-		return EmptyClientGetEmptyResponse{}, err
+		return GetEmptyResponse{}, err
 	}
 	return result, nil
 }
 
-func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInputOutput, options *EmptyClientPostRoundTripEmptyOptions) (EmptyClientPostRoundTripEmptyResponse, error) {
+// - options - PostRoundTripEmptyOptions contains the optional parameters for the EmptyClient.PostRoundTripEmpty method.
+func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInputOutput, options *PostRoundTripEmptyOptions) (PostRoundTripEmptyResponse, error) {
 	var err error
 	req, err := client.postRoundTripEmptyCreateRequest(ctx, body, options)
 	if err != nil {
-		return EmptyClientPostRoundTripEmptyResponse{}, err
+		return PostRoundTripEmptyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return EmptyClientPostRoundTripEmptyResponse{}, err
+		return PostRoundTripEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return EmptyClientPostRoundTripEmptyResponse{}, err
+		return PostRoundTripEmptyResponse{}, err
 	}
 	resp, err := client.postRoundTripEmptyHandleResponse(httpResp)
 	return resp, err
 }
 
 // postRoundTripEmptyCreateRequest creates the PostRoundTripEmpty request.
-func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, body EmptyInputOutput, options *EmptyClientPostRoundTripEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, body EmptyInputOutput, options *PostRoundTripEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/round-trip"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -93,33 +95,34 @@ func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, 
 }
 
 // postRoundTripEmptyHandleResponse handles the PostRoundTripEmpty response.
-func (client *EmptyClient) postRoundTripEmptyHandleResponse(resp *http.Response) (EmptyClientPostRoundTripEmptyResponse, error) {
-	result := EmptyClientPostRoundTripEmptyResponse{}
+func (client *EmptyClient) postRoundTripEmptyHandleResponse(resp *http.Response) (PostRoundTripEmptyResponse, error) {
+	result := PostRoundTripEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EmptyInputOutput); err != nil {
-		return EmptyClientPostRoundTripEmptyResponse{}, err
+		return PostRoundTripEmptyResponse{}, err
 	}
 	return result, nil
 }
 
-func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, options *EmptyClientPutEmptyOptions) (EmptyClientPutEmptyResponse, error) {
+// - options - PutEmptyOptions contains the optional parameters for the EmptyClient.PutEmpty method.
+func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, options *PutEmptyOptions) (PutEmptyResponse, error) {
 	var err error
 	req, err := client.putEmptyCreateRequest(ctx, input, options)
 	if err != nil {
-		return EmptyClientPutEmptyResponse{}, err
+		return PutEmptyResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return EmptyClientPutEmptyResponse{}, err
+		return PutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return EmptyClientPutEmptyResponse{}, err
+		return PutEmptyResponse{}, err
 	}
-	return EmptyClientPutEmptyResponse{}, nil
+	return PutEmptyResponse{}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *EmptyClient) putEmptyCreateRequest(ctx context.Context, input EmptyInput, options *EmptyClientPutEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) putEmptyCreateRequest(ctx context.Context, input EmptyInput, options *PutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -21,6 +21,7 @@ type UsageClient struct {
 	internal *azcore.Client
 }
 
+// - options - UsageClientInputOptions contains the optional parameters for the UsageClient.Input method.
 func (client *UsageClient) Input(ctx context.Context, input InputRecord, options *UsageClientInputOptions) (UsageClientInputResponse, error) {
 	var err error
 	req, err := client.inputCreateRequest(ctx, input, options)
@@ -52,6 +53,7 @@ func (client *UsageClient) inputCreateRequest(ctx context.Context, input InputRe
 	return req, nil
 }
 
+// - options - UsageClientInputAndOutputOptions contains the optional parameters for the UsageClient.InputAndOutput method.
 func (client *UsageClient) InputAndOutput(ctx context.Context, body InputOutputRecord, options *UsageClientInputAndOutputOptions) (UsageClientInputAndOutputResponse, error) {
 	var err error
 	req, err := client.inputAndOutputCreateRequest(ctx, body, options)
@@ -94,6 +96,7 @@ func (client *UsageClient) inputAndOutputHandleResponse(resp *http.Response) (Us
 	return result, nil
 }
 
+// - options - UsageClientOutputOptions contains the optional parameters for the UsageClient.Output method.
 func (client *UsageClient) Output(ctx context.Context, options *UsageClientOutputOptions) (UsageClientOutputResponse, error) {
 	var err error
 	req, err := client.outputCreateRequest(ctx, options)

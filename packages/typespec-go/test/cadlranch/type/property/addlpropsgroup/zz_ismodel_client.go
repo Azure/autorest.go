@@ -22,6 +22,7 @@ type IsModelClient struct {
 }
 
 // Get - Get call
+//   - options - IsModelClientGetOptions contains the optional parameters for the IsModelClient.Get method.
 func (client *IsModelClient) Get(ctx context.Context, options *IsModelClientGetOptions) (IsModelClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *IsModelClient) getHandleResponse(resp *http.Response) (IsModelClie
 
 // Put - Put operation
 //   - body - body
+//   - options - IsModelClientPutOptions contains the optional parameters for the IsModelClient.Put method.
 func (client *IsModelClient) Put(ctx context.Context, body IsModelAdditionalProperties, options *IsModelClientPutOptions) (IsModelClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

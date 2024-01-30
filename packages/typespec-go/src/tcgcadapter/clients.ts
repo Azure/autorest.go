@@ -3,7 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
+import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
+import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
 import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
@@ -12,6 +13,7 @@ import { values } from '@azure-tools/linq';
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
   private ta: typeAdapter;
+  private opts: GoEmitterOptions;
 
   // track all of the client and parameter group params across all operations
   // as not every option might contain them, and parameter groups can be shared
@@ -19,8 +21,9 @@ export class clientAdapter {
   private clientParams: Map<string, go.Parameter>;
   private paramGroups: Map<string, go.ParameterGroup>;
 
-  constructor(ta: typeAdapter) {
+  constructor(ta: typeAdapter, opts: GoEmitterOptions) {
     this.ta = ta;
+    this.opts = opts;
     this.clientParams = new Map<string, go.Parameter>();
     this.paramGroups = new Map<string, go.ParameterGroup>();
   }
@@ -28,6 +31,9 @@ export class clientAdapter {
   // converts all clients and their methods to Go code model types.
   // this includes parameter groups/options types and response envelopes.
   adaptClients(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>) {
+    if (this.opts['single-client'] && sdkPackage.clients.length > 1) {
+      throw new Error('single-client cannot be enabled when there are multiple clients');
+    }
     for (const sdkClient of sdkPackage.clients) {
       if (sdkClient.initialization && values(sdkClient.methods).all((each: tcgc.SdkMethod<tcgc.SdkHttpOperation>) => { return each.kind === 'clientaccessor'; })) {
         // this is a hierarchical client with only client accessors so skip
@@ -91,9 +97,14 @@ export class clientAdapter {
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
     if (go.isMethod(method)) {
-      const optionalParamsGroupName = `${method.client.clientName}${method.methodName}Options`;
+      let prefix = method.client.clientName;
+      if (this.opts['single-client']) {
+        prefix = '';
+      }
+      const optionalParamsGroupName = `${prefix}${method.methodName}Options`;
       // TODO: ensure param name is unique
       method.optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
+      method.optionalParamsGroup.description = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
       method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
     } else {
       throw new Error('NYI');
@@ -199,12 +210,18 @@ export class clientAdapter {
     return adaptedParam;
   }
 
+  private getMethodNameForDocComment(method: go.Method): string {
+    return `${method.client.clientName}.${go.isPageableMethod(method) && !go.isLROMethod(method) ? `New${method.methodName}Pager` : method.methodName}`;
+  }
+
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
-    const respEnvName = `${method.client.clientName}${method.methodName}Response`;
-    // TODO: proper name for paged methods in doc comment
-    const respEnvDesc = `${respEnvName} contains the response from method ${method.client.clientName}.${method.methodName}.`;
-    const respEnv = new go.ResponseEnvelope(respEnvName, respEnvDesc, method);
+    let prefix = method.client.clientName;
+    if (this.opts['single-client']) {
+      prefix = '';
+    }
+    const respEnvName = `${prefix}${method.methodName}Response`;
+    const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this. getMethodNameForDocComment(method)), method);
     this.ta.codeModel.responseEnvelopes.push(respEnv);
   
     const bodyResponses = new Array<tcgc.SdkType>();

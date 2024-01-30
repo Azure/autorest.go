@@ -21,6 +21,8 @@ type SharedModelInOperationClient struct {
 	internal *azcore.Client
 }
 
+//   - options - SharedModelInOperationClientInternalOptions contains the optional parameters for the SharedModelInOperationClient.Internal
+//     method.
 func (client *SharedModelInOperationClient) Internal(ctx context.Context, name string, options *SharedModelInOperationClientInternalOptions) (SharedModelInOperationClientInternalResponse, error) {
 	var err error
 	req, err := client.internalCreateRequest(ctx, name, options)
@@ -62,6 +64,8 @@ func (client *SharedModelInOperationClient) internalHandleResponse(resp *http.Re
 	return result, nil
 }
 
+//   - options - SharedModelInOperationClientPublicOptions contains the optional parameters for the SharedModelInOperationClient.Public
+//     method.
 func (client *SharedModelInOperationClient) Public(ctx context.Context, name string, options *SharedModelInOperationClientPublicOptions) (SharedModelInOperationClientPublicResponse, error) {
 	var err error
 	req, err := client.publicCreateRequest(ctx, name, options)

@@ -7,14 +7,17 @@
 
 package usagegroup
 
+// UsageClientInputAndOutputOptions contains the optional parameters for the UsageClient.InputAndOutput method.
 type UsageClientInputAndOutputOptions struct {
 	// placeholder for future optional parameters
 }
 
+// UsageClientInputOptions contains the optional parameters for the UsageClient.Input method.
 type UsageClientInputOptions struct {
 	// placeholder for future optional parameters
 }
 
+// UsageClientOutputOptions contains the optional parameters for the UsageClient.Output method.
 type UsageClientOutputOptions struct {
 	// placeholder for future optional parameters
 }

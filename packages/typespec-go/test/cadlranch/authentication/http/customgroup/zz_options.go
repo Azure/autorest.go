@@ -7,10 +7,12 @@
 
 package customgroup
 
+// CustomClientInvalidOptions contains the optional parameters for the CustomClient.Invalid method.
 type CustomClientInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CustomClientValidOptions contains the optional parameters for the CustomClient.Valid method.
 type CustomClientValidOptions struct {
 	// placeholder for future optional parameters
 }

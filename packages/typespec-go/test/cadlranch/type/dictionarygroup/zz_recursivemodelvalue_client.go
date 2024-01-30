@@ -21,6 +21,7 @@ type RecursiveModelValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - RecursiveModelValueClientGetOptions contains the optional parameters for the RecursiveModelValueClient.Get method.
 func (client *RecursiveModelValueClient) Get(ctx context.Context, options *RecursiveModelValueClientGetOptions) (RecursiveModelValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *RecursiveModelValueClient) getHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
+// - options - RecursiveModelValueClientPutOptions contains the optional parameters for the RecursiveModelValueClient.Put method.
 func (client *RecursiveModelValueClient) Put(ctx context.Context, body map[string]*InnerModel, options *RecursiveModelValueClientPutOptions) (RecursiveModelValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

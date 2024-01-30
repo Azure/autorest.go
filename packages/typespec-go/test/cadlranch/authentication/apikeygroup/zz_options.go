@@ -7,10 +7,12 @@
 
 package apikeygroup
 
+// ApiKeyClientInvalidOptions contains the optional parameters for the ApiKeyClient.Invalid method.
 type ApiKeyClientInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ApiKeyClientValidOptions contains the optional parameters for the ApiKeyClient.Valid method.
 type ApiKeyClientValidOptions struct {
 	// placeholder for future optional parameters
 }

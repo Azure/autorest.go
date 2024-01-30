@@ -21,6 +21,8 @@ type SingleDiscriminatorClient struct {
 	internal *azcore.Client
 }
 
+//   - options - SingleDiscriminatorClientGetLegacyModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetLegacyModel
+//     method.
 func (client *SingleDiscriminatorClient) GetLegacyModel(ctx context.Context, options *SingleDiscriminatorClientGetLegacyModelOptions) (SingleDiscriminatorClientGetLegacyModelResponse, error) {
 	var err error
 	req, err := client.getLegacyModelCreateRequest(ctx, options)
@@ -59,6 +61,8 @@ func (client *SingleDiscriminatorClient) getLegacyModelHandleResponse(resp *http
 	return result, nil
 }
 
+//   - options - SingleDiscriminatorClientGetMissingDiscriminatorOptions contains the optional parameters for the SingleDiscriminatorClient.GetMissingDiscriminator
+//     method.
 func (client *SingleDiscriminatorClient) GetMissingDiscriminator(ctx context.Context, options *SingleDiscriminatorClientGetMissingDiscriminatorOptions) (SingleDiscriminatorClientGetMissingDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getMissingDiscriminatorCreateRequest(ctx, options)
@@ -97,6 +101,8 @@ func (client *SingleDiscriminatorClient) getMissingDiscriminatorHandleResponse(r
 	return result, nil
 }
 
+//   - options - SingleDiscriminatorClientGetModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetModel
+//     method.
 func (client *SingleDiscriminatorClient) GetModel(ctx context.Context, options *SingleDiscriminatorClientGetModelOptions) (SingleDiscriminatorClientGetModelResponse, error) {
 	var err error
 	req, err := client.getModelCreateRequest(ctx, options)
@@ -135,6 +141,8 @@ func (client *SingleDiscriminatorClient) getModelHandleResponse(resp *http.Respo
 	return result, nil
 }
 
+//   - options - SingleDiscriminatorClientGetRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetRecursiveModel
+//     method.
 func (client *SingleDiscriminatorClient) GetRecursiveModel(ctx context.Context, options *SingleDiscriminatorClientGetRecursiveModelOptions) (SingleDiscriminatorClientGetRecursiveModelResponse, error) {
 	var err error
 	req, err := client.getRecursiveModelCreateRequest(ctx, options)
@@ -173,6 +181,8 @@ func (client *SingleDiscriminatorClient) getRecursiveModelHandleResponse(resp *h
 	return result, nil
 }
 
+//   - options - SingleDiscriminatorClientGetWrongDiscriminatorOptions contains the optional parameters for the SingleDiscriminatorClient.GetWrongDiscriminator
+//     method.
 func (client *SingleDiscriminatorClient) GetWrongDiscriminator(ctx context.Context, options *SingleDiscriminatorClientGetWrongDiscriminatorOptions) (SingleDiscriminatorClientGetWrongDiscriminatorResponse, error) {
 	var err error
 	req, err := client.getWrongDiscriminatorCreateRequest(ctx, options)
@@ -211,6 +221,8 @@ func (client *SingleDiscriminatorClient) getWrongDiscriminatorHandleResponse(res
 	return result, nil
 }
 
+//   - options - SingleDiscriminatorClientPutModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutModel
+//     method.
 func (client *SingleDiscriminatorClient) PutModel(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutModelOptions) (SingleDiscriminatorClientPutModelResponse, error) {
 	var err error
 	req, err := client.putModelCreateRequest(ctx, input, options)
@@ -242,6 +254,8 @@ func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+//   - options - SingleDiscriminatorClientPutRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutRecursiveModel
+//     method.
 func (client *SingleDiscriminatorClient) PutRecursiveModel(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutRecursiveModelOptions) (SingleDiscriminatorClientPutRecursiveModelResponse, error) {
 	var err error
 	req, err := client.putRecursiveModelCreateRequest(ctx, input, options)

@@ -7,7 +7,7 @@
 
 package pageablegroup
 
-// PageableClientListResponse contains the response from method PageableClient.List.
+// PageableClientListResponse contains the response from method PageableClient.NewListPager.
 type PageableClientListResponse struct {
 	// Paged collection of User items
 	PagedUser
