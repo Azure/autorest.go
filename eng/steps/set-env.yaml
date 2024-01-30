@@ -1,5 +1,5 @@
 parameters:
-  NodeVersion: "18.x"
+  NodeVersion: "20.x"
   GoVersion: "1.21.4"
 
 steps:
