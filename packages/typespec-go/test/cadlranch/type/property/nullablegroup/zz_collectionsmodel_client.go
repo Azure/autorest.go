@@ -22,6 +22,8 @@ type CollectionsModelClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+//   - options - CollectionsModelClientGetNonNullOptions contains the optional parameters for the CollectionsModelClient.GetNonNull
+//     method.
 func (client *CollectionsModelClient) GetNonNull(ctx context.Context, options *CollectionsModelClientGetNonNullOptions) (CollectionsModelClientGetNonNullResponse, error) {
 	var err error
 	req, err := client.getNonNullCreateRequest(ctx, options)
@@ -61,6 +63,8 @@ func (client *CollectionsModelClient) getNonNullHandleResponse(resp *http.Respon
 }
 
 // GetNull - Get models that will return the default object
+//   - options - CollectionsModelClientGetNullOptions contains the optional parameters for the CollectionsModelClient.GetNull
+//     method.
 func (client *CollectionsModelClient) GetNull(ctx context.Context, options *CollectionsModelClientGetNullOptions) (CollectionsModelClientGetNullResponse, error) {
 	var err error
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -100,6 +104,8 @@ func (client *CollectionsModelClient) getNullHandleResponse(resp *http.Response)
 }
 
 // PatchNonNull - Put a body with all properties present.
+//   - options - CollectionsModelClientPatchNonNullOptions contains the optional parameters for the CollectionsModelClient.PatchNonNull
+//     method.
 func (client *CollectionsModelClient) PatchNonNull(ctx context.Context, body CollectionsModelProperty, options *CollectionsModelClientPatchNonNullOptions) (CollectionsModelClientPatchNonNullResponse, error) {
 	var err error
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
@@ -132,6 +138,8 @@ func (client *CollectionsModelClient) patchNonNullCreateRequest(ctx context.Cont
 }
 
 // PatchNull - Put a body with default properties.
+//   - options - CollectionsModelClientPatchNullOptions contains the optional parameters for the CollectionsModelClient.PatchNull
+//     method.
 func (client *CollectionsModelClient) PatchNull(ctx context.Context, body CollectionsModelProperty, options *CollectionsModelClientPatchNullOptions) (CollectionsModelClientPatchNullResponse, error) {
 	var err error
 	req, err := client.patchNullCreateRequest(ctx, body, options)

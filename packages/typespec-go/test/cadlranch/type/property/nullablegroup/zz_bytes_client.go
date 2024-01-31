@@ -22,6 +22,7 @@ type BytesClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+//   - options - BytesClientGetNonNullOptions contains the optional parameters for the BytesClient.GetNonNull method.
 func (client *BytesClient) GetNonNull(ctx context.Context, options *BytesClientGetNonNullOptions) (BytesClientGetNonNullResponse, error) {
 	var err error
 	req, err := client.getNonNullCreateRequest(ctx, options)
@@ -61,6 +62,7 @@ func (client *BytesClient) getNonNullHandleResponse(resp *http.Response) (BytesC
 }
 
 // GetNull - Get models that will return the default object
+//   - options - BytesClientGetNullOptions contains the optional parameters for the BytesClient.GetNull method.
 func (client *BytesClient) GetNull(ctx context.Context, options *BytesClientGetNullOptions) (BytesClientGetNullResponse, error) {
 	var err error
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -100,6 +102,7 @@ func (client *BytesClient) getNullHandleResponse(resp *http.Response) (BytesClie
 }
 
 // PatchNonNull - Put a body with all properties present.
+//   - options - BytesClientPatchNonNullOptions contains the optional parameters for the BytesClient.PatchNonNull method.
 func (client *BytesClient) PatchNonNull(ctx context.Context, body BytesProperty, options *BytesClientPatchNonNullOptions) (BytesClientPatchNonNullResponse, error) {
 	var err error
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
@@ -132,6 +135,7 @@ func (client *BytesClient) patchNonNullCreateRequest(ctx context.Context, body B
 }
 
 // PatchNull - Put a body with default properties.
+//   - options - BytesClientPatchNullOptions contains the optional parameters for the BytesClient.PatchNull method.
 func (client *BytesClient) PatchNull(ctx context.Context, body BytesProperty, options *BytesClientPatchNullOptions) (BytesClientPatchNullResponse, error) {
 	var err error
 	req, err := client.patchNullCreateRequest(ctx, body, options)

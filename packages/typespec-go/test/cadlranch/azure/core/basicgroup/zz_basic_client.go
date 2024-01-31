@@ -28,6 +28,7 @@ type BasicClient struct {
 // CreateOrReplace - Adds a user or replaces a user's fields.
 //   - resource - The resource instance.
 //   - id - The user's id.
+//   - options - BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
 func (client *BasicClient) CreateOrReplace(ctx context.Context, resource User, id int32, options *BasicClientCreateOrReplaceOptions) (BasicClientCreateOrReplaceResponse, error) {
 	var err error
 	req, err := client.createOrReplaceCreateRequest(ctx, resource, id, options)
@@ -77,6 +78,7 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 // CreateOrUpdate - Adds a user or updates a user's fields.
 //   - resource - The resource instance.
 //   - id - The user's id.
+//   - options - BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
 func (client *BasicClient) CreateOrUpdate(ctx context.Context, resource User, id int32, options *BasicClientCreateOrUpdateOptions) (BasicClientCreateOrUpdateResponse, error) {
 	var err error
 	req, err := client.createOrUpdateCreateRequest(ctx, resource, id, options)
@@ -125,6 +127,7 @@ func (client *BasicClient) createOrUpdateHandleResponse(resp *http.Response) (Ba
 
 // Delete - Deletes a user.
 //   - id - The user's id.
+//   - options - BasicClientDeleteOptions contains the optional parameters for the BasicClient.Delete method.
 func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicClientDeleteOptions) (BasicClientDeleteResponse, error) {
 	var err error
 	req, err := client.deleteCreateRequest(ctx, id, options)
@@ -160,6 +163,7 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, op
 // Export - Exports a user.
 //   - id - The user's id.
 //   - formatParam - The format of the data.
+//   - options - BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
 func (client *BasicClient) Export(ctx context.Context, id int32, formatParam string, options *BasicClientExportOptions) (BasicClientExportResponse, error) {
 	var err error
 	req, err := client.exportCreateRequest(ctx, id, formatParam, options)
@@ -205,6 +209,7 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 
 // Get - Gets a user.
 //   - id - The user's id.
+//   - options - BasicClientGetOptions contains the optional parameters for the BasicClient.Get method.
 func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClientGetOptions) (BasicClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, id, options)
@@ -248,6 +253,7 @@ func (client *BasicClient) getHandleResponse(resp *http.Response) (BasicClientGe
 }
 
 // NewListPager - Lists all users.
+//   - options - BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
 func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtime.Pager[BasicClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListResponse]{
 		More: func(page BasicClientListResponse) bool {
@@ -320,6 +326,8 @@ func (client *BasicClient) listHandleResponse(resp *http.Response) (BasicClientL
 }
 
 // NewListWithCustomPageModelPager - List with custom page model.
+//   - options - BasicClientListWithCustomPageModelOptions contains the optional parameters for the BasicClient.NewListWithCustomPageModelPager
+//     method.
 func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientListWithCustomPageModelOptions) *runtime.Pager[BasicClientListWithCustomPageModelResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithCustomPageModelResponse]{
 		More: func(page BasicClientListWithCustomPageModelResponse) bool {
@@ -365,6 +373,7 @@ func (client *BasicClient) listWithCustomPageModelHandleResponse(resp *http.Resp
 }
 
 // NewListWithPagePager - List with Azure.Core.Page<>.
+//   - options - BasicClientListWithPageOptions contains the optional parameters for the BasicClient.NewListWithPagePager method.
 func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPageOptions) *runtime.Pager[BasicClientListWithPageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithPageResponse]{
 		More: func(page BasicClientListWithPageResponse) bool {
@@ -411,6 +420,8 @@ func (client *BasicClient) listWithPageHandleResponse(resp *http.Response) (Basi
 
 // NewListWithParametersPager - List with extensible enum parameter Azure.Core.Page<>.
 //   - bodyInput - The body of the input.
+//   - options - BasicClientListWithParametersOptions contains the optional parameters for the BasicClient.NewListWithParametersPager
+//     method.
 func (client *BasicClient) NewListWithParametersPager(bodyInput ListItemInputBody, options *BasicClientListWithParametersOptions) *runtime.Pager[BasicClientListWithParametersResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithParametersResponse]{
 		More: func(page BasicClientListWithParametersResponse) bool {

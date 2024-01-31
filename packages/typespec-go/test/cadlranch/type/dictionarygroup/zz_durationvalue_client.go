@@ -21,6 +21,7 @@ type DurationValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - DurationValueClientGetOptions contains the optional parameters for the DurationValueClient.Get method.
 func (client *DurationValueClient) Get(ctx context.Context, options *DurationValueClientGetOptions) (DurationValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *DurationValueClient) getHandleResponse(resp *http.Response) (Durat
 	return result, nil
 }
 
+// - options - DurationValueClientPutOptions contains the optional parameters for the DurationValueClient.Put method.
 func (client *DurationValueClient) Put(ctx context.Context, body map[string]*string, options *DurationValueClientPutOptions) (DurationValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

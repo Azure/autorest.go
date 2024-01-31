@@ -21,6 +21,7 @@ type Int32ValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - Int32ValueClientGetOptions contains the optional parameters for the Int32ValueClient.Get method.
 func (client *Int32ValueClient) Get(ctx context.Context, options *Int32ValueClientGetOptions) (Int32ValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *Int32ValueClient) getHandleResponse(resp *http.Response) (Int32Val
 	return result, nil
 }
 
+// - options - Int32ValueClientPutOptions contains the optional parameters for the Int32ValueClient.Put method.
 func (client *Int32ValueClient) Put(ctx context.Context, body map[string]*int32, options *Int32ValueClientPutOptions) (Int32ValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

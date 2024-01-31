@@ -22,6 +22,8 @@ type CollectionsByteClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+//   - options - CollectionsByteClientGetNonNullOptions contains the optional parameters for the CollectionsByteClient.GetNonNull
+//     method.
 func (client *CollectionsByteClient) GetNonNull(ctx context.Context, options *CollectionsByteClientGetNonNullOptions) (CollectionsByteClientGetNonNullResponse, error) {
 	var err error
 	req, err := client.getNonNullCreateRequest(ctx, options)
@@ -61,6 +63,7 @@ func (client *CollectionsByteClient) getNonNullHandleResponse(resp *http.Respons
 }
 
 // GetNull - Get models that will return the default object
+//   - options - CollectionsByteClientGetNullOptions contains the optional parameters for the CollectionsByteClient.GetNull method.
 func (client *CollectionsByteClient) GetNull(ctx context.Context, options *CollectionsByteClientGetNullOptions) (CollectionsByteClientGetNullResponse, error) {
 	var err error
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -100,6 +103,8 @@ func (client *CollectionsByteClient) getNullHandleResponse(resp *http.Response) 
 }
 
 // PatchNonNull - Put a body with all properties present.
+//   - options - CollectionsByteClientPatchNonNullOptions contains the optional parameters for the CollectionsByteClient.PatchNonNull
+//     method.
 func (client *CollectionsByteClient) PatchNonNull(ctx context.Context, body CollectionsByteProperty, options *CollectionsByteClientPatchNonNullOptions) (CollectionsByteClientPatchNonNullResponse, error) {
 	var err error
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
@@ -132,6 +137,8 @@ func (client *CollectionsByteClient) patchNonNullCreateRequest(ctx context.Conte
 }
 
 // PatchNull - Put a body with default properties.
+//   - options - CollectionsByteClientPatchNullOptions contains the optional parameters for the CollectionsByteClient.PatchNull
+//     method.
 func (client *CollectionsByteClient) PatchNull(ctx context.Context, body CollectionsByteProperty, options *CollectionsByteClientPatchNullOptions) (CollectionsByteClientPatchNullResponse, error) {
 	var err error
 	req, err := client.patchNullCreateRequest(ctx, body, options)

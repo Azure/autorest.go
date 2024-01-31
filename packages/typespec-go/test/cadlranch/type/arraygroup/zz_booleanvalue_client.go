@@ -21,6 +21,7 @@ type BooleanValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - BooleanValueClientGetOptions contains the optional parameters for the BooleanValueClient.Get method.
 func (client *BooleanValueClient) Get(ctx context.Context, options *BooleanValueClientGetOptions) (BooleanValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *BooleanValueClient) getHandleResponse(resp *http.Response) (Boolea
 	return result, nil
 }
 
+// - options - BooleanValueClientPutOptions contains the optional parameters for the BooleanValueClient.Put method.
 func (client *BooleanValueClient) Put(ctx context.Context, body []bool, options *BooleanValueClientPutOptions) (BooleanValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

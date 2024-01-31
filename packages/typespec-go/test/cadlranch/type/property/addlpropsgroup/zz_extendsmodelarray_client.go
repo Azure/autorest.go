@@ -22,6 +22,7 @@ type ExtendsModelArrayClient struct {
 }
 
 // Get - Get call
+//   - options - ExtendsModelArrayClientGetOptions contains the optional parameters for the ExtendsModelArrayClient.Get method.
 func (client *ExtendsModelArrayClient) Get(ctx context.Context, options *ExtendsModelArrayClientGetOptions) (ExtendsModelArrayClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *ExtendsModelArrayClient) getHandleResponse(resp *http.Response) (E
 
 // Put - Put operation
 //   - body - body
+//   - options - ExtendsModelArrayClientPutOptions contains the optional parameters for the ExtendsModelArrayClient.Put method.
 func (client *ExtendsModelArrayClient) Put(ctx context.Context, body ExtendsModelArrayAdditionalProperties, options *ExtendsModelArrayClientPutOptions) (ExtendsModelArrayClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

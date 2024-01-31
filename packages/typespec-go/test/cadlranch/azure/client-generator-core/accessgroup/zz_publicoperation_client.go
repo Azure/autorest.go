@@ -21,6 +21,8 @@ type PublicOperationClient struct {
 	internal *azcore.Client
 }
 
+//   - options - PublicOperationClientNoDecoratorInPublicOptions contains the optional parameters for the PublicOperationClient.NoDecoratorInPublic
+//     method.
 func (client *PublicOperationClient) NoDecoratorInPublic(ctx context.Context, name string, options *PublicOperationClientNoDecoratorInPublicOptions) (PublicOperationClientNoDecoratorInPublicResponse, error) {
 	var err error
 	req, err := client.noDecoratorInPublicCreateRequest(ctx, name, options)
@@ -62,6 +64,8 @@ func (client *PublicOperationClient) noDecoratorInPublicHandleResponse(resp *htt
 	return result, nil
 }
 
+//   - options - PublicOperationClientPublicDecoratorInPublicOptions contains the optional parameters for the PublicOperationClient.PublicDecoratorInPublic
+//     method.
 func (client *PublicOperationClient) PublicDecoratorInPublic(ctx context.Context, name string, options *PublicOperationClientPublicDecoratorInPublicOptions) (PublicOperationClientPublicDecoratorInPublicResponse, error) {
 	var err error
 	req, err := client.publicDecoratorInPublicCreateRequest(ctx, name, options)

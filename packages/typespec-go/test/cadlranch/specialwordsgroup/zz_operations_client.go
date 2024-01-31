@@ -21,6 +21,7 @@ type OperationsClient struct {
 	internal *azcore.Client
 }
 
+// - options - OperationsClientAndOptions contains the optional parameters for the OperationsClient.And method.
 func (client *OperationsClient) And(ctx context.Context, options *OperationsClientAndOptions) (OperationsClientAndResponse, error) {
 	var err error
 	req, err := client.andCreateRequest(ctx, options)
@@ -48,6 +49,7 @@ func (client *OperationsClient) andCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientAsOptions contains the optional parameters for the OperationsClient.As method.
 func (client *OperationsClient) As(ctx context.Context, options *OperationsClientAsOptions) (OperationsClientAsResponse, error) {
 	var err error
 	req, err := client.asCreateRequest(ctx, options)
@@ -75,6 +77,7 @@ func (client *OperationsClient) asCreateRequest(ctx context.Context, options *Op
 	return req, nil
 }
 
+// - options - OperationsClientAssertOptions contains the optional parameters for the OperationsClient.Assert method.
 func (client *OperationsClient) Assert(ctx context.Context, options *OperationsClientAssertOptions) (OperationsClientAssertResponse, error) {
 	var err error
 	req, err := client.assertCreateRequest(ctx, options)
@@ -102,6 +105,7 @@ func (client *OperationsClient) assertCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientAsyncOptions contains the optional parameters for the OperationsClient.Async method.
 func (client *OperationsClient) Async(ctx context.Context, options *OperationsClientAsyncOptions) (OperationsClientAsyncResponse, error) {
 	var err error
 	req, err := client.asyncCreateRequest(ctx, options)
@@ -129,6 +133,7 @@ func (client *OperationsClient) asyncCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientAwaitOptions contains the optional parameters for the OperationsClient.Await method.
 func (client *OperationsClient) Await(ctx context.Context, options *OperationsClientAwaitOptions) (OperationsClientAwaitResponse, error) {
 	var err error
 	req, err := client.awaitCreateRequest(ctx, options)
@@ -156,6 +161,7 @@ func (client *OperationsClient) awaitCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientBreakOptions contains the optional parameters for the OperationsClient.Break method.
 func (client *OperationsClient) Break(ctx context.Context, options *OperationsClientBreakOptions) (OperationsClientBreakResponse, error) {
 	var err error
 	req, err := client.breakCreateRequest(ctx, options)
@@ -183,6 +189,7 @@ func (client *OperationsClient) breakCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientClassOptions contains the optional parameters for the OperationsClient.Class method.
 func (client *OperationsClient) Class(ctx context.Context, options *OperationsClientClassOptions) (OperationsClientClassResponse, error) {
 	var err error
 	req, err := client.classCreateRequest(ctx, options)
@@ -210,6 +217,7 @@ func (client *OperationsClient) classCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientConstructorOptions contains the optional parameters for the OperationsClient.Constructor method.
 func (client *OperationsClient) Constructor(ctx context.Context, options *OperationsClientConstructorOptions) (OperationsClientConstructorResponse, error) {
 	var err error
 	req, err := client.constructorCreateRequest(ctx, options)
@@ -237,6 +245,7 @@ func (client *OperationsClient) constructorCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
+// - options - OperationsClientContinueOptions contains the optional parameters for the OperationsClient.Continue method.
 func (client *OperationsClient) Continue(ctx context.Context, options *OperationsClientContinueOptions) (OperationsClientContinueResponse, error) {
 	var err error
 	req, err := client.continueCreateRequest(ctx, options)
@@ -264,6 +273,7 @@ func (client *OperationsClient) continueCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
+// - options - OperationsClientDefOptions contains the optional parameters for the OperationsClient.Def method.
 func (client *OperationsClient) Def(ctx context.Context, options *OperationsClientDefOptions) (OperationsClientDefResponse, error) {
 	var err error
 	req, err := client.defCreateRequest(ctx, options)
@@ -291,6 +301,7 @@ func (client *OperationsClient) defCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientDelOptions contains the optional parameters for the OperationsClient.Del method.
 func (client *OperationsClient) Del(ctx context.Context, options *OperationsClientDelOptions) (OperationsClientDelResponse, error) {
 	var err error
 	req, err := client.delCreateRequest(ctx, options)
@@ -318,6 +329,7 @@ func (client *OperationsClient) delCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientElifOptions contains the optional parameters for the OperationsClient.Elif method.
 func (client *OperationsClient) Elif(ctx context.Context, options *OperationsClientElifOptions) (OperationsClientElifResponse, error) {
 	var err error
 	req, err := client.elifCreateRequest(ctx, options)
@@ -345,6 +357,7 @@ func (client *OperationsClient) elifCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientElseOptions contains the optional parameters for the OperationsClient.Else method.
 func (client *OperationsClient) Else(ctx context.Context, options *OperationsClientElseOptions) (OperationsClientElseResponse, error) {
 	var err error
 	req, err := client.elseCreateRequest(ctx, options)
@@ -372,6 +385,7 @@ func (client *OperationsClient) elseCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientExceptOptions contains the optional parameters for the OperationsClient.Except method.
 func (client *OperationsClient) Except(ctx context.Context, options *OperationsClientExceptOptions) (OperationsClientExceptResponse, error) {
 	var err error
 	req, err := client.exceptCreateRequest(ctx, options)
@@ -399,6 +413,7 @@ func (client *OperationsClient) exceptCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientExecOptions contains the optional parameters for the OperationsClient.Exec method.
 func (client *OperationsClient) Exec(ctx context.Context, options *OperationsClientExecOptions) (OperationsClientExecResponse, error) {
 	var err error
 	req, err := client.execCreateRequest(ctx, options)
@@ -426,6 +441,7 @@ func (client *OperationsClient) execCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientFinallyOptions contains the optional parameters for the OperationsClient.Finally method.
 func (client *OperationsClient) Finally(ctx context.Context, options *OperationsClientFinallyOptions) (OperationsClientFinallyResponse, error) {
 	var err error
 	req, err := client.finallyCreateRequest(ctx, options)
@@ -453,6 +469,7 @@ func (client *OperationsClient) finallyCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
+// - options - OperationsClientForOptions contains the optional parameters for the OperationsClient.For method.
 func (client *OperationsClient) For(ctx context.Context, options *OperationsClientForOptions) (OperationsClientForResponse, error) {
 	var err error
 	req, err := client.forCreateRequest(ctx, options)
@@ -480,6 +497,7 @@ func (client *OperationsClient) forCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientFromOptions contains the optional parameters for the OperationsClient.From method.
 func (client *OperationsClient) From(ctx context.Context, options *OperationsClientFromOptions) (OperationsClientFromResponse, error) {
 	var err error
 	req, err := client.fromCreateRequest(ctx, options)
@@ -507,6 +525,7 @@ func (client *OperationsClient) fromCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientGlobalOptions contains the optional parameters for the OperationsClient.Global method.
 func (client *OperationsClient) Global(ctx context.Context, options *OperationsClientGlobalOptions) (OperationsClientGlobalResponse, error) {
 	var err error
 	req, err := client.globalCreateRequest(ctx, options)
@@ -534,6 +553,7 @@ func (client *OperationsClient) globalCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientIfOptions contains the optional parameters for the OperationsClient.If method.
 func (client *OperationsClient) If(ctx context.Context, options *OperationsClientIfOptions) (OperationsClientIfResponse, error) {
 	var err error
 	req, err := client.ifCreateRequest(ctx, options)
@@ -561,6 +581,7 @@ func (client *OperationsClient) ifCreateRequest(ctx context.Context, options *Op
 	return req, nil
 }
 
+// - options - OperationsClientImportOptions contains the optional parameters for the OperationsClient.Import method.
 func (client *OperationsClient) Import(ctx context.Context, options *OperationsClientImportOptions) (OperationsClientImportResponse, error) {
 	var err error
 	req, err := client.importCreateRequest(ctx, options)
@@ -588,6 +609,7 @@ func (client *OperationsClient) importCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientInOptions contains the optional parameters for the OperationsClient.In method.
 func (client *OperationsClient) In(ctx context.Context, options *OperationsClientInOptions) (OperationsClientInResponse, error) {
 	var err error
 	req, err := client.inCreateRequest(ctx, options)
@@ -615,6 +637,7 @@ func (client *OperationsClient) inCreateRequest(ctx context.Context, options *Op
 	return req, nil
 }
 
+// - options - OperationsClientIsOptions contains the optional parameters for the OperationsClient.Is method.
 func (client *OperationsClient) Is(ctx context.Context, options *OperationsClientIsOptions) (OperationsClientIsResponse, error) {
 	var err error
 	req, err := client.isCreateRequest(ctx, options)
@@ -642,6 +665,7 @@ func (client *OperationsClient) isCreateRequest(ctx context.Context, options *Op
 	return req, nil
 }
 
+// - options - OperationsClientLambdaOptions contains the optional parameters for the OperationsClient.Lambda method.
 func (client *OperationsClient) Lambda(ctx context.Context, options *OperationsClientLambdaOptions) (OperationsClientLambdaResponse, error) {
 	var err error
 	req, err := client.lambdaCreateRequest(ctx, options)
@@ -669,6 +693,7 @@ func (client *OperationsClient) lambdaCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientNotOptions contains the optional parameters for the OperationsClient.Not method.
 func (client *OperationsClient) Not(ctx context.Context, options *OperationsClientNotOptions) (OperationsClientNotResponse, error) {
 	var err error
 	req, err := client.notCreateRequest(ctx, options)
@@ -696,6 +721,7 @@ func (client *OperationsClient) notCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientOrOptions contains the optional parameters for the OperationsClient.Or method.
 func (client *OperationsClient) Or(ctx context.Context, options *OperationsClientOrOptions) (OperationsClientOrResponse, error) {
 	var err error
 	req, err := client.orCreateRequest(ctx, options)
@@ -723,6 +749,7 @@ func (client *OperationsClient) orCreateRequest(ctx context.Context, options *Op
 	return req, nil
 }
 
+// - options - OperationsClientPassOptions contains the optional parameters for the OperationsClient.Pass method.
 func (client *OperationsClient) Pass(ctx context.Context, options *OperationsClientPassOptions) (OperationsClientPassResponse, error) {
 	var err error
 	req, err := client.passCreateRequest(ctx, options)
@@ -750,6 +777,7 @@ func (client *OperationsClient) passCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientRaiseOptions contains the optional parameters for the OperationsClient.Raise method.
 func (client *OperationsClient) Raise(ctx context.Context, options *OperationsClientRaiseOptions) (OperationsClientRaiseResponse, error) {
 	var err error
 	req, err := client.raiseCreateRequest(ctx, options)
@@ -777,6 +805,7 @@ func (client *OperationsClient) raiseCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientReturnOptions contains the optional parameters for the OperationsClient.Return method.
 func (client *OperationsClient) Return(ctx context.Context, options *OperationsClientReturnOptions) (OperationsClientReturnResponse, error) {
 	var err error
 	req, err := client.returnCreateRequest(ctx, options)
@@ -804,6 +833,7 @@ func (client *OperationsClient) returnCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
+// - options - OperationsClientTryOptions contains the optional parameters for the OperationsClient.Try method.
 func (client *OperationsClient) Try(ctx context.Context, options *OperationsClientTryOptions) (OperationsClientTryResponse, error) {
 	var err error
 	req, err := client.tryCreateRequest(ctx, options)
@@ -831,6 +861,7 @@ func (client *OperationsClient) tryCreateRequest(ctx context.Context, options *O
 	return req, nil
 }
 
+// - options - OperationsClientWhileOptions contains the optional parameters for the OperationsClient.While method.
 func (client *OperationsClient) While(ctx context.Context, options *OperationsClientWhileOptions) (OperationsClientWhileResponse, error) {
 	var err error
 	req, err := client.whileCreateRequest(ctx, options)
@@ -858,6 +889,7 @@ func (client *OperationsClient) whileCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
+// - options - OperationsClientWithOptions contains the optional parameters for the OperationsClient.With method.
 func (client *OperationsClient) With(ctx context.Context, options *OperationsClientWithOptions) (OperationsClientWithResponse, error) {
 	var err error
 	req, err := client.withCreateRequest(ctx, options)
@@ -885,6 +917,7 @@ func (client *OperationsClient) withCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
+// - options - OperationsClientYieldOptions contains the optional parameters for the OperationsClient.Yield method.
 func (client *OperationsClient) Yield(ctx context.Context, options *OperationsClientYieldOptions) (OperationsClientYieldResponse, error) {
 	var err error
 	req, err := client.yieldCreateRequest(ctx, options)

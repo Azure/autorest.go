@@ -29,6 +29,8 @@ type RelativeModelInOperationClient struct {
 // "kind": "real"
 // }
 // ```
+//   - options - RelativeModelInOperationClientDiscriminatorOptions contains the optional parameters for the RelativeModelInOperationClient.Discriminator
+//     method.
 func (client *RelativeModelInOperationClient) Discriminator(ctx context.Context, kind string, options *RelativeModelInOperationClientDiscriminatorOptions) (RelativeModelInOperationClientDiscriminatorResponse, error) {
 	var err error
 	req, err := client.discriminatorCreateRequest(ctx, kind, options)
@@ -81,6 +83,8 @@ func (client *RelativeModelInOperationClient) discriminatorHandleResponse(resp *
 // }
 // }
 // ```
+//   - options - RelativeModelInOperationClientOperationOptions contains the optional parameters for the RelativeModelInOperationClient.Operation
+//     method.
 func (client *RelativeModelInOperationClient) Operation(ctx context.Context, name string, options *RelativeModelInOperationClientOperationOptions) (RelativeModelInOperationClientOperationResponse, error) {
 	var err error
 	req, err := client.operationCreateRequest(ctx, name, options)

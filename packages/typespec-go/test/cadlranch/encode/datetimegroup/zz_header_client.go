@@ -23,6 +23,7 @@ type HeaderClient struct {
 	internal *azcore.Client
 }
 
+// - options - HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
 func (client *HeaderClient) Default(ctx context.Context, value time.Time, options *HeaderClientDefaultOptions) (HeaderClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, value, options)
@@ -51,6 +52,7 @@ func (client *HeaderClient) defaultCreateRequest(ctx context.Context, value time
 	return req, nil
 }
 
+// - options - HeaderClientRFC3339Options contains the optional parameters for the HeaderClient.RFC3339 method.
 func (client *HeaderClient) RFC3339(ctx context.Context, value time.Time, options *HeaderClientRFC3339Options) (HeaderClientRFC3339Response, error) {
 	var err error
 	req, err := client.rfc3339CreateRequest(ctx, value, options)
@@ -79,6 +81,7 @@ func (client *HeaderClient) rfc3339CreateRequest(ctx context.Context, value time
 	return req, nil
 }
 
+// - options - HeaderClientRFC7231Options contains the optional parameters for the HeaderClient.RFC7231 method.
 func (client *HeaderClient) RFC7231(ctx context.Context, value time.Time, options *HeaderClientRFC7231Options) (HeaderClientRFC7231Response, error) {
 	var err error
 	req, err := client.rfc7231CreateRequest(ctx, value, options)
@@ -107,6 +110,7 @@ func (client *HeaderClient) rfc7231CreateRequest(ctx context.Context, value time
 	return req, nil
 }
 
+// - options - HeaderClientUnixTimestampOptions contains the optional parameters for the HeaderClient.UnixTimestamp method.
 func (client *HeaderClient) UnixTimestamp(ctx context.Context, value time.Time, options *HeaderClientUnixTimestampOptions) (HeaderClientUnixTimestampResponse, error) {
 	var err error
 	req, err := client.unixTimestampCreateRequest(ctx, value, options)
@@ -135,6 +139,8 @@ func (client *HeaderClient) unixTimestampCreateRequest(ctx context.Context, valu
 	return req, nil
 }
 
+//   - options - HeaderClientUnixTimestampArrayOptions contains the optional parameters for the HeaderClient.UnixTimestampArray
+//     method.
 func (client *HeaderClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *HeaderClientUnixTimestampArrayOptions) (HeaderClientUnixTimestampArrayResponse, error) {
 	var err error
 	req, err := client.unixTimestampArrayCreateRequest(ctx, value, options)

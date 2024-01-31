@@ -104,6 +104,8 @@ export async function namer(session: Session<CodeModel>) {
     throw new Error('--module and --containing-module are mutually exclusive');
   }
   model.language.go!.containingModule = containingModule;
+  const singleClient = await session.getValue('single-client', false);
+  model.language.go!.singleClient = singleClient;
 
   // fix up type names
   const structNames = new Set<string>();

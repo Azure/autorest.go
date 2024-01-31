@@ -23,6 +23,7 @@ type PageableClient struct {
 }
 
 // NewListPager - List users
+//   - options - PageableClientListOptions contains the optional parameters for the PageableClient.NewListPager method.
 func (client *PageableClient) NewListPager(options *PageableClientListOptions) *runtime.Pager[PageableClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PageableClientListResponse]{
 		More: func(page PageableClientListResponse) bool {

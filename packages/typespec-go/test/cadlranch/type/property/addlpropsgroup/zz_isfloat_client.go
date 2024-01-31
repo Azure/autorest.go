@@ -22,6 +22,7 @@ type IsFloatClient struct {
 }
 
 // Get - Get call
+//   - options - IsFloatClientGetOptions contains the optional parameters for the IsFloatClient.Get method.
 func (client *IsFloatClient) Get(ctx context.Context, options *IsFloatClientGetOptions) (IsFloatClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -62,6 +63,7 @@ func (client *IsFloatClient) getHandleResponse(resp *http.Response) (IsFloatClie
 
 // Put - Put operation
 //   - body - body
+//   - options - IsFloatClientPutOptions contains the optional parameters for the IsFloatClient.Put method.
 func (client *IsFloatClient) Put(ctx context.Context, body IsFloatAdditionalProperties, options *IsFloatClientPutOptions) (IsFloatClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

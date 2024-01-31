@@ -21,6 +21,7 @@ type RequestBodyClient struct {
 	internal *azcore.Client
 }
 
+// - options - RequestBodyClientBase64Options contains the optional parameters for the RequestBodyClient.Base64 method.
 func (client *RequestBodyClient) Base64(ctx context.Context, value []byte, options *RequestBodyClientBase64Options) (RequestBodyClientBase64Response, error) {
 	var err error
 	req, err := client.base64CreateRequest(ctx, value, options)
@@ -52,6 +53,7 @@ func (client *RequestBodyClient) base64CreateRequest(ctx context.Context, value 
 	return req, nil
 }
 
+// - options - RequestBodyClientBase64URLOptions contains the optional parameters for the RequestBodyClient.Base64URL method.
 func (client *RequestBodyClient) Base64URL(ctx context.Context, value []byte, options *RequestBodyClientBase64URLOptions) (RequestBodyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, value, options)
@@ -83,6 +85,8 @@ func (client *RequestBodyClient) base64URLCreateRequest(ctx context.Context, val
 	return req, nil
 }
 
+//   - options - RequestBodyClientCustomContentTypeOptions contains the optional parameters for the RequestBodyClient.CustomContentType
+//     method.
 func (client *RequestBodyClient) CustomContentType(ctx context.Context, value []byte, options *RequestBodyClientCustomContentTypeOptions) (RequestBodyClientCustomContentTypeResponse, error) {
 	var err error
 	req, err := client.customContentTypeCreateRequest(ctx, value, options)
@@ -114,6 +118,7 @@ func (client *RequestBodyClient) customContentTypeCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// - options - RequestBodyClientDefaultOptions contains the optional parameters for the RequestBodyClient.Default method.
 func (client *RequestBodyClient) Default(ctx context.Context, value []byte, options *RequestBodyClientDefaultOptions) (RequestBodyClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, value, options)
@@ -145,6 +150,7 @@ func (client *RequestBodyClient) defaultCreateRequest(ctx context.Context, value
 	return req, nil
 }
 
+// - options - RequestBodyClientOctetStreamOptions contains the optional parameters for the RequestBodyClient.OctetStream method.
 func (client *RequestBodyClient) OctetStream(ctx context.Context, value []byte, options *RequestBodyClientOctetStreamOptions) (RequestBodyClientOctetStreamResponse, error) {
 	var err error
 	req, err := client.octetStreamCreateRequest(ctx, value, options)

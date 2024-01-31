@@ -21,6 +21,7 @@ type FooClient struct {
 	internal *azcore.Client
 }
 
+// - options - FooClientFourOptions contains the optional parameters for the FooClient.Four method.
 func (client *FooClient) Four(ctx context.Context, options *FooClientFourOptions) (FooClientFourResponse, error) {
 	var err error
 	req, err := client.fourCreateRequest(ctx, options)
@@ -48,6 +49,7 @@ func (client *FooClient) fourCreateRequest(ctx context.Context, options *FooClie
 	return req, nil
 }
 
+// - options - FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
 func (client *FooClient) Three(ctx context.Context, options *FooClientThreeOptions) (FooClientThreeResponse, error) {
 	var err error
 	req, err := client.threeCreateRequest(ctx, options)

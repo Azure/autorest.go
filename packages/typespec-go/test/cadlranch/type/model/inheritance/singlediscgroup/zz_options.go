@@ -7,30 +7,42 @@
 
 package singlediscgroup
 
+// SingleDiscriminatorClientGetLegacyModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetLegacyModel
+// method.
 type SingleDiscriminatorClientGetLegacyModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientGetMissingDiscriminatorOptions contains the optional parameters for the SingleDiscriminatorClient.GetMissingDiscriminator
+// method.
 type SingleDiscriminatorClientGetMissingDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientGetModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetModel method.
 type SingleDiscriminatorClientGetModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientGetRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.GetRecursiveModel
+// method.
 type SingleDiscriminatorClientGetRecursiveModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientGetWrongDiscriminatorOptions contains the optional parameters for the SingleDiscriminatorClient.GetWrongDiscriminator
+// method.
 type SingleDiscriminatorClientGetWrongDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientPutModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutModel method.
 type SingleDiscriminatorClientPutModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SingleDiscriminatorClientPutRecursiveModelOptions contains the optional parameters for the SingleDiscriminatorClient.PutRecursiveModel
+// method.
 type SingleDiscriminatorClientPutRecursiveModelOptions struct {
 	// placeholder for future optional parameters
 }

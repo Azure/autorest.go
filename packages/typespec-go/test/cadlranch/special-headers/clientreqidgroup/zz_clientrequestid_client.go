@@ -22,6 +22,7 @@ type ClientRequestIdClient struct {
 }
 
 // Get - Get operation with azure client request id header.
+//   - options - ClientRequestIdClientGetOptions contains the optional parameters for the ClientRequestIdClient.Get method.
 func (client *ClientRequestIdClient) Get(ctx context.Context, options *ClientRequestIdClientGetOptions) (ClientRequestIdClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)

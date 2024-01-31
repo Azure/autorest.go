@@ -21,6 +21,7 @@ type ResponseBodyClient struct {
 	internal *azcore.Client
 }
 
+// - options - ResponseBodyClientBase64Options contains the optional parameters for the ResponseBodyClient.Base64 method.
 func (client *ResponseBodyClient) Base64(ctx context.Context, options *ResponseBodyClientBase64Options) (ResponseBodyClientBase64Response, error) {
 	var err error
 	req, err := client.base64CreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *ResponseBodyClient) base64HandleResponse(resp *http.Response) (Res
 	return result, nil
 }
 
+// - options - ResponseBodyClientBase64URLOptions contains the optional parameters for the ResponseBodyClient.Base64URL method.
 func (client *ResponseBodyClient) Base64URL(ctx context.Context, options *ResponseBodyClientBase64URLOptions) (ResponseBodyClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, options)
@@ -97,6 +99,8 @@ func (client *ResponseBodyClient) base64URLHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
+//   - options - ResponseBodyClientCustomContentTypeOptions contains the optional parameters for the ResponseBodyClient.CustomContentType
+//     method.
 func (client *ResponseBodyClient) CustomContentType(ctx context.Context, options *ResponseBodyClientCustomContentTypeOptions) (ResponseBodyClientCustomContentTypeResponse, error) {
 	var err error
 	req, err := client.customContentTypeCreateRequest(ctx, options)
@@ -135,6 +139,7 @@ func (client *ResponseBodyClient) customContentTypeHandleResponse(resp *http.Res
 	return result, nil
 }
 
+// - options - ResponseBodyClientDefaultOptions contains the optional parameters for the ResponseBodyClient.Default method.
 func (client *ResponseBodyClient) Default(ctx context.Context, options *ResponseBodyClientDefaultOptions) (ResponseBodyClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, options)
@@ -173,6 +178,8 @@ func (client *ResponseBodyClient) defaultHandleResponse(resp *http.Response) (Re
 	return result, nil
 }
 
+//   - options - ResponseBodyClientOctetStreamOptions contains the optional parameters for the ResponseBodyClient.OctetStream
+//     method.
 func (client *ResponseBodyClient) OctetStream(ctx context.Context, options *ResponseBodyClientOctetStreamOptions) (ResponseBodyClientOctetStreamResponse, error) {
 	var err error
 	req, err := client.octetStreamCreateRequest(ctx, options)

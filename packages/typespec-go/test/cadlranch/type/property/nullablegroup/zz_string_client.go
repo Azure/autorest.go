@@ -22,6 +22,7 @@ type StringClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+//   - options - StringClientGetNonNullOptions contains the optional parameters for the StringClient.GetNonNull method.
 func (client *StringClient) GetNonNull(ctx context.Context, options *StringClientGetNonNullOptions) (StringClientGetNonNullResponse, error) {
 	var err error
 	req, err := client.getNonNullCreateRequest(ctx, options)
@@ -61,6 +62,7 @@ func (client *StringClient) getNonNullHandleResponse(resp *http.Response) (Strin
 }
 
 // GetNull - Get models that will return the default object
+//   - options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
 	var err error
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -100,6 +102,7 @@ func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringCl
 }
 
 // PatchNonNull - Put a body with all properties present.
+//   - options - StringClientPatchNonNullOptions contains the optional parameters for the StringClient.PatchNonNull method.
 func (client *StringClient) PatchNonNull(ctx context.Context, body StringProperty, options *StringClientPatchNonNullOptions) (StringClientPatchNonNullResponse, error) {
 	var err error
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
@@ -132,6 +135,7 @@ func (client *StringClient) patchNonNullCreateRequest(ctx context.Context, body 
 }
 
 // PatchNull - Put a body with default properties.
+//   - options - StringClientPatchNullOptions contains the optional parameters for the StringClient.PatchNull method.
 func (client *StringClient) PatchNull(ctx context.Context, body StringProperty, options *StringClientPatchNullOptions) (StringClientPatchNullResponse, error) {
 	var err error
 	req, err := client.patchNullCreateRequest(ctx, body, options)

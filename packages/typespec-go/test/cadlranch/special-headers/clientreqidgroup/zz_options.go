@@ -7,6 +7,7 @@
 
 package clientreqidgroup
 
+// ClientRequestIdClientGetOptions contains the optional parameters for the ClientRequestIdClient.Get method.
 type ClientRequestIdClientGetOptions struct {
 	ClientRequestID *string
 }

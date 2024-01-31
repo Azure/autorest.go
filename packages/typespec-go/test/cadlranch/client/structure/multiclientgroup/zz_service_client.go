@@ -21,6 +21,7 @@ type ServiceClient struct {
 	internal *azcore.Client
 }
 
+// - options - ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
 func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneOptions) (ServiceClientOneResponse, error) {
 	var err error
 	req, err := client.oneCreateRequest(ctx, options)
@@ -48,6 +49,7 @@ func (client *ServiceClient) oneCreateRequest(ctx context.Context, options *Serv
 	return req, nil
 }
 
+// - options - ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
 func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoOptions) (ServiceClientTwoResponse, error) {
 	var err error
 	req, err := client.twoCreateRequest(ctx, options)

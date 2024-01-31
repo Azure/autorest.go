@@ -21,6 +21,8 @@ type ProjectedNameClient struct {
 	internal *azcore.Client
 }
 
+//   - options - ProjectedNameClientClientNameOptions contains the optional parameters for the ProjectedNameClient.ClientName
+//     method.
 func (client *ProjectedNameClient) ClientName(ctx context.Context, options *ProjectedNameClientClientNameOptions) (ProjectedNameClientClientNameResponse, error) {
 	var err error
 	req, err := client.clientNameCreateRequest(ctx, options)
@@ -48,6 +50,7 @@ func (client *ProjectedNameClient) clientNameCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
+// - options - ProjectedNameClientParameterOptions contains the optional parameters for the ProjectedNameClient.Parameter method.
 func (client *ProjectedNameClient) Parameter(ctx context.Context, clientName string, options *ProjectedNameClientParameterOptions) (ProjectedNameClientParameterResponse, error) {
 	var err error
 	req, err := client.parameterCreateRequest(ctx, clientName, options)

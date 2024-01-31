@@ -7,98 +7,123 @@
 
 package nullablegroup
 
+// BytesClientGetNonNullOptions contains the optional parameters for the BytesClient.GetNonNull method.
 type BytesClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BytesClientGetNullOptions contains the optional parameters for the BytesClient.GetNull method.
 type BytesClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BytesClientPatchNonNullOptions contains the optional parameters for the BytesClient.PatchNonNull method.
 type BytesClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BytesClientPatchNullOptions contains the optional parameters for the BytesClient.PatchNull method.
 type BytesClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsByteClientGetNonNullOptions contains the optional parameters for the CollectionsByteClient.GetNonNull method.
 type CollectionsByteClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsByteClientGetNullOptions contains the optional parameters for the CollectionsByteClient.GetNull method.
 type CollectionsByteClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsByteClientPatchNonNullOptions contains the optional parameters for the CollectionsByteClient.PatchNonNull method.
 type CollectionsByteClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsByteClientPatchNullOptions contains the optional parameters for the CollectionsByteClient.PatchNull method.
 type CollectionsByteClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsModelClientGetNonNullOptions contains the optional parameters for the CollectionsModelClient.GetNonNull method.
 type CollectionsModelClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsModelClientGetNullOptions contains the optional parameters for the CollectionsModelClient.GetNull method.
 type CollectionsModelClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsModelClientPatchNonNullOptions contains the optional parameters for the CollectionsModelClient.PatchNonNull
+// method.
 type CollectionsModelClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// CollectionsModelClientPatchNullOptions contains the optional parameters for the CollectionsModelClient.PatchNull method.
 type CollectionsModelClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DatetimeClientGetNonNullOptions contains the optional parameters for the DatetimeClient.GetNonNull method.
 type DatetimeClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DatetimeClientGetNullOptions contains the optional parameters for the DatetimeClient.GetNull method.
 type DatetimeClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DatetimeClientPatchNonNullOptions contains the optional parameters for the DatetimeClient.PatchNonNull method.
 type DatetimeClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DatetimeClientPatchNullOptions contains the optional parameters for the DatetimeClient.PatchNull method.
 type DatetimeClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationClientGetNonNullOptions contains the optional parameters for the DurationClient.GetNonNull method.
 type DurationClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 type DurationClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationClientPatchNonNullOptions contains the optional parameters for the DurationClient.PatchNonNull method.
 type DurationClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationClientPatchNullOptions contains the optional parameters for the DurationClient.PatchNull method.
 type DurationClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// StringClientGetNonNullOptions contains the optional parameters for the StringClient.GetNonNull method.
 type StringClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 type StringClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// StringClientPatchNonNullOptions contains the optional parameters for the StringClient.PatchNonNull method.
 type StringClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// StringClientPatchNullOptions contains the optional parameters for the StringClient.PatchNull method.
 type StringClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }

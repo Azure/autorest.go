@@ -23,6 +23,7 @@ type QueryClient struct {
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - QueryClientCSVOptions contains the optional parameters for the QueryClient.CSV method.
 func (client *QueryClient) CSV(ctx context.Context, colors []string, options *QueryClientCSVOptions) (QueryClientCSVResponse, error) {
 	var err error
 	req, err := client.csvCreateRequest(ctx, colors, options)
@@ -54,6 +55,7 @@ func (client *QueryClient) csvCreateRequest(ctx context.Context, colors []string
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - QueryClientMultiOptions contains the optional parameters for the QueryClient.Multi method.
 func (client *QueryClient) Multi(ctx context.Context, colors []string, options *QueryClientMultiOptions) (QueryClientMultiResponse, error) {
 	var err error
 	req, err := client.multiCreateRequest(ctx, colors, options)
@@ -87,6 +89,7 @@ func (client *QueryClient) multiCreateRequest(ctx context.Context, colors []stri
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - QueryClientPipesOptions contains the optional parameters for the QueryClient.Pipes method.
 func (client *QueryClient) Pipes(ctx context.Context, colors []string, options *QueryClientPipesOptions) (QueryClientPipesResponse, error) {
 	var err error
 	req, err := client.pipesCreateRequest(ctx, colors, options)
@@ -118,6 +121,7 @@ func (client *QueryClient) pipesCreateRequest(ctx context.Context, colors []stri
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - QueryClientSsvOptions contains the optional parameters for the QueryClient.Ssv method.
 func (client *QueryClient) Ssv(ctx context.Context, colors []string, options *QueryClientSsvOptions) (QueryClientSsvResponse, error) {
 	var err error
 	req, err := client.ssvCreateRequest(ctx, colors, options)
@@ -149,6 +153,7 @@ func (client *QueryClient) ssvCreateRequest(ctx context.Context, colors []string
 }
 
 // - colors - Possible values for colors are [blue,red,green]
+// - options - QueryClientTsvOptions contains the optional parameters for the QueryClient.Tsv method.
 func (client *QueryClient) Tsv(ctx context.Context, colors []string, options *QueryClientTsvOptions) (QueryClientTsvResponse, error) {
 	var err error
 	req, err := client.tsvCreateRequest(ctx, colors, options)

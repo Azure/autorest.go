@@ -21,6 +21,7 @@ type UnknownValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - UnknownValueClientGetOptions contains the optional parameters for the UnknownValueClient.Get method.
 func (client *UnknownValueClient) Get(ctx context.Context, options *UnknownValueClientGetOptions) (UnknownValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -59,6 +60,7 @@ func (client *UnknownValueClient) getHandleResponse(resp *http.Response) (Unknow
 	return result, nil
 }
 
+// - options - UnknownValueClientPutOptions contains the optional parameters for the UnknownValueClient.Put method.
 func (client *UnknownValueClient) Put(ctx context.Context, body map[string]any, options *UnknownValueClientPutOptions) (UnknownValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

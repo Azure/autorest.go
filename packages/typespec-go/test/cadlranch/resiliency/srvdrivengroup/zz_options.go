@@ -7,15 +7,21 @@
 
 package srvdrivengroup
 
+// ResiliencyServiceDrivenClientAddOperationOptions contains the optional parameters for the ResiliencyServiceDrivenClient.AddOperation
+// method.
 type ResiliencyServiceDrivenClientAddOperationOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ResiliencyServiceDrivenClientFromNoneOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromNone
+// method.
 type ResiliencyServiceDrivenClientFromNoneOptions struct {
 	// I'm a new input optional parameter
 	NewParameter *string
 }
 
+// ResiliencyServiceDrivenClientFromOneOptionalOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneOptional
+// method.
 type ResiliencyServiceDrivenClientFromOneOptionalOptions struct {
 	// I'm a new input optional parameter
 	NewParameter *string
@@ -24,6 +30,8 @@ type ResiliencyServiceDrivenClientFromOneOptionalOptions struct {
 	Parameter *string
 }
 
+// ResiliencyServiceDrivenClientFromOneRequiredOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneRequired
+// method.
 type ResiliencyServiceDrivenClientFromOneRequiredOptions struct {
 	// I'm a new input optional parameter
 	NewParameter *string

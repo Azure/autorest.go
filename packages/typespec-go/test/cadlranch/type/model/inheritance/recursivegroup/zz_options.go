@@ -7,10 +7,12 @@
 
 package recursivegroup
 
+// RecursiveClientGetOptions contains the optional parameters for the RecursiveClient.Get method.
 type RecursiveClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
+// RecursiveClientPutOptions contains the optional parameters for the RecursiveClient.Put method.
 type RecursiveClientPutOptions struct {
 	// placeholder for future optional parameters
 }

@@ -22,6 +22,7 @@ type OAuth2Client struct {
 }
 
 // Invalid - Check whether client is authenticated. Will return an invalid bearer error.
+//   - options - OAuth2ClientInvalidOptions contains the optional parameters for the OAuth2Client.Invalid method.
 func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientInvalidOptions) (OAuth2ClientInvalidResponse, error) {
 	var err error
 	req, err := client.invalidCreateRequest(ctx, options)
@@ -51,6 +52,7 @@ func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, options *O
 }
 
 // Valid - Check whether client is authenticated
+//   - options - OAuth2ClientValidOptions contains the optional parameters for the OAuth2Client.Valid method.
 func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientValidOptions) (OAuth2ClientValidResponse, error) {
 	var err error
 	req, err := client.validCreateRequest(ctx, options)

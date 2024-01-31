@@ -21,6 +21,7 @@ type VisibilityClient struct {
 	internal *azcore.Client
 }
 
+// - options - VisibilityClientDeleteModelOptions contains the optional parameters for the VisibilityClient.DeleteModel method.
 func (client *VisibilityClient) DeleteModel(ctx context.Context, input VisibilityModel, options *VisibilityClientDeleteModelOptions) (VisibilityClientDeleteModelResponse, error) {
 	var err error
 	req, err := client.deleteModelCreateRequest(ctx, input, options)
@@ -52,6 +53,7 @@ func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, in
 	return req, nil
 }
 
+// - options - VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
 func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityModel, options *VisibilityClientGetModelOptions) (VisibilityClientGetModelResponse, error) {
 	var err error
 	req, err := client.getModelCreateRequest(ctx, input, options)
@@ -94,6 +96,7 @@ func (client *VisibilityClient) getModelHandleResponse(resp *http.Response) (Vis
 	return result, nil
 }
 
+// - options - VisibilityClientHeadModelOptions contains the optional parameters for the VisibilityClient.HeadModel method.
 func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityModel, options *VisibilityClientHeadModelOptions) (VisibilityClientHeadModelResponse, error) {
 	var err error
 	req, err := client.headModelCreateRequest(ctx, input, options)
@@ -125,6 +128,7 @@ func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, inpu
 	return req, nil
 }
 
+// - options - VisibilityClientPatchModelOptions contains the optional parameters for the VisibilityClient.PatchModel method.
 func (client *VisibilityClient) PatchModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPatchModelOptions) (VisibilityClientPatchModelResponse, error) {
 	var err error
 	req, err := client.patchModelCreateRequest(ctx, input, options)
@@ -156,6 +160,7 @@ func (client *VisibilityClient) patchModelCreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
+// - options - VisibilityClientPostModelOptions contains the optional parameters for the VisibilityClient.PostModel method.
 func (client *VisibilityClient) PostModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPostModelOptions) (VisibilityClientPostModelResponse, error) {
 	var err error
 	req, err := client.postModelCreateRequest(ctx, input, options)
@@ -187,6 +192,7 @@ func (client *VisibilityClient) postModelCreateRequest(ctx context.Context, inpu
 	return req, nil
 }
 
+// - options - VisibilityClientPutModelOptions contains the optional parameters for the VisibilityClient.PutModel method.
 func (client *VisibilityClient) PutModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPutModelOptions) (VisibilityClientPutModelResponse, error) {
 	var err error
 	req, err := client.putModelCreateRequest(ctx, input, options)

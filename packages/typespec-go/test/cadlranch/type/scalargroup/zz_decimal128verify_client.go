@@ -21,6 +21,8 @@ type Decimal128VerifyClient struct {
 	internal *azcore.Client
 }
 
+//   - options - Decimal128VerifyClientPrepareVerifyOptions contains the optional parameters for the Decimal128VerifyClient.PrepareVerify
+//     method.
 func (client *Decimal128VerifyClient) PrepareVerify(ctx context.Context, options *Decimal128VerifyClientPrepareVerifyOptions) (Decimal128VerifyClientPrepareVerifyResponse, error) {
 	var err error
 	req, err := client.prepareVerifyCreateRequest(ctx, options)
@@ -59,6 +61,7 @@ func (client *Decimal128VerifyClient) prepareVerifyHandleResponse(resp *http.Res
 	return result, nil
 }
 
+// - options - Decimal128VerifyClientVerifyOptions contains the optional parameters for the Decimal128VerifyClient.Verify method.
 func (client *Decimal128VerifyClient) Verify(ctx context.Context, body float64, options *Decimal128VerifyClientVerifyOptions) (Decimal128VerifyClientVerifyResponse, error) {
 	var err error
 	req, err := client.verifyCreateRequest(ctx, body, options)

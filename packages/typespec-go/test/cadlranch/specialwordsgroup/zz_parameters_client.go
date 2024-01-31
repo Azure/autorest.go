@@ -21,6 +21,7 @@ type ParametersClient struct {
 	internal *azcore.Client
 }
 
+// - options - ParametersClientWithAndOptions contains the optional parameters for the ParametersClient.WithAnd method.
 func (client *ParametersClient) WithAnd(ctx context.Context, and string, options *ParametersClientWithAndOptions) (ParametersClientWithAndResponse, error) {
 	var err error
 	req, err := client.withAndCreateRequest(ctx, and, options)
@@ -51,6 +52,7 @@ func (client *ParametersClient) withAndCreateRequest(ctx context.Context, and st
 	return req, nil
 }
 
+// - options - ParametersClientWithAsOptions contains the optional parameters for the ParametersClient.WithAs method.
 func (client *ParametersClient) WithAs(ctx context.Context, as string, options *ParametersClientWithAsOptions) (ParametersClientWithAsResponse, error) {
 	var err error
 	req, err := client.withAsCreateRequest(ctx, as, options)
@@ -81,6 +83,7 @@ func (client *ParametersClient) withAsCreateRequest(ctx context.Context, as stri
 	return req, nil
 }
 
+// - options - ParametersClientWithAssertOptions contains the optional parameters for the ParametersClient.WithAssert method.
 func (client *ParametersClient) WithAssert(ctx context.Context, assert string, options *ParametersClientWithAssertOptions) (ParametersClientWithAssertResponse, error) {
 	var err error
 	req, err := client.withAssertCreateRequest(ctx, assert, options)
@@ -111,6 +114,7 @@ func (client *ParametersClient) withAssertCreateRequest(ctx context.Context, ass
 	return req, nil
 }
 
+// - options - ParametersClientWithAsyncOptions contains the optional parameters for the ParametersClient.WithAsync method.
 func (client *ParametersClient) WithAsync(ctx context.Context, async string, options *ParametersClientWithAsyncOptions) (ParametersClientWithAsyncResponse, error) {
 	var err error
 	req, err := client.withAsyncCreateRequest(ctx, async, options)
@@ -141,6 +145,7 @@ func (client *ParametersClient) withAsyncCreateRequest(ctx context.Context, asyn
 	return req, nil
 }
 
+// - options - ParametersClientWithAwaitOptions contains the optional parameters for the ParametersClient.WithAwait method.
 func (client *ParametersClient) WithAwait(ctx context.Context, await string, options *ParametersClientWithAwaitOptions) (ParametersClientWithAwaitResponse, error) {
 	var err error
 	req, err := client.withAwaitCreateRequest(ctx, await, options)
@@ -171,6 +176,7 @@ func (client *ParametersClient) withAwaitCreateRequest(ctx context.Context, awai
 	return req, nil
 }
 
+// - options - ParametersClientWithBreakOptions contains the optional parameters for the ParametersClient.WithBreak method.
 func (client *ParametersClient) WithBreak(ctx context.Context, breakParam string, options *ParametersClientWithBreakOptions) (ParametersClientWithBreakResponse, error) {
 	var err error
 	req, err := client.withBreakCreateRequest(ctx, breakParam, options)
@@ -201,6 +207,8 @@ func (client *ParametersClient) withBreakCreateRequest(ctx context.Context, brea
 	return req, nil
 }
 
+//   - options - ParametersClientWithCancellationTokenOptions contains the optional parameters for the ParametersClient.WithCancellationToken
+//     method.
 func (client *ParametersClient) WithCancellationToken(ctx context.Context, cancellationToken string, options *ParametersClientWithCancellationTokenOptions) (ParametersClientWithCancellationTokenResponse, error) {
 	var err error
 	req, err := client.withCancellationTokenCreateRequest(ctx, cancellationToken, options)
@@ -231,6 +239,7 @@ func (client *ParametersClient) withCancellationTokenCreateRequest(ctx context.C
 	return req, nil
 }
 
+// - options - ParametersClientWithClassOptions contains the optional parameters for the ParametersClient.WithClass method.
 func (client *ParametersClient) WithClass(ctx context.Context, class string, options *ParametersClientWithClassOptions) (ParametersClientWithClassResponse, error) {
 	var err error
 	req, err := client.withClassCreateRequest(ctx, class, options)
@@ -261,6 +270,8 @@ func (client *ParametersClient) withClassCreateRequest(ctx context.Context, clas
 	return req, nil
 }
 
+//   - options - ParametersClientWithConstructorOptions contains the optional parameters for the ParametersClient.WithConstructor
+//     method.
 func (client *ParametersClient) WithConstructor(ctx context.Context, constructor string, options *ParametersClientWithConstructorOptions) (ParametersClientWithConstructorResponse, error) {
 	var err error
 	req, err := client.withConstructorCreateRequest(ctx, constructor, options)
@@ -291,6 +302,7 @@ func (client *ParametersClient) withConstructorCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// - options - ParametersClientWithContinueOptions contains the optional parameters for the ParametersClient.WithContinue method.
 func (client *ParametersClient) WithContinue(ctx context.Context, continueParam string, options *ParametersClientWithContinueOptions) (ParametersClientWithContinueResponse, error) {
 	var err error
 	req, err := client.withContinueCreateRequest(ctx, continueParam, options)
@@ -321,6 +333,7 @@ func (client *ParametersClient) withContinueCreateRequest(ctx context.Context, c
 	return req, nil
 }
 
+// - options - ParametersClientWithDefOptions contains the optional parameters for the ParametersClient.WithDef method.
 func (client *ParametersClient) WithDef(ctx context.Context, def string, options *ParametersClientWithDefOptions) (ParametersClientWithDefResponse, error) {
 	var err error
 	req, err := client.withDefCreateRequest(ctx, def, options)
@@ -351,6 +364,7 @@ func (client *ParametersClient) withDefCreateRequest(ctx context.Context, def st
 	return req, nil
 }
 
+// - options - ParametersClientWithDelOptions contains the optional parameters for the ParametersClient.WithDel method.
 func (client *ParametersClient) WithDel(ctx context.Context, del string, options *ParametersClientWithDelOptions) (ParametersClientWithDelResponse, error) {
 	var err error
 	req, err := client.withDelCreateRequest(ctx, del, options)
@@ -381,6 +395,7 @@ func (client *ParametersClient) withDelCreateRequest(ctx context.Context, del st
 	return req, nil
 }
 
+// - options - ParametersClientWithElifOptions contains the optional parameters for the ParametersClient.WithElif method.
 func (client *ParametersClient) WithElif(ctx context.Context, elif string, options *ParametersClientWithElifOptions) (ParametersClientWithElifResponse, error) {
 	var err error
 	req, err := client.withElifCreateRequest(ctx, elif, options)
@@ -411,6 +426,7 @@ func (client *ParametersClient) withElifCreateRequest(ctx context.Context, elif 
 	return req, nil
 }
 
+// - options - ParametersClientWithElseOptions contains the optional parameters for the ParametersClient.WithElse method.
 func (client *ParametersClient) WithElse(ctx context.Context, elseParam string, options *ParametersClientWithElseOptions) (ParametersClientWithElseResponse, error) {
 	var err error
 	req, err := client.withElseCreateRequest(ctx, elseParam, options)
@@ -441,6 +457,7 @@ func (client *ParametersClient) withElseCreateRequest(ctx context.Context, elseP
 	return req, nil
 }
 
+// - options - ParametersClientWithExceptOptions contains the optional parameters for the ParametersClient.WithExcept method.
 func (client *ParametersClient) WithExcept(ctx context.Context, except string, options *ParametersClientWithExceptOptions) (ParametersClientWithExceptResponse, error) {
 	var err error
 	req, err := client.withExceptCreateRequest(ctx, except, options)
@@ -471,6 +488,7 @@ func (client *ParametersClient) withExceptCreateRequest(ctx context.Context, exc
 	return req, nil
 }
 
+// - options - ParametersClientWithExecOptions contains the optional parameters for the ParametersClient.WithExec method.
 func (client *ParametersClient) WithExec(ctx context.Context, execParam string, options *ParametersClientWithExecOptions) (ParametersClientWithExecResponse, error) {
 	var err error
 	req, err := client.withExecCreateRequest(ctx, execParam, options)
@@ -501,6 +519,7 @@ func (client *ParametersClient) withExecCreateRequest(ctx context.Context, execP
 	return req, nil
 }
 
+// - options - ParametersClientWithFinallyOptions contains the optional parameters for the ParametersClient.WithFinally method.
 func (client *ParametersClient) WithFinally(ctx context.Context, finally string, options *ParametersClientWithFinallyOptions) (ParametersClientWithFinallyResponse, error) {
 	var err error
 	req, err := client.withFinallyCreateRequest(ctx, finally, options)
@@ -531,6 +550,7 @@ func (client *ParametersClient) withFinallyCreateRequest(ctx context.Context, fi
 	return req, nil
 }
 
+// - options - ParametersClientWithForOptions contains the optional parameters for the ParametersClient.WithFor method.
 func (client *ParametersClient) WithFor(ctx context.Context, forParam string, options *ParametersClientWithForOptions) (ParametersClientWithForResponse, error) {
 	var err error
 	req, err := client.withForCreateRequest(ctx, forParam, options)
@@ -561,6 +581,7 @@ func (client *ParametersClient) withForCreateRequest(ctx context.Context, forPar
 	return req, nil
 }
 
+// - options - ParametersClientWithFromOptions contains the optional parameters for the ParametersClient.WithFrom method.
 func (client *ParametersClient) WithFrom(ctx context.Context, from string, options *ParametersClientWithFromOptions) (ParametersClientWithFromResponse, error) {
 	var err error
 	req, err := client.withFromCreateRequest(ctx, from, options)
@@ -591,6 +612,7 @@ func (client *ParametersClient) withFromCreateRequest(ctx context.Context, from 
 	return req, nil
 }
 
+// - options - ParametersClientWithGlobalOptions contains the optional parameters for the ParametersClient.WithGlobal method.
 func (client *ParametersClient) WithGlobal(ctx context.Context, global string, options *ParametersClientWithGlobalOptions) (ParametersClientWithGlobalResponse, error) {
 	var err error
 	req, err := client.withGlobalCreateRequest(ctx, global, options)
@@ -621,6 +643,7 @@ func (client *ParametersClient) withGlobalCreateRequest(ctx context.Context, glo
 	return req, nil
 }
 
+// - options - ParametersClientWithIfOptions contains the optional parameters for the ParametersClient.WithIf method.
 func (client *ParametersClient) WithIf(ctx context.Context, ifParam string, options *ParametersClientWithIfOptions) (ParametersClientWithIfResponse, error) {
 	var err error
 	req, err := client.withIfCreateRequest(ctx, ifParam, options)
@@ -651,6 +674,7 @@ func (client *ParametersClient) withIfCreateRequest(ctx context.Context, ifParam
 	return req, nil
 }
 
+// - options - ParametersClientWithImportOptions contains the optional parameters for the ParametersClient.WithImport method.
 func (client *ParametersClient) WithImport(ctx context.Context, importParam string, options *ParametersClientWithImportOptions) (ParametersClientWithImportResponse, error) {
 	var err error
 	req, err := client.withImportCreateRequest(ctx, importParam, options)
@@ -681,6 +705,7 @@ func (client *ParametersClient) withImportCreateRequest(ctx context.Context, imp
 	return req, nil
 }
 
+// - options - ParametersClientWithInOptions contains the optional parameters for the ParametersClient.WithIn method.
 func (client *ParametersClient) WithIn(ctx context.Context, in string, options *ParametersClientWithInOptions) (ParametersClientWithInResponse, error) {
 	var err error
 	req, err := client.withInCreateRequest(ctx, in, options)
@@ -711,6 +736,7 @@ func (client *ParametersClient) withInCreateRequest(ctx context.Context, in stri
 	return req, nil
 }
 
+// - options - ParametersClientWithIsOptions contains the optional parameters for the ParametersClient.WithIs method.
 func (client *ParametersClient) WithIs(ctx context.Context, is string, options *ParametersClientWithIsOptions) (ParametersClientWithIsResponse, error) {
 	var err error
 	req, err := client.withIsCreateRequest(ctx, is, options)
@@ -741,6 +767,7 @@ func (client *ParametersClient) withIsCreateRequest(ctx context.Context, is stri
 	return req, nil
 }
 
+// - options - ParametersClientWithLambdaOptions contains the optional parameters for the ParametersClient.WithLambda method.
 func (client *ParametersClient) WithLambda(ctx context.Context, lambda string, options *ParametersClientWithLambdaOptions) (ParametersClientWithLambdaResponse, error) {
 	var err error
 	req, err := client.withLambdaCreateRequest(ctx, lambda, options)
@@ -771,6 +798,7 @@ func (client *ParametersClient) withLambdaCreateRequest(ctx context.Context, lam
 	return req, nil
 }
 
+// - options - ParametersClientWithNotOptions contains the optional parameters for the ParametersClient.WithNot method.
 func (client *ParametersClient) WithNot(ctx context.Context, not string, options *ParametersClientWithNotOptions) (ParametersClientWithNotResponse, error) {
 	var err error
 	req, err := client.withNotCreateRequest(ctx, not, options)
@@ -801,6 +829,7 @@ func (client *ParametersClient) withNotCreateRequest(ctx context.Context, not st
 	return req, nil
 }
 
+// - options - ParametersClientWithOrOptions contains the optional parameters for the ParametersClient.WithOr method.
 func (client *ParametersClient) WithOr(ctx context.Context, or string, options *ParametersClientWithOrOptions) (ParametersClientWithOrResponse, error) {
 	var err error
 	req, err := client.withOrCreateRequest(ctx, or, options)
@@ -831,6 +860,7 @@ func (client *ParametersClient) withOrCreateRequest(ctx context.Context, or stri
 	return req, nil
 }
 
+// - options - ParametersClientWithPassOptions contains the optional parameters for the ParametersClient.WithPass method.
 func (client *ParametersClient) WithPass(ctx context.Context, pass string, options *ParametersClientWithPassOptions) (ParametersClientWithPassResponse, error) {
 	var err error
 	req, err := client.withPassCreateRequest(ctx, pass, options)
@@ -861,6 +891,7 @@ func (client *ParametersClient) withPassCreateRequest(ctx context.Context, pass 
 	return req, nil
 }
 
+// - options - ParametersClientWithRaiseOptions contains the optional parameters for the ParametersClient.WithRaise method.
 func (client *ParametersClient) WithRaise(ctx context.Context, raise string, options *ParametersClientWithRaiseOptions) (ParametersClientWithRaiseResponse, error) {
 	var err error
 	req, err := client.withRaiseCreateRequest(ctx, raise, options)
@@ -891,6 +922,7 @@ func (client *ParametersClient) withRaiseCreateRequest(ctx context.Context, rais
 	return req, nil
 }
 
+// - options - ParametersClientWithReturnOptions contains the optional parameters for the ParametersClient.WithReturn method.
 func (client *ParametersClient) WithReturn(ctx context.Context, returnParam string, options *ParametersClientWithReturnOptions) (ParametersClientWithReturnResponse, error) {
 	var err error
 	req, err := client.withReturnCreateRequest(ctx, returnParam, options)
@@ -921,6 +953,7 @@ func (client *ParametersClient) withReturnCreateRequest(ctx context.Context, ret
 	return req, nil
 }
 
+// - options - ParametersClientWithTryOptions contains the optional parameters for the ParametersClient.WithTry method.
 func (client *ParametersClient) WithTry(ctx context.Context, try string, options *ParametersClientWithTryOptions) (ParametersClientWithTryResponse, error) {
 	var err error
 	req, err := client.withTryCreateRequest(ctx, try, options)
@@ -951,6 +984,7 @@ func (client *ParametersClient) withTryCreateRequest(ctx context.Context, try st
 	return req, nil
 }
 
+// - options - ParametersClientWithWhileOptions contains the optional parameters for the ParametersClient.WithWhile method.
 func (client *ParametersClient) WithWhile(ctx context.Context, while string, options *ParametersClientWithWhileOptions) (ParametersClientWithWhileResponse, error) {
 	var err error
 	req, err := client.withWhileCreateRequest(ctx, while, options)
@@ -981,6 +1015,7 @@ func (client *ParametersClient) withWhileCreateRequest(ctx context.Context, whil
 	return req, nil
 }
 
+// - options - ParametersClientWithWithOptions contains the optional parameters for the ParametersClient.WithWith method.
 func (client *ParametersClient) WithWith(ctx context.Context, with string, options *ParametersClientWithWithOptions) (ParametersClientWithWithResponse, error) {
 	var err error
 	req, err := client.withWithCreateRequest(ctx, with, options)
@@ -1011,6 +1046,7 @@ func (client *ParametersClient) withWithCreateRequest(ctx context.Context, with 
 	return req, nil
 }
 
+// - options - ParametersClientWithYieldOptions contains the optional parameters for the ParametersClient.WithYield method.
 func (client *ParametersClient) WithYield(ctx context.Context, yield string, options *ParametersClientWithYieldOptions) (ParametersClientWithYieldResponse, error) {
 	var err error
 	req, err := client.withYieldCreateRequest(ctx, yield, options)

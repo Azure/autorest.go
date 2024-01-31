@@ -21,6 +21,8 @@ type BodyOptionalityClient struct {
 	internal *azcore.Client
 }
 
+//   - options - BodyOptionalityClientRequiredExplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredExplicit
+//     method.
 func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredExplicitOptions) (BodyOptionalityClientRequiredExplicitResponse, error) {
 	var err error
 	req, err := client.requiredExplicitCreateRequest(ctx, body, options)
@@ -52,6 +54,8 @@ func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.C
 	return req, nil
 }
 
+//   - options - BodyOptionalityClientRequiredImplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredImplicit
+//     method.
 func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredImplicitOptions) (BodyOptionalityClientRequiredImplicitResponse, error) {
 	var err error
 	req, err := client.requiredImplicitCreateRequest(ctx, body, options)

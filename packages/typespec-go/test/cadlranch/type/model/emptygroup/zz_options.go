@@ -7,14 +7,17 @@
 
 package emptygroup
 
-type EmptyClientGetEmptyOptions struct {
+// GetEmptyOptions contains the optional parameters for the EmptyClient.GetEmpty method.
+type GetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-type EmptyClientPostRoundTripEmptyOptions struct {
+// PostRoundTripEmptyOptions contains the optional parameters for the EmptyClient.PostRoundTripEmpty method.
+type PostRoundTripEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-type EmptyClientPutEmptyOptions struct {
+// PutEmptyOptions contains the optional parameters for the EmptyClient.PutEmpty method.
+type PutEmptyOptions struct {
 	// placeholder for future optional parameters
 }

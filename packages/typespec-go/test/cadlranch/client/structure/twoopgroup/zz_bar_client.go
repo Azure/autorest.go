@@ -21,6 +21,7 @@ type BarClient struct {
 	internal *azcore.Client
 }
 
+// - options - BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
 func (client *BarClient) Five(ctx context.Context, options *BarClientFiveOptions) (BarClientFiveResponse, error) {
 	var err error
 	req, err := client.fiveCreateRequest(ctx, options)
@@ -48,6 +49,7 @@ func (client *BarClient) fiveCreateRequest(ctx context.Context, options *BarClie
 	return req, nil
 }
 
+// - options - BarClientSixOptions contains the optional parameters for the BarClient.Six method.
 func (client *BarClient) Six(ctx context.Context, options *BarClientSixOptions) (BarClientSixResponse, error) {
 	var err error
 	req, err := client.sixCreateRequest(ctx, options)

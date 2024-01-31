@@ -7,11 +7,15 @@
 
 package condreqgroup
 
+// ConditionalRequestClientPostIfMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfMatch
+// method.
 type ConditionalRequestClientPostIfMatchOptions struct {
 	// The request should only proceed if an entity matches this string.
 	IfMatch *string
 }
 
+// ConditionalRequestClientPostIfNoneMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfNoneMatch
+// method.
 type ConditionalRequestClientPostIfNoneMatchOptions struct {
 	// The request should only proceed if no entity matches this string.
 	IfNoneMatch *string

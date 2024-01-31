@@ -7,26 +7,32 @@
 
 package basicgroup
 
+// BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
 type BasicClientCreateOrReplaceOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
 type BasicClientCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientDeleteOptions contains the optional parameters for the BasicClient.Delete method.
 type BasicClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
 type BasicClientExportOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientGetOptions contains the optional parameters for the BasicClient.Get method.
 type BasicClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
 type BasicClientListOptions struct {
 	// Expand the indicated resources into the response.
 	Expand []string
@@ -50,23 +56,31 @@ type BasicClientListOptions struct {
 	Top *int32
 }
 
+// BasicClientListWithCustomPageModelOptions contains the optional parameters for the BasicClient.NewListWithCustomPageModelPager
+// method.
 type BasicClientListWithCustomPageModelOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientListWithPageOptions contains the optional parameters for the BasicClient.NewListWithPagePager method.
 type BasicClientListWithPageOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientListWithParametersOptions contains the optional parameters for the BasicClient.NewListWithParametersPager method.
 type BasicClientListWithParametersOptions struct {
 	// Another query parameter.
 	Another *ListItemInputExtensibleEnum
 }
 
+// TwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListFirstItemPager
+// method.
 type TwoModelsAsPageItemClientListFirstItemOptions struct {
 	// placeholder for future optional parameters
 }
 
+// TwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListSecondItemPager
+// method.
 type TwoModelsAsPageItemClientListSecondItemOptions struct {
 	// placeholder for future optional parameters
 }

@@ -7,10 +7,12 @@
 
 package oauth2group
 
+// OAuth2ClientInvalidOptions contains the optional parameters for the OAuth2Client.Invalid method.
 type OAuth2ClientInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
+// OAuth2ClientValidOptions contains the optional parameters for the OAuth2Client.Valid method.
 type OAuth2ClientValidOptions struct {
 	// placeholder for future optional parameters
 }

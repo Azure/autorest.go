@@ -23,6 +23,7 @@ type HeaderClient struct {
 	internal *azcore.Client
 }
 
+// - options - HeaderClientBase64Options contains the optional parameters for the HeaderClient.Base64 method.
 func (client *HeaderClient) Base64(ctx context.Context, value []byte, options *HeaderClientBase64Options) (HeaderClientBase64Response, error) {
 	var err error
 	req, err := client.base64CreateRequest(ctx, value, options)
@@ -51,6 +52,7 @@ func (client *HeaderClient) base64CreateRequest(ctx context.Context, value []byt
 	return req, nil
 }
 
+// - options - HeaderClientBase64URLOptions contains the optional parameters for the HeaderClient.Base64URL method.
 func (client *HeaderClient) Base64URL(ctx context.Context, value []byte, options *HeaderClientBase64URLOptions) (HeaderClientBase64URLResponse, error) {
 	var err error
 	req, err := client.base64URLCreateRequest(ctx, value, options)
@@ -79,6 +81,7 @@ func (client *HeaderClient) base64URLCreateRequest(ctx context.Context, value []
 	return req, nil
 }
 
+// - options - HeaderClientBase64URLArrayOptions contains the optional parameters for the HeaderClient.Base64URLArray method.
 func (client *HeaderClient) Base64URLArray(ctx context.Context, value [][]byte, options *HeaderClientBase64URLArrayOptions) (HeaderClientBase64URLArrayResponse, error) {
 	var err error
 	req, err := client.base64URLArrayCreateRequest(ctx, value, options)
@@ -113,6 +116,7 @@ func (client *HeaderClient) base64URLArrayCreateRequest(ctx context.Context, val
 	return req, nil
 }
 
+// - options - HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
 func (client *HeaderClient) Default(ctx context.Context, value []byte, options *HeaderClientDefaultOptions) (HeaderClientDefaultResponse, error) {
 	var err error
 	req, err := client.defaultCreateRequest(ctx, value, options)

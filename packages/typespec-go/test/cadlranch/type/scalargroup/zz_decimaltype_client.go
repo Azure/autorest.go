@@ -22,6 +22,7 @@ type DecimalTypeClient struct {
 	internal *azcore.Client
 }
 
+// - options - DecimalTypeClientRequestBodyOptions contains the optional parameters for the DecimalTypeClient.RequestBody method.
 func (client *DecimalTypeClient) RequestBody(ctx context.Context, body float64, options *DecimalTypeClientRequestBodyOptions) (DecimalTypeClientRequestBodyResponse, error) {
 	var err error
 	req, err := client.requestBodyCreateRequest(ctx, body, options)
@@ -53,6 +54,8 @@ func (client *DecimalTypeClient) requestBodyCreateRequest(ctx context.Context, b
 	return req, nil
 }
 
+//   - options - DecimalTypeClientRequestParameterOptions contains the optional parameters for the DecimalTypeClient.RequestParameter
+//     method.
 func (client *DecimalTypeClient) RequestParameter(ctx context.Context, value float64, options *DecimalTypeClientRequestParameterOptions) (DecimalTypeClientRequestParameterResponse, error) {
 	var err error
 	req, err := client.requestParameterCreateRequest(ctx, value, options)
@@ -83,6 +86,8 @@ func (client *DecimalTypeClient) requestParameterCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+//   - options - DecimalTypeClientResponseBodyOptions contains the optional parameters for the DecimalTypeClient.ResponseBody
+//     method.
 func (client *DecimalTypeClient) ResponseBody(ctx context.Context, options *DecimalTypeClientResponseBodyOptions) (DecimalTypeClientResponseBodyResponse, error) {
 	var err error
 	req, err := client.responseBodyCreateRequest(ctx, options)

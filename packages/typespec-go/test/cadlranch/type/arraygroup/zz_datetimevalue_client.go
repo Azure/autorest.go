@@ -22,6 +22,7 @@ type DatetimeValueClient struct {
 	internal *azcore.Client
 }
 
+// - options - DatetimeValueClientGetOptions contains the optional parameters for the DatetimeValueClient.Get method.
 func (client *DatetimeValueClient) Get(ctx context.Context, options *DatetimeValueClientGetOptions) (DatetimeValueClientGetResponse, error) {
 	var err error
 	req, err := client.getCreateRequest(ctx, options)
@@ -66,6 +67,7 @@ func (client *DatetimeValueClient) getHandleResponse(resp *http.Response) (Datet
 	return result, nil
 }
 
+// - options - DatetimeValueClientPutOptions contains the optional parameters for the DatetimeValueClient.Put method.
 func (client *DatetimeValueClient) Put(ctx context.Context, body []time.Time, options *DatetimeValueClientPutOptions) (DatetimeValueClientPutResponse, error) {
 	var err error
 	req, err := client.putCreateRequest(ctx, body, options)

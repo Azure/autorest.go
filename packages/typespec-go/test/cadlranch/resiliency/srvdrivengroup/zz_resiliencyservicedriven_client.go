@@ -22,6 +22,8 @@ type ResiliencyServiceDrivenClient struct {
 }
 
 // AddOperation - Added operation
+//   - options - ResiliencyServiceDrivenClientAddOperationOptions contains the optional parameters for the ResiliencyServiceDrivenClient.AddOperation
+//     method.
 func (client *ResiliencyServiceDrivenClient) AddOperation(ctx context.Context, options *ResiliencyServiceDrivenClientAddOperationOptions) (ResiliencyServiceDrivenClientAddOperationResponse, error) {
 	var err error
 	req, err := client.addOperationCreateRequest(ctx, options)
@@ -50,6 +52,8 @@ func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx conte
 }
 
 // FromNone - Test that grew up from accepting no parameters to an optional input parameter
+//   - options - ResiliencyServiceDrivenClientFromNoneOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromNone
+//     method.
 func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, options *ResiliencyServiceDrivenClientFromNoneOptions) (ResiliencyServiceDrivenClientFromNoneResponse, error) {
 	var err error
 	req, err := client.fromNoneCreateRequest(ctx, options)
@@ -84,6 +88,8 @@ func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.C
 
 // FromOneOptional - Tests that we can grow up an operation from accepting one optional parameter to accepting two optional
 // parameters.
+//   - options - ResiliencyServiceDrivenClientFromOneOptionalOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneOptional
+//     method.
 func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (ResiliencyServiceDrivenClientFromOneOptionalResponse, error) {
 	var err error
 	req, err := client.fromOneOptionalCreateRequest(ctx, options)
@@ -122,6 +128,8 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 // FromOneRequired - Operation that grew up from accepting one required parameter to accepting a required parameter and an
 // optional parameter.
 //   - parameter - I am a required parameter
+//   - options - ResiliencyServiceDrivenClientFromOneRequiredOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneRequired
+//     method.
 func (client *ResiliencyServiceDrivenClient) FromOneRequired(ctx context.Context, parameter string, options *ResiliencyServiceDrivenClientFromOneRequiredOptions) (ResiliencyServiceDrivenClientFromOneRequiredResponse, error) {
 	var err error
 	req, err := client.fromOneRequiredCreateRequest(ctx, parameter, options)

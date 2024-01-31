@@ -118,3 +118,11 @@ export function uncapitalize(str: string): string {
 export function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';
 }
+
+export function createOptionsTypeDescription(typeName: string, methodName: string): string {
+  return `${typeName} contains the optional parameters for the ${methodName} method.`;
+}
+
+export function createResponseEnvelopeDescription(typeName: string, methodName: string): string {
+  return `${typeName} contains the response from method ${methodName}.`
+}

@@ -21,6 +21,8 @@ type ModelPropertiesClient struct {
 	internal *azcore.Client
 }
 
+//   - options - ModelPropertiesClientSameAsModelOptions contains the optional parameters for the ModelPropertiesClient.SameAsModel
+//     method.
 func (client *ModelPropertiesClient) SameAsModel(ctx context.Context, body SameAsModel, options *ModelPropertiesClientSameAsModelOptions) (ModelPropertiesClientSameAsModelResponse, error) {
 	var err error
 	req, err := client.sameAsModelCreateRequest(ctx, body, options)
