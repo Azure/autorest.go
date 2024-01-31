@@ -6,9 +6,6 @@ pool:
 
 steps:
   - template: ../steps/set-env.yaml
-    parameters:
-      NodeVersion: "18.x"
-      GoVersion: "1.21.4"
 
   - template: ../steps/build-test-go.yaml
 
