@@ -18629,6 +18629,7 @@ language:
       - *ref_632
       - *ref_633
       - *ref_634
+    singleClient: false
     sliceElementsByValue: false
 protocol:
   http: {}
