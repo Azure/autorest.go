@@ -78,3 +78,25 @@ func TestDisallowedField(t *testing.T) {
 	data := `{"aliasId":"theAlias","unknownField":"value"}`
 	require.Error(t, json.Unmarshal([]byte(data), &resp))
 }
+
+func TestDateTimeWithSpace(t *testing.T) {
+	dst := ScheduleCreateOrUpdateProperties{}
+	require.NoError(t, json.Unmarshal([]byte(`{"startTime":"2024-01-18 14:18:54Z"}`), &dst))
+	require.NotNil(t, dst.StartTime)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 0, time.UTC), *dst.StartTime, 0)
+
+	dst = ScheduleCreateOrUpdateProperties{}
+	require.NoError(t, json.Unmarshal([]byte(`{"startTime":"2024-01-18 14:18:54.123Z"}`), &dst))
+	require.NotNil(t, dst.StartTime)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.StartTime, 0)
+
+	dst = ScheduleCreateOrUpdateProperties{}
+	require.NoError(t, json.Unmarshal([]byte(`{"startTime":"2024-01-18 14:18:54"}`), &dst))
+	require.NotNil(t, dst.StartTime)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 0, time.UTC), *dst.StartTime, 0)
+
+	dst = ScheduleCreateOrUpdateProperties{}
+	require.NoError(t, json.Unmarshal([]byte(`{"startTime":"2024-01-18 14:18:54.123"}`), &dst))
+	require.NotNil(t, dst.StartTime)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.StartTime, 0)
+}

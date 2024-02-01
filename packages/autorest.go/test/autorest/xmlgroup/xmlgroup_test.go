@@ -664,3 +664,25 @@ func TestMetadataWithEmptyValue(t *testing.T) {
 	require.Len(t, c.Metadata, 1)
 	require.Empty(t, *c.Metadata["key1"])
 }
+
+func TestDateTimeWithSpace(t *testing.T) {
+	dst := AccessPolicy{}
+	require.NoError(t, xml.Unmarshal([]byte(`<AccessPolicy><Expiry>2024-01-18 14:18:54Z</Expiry></AccessPolicy>`), &dst))
+	require.NotNil(t, dst.Expiry)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 0, time.UTC), *dst.Expiry, 0)
+
+	dst = AccessPolicy{}
+	require.NoError(t, xml.Unmarshal([]byte(`<AccessPolicy><Expiry>2024-01-18 14:18:54.123Z</Expiry></AccessPolicy>`), &dst))
+	require.NotNil(t, dst.Expiry)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.Expiry, 0)
+
+	dst = AccessPolicy{}
+	require.NoError(t, xml.Unmarshal([]byte(`<AccessPolicy><Expiry>2024-01-18 14:18:54</Expiry></AccessPolicy>`), &dst))
+	require.NotNil(t, dst.Expiry)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 0, time.UTC), *dst.Expiry, 0)
+
+	dst = AccessPolicy{}
+	require.NoError(t, xml.Unmarshal([]byte(`<AccessPolicy><Expiry>2024-01-18 14:18:54.123</Expiry></AccessPolicy>`), &dst))
+	require.NotNil(t, dst.Expiry)
+	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.Expiry, 0)
+}
