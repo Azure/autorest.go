@@ -40353,6 +40353,7 @@ language:
       - *ref_1399
       - *ref_1400
       - *ref_1401
+    singleClient: false
     sliceElementsByValue: false
 protocol:
   http: {}

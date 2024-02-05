@@ -6,14 +6,11 @@ pool:
 
 steps:
   - template: ../steps/set-env.yaml
-    parameters:
-      NodeVersion: "18.x"
-      GoVersion: "1.21.4"
 
   - template: ../steps/build-test-typespec.yaml
 
   - pwsh: |
-      $currentVersion = node -p -e "require('./packages/typespec-go/package.json').version";
+      $currentVersion = node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version";
       $currentVersion="$currentVersion-$(Build.BuildNumber)";
       cd packages/typespec-go
       npm version --no-git-tag-version $currentVersion

@@ -6,14 +6,11 @@ pool:
 
 steps:
   - template: ../steps/set-env.yaml
-    parameters:
-      NodeVersion: "18.x"
-      GoVersion: "1.21.4"
 
   - template: ../steps/build-test-go.yaml
 
   - pwsh: |
-      $currentVersion = node -p -e "require('./packages/autorest.go/package.json').version";
+      $currentVersion = node -p -e "require('$(System.DefaultWorkingDirectory)/packages/autorest.go/package.json').version";
       $currentVersion="$currentVersion-$(Build.BuildNumber)";
       cd packages/autorest.go
       npm version --no-git-tag-version $currentVersion
