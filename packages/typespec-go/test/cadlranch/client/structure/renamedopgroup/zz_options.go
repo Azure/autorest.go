@@ -7,32 +7,33 @@
 
 package renamedopgroup
 
-// BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
-type BarClientFiveOptions struct {
+// GroupClientRenamedFourOptions contains the optional parameters for the GroupClient.RenamedFour method.
+type GroupClientRenamedFourOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BarClientSixOptions contains the optional parameters for the BarClient.Six method.
-type BarClientSixOptions struct {
+// GroupClientRenamedSixOptions contains the optional parameters for the GroupClient.RenamedSix method.
+type GroupClientRenamedSixOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FooClientFourOptions contains the optional parameters for the FooClient.Four method.
-type FooClientFourOptions struct {
+// GroupClientRenamedTwoOptions contains the optional parameters for the GroupClient.RenamedTwo method.
+type GroupClientRenamedTwoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
-type FooClientThreeOptions struct {
+// RenamedOperationClientRenamedFiveOptions contains the optional parameters for the RenamedOperationClient.RenamedFive method.
+type RenamedOperationClientRenamedFiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
-type ServiceClientOneOptions struct {
+// RenamedOperationClientRenamedOneOptions contains the optional parameters for the RenamedOperationClient.RenamedOne method.
+type RenamedOperationClientRenamedOneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
-type ServiceClientTwoOptions struct {
+// RenamedOperationClientRenamedThreeOptions contains the optional parameters for the RenamedOperationClient.RenamedThree
+// method.
+type RenamedOperationClientRenamedThreeOptions struct {
 	// placeholder for future optional parameters
 }

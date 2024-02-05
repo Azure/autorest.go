@@ -7,32 +7,32 @@
 
 package twoopgroup
 
-// BarClientFiveResponse contains the response from method BarClient.Five.
-type BarClientFiveResponse struct {
+// Group1ClientFourResponse contains the response from method Group1Client.Four.
+type Group1ClientFourResponse struct {
 	// placeholder for future response values
 }
 
-// BarClientSixResponse contains the response from method BarClient.Six.
-type BarClientSixResponse struct {
+// Group1ClientOneResponse contains the response from method Group1Client.One.
+type Group1ClientOneResponse struct {
 	// placeholder for future response values
 }
 
-// FooClientFourResponse contains the response from method FooClient.Four.
-type FooClientFourResponse struct {
+// Group1ClientThreeResponse contains the response from method Group1Client.Three.
+type Group1ClientThreeResponse struct {
 	// placeholder for future response values
 }
 
-// FooClientThreeResponse contains the response from method FooClient.Three.
-type FooClientThreeResponse struct {
+// Group2ClientFiveResponse contains the response from method Group2Client.Five.
+type Group2ClientFiveResponse struct {
 	// placeholder for future response values
 }
 
-// ServiceClientOneResponse contains the response from method ServiceClient.One.
-type ServiceClientOneResponse struct {
+// Group2ClientSixResponse contains the response from method Group2Client.Six.
+type Group2ClientSixResponse struct {
 	// placeholder for future response values
 }
 
-// ServiceClientTwoResponse contains the response from method ServiceClient.Two.
-type ServiceClientTwoResponse struct {
+// Group2ClientTwoResponse contains the response from method Group2Client.Two.
+type Group2ClientTwoResponse struct {
 	// placeholder for future response values
 }
