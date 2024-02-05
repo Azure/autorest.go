@@ -35,7 +35,7 @@ const cadlRanch = {
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
-  'collectionfmtgroup': ['parameters/collection-format'], // missing tests
+  'collectionfmtgroup': ['parameters/collection-format'],
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
   'pageablegroup': ['payload/pageable'],
