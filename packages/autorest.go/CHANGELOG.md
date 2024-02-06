@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-preview.62 (unreleased)
+## 4.0.0-preview.62 (2024-02-06)
 
 ### Features Added
 
@@ -20,3 +20,4 @@
 * ARM client factory will share the same `*arm.Client` instance across SDKs.
 * Skip generating empty `models.go` files.
 * Setting header and query params codegen is now sorted by wire name.
+* Use latest `azcore` in generated `go.mod` files.
