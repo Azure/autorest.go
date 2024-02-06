@@ -57,7 +57,7 @@ steps:
     displayName: "Lint Generated Content"
 
   - pwsh: |
-      cadl-ranch server start $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs/http
+      cadl-ranch server start ./http
       $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
@@ -67,6 +67,7 @@ steps:
       }
       cadl-ranch server stop
     displayName: "Run All Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
 
   - task: PublishTestResults@2
     inputs:
