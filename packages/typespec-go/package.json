@@ -46,6 +46,11 @@
   },
   "homepage": "https://github.com/Azure/autorest.go#readme",
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
+  "workspaces": [
+    "../codegen.go/*",
+    "../codemodel.go/*",
+    "../naming.go/*"
+  ],
   "devDependencies": {
     "@azure-tools/cadl-ranch-expect": "~0.9.0",
     "@azure-tools/cadl-ranch-specs": "~0.26.2",
@@ -61,8 +66,6 @@
   },
   "dependencies": {
     "@azure-tools/codegen": "~2.9.2",
-    "@azure-tools/codegen.go": "workspace:*",
-    "@azure-tools/naming.go": "workspace:*",
     "@azure-tools/linq": "~3.1.0",
     "@azure-tools/typespec-azure-core": ">=0.37.2 <1.0.0",
     "@azure-tools/typespec-client-generator-core": "https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzQ3NzIwOS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.40.0-pr-6.20240207.7.tgz",

@@ -22,15 +22,9 @@ importers:
       '@azure-tools/codegen':
         specifier: ~2.9.2
         version: 2.9.2
-      '@azure-tools/codegen.go':
-        specifier: workspace:*
-        version: link:../codegen.go
       '@azure-tools/linq':
         specifier: ~3.1.0
         version: 3.1.263
-      '@azure-tools/naming.go':
-        specifier: workspace:*
-        version: link:../naming.go
       '@azure-tools/tasks':
         specifier: ~3.0.0
         version: 3.0.255
@@ -208,15 +202,9 @@ importers:
       '@azure-tools/codegen':
         specifier: ~2.9.2
         version: 2.9.2
-      '@azure-tools/codegen.go':
-        specifier: workspace:*
-        version: link:../codegen.go
       '@azure-tools/linq':
         specifier: ~3.1.0
         version: 3.1.263
-      '@azure-tools/naming.go':
-        specifier: workspace:*
-        version: link:../naming.go
       '@azure-tools/typespec-azure-core':
         specifier: '>=0.37.2 <1.0.0'
         version: 0.39.0(@typespec/compiler@0.53.0)(@typespec/http@0.53.0)(@typespec/rest@0.53.0)
