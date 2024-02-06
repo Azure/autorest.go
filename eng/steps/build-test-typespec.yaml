@@ -58,7 +58,7 @@ steps:
 
   - pwsh: |
       cadl-ranch server start ./http
-      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
         Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
