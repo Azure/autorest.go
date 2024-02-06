@@ -12,6 +12,10 @@ steps:
 
   - template: ../steps/build-test-typespec.yaml
 
+  - script: cadl-ranch check-coverage http/
+    displayName: Generate CADL Ranch Coverage Report
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
+
   - task: AzureCLI@2
     displayName: Upload CADL Ranch Test Coverage
     inputs:
