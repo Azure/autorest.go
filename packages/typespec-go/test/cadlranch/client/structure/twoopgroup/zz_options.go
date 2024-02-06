@@ -7,32 +7,32 @@
 
 package twoopgroup
 
-// BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
-type BarClientFiveOptions struct {
+// Group1ClientFourOptions contains the optional parameters for the Group1Client.Four method.
+type Group1ClientFourOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BarClientSixOptions contains the optional parameters for the BarClient.Six method.
-type BarClientSixOptions struct {
+// Group1ClientOneOptions contains the optional parameters for the Group1Client.One method.
+type Group1ClientOneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FooClientFourOptions contains the optional parameters for the FooClient.Four method.
-type FooClientFourOptions struct {
+// Group1ClientThreeOptions contains the optional parameters for the Group1Client.Three method.
+type Group1ClientThreeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
-type FooClientThreeOptions struct {
+// Group2ClientFiveOptions contains the optional parameters for the Group2Client.Five method.
+type Group2ClientFiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
-type ServiceClientOneOptions struct {
+// Group2ClientSixOptions contains the optional parameters for the Group2Client.Six method.
+type Group2ClientSixOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
-type ServiceClientTwoOptions struct {
+// Group2ClientTwoOptions contains the optional parameters for the Group2Client.Two method.
+type Group2ClientTwoOptions struct {
 	// placeholder for future optional parameters
 }

@@ -7,32 +7,32 @@
 
 package multiclientgroup
 
-// BarClientFiveResponse contains the response from method BarClient.Five.
-type BarClientFiveResponse struct {
+// ClientAClientRenamedFiveResponse contains the response from method ClientAClient.RenamedFive.
+type ClientAClientRenamedFiveResponse struct {
 	// placeholder for future response values
 }
 
-// BarClientSixResponse contains the response from method BarClient.Six.
-type BarClientSixResponse struct {
+// ClientAClientRenamedOneResponse contains the response from method ClientAClient.RenamedOne.
+type ClientAClientRenamedOneResponse struct {
 	// placeholder for future response values
 }
 
-// FooClientFourResponse contains the response from method FooClient.Four.
-type FooClientFourResponse struct {
+// ClientAClientRenamedThreeResponse contains the response from method ClientAClient.RenamedThree.
+type ClientAClientRenamedThreeResponse struct {
 	// placeholder for future response values
 }
 
-// FooClientThreeResponse contains the response from method FooClient.Three.
-type FooClientThreeResponse struct {
+// ClientBClientRenamedFourResponse contains the response from method ClientBClient.RenamedFour.
+type ClientBClientRenamedFourResponse struct {
 	// placeholder for future response values
 }
 
-// ServiceClientOneResponse contains the response from method ServiceClient.One.
-type ServiceClientOneResponse struct {
+// ClientBClientRenamedSixResponse contains the response from method ClientBClient.RenamedSix.
+type ClientBClientRenamedSixResponse struct {
 	// placeholder for future response values
 }
 
-// ServiceClientTwoResponse contains the response from method ServiceClient.Two.
-type ServiceClientTwoResponse struct {
+// ClientBClientRenamedTwoResponse contains the response from method ClientBClient.RenamedTwo.
+type ClientBClientRenamedTwoResponse struct {
 	// placeholder for future response values
 }
