@@ -25,13 +25,13 @@ func TestRecursiveClientGet(t *testing.T) {
 			{
 				Extension: []recursivegroup.Extension{
 					{
-						Level: to.Ptr[int32](2),
+						Level: to.Ptr[int8](2),
 					},
 				},
-				Level: to.Ptr[int32](1),
+				Level: to.Ptr[int8](1),
 			},
 			{
-				Level: to.Ptr[int32](1),
+				Level: to.Ptr[int8](1),
 			},
 		},
 	})
@@ -45,13 +45,13 @@ func TestRecursiveClientPut(t *testing.T) {
 			{
 				Extension: []recursivegroup.Extension{
 					{
-						Level: to.Ptr[int32](2),
+						Level: to.Ptr[int8](2),
 					},
 				},
-				Level: to.Ptr[int32](1),
+				Level: to.Ptr[int8](1),
 			},
 			{
-				Level: to.Ptr[int32](1),
+				Level: to.Ptr[int8](1),
 			},
 		},
 	}, nil)

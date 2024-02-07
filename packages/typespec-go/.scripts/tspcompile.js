@@ -32,7 +32,7 @@ const cadlRanch = {
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],    // missing tests
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'], // missing tests
   'twoopgroup': ['client/structure/two-operation-group/client.tsp'],   // missing tests
-  'bytesgroup': ['encode/bytes'],
+  //'bytesgroup': ['encode/bytes'], // regression in latest tcgc fails to compile this (fix in works)
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
