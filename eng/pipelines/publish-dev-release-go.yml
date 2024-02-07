@@ -15,5 +15,6 @@ steps:
       cd packages/autorest.go
       npm version --no-git-tag-version $currentVersion
       npm pack;
+      npm install -g autorest-go-$currentVersion.tgz
       npx publish-release --token $(package-write-token) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Preview version of Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
     displayName: "Publish Dev Release"
