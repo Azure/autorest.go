@@ -14,7 +14,7 @@ import (
 )
 
 func unmarshalAddonClassification(rawMsg json.RawMessage) (armdataboxedge.AddonClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -37,7 +37,7 @@ func unmarshalAddonClassification(rawMsg json.RawMessage) (armdataboxedge.AddonC
 }
 
 func unmarshalRoleClassification(rawMsg json.RawMessage) (armdataboxedge.RoleClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -64,7 +64,7 @@ func unmarshalRoleClassification(rawMsg json.RawMessage) (armdataboxedge.RoleCla
 }
 
 func unmarshalTriggerClassification(rawMsg json.RawMessage) (armdataboxedge.TriggerClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

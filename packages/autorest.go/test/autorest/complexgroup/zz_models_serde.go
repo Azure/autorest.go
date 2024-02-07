@@ -112,7 +112,9 @@ func (b *BooleanWrapper) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
 func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "field", b.Field, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "field", b.Field, func() any {
+		return runtime.EncodeByteArray(b.Field, runtime.Base64StdFormat)
+	})
 	return json.Marshal(objectMap)
 }
 
@@ -126,7 +128,9 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = runtime.DecodeByteArray(string(val), &b.Field, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &b.Field, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -878,7 +882,9 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 	populateDateTimeRFC3339(objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "sawshark"
 	populate(objectMap, "length", s.Length)
-	populateByteArray(objectMap, "picture", s.Picture, runtime.Base64StdFormat)
+	populateByteArray(objectMap, "picture", s.Picture, func() any {
+		return runtime.EncodeByteArray(s.Picture, runtime.Base64StdFormat)
+	})
 	populate(objectMap, "siblings", s.Siblings)
 	populate(objectMap, "species", s.Species)
 	return json.Marshal(objectMap)
@@ -906,7 +912,9 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "picture":
-			err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
+			}
 			delete(rawMsg, key)
 		case "siblings":
 			s.Siblings, err = unmarshalFishClassificationArray(val)
@@ -1123,18 +1131,18 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {
+func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
 		return
 	} else {
-		m[k] = runtime.EncodeByteArray(b, f)
+		m[k] = convert()
 	}
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

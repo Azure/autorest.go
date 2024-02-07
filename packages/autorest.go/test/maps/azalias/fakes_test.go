@@ -26,7 +26,7 @@ func TestFakeCreate(t *testing.T) {
 	queryEnumContent := azalias.SomeEnumThree
 	BoolHeaderEnum1Content := azalias.BooleanEnumDisabled
 	server := fake.Server{
-		Create: func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.ClientCreateOptions) (resp azfake.Responder[azalias.ClientCreateResponse], errResp azfake.ErrorResponder) {
+		Create: func(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum azalias.BooleanEnum, unixTimeQuery time.Time, headerEnum azalias.SomeEnum, queryEnum azalias.SomeEnum, options *azalias.CreateOptions) (resp azfake.Responder[azalias.CreateResponse], errResp azfake.ErrorResponder) {
 			require.EqualValues(t, headerBoolsContent, headerBools)
 			require.EqualValues(t, stringQueryContent, stringQuery)
 			require.EqualValues(t, boolHeaderEnumContent, boolHeaderEnum)
@@ -36,7 +36,7 @@ func TestFakeCreate(t *testing.T) {
 			require.NotNil(t, options)
 			require.NotNil(t, options.BoolHeaderEnum1)
 			require.EqualValues(t, BoolHeaderEnum1Content, *options.BoolHeaderEnum1)
-			resp.SetResponse(http.StatusCreated, azalias.ClientCreateResponse{}, nil)
+			resp.SetResponse(http.StatusCreated, azalias.CreateResponse{}, nil)
 			return
 		},
 	}
@@ -44,7 +44,7 @@ func TestFakeCreate(t *testing.T) {
 		Transport: fake.NewServerTransport(&server),
 	})
 	require.NoError(t, err)
-	_, err = client.Create(context.Background(), headerBoolsContent, stringQueryContent, boolHeaderEnumContent, unixTimeQueryContent, headerEnumContent, queryEnumContent, &azalias.ClientCreateOptions{
+	_, err = client.Create(context.Background(), headerBoolsContent, stringQueryContent, boolHeaderEnumContent, unixTimeQueryContent, headerEnumContent, queryEnumContent, &azalias.CreateOptions{
 		BoolHeaderEnum1: to.Ptr(BoolHeaderEnum1Content),
 	})
 	require.NoError(t, err)
@@ -60,7 +60,7 @@ func TestFakeGetScript(t *testing.T) {
 	headerStrings := []string{"bing", "bing"}
 	require.NoError(t, err)
 	server := fake.Server{
-		GetScript: func(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, someGroup azalias.SomeGroup, explodedGroup azalias.ExplodedGroup, options *azalias.ClientGetScriptOptions) (resp azfake.Responder[azalias.ClientGetScriptResponse], errResp azfake.ErrorResponder) {
+		GetScript: func(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props azalias.GeoJSONObjectNamedCollection, someGroup azalias.SomeGroup, explodedGroup azalias.ExplodedGroup, options *azalias.GetScriptOptions) (resp azfake.Responder[azalias.GetScriptResponse], errResp azfake.ErrorResponder) {
 			require.EqualValues(t, headerContent, headerCounts)
 			require.EqualValues(t, queryContent, queryCounts)
 			require.EqualValues(t, explodedStringStuff, explodedStrings)
@@ -68,7 +68,7 @@ func TestFakeGetScript(t *testing.T) {
 			require.EqualValues(t, explodedContent, explodedGroup.ExplodedStuff)
 			require.EqualValues(t, timeContent, headerTime)
 			require.EqualValues(t, headerStrings, someGroup.HeaderStrings)
-			resp.SetResponse(http.StatusOK, azalias.ClientGetScriptResponse{}, nil)
+			resp.SetResponse(http.StatusOK, azalias.GetScriptResponse{}, nil)
 			return
 		},
 	}

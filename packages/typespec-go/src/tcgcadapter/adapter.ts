@@ -6,8 +6,8 @@
 import { clientAdapter } from './clients.js';
 import { typeAdapter } from './types.js';
 import { GoEmitterOptions } from '../lib.js';
-import * as go from '../../../codemodel.go/gocodemodel.js';
-import { packageNameFromOutputFolder } from '../../../naming.go/naming.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import { packageNameFromOutputFolder } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
 
@@ -40,7 +40,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
 
-  const ca = new clientAdapter(ta);
+  const ca = new clientAdapter(ta, context.options);
   ca.adaptClients(sdkContext.sdkPackage);
   codeModel.sortContent();
   return codeModel;

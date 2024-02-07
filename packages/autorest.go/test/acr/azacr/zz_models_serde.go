@@ -381,7 +381,9 @@ func (e *ErrorInfo) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, "Code", &e.Code)
 			delete(rawMsg, key)
 		case "detail":
-			e.Detail = val
+			if string(val) != "null" {
+				e.Detail = val
+			}
 			delete(rawMsg, key)
 		case "message":
 			err = unpopulate(val, "Message", &e.Message)
@@ -1511,7 +1513,7 @@ func populate(m map[string]any, k string, v any) {
 }
 
 func unpopulate(data json.RawMessage, fn string, v any) error {
-	if data == nil {
+	if data == nil || string(data) == "null" {
 		return nil
 	}
 	if err := json.Unmarshal(data, v); err != nil {

@@ -5,17 +5,20 @@
 
 import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
-import { generateConstants } from '../../codegen.go/constants.js';
-import { generateGoModFile } from '../../codegen.go/gomod.js';
-import { generateModels } from '../../codegen.go/models.js';
-import { generateOperations } from '../../codegen.go/operations.js';
-import { generateOptions } from '../../codegen.go/options.js';
-import { generateResponses } from '../../codegen.go/responses.js';
-import { generateTimeHelpers } from '../../codegen.go/time.js';
+import { generateConstants } from '../../codegen.go/src/constants.js';
+import { generateGoModFile } from '../../codegen.go/src/gomod.js';
+import { generateInterfaces } from '../../codegen.go/src/interfaces.js';
+import { generateModels } from '../../codegen.go/src/models.js';
+import { generateOperations } from '../../codegen.go/src/operations.js';
+import { generateOptions } from '../../codegen.go/src/options.js';
+import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js';
+import { generateResponses } from '../../codegen.go/src/responses.js';
+import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';
 import { waitForDebugger } from 'inspector';
+import 'source-map-support/register.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   // TODO: get debugger pause integrated
@@ -54,8 +57,15 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}constants.go`, constants);
   }
 
+  const interfaces = await generateInterfaces(codeModel);
+  if (interfaces.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}interfaces.go`, interfaces);
+  }
+
   const models = await generateModels(codeModel);
-  writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
+  if (models.models.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}models.go`, models.models);
+  }
   if (models.serDe.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}models_serde.go`, models.serDe);
   }
@@ -75,6 +85,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   const options = await generateOptions(codeModel);
   if (options.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}options.go`, options);
+  }
+
+  const polymorphics = await generatePolymorphicHelpers(codeModel);
+  if (polymorphics.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
   }
 
   const responses = await generateResponses(codeModel);

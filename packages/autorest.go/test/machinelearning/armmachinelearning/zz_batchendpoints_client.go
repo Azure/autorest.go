@@ -306,12 +306,12 @@ func (client *BatchEndpointsClient) listCreateRequest(ctx context.Context, resou
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Skip != nil {
+		reqQP.Set("$skip", *options.Skip)
+	}
 	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.Count != nil {
 		reqQP.Set("count", strconv.FormatInt(int64(*options.Count), 10))
-	}
-	if options != nil && options.Skip != nil {
-		reqQP.Set("$skip", *options.Skip)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

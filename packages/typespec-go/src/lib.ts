@@ -16,6 +16,7 @@ export interface GoEmitterOptions {
   'package-name'?: string;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
+  'single-client'?: boolean;
 }
 
 const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
@@ -31,7 +32,8 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'module-version': { type: 'string', nullable: true },
     'package-name': { type: 'string', nullable: true },
     'rawjson-as-bytes': { type: 'boolean', nullable: true },
-    'slice-elements-byval': { type: 'boolean', nullable: true }
+    'slice-elements-byval': { type: 'boolean', nullable: true },
+    'single-client': { type: 'boolean', nullable: true }
   },
   required: [],
 };

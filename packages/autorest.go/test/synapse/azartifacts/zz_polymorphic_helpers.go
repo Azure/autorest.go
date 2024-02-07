@@ -11,7 +11,7 @@ package azartifacts
 import "encoding/json"
 
 func unmarshalActivityClassification(rawMsg json.RawMessage) (ActivityClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -112,7 +112,7 @@ func unmarshalActivityClassification(rawMsg json.RawMessage) (ActivityClassifica
 }
 
 func unmarshalActivityClassificationArray(rawMsg json.RawMessage) ([]ActivityClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -131,7 +131,7 @@ func unmarshalActivityClassificationArray(rawMsg json.RawMessage) ([]ActivityCla
 }
 
 func unmarshalCompressionReadSettingsClassification(rawMsg json.RawMessage) (CompressionReadSettingsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -156,7 +156,7 @@ func unmarshalCompressionReadSettingsClassification(rawMsg json.RawMessage) (Com
 }
 
 func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -249,7 +249,7 @@ func unmarshalCopySinkClassification(rawMsg json.RawMessage) (CopySinkClassifica
 }
 
 func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -460,7 +460,7 @@ func unmarshalCopySourceClassification(rawMsg json.RawMessage) (CopySourceClassi
 }
 
 func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetupBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -479,7 +479,7 @@ func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetup
 }
 
 func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) ([]CustomSetupBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -498,7 +498,7 @@ func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) ([]Cust
 }
 
 func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -521,7 +521,7 @@ func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassifica
 }
 
 func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -732,7 +732,7 @@ func unmarshalDatasetClassification(rawMsg json.RawMessage) (DatasetClassificati
 }
 
 func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLocationClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -773,7 +773,7 @@ func unmarshalDatasetLocationClassification(rawMsg json.RawMessage) (DatasetLoca
 }
 
 func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (DatasetStorageFormatClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -802,7 +802,7 @@ func unmarshalDatasetStorageFormatClassification(rawMsg json.RawMessage) (Datase
 }
 
 func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (DependencyReferenceClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -827,7 +827,7 @@ func unmarshalDependencyReferenceClassification(rawMsg json.RawMessage) (Depende
 }
 
 func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) ([]DependencyReferenceClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var rawMessages []json.RawMessage
@@ -846,7 +846,7 @@ func unmarshalDependencyReferenceClassificationArray(rawMsg json.RawMessage) ([]
 }
 
 func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatReadSettingsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -873,7 +873,7 @@ func unmarshalFormatReadSettingsClassification(rawMsg json.RawMessage) (FormatRe
 }
 
 func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (IntegrationRuntimeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -896,7 +896,7 @@ func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (Integrat
 }
 
 func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -919,7 +919,7 @@ func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage)
 }
 
 func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedServiceClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -1162,7 +1162,7 @@ func unmarshalLinkedServiceClassification(rawMsg json.RawMessage) (LinkedService
 }
 
 func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -1185,7 +1185,7 @@ func unmarshalSecretBaseClassification(rawMsg json.RawMessage) (SecretBaseClassi
 }
 
 func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreReadSettingsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -1226,7 +1226,7 @@ func unmarshalStoreReadSettingsClassification(rawMsg json.RawMessage) (StoreRead
 }
 
 func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWriteSettingsClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -1257,7 +1257,7 @@ func unmarshalStoreWriteSettingsClassification(rawMsg json.RawMessage) (StoreWri
 }
 
 func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -1292,7 +1292,7 @@ func unmarshalTriggerClassification(rawMsg json.RawMessage) (TriggerClassificati
 }
 
 func unmarshalWebLinkedServiceTypePropertiesClassification(rawMsg json.RawMessage) (WebLinkedServiceTypePropertiesClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

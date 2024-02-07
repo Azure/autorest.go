@@ -59,10 +59,10 @@ func (client *ExplicitClient) postOptionalArrayHeaderCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.HeaderParameter != nil {
 		req.Raw().Header["headerParameter"] = []string{strings.Join(options.HeaderParameter, ",")}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -276,10 +276,10 @@ func (client *ExplicitClient) postOptionalIntegerHeaderCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.HeaderParameter != nil {
 		req.Raw().Header["headerParameter"] = []string{strconv.FormatInt(int64(*options.HeaderParameter), 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -405,10 +405,10 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		req.Raw().Header["bodyParameter"] = []string{*options.BodyParameter}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -535,8 +535,8 @@ func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["headerParameter"] = []string{strings.Join(headerParameter, ",")}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["headerParameter"] = []string{strings.Join(headerParameter, ",")}
 	return req, nil
 }
 
@@ -743,8 +743,8 @@ func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["headerParameter"] = []string{strconv.FormatInt(int64(headerParameter), 10)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["headerParameter"] = []string{strconv.FormatInt(int64(headerParameter), 10)}
 	return req, nil
 }
 
@@ -867,8 +867,8 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["headerParameter"] = []string{headerParameter}
 	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["headerParameter"] = []string{headerParameter}
 	return req, nil
 }
 

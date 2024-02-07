@@ -3,7 +3,7 @@
 import { exec } from 'child_process';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
-import { semaphore } from './semaphore.js';
+import semaphore from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
 const sem = semaphore(8);
@@ -128,7 +128,7 @@ generate("azacr", acr, 'test/acr/azacr', '--module="azacr" --module-version=0.1.
 const machineLearning = './swagger/specification/machinelearningservices/resource-manager';
 generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-preview', 'test/machinelearning/armmachinelearning', '--module=armmachinelearning --module-version=1.0.0 --azure-arm=true --generate-fakes=false --inject-spans=false --remove-unreferenced-types');
 
-generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields');
+generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
 
 function should_generate(name) {
   if (filter !== undefined) {

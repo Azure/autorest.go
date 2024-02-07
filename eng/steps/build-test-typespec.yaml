@@ -20,27 +20,12 @@ steps:
 
   - script: |
       rush tspcompile --verbose
-      git add -A ./test/.
+      rush modtidy 2>&1
+      git add -A .
       git diff --staged -w 1>&2
     displayName: "Regenerate Cadl Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/test
     failOnStderr: true
-
-  - pwsh: |
-      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
-      $exit = 0
-      foreach ($md in $modDirs) {
-        pushd $md
-        Write-Host "##[command]Executing go mod tidy in $md"
-        go mod tidy
-        $diff = (git diff -w .)
-        write-host ($diff -join "`n")
-        if ($diff.Length -gt 0) {
-          $exit = 1
-        }
-      }
-      exit $exit
-    displayName: "Mod Tidy"
 
   - script: |
       set -e
@@ -72,8 +57,8 @@ steps:
     displayName: "Lint Generated Content"
 
   - pwsh: |
-      cadl-ranch server start $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs/http
-      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      cadl-ranch server start ./http
+      $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
         Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
@@ -82,6 +67,7 @@ steps:
       }
       cadl-ranch server stop
     displayName: "Run All Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
 
   - task: PublishTestResults@2
     inputs:

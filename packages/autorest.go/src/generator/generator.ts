@@ -6,20 +6,20 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import * as go from '../../../codemodel.go/gocodemodel.js';
-import { generateClientFactory } from '../../../codegen.go/clientFactory.js';
-import { generateOperations } from '../../../codegen.go/operations.js';
-import { generateModels } from '../../../codegen.go/models.js';
-import { generateOptions } from '../../../codegen.go/options.js';
-import { generateInterfaces } from '../../../codegen.go/interfaces.js';
-import { generateResponses } from '../../../codegen.go/responses.js';
-import { generateConstants } from '../../../codegen.go/constants.js';
-import { generateTimeHelpers } from '../../../codegen.go/time.js';
-import { generatePolymorphicHelpers } from '../../../codegen.go/polymorphics.js';
-import { generateGoModFile } from '../../../codegen.go/gomod.js';
-import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/xmlAdditionalProps.js';
-import { generateServers } from '../../../codegen.go/fake/servers.js';
-import { generateServerFactory } from '../../../codegen.go/fake/factory.js';
+import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import { generateClientFactory } from '../../../codegen.go/src/clientFactory.js';
+import { generateOperations } from '../../../codegen.go/src/operations.js';
+import { generateModels } from '../../../codegen.go/src/models.js';
+import { generateOptions } from '../../../codegen.go/src/options.js';
+import { generateInterfaces } from '../../../codegen.go/src/interfaces.js';
+import { generateResponses } from '../../../codegen.go/src/responses.js';
+import { generateConstants } from '../../../codegen.go/src/constants.js';
+import { generateTimeHelpers } from '../../../codegen.go/src/time.js';
+import { generatePolymorphicHelpers } from '../../../codegen.go/src/polymorphics.js';
+import { generateGoModFile } from '../../../codegen.go/src/gomod.js';
+import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/src/xmlAdditionalProps.js';
+import { generateServers } from '../../../codegen.go/src/fake/servers.js';
+import { generateServerFactory } from '../../../codegen.go/src/fake/factory.js';
 
 // The generator emits Go source code files to disk.
 export async function generateCode(host: AutorestExtensionHost) {
@@ -207,7 +207,7 @@ export async function generateCode(host: AutorestExtensionHost) {
     }
   } catch (E) {
     if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
+      console.error(`${import.meta.url} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }

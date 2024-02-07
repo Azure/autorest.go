@@ -14,7 +14,7 @@ import (
 )
 
 func unmarshalFishClassification(rawMsg json.RawMessage) (complexgroup.FishClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any
@@ -45,7 +45,7 @@ func unmarshalFishClassification(rawMsg json.RawMessage) (complexgroup.FishClass
 }
 
 func unmarshalSalmonClassification(rawMsg json.RawMessage) (complexgroup.SalmonClassification, error) {
-	if rawMsg == nil {
+	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
 	var m map[string]any

@@ -2933,7 +2933,7 @@ schemas:
                                             description: State of the config server.
                                           go:
                                             name: ProvisioningState
-                                            description: READ-ONLY; State of the config server.
+                                            description: State of the config server.
                                         protocol: {}
                                       - schema: &ref_30
                                           type: object
@@ -3013,7 +3013,7 @@ schemas:
                                                                 description: Name of the repository
                                                               go:
                                                                 name: Name
-                                                                description: REQUIRED; Name of the repository
+                                                                description: Name of the repository
                                                             protocol: {}
                                                           - schema: &ref_243
                                                               type: array
@@ -3050,7 +3050,7 @@ schemas:
                                                                 description: URI of the repository
                                                               go:
                                                                 name: URI
-                                                                description: REQUIRED; URI of the repository
+                                                                description: URI of the repository
                                                             protocol: {}
                                                           - schema: *ref_13
                                                             required: false
@@ -3202,7 +3202,7 @@ schemas:
                                                         description: URI of the repository
                                                       go:
                                                         name: URI
-                                                        description: REQUIRED; URI of the repository
+                                                        description: URI of the repository
                                                     protocol: {}
                                                   - schema: *ref_22
                                                     required: false
@@ -3427,7 +3427,7 @@ schemas:
                                             description: State of the Monitoring Setting.
                                           go:
                                             name: ProvisioningState
-                                            description: READ-ONLY; State of the Monitoring Setting.
+                                            description: State of the Monitoring Setting.
                                         protocol: {}
                                       - schema: *ref_30
                                         serializedName: error
@@ -3489,7 +3489,7 @@ schemas:
                                                   description: Indicates the version of application insight java agent
                                                 go:
                                                   name: Java
-                                                  description: READ-ONLY; Indicates the version of application insight java agent
+                                                  description: Indicates the version of application insight java agent
                                               protocol: {}
                                           serializationFormats:
                                             - json
@@ -3595,7 +3595,7 @@ schemas:
                                             description: URL of the App
                                           go:
                                             name: URL
-                                            description: READ-ONLY; URL of the App
+                                            description: URL of the App
                                         protocol: {}
                                       - schema: *ref_37
                                         readOnly: true
@@ -3606,7 +3606,7 @@ schemas:
                                             description: Provisioning state of the App
                                           go:
                                             name: ProvisioningState
-                                            description: READ-ONLY; Provisioning state of the App
+                                            description: Provisioning state of the App
                                         protocol: {}
                                       - schema: *ref_38
                                         serializedName: activeDeploymentName
@@ -3651,7 +3651,7 @@ schemas:
                                             description: Date time when the resource is created
                                           go:
                                             name: CreatedTime
-                                            description: READ-ONLY; Date time when the resource is created
+                                            description: Date time when the resource is created
                                         protocol: {}
                                       - schema: &ref_149
                                           type: object
@@ -3727,7 +3727,7 @@ schemas:
                                                   description: Size of the used persistent disk in GB
                                                 go:
                                                   name: UsedInGB
-                                                  description: READ-ONLY; Size of the used persistent disk in GB
+                                                  description: Size of the used persistent disk in GB
                                               protocol: {}
                                             - schema: *ref_46
                                               serializedName: mountPath
@@ -3914,7 +3914,7 @@ schemas:
                                             description: The name of the bound resource
                                           go:
                                             name: ResourceName
-                                            description: READ-ONLY; The name of the bound resource
+                                            description: The name of the bound resource
                                         protocol: {}
                                       - schema: *ref_53
                                         readOnly: true
@@ -3925,7 +3925,7 @@ schemas:
                                             description: The standard Azure resource type of the bound resource
                                           go:
                                             name: ResourceType
-                                            description: READ-ONLY; The standard Azure resource type of the bound resource
+                                            description: The standard Azure resource type of the bound resource
                                         protocol: {}
                                       - schema: *ref_54
                                         serializedName: resourceId
@@ -3967,7 +3967,7 @@ schemas:
                                             description: The generated Spring Boot property file for this binding. The secret will be deducted.
                                           go:
                                             name: GeneratedProperties
-                                            description: READ-ONLY; The generated Spring Boot property file for this binding. The secret will be deducted.
+                                            description: The generated Spring Boot property file for this binding. The secret will be deducted.
                                         protocol: {}
                                       - schema: *ref_58
                                         readOnly: true
@@ -3978,7 +3978,7 @@ schemas:
                                             description: Creation time of the Binding resource
                                           go:
                                             name: CreatedAt
-                                            description: READ-ONLY; Creation time of the Binding resource
+                                            description: Creation time of the Binding resource
                                         protocol: {}
                                       - schema: *ref_59
                                         readOnly: true
@@ -3989,7 +3989,7 @@ schemas:
                                             description: Update time of the Binding resource
                                           go:
                                             name: UpdatedAt
-                                            description: READ-ONLY; Update time of the Binding resource
+                                            description: Update time of the Binding resource
                                         protocol: {}
                                     serializationFormats:
                                       - json
@@ -4062,7 +4062,7 @@ schemas:
                                             description: The thumbprint of certificate.
                                           go:
                                             name: Thumbprint
-                                            description: READ-ONLY; The thumbprint of certificate.
+                                            description: The thumbprint of certificate.
                                         protocol: {}
                                       - schema: *ref_61
                                         required: true
@@ -4073,7 +4073,7 @@ schemas:
                                             description: The vault uri of user key vault.
                                           go:
                                             name: VaultURI
-                                            description: REQUIRED; The vault uri of user key vault.
+                                            description: The vault uri of user key vault.
                                         protocol: {}
                                       - schema: *ref_62
                                         required: true
@@ -4084,7 +4084,7 @@ schemas:
                                             description: The certificate name of key vault.
                                           go:
                                             name: KeyVaultCertName
-                                            description: REQUIRED; The certificate name of key vault.
+                                            description: The certificate name of key vault.
                                         protocol: {}
                                       - schema: *ref_63
                                         required: false
@@ -4107,7 +4107,7 @@ schemas:
                                             description: The issuer of certificate.
                                           go:
                                             name: Issuer
-                                            description: READ-ONLY; The issuer of certificate.
+                                            description: The issuer of certificate.
                                         protocol: {}
                                       - schema: *ref_65
                                         readOnly: true
@@ -4119,7 +4119,7 @@ schemas:
                                             description: The issue date of certificate.
                                           go:
                                             name: IssuedDate
-                                            description: READ-ONLY; The issue date of certificate.
+                                            description: The issue date of certificate.
                                         protocol: {}
                                       - schema: *ref_66
                                         readOnly: true
@@ -4131,7 +4131,7 @@ schemas:
                                             description: The expiration date of certificate.
                                           go:
                                             name: ExpirationDate
-                                            description: READ-ONLY; The expiration date of certificate.
+                                            description: The expiration date of certificate.
                                         protocol: {}
                                       - schema: *ref_67
                                         readOnly: true
@@ -4143,7 +4143,7 @@ schemas:
                                             description: The activate date of certificate.
                                           go:
                                             name: ActivateDate
-                                            description: READ-ONLY; The activate date of certificate.
+                                            description: The activate date of certificate.
                                         protocol: {}
                                       - schema: *ref_68
                                         readOnly: true
@@ -4155,7 +4155,7 @@ schemas:
                                             description: The subject name of certificate.
                                           go:
                                             name: SubjectName
-                                            description: READ-ONLY; The subject name of certificate.
+                                            description: The subject name of certificate.
                                         protocol: {}
                                       - schema: &ref_251
                                           type: array
@@ -4181,7 +4181,7 @@ schemas:
                                             description: The domain list of certificate.
                                           go:
                                             name: DNSNames
-                                            description: READ-ONLY; The domain list of certificate.
+                                            description: The domain list of certificate.
                                             byValue: true
                                         protocol: {}
                                     serializationFormats:
@@ -4263,7 +4263,7 @@ schemas:
                                             description: The app name of domain.
                                           go:
                                             name: AppName
-                                            description: READ-ONLY; The app name of domain.
+                                            description: The app name of domain.
                                         protocol: {}
                                       - schema: *ref_72
                                         serializedName: certName
@@ -4414,7 +4414,7 @@ schemas:
                                             description: App name of the deployment
                                           go:
                                             name: AppName
-                                            description: READ-ONLY; App name of the deployment
+                                            description: App name of the deployment
                                         protocol: {}
                                       - schema: &ref_171
                                           type: object
@@ -4517,7 +4517,7 @@ schemas:
                                             description: Provisioning state of the Deployment
                                           go:
                                             name: ProvisioningState
-                                            description: READ-ONLY; Provisioning state of the Deployment
+                                            description: Provisioning state of the Deployment
                                         protocol: {}
                                       - schema: *ref_85
                                         readOnly: true
@@ -4528,7 +4528,7 @@ schemas:
                                             description: Status of the Deployment
                                           go:
                                             name: Status
-                                            description: READ-ONLY; Status of the Deployment
+                                            description: Status of the Deployment
                                         protocol: {}
                                       - schema: *ref_86
                                         readOnly: true
@@ -4539,7 +4539,7 @@ schemas:
                                             description: Indicates whether the Deployment is active
                                           go:
                                             name: Active
-                                            description: READ-ONLY; Indicates whether the Deployment is active
+                                            description: Indicates whether the Deployment is active
                                         protocol: {}
                                       - schema: *ref_87
                                         readOnly: true
@@ -4550,7 +4550,7 @@ schemas:
                                             description: Date time when the resource is created
                                           go:
                                             name: CreatedTime
-                                            description: READ-ONLY; Date time when the resource is created
+                                            description: Date time when the resource is created
                                         protocol: {}
                                       - schema: &ref_254
                                           type: array
@@ -4570,7 +4570,7 @@ schemas:
                                                     description: Name of the deployment instance
                                                   go:
                                                     name: Name
-                                                    description: READ-ONLY; Name of the deployment instance
+                                                    description: Name of the deployment instance
                                                 protocol: {}
                                               - schema: *ref_89
                                                 readOnly: true
@@ -4581,7 +4581,7 @@ schemas:
                                                     description: Status of the deployment instance
                                                   go:
                                                     name: Status
-                                                    description: READ-ONLY; Status of the deployment instance
+                                                    description: Status of the deployment instance
                                                 protocol: {}
                                               - schema: *ref_90
                                                 readOnly: true
@@ -4592,7 +4592,7 @@ schemas:
                                                     description: Failed reason of the deployment instance
                                                   go:
                                                     name: Reason
-                                                    description: READ-ONLY; Failed reason of the deployment instance
+                                                    description: Failed reason of the deployment instance
                                                 protocol: {}
                                               - schema: *ref_91
                                                 readOnly: true
@@ -4603,7 +4603,7 @@ schemas:
                                                     description: Discovery status of the deployment instance
                                                   go:
                                                     name: DiscoveryStatus
-                                                    description: READ-ONLY; Discovery status of the deployment instance
+                                                    description: Discovery status of the deployment instance
                                                 protocol: {}
                                               - schema: *ref_92
                                                 readOnly: true
@@ -4614,7 +4614,7 @@ schemas:
                                                     description: Start time of the deployment instance
                                                   go:
                                                     name: StartTime
-                                                    description: READ-ONLY; Start time of the deployment instance
+                                                    description: Start time of the deployment instance
                                                 protocol: {}
                                             serializationFormats:
                                               - json
@@ -4650,7 +4650,7 @@ schemas:
                                             description: Collection of instances belong to the Deployment
                                           go:
                                             name: Instances
-                                            description: READ-ONLY; Collection of instances belong to the Deployment
+                                            description: Collection of instances belong to the Deployment
                                             byValue: true
                                         protocol: {}
                                     serializationFormats:
@@ -4808,7 +4808,7 @@ schemas:
                           description: Fully qualified resource Id for the resource.
                         go:
                           name: ID
-                          description: READ-ONLY; Fully qualified resource Id for the resource.
+                          description: Fully qualified resource Id for the resource.
                       protocol: {}
                     - schema: *ref_104
                       readOnly: true
@@ -4819,7 +4819,7 @@ schemas:
                           description: The name of the resource.
                         go:
                           name: Name
-                          description: READ-ONLY; The name of the resource.
+                          description: The name of the resource.
                       protocol: {}
                     - schema: *ref_105
                       readOnly: true
@@ -4830,7 +4830,7 @@ schemas:
                           description: The type of the resource.
                         go:
                           name: Type
-                          description: READ-ONLY; The type of the resource.
+                          description: The type of the resource.
                       protocol: {}
                   serializationFormats:
                     - json
@@ -4909,7 +4909,7 @@ schemas:
                     description: Provisioning state of the Service
                   go:
                     name: ProvisioningState
-                    description: READ-ONLY; Provisioning state of the Service
+                    description: Provisioning state of the Service
                 protocol: {}
               - schema: &ref_124
                   type: object
@@ -5014,7 +5014,7 @@ schemas:
                                 description: A list of public IP addresses.
                               go:
                                 name: PublicIPs
-                                description: READ-ONLY; A list of public IP addresses.
+                                description: A list of public IP addresses.
                                 byValue: true
                             protocol: {}
                         serializationFormats:
@@ -5042,7 +5042,7 @@ schemas:
                           description: Desired outbound IP resources for Azure Spring Cloud instance.
                         go:
                           name: OutboundIPs
-                          description: READ-ONLY; Desired outbound IP resources for Azure Spring Cloud instance.
+                          description: Desired outbound IP resources for Azure Spring Cloud instance.
                       protocol: {}
                     - schema: &ref_241
                         type: array
@@ -5062,7 +5062,7 @@ schemas:
                                   description: The protocol of required traffic
                                 go:
                                   name: Protocol
-                                  description: READ-ONLY; The protocol of required traffic
+                                  description: The protocol of required traffic
                               protocol: {}
                             - schema: *ref_116
                               readOnly: true
@@ -5073,7 +5073,7 @@ schemas:
                                   description: The port of required traffic
                                 go:
                                   name: Port
-                                  description: READ-ONLY; The port of required traffic
+                                  description: The port of required traffic
                               protocol: {}
                             - schema: &ref_239
                                 type: array
@@ -5098,7 +5098,7 @@ schemas:
                                   description: The ip list of required traffic
                                 go:
                                   name: IPs
-                                  description: READ-ONLY; The ip list of required traffic
+                                  description: The ip list of required traffic
                                   byValue: true
                               protocol: {}
                             - schema: &ref_240
@@ -5124,7 +5124,7 @@ schemas:
                                   description: The FQDN list of required traffic
                                 go:
                                   name: Fqdns
-                                  description: READ-ONLY; The FQDN list of required traffic
+                                  description: The FQDN list of required traffic
                                   byValue: true
                               protocol: {}
                             - schema: *ref_119
@@ -5136,7 +5136,7 @@ schemas:
                                   description: The direction of required traffic
                                 go:
                                   name: Direction
-                                  description: READ-ONLY; The direction of required traffic
+                                  description: The direction of required traffic
                               protocol: {}
                           serializationFormats:
                             - json
@@ -5173,7 +5173,7 @@ schemas:
                           description: Required inbound or outbound traffics for Azure Spring Cloud instance.
                         go:
                           name: RequiredTraffics
-                          description: READ-ONLY; Required inbound or outbound traffics for Azure Spring Cloud instance.
+                          description: Required inbound or outbound traffics for Azure Spring Cloud instance.
                           byValue: true
                       protocol: {}
                   serializationFormats:
@@ -5211,7 +5211,7 @@ schemas:
                     description: Version of the Service
                   go:
                     name: Version
-                    description: READ-ONLY; Version of the Service
+                    description: Version of the Service
                 protocol: {}
               - schema: *ref_121
                 readOnly: true
@@ -5222,7 +5222,7 @@ schemas:
                     description: ServiceInstanceEntity GUID which uniquely identifies a created resource
                   go:
                     name: ServiceID
-                    description: READ-ONLY; ServiceInstanceEntity GUID which uniquely identifies a created resource
+                    description: ServiceInstanceEntity GUID which uniquely identifies a created resource
                 protocol: {}
             serializationFormats:
               - json
@@ -5478,7 +5478,7 @@ schemas:
               description: Type of the test key
             go:
               name: KeyType
-              description: REQUIRED; Type of the test key
+              description: Type of the test key
           protocol: {}
       serializationFormats:
         - json
@@ -5858,7 +5858,7 @@ schemas:
               description: Type of the resource to check name availability
             go:
               name: Type
-              description: REQUIRED; Type of the resource to check name availability
+              description: Type of the resource to check name availability
           protocol: {}
         - schema: *ref_160
           required: true
@@ -5869,7 +5869,7 @@ schemas:
               description: Name to be checked
             go:
               name: Name
-              description: REQUIRED; Name to be checked
+              description: Name to be checked
           protocol: {}
       serializationFormats:
         - json
@@ -6008,7 +6008,7 @@ schemas:
               description: Name to be validated
             go:
               name: Name
-              description: REQUIRED; Name to be validated
+              description: Name to be validated
           protocol: {}
       serializationFormats:
         - json
@@ -6140,7 +6140,7 @@ schemas:
               description: URL of the log file
             go:
               name: URL
-              description: REQUIRED; URL of the log file
+              description: URL of the log file
           protocol: {}
       serializationFormats:
         - json
@@ -6325,7 +6325,7 @@ schemas:
                       description: Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
                     go:
                       name: ActionType
-                      description: READ-ONLY; Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+                      description: Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
                   protocol: {}
                 - schema: *ref_183
                   serializedName: origin
@@ -6864,7 +6864,7 @@ schemas:
               description: A list of all supported runtime versions.
             go:
               name: Value
-              description: READ-ONLY; A list of all supported runtime versions.
+              description: A list of all supported runtime versions.
               byValue: true
           protocol: {}
       serializationFormats:
@@ -6942,7 +6942,7 @@ schemas:
                             description: Gets or sets the minimum.
                           go:
                             name: Minimum
-                            description: REQUIRED; Gets or sets the minimum.
+                            description: Gets or sets the minimum.
                         protocol: {}
                       - schema: *ref_216
                         required: false
@@ -45620,6 +45620,7 @@ language:
       - *ref_1409
       - *ref_1410
       - *ref_1411
+    singleClient: false
     sliceElementsByValue: false
 protocol:
   http: {}

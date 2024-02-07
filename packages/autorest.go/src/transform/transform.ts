@@ -7,6 +7,7 @@ import { capitalize, KnownMediaType, serialize, uncapitalize } from '@azure-tool
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import * as m4 from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
+import { createOptionsTypeDescription, createResponseEnvelopeDescription } from '../../../naming.go/src/naming.js';
 import * as helpers from './helpers.js';
 import { namer, protocolMethods } from './namer.js';
 import { fromString } from 'html-to-text';
@@ -86,28 +87,9 @@ async function process(session: Session<m4.CodeModel>) {
     }
 
     for (const prop of values(obj.properties)) {
-      const descriptionMods = new Array<string>();
-      if (prop.readOnly) {
-        descriptionMods.push('READ-ONLY');
-      } else if (prop.required && (prop.schema.type !== m4.SchemaType.Constant || helpers.isOutputOnly(obj))) {
-        descriptionMods.push('REQUIRED');
-      } else if (prop.required && prop.schema.type === m4.SchemaType.Constant) {
-        descriptionMods.push('CONSTANT');
-      }
-      if (prop.required && prop.schema.type === m4.SchemaType.Constant && !helpers.isOutputOnly(obj)) {
-        // add a comment with the const value for const properties that are sent over the wire
-        if (prop.language.go!.description) {
-          prop.language.go!.description += '<br/>';
-        }
-        prop.language.go!.description += `Field has constant value ${helpers.formatConstantValue(<m4.ConstantSchema>prop.schema)}, any specified value is ignored.`;
-      }
       if (prop.language.go!.description) {
-        descriptionMods.push(parseComments(prop.language.go!.description));
-      } else if (prop.schema.language.go!.rawJSONAsBytes) {
-        // add a basic description if one isn't available
-        descriptionMods.push('The contents of this field are raw JSON.');
+        prop.language.go!.description = parseComments(prop.language.go!.description);
       }
-      prop.language.go!.description = descriptionMods.join('; ');
       const details = <m4.Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, 'InBody')}`;
       prop.schema = substitueDiscriminator(prop);
@@ -465,6 +447,10 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
   const hostParams = new Array<m4.Parameter>();
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, m4.GroupProperty>();
+  const singleClient = <boolean>session.model.language.go!.singleClient;
+  if (singleClient && session.model.operationGroups.length > 1) {
+    throw new Error('single-client cannot be enabled when there are multiple clients');
+  }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
       if (op.language.go!.description) {
@@ -483,9 +469,13 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
       // don't do this for paging next link operation as this isn't part of the public API
       if (!op.language.go!.paging || !op.language.go!.paging.isNextOp) {
         // create a type named <OperationGroup><Operation>Options
-        // the client might not be exported, but the options should be.
-        const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
-        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName} method.`;
+        // if single-client is enabled, omit the <OperationGroup> prefix
+        let clientPrefix = capitalize(group.language.go!.clientName);
+        if (singleClient) {
+          clientPrefix = '';
+        }
+        const optionalParamsGroupName = `${clientPrefix}${opName}Options`;
+        const desc = createOptionsTypeDescription(optionalParamsGroupName, `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`);
         const gp = createGroupProperty(optionalParamsGroupName, desc, false);
         gp.language.go!.name = 'options';
         // if there's an existing parameter with the name options then pick something else
@@ -593,13 +583,18 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
         // check for grouping
         if (param.extensions?.['x-ms-parameter-grouping'] && <boolean>session.model.language.go!.groupParameters) {
           // this param belongs to a param group, init name with default
-          let paramGroupName = `${group.language.go!.clientName}${opName}Parameters`;
+          // if single-client is enabled, omit the <OperationGroup> prefix
+          let clientPrefix = capitalize(group.language.go!.clientName);
+          if (singleClient) {
+            clientPrefix = '';
+          }
+          let paramGroupName = `${clientPrefix}${opName}Parameters`;
           if (param.extensions['x-ms-parameter-grouping'].name) {
             // use the specified name
             paramGroupName = <string>param.extensions['x-ms-parameter-grouping'].name;
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
             // use the suffix
-            paramGroupName = `${group.language.go!.clientName}${opName}${<string>param.extensions['x-ms-parameter-grouping'].postfix}`;
+            paramGroupName = `${clientPrefix}${opName}${<string>param.extensions['x-ms-parameter-grouping'].postfix}`;
           }
           // create group entry and add the param to it
           if (!paramGroups.has(paramGroupName)) {
@@ -822,9 +817,14 @@ function createResponseEnvelope(codeModel: m4.CodeModel, group: m4.OperationGrou
   // contains all the response envelopes
   const responseEnvelopes = <Array<m4.ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
-  const respEnvName = ensureUniqueModelName(codeModel, `${capitalize(group.language.go!.clientName)}${op.language.go!.name}Response`, 'Envelope');
+  // if single-client is enabled, omit the <OperationGroup> prefix
+  let clientPrefix = capitalize(group.language.go!.clientName);
+  if (codeModel.language.go!.singleClient) {
+    clientPrefix = '';
+  }
+  const respEnvName = ensureUniqueModelName(codeModel, `${clientPrefix}${op.language.go!.name}Response`, 'Envelope');
   const opName = helpers.isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
-  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}.`);
+  const respEnv = newObject(respEnvName, createResponseEnvelopeDescription(respEnvName, `${group.language.go!.clientName}.${helpers.isPageableOperation(op) && !helpers.isLROOperation(op) ? `New${opName}Pager` : opName}`));
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<m4.Property>();
   responseEnvelopes.push(respEnv);

@@ -192,11 +192,6 @@ export function formatConstantValue(schema: m4.ConstantSchema): string {
   return schema.value.value;
 }
 
-//  returns true if the object is used for output only
-export function isOutputOnly(obj: m4.ObjectSchema): boolean {
-  return !values(obj.usage).any((u) => { return u === m4.SchemaContext.Input; });
-}
-
 // aggregate the properties from the provided type and its parent types
 export function aggregateProperties(obj: m4.ObjectSchema): Array<m4.Property> {
   const allProps = new Array<m4.Property>();

@@ -284,10 +284,10 @@ func (client *DatastoresClient) listCreateRequest(ctx context.Context, resourceG
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.Skip != nil {
 		reqQP.Set("$skip", *options.Skip)
 	}
+	reqQP.Set("api-version", "2022-02-01-preview")
 	if options != nil && options.Count != nil {
 		reqQP.Set("count", strconv.FormatInt(int64(*options.Count), 10))
 	}
@@ -297,14 +297,14 @@ func (client *DatastoresClient) listCreateRequest(ctx context.Context, resourceG
 	if options != nil && options.Names != nil {
 		reqQP.Set("names", strings.Join(options.Names, ","))
 	}
-	if options != nil && options.SearchText != nil {
-		reqQP.Set("searchText", *options.SearchText)
-	}
 	if options != nil && options.OrderBy != nil {
 		reqQP.Set("orderBy", *options.OrderBy)
 	}
 	if options != nil && options.OrderByAsc != nil {
 		reqQP.Set("orderByAsc", strconv.FormatBool(*options.OrderByAsc))
+	}
+	if options != nil && options.SearchText != nil {
+		reqQP.Set("searchText", *options.SearchText)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}

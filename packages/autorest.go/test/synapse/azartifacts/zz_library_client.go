@@ -66,13 +66,13 @@ func (client *LibraryClient) appendCreateRequest(ctx context.Context, comp Enum9
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", string(comp))
 	reqQP.Set("api-version", "2020-12-01")
+	reqQP.Set("comp", string(comp))
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BlobConditionAppendPosition != nil {
 		req.Raw().Header["x-ms-blob-condition-appendpos"] = []string{strconv.FormatInt(*options.BlobConditionAppendPosition, 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := req.SetBody(content, "application/octet-stream"); err != nil {
 		return nil, err
 	}

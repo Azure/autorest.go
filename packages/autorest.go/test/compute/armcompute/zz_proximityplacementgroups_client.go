@@ -218,10 +218,10 @@ func (client *ProximityPlacementGroupsClient) getCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2021-11-01")
 	if options != nil && options.IncludeColocationStatus != nil {
 		reqQP.Set("includeColocationStatus", *options.IncludeColocationStatus)
 	}
-	reqQP.Set("api-version", "2021-11-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

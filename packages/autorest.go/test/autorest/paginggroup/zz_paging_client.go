@@ -164,6 +164,7 @@ func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["client-request-id"] = []string{*options.ClientRequestID}
 	}
@@ -173,7 +174,6 @@ func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, o
 	if options != nil && options.Timeout != nil {
 		req.Raw().Header["timeout"] = []string{strconv.FormatInt(int64(*options.Timeout), 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -476,6 +476,7 @@ func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["client-request-id"] = []string{*options.ClientRequestID}
 	}
@@ -485,7 +486,6 @@ func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context
 	if options != nil && options.Timeout != nil {
 		req.Raw().Header["timeout"] = []string{strconv.FormatInt(int64(*options.Timeout), 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -632,6 +632,7 @@ func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options.ClientRequestID != nil {
 		req.Raw().Header["client-request-id"] = []string{*options.ClientRequestID}
 	}
@@ -641,7 +642,6 @@ func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.
 	if options.Timeout != nil {
 		req.Raw().Header["timeout"] = []string{strconv.FormatInt(int64(*options.Timeout), 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -786,6 +786,7 @@ func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.ClientRequestID != nil {
 		req.Raw().Header["client-request-id"] = []string{*options.ClientRequestID}
 	}
@@ -795,7 +796,6 @@ func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Conte
 	if options != nil && options.Timeout != nil {
 		req.Raw().Header["timeout"] = []string{strconv.FormatInt(int64(*options.Timeout), 10)}
 	}
-	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -995,8 +995,8 @@ func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
 	reqQP.Set("queryConstant", "true")
+	reqQP.Set("requiredQueryParameter", strconv.FormatInt(int64(requiredQueryParameter), 10))
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

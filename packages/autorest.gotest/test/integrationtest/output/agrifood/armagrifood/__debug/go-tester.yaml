@@ -1392,7 +1392,7 @@ schemas:
                                                   description: The ARM identifier for Private Endpoint
                                                 go:
                                                   name: ID
-                                                  description: READ-ONLY; The ARM identifier for Private Endpoint
+                                                  description: The ARM identifier for Private Endpoint
                                               protocol: {}
                                           serializationFormats:
                                             - json
@@ -1479,7 +1479,7 @@ schemas:
                                             description: A collection of information about the state of the connection between service consumer and provider.
                                           go:
                                             name: PrivateLinkServiceConnectionState
-                                            description: REQUIRED; A collection of information about the state of the connection between service consumer and provider.
+                                            description: A collection of information about the state of the connection between service consumer and provider.
                                         protocol: {}
                                       - schema: *ref_11
                                         readOnly: true
@@ -1491,7 +1491,7 @@ schemas:
                                             description: The provisioning state of the private endpoint connection resource.
                                           go:
                                             name: ProvisioningState
-                                            description: READ-ONLY; The provisioning state of the private endpoint connection resource.
+                                            description: The provisioning state of the private endpoint connection resource.
                                         protocol: {}
                                     serializationFormats:
                                       - json
@@ -1567,7 +1567,7 @@ schemas:
                                                   description: The principal ID of resource identity.
                                                 go:
                                                   name: PrincipalID
-                                                  description: READ-ONLY; The principal ID of resource identity.
+                                                  description: The principal ID of resource identity.
                                               protocol: {}
                                             - schema: *ref_14
                                               readOnly: true
@@ -1578,7 +1578,7 @@ schemas:
                                                   description: The tenant ID of resource.
                                                 go:
                                                   name: TenantID
-                                                  description: READ-ONLY; The tenant ID of resource.
+                                                  description: The tenant ID of resource.
                                               protocol: {}
                                             - schema: *ref_15
                                               serializedName: type
@@ -1629,7 +1629,7 @@ schemas:
                                                   description: Uri of the FarmBeats instance.
                                                 go:
                                                   name: InstanceURI
-                                                  description: READ-ONLY; Uri of the FarmBeats instance.
+                                                  description: Uri of the FarmBeats instance.
                                               protocol: {}
                                             - schema: *ref_17
                                               readOnly: true
@@ -1640,7 +1640,7 @@ schemas:
                                                   description: FarmBeats instance provisioning state.
                                                 go:
                                                   name: ProvisioningState
-                                                  description: READ-ONLY; FarmBeats instance provisioning state.
+                                                  description: FarmBeats instance provisioning state.
                                               protocol: {}
                                             - schema: &ref_74
                                                 type: object
@@ -1666,7 +1666,7 @@ schemas:
                                                         description: Sensor integration instance provisioning state.
                                                       go:
                                                         name: ProvisioningState
-                                                        description: READ-ONLY; Sensor integration instance provisioning state.
+                                                        description: Sensor integration instance provisioning state.
                                                     protocol: {}
                                                   - schema: &ref_65
                                                       type: object
@@ -1687,7 +1687,7 @@ schemas:
                                                                     description: The error code.
                                                                   go:
                                                                     name: Code
-                                                                    description: READ-ONLY; The error code.
+                                                                    description: The error code.
                                                                 protocol: {}
                                                               - schema: *ref_20
                                                                 readOnly: true
@@ -1698,7 +1698,7 @@ schemas:
                                                                     description: The error message.
                                                                   go:
                                                                     name: Message
-                                                                    description: READ-ONLY; The error message.
+                                                                    description: The error message.
                                                                 protocol: {}
                                                               - schema: *ref_21
                                                                 readOnly: true
@@ -1709,7 +1709,7 @@ schemas:
                                                                     description: The error target.
                                                                   go:
                                                                     name: Target
-                                                                    description: READ-ONLY; The error target.
+                                                                    description: The error target.
                                                                 protocol: {}
                                                               - schema: &ref_100
                                                                   type: array
@@ -1742,7 +1742,7 @@ schemas:
                                                                     description: The error details.
                                                                   go:
                                                                     name: Details
-                                                                    description: READ-ONLY; The error details.
+                                                                    description: The error details.
                                                                     byValue: true
                                                                 protocol: {}
                                                               - schema: &ref_101
@@ -1763,7 +1763,7 @@ schemas:
                                                                             description: The additional info type.
                                                                           go:
                                                                             name: Type
-                                                                            description: READ-ONLY; The additional info type.
+                                                                            description: The additional info type.
                                                                         protocol: {}
                                                                       - schema: *ref_24
                                                                         readOnly: true
@@ -1774,7 +1774,7 @@ schemas:
                                                                             description: The additional info.
                                                                           go:
                                                                             name: Info
-                                                                            description: READ-ONLY; The additional info.
+                                                                            description: The additional info.
                                                                             byValue: true
                                                                         protocol: {}
                                                                     serializationFormats:
@@ -1816,7 +1816,7 @@ schemas:
                                                                     description: The error additional info.
                                                                   go:
                                                                     name: AdditionalInfo
-                                                                    description: READ-ONLY; The error additional info.
+                                                                    description: The error additional info.
                                                                     byValue: true
                                                                 protocol: {}
                                                             serializationFormats:
@@ -1919,7 +1919,7 @@ schemas:
                                                   description: The Private Endpoint Connection resource.
                                                 go:
                                                   name: PrivateEndpointConnections
-                                                  description: READ-ONLY; The Private Endpoint Connection resource.
+                                                  description: The Private Endpoint Connection resource.
                                               protocol: {}
                                           serializationFormats:
                                             - json
@@ -2004,7 +2004,7 @@ schemas:
                                       description: The geo-location where the resource lives
                                     go:
                                       name: Location
-                                      description: REQUIRED; The geo-location where the resource lives
+                                      description: The geo-location where the resource lives
                                   protocol: {}
                               serializationFormats:
                                 - json
@@ -2051,7 +2051,7 @@ schemas:
                                             description: The private link resource group id.
                                           go:
                                             name: GroupID
-                                            description: READ-ONLY; The private link resource group id.
+                                            description: The private link resource group id.
                                         protocol: {}
                                       - schema: &ref_118
                                           type: array
@@ -2076,7 +2076,7 @@ schemas:
                                             description: The private link resource required member names.
                                           go:
                                             name: RequiredMembers
-                                            description: READ-ONLY; The private link resource required member names.
+                                            description: The private link resource required member names.
                                             byValue: true
                                         protocol: {}
                                       - schema: &ref_119
@@ -2163,7 +2163,7 @@ schemas:
                                 description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
                               go:
                                 name: ID
-                                description: READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                                description: Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
                             protocol: {}
                           - schema: *ref_35
                             readOnly: true
@@ -2174,7 +2174,7 @@ schemas:
                                 description: The name of the resource
                               go:
                                 name: Name
-                                description: READ-ONLY; The name of the resource
+                                description: The name of the resource
                             protocol: {}
                           - schema: *ref_36
                             readOnly: true
@@ -2185,7 +2185,7 @@ schemas:
                                 description: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
                               go:
                                 name: Type
-                                description: READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+                                description: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
                             protocol: {}
                           - schema: &ref_64
                               type: object
@@ -2277,7 +2277,7 @@ schemas:
                                 description: Azure Resource Manager metadata containing createdBy and modifiedBy information.
                               go:
                                 name: SystemData
-                                description: READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+                                description: Azure Resource Manager metadata containing createdBy and modifiedBy information.
                             protocol: {}
                         serializationFormats:
                           - json
@@ -2317,7 +2317,7 @@ schemas:
                                 description: Target ResourceType of the farmBeatsExtension.
                               go:
                                 name: TargetResourceType
-                                description: READ-ONLY; Target ResourceType of the farmBeatsExtension.
+                                description: Target ResourceType of the farmBeatsExtension.
                             protocol: {}
                           - schema: *ref_43
                             readOnly: true
@@ -2328,7 +2328,7 @@ schemas:
                                 description: FarmBeatsExtension ID.
                               go:
                                 name: FarmBeatsExtensionID
-                                description: READ-ONLY; FarmBeatsExtension ID.
+                                description: FarmBeatsExtension ID.
                             protocol: {}
                           - schema: *ref_44
                             readOnly: true
@@ -2339,7 +2339,7 @@ schemas:
                                 description: FarmBeatsExtension name.
                               go:
                                 name: FarmBeatsExtensionName
-                                description: READ-ONLY; FarmBeatsExtension name.
+                                description: FarmBeatsExtension name.
                             protocol: {}
                           - schema: *ref_45
                             readOnly: true
@@ -2350,7 +2350,7 @@ schemas:
                                 description: FarmBeatsExtension version.
                               go:
                                 name: FarmBeatsExtensionVersion
-                                description: READ-ONLY; FarmBeatsExtension version.
+                                description: FarmBeatsExtension version.
                             protocol: {}
                           - schema: *ref_46
                             readOnly: true
@@ -2361,7 +2361,7 @@ schemas:
                                 description: Publisher ID.
                               go:
                                 name: PublisherID
-                                description: READ-ONLY; Publisher ID.
+                                description: Publisher ID.
                             protocol: {}
                           - schema: *ref_47
                             readOnly: true
@@ -2372,7 +2372,7 @@ schemas:
                                 description: Textual description.
                               go:
                                 name: Description
-                                description: READ-ONLY; Textual description.
+                                description: Textual description.
                             protocol: {}
                           - schema: *ref_48
                             readOnly: true
@@ -2383,7 +2383,7 @@ schemas:
                                 description: Category of the extension. e.g. weather/sensor/satellite.
                               go:
                                 name: ExtensionCategory
-                                description: READ-ONLY; Category of the extension. e.g. weather/sensor/satellite.
+                                description: Category of the extension. e.g. weather/sensor/satellite.
                             protocol: {}
                           - schema: *ref_49
                             readOnly: true
@@ -2394,7 +2394,7 @@ schemas:
                                 description: FarmBeatsExtension auth link.
                               go:
                                 name: ExtensionAuthLink
-                                description: READ-ONLY; FarmBeatsExtension auth link.
+                                description: FarmBeatsExtension auth link.
                             protocol: {}
                           - schema: *ref_50
                             readOnly: true
@@ -2405,7 +2405,7 @@ schemas:
                                 description: FarmBeatsExtension api docs link.
                               go:
                                 name: ExtensionAPIDocsLink
-                                description: READ-ONLY; FarmBeatsExtension api docs link.
+                                description: FarmBeatsExtension api docs link.
                             protocol: {}
                           - schema: &ref_113
                               type: array
@@ -2490,7 +2490,7 @@ schemas:
                                               description: UnitSystem key sent as part of ProviderInput.
                                             go:
                                               name: Key
-                                              description: REQUIRED; UnitSystem key sent as part of ProviderInput.
+                                              description: UnitSystem key sent as part of ProviderInput.
                                           protocol: {}
                                         - schema: &ref_111
                                             type: array
@@ -2515,7 +2515,7 @@ schemas:
                                               description: List of unit systems supported by this data provider.
                                             go:
                                               name: Values
-                                              description: REQUIRED; List of unit systems supported by this data provider.
+                                              description: List of unit systems supported by this data provider.
                                               byValue: true
                                           protocol: {}
                                       serializationFormats:
@@ -2609,7 +2609,7 @@ schemas:
                               go:
                                 name: DetailedInformation
                                 description: |-
-                                  READ-ONLY; Detailed information which shows summary of requested data. Used in descriptive get extension metadata call. Information for weather category per api included are apisSupported, customParameters,
+                                  Detailed information which shows summary of requested data. Used in descriptive get extension metadata call. Information for weather category per api included are apisSupported, customParameters,
                                   PlatformParameters and Units supported.
                                 byValue: true
                             protocol: {}
@@ -2704,7 +2704,7 @@ schemas:
                     description: Extension Id.
                   go:
                     name: ExtensionID
-                    description: READ-ONLY; Extension Id.
+                    description: Extension Id.
                 protocol: {}
               - schema: *ref_58
                 readOnly: true
@@ -2715,7 +2715,7 @@ schemas:
                     description: Extension category. e.g. weather/sensor/satellite.
                   go:
                     name: ExtensionCategory
-                    description: READ-ONLY; Extension category. e.g. weather/sensor/satellite.
+                    description: Extension category. e.g. weather/sensor/satellite.
                 protocol: {}
               - schema: *ref_59
                 readOnly: true
@@ -2726,7 +2726,7 @@ schemas:
                     description: Installed extension version.
                   go:
                     name: InstalledExtensionVersion
-                    description: READ-ONLY; Installed extension version.
+                    description: Installed extension version.
                 protocol: {}
               - schema: *ref_60
                 readOnly: true
@@ -2737,7 +2737,7 @@ schemas:
                     description: Extension auth link.
                   go:
                     name: ExtensionAuthLink
-                    description: READ-ONLY; Extension auth link.
+                    description: Extension auth link.
                 protocol: {}
               - schema: *ref_61
                 readOnly: true
@@ -2748,7 +2748,7 @@ schemas:
                     description: Extension api docs link.
                   go:
                     name: ExtensionAPIDocsLink
-                    description: READ-ONLY; Extension api docs link.
+                    description: Extension api docs link.
                 protocol: {}
             serializationFormats:
               - json
@@ -2786,7 +2786,7 @@ schemas:
               description: The ETag value to implement optimistic concurrency.
             go:
               name: ETag
-              description: READ-ONLY; The ETag value to implement optimistic concurrency.
+              description: The ETag value to implement optimistic concurrency.
           protocol: {}
       serializationFormats:
         - json
@@ -2852,7 +2852,7 @@ schemas:
               description: Continuation link (absolute URI) to the next page of results in the list.
             go:
               name: NextLink
-              description: READ-ONLY; Continuation link (absolute URI) to the next page of results in the list.
+              description: Continuation link (absolute URI) to the next page of results in the list.
           protocol: {}
       serializationFormats:
         - json
@@ -2909,7 +2909,7 @@ schemas:
               description: Continuation link (absolute URI) to the next page of results in the list.
             go:
               name: NextLink
-              description: READ-ONLY; Continuation link (absolute URI) to the next page of results in the list.
+              description: Continuation link (absolute URI) to the next page of results in the list.
           protocol: {}
       serializationFormats:
         - json
@@ -3082,7 +3082,7 @@ schemas:
               description: Continuation link (absolute URI) to the next page of results in the list.
             go:
               name: NextLink
-              description: READ-ONLY; Continuation link (absolute URI) to the next page of results in the list.
+              description: Continuation link (absolute URI) to the next page of results in the list.
           protocol: {}
       serializationFormats:
         - json
@@ -3243,7 +3243,7 @@ schemas:
                       description: 'The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action"'
                     go:
                       name: Name
-                      description: 'READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action"'
+                      description: 'The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action"'
                   protocol: {}
                 - schema: *ref_89
                   readOnly: true
@@ -3254,7 +3254,7 @@ schemas:
                       description: Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for ARM/control-plane operations.
                     go:
                       name: IsDataAction
-                      description: READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for ARM/control-plane operations.
+                      description: Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for ARM/control-plane operations.
                   protocol: {}
                 - schema: &ref_98
                     type: object
@@ -3270,7 +3270,7 @@ schemas:
                             description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
                           go:
                             name: Provider
-                            description: READ-ONLY; The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+                            description: The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
                         protocol: {}
                       - schema: *ref_91
                         readOnly: true
@@ -3281,7 +3281,7 @@ schemas:
                             description: The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
                           go:
                             name: Resource
-                            description: READ-ONLY; The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
+                            description: The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
                         protocol: {}
                       - schema: *ref_92
                         readOnly: true
@@ -3292,7 +3292,7 @@ schemas:
                             description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
                           go:
                             name: Operation
-                            description: READ-ONLY; The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
+                            description: The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine".
                         protocol: {}
                       - schema: *ref_93
                         readOnly: true
@@ -3303,7 +3303,7 @@ schemas:
                             description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
                           go:
                             name: Description
-                            description: READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+                            description: The short, localized friendly description of the operation; suitable for tool tips and detailed views.
                         protocol: {}
                     serializationFormats:
                       - json
@@ -3338,7 +3338,7 @@ schemas:
                       description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
                     go:
                       name: Origin
-                      description: READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+                      description: The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
                   protocol: {}
                 - schema: *ref_95
                   readOnly: true
@@ -3349,7 +3349,7 @@ schemas:
                       description: Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
                     go:
                       name: ActionType
-                      description: READ-ONLY; Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+                      description: Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
                   protocol: {}
               serializationFormats:
                 - json
@@ -3393,7 +3393,7 @@ schemas:
               description: List of operations supported by the resource provider
             go:
               name: Value
-              description: READ-ONLY; List of operations supported by the resource provider
+              description: List of operations supported by the resource provider
               byValue: true
           protocol: {}
         - schema: *ref_96
@@ -3405,7 +3405,7 @@ schemas:
               description: URL to get the next set of operation list results (if there are any).
             go:
               name: NextLink
-              description: READ-ONLY; URL to get the next set of operation list results (if there are any).
+              description: URL to get the next set of operation list results (if there are any).
           protocol: {}
       serializationFormats:
         - json
@@ -13952,6 +13952,7 @@ language:
       - *ref_559
       - *ref_560
       - *ref_561
+    singleClient: false
     sliceElementsByValue: false
 protocol:
   http: {}

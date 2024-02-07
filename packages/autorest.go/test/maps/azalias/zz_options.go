@@ -10,14 +10,32 @@ package azalias
 
 import "time"
 
-// ClientBeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
-type ClientBeginListLROOptions struct {
+// BeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
+type BeginListLROOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
-// ClientCreateOptions contains the optional parameters for the Client.Create method.
-type ClientCreateOptions struct {
+// ClientGroup contains a group of parameters for the Client client.
+type ClientGroup struct {
+	// Index number of Azure Maps API.
+	ClientIndex int32
+
+	// Version number of Azure Maps API.
+	ClientVersion string
+}
+
+// ClientOptionalGroup contains a group of parameters for the Client client.
+type ClientOptionalGroup struct {
+	// Index number of Azure Maps API.
+	OptionalIndex *int32
+
+	// Version number of Azure Maps API.
+	OptionalVersion *string
+}
+
+// CreateOptions contains the optional parameters for the Client.Create method.
+type CreateOptions struct {
 	// Some enums that are boolean values.
 	BoolHeaderEnum1 *BooleanEnum
 	GroupBy         []SomethingCount
@@ -32,55 +50,37 @@ type ClientCreateOptions struct {
 	CreatorID *int32
 }
 
-// ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
-type ClientGetScriptOptions struct {
+// ExplodedGroup contains a group of parameters for the Client.GetScript method.
+type ExplodedGroup struct {
+	ExplodedStuff []int64
+}
+
+// GetScriptOptions contains the optional parameters for the Client.GetScript method.
+type GetScriptOptions struct {
 	OptionalExplodedStuff []string
 }
 
-// ClientGroup contains a group of parameters for the Client client.
-type ClientGroup struct {
-	// Index number of Azure Maps API.
-	ClientIndex int32
-
-	// Version number of Azure Maps API.
-	ClientVersion string
-}
-
-// ClientListOptions contains the optional parameters for the Client.NewListPager method.
-type ClientListOptions struct {
+// ListOptions contains the optional parameters for the Client.NewListPager method.
+type ListOptions struct {
 	GroupBy    []LogMetricsGroupBy
 	HeaderEnum *IntEnum
 	QueryEnums []IntEnum
 }
 
-// ClientListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
-type ClientListWithSharedNextOneOptions struct {
+// ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
+type ListWithSharedNextOneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
-type ClientListWithSharedNextTwoOptions struct {
+// ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
+type ListWithSharedNextTwoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientOptionalGroup contains a group of parameters for the Client client.
-type ClientOptionalGroup struct {
-	// Index number of Azure Maps API.
-	OptionalIndex *int32
-
-	// Version number of Azure Maps API.
-	OptionalVersion *string
-}
-
-// ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
-type ClientPolicyAssignmentOptions struct {
+// PolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
+type PolicyAssignmentOptions struct {
 	Interval *string
 	Unique   *string
-}
-
-// ExplodedGroup contains a group of parameters for the Client.GetScript method.
-type ExplodedGroup struct {
-	ExplodedStuff []int64
 }
 
 // SomeGroup contains a group of parameters for the Client.GetScript method.

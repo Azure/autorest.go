@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/typespec-go/test/cadlranch
+pr: none
+
+steps:
+  - template: ../steps/set-env.yaml
+
+  - template: ../steps/build-test-typespec.yaml
+
+  - task: AzureCLI@2
+    displayName: Upload CADL Ranch Test Coverage
+    inputs:
+      azureSubscription: "Cadl Ranch Storage"
+      scriptType: "bash"
+      scriptLocation: "inlineScript"
+      inlineScript: cadl-ranch upload-coverage --generatorName go --storageAccountName azuresdkcadlranch --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
+      workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs

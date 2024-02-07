@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 import { exec, execSync } from 'child_process';
-
 import { existsSync, opendirSync, unlinkSync } from 'fs';
-
-import { semaphore } from './semaphore.js';
+import semaphore from '../../../.scripts/semaphore.js';
 
 // limit to 8 concurrent builds
 const sem = semaphore(8);
@@ -13,14 +11,61 @@ const pkgRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/
 
 const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 
+const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/tsp';
+
 // the format is as follows
-// 'moduleName': [ 'moduleVersion', 'inputDir', 'additional arg 1', 'additional arg N...' ]
+// 'moduleName': [ 'input', 'additional arg 1', 'additional arg N...' ]
+// if no .tsp file is specified in input, it's assumed to be main.tsp
 const cadlRanch = {
-  'arraygroup': ['0.1.1', 'type/array', 'slice-elements-byval=true'],
-  'dictionarygroup': ['0.1.1', 'type/dictionary'],
-  'extensibleenumgroup': ['0.1.1', 'type/enum/extensible'],
-  //'singlediscriminatorgroup': ['0.1.1', 'type/model/inheritance/single-discriminator'],
-  'visibilitygroup': ['0.1.1', 'type/model/visibility']
+  'apikeygroup': ['authentication/api-key'],     // missing tests
+  'customgroup': ['authentication/http/custom'], // missing tests
+  'oauth2group': ['authentication/oauth2'],      // missing tests
+  'unionauthgroup': ['authentication/union'],    // missing tests
+  'accessgroup': ['azure/client-generator-core/access'],   // missing tests
+  'coreusagegroup': ['azure/client-generator-core/usage'], // missing tests
+  'basicgroup': ['azure/core/basic'], // missing tests
+  //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
+  //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
+  //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
+  //'traitsgroup': ['azure/core/traits'],            // requires union support
+  'defaultgroup': ['client/structure/default/client.tsp'], // missing tests
+  'multiclientgroup': ['client/structure/multi-client/client.tsp'],    // missing tests
+  'renamedopgroup': ['client/structure/renamed-operation/client.tsp'], // missing tests
+  'twoopgroup': ['client/structure/two-operation-group/client.tsp'],   // missing tests
+  'bytesgroup': ['encode/bytes'],
+  'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
+  'durationgroup': ['encode/duration'],
+  'bodyoptionalgroup': ['parameters/body-optionality'],
+  'collectionfmtgroup': ['parameters/collection-format'],
+  //'spreadgroup': ['parameters/spread'], // needs more investigation
+  //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
+  'pageablegroup': ['payload/pageable'],
+  'projectednamegroup': ['projection/projected-name'], // missing tests
+  'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
+  'multiplegroup': ['server/path/multiple'],   // missing tests
+  'singlegroup': ['server/path/single'],       // missing tests
+  'clientreqidgroup': ['special-headers/client-request-id'],
+  'condreqgroup': ['special-headers/conditional-request'],
+  //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
+  'specialwordsgroup': ['special-words'],
+  'arraygroup': ['type/array', 'slice-elements-byval=true'],
+  'dictionarygroup': ['type/dictionary'],
+  'extensiblegroup': ['type/enum/extensible'],
+  'fixedgroup': ['type/enum/fixed'],
+  'emptygroup': ['type/model/empty', 'single-client=true'],
+  'enumdiscgroup': ['type/model/inheritance/enum-discriminator'],
+  //'nesteddiscgroup': ['type/model/inheritance/nested-discriminator'], // not a real scenario
+  'nodiscgroup': ['type/model/inheritance/not-discriminated'],
+  'recursivegroup': ['type/model/inheritance/recursive', 'slice-elements-byval=true'],
+  'singlediscgroup': ['type/model/inheritance/single-discriminator'],
+  'usagegroup': ['type/model/usage'],
+  'visibilitygroup': ['type/model/visibility'],
+  'addlpropsgroup': ['type/property/additional-properties'],
+  'nullablegroup': ['type/property/nullable'],
+  //'optionalitygroup': ['type/property/optionality'], // requires union support
+  //'valuetypesgroup': ['type/property/value-types'], // requires union support
+  'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
+  //'uniongroup': ['type/union'], // requires union support
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
@@ -59,13 +104,21 @@ function should_generate(name) {
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let additionalArgs;
-  if (values.length > 2) {
-    additionalArgs = values.slice(2);
+  if (values.length > 1) {
+    additionalArgs = values.slice(1);
   }
-  generate(module, values[0], tspRoot + values[1], 'test/cadlranch/' + module, additionalArgs);
+  // keep the output directory structure similar to the cadl input directory.
+  // remove the last dir from the input path as we'll use the module name instead.
+  // if the input specifies a .tsp file, remove that first.
+  let outDir = values[0];
+  if (outDir.lastIndexOf('.tsp') > -1) {
+    outDir = outDir.substring(0, outDir.lastIndexOf('/'));
+  }
+  outDir = outDir.substring(0, outDir.lastIndexOf('/'));
+  generate(module, tspRoot + values[0], `test/cadlranch/${outDir}/` + module, additionalArgs);
 }
 
-function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs) {
+function generate(moduleName, input, outputDir, additionalArgs) {
   if (!should_generate(moduleName)) {
     return
   }
@@ -77,18 +130,21 @@ function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs
     }
   }
   sem.take(function() {
-    console.log('generating ' + inputDir);
+    // default to main.tsp if a .tsp file isn't specified in the input
+    if (input.lastIndexOf('.tsp') === -1) {
+      input += '/main.tsp';
+    }
+    console.log('generating ' + input);
     const fullOutputDir = pkgRoot + outputDir;
     try {
       const options = [];
       options.push(`--option="@azure-tools/typespec-go.module=${moduleName}"`);
-      options.push(`--option="@azure-tools/typespec-go.module-version=${moduleVersion}"`);
       options.push(`--option="@azure-tools/typespec-go.emitter-output-dir=${fullOutputDir}"`);
       options.push(`--option="@azure-tools/typespec-go.file-prefix=zz_"`);
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
-      const command = `tsp compile ${inputDir}/main.tsp --emit=${pkgRoot} ${options.join(' ')} ${additionalArgs.join(' ')}`;
+      const command = `${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')} ${additionalArgs.join(' ')}`;
       if (switches.includes('--verbose')) {
         console.log(command);
       }
@@ -100,10 +156,11 @@ function generate(moduleName, moduleVersion, inputDir, outputDir, additionalArgs
         if (error === null && stderr === '') {
           execSync('gofmt -w .', { cwd: fullOutputDir});
         }
-        sem.leave();
       });
     } catch (err) {
       console.error(err.output.toString());
+    } finally {
+      sem.leave();
     }
   });
 }

@@ -8,8 +8,8 @@
 
 package azalias
 
-// ClientCreateResponse contains the response from method Client.Create.
-type ClientCreateResponse struct {
+// CreateResponse contains the response from method Client.Create.
+type CreateResponse struct {
 	// The response model for the Alias Create API for the case when the alias was successfully created.
 	AliasesCreateResponse
 
@@ -17,35 +17,35 @@ type ClientCreateResponse struct {
 	AccessControlExposeHeaders *string
 }
 
-// ClientGetScriptResponse contains the response from method Client.GetScript.
-type ClientGetScriptResponse struct {
+// GetScriptResponse contains the response from method Client.GetScript.
+type GetScriptResponse struct {
 	Value *string
 }
 
-// ClientListLROResponse contains the response from method Client.BeginListLRO.
-type ClientListLROResponse struct {
+// ListLROResponse contains the response from method Client.BeginListLRO.
+type ListLROResponse struct {
 	PagesOfThings
 }
 
-// ClientListResponse contains the response from method Client.NewListPager.
-type ClientListResponse struct {
+// ListResponseEnvelope contains the response from method Client.NewListPager.
+type ListResponseEnvelope struct {
 	// The response model for the List API. Returns a list of all the previously created aliases.
 	ListResponse
 }
 
-// ClientListWithSharedNextOneResponse contains the response from method Client.NewListWithSharedNextOnePager.
-type ClientListWithSharedNextOneResponse struct {
+// ListWithSharedNextOneResponse contains the response from method Client.NewListWithSharedNextOnePager.
+type ListWithSharedNextOneResponse struct {
 	// The response model for the List API. Returns a list of all the previously created aliases.
 	ListResponse
 }
 
-// ClientListWithSharedNextTwoResponse contains the response from method Client.NewListWithSharedNextTwoPager.
-type ClientListWithSharedNextTwoResponse struct {
+// ListWithSharedNextTwoResponse contains the response from method Client.NewListWithSharedNextTwoPager.
+type ListWithSharedNextTwoResponse struct {
 	// The response model for the List API. Returns a list of all the previously created aliases.
 	ListResponse
 }
 
-// ClientPolicyAssignmentResponse contains the response from method Client.PolicyAssignment.
-type ClientPolicyAssignmentResponse struct {
+// PolicyAssignmentResponse contains the response from method Client.PolicyAssignment.
+type PolicyAssignmentResponse struct {
 	PolicyAssignmentProperties
 }
