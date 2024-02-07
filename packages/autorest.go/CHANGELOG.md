@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.63 (2024-02-07)
+
+### Bugs Fixed
+
+* Fixed package installation failure due to improper use of workspaces.
+
 ## 4.0.0-preview.62 (2024-02-06)
 
 ### Features Added
