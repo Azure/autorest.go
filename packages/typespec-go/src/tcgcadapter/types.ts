@@ -121,17 +121,18 @@ export class typeAdapter {
       case 'armId':
       case 'boolean':
       case 'bytes':
-      case 'date':
       case 'decimal':
       case 'decimal128':
       case 'etag':
+      case 'float':
       case 'float32':
       case 'float64':
       case 'guid':
+      case 'int8':
+      case 'int16':
       case 'int32':
       case 'int64':
       case 'string':
-      case 'time':
       case 'url':
       case 'uuid':
         return this.getBuiltInType(type);
@@ -215,6 +216,7 @@ export class typeAdapter {
       }
       case 'duration': {
         switch (type.wireType.kind) {
+          case 'float':
           case 'float32':
           case 'float64':
           case 'int32':
@@ -269,7 +271,7 @@ export class typeAdapter {
       }
       case 'bytes':
         return this.adaptBytesType(type);
-      case 'date': {
+      case 'plainDate': {
         if (type.encode !== 'rfc3339') {
           throw new Error(`unsupported date encoding ${type.encode}`);
         }
@@ -304,6 +306,7 @@ export class typeAdapter {
         this.types.set(etagKey, etag);
         return etag;
       }
+      case 'float': // C# and Java define float as 32 bits so we're following suit
       case 'float32': {
         const float32Key = 'float32';
         let float32 = this.types.get(float32Key);
@@ -323,6 +326,26 @@ export class typeAdapter {
         float64 = new go.PrimitiveType(float64Key);
         this. types.set(float64Key, float64);
         return float64;
+      }
+      case 'int8': {
+        const int8Key = 'int8';
+        let int8 = this.types.get(int8Key);
+        if (int8) {
+          return int8;
+        }
+        int8 = new go.PrimitiveType(int8Key);
+        this.types.set(int8Key, int8);
+        return int8;
+      }
+      case 'int16': {
+        const int16Key = 'int16';
+        let int16 = this.types.get(int16Key);
+        if (int16) {
+          return int16;
+        }
+        int16 = new go.PrimitiveType(int16Key);
+        this.types.set(int16Key, int16);
+        return int16;
       }
       case 'int32': {
         const int32Key = 'int32';
@@ -355,7 +378,7 @@ export class typeAdapter {
         this.types.set(stringKey, stringType);
         return stringType;
       }
-      case 'time': {
+      case 'plainTime': {
         if (type.encode !== 'rfc3339') {
           throw new Error(`unsupported time encoding ${type.encode}`);
         }
@@ -727,7 +750,7 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
       return `${root}-${obj.enumType.name}-${obj.value}`;
     case 'dict':
       return recursiveKeyName(`${root}-dict`, obj.valueType, substituteDiscriminator);
-    case 'date':
+    case 'plainDate':
       if (obj.encode !== 'rfc3339') {
         throw new Error(`unsupported date encoding ${obj.encode}`);
       }
@@ -741,7 +764,7 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
         return `${root}-${naming.createPolymorphicInterfaceName(obj.name)}`;
       }
       return `${root}-${obj.name}`;
-    case 'time':
+    case 'plainTime':
       if (obj.encode !== 'rfc3339') {
         throw new Error(`unsupported time encoding ${obj.encode}`);
       }

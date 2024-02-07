@@ -746,7 +746,7 @@ export interface HeaderMapResponse {
   collectionPrefix: string;
 }
 
-export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int32' | 'int64' | 'rune' | 'string';
+export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64' | 'rune' | 'string';
 
 export type BytesEncoding = 'Std' | 'URL';
 
