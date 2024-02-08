@@ -62,6 +62,38 @@ type ExtendsUnknownClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// ExtendsUnknownDerivedClientGetResponse contains the response from method ExtendsUnknownDerivedClient.Get.
+type ExtendsUnknownDerivedClientGetResponse struct {
+	// The model extends from a type that extends from Record<unknown>.
+	ExtendsUnknownAdditionalPropertiesDerived
+}
+
+// ExtendsUnknownDerivedClientPutResponse contains the response from method ExtendsUnknownDerivedClient.Put.
+type ExtendsUnknownDerivedClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// ExtendsUnknownDiscriminatedClientGetResponse contains the response from method ExtendsUnknownDiscriminatedClient.Get.
+type ExtendsUnknownDiscriminatedClientGetResponse struct {
+	// The model extends from Record<unknown> with a discriminator.
+	ExtendsUnknownAdditionalPropertiesDiscriminatedClassification
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ExtendsUnknownDiscriminatedClientGetResponse.
+func (e *ExtendsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalExtendsUnknownAdditionalPropertiesDiscriminatedClassification(data)
+	if err != nil {
+		return err
+	}
+	e.ExtendsUnknownAdditionalPropertiesDiscriminatedClassification = res
+	return nil
+}
+
+// ExtendsUnknownDiscriminatedClientPutResponse contains the response from method ExtendsUnknownDiscriminatedClient.Put.
+type ExtendsUnknownDiscriminatedClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // IsFloatClientGetResponse contains the response from method IsFloatClient.Get.
 type IsFloatClientGetResponse struct {
 	// The model is from Record<float32> type.
@@ -114,5 +146,37 @@ type IsUnknownClientGetResponse struct {
 
 // IsUnknownClientPutResponse contains the response from method IsUnknownClient.Put.
 type IsUnknownClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// IsUnknownDerivedClientGetResponse contains the response from method IsUnknownDerivedClient.Get.
+type IsUnknownDerivedClientGetResponse struct {
+	// The model extends from a type that is Record<unknown> type
+	IsUnknownAdditionalPropertiesDerived
+}
+
+// IsUnknownDerivedClientPutResponse contains the response from method IsUnknownDerivedClient.Put.
+type IsUnknownDerivedClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// IsUnknownDiscriminatedClientGetResponse contains the response from method IsUnknownDiscriminatedClient.Get.
+type IsUnknownDiscriminatedClientGetResponse struct {
+	// The model is Record<unknown> with a discriminator.
+	IsUnknownAdditionalPropertiesDiscriminatedClassification
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IsUnknownDiscriminatedClientGetResponse.
+func (i *IsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalIsUnknownAdditionalPropertiesDiscriminatedClassification(data)
+	if err != nil {
+		return err
+	}
+	i.IsUnknownAdditionalPropertiesDiscriminatedClassification = res
+	return nil
+}
+
+// IsUnknownDiscriminatedClientPutResponse contains the response from method IsUnknownDiscriminatedClient.Put.
+type IsUnknownDiscriminatedClientPutResponse struct {
 	// placeholder for future response values
 }

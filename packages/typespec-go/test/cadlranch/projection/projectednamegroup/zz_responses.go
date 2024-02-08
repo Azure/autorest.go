@@ -7,6 +7,16 @@
 
 package projectednamegroup
 
+// ModelClientClientResponse contains the response from method ModelClient.Client.
+type ModelClientClientResponse struct {
+	// placeholder for future response values
+}
+
+// ModelClientLanguageResponse contains the response from method ModelClient.Language.
+type ModelClientLanguageResponse struct {
+	// placeholder for future response values
+}
+
 // ProjectedNameClientClientNameResponse contains the response from method ProjectedNameClient.ClientName.
 type ProjectedNameClientClientNameResponse struct {
 	// placeholder for future response values

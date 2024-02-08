@@ -7,6 +7,16 @@
 
 package projectednamegroup
 
+// ModelClientClientOptions contains the optional parameters for the ModelClient.Client method.
+type ModelClientClientOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ModelClientLanguageOptions contains the optional parameters for the ModelClient.Language method.
+type ModelClientLanguageOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ProjectedNameClientClientNameOptions contains the optional parameters for the ProjectedNameClient.ClientName method.
 type ProjectedNameClientClientNameOptions struct {
 	// placeholder for future optional parameters

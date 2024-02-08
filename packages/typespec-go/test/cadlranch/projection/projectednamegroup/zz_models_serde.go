@@ -14,6 +14,33 @@ import (
 	"reflect"
 )
 
+// MarshalJSON implements the json.Marshaller interface for type ClientModel.
+func (c ClientModel) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "defaultName", c.DefaultName)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ClientModel.
+func (c *ClientModel) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "defaultName":
+			err = unpopulate(val, "DefaultName", &c.DefaultName)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type ClientProjectedNameModel.
 func (c ClientProjectedNameModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -36,6 +63,33 @@ func (c *ClientProjectedNameModel) UnmarshalJSON(data []byte) error {
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", c, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GoModel.
+func (g GoModel) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "defaultName", g.DefaultName)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GoModel.
+func (g *GoModel) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", g, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "defaultName":
+			err = unpopulate(val, "DefaultName", &g.DefaultName)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", g, err)
 		}
 	}
 	return nil
@@ -98,7 +152,7 @@ func (j *JSONProjectedNameModel) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type LanguageProjectedNameModel.
 func (l LanguageProjectedNameModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "defaultName", l.DoNotUseMeAsAName)
+	populate(objectMap, "defaultName", l.GoName)
 	return json.Marshal(objectMap)
 }
 
@@ -112,7 +166,7 @@ func (l *LanguageProjectedNameModel) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "defaultName":
-			err = unpopulate(val, "DoNotUseMeAsAName", &l.DoNotUseMeAsAName)
+			err = unpopulate(val, "GoName", &l.GoName)
 			delete(rawMsg, key)
 		}
 		if err != nil {

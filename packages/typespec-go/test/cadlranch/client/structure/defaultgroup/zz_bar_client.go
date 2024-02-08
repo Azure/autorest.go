@@ -49,6 +49,34 @@ func (client *BarClient) fiveCreateRequest(ctx context.Context, options *BarClie
 	return req, nil
 }
 
+// - options - BarClientNineOptions contains the optional parameters for the BarClient.Nine method.
+func (client *BarClient) Nine(ctx context.Context, options *BarClientNineOptions) (BarClientNineResponse, error) {
+	var err error
+	req, err := client.nineCreateRequest(ctx, options)
+	if err != nil {
+		return BarClientNineResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return BarClientNineResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return BarClientNineResponse{}, err
+	}
+	return BarClientNineResponse{}, nil
+}
+
+// nineCreateRequest creates the Nine request.
+func (client *BarClient) nineCreateRequest(ctx context.Context, options *BarClientNineOptions) (*policy.Request, error) {
+	urlPath := "/nine"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // - options - BarClientSixOptions contains the optional parameters for the BarClient.Six method.
 func (client *BarClient) Six(ctx context.Context, options *BarClientSixOptions) (BarClientSixResponse, error) {
 	var err error

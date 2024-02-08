@@ -35,7 +35,7 @@ export class clientAdapter {
       throw new Error('single-client cannot be enabled when there are multiple clients');
     }
     for (const sdkClient of sdkPackage.clients) {
-      if (sdkClient.initialization && values(sdkClient.methods).all((each: tcgc.SdkMethod<tcgc.SdkHttpOperation>) => { return each.kind === 'clientaccessor'; })) {
+      if (values(sdkClient.methods).all((each: tcgc.SdkMethod<tcgc.SdkHttpOperation>) => { return each.kind === 'clientaccessor'; })) {
         // this is a hierarchical client with only client accessors so skip
         // it as we don't currently support hierarchical clients.
         continue;

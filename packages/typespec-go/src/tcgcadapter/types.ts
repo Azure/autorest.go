@@ -94,17 +94,17 @@ export class typeAdapter {
 
     // now adapt model fields
     for (const modelType of modelTypes) {
-      const props = aggregateProperties(modelType.tcgc);
-      for (const prop of values(props)) {
+      const content = aggregateProperties(modelType.tcgc);
+      for (const prop of values(content.props)) {
         if (prop.kind !== 'property') {
           throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.tcgc.name}`);
         }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
-      if (modelType.tcgc.additionalProperties) {
+      if (content.addlProps) {
         const annotations = new go.ModelFieldAnnotations(false, false, true, false);
-        const addlPropsType = new go.MapType(this.getPossibleType(modelType.tcgc.additionalProperties, false, false), isTypePassedByValue(modelType.tcgc.additionalProperties));
+        const addlPropsType = new go.MapType(this.getPossibleType(content.addlProps, false, false), isTypePassedByValue(content.addlProps));
         const addlProps = new go.ModelField('AdditionalProperties', addlPropsType, true, '', annotations);
         modelType.go.fields.push(addlProps);
       }
@@ -790,13 +790,15 @@ interface InterfaceTypeSdkModelType {
   tcgc: tcgc.SdkModelType;
 }
 
-// aggregate the properties from the provided type and its parent types
-function aggregateProperties(model: tcgc.SdkModelType): Array<tcgc.SdkModelPropertyType> {
+// aggregate the properties from the provided type and its parent types.
+// this includes any inherited additional properties.
+function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
     allProps.push(prop);
   }
 
+  let addlProps = model.additionalProperties;
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
@@ -808,7 +810,11 @@ function aggregateProperties(model: tcgc.SdkModelType): Array<tcgc.SdkModelPrope
       }
       allProps.push(parentProp);
     }
+    // if we haven't found additional properties yet and the parent has it, use it
+    if (!addlProps && parent.additionalProperties) {
+      addlProps = parent.additionalProperties;
+    }
     parent = parent.baseModel;
   }
-  return allProps;
+  return {props: allProps, addlProps: addlProps};
 }
