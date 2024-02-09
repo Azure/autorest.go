@@ -12,6 +12,11 @@ type BarClientFiveOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BarClientNineOptions contains the optional parameters for the BarClient.Nine method.
+type BarClientNineOptions struct {
+	// placeholder for future optional parameters
+}
+
 // BarClientSixOptions contains the optional parameters for the BarClient.Six method.
 type BarClientSixOptions struct {
 	// placeholder for future optional parameters
@@ -22,8 +27,18 @@ type FooClientFourOptions struct {
 	// placeholder for future optional parameters
 }
 
+// FooClientSevenOptions contains the optional parameters for the FooClient.Seven method.
+type FooClientSevenOptions struct {
+	// placeholder for future optional parameters
+}
+
 // FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
 type FooClientThreeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// QuxClientEightOptions contains the optional parameters for the QuxClient.Eight method.
+type QuxClientEightOptions struct {
 	// placeholder for future optional parameters
 }
 

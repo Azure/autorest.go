@@ -40,7 +40,7 @@ const cadlRanch = {
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
   'pageablegroup': ['payload/pageable'],
-  'projectednamegroup': ['projection/projected-name'], // missing tests
+  'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
   'multiplegroup': ['server/path/multiple'],   // missing tests
   'singlegroup': ['server/path/single'],       // missing tests

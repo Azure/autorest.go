@@ -20,7 +20,7 @@ func TestRecursiveClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, resp.Extension, recursivegroup.Extension{
+	require.EqualValues(t, recursivegroup.Extension{
 		Extension: []recursivegroup.Extension{
 			{
 				Extension: []recursivegroup.Extension{
@@ -34,7 +34,8 @@ func TestRecursiveClientGet(t *testing.T) {
 				Level: to.Ptr[int8](1),
 			},
 		},
-	})
+		Level: to.Ptr[int8](0),
+	}, resp.Extension)
 }
 
 func TestRecursiveClientPut(t *testing.T) {
@@ -54,6 +55,7 @@ func TestRecursiveClientPut(t *testing.T) {
 				Level: to.Ptr[int8](1),
 			},
 		},
+		Level: to.Ptr[int8](0),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

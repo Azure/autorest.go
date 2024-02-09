@@ -12,6 +12,11 @@ type BarClientFiveResponse struct {
 	// placeholder for future response values
 }
 
+// BarClientNineResponse contains the response from method BarClient.Nine.
+type BarClientNineResponse struct {
+	// placeholder for future response values
+}
+
 // BarClientSixResponse contains the response from method BarClient.Six.
 type BarClientSixResponse struct {
 	// placeholder for future response values
@@ -22,8 +27,18 @@ type FooClientFourResponse struct {
 	// placeholder for future response values
 }
 
+// FooClientSevenResponse contains the response from method FooClient.Seven.
+type FooClientSevenResponse struct {
+	// placeholder for future response values
+}
+
 // FooClientThreeResponse contains the response from method FooClient.Three.
 type FooClientThreeResponse struct {
+	// placeholder for future response values
+}
+
+// QuxClientEightResponse contains the response from method QuxClient.Eight.
+type QuxClientEightResponse struct {
 	// placeholder for future response values
 }
 

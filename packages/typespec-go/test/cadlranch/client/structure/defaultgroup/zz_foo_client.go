@@ -49,6 +49,34 @@ func (client *FooClient) fourCreateRequest(ctx context.Context, options *FooClie
 	return req, nil
 }
 
+// - options - FooClientSevenOptions contains the optional parameters for the FooClient.Seven method.
+func (client *FooClient) Seven(ctx context.Context, options *FooClientSevenOptions) (FooClientSevenResponse, error) {
+	var err error
+	req, err := client.sevenCreateRequest(ctx, options)
+	if err != nil {
+		return FooClientSevenResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return FooClientSevenResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return FooClientSevenResponse{}, err
+	}
+	return FooClientSevenResponse{}, nil
+}
+
+// sevenCreateRequest creates the Seven request.
+func (client *FooClient) sevenCreateRequest(ctx context.Context, options *FooClientSevenOptions) (*policy.Request, error) {
+	urlPath := "/seven"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // - options - FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
 func (client *FooClient) Three(ctx context.Context, options *FooClientThreeOptions) (FooClientThreeResponse, error) {
 	var err error
