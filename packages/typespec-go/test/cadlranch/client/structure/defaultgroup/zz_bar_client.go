@@ -13,12 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // BarClient contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [QuxClient.BarClient] instead.
 type BarClient struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
 }
 
 // - options - BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
@@ -41,6 +44,9 @@ func (client *BarClient) Five(ctx context.Context, options *BarClientFiveOptions
 
 // fiveCreateRequest creates the Five request.
 func (client *BarClient) fiveCreateRequest(ctx context.Context, options *BarClientFiveOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -69,6 +75,9 @@ func (client *BarClient) Nine(ctx context.Context, options *BarClientNineOptions
 
 // nineCreateRequest creates the Nine request.
 func (client *BarClient) nineCreateRequest(ctx context.Context, options *BarClientNineOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/nine"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,6 +106,9 @@ func (client *BarClient) Six(ctx context.Context, options *BarClientSixOptions) 
 
 // sixCreateRequest creates the Six request.
 func (client *BarClient) sixCreateRequest(ctx context.Context, options *BarClientSixOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/six"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -16,7 +16,7 @@ import (
 )
 
 // BooleanValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [DictionaryClient.BooleanValueClient] instead.
 type BooleanValueClient struct {
 	internal *azcore.Client
 }

@@ -16,7 +16,7 @@ import (
 )
 
 // ModelsClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [SpecialWordsClient.ModelsClient] instead.
 type ModelsClient struct {
 	internal *azcore.Client
 }

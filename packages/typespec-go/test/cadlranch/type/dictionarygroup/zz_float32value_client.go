@@ -16,7 +16,7 @@ import (
 )
 
 // Float32ValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [DictionaryClient.Float32ValueClient] instead.
 type Float32ValueClient struct {
 	internal *azcore.Client
 }

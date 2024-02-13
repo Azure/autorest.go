@@ -16,7 +16,7 @@ import (
 )
 
 // IsStringClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.IsStringClient] instead.
 type IsStringClient struct {
 	internal *azcore.Client
 }

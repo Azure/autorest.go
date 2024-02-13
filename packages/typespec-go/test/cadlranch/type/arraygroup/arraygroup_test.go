@@ -17,105 +17,105 @@ import (
 )
 
 func TestBooleanValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewBooleanValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewBooleanValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.Equal(t, []bool{true, false}, resp.Value)
 }
 
 func TestBooleanValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewBooleanValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []bool{true, false}, nil)
+	resp, err := client.NewBooleanValueClient().Put(context.Background(), []bool{true, false}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestDatetimeValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewDatetimeValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewDatetimeValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []time.Time{time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)}, resp.Value)
 }
 
 func TestDatetimeValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewDatetimeValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []time.Time{time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)}, nil)
+	resp, err := client.NewDatetimeValueClient().Put(context.Background(), []time.Time{time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestDurationValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewDurationValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewDurationValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []string{"P123DT22H14M12.011S"}, resp.Value)
 }
 
 func TestDurationValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewDurationValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []string{"P123DT22H14M12.011S"}, nil)
+	resp, err := client.NewDurationValueClient().Put(context.Background(), []string{"P123DT22H14M12.011S"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestFloat32ValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewFloat32ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []float32{42.42}, resp.Value)
 }
 
 func TestFloat32ValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewFloat32ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []float32{42.42}, nil)
+	resp, err := client.NewFloat32ValueClient().Put(context.Background(), []float32{42.42}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestInt32ValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewInt32ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewInt32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []int32{1, 2}, resp.Value)
 }
 
 func TestInt32ValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewInt32ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []int32{1, 2}, nil)
+	resp, err := client.NewInt32ValueClient().Put(context.Background(), []int32{1, 2}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestInt64ValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewInt64ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewInt64ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []int64{9007199254740991, -9007199254740991}, resp.Value)
 }
 
 func TestInt64ValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewInt64ValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []int64{9007199254740991, -9007199254740991}, nil)
+	resp, err := client.NewInt64ValueClient().Put(context.Background(), []int64{9007199254740991, -9007199254740991}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestModelValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewModelValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []arraygroup.InnerModel{
 		{
@@ -128,9 +128,9 @@ func TestModelValueClientGet(t *testing.T) {
 }
 
 func TestModelValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewModelValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []arraygroup.InnerModel{
+	resp, err := client.NewModelValueClient().Put(context.Background(), []arraygroup.InnerModel{
 		{
 			Property: to.Ptr("hello"),
 		},
@@ -143,49 +143,49 @@ func TestModelValueClientPut(t *testing.T) {
 }
 
 func TestNullableFloatValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewNullableFloatValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []*float32{to.Ptr[float32](1.2), nil, to.Ptr[float32](3)}, resp.Value)
 }
 
 func TestNullableFloatValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewNullableFloatValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []*float32{to.Ptr[float32](1.2), nil, to.Ptr[float32](3)}, nil)
+	resp, err := client.NewNullableFloatValueClient().Put(context.Background(), []*float32{to.Ptr[float32](1.2), nil, to.Ptr[float32](3)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestStringValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewStringValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewStringValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []string{"hello", ""}, resp.Value)
 }
 
 func TestStringValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewStringValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []string{"hello", ""}, nil)
+	resp, err := client.NewStringValueClient().Put(context.Background(), []string{"hello", ""}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestUnknownValueClientGet(t *testing.T) {
-	client, err := arraygroup.NewUnknownValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewUnknownValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []any{float64(1), "hello", nil}, resp.Value)
 }
 
 func TestUnknownValueClientPut(t *testing.T) {
-	client, err := arraygroup.NewUnknownValueClient(nil)
+	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), []any{float64(1), "hello", nil}, nil)
+	resp, err := client.NewUnknownValueClient().Put(context.Background(), []any{float64(1), "hello", nil}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

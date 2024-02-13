@@ -16,7 +16,7 @@ import (
 )
 
 // ParametersClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [SpecialWordsClient.ParametersClient] instead.
 type ParametersClient struct {
 	internal *azcore.Client
 }

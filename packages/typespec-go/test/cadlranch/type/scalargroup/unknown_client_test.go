@@ -15,17 +15,17 @@ import (
 )
 
 func TestUnknownClient_Get(t *testing.T) {
-	client, err := scalargroup.NewUnknownClient(nil)
+	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewUnknownClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, "test", resp.Value)
 }
 
 func TestUnknownClient_Put(t *testing.T) {
-	client, err := scalargroup.NewUnknownClient(nil)
+	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), "test", nil)
+	resp, err := client.NewUnknownClient().Put(context.Background(), "test", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

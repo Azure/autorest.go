@@ -11,46 +11,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
-	internal, err := newClient(options)
+func NewDatetimeClient(options *azcore.ClientOptions) (*DatetimeClient, error) {
+	internal, err := azcore.NewClient("datetimegroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderClient{
+	return &DatetimeClient{
 		internal: internal,
 	}, nil
-}
-
-func NewPropertyClient(options *azcore.ClientOptions) (*PropertyClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &PropertyClient{
-		internal: internal,
-	}, nil
-}
-
-func NewQueryClient(options *azcore.ClientOptions) (*QueryClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &QueryClient{
-		internal: internal,
-	}, nil
-}
-
-func NewResponseHeaderClient(options *azcore.ClientOptions) (*ResponseHeaderClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &ResponseHeaderClient{
-		internal: internal,
-	}, nil
-}
-
-func newClient(options *azcore.ClientOptions) (*azcore.Client, error) {
-	return azcore.NewClient("datetimegroup", "v0.1.0", runtime.PipelineOptions{}, options)
 }

@@ -16,7 +16,7 @@ import (
 )
 
 // Int32ValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [ArrayClient.Int32ValueClient] instead.
 type Int32ValueClient struct {
 	internal *azcore.Client
 }

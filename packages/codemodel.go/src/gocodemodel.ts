@@ -234,6 +234,9 @@ export interface Client {
 
   methods: Array<Method | LROMethod | PageableMethod | LROPageableMethod>;
 
+  // contains any client accessor methods. can be empty
+  clientAccessors: Array<ClientAccessor>;
+
   // client has a statically defined host
   host?: string;
 
@@ -243,6 +246,14 @@ export interface Client {
   // complexHostParams indicates that the parameters to construct the full host name
   // span the client and the method. see custombaseurlgroup for an example of this.
   complexHostParams: boolean;
+
+  // the parent client in a hierarchical client
+  parent?: Client;
+}
+
+// ClientAccessor is a client method that returns a sub-client instance.
+export interface ClientAccessor {
+  subClient: Client;
 }
 
 // Method is a method on a client
@@ -1007,6 +1018,7 @@ export class CodeModel implements CodeModel {
     this.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
     for (const client of this.clients) {
       client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
+      client.clientAccessors.sort((a: ClientAccessor, b: ClientAccessor) => { return sortAscending(a.subClient.clientName, b.subClient.clientName); });
     }
   }
 }
@@ -1019,7 +1031,14 @@ export class Client implements Client {
     this.groupName = groupName;
     this.hostParams = new Array<URIParameter>();
     this.methods = new Array<Method>();
+    this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<Parameter>();
+  }
+}
+
+export class ClientAccessor implements ClientAccessor {
+  constructor(subClient: Client) {
+    this.subClient = subClient;
   }
 }
 

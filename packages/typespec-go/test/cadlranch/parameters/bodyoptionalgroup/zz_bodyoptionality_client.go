@@ -21,6 +21,13 @@ type BodyOptionalityClient struct {
 	internal *azcore.Client
 }
 
+// NewOptionalExplicitClient creates a new instance of [OptionalExplicitClient].
+func (client *BodyOptionalityClient) NewOptionalExplicitClient() *OptionalExplicitClient {
+	return &OptionalExplicitClient{
+		internal: client.internal,
+	}
+}
+
 //   - options - BodyOptionalityClientRequiredExplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredExplicit
 //     method.
 func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredExplicitOptions) (BodyOptionalityClientRequiredExplicitResponse, error) {

@@ -7,8 +7,6 @@
 
 package multiplegroup
 
-const host = "{endpoint}/server/path/multiple/{apiVersion}"
-
 // Versions - Service versions
 type Versions string
 

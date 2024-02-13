@@ -31,10 +31,13 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
   for (const client of codeModel.clients) {
     // the list of packages to import
     const imports = new ImportManager();
-    // add standard imports
-    imports.add('net/http');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+    if (client.methods.length > 0) {
+      // add standard imports for clients with methods.
+      // clients that are purely hierarchical (i.e. having no APIs) won't need them.
+      imports.add('net/http');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+    }
 
     let clientPkg = 'azcore';
     if (azureARM) {
@@ -53,6 +56,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     clientText += '// Don\'t use this type directly, use ';
     if (azureARM) {
       clientText += `${client.ctorName}() instead.\n`;
+    } else if (client.parent) {
+      clientText += `[${client.parent.clientName}.${client.clientName}] instead.\n`;
     } else {
       clientText += 'a constructor function instead.\n';
     }
@@ -115,6 +120,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         }
       }
     }
+
+    // end of client definition
     clientText += '}\n\n';
 
     if (azureARM && optionalParams.length > 0) {
@@ -166,8 +173,24 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       clientText += '}\n\n';
     }
 
-    // generate operations
+    // generate client accessors and operations
     let opText = '';
+    for (const clientAccessor of client.clientAccessors) {
+      const methodName = `New${clientAccessor.subClient.clientName}`;
+      opText += `// ${methodName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
+      opText += `func (client *${client.clientName}) ${methodName}() *${clientAccessor.subClient.clientName} {\n`;
+      opText += `\treturn &${clientAccessor.subClient.clientName}{\n`;
+      opText += '\t\tinternal: client.internal,\n';
+      // propagate all client params
+      for (const hostParam of client.hostParams) {
+        opText += `\t\t${hostParam.paramName}: client.${hostParam.paramName},\n`;
+      }
+      for (const param of client.parameters) {
+        opText += `\t\t${param.paramName}: client.${param.paramName},\n`;
+      }
+      opText += '\t}\n}\n\n';
+    }
+
     const nextPageMethods = new Array<go.NextPageMethod>();
     for (const method of client.methods) {
       // protocol creation can add imports to the list so
@@ -484,12 +507,12 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     text += `\thost := "${client.host!}"\n`;
     // get all the host params on the client
     for (const hostParam of values(client.hostParams)) {
-      text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", client.${(<string>hostParam.paramName)})\n`;
+      text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${(<string>hostParam.paramName)}`, hostParam.type, imports)})\n`;
     }
     // check for any method local host params
     for (const param of values(method.parameters)) {
       if (param.location === 'method' && go.isURIParameter(param)) {
-        text += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.getParamName(param)})\n`;
+        text += `\thost = strings.ReplaceAll(host, "{${param.uriPathSegment}}", ${helpers.formatValue(helpers.getParamName(param), param.type, imports)})\n`;
       }
     }
     hostParam = 'host';

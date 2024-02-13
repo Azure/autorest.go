@@ -17,9 +17,9 @@ import (
 )
 
 func TestCollectionsByteClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsByteClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetNonNull(context.Background(), nil)
+	resp, err := client.NewCollectionsByteClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.CollectionsByteProperty{
 		NullableProperty: [][]byte{
@@ -31,9 +31,9 @@ func TestCollectionsByteClientGetNonNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsByteClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetNull(context.Background(), nil)
+	resp, err := client.NewCollectionsByteClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.CollectionsByteProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -41,9 +41,9 @@ func TestCollectionsByteClientGetNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsByteClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PatchNonNull(context.Background(), nullablegroup.CollectionsByteProperty{
+	resp, err := client.NewCollectionsByteClient().PatchNonNull(context.Background(), nullablegroup.CollectionsByteProperty{
 		NullableProperty: [][]byte{
 			[]byte("hello, world!"),
 			[]byte("hello, world!"),
@@ -55,9 +55,9 @@ func TestCollectionsByteClientPatchNonNull(t *testing.T) {
 }
 
 func TestCollectionsByteClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsByteClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PatchNull(context.Background(), nullablegroup.CollectionsByteProperty{
+	resp, err := client.NewCollectionsByteClient().PatchNull(context.Background(), nullablegroup.CollectionsByteProperty{
 		NullableProperty: azcore.NullValue[[][]byte](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

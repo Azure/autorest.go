@@ -16,7 +16,7 @@ import (
 )
 
 // StringValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [DictionaryClient.StringValueClient] instead.
 type StringValueClient struct {
 	internal *azcore.Client
 }

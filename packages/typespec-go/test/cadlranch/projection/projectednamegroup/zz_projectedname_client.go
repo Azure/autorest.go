@@ -21,6 +21,20 @@ type ProjectedNameClient struct {
 	internal *azcore.Client
 }
 
+// NewModelClient creates a new instance of [ModelClient].
+func (client *ProjectedNameClient) NewModelClient() *ModelClient {
+	return &ModelClient{
+		internal: client.internal,
+	}
+}
+
+// NewPropertyClient creates a new instance of [PropertyClient].
+func (client *ProjectedNameClient) NewPropertyClient() *PropertyClient {
+	return &PropertyClient{
+		internal: client.internal,
+	}
+}
+
 //   - options - ProjectedNameClientClientNameOptions contains the optional parameters for the ProjectedNameClient.ClientName
 //     method.
 func (client *ProjectedNameClient) ClientName(ctx context.Context, options *ProjectedNameClientClientNameOptions) (ProjectedNameClientClientNameResponse, error) {

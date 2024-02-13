@@ -22,6 +22,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type MultipleClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 //   - options - MultipleClientNoOperationParamsOptions contains the optional parameters for the MultipleClient.NoOperationParams
@@ -45,6 +46,8 @@ func (client *MultipleClient) NoOperationParams(ctx context.Context, options *Mu
 
 // noOperationParamsCreateRequest creates the NoOperationParams request.
 func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context, options *MultipleClientNoOperationParamsOptions) (*policy.Request, error) {
+	host := "{endpoint}/server/path/multiple/{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, host)
 	if err != nil {
 		return nil, err
@@ -73,6 +76,8 @@ func (client *MultipleClient) WithOperationPathParam(ctx context.Context, keywor
 
 // withOperationPathParamCreateRequest creates the WithOperationPathParam request.
 func (client *MultipleClient) withOperationPathParamCreateRequest(ctx context.Context, keyword string, options *MultipleClientWithOperationPathParamOptions) (*policy.Request, error) {
+	host := "{endpoint}/server/path/multiple/{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/{keyword}"
 	if keyword == "" {
 		return nil, errors.New("parameter keyword cannot be empty")

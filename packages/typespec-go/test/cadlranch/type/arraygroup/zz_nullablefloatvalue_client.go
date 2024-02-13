@@ -16,7 +16,7 @@ import (
 )
 
 // NullableFloatValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [ArrayClient.NullableFloatValueClient] instead.
 type NullableFloatValueClient struct {
 	internal *azcore.Client
 }

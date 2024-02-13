@@ -17,9 +17,9 @@ import (
 )
 
 func TestBooleanValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewBooleanValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewBooleanValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*bool{
 		"k1": to.Ptr(true),
@@ -28,9 +28,9 @@ func TestBooleanValueClientGet(t *testing.T) {
 }
 
 func TestBooleanValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewBooleanValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*bool{
+	resp, err := client.NewBooleanValueClient().Put(context.Background(), map[string]*bool{
 		"k1": to.Ptr(true),
 		"k2": to.Ptr(false),
 	}, nil)
@@ -39,9 +39,9 @@ func TestBooleanValueClientPut(t *testing.T) {
 }
 
 func TestDatetimeValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDatetimeValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewDatetimeValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*time.Time{
 		"k1": to.Ptr(time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)),
@@ -49,9 +49,9 @@ func TestDatetimeValueClientGet(t *testing.T) {
 }
 
 func TestDatetimeValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDatetimeValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*time.Time{
+	resp, err := client.NewDatetimeValueClient().Put(context.Background(), map[string]*time.Time{
 		"k1": to.Ptr(time.Date(2022, time.August, 26, 18, 38, 0, 0, time.UTC)),
 	}, nil)
 	require.NoError(t, err)
@@ -59,9 +59,9 @@ func TestDatetimeValueClientPut(t *testing.T) {
 }
 
 func TestDurationValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewDurationValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewDurationValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*string{
 		"k1": to.Ptr("P123DT22H14M12.011S"),
@@ -69,9 +69,9 @@ func TestDurationValueClientGet(t *testing.T) {
 }
 
 func TestDurationValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewDurationValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*string{
+	resp, err := client.NewDurationValueClient().Put(context.Background(), map[string]*string{
 		"k1": to.Ptr("P123DT22H14M12.011S"),
 	}, nil)
 	require.NoError(t, err)
@@ -79,9 +79,9 @@ func TestDurationValueClientPut(t *testing.T) {
 }
 
 func TestFloat32ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewFloat32ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*float32{
 		"k1": to.Ptr[float32](42.42),
@@ -89,9 +89,9 @@ func TestFloat32ValueClientGet(t *testing.T) {
 }
 
 func TestFloat32ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewFloat32ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*float32{
+	resp, err := client.NewFloat32ValueClient().Put(context.Background(), map[string]*float32{
 		"k1": to.Ptr[float32](42.42),
 	}, nil)
 	require.NoError(t, err)
@@ -99,9 +99,9 @@ func TestFloat32ValueClientPut(t *testing.T) {
 }
 
 func TestInt32ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewInt32ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewInt32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*int32{
 		"k1": to.Ptr[int32](1),
@@ -110,9 +110,9 @@ func TestInt32ValueClientGet(t *testing.T) {
 }
 
 func TestInt32ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewInt32ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*int32{
+	resp, err := client.NewInt32ValueClient().Put(context.Background(), map[string]*int32{
 		"k1": to.Ptr[int32](1),
 		"k2": to.Ptr[int32](2),
 	}, nil)
@@ -121,9 +121,9 @@ func TestInt32ValueClientPut(t *testing.T) {
 }
 
 func TestInt64ValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewInt64ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewInt64ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*int64{
 		"k1": to.Ptr[int64](9007199254740991),
@@ -132,9 +132,9 @@ func TestInt64ValueClientGet(t *testing.T) {
 }
 
 func TestInt64ValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewInt64ValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*int64{
+	resp, err := client.NewInt64ValueClient().Put(context.Background(), map[string]*int64{
 		"k1": to.Ptr[int64](9007199254740991),
 		"k2": to.Ptr[int64](-9007199254740991),
 	}, nil)
@@ -143,9 +143,9 @@ func TestInt64ValueClientPut(t *testing.T) {
 }
 
 func TestModelValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewModelValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*dictionarygroup.InnerModel{
 		"k1": {
@@ -158,9 +158,9 @@ func TestModelValueClientGet(t *testing.T) {
 }
 
 func TestModelValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewModelValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*dictionarygroup.InnerModel{
+	resp, err := client.NewModelValueClient().Put(context.Background(), map[string]*dictionarygroup.InnerModel{
 		"k1": {
 			Property: to.Ptr("hello"),
 		},
@@ -173,9 +173,9 @@ func TestModelValueClientPut(t *testing.T) {
 }
 
 func TestNullableFloatValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewNullableFloatValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*float32{
 		"k1": to.Ptr[float32](1.2),
@@ -185,9 +185,9 @@ func TestNullableFloatValueClientGet(t *testing.T) {
 }
 
 func TestNullableFloatValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewNullableFloatValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*float32{
+	resp, err := client.NewNullableFloatValueClient().Put(context.Background(), map[string]*float32{
 		"k1": to.Ptr[float32](1.2),
 		"k2": to.Ptr[float32](0.5),
 		"k3": nil,
@@ -197,9 +197,9 @@ func TestNullableFloatValueClientPut(t *testing.T) {
 }
 
 func TestRecursiveModelValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewRecursiveModelValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewRecursiveModelValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*dictionarygroup.InnerModel{
 		"k1": {
@@ -218,9 +218,9 @@ func TestRecursiveModelValueClientGet(t *testing.T) {
 }
 
 func TestRecursiveModelValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewRecursiveModelValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*dictionarygroup.InnerModel{
+	resp, err := client.NewRecursiveModelValueClient().Put(context.Background(), map[string]*dictionarygroup.InnerModel{
 		"k1": {
 			Property: to.Ptr("hello"),
 			Children: map[string]*dictionarygroup.InnerModel{},
@@ -239,9 +239,9 @@ func TestRecursiveModelValueClientPut(t *testing.T) {
 }
 
 func TestStringValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewStringValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewStringValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*string{
 		"k1": to.Ptr("hello"),
@@ -250,9 +250,9 @@ func TestStringValueClientGet(t *testing.T) {
 }
 
 func TestStringValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewStringValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]*string{
+	resp, err := client.NewStringValueClient().Put(context.Background(), map[string]*string{
 		"k1": to.Ptr("hello"),
 		"k2": to.Ptr(""),
 	}, nil)
@@ -261,9 +261,9 @@ func TestStringValueClientPut(t *testing.T) {
 }
 
 func TestUnknownValueClientGet(t *testing.T) {
-	client, err := dictionarygroup.NewUnknownValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewUnknownValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]any{
 		"k1": float64(1),
@@ -273,9 +273,9 @@ func TestUnknownValueClientGet(t *testing.T) {
 }
 
 func TestUnknownValueClientPut(t *testing.T) {
-	client, err := dictionarygroup.NewUnknownValueClient(nil)
+	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), map[string]any{
+	resp, err := client.NewUnknownValueClient().Put(context.Background(), map[string]any{
 		"k1": float64(1),
 		"k2": "hello",
 		"k3": nil,

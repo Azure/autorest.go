@@ -18,7 +18,7 @@ import (
 )
 
 // QueryClient contains the methods for the Encode.Datetime group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [DatetimeClient.QueryClient] instead.
 type QueryClient struct {
 	internal *azcore.Client
 }

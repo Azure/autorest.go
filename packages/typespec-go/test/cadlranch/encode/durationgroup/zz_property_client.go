@@ -16,7 +16,7 @@ import (
 )
 
 // PropertyClient contains the methods for the Encode.Duration group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [DurationClient.PropertyClient] instead.
 type PropertyClient struct {
 	internal *azcore.Client
 }

@@ -16,7 +16,7 @@ import (
 )
 
 // ModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Usage group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [UsageClient.ModelInOperationClient] instead.
 type ModelInOperationClient struct {
 	internal *azcore.Client
 }

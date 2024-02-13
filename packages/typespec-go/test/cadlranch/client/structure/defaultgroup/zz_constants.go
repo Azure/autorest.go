@@ -7,8 +7,6 @@
 
 package defaultgroup
 
-const host = "{endpoint}/client/structure/{client}"
-
 type ClientType string
 
 const (

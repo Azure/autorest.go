@@ -16,7 +16,7 @@ import (
 )
 
 // ExtendsStringClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.ExtendsStringClient] instead.
 type ExtendsStringClient struct {
 	internal *azcore.Client
 }
