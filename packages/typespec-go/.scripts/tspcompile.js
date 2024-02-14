@@ -29,9 +29,9 @@ const cadlRanch = {
   //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
   //'traitsgroup': ['azure/core/traits'],            // requires union support
   'defaultgroup': ['client/structure/default/client.tsp'],
-  'multiclientgroup': ['client/structure/multi-client/client.tsp'],    // missing tests
-  'renamedopgroup': ['client/structure/renamed-operation/client.tsp'], // missing tests
-  'twoopgroup': ['client/structure/two-operation-group/client.tsp'],   // missing tests
+  'multiclientgroup': ['client/structure/multi-client/client.tsp'],
+  'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
+  'twoopgroup': ['client/structure/two-operation-group/client.tsp'],
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
