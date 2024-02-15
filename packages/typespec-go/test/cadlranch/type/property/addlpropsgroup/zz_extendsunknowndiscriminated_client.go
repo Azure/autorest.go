@@ -16,7 +16,7 @@ import (
 )
 
 // ExtendsUnknownDiscriminatedClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use [AdditionalPropertiesClient.ExtendsUnknownDiscriminatedClient] instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewExtendsUnknownDiscriminatedClient] instead.
 type ExtendsUnknownDiscriminatedClient struct {
 	internal *azcore.Client
 }

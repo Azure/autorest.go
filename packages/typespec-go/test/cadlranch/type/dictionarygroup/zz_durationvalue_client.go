@@ -16,7 +16,7 @@ import (
 )
 
 // DurationValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use [DictionaryClient.DurationValueClient] instead.
+// Don't use this type directly, use [DictionaryClient.NewDurationValueClient] instead.
 type DurationValueClient struct {
 	internal *azcore.Client
 }

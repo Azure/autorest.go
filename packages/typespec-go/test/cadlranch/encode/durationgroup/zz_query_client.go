@@ -19,7 +19,7 @@ import (
 )
 
 // QueryClient contains the methods for the Encode.Duration group.
-// Don't use this type directly, use [DurationClient.QueryClient] instead.
+// Don't use this type directly, use [DurationClient.NewQueryClient] instead.
 type QueryClient struct {
 	internal *azcore.Client
 }

@@ -16,7 +16,7 @@ import (
 )
 
 // CollectionsModelClient contains the methods for the Type.Property.Nullable group.
-// Don't use this type directly, use [NullableClient.CollectionsModelClient] instead.
+// Don't use this type directly, use [NullableClient.NewCollectionsModelClient] instead.
 type CollectionsModelClient struct {
 	internal *azcore.Client
 }

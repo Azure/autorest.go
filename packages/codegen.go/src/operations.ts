@@ -57,7 +57,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (azureARM) {
       clientText += `${client.ctorName}() instead.\n`;
     } else if (client.parent) {
-      clientText += `[${client.parent.clientName}.${client.clientName}] instead.\n`;
+      clientText += `[${client.parent.clientName}.${client.ctorName}] instead.\n`;
     } else {
       clientText += 'a constructor function instead.\n';
     }
@@ -176,9 +176,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      const methodName = `New${clientAccessor.subClient.clientName}`;
-      opText += `// ${methodName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
-      opText += `func (client *${client.clientName}) ${methodName}() *${clientAccessor.subClient.clientName} {\n`;
+      opText += `// ${clientAccessor.subClient.ctorName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
+      opText += `func (client *${client.clientName}) ${clientAccessor.subClient.ctorName}() *${clientAccessor.subClient.clientName} {\n`;
       opText += `\treturn &${clientAccessor.subClient.clientName}{\n`;
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params

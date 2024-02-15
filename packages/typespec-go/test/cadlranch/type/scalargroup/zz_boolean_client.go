@@ -16,7 +16,7 @@ import (
 )
 
 // BooleanClient contains the methods for the Type.Scalar group.
-// Don't use this type directly, use [ScalarClient.BooleanClient] instead.
+// Don't use this type directly, use [ScalarClient.NewBooleanClient] instead.
 type BooleanClient struct {
 	internal *azcore.Client
 }

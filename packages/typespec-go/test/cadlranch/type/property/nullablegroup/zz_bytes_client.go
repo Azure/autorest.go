@@ -16,7 +16,7 @@ import (
 )
 
 // BytesClient contains the methods for the Type.Property.Nullable group.
-// Don't use this type directly, use [NullableClient.BytesClient] instead.
+// Don't use this type directly, use [NullableClient.NewBytesClient] instead.
 type BytesClient struct {
 	internal *azcore.Client
 }

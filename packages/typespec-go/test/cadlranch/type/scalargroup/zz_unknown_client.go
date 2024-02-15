@@ -16,7 +16,7 @@ import (
 )
 
 // UnknownClient contains the methods for the Type.Scalar group.
-// Don't use this type directly, use [ScalarClient.UnknownClient] instead.
+// Don't use this type directly, use [ScalarClient.NewUnknownClient] instead.
 type UnknownClient struct {
 	internal *azcore.Client
 }

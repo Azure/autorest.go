@@ -16,7 +16,7 @@ import (
 )
 
 // ModelClient contains the methods for the Projection.ProjectedName group.
-// Don't use this type directly, use [ProjectedNameClient.ModelClient] instead.
+// Don't use this type directly, use [ProjectedNameClient.NewModelClient] instead.
 type ModelClient struct {
 	internal *azcore.Client
 }

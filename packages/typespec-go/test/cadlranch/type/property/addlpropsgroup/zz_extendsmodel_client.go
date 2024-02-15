@@ -16,7 +16,7 @@ import (
 )
 
 // ExtendsModelClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use [AdditionalPropertiesClient.ExtendsModelClient] instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewExtendsModelClient] instead.
 type ExtendsModelClient struct {
 	internal *azcore.Client
 }

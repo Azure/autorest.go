@@ -18,7 +18,7 @@ import (
 )
 
 // HeaderClient contains the methods for the Encode.Duration group.
-// Don't use this type directly, use [DurationClient.HeaderClient] instead.
+// Don't use this type directly, use [DurationClient.NewHeaderClient] instead.
 type HeaderClient struct {
 	internal *azcore.Client
 }

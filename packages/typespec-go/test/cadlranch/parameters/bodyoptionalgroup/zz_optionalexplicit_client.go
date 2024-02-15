@@ -16,7 +16,7 @@ import (
 )
 
 // OptionalExplicitClient contains the methods for the Parameters.BodyOptionality group.
-// Don't use this type directly, use [BodyOptionalityClient.OptionalExplicitClient] instead.
+// Don't use this type directly, use [BodyOptionalityClient.NewOptionalExplicitClient] instead.
 type OptionalExplicitClient struct {
 	internal *azcore.Client
 }

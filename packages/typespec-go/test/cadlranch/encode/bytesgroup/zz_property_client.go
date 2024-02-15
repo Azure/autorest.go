@@ -16,7 +16,7 @@ import (
 )
 
 // PropertyClient contains the methods for the Encode.Bytes group.
-// Don't use this type directly, use [BytesClient.PropertyClient] instead.
+// Don't use this type directly, use [BytesClient.NewPropertyClient] instead.
 type PropertyClient struct {
 	internal *azcore.Client
 }

@@ -16,7 +16,7 @@ import (
 )
 
 // Int32ValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use [DictionaryClient.Int32ValueClient] instead.
+// Don't use this type directly, use [DictionaryClient.NewInt32ValueClient] instead.
 type Int32ValueClient struct {
 	internal *azcore.Client
 }

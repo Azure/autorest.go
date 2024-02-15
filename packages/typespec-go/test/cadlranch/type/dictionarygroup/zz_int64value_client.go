@@ -16,7 +16,7 @@ import (
 )
 
 // Int64ValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use [DictionaryClient.Int64ValueClient] instead.
+// Don't use this type directly, use [DictionaryClient.NewInt64ValueClient] instead.
 type Int64ValueClient struct {
 	internal *azcore.Client
 }

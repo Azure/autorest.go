@@ -16,7 +16,7 @@ import (
 )
 
 // StringClient contains the methods for the Type.Enum.Fixed group.
-// Don't use this type directly, use [FixedClient.StringClient] instead.
+// Don't use this type directly, use [FixedClient.NewStringClient] instead.
 type StringClient struct {
 	internal *azcore.Client
 }

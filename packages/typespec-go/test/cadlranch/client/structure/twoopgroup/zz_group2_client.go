@@ -17,7 +17,7 @@ import (
 )
 
 // Group2Client contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use [TwoOperationGroupClient.Group2Client] instead.
+// Don't use this type directly, use [TwoOperationGroupClient.NewGroup2Client] instead.
 type Group2Client struct {
 	internal *azcore.Client
 	endpoint string

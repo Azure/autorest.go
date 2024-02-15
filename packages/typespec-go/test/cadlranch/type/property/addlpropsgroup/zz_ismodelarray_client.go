@@ -16,7 +16,7 @@ import (
 )
 
 // IsModelArrayClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use [AdditionalPropertiesClient.IsModelArrayClient] instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewIsModelArrayClient] instead.
 type IsModelArrayClient struct {
 	internal *azcore.Client
 }

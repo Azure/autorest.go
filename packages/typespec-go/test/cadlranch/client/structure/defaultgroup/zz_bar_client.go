@@ -17,7 +17,7 @@ import (
 )
 
 // BarClient contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use [QuxClient.BarClient] instead.
+// Don't use this type directly, use [QuxClient.NewBarClient] instead.
 type BarClient struct {
 	internal *azcore.Client
 	endpoint string

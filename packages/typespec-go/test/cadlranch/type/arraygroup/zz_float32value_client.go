@@ -16,7 +16,7 @@ import (
 )
 
 // Float32ValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use [ArrayClient.Float32ValueClient] instead.
+// Don't use this type directly, use [ArrayClient.NewFloat32ValueClient] instead.
 type Float32ValueClient struct {
 	internal *azcore.Client
 }

@@ -10,7 +10,7 @@ package defaultgroup
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // BazClient contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use [ServiceClient.BazClient] instead.
+// Don't use this type directly, use [ServiceClient.NewBazClient] instead.
 type BazClient struct {
 	internal *azcore.Client
 	endpoint string

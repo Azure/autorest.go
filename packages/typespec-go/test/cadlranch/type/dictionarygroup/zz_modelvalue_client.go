@@ -16,7 +16,7 @@ import (
 )
 
 // ModelValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use [DictionaryClient.ModelValueClient] instead.
+// Don't use this type directly, use [DictionaryClient.NewModelValueClient] instead.
 type ModelValueClient struct {
 	internal *azcore.Client
 }

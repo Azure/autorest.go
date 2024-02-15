@@ -16,7 +16,7 @@ import (
 )
 
 // IsUnknownDiscriminatedClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use [AdditionalPropertiesClient.IsUnknownDiscriminatedClient] instead.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewIsUnknownDiscriminatedClient] instead.
 type IsUnknownDiscriminatedClient struct {
 	internal *azcore.Client
 }

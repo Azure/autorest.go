@@ -17,7 +17,7 @@ import (
 )
 
 // HeaderClient contains the methods for the Parameters.CollectionFormat group.
-// Don't use this type directly, use [CollectionFormatClient.HeaderClient] instead.
+// Don't use this type directly, use [CollectionFormatClient.NewHeaderClient] instead.
 type HeaderClient struct {
 	internal *azcore.Client
 }

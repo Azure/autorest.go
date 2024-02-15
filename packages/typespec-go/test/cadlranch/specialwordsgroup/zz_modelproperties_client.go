@@ -16,7 +16,7 @@ import (
 )
 
 // ModelPropertiesClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use [SpecialWordsClient.ModelPropertiesClient] instead.
+// Don't use this type directly, use [SpecialWordsClient.NewModelPropertiesClient] instead.
 type ModelPropertiesClient struct {
 	internal *azcore.Client
 }
