@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// CustomClient contains the methods for the Authentication.Http.Custom group.
+// CustomClient - Illustrates clients generated with generic HTTP auth.
 // Don't use this type directly, use a constructor function instead.
 type CustomClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// StringValueClient contains the methods for the Type.Dictionary group.
+// StringValueClient - Dictionary of string values
 // Don't use this type directly, use [DictionaryClient.NewStringValueClient] instead.
 type StringValueClient struct {
 	internal *azcore.Client

@@ -223,8 +223,7 @@ export interface ConstantValue {
 export interface Client {
   clientName: string;
 
-  // groupName is the name of the operation group the client belongs to (e.g. "groupname" from an operation ID of "groupname_operation")
-  groupName: string;
+  description: string;
 
   // the name of the client's constructor func
   ctorName: string;
@@ -1024,11 +1023,11 @@ export class CodeModel implements CodeModel {
 }
 
 export class Client implements Client {
-  constructor(name: string, groupName: string, ctorName: string) {
+  constructor(name: string, description: string, ctorName: string) {
     this.clientName = name;
     this.complexHostParams = false;
     this.ctorName = ctorName;
-    this.groupName = groupName;
+    this.description = description;
     this.hostParams = new Array<URIParameter>();
     this.methods = new Array<Method>();
     this.clientAccessors = new Array<ClientAccessor>();

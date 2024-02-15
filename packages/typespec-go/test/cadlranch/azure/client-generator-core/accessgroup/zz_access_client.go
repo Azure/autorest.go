@@ -9,7 +9,7 @@ package accessgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// AccessClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access group.
+// AccessClient - Test for internal decorator.
 // Don't use this type directly, use a constructor function instead.
 type AccessClient struct {
 	internal *azcore.Client

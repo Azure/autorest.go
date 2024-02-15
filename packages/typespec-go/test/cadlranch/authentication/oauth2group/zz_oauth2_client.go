@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// OAuth2Client contains the methods for the Authentication.OAuth2 group.
+// OAuth2Client - Illustrates clients generated with OAuth2 authentication.
 // Don't use this type directly, use a constructor function instead.
 type OAuth2Client struct {
 	internal *azcore.Client

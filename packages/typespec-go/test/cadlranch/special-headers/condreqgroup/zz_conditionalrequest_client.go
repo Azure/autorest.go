@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ConditionalRequestClient contains the methods for the SpecialHeaders.ConditionalRequest group.
+// ConditionalRequestClient - Illustrates conditional request headers
 // Don't use this type directly, use a constructor function instead.
 type ConditionalRequestClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// PropertyClient contains the methods for the Projection.ProjectedName group.
+// PropertyClient contains the methods for the Projection.ProjectedName namespace.
 // Don't use this type directly, use [ProjectedNameClient.NewPropertyClient] instead.
 type PropertyClient struct {
 	internal *azcore.Client

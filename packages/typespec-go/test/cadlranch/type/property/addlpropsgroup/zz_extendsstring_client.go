@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ExtendsStringClient contains the methods for the Type.Property.AdditionalProperties group.
+// ExtendsStringClient contains the methods for the Type.Property.AdditionalProperties namespace.
 // Don't use this type directly, use [AdditionalPropertiesClient.NewExtendsStringClient] instead.
 type ExtendsStringClient struct {
 	internal *azcore.Client

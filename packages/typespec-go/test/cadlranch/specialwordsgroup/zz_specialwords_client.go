@@ -9,7 +9,43 @@ package specialwordsgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// SpecialWordsClient contains the methods for the SpecialWords group.
+// SpecialWordsClient - Scenarios to verify that reserved words can be used in service and generators will handle it appropriately.
+// Current list of special words
+// ```txt
+// and
+// as
+// assert
+// async
+// await
+// break
+// class
+// constructor
+// continue
+// def
+// del
+// elif
+// else
+// except
+// exec
+// finally
+// for
+// from
+// global
+// if
+// import
+// in
+// is
+// lambda
+// not
+// or
+// pass
+// raise
+// return
+// try
+// while
+// with
+// yield
+// ```
 // Don't use this type directly, use a constructor function instead.
 type SpecialWordsClient struct {
 	internal *azcore.Client

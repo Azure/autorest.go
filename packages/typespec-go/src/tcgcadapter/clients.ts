@@ -57,7 +57,14 @@ export class clientAdapter {
       return goClient;
     }
 
-    goClient = new go.Client(clientName, sdkClient.nameSpace, `New${clientName}`);
+    let description: string;
+    if (sdkClient.description) {
+      description = `${clientName} - ${sdkClient.description}`;
+    } else {
+      description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
+    }
+
+    goClient = new go.Client(clientName, description, `New${clientName}`);
     goClient.parent = parent;
     goClient.host = sdkClient.endpoint;
     goClient.complexHostParams = sdkClient.hasParameterizedEndpoint;

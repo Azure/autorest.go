@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// UnionClient contains the methods for the Authentication.Union group.
+// UnionClient - Illustrates clients generated with ApiKey and OAuth2 authentication.
 // Don't use this type directly, use a constructor function instead.
 type UnionClient struct {
 	internal *azcore.Client

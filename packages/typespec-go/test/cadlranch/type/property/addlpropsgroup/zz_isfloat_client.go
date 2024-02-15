@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// IsFloatClient contains the methods for the Type.Property.AdditionalProperties group.
+// IsFloatClient contains the methods for the Type.Property.AdditionalProperties namespace.
 // Don't use this type directly, use [AdditionalPropertiesClient.NewIsFloatClient] instead.
 type IsFloatClient struct {
 	internal *azcore.Client

@@ -9,7 +9,7 @@ package datetimegroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// DatetimeClient contains the methods for the Encode.Datetime group.
+// DatetimeClient - Test for encode decorator on datetime.
 // Don't use this type directly, use a constructor function instead.
 type DatetimeClient struct {
 	internal *azcore.Client

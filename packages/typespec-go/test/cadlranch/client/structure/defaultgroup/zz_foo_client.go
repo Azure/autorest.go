@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// FooClient contains the methods for the Client.Structure.Service group.
+// FooClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use [BazClient.NewFooClient] instead.
 type FooClient struct {
 	internal *azcore.Client

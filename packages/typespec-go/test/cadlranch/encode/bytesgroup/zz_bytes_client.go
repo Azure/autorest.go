@@ -9,7 +9,7 @@ package bytesgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// BytesClient contains the methods for the Encode.Bytes group.
+// BytesClient - Test for encode decorator on bytes.
 // Don't use this type directly, use a constructor function instead.
 type BytesClient struct {
 	internal *azcore.Client

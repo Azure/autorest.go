@@ -9,7 +9,7 @@ package nullablegroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// NullableClient contains the methods for the Type.Property.Nullable group.
+// NullableClient - Illustrates models with nullable properties.
 // Don't use this type directly, use a constructor function instead.
 type NullableClient struct {
 	internal *azcore.Client

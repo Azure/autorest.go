@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// DurationValueClient contains the methods for the Type.Array group.
+// DurationValueClient - Array of duration values
 // Don't use this type directly, use [ArrayClient.NewDurationValueClient] instead.
 type DurationValueClient struct {
 	internal *azcore.Client

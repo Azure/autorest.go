@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// IsUnknownClient contains the methods for the Type.Property.AdditionalProperties group.
+// IsUnknownClient contains the methods for the Type.Property.AdditionalProperties namespace.
 // Don't use this type directly, use [AdditionalPropertiesClient.NewIsUnknownClient] instead.
 type IsUnknownClient struct {
 	internal *azcore.Client

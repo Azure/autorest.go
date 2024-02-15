@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-// DatetimeValueClient contains the methods for the Type.Array group.
+// DatetimeValueClient - Array of datetime values
 // Don't use this type directly, use [ArrayClient.NewDatetimeValueClient] instead.
 type DatetimeValueClient struct {
 	internal *azcore.Client

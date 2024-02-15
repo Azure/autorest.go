@@ -9,7 +9,7 @@ package durationgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// DurationClient contains the methods for the Encode.Duration group.
+// DurationClient - Test for encode decorator on duration.
 // Don't use this type directly, use a constructor function instead.
 type DurationClient struct {
 	internal *azcore.Client

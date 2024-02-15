@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// UsageClient contains the methods for the Type.Model.Usage group.
+// UsageClient - Illustrates usage of Record in different places(Operation parameters, return type or both).
 // Don't use this type directly, use a constructor function instead.
 type UsageClient struct {
 	internal *azcore.Client

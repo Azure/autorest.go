@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// PropertyClient contains the methods for the Encode.Duration group.
+// PropertyClient contains the methods for the Encode.Duration namespace.
 // Don't use this type directly, use [DurationClient.NewPropertyClient] instead.
 type PropertyClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// EmptyClient contains the methods for the Type.Model.Empty group.
+// EmptyClient - Illustrates usage of empty model used in operation's parameters and responses.
 // Don't use this type directly, use a constructor function instead.
 type EmptyClient struct {
 	internal *azcore.Client

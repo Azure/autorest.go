@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// QuxClient contains the methods for the Client.Structure.Service group.
+// QuxClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use [ServiceClient.NewQuxClient] instead.
 type QuxClient struct {
 	internal *azcore.Client

@@ -9,7 +9,7 @@ package twoopgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// TwoOperationGroupClient contains the methods for the Client.Structure.Service group.
+// TwoOperationGroupClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use a constructor function instead.
 type TwoOperationGroupClient struct {
 	internal *azcore.Client

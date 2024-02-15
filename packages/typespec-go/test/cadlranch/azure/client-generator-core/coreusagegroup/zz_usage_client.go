@@ -9,7 +9,7 @@ package coreusagegroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// UsageClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Usage group.
+// UsageClient - Test for internal decorator.
 // Don't use this type directly, use a constructor function instead.
 type UsageClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// BooleanValueClient contains the methods for the Type.Dictionary group.
+// BooleanValueClient - Dictionary of boolean values
 // Don't use this type directly, use [DictionaryClient.NewBooleanValueClient] instead.
 type BooleanValueClient struct {
 	internal *azcore.Client

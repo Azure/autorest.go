@@ -9,7 +9,7 @@ package collectionfmtgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// CollectionFormatClient contains the methods for the Parameters.CollectionFormat group.
+// CollectionFormatClient - Test for collectionFormat.
 // Don't use this type directly, use a constructor function instead.
 type CollectionFormatClient struct {
 	internal *azcore.Client

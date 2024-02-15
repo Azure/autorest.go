@@ -16,7 +16,7 @@ import (
 	"strconv"
 )
 
-// DecimalTypeClient contains the methods for the Type.Scalar group.
+// DecimalTypeClient - Decimal type
 // Don't use this type directly, use [ScalarClient.NewDecimalTypeClient] instead.
 type DecimalTypeClient struct {
 	internal *azcore.Client

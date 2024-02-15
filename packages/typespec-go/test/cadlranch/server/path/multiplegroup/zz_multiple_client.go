@@ -18,7 +18,7 @@ import (
 	"strings"
 )
 
-// MultipleClient contains the methods for the Server.Path.Multiple group.
+// MultipleClient contains the methods for the Server.Path.Multiple namespace.
 // Don't use this type directly, use a constructor function instead.
 type MultipleClient struct {
 	internal *azcore.Client

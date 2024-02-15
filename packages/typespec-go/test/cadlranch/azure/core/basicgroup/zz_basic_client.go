@@ -18,7 +18,7 @@ import (
 	"strings"
 )
 
-// BasicClient contains the methods for the _Specs_.Azure.Core.Basic group.
+// BasicClient - Illustrates bodies templated with Azure Core
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal   *azcore.Client

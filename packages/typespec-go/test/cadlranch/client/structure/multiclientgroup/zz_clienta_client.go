@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// ClientAClient contains the methods for the Client.Structure.Service group.
+// ClientAClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use a constructor function instead.
 type ClientAClient struct {
 	internal *azcore.Client

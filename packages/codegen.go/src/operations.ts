@@ -52,7 +52,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     let clientText = '';
     let hostParamName: string | undefined;
     const clientName = client.clientName;
-    clientText += `// ${clientName} contains the methods for the ${client.groupName} group.\n`;
+    clientText += `${comment(`${client.description}`, '//', undefined, helpers.commentLength)}\n`;
     clientText += '// Don\'t use this type directly, use ';
     if (azureARM) {
       clientText += `${client.ctorName}() instead.\n`;

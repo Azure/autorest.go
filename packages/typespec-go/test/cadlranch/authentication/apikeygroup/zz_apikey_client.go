@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ApiKeyClient contains the methods for the Authentication.ApiKey group.
+// ApiKeyClient - Illustrates clients generated with ApiKey authentication.
 // Don't use this type directly, use a constructor function instead.
 type ApiKeyClient struct {
 	internal *azcore.Client

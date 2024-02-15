@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ProjectedNameClient contains the methods for the Projection.ProjectedName group.
+// ProjectedNameClient - Projection
 // Don't use this type directly, use a constructor function instead.
 type ProjectedNameClient struct {
 	internal *azcore.Client

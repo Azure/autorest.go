@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// StringClient contains the methods for the Type.Enum.Fixed group.
+// StringClient contains the methods for the Type.Enum.Fixed namespace.
 // Don't use this type directly, use [FixedClient.NewStringClient] instead.
 type StringClient struct {
 	internal *azcore.Client

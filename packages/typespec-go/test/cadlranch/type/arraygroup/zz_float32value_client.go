@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// Float32ValueClient contains the methods for the Type.Array group.
+// Float32ValueClient - Array of float values
 // Don't use this type directly, use [ArrayClient.NewFloat32ValueClient] instead.
 type Float32ValueClient struct {
 	internal *azcore.Client

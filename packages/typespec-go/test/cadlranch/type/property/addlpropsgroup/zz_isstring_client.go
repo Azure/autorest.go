@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// IsStringClient contains the methods for the Type.Property.AdditionalProperties group.
+// IsStringClient contains the methods for the Type.Property.AdditionalProperties namespace.
 // Don't use this type directly, use [AdditionalPropertiesClient.NewIsStringClient] instead.
 type IsStringClient struct {
 	internal *azcore.Client

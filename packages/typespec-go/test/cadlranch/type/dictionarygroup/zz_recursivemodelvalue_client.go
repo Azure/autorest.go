@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// RecursiveModelValueClient contains the methods for the Type.Dictionary group.
+// RecursiveModelValueClient - Dictionary of model values
 // Don't use this type directly, use [DictionaryClient.NewRecursiveModelValueClient] instead.
 type RecursiveModelValueClient struct {
 	internal *azcore.Client

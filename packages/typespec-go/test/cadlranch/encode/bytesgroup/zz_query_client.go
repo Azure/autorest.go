@@ -17,7 +17,7 @@ import (
 	"strings"
 )
 
-// QueryClient contains the methods for the Encode.Bytes group.
+// QueryClient contains the methods for the Encode.Bytes namespace.
 // Don't use this type directly, use [BytesClient.NewQueryClient] instead.
 type QueryClient struct {
 	internal *azcore.Client

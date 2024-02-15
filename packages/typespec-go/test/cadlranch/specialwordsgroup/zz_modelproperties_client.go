@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ModelPropertiesClient contains the methods for the SpecialWords group.
+// ModelPropertiesClient - Verify model names
 // Don't use this type directly, use [SpecialWordsClient.NewModelPropertiesClient] instead.
 type ModelPropertiesClient struct {
 	internal *azcore.Client

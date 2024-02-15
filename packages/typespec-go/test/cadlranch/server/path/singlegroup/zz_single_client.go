@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// SingleClient contains the methods for the Server.Path.Single group.
+// SingleClient - Illustrates server with a single path parameter @server
 // Don't use this type directly, use a constructor function instead.
 type SingleClient struct {
 	internal *azcore.Client

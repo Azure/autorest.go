@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// Int32ValueClient contains the methods for the Type.Array group.
+// Int32ValueClient - Array of int32 values
 // Don't use this type directly, use [ArrayClient.NewInt32ValueClient] instead.
 type Int32ValueClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// IsUnknownDiscriminatedClient contains the methods for the Type.Property.AdditionalProperties group.
+// IsUnknownDiscriminatedClient contains the methods for the Type.Property.AdditionalProperties namespace.
 // Don't use this type directly, use [AdditionalPropertiesClient.NewIsUnknownDiscriminatedClient] instead.
 type IsUnknownDiscriminatedClient struct {
 	internal *azcore.Client

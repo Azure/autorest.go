@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// SingleDiscriminatorClient contains the methods for the Type.Model.Inheritance.SingleDiscriminator group.
+// SingleDiscriminatorClient - Illustrates inheritance with single discriminator.
 // Don't use this type directly, use a constructor function instead.
 type SingleDiscriminatorClient struct {
 	internal *azcore.Client

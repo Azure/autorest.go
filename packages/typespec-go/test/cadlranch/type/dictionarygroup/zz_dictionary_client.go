@@ -9,7 +9,7 @@ package dictionarygroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// DictionaryClient contains the methods for the Type.Dictionary group.
+// DictionaryClient - Illustrates various of dictionaries.
 // Don't use this type directly, use a constructor function instead.
 type DictionaryClient struct {
 	internal *azcore.Client

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// NullableFloatValueClient contains the methods for the Type.Array group.
+// NullableFloatValueClient - Array of nullable float values
 // Don't use this type directly, use [ArrayClient.NewNullableFloatValueClient] instead.
 type NullableFloatValueClient struct {
 	internal *azcore.Client

@@ -9,7 +9,7 @@ package addlpropsgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// AdditionalPropertiesClient contains the methods for the Type.Property.AdditionalProperties group.
+// AdditionalPropertiesClient - Tests for additional properties of models
 // Don't use this type directly, use a constructor function instead.
 type AdditionalPropertiesClient struct {
 	internal *azcore.Client
