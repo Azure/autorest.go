@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// DecimalVerifyClient contains the methods for the Type.Scalar group.
-// Don't use this type directly, use a constructor function instead.
+// DecimalVerifyClient - Decimal type verification
+// Don't use this type directly, use [ScalarClient.NewDecimalVerifyClient] instead.
 type DecimalVerifyClient struct {
 	internal *azcore.Client
 }

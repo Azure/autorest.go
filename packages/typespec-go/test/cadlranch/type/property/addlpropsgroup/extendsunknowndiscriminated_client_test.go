@@ -16,9 +16,9 @@ import (
 )
 
 func TestExtendsUnknownDiscriminatedClient_Get(t *testing.T) {
-	client, err := addlpropsgroup.NewExtendsUnknownDiscriminatedClient(nil)
+	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewExtendsUnknownDiscriminatedClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, &addlpropsgroup.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived{
 		Index: to.Ptr[int32](314),
@@ -34,9 +34,9 @@ func TestExtendsUnknownDiscriminatedClient_Get(t *testing.T) {
 }
 
 func TestExtendsUnknownDiscriminatedClient_Put(t *testing.T) {
-	client, err := addlpropsgroup.NewExtendsUnknownDiscriminatedClient(nil)
+	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), &addlpropsgroup.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived{
+	resp, err := client.NewExtendsUnknownDiscriminatedClient().Put(context.Background(), &addlpropsgroup.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived{
 		Index: to.Ptr[int32](314),
 		Kind:  to.Ptr("derived"),
 		Name:  to.Ptr("Derived"),

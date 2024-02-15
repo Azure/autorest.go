@@ -13,12 +13,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// SingleClient contains the methods for the Server.Path.Single group.
+// SingleClient - Illustrates server with a single path parameter @server
 // Don't use this type directly, use a constructor function instead.
 type SingleClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // - options - SingleClientMyOpOptions contains the optional parameters for the SingleClient.MyOp method.
@@ -41,6 +43,8 @@ func (client *SingleClient) MyOp(ctx context.Context, options *SingleClientMyOpO
 
 // myOpCreateRequest creates the MyOp request.
 func (client *SingleClient) myOpCreateRequest(ctx context.Context, options *SingleClientMyOpOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/path/single/myOp"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {

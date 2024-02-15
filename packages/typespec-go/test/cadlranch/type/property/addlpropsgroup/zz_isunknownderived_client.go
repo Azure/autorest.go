@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// IsUnknownDerivedClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// IsUnknownDerivedClient contains the methods for the Type.Property.AdditionalProperties namespace.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewIsUnknownDerivedClient] instead.
 type IsUnknownDerivedClient struct {
 	internal *azcore.Client
 }

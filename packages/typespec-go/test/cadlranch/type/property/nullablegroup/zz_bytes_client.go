@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// BytesClient contains the methods for the Type.Property.Nullable group.
-// Don't use this type directly, use a constructor function instead.
+// BytesClient contains the methods for the Type.Property.Nullable namespace.
+// Don't use this type directly, use [NullableClient.NewBytesClient] instead.
 type BytesClient struct {
 	internal *azcore.Client
 }

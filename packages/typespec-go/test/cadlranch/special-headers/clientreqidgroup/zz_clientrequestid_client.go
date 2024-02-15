@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// ClientRequestIdClient contains the methods for the SpecialHeaders.ClientRequestId group.
+// ClientRequestIdClient - Azure client request id header configurations.
 // Don't use this type directly, use a constructor function instead.
 type ClientRequestIdClient struct {
 	internal *azcore.Client

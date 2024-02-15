@@ -16,8 +16,8 @@ import (
 	"time"
 )
 
-// DatetimeValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// DatetimeValueClient - Dictionary of datetime values
+// Don't use this type directly, use [DictionaryClient.NewDatetimeValueClient] instead.
 type DatetimeValueClient struct {
 	internal *azcore.Client
 }

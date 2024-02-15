@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// StringValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// StringValueClient - Array of string values
+// Don't use this type directly, use [ArrayClient.NewStringValueClient] instead.
 type StringValueClient struct {
 	internal *azcore.Client
 }

@@ -18,20 +18,28 @@ import (
 	"strings"
 )
 
-// BasicClient contains the methods for the _Specs_.Azure.Core.Basic group.
+// BasicClient - Illustrates bodies templated with Azure Core
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal   *azcore.Client
 	apiVersion string
 }
 
+// NewTwoModelsAsPageItemClient creates a new instance of [TwoModelsAsPageItemClient].
+func (client *BasicClient) NewTwoModelsAsPageItemClient() *TwoModelsAsPageItemClient {
+	return &TwoModelsAsPageItemClient{
+		internal:   client.internal,
+		apiVersion: client.apiVersion,
+	}
+}
+
 // CreateOrReplace - Adds a user or replaces a user's fields.
-//   - resource - The resource instance.
 //   - id - The user's id.
+//   - resource - The resource instance.
 //   - options - BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
-func (client *BasicClient) CreateOrReplace(ctx context.Context, resource User, id int32, options *BasicClientCreateOrReplaceOptions) (BasicClientCreateOrReplaceResponse, error) {
+func (client *BasicClient) CreateOrReplace(ctx context.Context, id int32, resource User, options *BasicClientCreateOrReplaceOptions) (BasicClientCreateOrReplaceResponse, error) {
 	var err error
-	req, err := client.createOrReplaceCreateRequest(ctx, resource, id, options)
+	req, err := client.createOrReplaceCreateRequest(ctx, id, resource, options)
 	if err != nil {
 		return BasicClientCreateOrReplaceResponse{}, err
 	}
@@ -48,7 +56,7 @@ func (client *BasicClient) CreateOrReplace(ctx context.Context, resource User, i
 }
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
-func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, resource User, id int32, options *BasicClientCreateOrReplaceOptions) (*policy.Request, error) {
+func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id int32, resource User, options *BasicClientCreateOrReplaceOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
@@ -76,12 +84,12 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 }
 
 // CreateOrUpdate - Adds a user or updates a user's fields.
-//   - resource - The resource instance.
 //   - id - The user's id.
+//   - resource - The resource instance.
 //   - options - BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
-func (client *BasicClient) CreateOrUpdate(ctx context.Context, resource User, id int32, options *BasicClientCreateOrUpdateOptions) (BasicClientCreateOrUpdateResponse, error) {
+func (client *BasicClient) CreateOrUpdate(ctx context.Context, id int32, resource User, options *BasicClientCreateOrUpdateOptions) (BasicClientCreateOrUpdateResponse, error) {
 	var err error
-	req, err := client.createOrUpdateCreateRequest(ctx, resource, id, options)
+	req, err := client.createOrUpdateCreateRequest(ctx, id, resource, options)
 	if err != nil {
 		return BasicClientCreateOrUpdateResponse{}, err
 	}
@@ -98,7 +106,7 @@ func (client *BasicClient) CreateOrUpdate(ctx context.Context, resource User, id
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, resource User, id int32, options *BasicClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id int32, resource User, options *BasicClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))

@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// ExtendsModelArrayClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// ExtendsModelArrayClient contains the methods for the Type.Property.AdditionalProperties namespace.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewExtendsModelArrayClient] instead.
 type ExtendsModelArrayClient struct {
 	internal *azcore.Client
 }

@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// ParametersClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use a constructor function instead.
+// ParametersClient - Verify reserved words as parameter name.
+// Don't use this type directly, use [SpecialWordsClient.NewParametersClient] instead.
 type ParametersClient struct {
 	internal *azcore.Client
 }

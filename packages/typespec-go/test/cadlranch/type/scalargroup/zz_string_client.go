@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// StringClient contains the methods for the Type.Scalar group.
-// Don't use this type directly, use a constructor function instead.
+// StringClient contains the methods for the Type.Scalar namespace.
+// Don't use this type directly, use [ScalarClient.NewStringClient] instead.
 type StringClient struct {
 	internal *azcore.Client
 }

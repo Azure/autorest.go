@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// InternalOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access group.
-// Don't use this type directly, use a constructor function instead.
+// InternalOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access namespace.
+// Don't use this type directly, use [AccessClient.NewInternalOperationClient] instead.
 type InternalOperationClient struct {
 	internal *azcore.Client
 }

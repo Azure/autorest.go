@@ -13,12 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// FooClient contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use a constructor function instead.
+// FooClient contains the methods for the Client.Structure.Service namespace.
+// Don't use this type directly, use [BazClient.NewFooClient] instead.
 type FooClient struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
 }
 
 // - options - FooClientFourOptions contains the optional parameters for the FooClient.Four method.
@@ -41,6 +44,9 @@ func (client *FooClient) Four(ctx context.Context, options *FooClientFourOptions
 
 // fourCreateRequest creates the Four request.
 func (client *FooClient) fourCreateRequest(ctx context.Context, options *FooClientFourOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -69,6 +75,9 @@ func (client *FooClient) Seven(ctx context.Context, options *FooClientSevenOptio
 
 // sevenCreateRequest creates the Seven request.
 func (client *FooClient) sevenCreateRequest(ctx context.Context, options *FooClientSevenOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/seven"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,6 +106,9 @@ func (client *FooClient) Three(ctx context.Context, options *FooClientThreeOptio
 
 // threeCreateRequest creates the Three request.
 func (client *FooClient) threeCreateRequest(ctx context.Context, options *FooClientThreeOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

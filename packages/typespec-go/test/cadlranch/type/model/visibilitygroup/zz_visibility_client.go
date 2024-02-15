@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// VisibilityClient contains the methods for the Type.Model.Visibility group.
+// VisibilityClient - Illustrates models with visibility properties.
 // Don't use this type directly, use a constructor function instead.
 type VisibilityClient struct {
 	internal *azcore.Client

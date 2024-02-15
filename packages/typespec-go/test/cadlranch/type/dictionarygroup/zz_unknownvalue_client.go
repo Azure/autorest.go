@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// UnknownValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// UnknownValueClient - Dictionary of unknown values
+// Don't use this type directly, use [DictionaryClient.NewUnknownValueClient] instead.
 type UnknownValueClient struct {
 	internal *azcore.Client
 }

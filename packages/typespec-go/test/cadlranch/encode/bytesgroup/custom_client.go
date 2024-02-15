@@ -11,56 +11,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewHeaderClient(options *azcore.ClientOptions) (*HeaderClient, error) {
-	internal, err := newClient(options)
+func NewBytesClient(options *azcore.ClientOptions) (*BytesClient, error) {
+	internal, err := azcore.NewClient("bytesgroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &HeaderClient{
+	return &BytesClient{
 		internal: internal,
 	}, nil
-}
-
-func NewPropertyClient(options *azcore.ClientOptions) (*PropertyClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &PropertyClient{
-		internal: internal,
-	}, nil
-}
-
-func NewQueryClient(options *azcore.ClientOptions) (*QueryClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &QueryClient{
-		internal: internal,
-	}, nil
-}
-
-func NewRequestBodyClient(options *azcore.ClientOptions) (*RequestBodyClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &RequestBodyClient{
-		internal: internal,
-	}, nil
-}
-
-func NewResponseBodyClient(options *azcore.ClientOptions) (*ResponseBodyClient, error) {
-	internal, err := newClient(options)
-	if err != nil {
-		return nil, err
-	}
-	return &ResponseBodyClient{
-		internal: internal,
-	}, nil
-}
-
-func newClient(options *azcore.ClientOptions) (*azcore.Client, error) {
-	return azcore.NewClient("bytesgroup", "v0.1.0", runtime.PipelineOptions{}, options)
 }

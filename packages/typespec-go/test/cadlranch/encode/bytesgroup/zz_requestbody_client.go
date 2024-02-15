@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// RequestBodyClient contains the methods for the Encode.Bytes group.
-// Don't use this type directly, use a constructor function instead.
+// RequestBodyClient contains the methods for the Encode.Bytes namespace.
+// Don't use this type directly, use [BytesClient.NewRequestBodyClient] instead.
 type RequestBodyClient struct {
 	internal *azcore.Client
 }

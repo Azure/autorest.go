@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// IsModelArrayClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// IsModelArrayClient contains the methods for the Type.Property.AdditionalProperties namespace.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewIsModelArrayClient] instead.
 type IsModelArrayClient struct {
 	internal *azcore.Client
 }

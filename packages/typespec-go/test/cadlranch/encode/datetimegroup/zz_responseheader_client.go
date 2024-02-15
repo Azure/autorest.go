@@ -18,8 +18,8 @@ import (
 	"time"
 )
 
-// ResponseHeaderClient contains the methods for the Encode.Datetime group.
-// Don't use this type directly, use a constructor function instead.
+// ResponseHeaderClient contains the methods for the Encode.Datetime namespace.
+// Don't use this type directly, use [DatetimeClient.NewResponseHeaderClient] instead.
 type ResponseHeaderClient struct {
 	internal *azcore.Client
 }

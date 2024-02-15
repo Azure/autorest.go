@@ -13,12 +13,58 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// ServiceClient contains the methods for the Client.Structure.Service group.
+// ServiceClient - Test that we can use @client and @operationGroup decorators to customize client side code structure, such
+// as:
+// 1. have everything as default.
+// 2. to rename client or operation group
+// 3. one client can have more than one operations groups
+// 4. split one interface into two clients
+// 5. have two clients with operations come from different interfaces
+// 6. have two clients with a hierarchy relation.
 // Don't use this type directly, use a constructor function instead.
 type ServiceClient struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
+}
+
+// NewBarClient creates a new instance of [BarClient].
+func (client *ServiceClient) NewBarClient() *BarClient {
+	return &BarClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+		client:   client.client,
+	}
+}
+
+// NewBazClient creates a new instance of [BazClient].
+func (client *ServiceClient) NewBazClient() *BazClient {
+	return &BazClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+		client:   client.client,
+	}
+}
+
+// NewFooClient creates a new instance of [FooClient].
+func (client *ServiceClient) NewFooClient() *FooClient {
+	return &FooClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+		client:   client.client,
+	}
+}
+
+// NewQuxClient creates a new instance of [QuxClient].
+func (client *ServiceClient) NewQuxClient() *QuxClient {
+	return &QuxClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+		client:   client.client,
+	}
 }
 
 // - options - ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
@@ -41,6 +87,9 @@ func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneO
 
 // oneCreateRequest creates the One request.
 func (client *ServiceClient) oneCreateRequest(ctx context.Context, options *ServiceClientOneOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -69,6 +118,9 @@ func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoO
 
 // twoCreateRequest creates the Two request.
 func (client *ServiceClient) twoCreateRequest(ctx context.Context, options *ServiceClientTwoOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/two"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

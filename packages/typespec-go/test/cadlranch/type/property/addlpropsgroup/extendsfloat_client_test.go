@@ -16,9 +16,9 @@ import (
 )
 
 func TestExtendsFloatClient_Get(t *testing.T) {
-	client, err := addlpropsgroup.NewExtendsFloatClient(nil)
+	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Get(context.Background(), nil)
+	resp, err := client.NewExtendsFloatClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.ExtendsFloatAdditionalProperties{
 		ID: to.Ptr[float32](42.42),
@@ -29,9 +29,9 @@ func TestExtendsFloatClient_Get(t *testing.T) {
 }
 
 func TestExtendsFloatClient_Put(t *testing.T) {
-	client, err := addlpropsgroup.NewExtendsFloatClient(nil)
+	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Put(context.Background(), addlpropsgroup.ExtendsFloatAdditionalProperties{
+	resp, err := client.NewExtendsFloatClient().Put(context.Background(), addlpropsgroup.ExtendsFloatAdditionalProperties{
 		ID: to.Ptr[float32](42.42),
 		AdditionalProperties: map[string]*float32{
 			"prop": to.Ptr[float32](42.42),

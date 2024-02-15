@@ -16,7 +16,7 @@ import (
 	"strconv"
 )
 
-// PageableClient contains the methods for the Payload.Pageable group.
+// PageableClient - Test describing pageable.
 // Don't use this type directly, use a constructor function instead.
 type PageableClient struct {
 	internal *azcore.Client

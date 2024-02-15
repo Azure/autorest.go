@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// ModelValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// ModelValueClient - Array of model values
+// Don't use this type directly, use [ArrayClient.NewModelValueClient] instead.
 type ModelValueClient struct {
 	internal *azcore.Client
 }

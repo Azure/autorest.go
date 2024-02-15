@@ -13,12 +13,26 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// ResiliencyServiceDrivenClient contains the methods for the Resiliency.ServiceDriven group.
+// ResiliencyServiceDrivenClient - Test that we can grow up a service spec and service deployment into a multi-versioned service
+// with full client support.
+// There are three concepts that should be clarified:
+// 1. Client spec version: refers to the spec that the client is generated from. 'v1' is a client generated from old.tsp and
+// 'v2' is a client generated from main.tsp.
+// 2. Service deployment version: refers to a deployment version of the service. 'v1' represents the initial deployment of
+// the service with a single api version. 'v2' represents the new deployment of a service with multiple api versions
+// 3. Api version: The initial deployment of the service only supports api version 'v1'. The new deployment of the service
+// supports api versions 'v1' and 'v2'.
+// We test the following configurations from this service spec:
+// - A client generated from the second service spec can call the second deployment of a service with api version v1
+// - A client generated from the second service spec can call the second deployment of a service with api version v2
 // Don't use this type directly, use a constructor function instead.
 type ResiliencyServiceDrivenClient struct {
-	internal *azcore.Client
+	internal                 *azcore.Client
+	endpoint                 string
+	serviceDeploymentVersion string
 }
 
 // AddOperation - Added operation
@@ -43,6 +57,9 @@ func (client *ResiliencyServiceDrivenClient) AddOperation(ctx context.Context, o
 
 // addOperationCreateRequest creates the AddOperation request.
 func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientAddOperationOptions) (*policy.Request, error) {
+	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
 	urlPath := "/add-operation"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -73,6 +90,9 @@ func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, optio
 
 // fromNoneCreateRequest creates the FromNone request.
 func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientFromNoneOptions) (*policy.Request, error) {
+	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
 	urlPath := "/add-optional-param/from-none"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -109,6 +129,9 @@ func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context
 
 // fromOneOptionalCreateRequest creates the FromOneOptional request.
 func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (*policy.Request, error) {
+	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
 	urlPath := "/add-optional-param/from-one-optional"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -149,6 +172,9 @@ func (client *ResiliencyServiceDrivenClient) FromOneRequired(ctx context.Context
 
 // fromOneRequiredCreateRequest creates the FromOneRequired request.
 func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx context.Context, parameter string, options *ResiliencyServiceDrivenClientFromOneRequiredOptions) (*policy.Request, error) {
+	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
 	urlPath := "/add-optional-param/from-one-required"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

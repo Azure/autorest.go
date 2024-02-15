@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// ExtendsFloatClient contains the methods for the Type.Property.AdditionalProperties group.
-// Don't use this type directly, use a constructor function instead.
+// ExtendsFloatClient contains the methods for the Type.Property.AdditionalProperties namespace.
+// Don't use this type directly, use [AdditionalPropertiesClient.NewExtendsFloatClient] instead.
 type ExtendsFloatClient struct {
 	internal *azcore.Client
 }

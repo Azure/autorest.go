@@ -13,12 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// ClientAClient contains the methods for the Client.Structure.Service group.
+// ClientAClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use a constructor function instead.
 type ClientAClient struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
 }
 
 // - options - ClientAClientRenamedFiveOptions contains the optional parameters for the ClientAClient.RenamedFive method.
@@ -41,6 +44,9 @@ func (client *ClientAClient) RenamedFive(ctx context.Context, options *ClientACl
 
 // renamedFiveCreateRequest creates the RenamedFive request.
 func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, options *ClientAClientRenamedFiveOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -69,6 +75,9 @@ func (client *ClientAClient) RenamedOne(ctx context.Context, options *ClientACli
 
 // renamedOneCreateRequest creates the RenamedOne request.
 func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, options *ClientAClientRenamedOneOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,6 +106,9 @@ func (client *ClientAClient) RenamedThree(ctx context.Context, options *ClientAC
 
 // renamedThreeCreateRequest creates the RenamedThree request.
 func (client *ClientAClient) renamedThreeCreateRequest(ctx context.Context, options *ClientAClientRenamedThreeOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

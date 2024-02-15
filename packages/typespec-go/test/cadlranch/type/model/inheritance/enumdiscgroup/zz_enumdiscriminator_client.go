@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// EnumDiscriminatorClient contains the methods for the Type.Model.Inheritance.EnumDiscriminator group.
+// EnumDiscriminatorClient - Illustrates inheritance with enum discriminator.
 // Don't use this type directly, use a constructor function instead.
 type EnumDiscriminatorClient struct {
 	internal *azcore.Client

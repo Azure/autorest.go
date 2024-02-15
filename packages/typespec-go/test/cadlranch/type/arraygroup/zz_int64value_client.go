@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// Int64ValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// Int64ValueClient - Array of int64 values
+// Don't use this type directly, use [ArrayClient.NewInt64ValueClient] instead.
 type Int64ValueClient struct {
 	internal *azcore.Client
 }

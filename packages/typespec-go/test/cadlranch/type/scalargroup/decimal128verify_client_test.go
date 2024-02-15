@@ -15,17 +15,17 @@ import (
 )
 
 func TestDecimal128VerifyClient_PrepareVerify(t *testing.T) {
-	client, err := scalargroup.NewDecimal128VerifyClient(nil)
+	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PrepareVerify(context.Background(), nil)
+	resp, err := client.NewDecimal128VerifyClient().PrepareVerify(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, []float64{0.1, 0.1, 0.1}, resp.Value)
 }
 
 func TestDecimal128VerifyClient_Verify(t *testing.T) {
-	client, err := scalargroup.NewDecimal128VerifyClient(nil)
+	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Verify(context.Background(), 0.3, nil)
+	resp, err := client.NewDecimal128VerifyClient().Verify(context.Background(), 0.3, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

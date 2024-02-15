@@ -35,32 +35,86 @@ export class clientAdapter {
       throw new Error('single-client cannot be enabled when there are multiple clients');
     }
     for (const sdkClient of sdkPackage.clients) {
-      if (values(sdkClient.methods).all((each: tcgc.SdkMethod<tcgc.SdkHttpOperation>) => { return each.kind === 'clientaccessor'; })) {
-        // this is a hierarchical client with only client accessors so skip
-        // it as we don't currently support hierarchical clients.
-        continue;
+      // start with instantiable clients and recursively work down
+      if (sdkClient.initialization) {
+        this.recursiveAdaptClient(sdkClient);
       }
-      let clientName = sdkClient.name;
-      if (!clientName.match(/Client$/)) {
-        clientName += 'Client';
-      }
-      const goClient = new go.Client(clientName, sdkPackage.name, `New${clientName}`);
-      goClient.host = sdkClient.endpoint;
-      if (!this.ta.codeModel.host) {
-        this.ta.codeModel.host = goClient.host;
-      } else if (this.ta.codeModel.host !== goClient.host) {
-        throw new Error(`client ${goClient.clientName} has a conflicting host`);
-      }
-      for (const sdkMethod of sdkClient.methods) {
-        if (sdkMethod.kind === 'clientaccessor') {
-          // used for hierarchical clients which isn't currently supported
+    }
+  }
+
+  private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client {
+    let clientName = sdkClient.name;
+    if (!clientName.match(/Client$/)) {
+      clientName += 'Client';
+    }
+
+    // depending on the hierarchy, we could end up attempting to adapt the same client.
+    // if it's already been adapted, return it.
+    let goClient = this.ta.codeModel.clients.find((v: go.Client, i: number, o: Array<go.Client>) => {
+      return o[i].clientName === clientName;
+    });
+    if (goClient) {
+      return goClient;
+    }
+
+    let description: string;
+    if (sdkClient.description) {
+      description = `${clientName} - ${sdkClient.description}`;
+    } else {
+      description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
+    }
+
+    goClient = new go.Client(clientName, description, `New${clientName}`);
+    goClient.parent = parent;
+    goClient.host = sdkClient.endpoint;
+    goClient.complexHostParams = sdkClient.hasParameterizedEndpoint;
+
+    if (sdkClient.initialization) {
+      for (const param of sdkClient.initialization.properties) {
+        if (param.kind === 'credential' || param.isApiVersionParam) {
+          // skip these for now as we don't generate client constructors
           continue;
+        } else if (param.kind === 'endpoint' && param.type.kind === 'constant') {
+          // this is the param for the fixed host, don't create a param for it
+          goClient.host = <string>param.type.value;
+          if (!this.ta.codeModel.host) {
+            this.ta.codeModel.host = goClient.host;
+          } else if (this.ta.codeModel.host !== goClient.host) {
+            throw new Error(`client ${goClient.clientName} has a conflicting host ${goClient.host}`);
+          }
+          continue;
+        } else if (param.kind === 'method') {
+          throw new Error('client method params NYI');
         }
+
+        const paramType = this.ta.getPossibleType(param.type, true, false);
+        if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
+          throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
+        }
+        // TODO: follow up with tcgc if serializedName should actually be optional
+        const uriParam = new go.URIParameter(param.nameInClient, param.serializedName ? param.serializedName : param.nameInClient, paramType,
+          this.adaptParameterType(param), isTypePassedByValue(param.type) || !param.optional, 'client');
+        goClient.hostParams.push(uriParam);
+      }
+    } else if (parent) {
+      // this is a sub-client. it will share the client/host params of the parent.
+      // NOTE: we must propagate parant params before a potential recursive call
+      // to create a child client that will need to inherit our client params.
+      goClient.hostParams = parent.hostParams;
+      goClient.parameters = parent.parameters;
+    }
+
+    for (const sdkMethod of sdkClient.methods) {
+      if (sdkMethod.kind === 'clientaccessor') {
+        const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
+        goClient.clientAccessors.push(new go.ClientAccessor(subClient));
+      } else {
         this.adaptMethod(sdkMethod, goClient);
       }
-  
-      this.ta.codeModel.clients.push(goClient);
     }
+
+    this.ta.codeModel.clients.push(goClient);
+    return goClient;
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
@@ -126,13 +180,6 @@ export class clientAdapter {
       // NextPageMethods don't have optional params
       optionalGroup = method.optionalParamsGroup;
     }
-
-    if (sdkMethod.operation.bodyParams.length > 1) {
-      throw new Error('multipart body NYI');
-    } else if (sdkMethod.operation.bodyParams.length === 1) {
-      const bodyParam = sdkMethod.operation.bodyParams[0];
-      method.parameters.push(this.adaptMethodParameter(bodyParam, optionalGroup));
-    }
   
     for (const param of sdkMethod.operation.parameters) {
       const adaptedParam = this.adaptMethodParameter(param, optionalGroup);
@@ -140,6 +187,15 @@ export class clientAdapter {
       if (adaptedParam.location === 'client' && !method.client.parameters.includes(adaptedParam)) {
         method.client.parameters.push(adaptedParam);
       }
+    }
+
+    // we add the body param after any required params. this way,
+    // if the body param is required it shows up last in the list.
+    if (sdkMethod.operation.bodyParams.length > 1) {
+      throw new Error('multipart body NYI');
+    } else if (sdkMethod.operation.bodyParams.length === 1) {
+      const bodyParam = sdkMethod.operation.bodyParams[0];
+      method.parameters.push(this.adaptMethodParameter(bodyParam, optionalGroup));
     }
   }
 
@@ -328,7 +384,7 @@ export class clientAdapter {
     return type;
   }
   
-  private adaptParameterType(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterType {
+  private adaptParameterType(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterType {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
       if (param.optional) {

@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// PropertyClient contains the methods for the Encode.Datetime group.
-// Don't use this type directly, use a constructor function instead.
+// PropertyClient contains the methods for the Encode.Datetime namespace.
+// Don't use this type directly, use [DatetimeClient.NewPropertyClient] instead.
 type PropertyClient struct {
 	internal *azcore.Client
 }

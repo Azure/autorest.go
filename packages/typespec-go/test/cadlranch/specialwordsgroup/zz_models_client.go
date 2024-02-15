@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// ModelsClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use a constructor function instead.
+// ModelsClient - Verify model names
+// Don't use this type directly, use [SpecialWordsClient.NewModelsClient] instead.
 type ModelsClient struct {
 	internal *azcore.Client
 }

@@ -17,9 +17,9 @@ import (
 )
 
 func TestCollectionsModelClientGetNonNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsModelClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetNonNull(context.Background(), nil)
+	resp, err := client.NewCollectionsModelClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.CollectionsModelProperty{
 		NullableProperty: []*nullablegroup.InnerModel{
@@ -35,9 +35,9 @@ func TestCollectionsModelClientGetNonNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientGetNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsModelClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetNull(context.Background(), nil)
+	resp, err := client.NewCollectionsModelClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.CollectionsModelProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -45,9 +45,9 @@ func TestCollectionsModelClientGetNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientPatchNonNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsModelClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PatchNonNull(context.Background(), nullablegroup.CollectionsModelProperty{
+	resp, err := client.NewCollectionsModelClient().PatchNonNull(context.Background(), nullablegroup.CollectionsModelProperty{
 		NullableProperty: []*nullablegroup.InnerModel{
 			{
 				Property: to.Ptr("hello"),
@@ -63,9 +63,9 @@ func TestCollectionsModelClientPatchNonNull(t *testing.T) {
 }
 
 func TestCollectionsModelClientPatchNull(t *testing.T) {
-	client, err := nullablegroup.NewCollectionsModelClient(nil)
+	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PatchNull(context.Background(), nullablegroup.CollectionsModelProperty{
+	resp, err := client.NewCollectionsModelClient().PatchNull(context.Background(), nullablegroup.CollectionsModelProperty{
 		NullableProperty: azcore.NullValue[[]*nullablegroup.InnerModel](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

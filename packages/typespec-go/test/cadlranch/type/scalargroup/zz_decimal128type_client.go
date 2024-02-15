@@ -16,8 +16,8 @@ import (
 	"strconv"
 )
 
-// Decimal128TypeClient contains the methods for the Type.Scalar group.
-// Don't use this type directly, use a constructor function instead.
+// Decimal128TypeClient - Decimal128 type
+// Don't use this type directly, use [ScalarClient.NewDecimal128TypeClient] instead.
 type Decimal128TypeClient struct {
 	internal *azcore.Client
 }

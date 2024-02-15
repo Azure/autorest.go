@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// BooleanValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// BooleanValueClient - Array of boolean values
+// Don't use this type directly, use [ArrayClient.NewBooleanValueClient] instead.
 type BooleanValueClient struct {
 	internal *azcore.Client
 }

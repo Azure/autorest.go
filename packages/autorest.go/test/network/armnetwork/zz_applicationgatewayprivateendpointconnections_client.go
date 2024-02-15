@@ -20,7 +20,8 @@ import (
 	"strings"
 )
 
-// ApplicationGatewayPrivateEndpointConnectionsClient contains the methods for the ApplicationGatewayPrivateEndpointConnections group.
+// ApplicationGatewayPrivateEndpointConnectionsClient contains the methods for the ApplicationGatewayPrivateEndpointConnections
+// group.
 // Don't use this type directly, use NewApplicationGatewayPrivateEndpointConnectionsClient() instead.
 type ApplicationGatewayPrivateEndpointConnectionsClient struct {
 	internal       *arm.Client

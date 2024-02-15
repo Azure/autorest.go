@@ -17,8 +17,8 @@ import (
 	"time"
 )
 
-// HeaderClient contains the methods for the Encode.Datetime group.
-// Don't use this type directly, use a constructor function instead.
+// HeaderClient contains the methods for the Encode.Datetime namespace.
+// Don't use this type directly, use [DatetimeClient.NewHeaderClient] instead.
 type HeaderClient struct {
 	internal *azcore.Client
 }

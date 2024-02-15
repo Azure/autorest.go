@@ -13,12 +13,24 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// RenamedOperationClient contains the methods for the Client.Structure.Service group.
+// RenamedOperationClient contains the methods for the Client.Structure.Service namespace.
 // Don't use this type directly, use a constructor function instead.
 type RenamedOperationClient struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
+}
+
+// NewGroupClient creates a new instance of [GroupClient].
+func (client *RenamedOperationClient) NewGroupClient() *GroupClient {
+	return &GroupClient{
+		internal: client.internal,
+		endpoint: client.endpoint,
+		client:   client.client,
+	}
 }
 
 //   - options - RenamedOperationClientRenamedFiveOptions contains the optional parameters for the RenamedOperationClient.RenamedFive
@@ -42,6 +54,9 @@ func (client *RenamedOperationClient) RenamedFive(ctx context.Context, options *
 
 // renamedFiveCreateRequest creates the RenamedFive request.
 func (client *RenamedOperationClient) renamedFiveCreateRequest(ctx context.Context, options *RenamedOperationClientRenamedFiveOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/five"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -71,6 +86,9 @@ func (client *RenamedOperationClient) RenamedOne(ctx context.Context, options *R
 
 // renamedOneCreateRequest creates the RenamedOne request.
 func (client *RenamedOperationClient) renamedOneCreateRequest(ctx context.Context, options *RenamedOperationClientRenamedOneOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -100,6 +118,9 @@ func (client *RenamedOperationClient) RenamedThree(ctx context.Context, options 
 
 // renamedThreeCreateRequest creates the RenamedThree request.
 func (client *RenamedOperationClient) renamedThreeCreateRequest(ctx context.Context, options *RenamedOperationClientRenamedThreeOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// RecursiveClient contains the methods for the Type.Model.Inheritance.Recursive group.
+// RecursiveClient - Illustrates inheritance recursion
 // Don't use this type directly, use a constructor function instead.
 type RecursiveClient struct {
 	internal *azcore.Client

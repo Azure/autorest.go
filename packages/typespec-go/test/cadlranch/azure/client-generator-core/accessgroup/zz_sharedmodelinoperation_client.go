@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// SharedModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access group.
-// Don't use this type directly, use a constructor function instead.
+// SharedModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access namespace.
+// Don't use this type directly, use [AccessClient.NewSharedModelInOperationClient] instead.
 type SharedModelInOperationClient struct {
 	internal *azcore.Client
 }

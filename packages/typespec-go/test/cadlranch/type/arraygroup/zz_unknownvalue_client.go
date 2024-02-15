@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// UnknownValueClient contains the methods for the Type.Array group.
-// Don't use this type directly, use a constructor function instead.
+// UnknownValueClient - Array of unknown values
+// Don't use this type directly, use [ArrayClient.NewUnknownValueClient] instead.
 type UnknownValueClient struct {
 	internal *azcore.Client
 }

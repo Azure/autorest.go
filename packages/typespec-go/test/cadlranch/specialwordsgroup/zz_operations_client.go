@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// OperationsClient contains the methods for the SpecialWords group.
-// Don't use this type directly, use a constructor function instead.
+// OperationsClient - Test reserved words as operation name.
+// Don't use this type directly, use [SpecialWordsClient.NewOperationsClient] instead.
 type OperationsClient struct {
 	internal *azcore.Client
 }

@@ -16,8 +16,8 @@ import (
 	"strings"
 )
 
-// QueryClient contains the methods for the Parameters.CollectionFormat group.
-// Don't use this type directly, use a constructor function instead.
+// QueryClient contains the methods for the Parameters.CollectionFormat namespace.
+// Don't use this type directly, use [CollectionFormatClient.NewQueryClient] instead.
 type QueryClient struct {
 	internal *azcore.Client
 }

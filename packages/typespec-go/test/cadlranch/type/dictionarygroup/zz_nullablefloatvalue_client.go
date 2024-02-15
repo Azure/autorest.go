@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// NullableFloatValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// NullableFloatValueClient - Dictionary of nullable float values
+// Don't use this type directly, use [DictionaryClient.NewNullableFloatValueClient] instead.
 type NullableFloatValueClient struct {
 	internal *azcore.Client
 }

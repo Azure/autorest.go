@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// DurationValueClient contains the methods for the Type.Dictionary group.
-// Don't use this type directly, use a constructor function instead.
+// DurationValueClient - Dictionary of duration values
+// Don't use this type directly, use [DictionaryClient.NewDurationValueClient] instead.
 type DurationValueClient struct {
 	internal *azcore.Client
 }

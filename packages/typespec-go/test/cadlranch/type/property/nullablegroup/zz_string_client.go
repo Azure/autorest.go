@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// StringClient contains the methods for the Type.Property.Nullable group.
-// Don't use this type directly, use a constructor function instead.
+// StringClient contains the methods for the Type.Property.Nullable namespace.
+// Don't use this type directly, use [NullableClient.NewStringClient] instead.
 type StringClient struct {
 	internal *azcore.Client
 }

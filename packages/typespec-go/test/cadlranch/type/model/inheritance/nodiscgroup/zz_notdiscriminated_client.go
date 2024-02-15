@@ -15,7 +15,7 @@ import (
 	"net/http"
 )
 
-// NotDiscriminatedClient contains the methods for the Type.Model.Inheritance.NotDiscriminated group.
+// NotDiscriminatedClient - Illustrates not-discriminated inheritance model.
 // Don't use this type directly, use a constructor function instead.
 type NotDiscriminatedClient struct {
 	internal *azcore.Client

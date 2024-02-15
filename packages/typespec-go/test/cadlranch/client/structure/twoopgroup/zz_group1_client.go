@@ -13,12 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
-// Group1Client contains the methods for the Client.Structure.Service group.
-// Don't use this type directly, use a constructor function instead.
+// Group1Client contains the methods for the Client.Structure.Service namespace.
+// Don't use this type directly, use [TwoOperationGroupClient.NewGroup1Client] instead.
 type Group1Client struct {
 	internal *azcore.Client
+	endpoint string
+	client   ClientType
 }
 
 // - options - Group1ClientFourOptions contains the optional parameters for the Group1Client.Four method.
@@ -41,6 +44,9 @@ func (client *Group1Client) Four(ctx context.Context, options *Group1ClientFourO
 
 // fourCreateRequest creates the Four request.
 func (client *Group1Client) fourCreateRequest(ctx context.Context, options *Group1ClientFourOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/four"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -69,6 +75,9 @@ func (client *Group1Client) One(ctx context.Context, options *Group1ClientOneOpt
 
 // oneCreateRequest creates the One request.
 func (client *Group1Client) oneCreateRequest(ctx context.Context, options *Group1ClientOneOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/one"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,6 +106,9 @@ func (client *Group1Client) Three(ctx context.Context, options *Group1ClientThre
 
 // threeCreateRequest creates the Three request.
 func (client *Group1Client) threeCreateRequest(ctx context.Context, options *Group1ClientThreeOptions) (*policy.Request, error) {
+	host := "{endpoint}/client/structure/{client}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	host = strings.ReplaceAll(host, "{client}", string(client.client))
 	urlPath := "/three"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

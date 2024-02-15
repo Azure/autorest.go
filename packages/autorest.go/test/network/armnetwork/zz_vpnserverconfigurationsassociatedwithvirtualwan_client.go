@@ -20,7 +20,8 @@ import (
 	"strings"
 )
 
-// VPNServerConfigurationsAssociatedWithVirtualWanClient contains the methods for the VPNServerConfigurationsAssociatedWithVirtualWan group.
+// VPNServerConfigurationsAssociatedWithVirtualWanClient contains the methods for the VPNServerConfigurationsAssociatedWithVirtualWan
+// group.
 // Don't use this type directly, use NewVPNServerConfigurationsAssociatedWithVirtualWanClient() instead.
 type VPNServerConfigurationsAssociatedWithVirtualWanClient struct {
 	internal       *arm.Client

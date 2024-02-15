@@ -15,8 +15,8 @@ import (
 	"net/http"
 )
 
-// OptionalExplicitClient contains the methods for the Parameters.BodyOptionality group.
-// Don't use this type directly, use a constructor function instead.
+// OptionalExplicitClient contains the methods for the Parameters.BodyOptionality namespace.
+// Don't use this type directly, use [BodyOptionalityClient.NewOptionalExplicitClient] instead.
 type OptionalExplicitClient struct {
 	internal *azcore.Client
 }

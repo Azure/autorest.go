@@ -15,10 +15,17 @@ import (
 	"net/http"
 )
 
-// BodyOptionalityClient contains the methods for the Parameters.BodyOptionality group.
+// BodyOptionalityClient - Test describing optionality of the request body.
 // Don't use this type directly, use a constructor function instead.
 type BodyOptionalityClient struct {
 	internal *azcore.Client
+}
+
+// NewOptionalExplicitClient creates a new instance of [OptionalExplicitClient].
+func (client *BodyOptionalityClient) NewOptionalExplicitClient() *OptionalExplicitClient {
+	return &OptionalExplicitClient{
+		internal: client.internal,
+	}
 }
 
 //   - options - BodyOptionalityClientRequiredExplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredExplicit
