@@ -20,7 +20,8 @@ import (
 	"strings"
 )
 
-// ApplicationGatewayWafDynamicManifestsDefaultClient contains the methods for the ApplicationGatewayWafDynamicManifestsDefault group.
+// ApplicationGatewayWafDynamicManifestsDefaultClient contains the methods for the ApplicationGatewayWafDynamicManifestsDefault
+// group.
 // Don't use this type directly, use NewApplicationGatewayWafDynamicManifestsDefaultClient() instead.
 type ApplicationGatewayWafDynamicManifestsDefaultClient struct {
 	internal       *arm.Client
