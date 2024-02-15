@@ -4,24 +4,6 @@
 
 package accessgroup
 
-// InternalOperationClientInternalDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.InternalDecoratorInInternal
-// method.
-type InternalOperationClientInternalDecoratorInInternalOptions struct {
-	// placeholder for future optional parameters
-}
-
-// InternalOperationClientNoDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.NoDecoratorInInternal
-// method.
-type InternalOperationClientNoDecoratorInInternalOptions struct {
-	// placeholder for future optional parameters
-}
-
-// InternalOperationClientPublicDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.PublicDecoratorInInternal
-// method.
-type InternalOperationClientPublicDecoratorInInternalOptions struct {
-	// placeholder for future optional parameters
-}
-
 // PublicOperationClientNoDecoratorInPublicOptions contains the optional parameters for the PublicOperationClient.NoDecoratorInPublic
 // method.
 type PublicOperationClientNoDecoratorInPublicOptions struct {
@@ -34,26 +16,44 @@ type PublicOperationClientPublicDecoratorInPublicOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RelativeModelInOperationClientDiscriminatorOptions contains the optional parameters for the RelativeModelInOperationClient.Discriminator
-// method.
-type RelativeModelInOperationClientDiscriminatorOptions struct {
-	// placeholder for future optional parameters
-}
-
-// RelativeModelInOperationClientOperationOptions contains the optional parameters for the RelativeModelInOperationClient.Operation
-// method.
-type RelativeModelInOperationClientOperationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SharedModelInOperationClientInternalOptions contains the optional parameters for the SharedModelInOperationClient.Internal
-// method.
-type SharedModelInOperationClientInternalOptions struct {
-	// placeholder for future optional parameters
-}
-
 // SharedModelInOperationClientPublicOptions contains the optional parameters for the SharedModelInOperationClient.Public
 // method.
 type SharedModelInOperationClientPublicOptions struct {
+	// placeholder for future optional parameters
+}
+
+// internalOperationClientinternalDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.internalDecoratorInInternal
+// method.
+type internalOperationClientinternalDecoratorInInternalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// internalOperationClientnoDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.noDecoratorInInternal
+// method.
+type internalOperationClientnoDecoratorInInternalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// internalOperationClientpublicDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.publicDecoratorInInternal
+// method.
+type internalOperationClientpublicDecoratorInInternalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// relativeModelInOperationClientdiscriminatorOptions contains the optional parameters for the RelativeModelInOperationClient.discriminator
+// method.
+type relativeModelInOperationClientdiscriminatorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// relativeModelInOperationClientoperationOptions contains the optional parameters for the RelativeModelInOperationClient.operation
+// method.
+type relativeModelInOperationClientoperationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sharedModelInOperationClientinternalMethodOptions contains the optional parameters for the SharedModelInOperationClient.internalMethod
+// method.
+type sharedModelInOperationClientinternalMethodOptions struct {
 	// placeholder for future optional parameters
 }

@@ -6,8 +6,8 @@
 import { CommonAcronyms, ReservedWords } from './mappings.js';
 
 // make sure that reserved words are escaped
-export function getEscapedReservedName(name: string, appendValue: string): string {
-  if (ReservedWords.includes(name)) {
+export function getEscapedReservedName(name: string, appendValue: string, additional?: Array<string>): string {
+  if (ReservedWords.includes(name) || additional?.includes(name)) {
     name += appendValue;
   }
 

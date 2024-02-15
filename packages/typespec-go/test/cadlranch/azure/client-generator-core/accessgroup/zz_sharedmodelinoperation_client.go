@@ -18,49 +18,6 @@ type SharedModelInOperationClient struct {
 	internal *azcore.Client
 }
 
-//   - options - SharedModelInOperationClientInternalOptions contains the optional parameters for the SharedModelInOperationClient.Internal
-//     method.
-func (client *SharedModelInOperationClient) Internal(ctx context.Context, name string, options *SharedModelInOperationClientInternalOptions) (SharedModelInOperationClientInternalResponse, error) {
-	var err error
-	req, err := client.internalCreateRequest(ctx, name, options)
-	if err != nil {
-		return SharedModelInOperationClientInternalResponse{}, err
-	}
-	httpResp, err := client.internal.Pipeline().Do(req)
-	if err != nil {
-		return SharedModelInOperationClientInternalResponse{}, err
-	}
-	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
-		err = runtime.NewResponseError(httpResp)
-		return SharedModelInOperationClientInternalResponse{}, err
-	}
-	resp, err := client.internalHandleResponse(httpResp)
-	return resp, err
-}
-
-// internalCreateRequest creates the Internal request.
-func (client *SharedModelInOperationClient) internalCreateRequest(ctx context.Context, name string, options *SharedModelInOperationClientInternalOptions) (*policy.Request, error) {
-	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/internal"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("name", name)
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Accept"] = []string{"application/json"}
-	return req, nil
-}
-
-// internalHandleResponse handles the Internal response.
-func (client *SharedModelInOperationClient) internalHandleResponse(resp *http.Response) (SharedModelInOperationClientInternalResponse, error) {
-	result := SharedModelInOperationClientInternalResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SharedModel); err != nil {
-		return SharedModelInOperationClientInternalResponse{}, err
-	}
-	return result, nil
-}
-
 //   - options - SharedModelInOperationClientPublicOptions contains the optional parameters for the SharedModelInOperationClient.Public
 //     method.
 func (client *SharedModelInOperationClient) Public(ctx context.Context, name string, options *SharedModelInOperationClientPublicOptions) (SharedModelInOperationClientPublicResponse, error) {
@@ -100,6 +57,49 @@ func (client *SharedModelInOperationClient) publicHandleResponse(resp *http.Resp
 	result := SharedModelInOperationClientPublicResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SharedModel); err != nil {
 		return SharedModelInOperationClientPublicResponse{}, err
+	}
+	return result, nil
+}
+
+//   - options - sharedModelInOperationClientinternalMethodOptions contains the optional parameters for the SharedModelInOperationClient.internalMethod
+//     method.
+func (client *SharedModelInOperationClient) internalMethod(ctx context.Context, name string, options *sharedModelInOperationClientinternalMethodOptions) (sharedModelInOperationClientinternalMethodResponse, error) {
+	var err error
+	req, err := client.internalCreateRequest(ctx, name, options)
+	if err != nil {
+		return sharedModelInOperationClientinternalMethodResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return sharedModelInOperationClientinternalMethodResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return sharedModelInOperationClientinternalMethodResponse{}, err
+	}
+	resp, err := client.internalHandleResponse(httpResp)
+	return resp, err
+}
+
+// internalCreateRequest creates the internalMethod request.
+func (client *SharedModelInOperationClient) internalCreateRequest(ctx context.Context, name string, options *sharedModelInOperationClientinternalMethodOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/internal"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("name", name)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// internalHandleResponse handles the internalMethod response.
+func (client *SharedModelInOperationClient) internalHandleResponse(resp *http.Response) (sharedModelInOperationClientinternalMethodResponse, error) {
+	result := sharedModelInOperationClientinternalMethodResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SharedModel); err != nil {
+		return sharedModelInOperationClientinternalMethodResponse{}, err
 	}
 	return result, nil
 }

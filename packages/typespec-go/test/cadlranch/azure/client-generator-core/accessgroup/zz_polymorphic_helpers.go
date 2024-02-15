@@ -6,7 +6,7 @@ package accessgroup
 
 import "encoding/json"
 
-func unmarshalAbstractModelClassification(rawMsg json.RawMessage) (AbstractModelClassification, error) {
+func unmarshalabstractModelClassification(rawMsg json.RawMessage) (abstractModelClassification, error) {
 	if rawMsg == nil || string(rawMsg) == "null" {
 		return nil, nil
 	}
@@ -14,12 +14,12 @@ func unmarshalAbstractModelClassification(rawMsg json.RawMessage) (AbstractModel
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
-	var b AbstractModelClassification
+	var b abstractModelClassification
 	switch m["kind"] {
 	case "real":
-		b = &RealModel{}
+		b = &realModel{}
 	default:
-		b = &AbstractModel{}
+		b = &abstractModel{}
 	}
 	if err := json.Unmarshal(rawMsg, b); err != nil {
 		return nil, err
