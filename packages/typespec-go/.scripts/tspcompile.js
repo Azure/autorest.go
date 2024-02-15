@@ -22,6 +22,7 @@ const cadlRanch = {
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
   'accessgroup': ['azure/client-generator-core/access'],   // missing tests
+  'flattengroup': ['azure/client-generator-core/flatten'], // missing tests
   'coreusagegroup': ['azure/client-generator-core/usage'], // missing tests
   'basicgroup': ['azure/core/basic'],
   //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
@@ -39,6 +40,9 @@ const cadlRanch = {
   'collectionfmtgroup': ['parameters/collection-format'],
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
+  'jmergepatchgroup': ['payload/json-merge-patch'], // missing tests
+  'mediatypegroup': ['payload/media-type'], // missing tests
+  'multipartgroup': ['payload/multipart'],  // missing tests
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
