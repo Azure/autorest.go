@@ -21,9 +21,9 @@ const cadlRanch = {
   'customgroup': ['authentication/http/custom'], // missing tests
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
-  'accessgroup': ['azure/client-generator-core/access'],   // missing tests
+  'accessgroup': ['azure/client-generator-core/access'],
   'flattengroup': ['azure/client-generator-core/flatten'], // missing tests
-  'coreusagegroup': ['azure/client-generator-core/usage'], // missing tests
+  'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
   //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
   //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support

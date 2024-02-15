@@ -18,7 +18,7 @@ type RelativeModelInOperationClient struct {
 	internal *azcore.Client
 }
 
-// Discriminator - Expected query parameter: kind=<any string>
+// discriminator - Expected query parameter: kind=<any string>
 // Expected response body:
 // ```json
 // {
@@ -26,28 +26,28 @@ type RelativeModelInOperationClient struct {
 // "kind": "real"
 // }
 // ```
-//   - options - RelativeModelInOperationClientDiscriminatorOptions contains the optional parameters for the RelativeModelInOperationClient.Discriminator
+//   - options - relativeModelInOperationClientdiscriminatorOptions contains the optional parameters for the RelativeModelInOperationClient.discriminator
 //     method.
-func (client *RelativeModelInOperationClient) Discriminator(ctx context.Context, kind string, options *RelativeModelInOperationClientDiscriminatorOptions) (RelativeModelInOperationClientDiscriminatorResponse, error) {
+func (client *RelativeModelInOperationClient) discriminator(ctx context.Context, kind string, options *relativeModelInOperationClientdiscriminatorOptions) (relativeModelInOperationClientdiscriminatorResponse, error) {
 	var err error
 	req, err := client.discriminatorCreateRequest(ctx, kind, options)
 	if err != nil {
-		return RelativeModelInOperationClientDiscriminatorResponse{}, err
+		return relativeModelInOperationClientdiscriminatorResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RelativeModelInOperationClientDiscriminatorResponse{}, err
+		return relativeModelInOperationClientdiscriminatorResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return RelativeModelInOperationClientDiscriminatorResponse{}, err
+		return relativeModelInOperationClientdiscriminatorResponse{}, err
 	}
 	resp, err := client.discriminatorHandleResponse(httpResp)
 	return resp, err
 }
 
-// discriminatorCreateRequest creates the Discriminator request.
-func (client *RelativeModelInOperationClient) discriminatorCreateRequest(ctx context.Context, kind string, options *RelativeModelInOperationClientDiscriminatorOptions) (*policy.Request, error) {
+// discriminatorCreateRequest creates the discriminator request.
+func (client *RelativeModelInOperationClient) discriminatorCreateRequest(ctx context.Context, kind string, options *relativeModelInOperationClientdiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/relativeModelInOperation/discriminator"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -60,16 +60,16 @@ func (client *RelativeModelInOperationClient) discriminatorCreateRequest(ctx con
 	return req, nil
 }
 
-// discriminatorHandleResponse handles the Discriminator response.
-func (client *RelativeModelInOperationClient) discriminatorHandleResponse(resp *http.Response) (RelativeModelInOperationClientDiscriminatorResponse, error) {
-	result := RelativeModelInOperationClientDiscriminatorResponse{}
+// discriminatorHandleResponse handles the discriminator response.
+func (client *RelativeModelInOperationClient) discriminatorHandleResponse(resp *http.Response) (relativeModelInOperationClientdiscriminatorResponse, error) {
+	result := relativeModelInOperationClientdiscriminatorResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return RelativeModelInOperationClientDiscriminatorResponse{}, err
+		return relativeModelInOperationClientdiscriminatorResponse{}, err
 	}
 	return result, nil
 }
 
-// Operation - Expected query parameter: name=<any string>
+// operation - Expected query parameter: name=<any string>
 // Expected response body:
 // ```json
 // {
@@ -80,28 +80,28 @@ func (client *RelativeModelInOperationClient) discriminatorHandleResponse(resp *
 // }
 // }
 // ```
-//   - options - RelativeModelInOperationClientOperationOptions contains the optional parameters for the RelativeModelInOperationClient.Operation
+//   - options - relativeModelInOperationClientoperationOptions contains the optional parameters for the RelativeModelInOperationClient.operation
 //     method.
-func (client *RelativeModelInOperationClient) Operation(ctx context.Context, name string, options *RelativeModelInOperationClientOperationOptions) (RelativeModelInOperationClientOperationResponse, error) {
+func (client *RelativeModelInOperationClient) operation(ctx context.Context, name string, options *relativeModelInOperationClientoperationOptions) (relativeModelInOperationClientoperationResponse, error) {
 	var err error
 	req, err := client.operationCreateRequest(ctx, name, options)
 	if err != nil {
-		return RelativeModelInOperationClientOperationResponse{}, err
+		return relativeModelInOperationClientoperationResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return RelativeModelInOperationClientOperationResponse{}, err
+		return relativeModelInOperationClientoperationResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return RelativeModelInOperationClientOperationResponse{}, err
+		return relativeModelInOperationClientoperationResponse{}, err
 	}
 	resp, err := client.operationHandleResponse(httpResp)
 	return resp, err
 }
 
-// operationCreateRequest creates the Operation request.
-func (client *RelativeModelInOperationClient) operationCreateRequest(ctx context.Context, name string, options *RelativeModelInOperationClientOperationOptions) (*policy.Request, error) {
+// operationCreateRequest creates the operation request.
+func (client *RelativeModelInOperationClient) operationCreateRequest(ctx context.Context, name string, options *relativeModelInOperationClientoperationOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/relativeModelInOperation/operation"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -114,11 +114,11 @@ func (client *RelativeModelInOperationClient) operationCreateRequest(ctx context
 	return req, nil
 }
 
-// operationHandleResponse handles the Operation response.
-func (client *RelativeModelInOperationClient) operationHandleResponse(resp *http.Response) (RelativeModelInOperationClientOperationResponse, error) {
-	result := RelativeModelInOperationClientOperationResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.OuterModel); err != nil {
-		return RelativeModelInOperationClientOperationResponse{}, err
+// operationHandleResponse handles the operation response.
+func (client *RelativeModelInOperationClient) operationHandleResponse(resp *http.Response) (relativeModelInOperationClientoperationResponse, error) {
+	result := relativeModelInOperationClientoperationResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.outerModel); err != nil {
+		return relativeModelInOperationClientoperationResponse{}, err
 	}
 	return result, nil
 }

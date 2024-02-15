@@ -4,11 +4,11 @@
 
 package accessgroup
 
-// AbstractModelClassification provides polymorphic access to related types.
-// Call the interface's GetAbstractModel() method to access the common type.
+// abstractModelClassification provides polymorphic access to related types.
+// Call the interface's GetabstractModel() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *AbstractModel, *RealModel
-type AbstractModelClassification interface {
-	// GetAbstractModel returns the AbstractModel content of the underlying type.
-	GetAbstractModel() *AbstractModel
+// - *abstractModel, *realModel
+type abstractModelClassification interface {
+	// GetabstractModel returns the abstractModel content of the underlying type.
+	GetabstractModel() *abstractModel
 }

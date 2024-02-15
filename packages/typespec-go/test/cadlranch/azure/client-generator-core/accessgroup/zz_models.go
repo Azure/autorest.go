@@ -4,53 +4,8 @@
 
 package accessgroup
 
-// Used in internal operations, should be generated but not exported.
-type AbstractModel struct {
-	// REQUIRED
-	Kind *string
-
-	// REQUIRED
-	Name *string
-}
-
-// GetAbstractModel implements the AbstractModelClassification interface for type AbstractModel.
-func (a *AbstractModel) GetAbstractModel() *AbstractModel { return a }
-
-// Used in internal operations, should be generated but not exported.
-type BaseModel struct {
-	// REQUIRED
-	Name *string
-}
-
-// Used in internal operations, should be generated but not exported.
-type InnerModel struct {
-	// REQUIRED
-	Name *string
-}
-
-// Used in an internal operation, should be generated but not exported.
-type InternalDecoratorModelInInternal struct {
-	// REQUIRED
-	Name *string
-}
-
-// Used in an internal operation, should be generated but not exported.
-type NoDecoratorModelInInternal struct {
-	// REQUIRED
-	Name *string
-}
-
 // Used in a public operation, should be generated and exported.
 type NoDecoratorModelInPublic struct {
-	// REQUIRED
-	Name *string
-}
-
-// Used in internal operations, should be generated but not exported.
-type OuterModel struct {
-	// REQUIRED
-	Inner *InnerModel
-
 	// REQUIRED
 	Name *string
 }
@@ -67,8 +22,14 @@ type PublicDecoratorModelInPublic struct {
 	Name *string
 }
 
+// Used by both public and internal operation. It should be generated and exported.
+type SharedModel struct {
+	// REQUIRED
+	Name *string
+}
+
 // Used in internal operations, should be generated but not exported.
-type RealModel struct {
+type abstractModel struct {
 	// REQUIRED
 	Kind *string
 
@@ -76,16 +37,55 @@ type RealModel struct {
 	Name *string
 }
 
-// GetAbstractModel implements the AbstractModelClassification interface for type RealModel.
-func (r *RealModel) GetAbstractModel() *AbstractModel {
-	return &AbstractModel{
+// GetabstractModel implements the abstractModelClassification interface for type abstractModel.
+func (a *abstractModel) GetabstractModel() *abstractModel { return a }
+
+// Used in internal operations, should be generated but not exported.
+type baseModel struct {
+	// REQUIRED
+	Name *string
+}
+
+// Used in internal operations, should be generated but not exported.
+type innerModel struct {
+	// REQUIRED
+	Name *string
+}
+
+// Used in an internal operation, should be generated but not exported.
+type internalDecoratorModelInInternal struct {
+	// REQUIRED
+	Name *string
+}
+
+// Used in an internal operation, should be generated but not exported.
+type noDecoratorModelInInternal struct {
+	// REQUIRED
+	Name *string
+}
+
+// Used in internal operations, should be generated but not exported.
+type outerModel struct {
+	// REQUIRED
+	Inner *innerModel
+
+	// REQUIRED
+	Name *string
+}
+
+// Used in internal operations, should be generated but not exported.
+type realModel struct {
+	// REQUIRED
+	Kind *string
+
+	// REQUIRED
+	Name *string
+}
+
+// GetabstractModel implements the abstractModelClassification interface for type realModel.
+func (r *realModel) GetabstractModel() *abstractModel {
+	return &abstractModel{
 		Kind: r.Kind,
 		Name: r.Name,
 	}
-}
-
-// Used by both public and internal operation. It should be generated and exported.
-type SharedModel struct {
-	// REQUIRED
-	Name *string
 }

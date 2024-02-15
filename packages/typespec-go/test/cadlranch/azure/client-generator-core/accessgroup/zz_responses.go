@@ -4,24 +4,6 @@
 
 package accessgroup
 
-// InternalOperationClientInternalDecoratorInInternalResponse contains the response from method InternalOperationClient.InternalDecoratorInInternal.
-type InternalOperationClientInternalDecoratorInInternalResponse struct {
-	// Used in an internal operation, should be generated but not exported.
-	InternalDecoratorModelInInternal
-}
-
-// InternalOperationClientNoDecoratorInInternalResponse contains the response from method InternalOperationClient.NoDecoratorInInternal.
-type InternalOperationClientNoDecoratorInInternalResponse struct {
-	// Used in an internal operation, should be generated but not exported.
-	NoDecoratorModelInInternal
-}
-
-// InternalOperationClientPublicDecoratorInInternalResponse contains the response from method InternalOperationClient.PublicDecoratorInInternal.
-type InternalOperationClientPublicDecoratorInInternalResponse struct {
-	// Used in an internal operation but with public decorator, should be generated and exported.
-	PublicDecoratorModelInInternal
-}
-
 // PublicOperationClientNoDecoratorInPublicResponse contains the response from method PublicOperationClient.NoDecoratorInPublic.
 type PublicOperationClientNoDecoratorInPublicResponse struct {
 	// Used in a public operation, should be generated and exported.
@@ -34,36 +16,54 @@ type PublicOperationClientPublicDecoratorInPublicResponse struct {
 	PublicDecoratorModelInPublic
 }
 
-// RelativeModelInOperationClientDiscriminatorResponse contains the response from method RelativeModelInOperationClient.Discriminator.
-type RelativeModelInOperationClientDiscriminatorResponse struct {
-	// Used in internal operations, should be generated but not exported.
-	AbstractModelClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type RelativeModelInOperationClientDiscriminatorResponse.
-func (r *RelativeModelInOperationClientDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalAbstractModelClassification(data)
-	if err != nil {
-		return err
-	}
-	r.AbstractModelClassification = res
-	return nil
-}
-
-// RelativeModelInOperationClientOperationResponse contains the response from method RelativeModelInOperationClient.Operation.
-type RelativeModelInOperationClientOperationResponse struct {
-	// Used in internal operations, should be generated but not exported.
-	OuterModel
-}
-
-// SharedModelInOperationClientInternalResponse contains the response from method SharedModelInOperationClient.Internal.
-type SharedModelInOperationClientInternalResponse struct {
+// SharedModelInOperationClientPublicResponse contains the response from method SharedModelInOperationClient.Public.
+type SharedModelInOperationClientPublicResponse struct {
 	// Used by both public and internal operation. It should be generated and exported.
 	SharedModel
 }
 
-// SharedModelInOperationClientPublicResponse contains the response from method SharedModelInOperationClient.Public.
-type SharedModelInOperationClientPublicResponse struct {
+// internalOperationClientinternalDecoratorInInternalResponse contains the response from method InternalOperationClient.internalDecoratorInInternal.
+type internalOperationClientinternalDecoratorInInternalResponse struct {
+	// Used in an internal operation, should be generated but not exported.
+	internalDecoratorModelInInternal
+}
+
+// internalOperationClientnoDecoratorInInternalResponse contains the response from method InternalOperationClient.noDecoratorInInternal.
+type internalOperationClientnoDecoratorInInternalResponse struct {
+	// Used in an internal operation, should be generated but not exported.
+	noDecoratorModelInInternal
+}
+
+// internalOperationClientpublicDecoratorInInternalResponse contains the response from method InternalOperationClient.publicDecoratorInInternal.
+type internalOperationClientpublicDecoratorInInternalResponse struct {
+	// Used in an internal operation but with public decorator, should be generated and exported.
+	PublicDecoratorModelInInternal
+}
+
+// relativeModelInOperationClientdiscriminatorResponse contains the response from method RelativeModelInOperationClient.discriminator.
+type relativeModelInOperationClientdiscriminatorResponse struct {
+	// Used in internal operations, should be generated but not exported.
+	abstractModelClassification
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type relativeModelInOperationClientdiscriminatorResponse.
+func (r *relativeModelInOperationClientdiscriminatorResponse) UnmarshalJSON(data []byte) error {
+	res, err := unmarshalabstractModelClassification(data)
+	if err != nil {
+		return err
+	}
+	r.abstractModelClassification = res
+	return nil
+}
+
+// relativeModelInOperationClientoperationResponse contains the response from method RelativeModelInOperationClient.operation.
+type relativeModelInOperationClientoperationResponse struct {
+	// Used in internal operations, should be generated but not exported.
+	outerModel
+}
+
+// sharedModelInOperationClientinternalMethodResponse contains the response from method SharedModelInOperationClient.internalMethod.
+type sharedModelInOperationClientinternalMethodResponse struct {
 	// Used by both public and internal operation. It should be generated and exported.
 	SharedModel
 }

@@ -18,28 +18,28 @@ type InternalOperationClient struct {
 	internal *azcore.Client
 }
 
-//   - options - InternalOperationClientInternalDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.InternalDecoratorInInternal
+//   - options - internalOperationClientinternalDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.internalDecoratorInInternal
 //     method.
-func (client *InternalOperationClient) InternalDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientInternalDecoratorInInternalOptions) (InternalOperationClientInternalDecoratorInInternalResponse, error) {
+func (client *InternalOperationClient) internalDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientinternalDecoratorInInternalOptions) (internalOperationClientinternalDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.internalDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
-		return InternalOperationClientInternalDecoratorInInternalResponse{}, err
+		return internalOperationClientinternalDecoratorInInternalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InternalOperationClientInternalDecoratorInInternalResponse{}, err
+		return internalOperationClientinternalDecoratorInInternalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return InternalOperationClientInternalDecoratorInInternalResponse{}, err
+		return internalOperationClientinternalDecoratorInInternalResponse{}, err
 	}
 	resp, err := client.internalDecoratorInInternalHandleResponse(httpResp)
 	return resp, err
 }
 
-// internalDecoratorInInternalCreateRequest creates the InternalDecoratorInInternal request.
-func (client *InternalOperationClient) internalDecoratorInInternalCreateRequest(ctx context.Context, name string, options *InternalOperationClientInternalDecoratorInInternalOptions) (*policy.Request, error) {
+// internalDecoratorInInternalCreateRequest creates the internalDecoratorInInternal request.
+func (client *InternalOperationClient) internalDecoratorInInternalCreateRequest(ctx context.Context, name string, options *internalOperationClientinternalDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/internalDecoratorInInternal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -52,37 +52,37 @@ func (client *InternalOperationClient) internalDecoratorInInternalCreateRequest(
 	return req, nil
 }
 
-// internalDecoratorInInternalHandleResponse handles the InternalDecoratorInInternal response.
-func (client *InternalOperationClient) internalDecoratorInInternalHandleResponse(resp *http.Response) (InternalOperationClientInternalDecoratorInInternalResponse, error) {
-	result := InternalOperationClientInternalDecoratorInInternalResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.InternalDecoratorModelInInternal); err != nil {
-		return InternalOperationClientInternalDecoratorInInternalResponse{}, err
+// internalDecoratorInInternalHandleResponse handles the internalDecoratorInInternal response.
+func (client *InternalOperationClient) internalDecoratorInInternalHandleResponse(resp *http.Response) (internalOperationClientinternalDecoratorInInternalResponse, error) {
+	result := internalOperationClientinternalDecoratorInInternalResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.internalDecoratorModelInInternal); err != nil {
+		return internalOperationClientinternalDecoratorInInternalResponse{}, err
 	}
 	return result, nil
 }
 
-//   - options - InternalOperationClientNoDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.NoDecoratorInInternal
+//   - options - internalOperationClientnoDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.noDecoratorInInternal
 //     method.
-func (client *InternalOperationClient) NoDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientNoDecoratorInInternalOptions) (InternalOperationClientNoDecoratorInInternalResponse, error) {
+func (client *InternalOperationClient) noDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientnoDecoratorInInternalOptions) (internalOperationClientnoDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.noDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
-		return InternalOperationClientNoDecoratorInInternalResponse{}, err
+		return internalOperationClientnoDecoratorInInternalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InternalOperationClientNoDecoratorInInternalResponse{}, err
+		return internalOperationClientnoDecoratorInInternalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return InternalOperationClientNoDecoratorInInternalResponse{}, err
+		return internalOperationClientnoDecoratorInInternalResponse{}, err
 	}
 	resp, err := client.noDecoratorInInternalHandleResponse(httpResp)
 	return resp, err
 }
 
-// noDecoratorInInternalCreateRequest creates the NoDecoratorInInternal request.
-func (client *InternalOperationClient) noDecoratorInInternalCreateRequest(ctx context.Context, name string, options *InternalOperationClientNoDecoratorInInternalOptions) (*policy.Request, error) {
+// noDecoratorInInternalCreateRequest creates the noDecoratorInInternal request.
+func (client *InternalOperationClient) noDecoratorInInternalCreateRequest(ctx context.Context, name string, options *internalOperationClientnoDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/noDecoratorInInternal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,37 +95,37 @@ func (client *InternalOperationClient) noDecoratorInInternalCreateRequest(ctx co
 	return req, nil
 }
 
-// noDecoratorInInternalHandleResponse handles the NoDecoratorInInternal response.
-func (client *InternalOperationClient) noDecoratorInInternalHandleResponse(resp *http.Response) (InternalOperationClientNoDecoratorInInternalResponse, error) {
-	result := InternalOperationClientNoDecoratorInInternalResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NoDecoratorModelInInternal); err != nil {
-		return InternalOperationClientNoDecoratorInInternalResponse{}, err
+// noDecoratorInInternalHandleResponse handles the noDecoratorInInternal response.
+func (client *InternalOperationClient) noDecoratorInInternalHandleResponse(resp *http.Response) (internalOperationClientnoDecoratorInInternalResponse, error) {
+	result := internalOperationClientnoDecoratorInInternalResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.noDecoratorModelInInternal); err != nil {
+		return internalOperationClientnoDecoratorInInternalResponse{}, err
 	}
 	return result, nil
 }
 
-//   - options - InternalOperationClientPublicDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.PublicDecoratorInInternal
+//   - options - internalOperationClientpublicDecoratorInInternalOptions contains the optional parameters for the InternalOperationClient.publicDecoratorInInternal
 //     method.
-func (client *InternalOperationClient) PublicDecoratorInInternal(ctx context.Context, name string, options *InternalOperationClientPublicDecoratorInInternalOptions) (InternalOperationClientPublicDecoratorInInternalResponse, error) {
+func (client *InternalOperationClient) publicDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientpublicDecoratorInInternalOptions) (internalOperationClientpublicDecoratorInInternalResponse, error) {
 	var err error
 	req, err := client.publicDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
-		return InternalOperationClientPublicDecoratorInInternalResponse{}, err
+		return internalOperationClientpublicDecoratorInInternalResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return InternalOperationClientPublicDecoratorInInternalResponse{}, err
+		return internalOperationClientpublicDecoratorInInternalResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return InternalOperationClientPublicDecoratorInInternalResponse{}, err
+		return internalOperationClientpublicDecoratorInInternalResponse{}, err
 	}
 	resp, err := client.publicDecoratorInInternalHandleResponse(httpResp)
 	return resp, err
 }
 
-// publicDecoratorInInternalCreateRequest creates the PublicDecoratorInInternal request.
-func (client *InternalOperationClient) publicDecoratorInInternalCreateRequest(ctx context.Context, name string, options *InternalOperationClientPublicDecoratorInInternalOptions) (*policy.Request, error) {
+// publicDecoratorInInternalCreateRequest creates the publicDecoratorInInternal request.
+func (client *InternalOperationClient) publicDecoratorInInternalCreateRequest(ctx context.Context, name string, options *internalOperationClientpublicDecoratorInInternalOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/internalOperation/publicDecoratorInInternal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -138,11 +138,11 @@ func (client *InternalOperationClient) publicDecoratorInInternalCreateRequest(ct
 	return req, nil
 }
 
-// publicDecoratorInInternalHandleResponse handles the PublicDecoratorInInternal response.
-func (client *InternalOperationClient) publicDecoratorInInternalHandleResponse(resp *http.Response) (InternalOperationClientPublicDecoratorInInternalResponse, error) {
-	result := InternalOperationClientPublicDecoratorInInternalResponse{}
+// publicDecoratorInInternalHandleResponse handles the publicDecoratorInInternal response.
+func (client *InternalOperationClient) publicDecoratorInInternalHandleResponse(resp *http.Response) (internalOperationClientpublicDecoratorInInternalResponse, error) {
+	result := internalOperationClientpublicDecoratorInInternalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicDecoratorModelInInternal); err != nil {
-		return InternalOperationClientPublicDecoratorInInternalResponse{}, err
+		return internalOperationClientpublicDecoratorInInternalResponse{}, err
 	}
 	return result, nil
 }

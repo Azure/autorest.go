@@ -130,7 +130,12 @@ export class clientAdapter {
       return statusCodes;
     };
   
-    const methodName = capitalize(ensureNameCase(sdkMethod.name));
+    let methodName = capitalize(ensureNameCase(sdkMethod.name));
+    if (sdkMethod.access === 'internal') {
+      // we add internal to the extra list so we don't end up with a method named "internal"
+      // which will collide with an unexported field with the same name.
+      methodName = getEscapedReservedName(uncapitalize(methodName), 'Method', ['internal']);
+    }
 
     if (sdkMethod.kind === 'basic') {
       method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
@@ -155,7 +160,10 @@ export class clientAdapter {
       if (this.opts['single-client']) {
         prefix = '';
       }
-      const optionalParamsGroupName = `${prefix}${method.methodName}Options`;
+      let optionalParamsGroupName = `${prefix}${method.methodName}Options`;
+      if (sdkMethod.access === 'internal') {
+        optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
+      }
       // TODO: ensure param name is unique
       method.optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
       method.optionalParamsGroup.description = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
@@ -276,7 +284,10 @@ export class clientAdapter {
     if (this.opts['single-client']) {
       prefix = '';
     }
-    const respEnvName = `${prefix}${method.methodName}Response`;
+    let respEnvName = `${prefix}${method.methodName}Response`;
+    if (sdkMethod.access === 'internal') {
+      respEnvName = uncapitalize(respEnvName);
+    }
     const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this. getMethodNameForDocComment(method)), method);
     this.ta.codeModel.responseEnvelopes.push(respEnv);
   
@@ -309,9 +320,9 @@ export class clientAdapter {
       throw new Error('any response NYI');
     } else if (bodyResponses[0].kind === 'model') {
       let modelType: go.ModelType | undefined;
-      const modelName = ensureNameCase(bodyResponses[0].name);
+      const modelName = ensureNameCase(bodyResponses[0].name).toUpperCase();
       for (const model of this.ta.codeModel.models) {
-        if (model.name === modelName) {
+        if (model.name.toUpperCase() === modelName) {
           modelType = model;
           break;
         }

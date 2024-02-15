@@ -8,6 +8,7 @@ import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import { values } from '@azure-tools/linq';
+import { uncapitalize } from '@azure-tools/codegen';
 
 // used to convert SDK types to Go code model types
 export class typeAdapter {
@@ -420,7 +421,10 @@ export class typeAdapter {
 
   // converts an SdkEnumType to a go.ConstantType
   private getConstantType(enumType: tcgc.SdkEnumType): go.ConstantType {
-    const constTypeName = naming.ensureNameCase(enumType.name);
+    let constTypeName = naming.ensureNameCase(enumType.name);
+    if (enumType.access === 'internal') {
+      constTypeName = naming.getEscapedReservedName(uncapitalize(constTypeName), 'Type');
+    }
     let constType = this.types.get(constTypeName);
     if (constType) {
       return <go.ConstantType>constType;
@@ -436,7 +440,10 @@ export class typeAdapter {
     if (!model.discriminatedSubtypes) {
       throw new Error(`type ${model.name} isn't a discriminator root`);
     }
-    const ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
+    let ifaceName = naming.createPolymorphicInterfaceName(naming.ensureNameCase(model.name));
+    if (model.access === 'internal') {
+      ifaceName = uncapitalize(ifaceName);
+    }
     let iface = this.types.get(ifaceName);
     if (iface) {
       return <go.InterfaceType>iface;
@@ -462,7 +469,10 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    const modelName = naming.ensureNameCase(model.name);
+    let modelName = naming.ensureNameCase(model.name);
+    if (model.access === 'internal') {
+      modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
+    }
     let modelType = this.types.get(modelName);
     if (modelType) {
       return <go.ModelType | go.PolymorphicType>modelType;
@@ -587,7 +597,10 @@ export class typeAdapter {
   private getConstantValues(type: go.ConstantType, valueTypes: Array<tcgc.SdkEnumValueType>): Array<go.ConstantValue> {
     const values = new Array<go.ConstantValue>();
     for (const valueType of valueTypes) {
-      const valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
+      let valueTypeName = `${type.name}${naming.ensureNameCase(valueType.name)}`;
+      if (valueType.enumType.access === 'internal') {
+        valueTypeName = naming.getEscapedReservedName(uncapitalize(valueTypeName), 'Type');
+      }
       let value = this.constValues.get(valueTypeName);
       if (!value) {
         value = new go.ConstantValue(valueTypeName, type, valueType.value);
