@@ -342,6 +342,7 @@ export class clientAdapter {
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
         throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
+      // TODO: hard-coded JSON
       respEnv.result = new go.MonomorphicResult('Value', 'JSON', resultType, isTypePassedByValue(bodyResponses[0]));
     }
   
