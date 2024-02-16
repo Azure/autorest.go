@@ -40,7 +40,7 @@ const cadlRanch = {
   'collectionfmtgroup': ['parameters/collection-format'],
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
-  'jmergepatchgroup': ['payload/json-merge-patch'], // missing tests
+  'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'], // missing tests
   'multipartgroup': ['payload/multipart'],  // missing tests
   'pageablegroup': ['payload/pageable'],
@@ -48,6 +48,8 @@ const cadlRanch = {
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
   'multiplegroup': ['server/path/multiple'],   // missing tests
   'singlegroup': ['server/path/single'],       // missing tests
+  'unversionedgroup': ['server/versions/not-versioned'], // missing tests
+  'versionedgroup': ['server/versions/versioned'],       // missing tests
   'clientreqidgroup': ['special-headers/client-request-id'],
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
