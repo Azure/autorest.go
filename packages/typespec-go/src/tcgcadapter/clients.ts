@@ -84,6 +84,10 @@ export class clientAdapter {
           }
           continue;
         } else if (param.kind === 'method') {
+          // TODO:
+          // client params that are used in methods are implicitly adapted when
+          // we enumerate the operation params in adaptMethodParameter()
+          // this can likely change to continue but needs a bit more investigation
           throw new Error('client method params NYI');
         }
 
@@ -192,7 +196,12 @@ export class clientAdapter {
     for (const param of sdkMethod.operation.parameters) {
       const adaptedParam = this.adaptMethodParameter(param, optionalGroup);
       method.parameters.push(adaptedParam);
-      if (adaptedParam.location === 'client' && !method.client.parameters.includes(adaptedParam)) {
+      // we must check via param name and not reference equality. this is because a client param
+      // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
+      // in one method and a query param in another.
+      if (adaptedParam.location === 'client' && !method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
+        return v.paramName === adaptedParam.paramName;
+      })) {
         method.client.parameters.push(adaptedParam);
       }
     }
@@ -209,10 +218,15 @@ export class clientAdapter {
 
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
     let location: go.ParameterLocation = 'method';
+    const getClientParamsKey = function(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
+      // include the param kind in the key name as a client param can be used
+      // in different places across methods (path/query)
+      return `${param.nameInClient}-${param.kind}`;
+    };
     if (param.onClient) {
       // check if we've already adapted this client parameter
       // TODO: grouped client params
-      const clientParam = this.clientParams.get(param.nameInClient);
+      const clientParam = this.clientParams.get(getClientParamsKey(param));
       if (clientParam) {
         return clientParam;
       }
@@ -261,7 +275,7 @@ export class clientAdapter {
 
     if (adaptedParam.location === 'client') {
       // track client parameter for later use
-      this.clientParams.set(param.nameInClient, adaptedParam);
+      this.clientParams.set(getClientParamsKey(param), adaptedParam);
     } else if (paramType !== 'required' && paramType !== 'literal') {
       // add optional method param to the options param group
       if (!optionalGroup) {
