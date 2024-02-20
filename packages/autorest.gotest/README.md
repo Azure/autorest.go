@@ -62,7 +62,7 @@ testmodeler:
 version: 3.9.7
 
 use-extension:
-  '@autorest/go': '4.0.0-preview.60'
+  '@autorest/go': '4.0.0-preview.63'
   '@autorest/testmodeler': '2.5.2'
 
 pipeline:
