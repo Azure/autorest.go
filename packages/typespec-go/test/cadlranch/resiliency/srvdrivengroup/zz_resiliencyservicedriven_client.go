@@ -30,6 +30,7 @@ type ResiliencyServiceDrivenClient struct {
 	internal                 *azcore.Client
 	endpoint                 string
 	serviceDeploymentVersion string
+	apiVersion               string
 }
 
 // AddOperation - Added operation
@@ -57,6 +58,7 @@ func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx conte
 	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
+	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-operation"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,6 +92,7 @@ func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.C
 	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
+	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-none"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -129,6 +132,7 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
+	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-one-optional"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -172,6 +176,7 @@ func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx co
 	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
+	host = strings.ReplaceAll(host, "{apiVersion}", client.apiVersion)
 	urlPath := "/add-optional-param/from-one-required"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
