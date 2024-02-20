@@ -6,10 +6,12 @@ package unversionedgroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -44,13 +46,15 @@ func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, option
 func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, options *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
-	req, err := runtime.NewRequest(ctx, http.MethodHead, host)
+	urlPath := "/server/versions/not-versioned/with-path-api-version/{apiVersion}"
+	if client.apiVersion == "" {
+		return nil, errors.New("parameter client.apiVersion cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(client.apiVersion))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
-	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 

@@ -48,8 +48,8 @@ const cadlRanch = {
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
   'multiplegroup': ['server/path/multiple'],   // missing tests
   'singlegroup': ['server/path/single'],       // missing tests
-  'unversionedgroup': ['server/versions/not-versioned'], // missing tests
-  'versionedgroup': ['server/versions/versioned'],       // missing tests
+  'unversionedgroup': ['server/versions/not-versioned'],
+  'versionedgroup': ['server/versions/versioned'],
   'clientreqidgroup': ['special-headers/client-request-id'],
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
