@@ -22,7 +22,7 @@ const cadlRanch = {
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
   'accessgroup': ['azure/client-generator-core/access'],
-  'flattengroup': ['azure/client-generator-core/flatten'], // missing tests
+  'flattengroup': ['azure/client-generator-core/flatten'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
   //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
@@ -46,8 +46,8 @@ const cadlRanch = {
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
-  'multiplegroup': ['server/path/multiple'],   // missing tests
-  'singlegroup': ['server/path/single'],       // missing tests
+  'multiplegroup': ['server/path/multiple'],
+  'singlegroup': ['server/path/single'],
   'unversionedgroup': ['server/versions/not-versioned'],
   'versionedgroup': ['server/versions/versioned'],
   'clientreqidgroup': ['special-headers/client-request-id'],
