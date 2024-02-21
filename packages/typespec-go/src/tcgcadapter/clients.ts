@@ -71,8 +71,8 @@ export class clientAdapter {
 
     if (sdkClient.initialization) {
       for (const param of sdkClient.initialization.properties) {
-        if (param.kind === 'credential' || param.isApiVersionParam) {
-          // skip these for now as we don't generate client constructors
+        if (param.kind === 'credential') {
+          // skip this for now as we don't generate client constructors
           continue;
         } else if (param.kind === 'endpoint' && param.type.kind === 'constant') {
           // this is the param for the fixed host, don't create a param for it
@@ -84,11 +84,12 @@ export class clientAdapter {
           }
           continue;
         } else if (param.kind === 'method') {
-          // TODO:
-          // client params that are used in methods are implicitly adapted when
-          // we enumerate the operation params in adaptMethodParameter()
-          // this can likely change to continue but needs a bit more investigation
-          throw new Error('client method params NYI');
+          // some client params, notably (only?) api-version, can be explicitly
+          // defined in the operation signature:
+          // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
+          // these get propagated to sdkMethod.operation.parameters thus they
+          // will be adapted in adaptMethodParameters()
+          continue;
         }
 
         const paramType = this.ta.getPossibleType(param.type, true, false);
