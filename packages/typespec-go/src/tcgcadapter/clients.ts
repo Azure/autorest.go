@@ -134,22 +134,25 @@ export class clientAdapter {
       }
       return statusCodes;
     };
-  
+
     let methodName = capitalize(ensureNameCase(sdkMethod.name));
     if (sdkMethod.access === 'internal') {
       // we add internal to the extra list so we don't end up with a method named "internal"
       // which will collide with an unexported field with the same name.
       methodName = getEscapedReservedName(uncapitalize(methodName), 'Method', ['internal']);
     }
+    const statusCodes = getStatusCodes(sdkMethod.operation);
 
     if (sdkMethod.kind === 'basic') {
-      method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      method = new go.Method(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
     } else if (sdkMethod.kind === 'paging') {
-      method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, getStatusCodes(sdkMethod.operation), naming);
+      method = new go.PageableMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
       if (sdkMethod.nextLinkPath) {
         // TODO: handle nested next link
         (<go.PageableMethod>method).nextLinkName = capitalize(ensureNameCase(sdkMethod.nextLinkPath));
       }
+    } else if (sdkMethod.kind === 'lro') {
+      method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }
@@ -192,6 +195,9 @@ export class clientAdapter {
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
       optionalGroup = method.optionalParamsGroup;
+      if (go.isLROMethod(method)) {
+        optionalGroup.params.push(new go.ResumeTokenParameter());
+      }
     }
   
     for (const param of sdkMethod.operation.parameters) {
@@ -305,20 +311,26 @@ export class clientAdapter {
     }
     const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this. getMethodNameForDocComment(method)), method);
     this.ta.codeModel.responseEnvelopes.push(respEnv);
-  
+
+    // used to track possible operation response body types
     const bodyResponses = new Array<tcgc.SdkType>();
 
     // add any headers
-    for (const httpResp of Object.values(sdkMethod.operation.responses)) {
-      const addedHeaders = new Set<string>();
-      if (httpResp.type && !bodyResponses.includes(httpResp.type)) {
+    const addedHeaders = new Set<string>();
+    for (const httpResp of Object.values(sdkMethod.operation.responses)) { 
+      // for LROs we don't look at the operation response as it contains the polling response type
+      if (!go.isLROMethod(method) && httpResp.type && !bodyResponses.includes(httpResp.type)) {
         bodyResponses.push(httpResp.type);
       }
-  
+
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
+        } else if (go.isLROMethod(method) && httpHeader.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location/i)) {
+          // we omit the LRO polling headers as they aren't useful on the response envelope
+          continue;
         }
+        
         // TODO: x-ms-header-collection-prefix
         const headerResp = new go.HeaderResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.description = httpHeader.description;
@@ -326,16 +338,26 @@ export class clientAdapter {
         addedHeaders.add(httpHeader.serializedName);
       }
     }
-  
-    if (bodyResponses.length === 0) {
-      return respEnv;
-    }
-  
-    if (bodyResponses.length > 1) {
+
+    let sdkResponse: tcgc.SdkType | undefined;
+
+    if (go.isLROMethod(method) && sdkMethod.response.type) {
+      // use the method response for LROs as it contains the "final response" type
+      sdkResponse = sdkMethod.response.type;
+    } else if (bodyResponses.length === 1) {
+      sdkResponse = bodyResponses[0];
+    } else if (bodyResponses.length > 1) {
       throw new Error('any response NYI');
-    } else if (bodyResponses[0].kind === 'model') {
+    }
+
+    if (sdkResponse?.kind === 'model') {
+      // workaround until https://github.com/Azure/typespec-azure/issues/124 is fixed
+      if (sdkResponse.name === 'OperationStatus' || sdkResponse.name === 'ResourceOperationStatus') {
+        return respEnv;
+      }
+      // end workaround
       let modelType: go.ModelType | undefined;
-      const modelName = ensureNameCase(bodyResponses[0].name).toUpperCase();
+      const modelName = ensureNameCase(sdkResponse.name).toUpperCase();
       for (const model of this.ta.codeModel.models) {
         if (model.name.toUpperCase() === modelName) {
           modelType = model;
@@ -343,7 +365,7 @@ export class clientAdapter {
         }
       }
       if (!modelType) {
-        throw new Error(`didn't find type name ${bodyResponses[0].name} for response envelope ${respEnv.name}`);
+        throw new Error(`didn't find type name ${sdkResponse.name} for response envelope ${respEnv.name}`);
       }
       if (go.isPolymorphicType(modelType)) {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
@@ -351,14 +373,14 @@ export class clientAdapter {
         // TODO: hard-coded JSON
         respEnv.result = new go.ModelResult(modelType, 'JSON');
       }
-      respEnv.result.description = bodyResponses[0].description;
-    } else {
-      const resultType = this.ta.getPossibleType(bodyResponses[0], false, false);
+      respEnv.result.description = sdkResponse.description;
+    } else if (sdkResponse) {
+      const resultType = this.ta.getPossibleType(sdkResponse, false, false);
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
         throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
       // TODO: hard-coded JSON
-      respEnv.result = new go.MonomorphicResult('Value', 'JSON', resultType, isTypePassedByValue(bodyResponses[0]));
+      respEnv.result = new go.MonomorphicResult('Value', 'JSON', resultType, isTypePassedByValue(sdkResponse));
     }
   
     return respEnv;

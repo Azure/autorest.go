@@ -36,6 +36,10 @@ export class typeAdapter {
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.sdkPackage.models) {
+      if (this.isFoundationsError(modelType)) {
+        // don't create a model as we use azcore.ResponseError instead
+        continue;
+      }
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
@@ -231,11 +235,17 @@ export class typeAdapter {
       case 'model':
         if (type.discriminatedSubtypes && substituteDiscriminator) {
           return this.getInterfaceType(type);
+        } else if (this.isFoundationsError(type)) {
+          return new go.QualifiedType('ResponseError', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
         }
         return this.getModel(type);
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
+  }
+
+  private isFoundationsError(sdkModel: tcgc.SdkModelType): boolean {
+    return !!sdkModel.crossLanguageDefinitionId.match(/Foundations\.ErrorResponse$/i);
   }
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {

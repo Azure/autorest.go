@@ -25,9 +25,9 @@ const cadlRanch = {
   'flattengroup': ['azure/client-generator-core/flatten'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
-  //'lrorpcgroup': ['azure/core/lro/rpc'],           // requires lro support
-  //'lrolegacygroup': ['azure/core/lro/rpc-legacy'], // requires lro support
-  //'lrostdgroup': ['azure/core/lro/standard'],      // requires lro support
+  'lrorpcgroup': ['azure/core/lro/rpc'],
+  'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
+  'lrostdgroup': ['azure/core/lro/standard'],
   //'traitsgroup': ['azure/core/traits'],            // requires union support
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
