@@ -1414,9 +1414,9 @@ export class URIParameter implements URIParameter {
 }
 
 export class ResumeTokenParameter implements ResumeTokenParameter {
-  constructor(paramName: string) {
+  constructor() {
     this.isResumeToken = true;
-    this.paramName = paramName;
+    this.paramName = 'ResumeToken';
     this.type = new PrimitiveType('string');
     this.paramType = 'optional';
     this.byValue = true;
