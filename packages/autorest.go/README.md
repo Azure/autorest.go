@@ -123,4 +123,7 @@ help-content:
       - key: single-client
         type: boolean
         description: Indicates package has a single client. This will omit the Client prefix from options and response types. If multiple clients are detected, an error is returned.
+      - key: disallow-unknown-fields
+        type: boolean
+        description: When true, unmarshalers will return an error when an unknown field is encountered in the payload.
 ```
