@@ -102,6 +102,7 @@ export class typeAdapter {
       const content = aggregateProperties(modelType.tcgc);
       for (const prop of values(content.props)) {
         if (prop.kind !== 'property') {
+          // TODO: unexpected kind path for property name in model Product
           throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.tcgc.name}`);
         }
         const field = this.getModelField(prop, modelType.tcgc);
@@ -137,6 +138,8 @@ export class typeAdapter {
       case 'int16':
       case 'int32':
       case 'int64':
+      case 'plainDate':
+      case 'plainTime':
       case 'string':
       case 'url':
       case 'uuid':
@@ -185,7 +188,7 @@ export class typeAdapter {
         types.set(m4.SchemaType.Credential, credType);
         return credType;
       }*/
-      case 'datetime': {
+      case 'utcDateTime': {
         const encoding = getDateTimeEncoding(type.encode);
         let datetime = this.types.get(encoding);
         if (datetime) {
@@ -283,10 +286,7 @@ export class typeAdapter {
       case 'bytes':
         return this.adaptBytesType(type);
       case 'plainDate': {
-        if (type.encode !== 'rfc3339') {
-          throw new Error(`unsupported date encoding ${type.encode}`);
-        }
-        const dateKey = `date-${type.encode}`;
+        const dateKey = 'dateType';
         let date = this.types.get(dateKey);
         if (date) {
           return date;
@@ -479,7 +479,14 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    let modelName = naming.ensureNameCase(model.name);
+    if (model.name.length === 0 && model.generatedName?.length === 0) {
+      throw new Error('unnamed model');
+    }
+    let modelName = model.name;
+    if (modelName.length === 0 && model.generatedName) {
+      modelName = model.generatedName;
+    }
+    modelName = naming.ensureNameCase(modelName);
     if (model.access === 'internal') {
       modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
     }
@@ -774,11 +781,8 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
     case 'dict':
       return recursiveKeyName(`${root}-dict`, obj.valueType, substituteDiscriminator);
     case 'plainDate':
-      if (obj.encode !== 'rfc3339') {
-        throw new Error(`unsupported date encoding ${obj.encode}`);
-      }
-      return `${root}-dateRFC3339`;
-    case 'datetime':
+      return `${root}-dateType`;
+    case 'utcDateTime':
       return `${root}-${getDateTimeEncoding(obj.encode)}`;
     case 'duration':
       return `${root}-${obj.wireType.kind}`;
