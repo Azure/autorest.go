@@ -13,7 +13,7 @@ const (
 	// JobStatusCanceled - The operation has been canceled by the user.
 	JobStatusCanceled JobStatus = "canceled"
 	// JobStatusFailed - The operation has failed.
-	JobStatusFailed JobStatus = "failed"
+	JobStatusFailed JobStatus = "Failed"
 	// JobStatusNotStarted - The operation is not started.
 	JobStatusNotStarted JobStatus = "notStarted"
 	// JobStatusPartiallyCompleted - The operation has partially completed.
@@ -21,7 +21,7 @@ const (
 	// JobStatusRunning - The operation is in progress.
 	JobStatusRunning JobStatus = "running"
 	// JobStatusSucceeded - The operation has completed successfully.
-	JobStatusSucceeded JobStatus = "succeeded"
+	JobStatusSucceeded JobStatus = "Succeeded"
 )
 
 // PossibleJobStatusValues returns the possible values for the JobStatus const type.
