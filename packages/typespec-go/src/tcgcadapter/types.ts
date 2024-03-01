@@ -479,12 +479,13 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    if (model.name.length === 0 && model.generatedName?.length === 0) {
-      throw new Error('unnamed model');
-    }
     let modelName = model.name;
-    if (modelName.length === 0 && model.generatedName) {
-      modelName = model.generatedName;
+    if (modelName.length === 0) {
+      if (model.generatedName && model.generatedName.length > 0) {
+        modelName = model.generatedName;
+      } else {
+        throw new Error('unnamed model');
+      }
     }
     modelName = naming.ensureNameCase(modelName);
     if (model.access === 'internal') {
