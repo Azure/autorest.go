@@ -615,7 +615,8 @@ function generateXMLUnmarshaller(modelType: go.ModelType, modelDef: ModelDef, im
   text += '\t}\n';
   for (const field of values(modelDef.Fields)) {
     if (go.isTimeType(field.type)) {
-      text += `\t${receiver}.${field.fieldName} = (*time.Time)(aux.${field.fieldName})\n`;
+      text += `\tif aux.${field.fieldName} != nil && !(*time.Time)(aux.${field.fieldName}).IsZero() {\n`;
+      text += `\t\t${receiver}.${field.fieldName} = (*time.Time)(aux.${field.fieldName})\n\t}\n`;
     } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
       text += `\t${receiver}.${field.fieldName} = (map[string]*string)(aux.${field.fieldName})\n`;
     } else if (go.isBytesType(field.type)) {

@@ -42,8 +42,12 @@ func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	a.Expiry = (*time.Time)(aux.Expiry)
-	a.Start = (*time.Time)(aux.Start)
+	if aux.Expiry != nil && !(*time.Time)(aux.Expiry).IsZero() {
+		a.Expiry = (*time.Time)(aux.Expiry)
+	}
+	if aux.Start != nil && !(*time.Time)(aux.Start).IsZero() {
+		a.Start = (*time.Time)(aux.Start)
+	}
 	return nil
 }
 
@@ -103,7 +107,9 @@ func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
+	if aux.LastSyncTime != nil && !(*time.Time)(aux.LastSyncTime).IsZero() {
+		g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
+	}
 	return nil
 }
 

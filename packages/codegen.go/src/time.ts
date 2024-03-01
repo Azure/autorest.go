@@ -99,6 +99,9 @@ func (t *dateTimeRFC1123) UnmarshalJSON(data []byte) error {
 }
 
 func (t *dateTimeRFC1123) UnmarshalText(data []byte) error {
+	if len(data) == 0 {
+		return nil
+	}
 	p, err := time.Parse(time.RFC1123, string(data))
 	*t = dateTimeRFC1123(p)
 	return err
@@ -200,7 +203,10 @@ func (t *dateTimeRFC3339) UnmarshalJSON(data []byte) error {
 	return t.Parse(layout, string(data))
 }
 
-func (t *dateTimeRFC3339) UnmarshalText(data []byte) (error) {
+func (t *dateTimeRFC3339) UnmarshalText(data []byte) error {
+	if len(data) == 0 {
+		return nil
+	}
 	tzOffset := tzOffsetRegex.Match(data)
 	hasT := strings.Contains(string(data), "T") || strings.Contains(string(data), "t")
 	var layout string
@@ -286,6 +292,9 @@ func (t *timeRFC3339) UnmarshalJSON(data []byte) error {
 }
 
 func (t *timeRFC3339) UnmarshalText(data []byte) error {
+	if len(data) == 0 {
+		return nil
+	}
 	layout := utcTime
 	if tzOffsetRegex.Match(data) {
 		layout = timeFormat

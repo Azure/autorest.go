@@ -43,8 +43,12 @@ func (a *AccessPolicy) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	a.Expiry = (*time.Time)(aux.Expiry)
-	a.Start = (*time.Time)(aux.Start)
+	if aux.Expiry != nil && !(*time.Time)(aux.Expiry).IsZero() {
+		a.Expiry = (*time.Time)(aux.Expiry)
+	}
+	if aux.Start != nil && !(*time.Time)(aux.Start).IsZero() {
+		a.Start = (*time.Time)(aux.Start)
+	}
 	return nil
 }
 
@@ -93,7 +97,9 @@ func (b *Banana) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	b.Expiration = (*time.Time)(aux.Expiration)
+	if aux.Expiration != nil && !(*time.Time)(aux.Expiration).IsZero() {
+		b.Expiration = (*time.Time)(aux.Expiration)
+	}
 	return nil
 }
 
@@ -144,9 +150,15 @@ func (b *BlobProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
-	b.DeletedTime = (*time.Time)(aux.DeletedTime)
-	b.LastModified = (*time.Time)(aux.LastModified)
+	if aux.CopyCompletionTime != nil && !(*time.Time)(aux.CopyCompletionTime).IsZero() {
+		b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
+	}
+	if aux.DeletedTime != nil && !(*time.Time)(aux.DeletedTime).IsZero() {
+		b.DeletedTime = (*time.Time)(aux.DeletedTime)
+	}
+	if aux.LastModified != nil && !(*time.Time)(aux.LastModified).IsZero() {
+		b.LastModified = (*time.Time)(aux.LastModified)
+	}
 	return nil
 }
 
@@ -210,7 +222,9 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.LastModified = (*time.Time)(aux.LastModified)
+	if aux.LastModified != nil && !(*time.Time)(aux.LastModified).IsZero() {
+		c.LastModified = (*time.Time)(aux.LastModified)
+	}
 	return nil
 }
 
