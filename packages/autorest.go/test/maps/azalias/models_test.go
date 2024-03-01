@@ -100,3 +100,11 @@ func TestDateTimeWithSpace(t *testing.T) {
 	require.NotNil(t, dst.StartTime)
 	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.StartTime, 0)
 }
+
+func TestEmptyAndNullTime(t *testing.T) {
+	dst := TypeWithSliceOfTimes{}
+	require.NoError(t, json.Unmarshal([]byte("{}"), &dst))
+	require.Nil(t, dst.Interval)
+	require.NoError(t, json.Unmarshal([]byte(`{"interval": null}`), &dst))
+	require.Nil(t, dst.Interval)
+}

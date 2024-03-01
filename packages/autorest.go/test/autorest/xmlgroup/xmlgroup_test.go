@@ -686,3 +686,15 @@ func TestDateTimeWithSpace(t *testing.T) {
 	require.NotNil(t, dst.Expiry)
 	require.WithinDuration(t, time.Date(2024, 1, 18, 14, 18, 54, 123000000, time.UTC), *dst.Expiry, 0)
 }
+
+func TestEmptyTimeRFC1123(t *testing.T) {
+	dst := BlobProperties{}
+	require.NoError(t, xml.Unmarshal([]byte(`<BlobProperties><CopyCompletionTime/></BlobProperties>`), &dst))
+	require.Nil(t, dst.CopyCompletionTime)
+}
+
+func TestEmptyTimeRFC3339(t *testing.T) {
+	dst := AccessPolicy{}
+	require.NoError(t, xml.Unmarshal([]byte(`<AccessPolicy><Expiry/></AccessPolicy>`), &dst))
+	require.Nil(t, dst.Expiry)
+}

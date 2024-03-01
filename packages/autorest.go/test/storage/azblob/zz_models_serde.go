@@ -117,8 +117,12 @@ func (c *ContainerProperties) UnmarshalXML(dec *xml.Decoder, start xml.StartElem
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	c.DeletedTime = (*time.Time)(aux.DeletedTime)
-	c.LastModified = (*time.Time)(aux.LastModified)
+	if aux.DeletedTime != nil && !(*time.Time)(aux.DeletedTime).IsZero() {
+		c.DeletedTime = (*time.Time)(aux.DeletedTime)
+	}
+	if aux.LastModified != nil && !(*time.Time)(aux.LastModified).IsZero() {
+		c.LastModified = (*time.Time)(aux.LastModified)
+	}
 	return nil
 }
 
@@ -177,7 +181,9 @@ func (g *GeoReplication) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) 
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
+	if aux.LastSyncTime != nil && !(*time.Time)(aux.LastSyncTime).IsZero() {
+		g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
+	}
 	return nil
 }
 
@@ -286,19 +292,35 @@ func (p *PropertiesInternal) UnmarshalXML(dec *xml.Decoder, start xml.StartEleme
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	p.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
+	if aux.AccessTierChangeTime != nil && !(*time.Time)(aux.AccessTierChangeTime).IsZero() {
+		p.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
+	}
 	if aux.ContentMD5 != nil {
 		if err := runtime.DecodeByteArray(*aux.ContentMD5, &p.ContentMD5, runtime.Base64StdFormat); err != nil {
 			return err
 		}
 	}
-	p.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
-	p.CreationTime = (*time.Time)(aux.CreationTime)
-	p.DeletedTime = (*time.Time)(aux.DeletedTime)
-	p.ExpiresOn = (*time.Time)(aux.ExpiresOn)
-	p.ImmutabilityPolicyExpiresOn = (*time.Time)(aux.ImmutabilityPolicyExpiresOn)
-	p.LastAccessedOn = (*time.Time)(aux.LastAccessedOn)
-	p.LastModified = (*time.Time)(aux.LastModified)
+	if aux.CopyCompletionTime != nil && !(*time.Time)(aux.CopyCompletionTime).IsZero() {
+		p.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
+	}
+	if aux.CreationTime != nil && !(*time.Time)(aux.CreationTime).IsZero() {
+		p.CreationTime = (*time.Time)(aux.CreationTime)
+	}
+	if aux.DeletedTime != nil && !(*time.Time)(aux.DeletedTime).IsZero() {
+		p.DeletedTime = (*time.Time)(aux.DeletedTime)
+	}
+	if aux.ExpiresOn != nil && !(*time.Time)(aux.ExpiresOn).IsZero() {
+		p.ExpiresOn = (*time.Time)(aux.ExpiresOn)
+	}
+	if aux.ImmutabilityPolicyExpiresOn != nil && !(*time.Time)(aux.ImmutabilityPolicyExpiresOn).IsZero() {
+		p.ImmutabilityPolicyExpiresOn = (*time.Time)(aux.ImmutabilityPolicyExpiresOn)
+	}
+	if aux.LastAccessedOn != nil && !(*time.Time)(aux.LastAccessedOn).IsZero() {
+		p.LastAccessedOn = (*time.Time)(aux.LastAccessedOn)
+	}
+	if aux.LastModified != nil && !(*time.Time)(aux.LastModified).IsZero() {
+		p.LastModified = (*time.Time)(aux.LastModified)
+	}
 	return nil
 }
 
@@ -400,8 +422,12 @@ func (u *UserDelegationKey) UnmarshalXML(dec *xml.Decoder, start xml.StartElemen
 	if err := dec.DecodeElement(aux, &start); err != nil {
 		return err
 	}
-	u.SignedExpiry = (*time.Time)(aux.SignedExpiry)
-	u.SignedStart = (*time.Time)(aux.SignedStart)
+	if aux.SignedExpiry != nil && !(*time.Time)(aux.SignedExpiry).IsZero() {
+		u.SignedExpiry = (*time.Time)(aux.SignedExpiry)
+	}
+	if aux.SignedStart != nil && !(*time.Time)(aux.SignedStart).IsZero() {
+		u.SignedStart = (*time.Time)(aux.SignedStart)
+	}
 	return nil
 }
 
