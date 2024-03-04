@@ -5,8 +5,6 @@
 
 package armnetwork
 
-import "encoding/json"
-
 // AdminRuleCollectionsClientCreateOrUpdateResponse contains the response from method AdminRuleCollectionsClient.CreateOrUpdate.
 type AdminRuleCollectionsClientCreateOrUpdateResponse struct {
 	// Defines the admin rule collection.
@@ -36,16 +34,6 @@ type AdminRulesClientCreateOrUpdateResponse struct {
 	BaseAdminRuleClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AdminRulesClientCreateOrUpdateResponse.
-func (a *AdminRulesClientCreateOrUpdateResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBaseAdminRuleClassification(data)
-	if err != nil {
-		return err
-	}
-	a.BaseAdminRuleClassification = res
-	return nil
-}
-
 // AdminRulesClientDeleteResponse contains the response from method AdminRulesClient.BeginDelete.
 type AdminRulesClientDeleteResponse struct {
 	// placeholder for future response values
@@ -55,16 +43,6 @@ type AdminRulesClientDeleteResponse struct {
 type AdminRulesClientGetResponse struct {
 	// Network base admin rule.
 	BaseAdminRuleClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AdminRulesClientGetResponse.
-func (a *AdminRulesClientGetResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBaseAdminRuleClassification(data)
-	if err != nil {
-		return err
-	}
-	a.BaseAdminRuleClassification = res
-	return nil
 }
 
 // AdminRulesClientListResponse contains the response from method AdminRulesClient.NewListPager.
@@ -2658,19 +2636,9 @@ type VPNConnectionsClientStartPacketCaptureResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VPNConnectionsClientStartPacketCaptureResponse.
-func (v *VPNConnectionsClientStartPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VPNConnectionsClientStopPacketCaptureResponse contains the response from method VPNConnectionsClient.BeginStopPacketCapture.
 type VPNConnectionsClientStopPacketCaptureResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VPNConnectionsClientStopPacketCaptureResponse.
-func (v *VPNConnectionsClientStopPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VPNGatewaysClientCreateOrUpdateResponse contains the response from method VPNGatewaysClient.BeginCreateOrUpdate.
@@ -2715,19 +2683,9 @@ type VPNGatewaysClientStartPacketCaptureResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VPNGatewaysClientStartPacketCaptureResponse.
-func (v *VPNGatewaysClientStartPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VPNGatewaysClientStopPacketCaptureResponse contains the response from method VPNGatewaysClient.BeginStopPacketCapture.
 type VPNGatewaysClientStopPacketCaptureResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VPNGatewaysClientStopPacketCaptureResponse.
-func (v *VPNGatewaysClientStopPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VPNGatewaysClientUpdateTagsResponse contains the response from method VPNGatewaysClient.BeginUpdateTags.
@@ -2739,11 +2697,6 @@ type VPNGatewaysClientUpdateTagsResponse struct {
 // VPNLinkConnectionsClientGetIkeSasResponse contains the response from method VPNLinkConnectionsClient.BeginGetIkeSas.
 type VPNLinkConnectionsClientGetIkeSasResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VPNLinkConnectionsClientGetIkeSasResponse.
-func (v *VPNLinkConnectionsClientGetIkeSasResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VPNLinkConnectionsClientListByVPNConnectionResponse contains the response from method VPNLinkConnectionsClient.NewListByVPNConnectionPager.
@@ -3096,11 +3049,6 @@ type VirtualNetworkGatewayConnectionsClientGetIkeSasResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewayConnectionsClientGetIkeSasResponse.
-func (v *VirtualNetworkGatewayConnectionsClientGetIkeSasResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VirtualNetworkGatewayConnectionsClientGetResponse contains the response from method VirtualNetworkGatewayConnectionsClient.Get.
 type VirtualNetworkGatewayConnectionsClientGetResponse struct {
 	// A common class for general resource information.
@@ -3141,19 +3089,9 @@ type VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse.
-func (v *VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture.
 type VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse.
-func (v *VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VirtualNetworkGatewayConnectionsClientUpdateTagsResponse contains the response from method VirtualNetworkGatewayConnectionsClient.BeginUpdateTags.
@@ -3207,19 +3145,9 @@ type VirtualNetworkGatewaysClientGenerateVPNProfileResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewaysClientGenerateVPNProfileResponse.
-func (v *VirtualNetworkGatewaysClientGenerateVPNProfileResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse contains the response from method VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage.
 type VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse.
-func (v *VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse contains the response from method VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes.
@@ -3249,11 +3177,6 @@ type VirtualNetworkGatewaysClientGetResponse struct {
 // VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse contains the response from method VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL.
 type VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse.
-func (v *VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse contains the response from method VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth.
@@ -3302,19 +3225,9 @@ type VirtualNetworkGatewaysClientStartPacketCaptureResponse struct {
 	Value *string
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewaysClientStartPacketCaptureResponse.
-func (v *VirtualNetworkGatewaysClientStartPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
-}
-
 // VirtualNetworkGatewaysClientStopPacketCaptureResponse contains the response from method VirtualNetworkGatewaysClient.BeginStopPacketCapture.
 type VirtualNetworkGatewaysClientStopPacketCaptureResponse struct {
 	Value *string
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type VirtualNetworkGatewaysClientStopPacketCaptureResponse.
-func (v *VirtualNetworkGatewaysClientStopPacketCaptureResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &v.Value)
 }
 
 // VirtualNetworkGatewaysClientSupportedVPNDevicesResponse contains the response from method VirtualNetworkGatewaysClient.SupportedVPNDevices.

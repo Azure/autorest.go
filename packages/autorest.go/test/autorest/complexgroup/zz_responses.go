@@ -95,16 +95,6 @@ type FlattencomplexClientGetValidResponse struct {
 	MyBaseTypeClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type FlattencomplexClientGetValidResponse.
-func (f *FlattencomplexClientGetValidResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalMyBaseTypeClassification(data)
-	if err != nil {
-		return err
-	}
-	f.MyBaseTypeClassification = res
-	return nil
-}
-
 // InheritanceClientGetValidResponse contains the response from method InheritanceClient.GetValid.
 type InheritanceClientGetValidResponse struct {
 	Siamese
@@ -120,16 +110,6 @@ type PolymorphicrecursiveClientGetValidResponse struct {
 	FishClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphicrecursiveClientGetValidResponse.
-func (p *PolymorphicrecursiveClientGetValidResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalFishClassification(data)
-	if err != nil {
-		return err
-	}
-	p.FishClassification = res
-	return nil
-}
-
 // PolymorphicrecursiveClientPutValidResponse contains the response from method PolymorphicrecursiveClient.PutValid.
 type PolymorphicrecursiveClientPutValidResponse struct {
 	// placeholder for future response values
@@ -138,16 +118,6 @@ type PolymorphicrecursiveClientPutValidResponse struct {
 // PolymorphismClientGetComplicatedResponse contains the response from method PolymorphismClient.GetComplicated.
 type PolymorphismClientGetComplicatedResponse struct {
 	SalmonClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetComplicatedResponse.
-func (p *PolymorphismClientGetComplicatedResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSalmonClassification(data)
-	if err != nil {
-		return err
-	}
-	p.SalmonClassification = res
-	return nil
 }
 
 // PolymorphismClientGetComposedWithDiscriminatorResponse contains the response from method PolymorphismClient.GetComposedWithDiscriminator.
@@ -165,29 +135,9 @@ type PolymorphismClientGetDotSyntaxResponse struct {
 	DotFishClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetDotSyntaxResponse.
-func (p *PolymorphismClientGetDotSyntaxResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDotFishClassification(data)
-	if err != nil {
-		return err
-	}
-	p.DotFishClassification = res
-	return nil
-}
-
 // PolymorphismClientGetValidResponse contains the response from method PolymorphismClient.GetValid.
 type PolymorphismClientGetValidResponse struct {
 	FishClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetValidResponse.
-func (p *PolymorphismClientGetValidResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalFishClassification(data)
-	if err != nil {
-		return err
-	}
-	p.FishClassification = res
-	return nil
 }
 
 // PolymorphismClientPutComplicatedResponse contains the response from method PolymorphismClient.PutComplicated.
@@ -198,16 +148,6 @@ type PolymorphismClientPutComplicatedResponse struct {
 // PolymorphismClientPutMissingDiscriminatorResponse contains the response from method PolymorphismClient.PutMissingDiscriminator.
 type PolymorphismClientPutMissingDiscriminatorResponse struct {
 	SalmonClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientPutMissingDiscriminatorResponse.
-func (p *PolymorphismClientPutMissingDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSalmonClassification(data)
-	if err != nil {
-		return err
-	}
-	p.SalmonClassification = res
-	return nil
 }
 
 // PolymorphismClientPutValidMissingRequiredResponse contains the response from method PolymorphismClient.PutValidMissingRequired.

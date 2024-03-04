@@ -10,27 +10,48 @@ import { commentLength, contentPreamble, sortAscending } from './helpers.js';
 import { ImportManager } from './imports.js';
 import { getStar } from './models.js';
 
+export interface ResponsesSerDe {
+  responses: string;
+  serDe: string;
+}
+
 // Creates the content in responses.go
-export async function generateResponses(codeModel: go.CodeModel): Promise<string> {
+export async function generateResponses(codeModel: go.CodeModel): Promise<ResponsesSerDe> {
   if (codeModel.responseEnvelopes. length === 0) {
-    return '';
+    return {
+      responses: '',
+      serDe: ''
+    };
   }
 
   const imports = new ImportManager();
-  let text = contentPreamble(codeModel);
-  let content = '';
+  const serdeImports = new ImportManager();
+  let responses = contentPreamble(codeModel);
+  let serDe = '';
+  let respContent = '';
+  let serdeContent = '';
 
   for (const respEnv of codeModel.responseEnvelopes) {
-    content += emit(respEnv, imports);
+    respContent += emit(respEnv, imports);
     if (codeModel.options.generateFakes) {
-      content += generateMarshaller(respEnv, imports);
+      serdeContent += generateMarshaller(respEnv, serdeImports);
     }
-    content += generateUnmarshaller(respEnv, imports);
+    serdeContent += generateUnmarshaller(respEnv, serdeImports);
   }
-  
-  text += imports.text();
-  text += content;
-  return text;
+
+  responses += imports.text();
+  responses += respContent;
+
+  if (serdeContent.length > 0) {
+    serDe = contentPreamble(codeModel);
+    serDe += serdeImports.text();
+    serDe += serdeContent;
+  }
+
+  return {
+    responses: responses,
+    serDe: serDe
+  };
 }
 
 function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager): string {

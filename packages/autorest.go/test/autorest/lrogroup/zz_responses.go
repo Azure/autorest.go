@@ -5,8 +5,6 @@
 
 package lrogroup
 
-import "encoding/json"
-
 // LRORetrysClientDelete202Retry200Response contains the response from method LRORetrysClient.BeginDelete202Retry200.
 type LRORetrysClientDelete202Retry200Response struct {
 	// placeholder for future response values
@@ -256,11 +254,6 @@ type LROsClientPost200WithPayloadResponse struct {
 type LROsClientPost202ListResponse struct {
 	// Array of Product
 	ProductArray []*Product
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LROsClientPost202ListResponse.
-func (l *LROsClientPost202ListResponse) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &l.ProductArray)
 }
 
 // LROsClientPost202NoRetry204Response contains the response from method LROsClient.BeginPost202NoRetry204.

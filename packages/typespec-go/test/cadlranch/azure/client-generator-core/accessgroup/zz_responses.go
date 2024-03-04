@@ -46,16 +46,6 @@ type relativeModelInOperationClientdiscriminatorResponse struct {
 	abstractModelClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type relativeModelInOperationClientdiscriminatorResponse.
-func (r *relativeModelInOperationClientdiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalabstractModelClassification(data)
-	if err != nil {
-		return err
-	}
-	r.abstractModelClassification = res
-	return nil
-}
-
 // relativeModelInOperationClientoperationResponse contains the response from method RelativeModelInOperationClient.operation.
 type relativeModelInOperationClientoperationResponse struct {
 	// Used in internal operations, should be generated but not exported.
