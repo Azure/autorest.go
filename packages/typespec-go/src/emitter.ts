@@ -93,8 +93,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   }
 
   const responses = await generateResponses(codeModel);
-  if (responses.length > 0) {
-    writeFile(`${context.emitterOutputDir}/${filePrefix}responses.go`, responses);
+  if (responses.responses.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}responses.go`, responses.responses);
+  }
+  if (responses.serDe.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}responses_serde.go`, responses.serDe);
   }
 
   const timeHelpers = await generateTimeHelpers(codeModel);

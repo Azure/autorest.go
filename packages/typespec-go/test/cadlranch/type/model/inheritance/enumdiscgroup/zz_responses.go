@@ -10,30 +10,10 @@ type EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse struc
 	DogClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse.
-func (e *EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDogClassification(data)
-	if err != nil {
-		return err
-	}
-	e.DogClassification = res
-	return nil
-}
-
 // EnumDiscriminatorClientGetExtensibleModelResponse contains the response from method EnumDiscriminatorClient.GetExtensibleModel.
 type EnumDiscriminatorClientGetExtensibleModelResponse struct {
 	// Test extensible enum type for discriminator
 	DogClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetExtensibleModelResponse.
-func (e *EnumDiscriminatorClientGetExtensibleModelResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDogClassification(data)
-	if err != nil {
-		return err
-	}
-	e.DogClassification = res
-	return nil
 }
 
 // EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse contains the response from method EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator.
@@ -42,30 +22,10 @@ type EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse struct 
 	DogClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse.
-func (e *EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDogClassification(data)
-	if err != nil {
-		return err
-	}
-	e.DogClassification = res
-	return nil
-}
-
 // EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse contains the response from method EnumDiscriminatorClient.GetFixedModelMissingDiscriminator.
 type EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse struct {
 	// Test fixed enum type for discriminator
 	SnakeClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse.
-func (e *EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSnakeClassification(data)
-	if err != nil {
-		return err
-	}
-	e.SnakeClassification = res
-	return nil
 }
 
 // EnumDiscriminatorClientGetFixedModelResponse contains the response from method EnumDiscriminatorClient.GetFixedModel.
@@ -74,30 +34,10 @@ type EnumDiscriminatorClientGetFixedModelResponse struct {
 	SnakeClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetFixedModelResponse.
-func (e *EnumDiscriminatorClientGetFixedModelResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSnakeClassification(data)
-	if err != nil {
-		return err
-	}
-	e.SnakeClassification = res
-	return nil
-}
-
 // EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse contains the response from method EnumDiscriminatorClient.GetFixedModelWrongDiscriminator.
 type EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse struct {
 	// Test fixed enum type for discriminator
 	SnakeClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse.
-func (e *EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSnakeClassification(data)
-	if err != nil {
-		return err
-	}
-	e.SnakeClassification = res
-	return nil
 }
 
 // EnumDiscriminatorClientPutExtensibleModelResponse contains the response from method EnumDiscriminatorClient.PutExtensibleModel.

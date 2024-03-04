@@ -178,16 +178,6 @@ type ComputeClientListKeysResponse struct {
 	ComputeSecretsClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ComputeClientListKeysResponse.
-func (c *ComputeClientListKeysResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalComputeSecretsClassification(data)
-	if err != nil {
-		return err
-	}
-	c.ComputeSecretsClassification = res
-	return nil
-}
-
 // ComputeClientListNodesResponse contains the response from method ComputeClient.NewListNodesPager.
 type ComputeClientListNodesResponse struct {
 	// Result of AmlCompute Nodes
@@ -294,16 +284,6 @@ type DatastoresClientListResponse struct {
 type DatastoresClientListSecretsResponse struct {
 	// Base definition for datastore secrets.
 	DatastoreSecretsClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type DatastoresClientListSecretsResponse.
-func (d *DatastoresClientListSecretsResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDatastoreSecretsClassification(data)
-	if err != nil {
-		return err
-	}
-	d.DatastoreSecretsClassification = res
-	return nil
 }
 
 // EnvironmentContainersClientCreateOrUpdateResponse contains the response from method EnvironmentContainersClient.CreateOrUpdate.

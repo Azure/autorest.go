@@ -108,10 +108,17 @@ export async function generateCode(host: AutorestExtensionHost) {
     }
 
     const responses = await generateResponses(session.model);
-    if (responses.length > 0) {
+    if (responses.responses.length > 0) {
       host.writeFile({
         filename: `${filePrefix}responses.go`,
-        content: responses,
+        content: responses.responses,
+        artifactType: 'source-file-go'
+      });
+    }
+    if (responses.serDe.length > 0) {
+      host.writeFile({
+        filename: `${filePrefix}responses_serde.go`,
+        content: responses.serDe,
         artifactType: 'source-file-go'
       });
     }

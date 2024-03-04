@@ -10,30 +10,10 @@ type SingleDiscriminatorClientGetLegacyModelResponse struct {
 	DinosaurClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetLegacyModelResponse.
-func (s *SingleDiscriminatorClientGetLegacyModelResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDinosaurClassification(data)
-	if err != nil {
-		return err
-	}
-	s.DinosaurClassification = res
-	return nil
-}
-
 // SingleDiscriminatorClientGetMissingDiscriminatorResponse contains the response from method SingleDiscriminatorClient.GetMissingDiscriminator.
 type SingleDiscriminatorClientGetMissingDiscriminatorResponse struct {
 	// This is base model for polymorphic single level inheritance with a discriminator.
 	BirdClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetMissingDiscriminatorResponse.
-func (s *SingleDiscriminatorClientGetMissingDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBirdClassification(data)
-	if err != nil {
-		return err
-	}
-	s.BirdClassification = res
-	return nil
 }
 
 // SingleDiscriminatorClientGetModelResponse contains the response from method SingleDiscriminatorClient.GetModel.
@@ -42,46 +22,16 @@ type SingleDiscriminatorClientGetModelResponse struct {
 	BirdClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetModelResponse.
-func (s *SingleDiscriminatorClientGetModelResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBirdClassification(data)
-	if err != nil {
-		return err
-	}
-	s.BirdClassification = res
-	return nil
-}
-
 // SingleDiscriminatorClientGetRecursiveModelResponse contains the response from method SingleDiscriminatorClient.GetRecursiveModel.
 type SingleDiscriminatorClientGetRecursiveModelResponse struct {
 	// This is base model for polymorphic single level inheritance with a discriminator.
 	BirdClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetRecursiveModelResponse.
-func (s *SingleDiscriminatorClientGetRecursiveModelResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBirdClassification(data)
-	if err != nil {
-		return err
-	}
-	s.BirdClassification = res
-	return nil
-}
-
 // SingleDiscriminatorClientGetWrongDiscriminatorResponse contains the response from method SingleDiscriminatorClient.GetWrongDiscriminator.
 type SingleDiscriminatorClientGetWrongDiscriminatorResponse struct {
 	// This is base model for polymorphic single level inheritance with a discriminator.
 	BirdClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type SingleDiscriminatorClientGetWrongDiscriminatorResponse.
-func (s *SingleDiscriminatorClientGetWrongDiscriminatorResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalBirdClassification(data)
-	if err != nil {
-		return err
-	}
-	s.BirdClassification = res
-	return nil
 }
 
 // SingleDiscriminatorClientPutModelResponse contains the response from method SingleDiscriminatorClient.PutModel.

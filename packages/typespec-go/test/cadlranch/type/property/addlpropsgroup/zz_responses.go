@@ -76,16 +76,6 @@ type ExtendsUnknownDiscriminatedClientGetResponse struct {
 	ExtendsUnknownAdditionalPropertiesDiscriminatedClassification
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ExtendsUnknownDiscriminatedClientGetResponse.
-func (e *ExtendsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalExtendsUnknownAdditionalPropertiesDiscriminatedClassification(data)
-	if err != nil {
-		return err
-	}
-	e.ExtendsUnknownAdditionalPropertiesDiscriminatedClassification = res
-	return nil
-}
-
 // ExtendsUnknownDiscriminatedClientPutResponse contains the response from method ExtendsUnknownDiscriminatedClient.Put.
 type ExtendsUnknownDiscriminatedClientPutResponse struct {
 	// placeholder for future response values
@@ -161,16 +151,6 @@ type IsUnknownDerivedClientPutResponse struct {
 type IsUnknownDiscriminatedClientGetResponse struct {
 	// The model is Record<unknown> with a discriminator.
 	IsUnknownAdditionalPropertiesDiscriminatedClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type IsUnknownDiscriminatedClientGetResponse.
-func (i *IsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalIsUnknownAdditionalPropertiesDiscriminatedClassification(data)
-	if err != nil {
-		return err
-	}
-	i.IsUnknownAdditionalPropertiesDiscriminatedClassification = res
-	return nil
 }
 
 // IsUnknownDiscriminatedClientPutResponse contains the response from method IsUnknownDiscriminatedClient.Put.
