@@ -27,7 +27,7 @@ export class typeAdapter {
 
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
-    for (const enumType of sdkContext.sdkPackage.enums) {
+    for (const enumType of sdkContext.experimental_sdkPackage.enums) {
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
     }
@@ -35,7 +35,7 @@ export class typeAdapter {
     // we must adapt all interface/model types first. this is because models can contain cyclic references
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
-    for (const modelType of sdkContext.sdkPackage.models) {
+    for (const modelType of sdkContext.experimental_sdkPackage.models) {
       if (this.isFoundationsError(modelType)) {
         // don't create a model as we use azcore.ResponseError instead
         continue;
@@ -64,7 +64,7 @@ export class typeAdapter {
   
     // add the synthesized models from TCGC for paged results
     const pagedResponses = new Array<tcgc.SdkModelType>();
-    for (const sdkClient of sdkContext.sdkPackage.clients) {
+    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
       for (const sdkMethod of sdkClient.methods) {
         if (sdkMethod.kind !== 'paging') {
           continue;
@@ -129,7 +129,7 @@ export class typeAdapter {
       case 'bytes':
       case 'decimal':
       case 'decimal128':
-      case 'etag':
+      case 'eTag':
       case 'float':
       case 'float32':
       case 'float64':
@@ -307,7 +307,7 @@ export class typeAdapter {
         this. types.set(decimalKey, decimalType);
         return decimalType;
       }
-      case 'etag': {
+      case 'eTag': {
         const etagKey = 'etag';
         let etag = this.types.get(etagKey);
         if (etag) {

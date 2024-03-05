@@ -6,7 +6,7 @@ package arraygroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// ArrayClient - Illustrates various of dictionaries.
+// ArrayClient - Illustrates various types of arrays.
 // Don't use this type directly, use a constructor function instead.
 type ArrayClient struct {
 	internal *azcore.Client

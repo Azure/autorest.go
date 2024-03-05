@@ -84,7 +84,7 @@ func TestFloat32ValueClientGet(t *testing.T) {
 	resp, err := client.NewFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*float32{
-		"k1": to.Ptr[float32](42.42),
+		"k1": to.Ptr[float32](43.125),
 	}, resp.Value)
 }
 
@@ -92,7 +92,7 @@ func TestFloat32ValueClientPut(t *testing.T) {
 	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
 	resp, err := client.NewFloat32ValueClient().Put(context.Background(), map[string]*float32{
-		"k1": to.Ptr[float32](42.42),
+		"k1": to.Ptr[float32](43.125),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -178,7 +178,7 @@ func TestNullableFloatValueClientGet(t *testing.T) {
 	resp, err := client.NewNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, map[string]*float32{
-		"k1": to.Ptr[float32](1.2),
+		"k1": to.Ptr[float32](1.25),
 		"k2": to.Ptr[float32](0.5),
 		"k3": nil,
 	}, resp.Value)
@@ -188,7 +188,7 @@ func TestNullableFloatValueClientPut(t *testing.T) {
 	client, err := dictionarygroup.NewDictionaryClient(nil)
 	require.NoError(t, err)
 	resp, err := client.NewNullableFloatValueClient().Put(context.Background(), map[string]*float32{
-		"k1": to.Ptr[float32](1.2),
+		"k1": to.Ptr[float32](1.25),
 		"k2": to.Ptr[float32](0.5),
 		"k3": nil,
 	}, nil)

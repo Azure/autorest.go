@@ -48,7 +48,7 @@
   "readme": "https://github.com/Azure/autorest.go/blob/main/readme.md",
   "devDependencies": {
     "@azure-tools/cadl-ranch-expect": "~0.12.0",
-    "@azure-tools/cadl-ranch-specs": "~0.29.0",
+    "@azure-tools/cadl-ranch-specs": "~0.31.1",
     "@types/js-yaml": "~4.0.6",
     "@types/node": "^18.16.3",
     "@typescript-eslint/eslint-plugin": "~4.1.1",
@@ -62,9 +62,9 @@
   "dependencies": {
     "@azure-tools/codegen": "~2.9.2",
     "@azure-tools/linq": "~3.1.0",
-    "@azure-tools/typespec-azure-core": ">=0.39.0 <1.0.0",
-    "@azure-tools/typespec-client-generator-core": "https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzUzNTE5NS9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.40.0-pr-6.20240227.28.tgz",
-    "@typespec/compiler": ">=0.53.0 <1.0.0",
+    "@azure-tools/typespec-azure-core": ">=0.39.1 <1.0.0",
+    "@azure-tools/typespec-client-generator-core": "https://artprodcus3.artifacts.visualstudio.com/A0fb41ef4-5012-48a9-bf39-4ee3de03ee35/29ec6040-b234-4e31-b139-33dc4287b756/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6dXJlLXNkay9wcm9qZWN0SWQvMjllYzYwNDAtYjIzNC00ZTMxLWIxMzktMzNkYzQyODdiNzU2L2J1aWxkSWQvMzU1OTQ3Mi9hcnRpZmFjdE5hbWUvcGFja2FnZXM1/content?format=file&subPath=%2Fazure-tools-typespec-client-generator-core-0.40.0-pr-6.20240305.18.tgz",
+    "@typespec/compiler": ">=0.53.1 <1.0.0",
     "@typespec/http": ">=0.53.0 <1.0.0",
     "@typespec/rest": ">=0.53.0 <1.0.0",
     "@typespec/versioning": ">=0.53.0 <1.0.0",

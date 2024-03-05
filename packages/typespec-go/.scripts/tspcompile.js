@@ -28,7 +28,8 @@ const cadlRanch = {
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
   'lrostdgroup': ['azure/core/lro/standard'],
-  //'traitsgroup': ['azure/core/traits'],            // requires union support
+  //'traitsgroup': ['azure/core/traits'], // requires union support
+  'naminggroup': ['client/naming'], // missing tests
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
   'renamedopgroup': ['client/structure/renamed-operation/client.tsp'],
@@ -46,6 +47,7 @@ const cadlRanch = {
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
+  'jsongroup': ['serialization/encoded-name/json'], // missing tests
   'multiplegroup': ['server/path/multiple'],
   'singlegroup': ['server/path/single'],
   'unversionedgroup': ['server/versions/not-versioned'],
