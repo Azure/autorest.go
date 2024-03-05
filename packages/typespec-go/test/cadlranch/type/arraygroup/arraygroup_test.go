@@ -69,13 +69,13 @@ func TestFloat32ValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewFloat32ValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []float32{42.42}, resp.Value)
+	require.EqualValues(t, []float32{43.125}, resp.Value)
 }
 
 func TestFloat32ValueClientPut(t *testing.T) {
 	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewFloat32ValueClient().Put(context.Background(), []float32{42.42}, nil)
+	resp, err := client.NewFloat32ValueClient().Put(context.Background(), []float32{43.125}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -147,13 +147,13 @@ func TestNullableFloatValueClientGet(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewNullableFloatValueClient().Get(context.Background(), nil)
 	require.NoError(t, err)
-	require.EqualValues(t, []*float32{to.Ptr[float32](1.2), nil, to.Ptr[float32](3)}, resp.Value)
+	require.EqualValues(t, []*float32{to.Ptr[float32](1.25), nil, to.Ptr[float32](3)}, resp.Value)
 }
 
 func TestNullableFloatValueClientPut(t *testing.T) {
 	client, err := arraygroup.NewArrayClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewNullableFloatValueClient().Put(context.Background(), []*float32{to.Ptr[float32](1.2), nil, to.Ptr[float32](3)}, nil)
+	resp, err := client.NewNullableFloatValueClient().Put(context.Background(), []*float32{to.Ptr[float32](1.25), nil, to.Ptr[float32](3)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

@@ -21,9 +21,9 @@ func TestIsFloatClient_Get(t *testing.T) {
 	resp, err := client.NewIsFloatClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.IsFloatAdditionalProperties{
-		ID: to.Ptr[float32](42.42),
+		ID: to.Ptr[float32](43.125),
 		AdditionalProperties: map[string]*float32{
-			"prop": to.Ptr[float32](42.42),
+			"prop": to.Ptr[float32](43.125),
 		},
 	}, resp.IsFloatAdditionalProperties)
 }
@@ -32,9 +32,9 @@ func TestIsFloatClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
 	resp, err := client.NewIsFloatClient().Put(context.Background(), addlpropsgroup.IsFloatAdditionalProperties{
-		ID: to.Ptr[float32](42.42),
+		ID: to.Ptr[float32](43.125),
 		AdditionalProperties: map[string]*float32{
-			"prop": to.Ptr[float32](42.42),
+			"prop": to.Ptr[float32](43.125),
 		},
 	}, nil)
 	require.NoError(t, err)
