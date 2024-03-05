@@ -44,7 +44,7 @@ func (client *FormDataClient) basicCreateRequest(ctx context.Context, body Multi
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (client *FormDataClient) binaryArrayPartsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (client *FormDataClient) checkFileNameAndContentTypeCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (client *FormDataClient) complexCreateRequest(ctx context.Context, body Com
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ func (client *FormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, b
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func (client *FormDataClient) jsonPartCreateRequest(ctx context.Context, body JS
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
@@ -245,7 +245,7 @@ func (client *FormDataClient) multiBinaryPartsCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"multipart/form-data"}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}

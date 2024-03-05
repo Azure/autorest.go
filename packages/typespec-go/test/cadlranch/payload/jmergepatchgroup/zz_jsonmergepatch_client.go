@@ -92,7 +92,7 @@ func (client *JsonMergePatchClient) updateOptionalResourceCreateRequest(ctx cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["content-type"] = []string{"application/merge-patch+json"}
+	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
 	if options != nil && options.Body != nil {
 		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
 			return nil, err
@@ -140,7 +140,7 @@ func (client *JsonMergePatchClient) updateResourceCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["content-type"] = []string{"application/merge-patch+json"}
+	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
