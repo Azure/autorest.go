@@ -129,7 +129,7 @@ export class typeAdapter {
       case 'bytes':
       case 'decimal':
       case 'decimal128':
-      case 'etag':
+      case 'eTag':
       case 'float':
       case 'float32':
       case 'float64':
@@ -307,7 +307,7 @@ export class typeAdapter {
         this. types.set(decimalKey, decimalType);
         return decimalType;
       }
-      case 'etag': {
+      case 'eTag': {
         const etagKey = 'etag';
         let etag = this.types.get(etagKey);
         if (etag) {
