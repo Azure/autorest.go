@@ -172,8 +172,15 @@ export class clientAdapter {
       if (sdkMethod.access === 'internal') {
         optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
       }
-      // TODO: ensure param name is unique
-      method.optionalParamsGroup = new go.ParameterGroup('options', optionalParamsGroupName, false, 'method');
+      let optsGroupName = 'options';
+      // if there's an existing parameter with the name options then pick something else
+      for (const param of sdkMethod.parameters) {
+        if (param.nameInClient === optsGroupName) {
+          optsGroupName = 'opts';
+          break;
+        }
+      }
+      method.optionalParamsGroup = new go.ParameterGroup(optsGroupName, optionalParamsGroupName, false, 'method');
       method.optionalParamsGroup.description = createOptionsTypeDescription(optionalParamsGroupName, this.getMethodNameForDocComment(method));
       method.responseEnvelope = this.adaptResponseEnvelope(sdkMethod, method);
     } else {
