@@ -108,7 +108,7 @@ func (client *RequestBodyClient) customContentTypeCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"image/png"}
+	req.Raw().Header["Content-Type"] = []string{"image/png"}
 	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (client *RequestBodyClient) octetStreamCreateRequest(ctx context.Context, v
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"application/octet-stream"}
+	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
 	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
 		return nil, err
 	}

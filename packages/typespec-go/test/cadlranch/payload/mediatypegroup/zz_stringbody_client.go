@@ -121,7 +121,7 @@ func (client *StringBodyClient) sendAsJSONCreateRequest(ctx context.Context, tex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, textParam); err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func (client *StringBodyClient) sendAsTextCreateRequest(ctx context.Context, tex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["content-type"] = []string{"text/plain"}
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
 	if err := runtime.MarshalAsJSON(req, textParam); err != nil {
 		return nil, err
 	}

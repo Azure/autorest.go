@@ -703,6 +703,10 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     }
   }
   for (const param of headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => { return helpers.sortAscending(a.headerName, b.headerName);})) {
+    if (param.headerName.match(/^content-type$/)) {
+      // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
+      param.headerName = 'Content-Type';
+    }
     if (helpers.isRequiredParameter(param) || helpers.isLiteralParameter(param) || go.isClientSideDefault(param.paramType)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
