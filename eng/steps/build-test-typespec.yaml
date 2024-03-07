@@ -4,11 +4,6 @@ parameters:
 
 steps:
   - script: |
-      npm install -g @typespec/compiler
-      npm install -g @azure-tools/cadl-ranch
-    displayName: "Prepare TypeSpec Environment"
-
-  - script: |
       rush install
       rush rebuild -v
     displayName: "Build Emitter Sources"
@@ -57,7 +52,7 @@ steps:
     displayName: "Lint Generated Content"
 
   - pwsh: |
-      cadl-ranch server start ./http
+      rush cadl-ranch --start
       $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
@@ -65,7 +60,7 @@ steps:
         go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
-      cadl-ranch server stop
+      rush cadl-ranch --stop
     displayName: "Run All Tests"
     timeoutInMinutes: 10
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs

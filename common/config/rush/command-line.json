@@ -84,6 +84,12 @@
       "name": "gotest",
       "summary": "run node .scripts/gotest.js to go test every module under the current directory",
       "shellCommand": "node .scripts/gotest.js"
+    },
+    {
+      "commandKind": "global",
+      "name": "cadl-ranch",
+      "summary": "used to start or stop the cadl-ranch test server",
+      "shellCommand": "node packages/typespec-go/.scripts/cadl-ranch.js"
     }
   ],
   "parameters": [
@@ -111,6 +117,18 @@
       "longName": "--dump-code-model",
       "description": "Dumps the M4 code model yaml file",
       "associatedCommands": ["regenerate"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--start",
+      "description": "Starts the cadl-ranch test server",
+      "associatedCommands": ["cadl-ranch"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--stop",
+      "description": "Stops the cadl-ranch test server",
+      "associatedCommands": ["cadl-ranch"]
     }
   ]
 }
