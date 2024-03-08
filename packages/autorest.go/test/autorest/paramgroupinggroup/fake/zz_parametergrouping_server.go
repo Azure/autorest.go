@@ -21,6 +21,10 @@ import (
 
 // ParameterGroupingServer is a fake server for instances of the paramgroupinggroup.ParameterGroupingClient type.
 type ParameterGroupingServer struct {
+	// GroupWithConstant is the fake for method ParameterGroupingClient.GroupWithConstant
+	// HTTP status codes to indicate success: http.StatusOK
+	GroupWithConstant func(ctx context.Context, grouper *paramgroupinggroup.Grouper, options *paramgroupinggroup.ParameterGroupingClientGroupWithConstantOptions) (resp azfake.Responder[paramgroupinggroup.ParameterGroupingClientGroupWithConstantResponse], errResp azfake.ErrorResponder)
+
 	// PostMultiParamGroups is the fake for method ParameterGroupingClient.PostMultiParamGroups
 	// HTTP status codes to indicate success: http.StatusOK
 	PostMultiParamGroups func(ctx context.Context, firstParameterGroup *paramgroupinggroup.FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *paramgroupinggroup.ParameterGroupingClientPostMultiParamGroupsSecondParamGroup, options *paramgroupinggroup.ParameterGroupingClientPostMultiParamGroupsOptions) (resp azfake.Responder[paramgroupinggroup.ParameterGroupingClientPostMultiParamGroupsResponse], errResp azfake.ErrorResponder)
@@ -67,6 +71,8 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 	var err error
 
 	switch method {
+	case "ParameterGroupingClient.GroupWithConstant":
+		resp, err = p.dispatchGroupWithConstant(req)
 	case "ParameterGroupingClient.PostMultiParamGroups":
 		resp, err = p.dispatchPostMultiParamGroups(req)
 	case "ParameterGroupingClient.PostOptional":
@@ -85,6 +91,34 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 		return nil, err
 	}
 
+	return resp, nil
+}
+
+func (p *ParameterGroupingServerTransport) dispatchGroupWithConstant(req *http.Request) (*http.Response, error) {
+	if p.srv.GroupWithConstant == nil {
+		return nil, &nonRetriableError{errors.New("fake for method GroupWithConstant not implemented")}
+	}
+	groupedConstantParam := getOptional(getHeaderValue(req.Header, "groupedConstant"))
+	groupedParameterParam := getOptional(getHeaderValue(req.Header, "groupedParameter"))
+	var grouper *paramgroupinggroup.Grouper
+	if groupedConstantParam != nil || groupedParameterParam != nil {
+		grouper = &paramgroupinggroup.Grouper{
+			GroupedConstant:  groupedConstantParam,
+			GroupedParameter: groupedParameterParam,
+		}
+	}
+	respr, errRespr := p.srv.GroupWithConstant(req.Context(), grouper, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
 	return resp, nil
 }
 

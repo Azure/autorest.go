@@ -15,6 +15,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
@@ -36,6 +37,23 @@ func httpClientWithCookieJar() policy.Transporter {
 	}
 	http.DefaultClient.Jar = j
 	return http.DefaultClient
+}
+
+func TestAppendAPIVersion(t *testing.T) {
+	t.Skip("Go doesn't append api-version")
+}
+
+func TestGetEmptyNextLinkNamePages(t *testing.T) {
+	client := newPagingClient(t)
+	pager := client.NewGetEmptyNextLinkNamePagesPager(nil)
+	count := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		require.NotEmpty(t, page.Value)
+		count++
+	}
+	require.EqualValues(t, 1, count)
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
@@ -324,6 +342,21 @@ func TestGetSinglePagesFailure(t *testing.T) {
 	}
 }
 
+func TestGetSinglePagesWithBodyParams(t *testing.T) {
+	client := newPagingClient(t)
+	pager := client.NewGetSinglePagesWithBodyParamsPager(BodyParam{
+		Name: to.Ptr("body"),
+	}, nil)
+	count := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		require.NotEmpty(t, page.Values)
+		count++
+	}
+	require.EqualValues(t, 1, count)
+}
+
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
 func TestGetWithQueryParams(t *testing.T) {
 	client := newPagingClient(t)
@@ -339,4 +372,22 @@ func TestGetWithQueryParams(t *testing.T) {
 	if r := cmp.Diff(count, 2); r != "" {
 		t.Fatal(r)
 	}
+}
+
+func TestPageWithMaxPageSize(t *testing.T) {
+	client := newPagingClient(t)
+	pager := client.NewPageWithMaxPageSizePager(nil)
+	count := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.Empty(t, page.ProductResult.Values)
+		count++
+	}
+	require.EqualValues(t, 1, count)
+}
+
+func TestReplaceAPIVersion(t *testing.T) {
+	t.Skip("Go doesn't set api-version")
 }

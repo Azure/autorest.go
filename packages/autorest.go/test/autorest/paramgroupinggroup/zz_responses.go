@@ -5,6 +5,11 @@
 
 package paramgroupinggroup
 
+// ParameterGroupingClientGroupWithConstantResponse contains the response from method ParameterGroupingClient.GroupWithConstant.
+type ParameterGroupingClientGroupWithConstantResponse struct {
+	// placeholder for future response values
+}
+
 // ParameterGroupingClientPostMultiParamGroupsResponse contains the response from method ParameterGroupingClient.PostMultiParamGroups.
 type ParameterGroupingClientPostMultiParamGroupsResponse struct {
 	// placeholder for future response values

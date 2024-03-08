@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -18,6 +19,16 @@ func newParameterGroupingClient(t *testing.T) *ParameterGroupingClient {
 	})
 	require.NoError(t, err)
 	return client
+}
+
+func TestGroupWithConstant(t *testing.T) {
+	client := newParameterGroupingClient(t)
+	result, err := client.GroupWithConstant(context.Background(), &Grouper{
+		GroupedConstant:  to.Ptr("flag"),
+		GroupedParameter: to.Ptr("bar"),
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups

@@ -5,6 +5,11 @@
 
 package binarygroup
 
+// DownloadClientErrorStreamOptions contains the optional parameters for the DownloadClient.ErrorStream method.
+type DownloadClientErrorStreamOptions struct {
+	// placeholder for future optional parameters
+}
+
 // UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 type UploadClientBinaryOptions struct {
 	// placeholder for future optional parameters

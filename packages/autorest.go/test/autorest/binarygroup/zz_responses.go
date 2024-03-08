@@ -5,6 +5,14 @@
 
 package binarygroup
 
+import "io"
+
+// DownloadClientErrorStreamResponse contains the response from method DownloadClient.ErrorStream.
+type DownloadClientErrorStreamResponse struct {
+	// Body contains the streaming response.
+	Body io.ReadCloser
+}
+
 // UploadClientBinaryResponse contains the response from method UploadClient.Binary.
 type UploadClientBinaryResponse struct {
 	// placeholder for future response values

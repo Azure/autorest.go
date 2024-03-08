@@ -16,6 +16,6 @@ steps:
   - script: |
       cd $(Build.SourcesDirectory)
       npm install -g "@microsoft/rush"
-      rush update --debug
+      rush update
       npm install -g autorest
     displayName: "Prepare Generator Environment"

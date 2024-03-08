@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"context"
 	"generatortests"
+	"strings"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -58,18 +59,66 @@ func TestContentTypeWithEncoding(t *testing.T) {
 	}
 }
 
-func TestBinaryBodyWithThreeContentTypes(t *testing.T) {
-	t.Skip("no route")
+func TestBodyThreeTypes(t *testing.T) {
+	client := newMediaTypesClient(t)
+	result, err := client.BodyThreeTypes(context.Background(), streaming.NopCloser(bytes.NewReader([]byte("foo"))), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
 }
 
-func TestBinaryBodyWithThreeContentTypesWithText(t *testing.T) {
-	t.Skip("no route")
+func TestBodyThreeTypesWithJSON(t *testing.T) {
+	client := newMediaTypesClient(t)
+	type hello struct {
+		Hello string `json:"hello"`
+	}
+	result, err := client.BodyThreeTypesWithJSON(context.Background(), hello{
+		Hello: "world",
+	}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
+}
+
+func TestBodyThreeTypesWithText(t *testing.T) {
+	client := newMediaTypesClient(t)
+	result, err := client.BodyThreeTypesWithText(context.Background(), "hello, world", nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
+}
+
+func TestBinaryBodyWithThreeContentTypes(t *testing.T) {
+	client := newMediaTypesClient(t)
+	result, err := client.BinaryBodyWithThreeContentTypes(context.Background(), ContentType2ApplicationJSON, streaming.NopCloser(strings.NewReader(`{"hello":"world"}`)), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
+
+	result, err = client.BinaryBodyWithThreeContentTypes(context.Background(), ContentType2ApplicationOctetStream, streaming.NopCloser(bytes.NewReader([]byte("foo"))), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
+
+	result, err = client.BinaryBodyWithThreeContentTypes(context.Background(), ContentType2TextPlain, streaming.NopCloser(strings.NewReader("hello, world")), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
 }
 
 func TestBinaryBodyWithTwoContentTypes(t *testing.T) {
-	t.Skip("no route")
+	client := newMediaTypesClient(t)
+	result, err := client.BinaryBodyWithTwoContentTypes(context.Background(), ContentType1ApplicationJSON, streaming.NopCloser(strings.NewReader(`{"hello":"world"}`)), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
+
+	result, err = client.BinaryBodyWithTwoContentTypes(context.Background(), ContentType1ApplicationOctetStream, streaming.NopCloser(bytes.NewReader([]byte("foo"))), nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Value)
+	require.Empty(t, *result.Value)
 }
 
-func TestPutTextAndJSONBodyWithJSON(t *testing.T) {
+func TestPutTextAndJSONBody(t *testing.T) {
 	t.Skip("no route")
 }

@@ -73,8 +73,7 @@ RESPONSE 400: 400 Bad Request
 ERROR CODE UNAVAILABLE
 --------------------------------------------------------------------------------
 {
-  "message": "client error",
-  "status": 400
+  "message": "client error"
 }
 --------------------------------------------------------------------------------
 `
@@ -133,7 +132,9 @@ func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 RESPONSE 202: 202 Accepted
 ERROR CODE UNAVAILABLE
 --------------------------------------------------------------------------------
-Response contained no body
+{
+  "statusCode": "202"
+}
 --------------------------------------------------------------------------------
 `
 	if got := respErr.Error(); got != want {
@@ -167,8 +168,7 @@ RESPONSE 400: 400 Bad Request
 ERROR CODE UNAVAILABLE
 --------------------------------------------------------------------------------
 {
-  "message": "client error",
-  "status": 400
+  "message": "client error"
 }
 --------------------------------------------------------------------------------
 `
@@ -251,8 +251,7 @@ RESPONSE 400: 400 Bad Request
 ERROR CODE UNAVAILABLE
 --------------------------------------------------------------------------------
 {
-  "message": "client error",
-  "status": 400
+  "message": "client error"
 }
 --------------------------------------------------------------------------------
 `

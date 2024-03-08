@@ -14,6 +14,11 @@ type CustomParameterGroup struct {
 	Tenant string
 }
 
+// PagingClientAppendAPIVersionOptions contains the optional parameters for the PagingClient.NewAppendAPIVersionPager method.
+type PagingClientAppendAPIVersionOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
 type PagingClientBeginGetMultiplePagesLROOptions struct {
@@ -38,6 +43,12 @@ type PagingClientDuplicateParamsOptions struct {
 // PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.NewFirstResponseEmptyPager
 // method.
 type PagingClientFirstResponseEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PagingClientGetEmptyNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetEmptyNextLinkNamePagesPager
+// method.
+type PagingClientGetEmptyNextLinkNamePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -144,8 +155,26 @@ type PagingClientGetSinglePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
+// PagingClientGetSinglePagesWithBodyParamsOptions contains the optional parameters for the PagingClient.NewGetSinglePagesWithBodyParamsPager
+// method.
+type PagingClientGetSinglePagesWithBodyParamsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.NewGetWithQueryParamsPager
 // method.
 type PagingClientGetWithQueryParamsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PagingClientPageWithMaxPageSizeOptions contains the optional parameters for the PagingClient.NewPageWithMaxPageSizePager
+// method.
+type PagingClientPageWithMaxPageSizeOptions struct {
+	// Max page size query param. Don't send. Specifying any value will set the value to 5.
+	Maxpagesize *string
+}
+
+// PagingClientReplaceAPIVersionOptions contains the optional parameters for the PagingClient.NewReplaceAPIVersionPager method.
+type PagingClientReplaceAPIVersionOptions struct {
 	// placeholder for future optional parameters
 }

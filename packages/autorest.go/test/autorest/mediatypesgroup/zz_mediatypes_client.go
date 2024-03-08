@@ -338,6 +338,178 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleResponse(resp
 	return result, nil
 }
 
+// BodyThreeTypes - Body with three types. Can be stream, string, or JSON. Pass in string 'hello, world' with content type
+// 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
+// 'application/octet-stream'.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2.0-preview
+//   - message - The payload body.
+//   - options - MediaTypesClientBodyThreeTypesOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypes
+//     method.
+func (client *MediaTypesClient) BodyThreeTypes(ctx context.Context, message io.ReadSeekCloser, options *MediaTypesClientBodyThreeTypesOptions) (MediaTypesClientBodyThreeTypesResponse, error) {
+	var err error
+	const operationName = "MediaTypesClient.BodyThreeTypes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.bodyThreeTypesCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MediaTypesClientBodyThreeTypesResponse{}, err
+	}
+	resp, err := client.bodyThreeTypesHandleResponse(httpResp)
+	return resp, err
+}
+
+// bodyThreeTypesCreateRequest creates the BodyThreeTypes request.
+func (client *MediaTypesClient) bodyThreeTypesCreateRequest(ctx context.Context, message io.ReadSeekCloser, options *MediaTypesClientBodyThreeTypesOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/bodyThreeTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	if err := req.SetBody(message, "application/octet-stream"); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// bodyThreeTypesHandleResponse handles the BodyThreeTypes response.
+func (client *MediaTypesClient) bodyThreeTypesHandleResponse(resp *http.Response) (MediaTypesClientBodyThreeTypesResponse, error) {
+	result := MediaTypesClientBodyThreeTypesResponse{}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesResponse{}, err
+	}
+	txt := string(body)
+	result.Value = &txt
+	return result, nil
+}
+
+// BodyThreeTypesWithJSON - Body with three types. Can be stream, string, or JSON. Pass in string 'hello, world' with content
+// type 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
+// 'application/octet-stream'.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2.0-preview
+//   - message - The payload body.
+//   - options - MediaTypesClientBodyThreeTypesWithJSONOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypesWithJSON
+//     method.
+func (client *MediaTypesClient) BodyThreeTypesWithJSON(ctx context.Context, message any, options *MediaTypesClientBodyThreeTypesWithJSONOptions) (MediaTypesClientBodyThreeTypesWithJSONResponse, error) {
+	var err error
+	const operationName = "MediaTypesClient.BodyThreeTypesWithJSON"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.bodyThreeTypesWithJSONCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithJSONResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithJSONResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MediaTypesClientBodyThreeTypesWithJSONResponse{}, err
+	}
+	resp, err := client.bodyThreeTypesWithJSONHandleResponse(httpResp)
+	return resp, err
+}
+
+// bodyThreeTypesWithJSONCreateRequest creates the BodyThreeTypesWithJSON request.
+func (client *MediaTypesClient) bodyThreeTypesWithJSONCreateRequest(ctx context.Context, message any, options *MediaTypesClientBodyThreeTypesWithJSONOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/bodyThreeTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	if err := runtime.MarshalAsJSON(req, message); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// bodyThreeTypesWithJSONHandleResponse handles the BodyThreeTypesWithJSON response.
+func (client *MediaTypesClient) bodyThreeTypesWithJSONHandleResponse(resp *http.Response) (MediaTypesClientBodyThreeTypesWithJSONResponse, error) {
+	result := MediaTypesClientBodyThreeTypesWithJSONResponse{}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithJSONResponse{}, err
+	}
+	txt := string(body)
+	result.Value = &txt
+	return result, nil
+}
+
+// BodyThreeTypesWithText - Body with three types. Can be stream, string, or JSON. Pass in string 'hello, world' with content
+// type 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
+// 'application/octet-stream'.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2.0-preview
+//   - message - The payload body.
+//   - options - MediaTypesClientBodyThreeTypesWithTextOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypesWithText
+//     method.
+func (client *MediaTypesClient) BodyThreeTypesWithText(ctx context.Context, message string, options *MediaTypesClientBodyThreeTypesWithTextOptions) (MediaTypesClientBodyThreeTypesWithTextResponse, error) {
+	var err error
+	const operationName = "MediaTypesClient.BodyThreeTypesWithText"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.bodyThreeTypesWithTextCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithTextResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithTextResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return MediaTypesClientBodyThreeTypesWithTextResponse{}, err
+	}
+	resp, err := client.bodyThreeTypesWithTextHandleResponse(httpResp)
+	return resp, err
+}
+
+// bodyThreeTypesWithTextCreateRequest creates the BodyThreeTypesWithText request.
+func (client *MediaTypesClient) bodyThreeTypesWithTextCreateRequest(ctx context.Context, message string, options *MediaTypesClientBodyThreeTypesWithTextOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/bodyThreeTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"text/plain"}
+	body := streaming.NopCloser(strings.NewReader(message))
+	if err := req.SetBody(body, "text/plain"); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// bodyThreeTypesWithTextHandleResponse handles the BodyThreeTypesWithText response.
+func (client *MediaTypesClient) bodyThreeTypesWithTextHandleResponse(resp *http.Response) (MediaTypesClientBodyThreeTypesWithTextResponse, error) {
+	result := MediaTypesClientBodyThreeTypesWithTextResponse{}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBodyThreeTypesWithTextResponse{}, err
+	}
+	txt := string(body)
+	result.Value = &txt
+	return result, nil
+}
+
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; charset=UTF-8' to pass test. Value for input does not matter
 // If the operation fails it returns an *azcore.ResponseError type.
 //

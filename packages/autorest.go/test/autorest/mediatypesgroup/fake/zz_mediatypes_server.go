@@ -44,6 +44,18 @@ type MediaTypesServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	BinaryBodyWithTwoContentTypes func(ctx context.Context, contentType mediatypesgroup.ContentType1, message io.ReadSeekCloser, options *mediatypesgroup.MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (resp azfake.Responder[mediatypesgroup.MediaTypesClientBinaryBodyWithTwoContentTypesResponse], errResp azfake.ErrorResponder)
 
+	// BodyThreeTypes is the fake for method MediaTypesClient.BodyThreeTypes
+	// HTTP status codes to indicate success: http.StatusOK
+	BodyThreeTypes func(ctx context.Context, message io.ReadSeekCloser, options *mediatypesgroup.MediaTypesClientBodyThreeTypesOptions) (resp azfake.Responder[mediatypesgroup.MediaTypesClientBodyThreeTypesResponse], errResp azfake.ErrorResponder)
+
+	// BodyThreeTypesWithJSON is the fake for method MediaTypesClient.BodyThreeTypesWithJSON
+	// HTTP status codes to indicate success: http.StatusOK
+	BodyThreeTypesWithJSON func(ctx context.Context, message any, options *mediatypesgroup.MediaTypesClientBodyThreeTypesWithJSONOptions) (resp azfake.Responder[mediatypesgroup.MediaTypesClientBodyThreeTypesWithJSONResponse], errResp azfake.ErrorResponder)
+
+	// BodyThreeTypesWithText is the fake for method MediaTypesClient.BodyThreeTypesWithText
+	// HTTP status codes to indicate success: http.StatusOK
+	BodyThreeTypesWithText func(ctx context.Context, message string, options *mediatypesgroup.MediaTypesClientBodyThreeTypesWithTextOptions) (resp azfake.Responder[mediatypesgroup.MediaTypesClientBodyThreeTypesWithTextResponse], errResp azfake.ErrorResponder)
+
 	// ContentTypeWithEncoding is the fake for method MediaTypesClient.ContentTypeWithEncoding
 	// HTTP status codes to indicate success: http.StatusOK
 	ContentTypeWithEncoding func(ctx context.Context, options *mediatypesgroup.MediaTypesClientContentTypeWithEncodingOptions) (resp azfake.Responder[mediatypesgroup.MediaTypesClientContentTypeWithEncodingResponse], errResp azfake.ErrorResponder)
@@ -90,6 +102,12 @@ func (m *MediaTypesServerTransport) Do(req *http.Request) (*http.Response, error
 		resp, err = m.dispatchBinaryBodyWithThreeContentTypes(req)
 	case "MediaTypesClient.BinaryBodyWithTwoContentTypes":
 		resp, err = m.dispatchBinaryBodyWithTwoContentTypes(req)
+	case "MediaTypesClient.BodyThreeTypes":
+		resp, err = m.dispatchBodyThreeTypes(req)
+	case "MediaTypesClient.BodyThreeTypesWithJSON":
+		resp, err = m.dispatchBodyThreeTypesWithJSON(req)
+	case "MediaTypesClient.BodyThreeTypesWithText":
+		resp, err = m.dispatchBodyThreeTypesWithText(req)
 	case "MediaTypesClient.ContentTypeWithEncoding":
 		resp, err = m.dispatchContentTypeWithEncoding(req)
 	case "MediaTypesClient.PutTextAndJSONBody":
@@ -237,6 +255,71 @@ func (m *MediaTypesServerTransport) dispatchBinaryBodyWithTwoContentTypes(req *h
 		return nil, &nonRetriableError{errors.New("fake for method BinaryBodyWithTwoContentTypes not implemented")}
 	}
 	respr, errRespr := m.srv.BinaryBodyWithTwoContentTypes(req.Context(), mediatypesgroup.ContentType1(getHeaderValue(req.Header, "Content-Type")), req.Body.(io.ReadSeekCloser), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MediaTypesServerTransport) dispatchBodyThreeTypes(req *http.Request) (*http.Response, error) {
+	if m.srv.BodyThreeTypes == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BodyThreeTypes not implemented")}
+	}
+	respr, errRespr := m.srv.BodyThreeTypes(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MediaTypesServerTransport) dispatchBodyThreeTypesWithJSON(req *http.Request) (*http.Response, error) {
+	if m.srv.BodyThreeTypesWithJSON == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BodyThreeTypesWithJSON not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[any](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := m.srv.BodyThreeTypesWithJSON(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MediaTypesServerTransport) dispatchBodyThreeTypesWithText(req *http.Request) (*http.Response, error) {
+	if m.srv.BodyThreeTypesWithText == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BodyThreeTypesWithText not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsText(req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := m.srv.BodyThreeTypesWithText(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

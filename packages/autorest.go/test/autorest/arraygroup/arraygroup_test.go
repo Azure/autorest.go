@@ -279,8 +279,8 @@ func TestGetDateTimeValid(t *testing.T) {
 	resp, err := client.GetDateTimeValid(context.Background(), nil)
 	require.NoError(t, err)
 	v1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
-	v2, _ := time.Parse(time.RFC3339, "1980-01-02T01:11:35+01:00")
-	v3, _ := time.Parse(time.RFC3339, "1492-10-12T02:15:01-08:00")
+	v2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
+	v3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01-08:00")
 	if r := cmp.Diff(resp.TimeArray, []*time.Time{
 		&v1,
 		&v2,
