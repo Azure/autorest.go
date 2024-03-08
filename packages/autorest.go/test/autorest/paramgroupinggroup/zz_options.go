@@ -13,6 +13,21 @@ type FirstParameterGroup struct {
 	QueryOne *int32
 }
 
+// Grouper contains a group of parameters for the ParameterGroupingClient.GroupWithConstant method.
+type Grouper struct {
+	// A grouped parameter that is a constant.. Specifying any value will set the value to foo.
+	GroupedConstant *string
+
+	// Optional parameter part of a parameter grouping.
+	GroupedParameter *string
+}
+
+// ParameterGroupingClientGroupWithConstantOptions contains the optional parameters for the ParameterGroupingClient.GroupWithConstant
+// method.
+type ParameterGroupingClientGroupWithConstantOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ParameterGroupingClientPostMultiParamGroupsOptions contains the optional parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
 type ParameterGroupingClientPostMultiParamGroupsOptions struct {

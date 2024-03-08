@@ -5,6 +5,10 @@
 
 package paginggroup
 
+type BodyParam struct {
+	Name *string
+}
+
 type ODataProductResult struct {
 	ODataNextLink *string
 	Values        []*Product

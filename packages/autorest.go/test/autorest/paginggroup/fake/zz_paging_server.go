@@ -22,6 +22,10 @@ import (
 
 // PagingServer is a fake server for instances of the paginggroup.PagingClient type.
 type PagingServer struct {
+	// NewAppendAPIVersionPager is the fake for method PagingClient.NewAppendAPIVersionPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewAppendAPIVersionPager func(options *paginggroup.PagingClientAppendAPIVersionOptions) (resp azfake.PagerResponder[paginggroup.PagingClientAppendAPIVersionResponse])
+
 	// NewDuplicateParamsPager is the fake for method PagingClient.NewDuplicateParamsPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewDuplicateParamsPager func(options *paginggroup.PagingClientDuplicateParamsOptions) (resp azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse])
@@ -29,6 +33,10 @@ type PagingServer struct {
 	// NewFirstResponseEmptyPager is the fake for method PagingClient.NewFirstResponseEmptyPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewFirstResponseEmptyPager func(options *paginggroup.PagingClientFirstResponseEmptyOptions) (resp azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse])
+
+	// NewGetEmptyNextLinkNamePagesPager is the fake for method PagingClient.NewGetEmptyNextLinkNamePagesPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewGetEmptyNextLinkNamePagesPager func(options *paginggroup.PagingClientGetEmptyNextLinkNamePagesOptions) (resp azfake.PagerResponder[paginggroup.PagingClientGetEmptyNextLinkNamePagesResponse])
 
 	// NewGetMultiplePagesPager is the fake for method PagingClient.NewGetMultiplePagesPager
 	// HTTP status codes to indicate success: http.StatusOK
@@ -90,9 +98,21 @@ type PagingServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	NewGetSinglePagesFailurePager func(options *paginggroup.PagingClientGetSinglePagesFailureOptions) (resp azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse])
 
+	// NewGetSinglePagesWithBodyParamsPager is the fake for method PagingClient.NewGetSinglePagesWithBodyParamsPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewGetSinglePagesWithBodyParamsPager func(parameters paginggroup.BodyParam, options *paginggroup.PagingClientGetSinglePagesWithBodyParamsOptions) (resp azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesWithBodyParamsResponse])
+
 	// NewGetWithQueryParamsPager is the fake for method PagingClient.NewGetWithQueryParamsPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewGetWithQueryParamsPager func(requiredQueryParameter int32, options *paginggroup.PagingClientGetWithQueryParamsOptions) (resp azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse])
+
+	// NewPageWithMaxPageSizePager is the fake for method PagingClient.NewPageWithMaxPageSizePager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewPageWithMaxPageSizePager func(options *paginggroup.PagingClientPageWithMaxPageSizeOptions) (resp azfake.PagerResponder[paginggroup.PagingClientPageWithMaxPageSizeResponse])
+
+	// NewReplaceAPIVersionPager is the fake for method PagingClient.NewReplaceAPIVersionPager
+	// HTTP status codes to indicate success: http.StatusOK
+	NewReplaceAPIVersionPager func(options *paginggroup.PagingClientReplaceAPIVersionOptions) (resp azfake.PagerResponder[paginggroup.PagingClientReplaceAPIVersionResponse])
 }
 
 // NewPagingServerTransport creates a new instance of PagingServerTransport with the provided implementation.
@@ -101,8 +121,10 @@ type PagingServer struct {
 func NewPagingServerTransport(srv *PagingServer) *PagingServerTransport {
 	return &PagingServerTransport{
 		srv:                                                  srv,
+		newAppendAPIVersionPager:                             newTracker[azfake.PagerResponder[paginggroup.PagingClientAppendAPIVersionResponse]](),
 		newDuplicateParamsPager:                              newTracker[azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse]](),
 		newFirstResponseEmptyPager:                           newTracker[azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse]](),
+		newGetEmptyNextLinkNamePagesPager:                    newTracker[azfake.PagerResponder[paginggroup.PagingClientGetEmptyNextLinkNamePagesResponse]](),
 		newGetMultiplePagesPager:                             newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesResponse]](),
 		newGetMultiplePagesFailurePager:                      newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureResponse]](),
 		newGetMultiplePagesFailureURIPager:                   newTracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureURIResponse]](),
@@ -118,7 +140,10 @@ func NewPagingServerTransport(srv *PagingServer) *PagingServerTransport {
 		newGetPagingModelWithItemNameWithXMSClientNamePager:  newTracker[azfake.PagerResponder[paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]](),
 		newGetSinglePagesPager:                               newTracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesResponse]](),
 		newGetSinglePagesFailurePager:                        newTracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse]](),
+		newGetSinglePagesWithBodyParamsPager:                 newTracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesWithBodyParamsResponse]](),
 		newGetWithQueryParamsPager:                           newTracker[azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse]](),
+		newPageWithMaxPageSizePager:                          newTracker[azfake.PagerResponder[paginggroup.PagingClientPageWithMaxPageSizeResponse]](),
+		newReplaceAPIVersionPager:                            newTracker[azfake.PagerResponder[paginggroup.PagingClientReplaceAPIVersionResponse]](),
 	}
 }
 
@@ -126,8 +151,10 @@ func NewPagingServerTransport(srv *PagingServer) *PagingServerTransport {
 // Don't use this type directly, use NewPagingServerTransport instead.
 type PagingServerTransport struct {
 	srv                                                  *PagingServer
+	newAppendAPIVersionPager                             *tracker[azfake.PagerResponder[paginggroup.PagingClientAppendAPIVersionResponse]]
 	newDuplicateParamsPager                              *tracker[azfake.PagerResponder[paginggroup.PagingClientDuplicateParamsResponse]]
 	newFirstResponseEmptyPager                           *tracker[azfake.PagerResponder[paginggroup.PagingClientFirstResponseEmptyResponse]]
+	newGetEmptyNextLinkNamePagesPager                    *tracker[azfake.PagerResponder[paginggroup.PagingClientGetEmptyNextLinkNamePagesResponse]]
 	newGetMultiplePagesPager                             *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesResponse]]
 	newGetMultiplePagesFailurePager                      *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureResponse]]
 	newGetMultiplePagesFailureURIPager                   *tracker[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFailureURIResponse]]
@@ -143,7 +170,10 @@ type PagingServerTransport struct {
 	newGetPagingModelWithItemNameWithXMSClientNamePager  *tracker[azfake.PagerResponder[paginggroup.PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]]
 	newGetSinglePagesPager                               *tracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesResponse]]
 	newGetSinglePagesFailurePager                        *tracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesFailureResponse]]
+	newGetSinglePagesWithBodyParamsPager                 *tracker[azfake.PagerResponder[paginggroup.PagingClientGetSinglePagesWithBodyParamsResponse]]
 	newGetWithQueryParamsPager                           *tracker[azfake.PagerResponder[paginggroup.PagingClientGetWithQueryParamsResponse]]
+	newPageWithMaxPageSizePager                          *tracker[azfake.PagerResponder[paginggroup.PagingClientPageWithMaxPageSizeResponse]]
+	newReplaceAPIVersionPager                            *tracker[azfake.PagerResponder[paginggroup.PagingClientReplaceAPIVersionResponse]]
 }
 
 // Do implements the policy.Transporter interface for PagingServerTransport.
@@ -158,10 +188,14 @@ func (p *PagingServerTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch method {
+	case "PagingClient.NewAppendAPIVersionPager":
+		resp, err = p.dispatchNewAppendAPIVersionPager(req)
 	case "PagingClient.NewDuplicateParamsPager":
 		resp, err = p.dispatchNewDuplicateParamsPager(req)
 	case "PagingClient.NewFirstResponseEmptyPager":
 		resp, err = p.dispatchNewFirstResponseEmptyPager(req)
+	case "PagingClient.NewGetEmptyNextLinkNamePagesPager":
+		resp, err = p.dispatchNewGetEmptyNextLinkNamePagesPager(req)
 	case "PagingClient.NewGetMultiplePagesPager":
 		resp, err = p.dispatchNewGetMultiplePagesPager(req)
 	case "PagingClient.NewGetMultiplePagesFailurePager":
@@ -192,8 +226,14 @@ func (p *PagingServerTransport) Do(req *http.Request) (*http.Response, error) {
 		resp, err = p.dispatchNewGetSinglePagesPager(req)
 	case "PagingClient.NewGetSinglePagesFailurePager":
 		resp, err = p.dispatchNewGetSinglePagesFailurePager(req)
+	case "PagingClient.NewGetSinglePagesWithBodyParamsPager":
+		resp, err = p.dispatchNewGetSinglePagesWithBodyParamsPager(req)
 	case "PagingClient.NewGetWithQueryParamsPager":
 		resp, err = p.dispatchNewGetWithQueryParamsPager(req)
+	case "PagingClient.NewPageWithMaxPageSizePager":
+		resp, err = p.dispatchNewPageWithMaxPageSizePager(req)
+	case "PagingClient.NewReplaceAPIVersionPager":
+		resp, err = p.dispatchNewReplaceAPIVersionPager(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -202,6 +242,33 @@ func (p *PagingServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
+	return resp, nil
+}
+
+func (p *PagingServerTransport) dispatchNewAppendAPIVersionPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewAppendAPIVersionPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewAppendAPIVersionPager not implemented")}
+	}
+	newAppendAPIVersionPager := p.newAppendAPIVersionPager.get(req)
+	if newAppendAPIVersionPager == nil {
+		resp := p.srv.NewAppendAPIVersionPager(nil)
+		newAppendAPIVersionPager = &resp
+		p.newAppendAPIVersionPager.add(req, newAppendAPIVersionPager)
+		server.PagerResponderInjectNextLinks(newAppendAPIVersionPager, req, func(page *paginggroup.PagingClientAppendAPIVersionResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newAppendAPIVersionPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newAppendAPIVersionPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newAppendAPIVersionPager) {
+		p.newAppendAPIVersionPager.remove(req)
+	}
 	return resp, nil
 }
 
@@ -267,6 +334,33 @@ func (p *PagingServerTransport) dispatchNewFirstResponseEmptyPager(req *http.Req
 	}
 	if !server.PagerResponderMore(newFirstResponseEmptyPager) {
 		p.newFirstResponseEmptyPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PagingServerTransport) dispatchNewGetEmptyNextLinkNamePagesPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewGetEmptyNextLinkNamePagesPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewGetEmptyNextLinkNamePagesPager not implemented")}
+	}
+	newGetEmptyNextLinkNamePagesPager := p.newGetEmptyNextLinkNamePagesPager.get(req)
+	if newGetEmptyNextLinkNamePagesPager == nil {
+		resp := p.srv.NewGetEmptyNextLinkNamePagesPager(nil)
+		newGetEmptyNextLinkNamePagesPager = &resp
+		p.newGetEmptyNextLinkNamePagesPager.add(req, newGetEmptyNextLinkNamePagesPager)
+		server.PagerResponderInjectNextLinks(newGetEmptyNextLinkNamePagesPager, req, func(page *paginggroup.PagingClientGetEmptyNextLinkNamePagesResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newGetEmptyNextLinkNamePagesPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetEmptyNextLinkNamePagesPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newGetEmptyNextLinkNamePagesPager) {
+		p.newGetEmptyNextLinkNamePagesPager.remove(req)
 	}
 	return resp, nil
 }
@@ -844,6 +938,37 @@ func (p *PagingServerTransport) dispatchNewGetSinglePagesFailurePager(req *http.
 	return resp, nil
 }
 
+func (p *PagingServerTransport) dispatchNewGetSinglePagesWithBodyParamsPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewGetSinglePagesWithBodyParamsPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewGetSinglePagesWithBodyParamsPager not implemented")}
+	}
+	newGetSinglePagesWithBodyParamsPager := p.newGetSinglePagesWithBodyParamsPager.get(req)
+	if newGetSinglePagesWithBodyParamsPager == nil {
+		body, err := server.UnmarshalRequestAsJSON[paginggroup.BodyParam](req)
+		if err != nil {
+			return nil, err
+		}
+		resp := p.srv.NewGetSinglePagesWithBodyParamsPager(body, nil)
+		newGetSinglePagesWithBodyParamsPager = &resp
+		p.newGetSinglePagesWithBodyParamsPager.add(req, newGetSinglePagesWithBodyParamsPager)
+		server.PagerResponderInjectNextLinks(newGetSinglePagesWithBodyParamsPager, req, func(page *paginggroup.PagingClientGetSinglePagesWithBodyParamsResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newGetSinglePagesWithBodyParamsPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newGetSinglePagesWithBodyParamsPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newGetSinglePagesWithBodyParamsPager) {
+		p.newGetSinglePagesWithBodyParamsPager.remove(req)
+	}
+	return resp, nil
+}
+
 func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Request) (*http.Response, error) {
 	if p.srv.NewGetWithQueryParamsPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewGetWithQueryParamsPager not implemented")}
@@ -882,6 +1007,72 @@ func (p *PagingServerTransport) dispatchNewGetWithQueryParamsPager(req *http.Req
 	}
 	if !server.PagerResponderMore(newGetWithQueryParamsPager) {
 		p.newGetWithQueryParamsPager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PagingServerTransport) dispatchNewPageWithMaxPageSizePager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewPageWithMaxPageSizePager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewPageWithMaxPageSizePager not implemented")}
+	}
+	newPageWithMaxPageSizePager := p.newPageWithMaxPageSizePager.get(req)
+	if newPageWithMaxPageSizePager == nil {
+		qp := req.URL.Query()
+		maxpagesizeUnescaped, err := url.QueryUnescape(qp.Get("$maxpagesize"))
+		if err != nil {
+			return nil, err
+		}
+		maxpagesizeParam := getOptional(maxpagesizeUnescaped)
+		var options *paginggroup.PagingClientPageWithMaxPageSizeOptions
+		if maxpagesizeParam != nil {
+			options = &paginggroup.PagingClientPageWithMaxPageSizeOptions{
+				Maxpagesize: maxpagesizeParam,
+			}
+		}
+		resp := p.srv.NewPageWithMaxPageSizePager(options)
+		newPageWithMaxPageSizePager = &resp
+		p.newPageWithMaxPageSizePager.add(req, newPageWithMaxPageSizePager)
+		server.PagerResponderInjectNextLinks(newPageWithMaxPageSizePager, req, func(page *paginggroup.PagingClientPageWithMaxPageSizeResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newPageWithMaxPageSizePager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newPageWithMaxPageSizePager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newPageWithMaxPageSizePager) {
+		p.newPageWithMaxPageSizePager.remove(req)
+	}
+	return resp, nil
+}
+
+func (p *PagingServerTransport) dispatchNewReplaceAPIVersionPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewReplaceAPIVersionPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewReplaceAPIVersionPager not implemented")}
+	}
+	newReplaceAPIVersionPager := p.newReplaceAPIVersionPager.get(req)
+	if newReplaceAPIVersionPager == nil {
+		resp := p.srv.NewReplaceAPIVersionPager(nil)
+		newReplaceAPIVersionPager = &resp
+		p.newReplaceAPIVersionPager.add(req, newReplaceAPIVersionPager)
+		server.PagerResponderInjectNextLinks(newReplaceAPIVersionPager, req, func(page *paginggroup.PagingClientReplaceAPIVersionResponse, createLink func() string) {
+			page.NextLink = to.Ptr(createLink())
+		})
+	}
+	resp, err := server.PagerResponderNext(newReplaceAPIVersionPager, req)
+	if err != nil {
+		return nil, err
+	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newReplaceAPIVersionPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newReplaceAPIVersionPager) {
+		p.newReplaceAPIVersionPager.remove(req)
 	}
 	return resp, nil
 }

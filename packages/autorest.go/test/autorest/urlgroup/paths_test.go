@@ -69,7 +69,7 @@ func TestPathsDateNull(t *testing.T) {
 	client := newPathsClient(t)
 	var time time.Time
 	result, err := client.DateNull(context.Background(), time, nil)
-	require.NoError(t, err)
+	require.Error(t, err)
 	require.Zero(t, result)
 }
 
@@ -77,7 +77,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 	client := newPathsClient(t)
 	var time time.Time
 	result, err := client.DateTimeNull(context.Background(), time, nil)
-	require.NoError(t, err)
+	require.Error(t, err)
 	require.Zero(t, result)
 }
 

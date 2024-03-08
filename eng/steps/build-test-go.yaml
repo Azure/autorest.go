@@ -112,6 +112,7 @@ steps:
       npm stop
       popd
     displayName: "Run Acceptance Tests"
+    timeoutInMinutes: 10
 
   - pwsh: npm test
     displayName: "Run Unit Tests"

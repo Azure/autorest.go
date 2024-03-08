@@ -35,6 +35,21 @@ type MediaTypesClientBinaryBodyWithTwoContentTypesWithBinaryResponse struct {
 	Value *string
 }
 
+// MediaTypesClientBodyThreeTypesResponse contains the response from method MediaTypesClient.BodyThreeTypes.
+type MediaTypesClientBodyThreeTypesResponse struct {
+	Value *string
+}
+
+// MediaTypesClientBodyThreeTypesWithBinaryResponse contains the response from method MediaTypesClient.BodyThreeTypesWithBinary.
+type MediaTypesClientBodyThreeTypesWithBinaryResponse struct {
+	Value *string
+}
+
+// MediaTypesClientBodyThreeTypesWithTextResponse contains the response from method MediaTypesClient.BodyThreeTypesWithText.
+type MediaTypesClientBodyThreeTypesWithTextResponse struct {
+	Value *string
+}
+
 // MediaTypesClientContentTypeWithEncodingWithTextResponse contains the response from method MediaTypesClient.ContentTypeWithEncodingWithText.
 type MediaTypesClientContentTypeWithEncodingWithTextResponse struct {
 	Value *string

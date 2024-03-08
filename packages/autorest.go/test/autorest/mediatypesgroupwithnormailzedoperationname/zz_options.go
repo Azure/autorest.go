@@ -46,6 +46,23 @@ type MediaTypesClientBinaryBodyWithTwoContentTypesWithBinaryOptions struct {
 	// placeholder for future optional parameters
 }
 
+// MediaTypesClientBodyThreeTypesOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypes method.
+type MediaTypesClientBodyThreeTypesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MediaTypesClientBodyThreeTypesWithBinaryOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypesWithBinary
+// method.
+type MediaTypesClientBodyThreeTypesWithBinaryOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MediaTypesClientBodyThreeTypesWithTextOptions contains the optional parameters for the MediaTypesClient.BodyThreeTypesWithText
+// method.
+type MediaTypesClientBodyThreeTypesWithTextOptions struct {
+	// placeholder for future optional parameters
+}
+
 // MediaTypesClientContentTypeWithEncodingWithTextOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncodingWithText
 // method.
 type MediaTypesClientContentTypeWithEncodingWithTextOptions struct {

@@ -67,6 +67,7 @@ steps:
       }
       cadl-ranch server stop
     displayName: "Run All Tests"
+    timeoutInMinutes: 10
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
 
   - task: PublishTestResults@2

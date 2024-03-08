@@ -5,6 +5,11 @@
 
 package paginggroup
 
+// PagingClientAppendAPIVersionResponse contains the response from method PagingClient.NewAppendAPIVersionPager.
+type PagingClientAppendAPIVersionResponse struct {
+	ProductResult
+}
+
 // PagingClientDuplicateParamsResponse contains the response from method PagingClient.NewDuplicateParamsPager.
 type PagingClientDuplicateParamsResponse struct {
 	ProductResult
@@ -12,6 +17,11 @@ type PagingClientDuplicateParamsResponse struct {
 
 // PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.NewFirstResponseEmptyPager.
 type PagingClientFirstResponseEmptyResponse struct {
+	ProductResultValue
+}
+
+// PagingClientGetEmptyNextLinkNamePagesResponse contains the response from method PagingClient.NewGetEmptyNextLinkNamePagesPager.
+type PagingClientGetEmptyNextLinkNamePagesResponse struct {
 	ProductResultValue
 }
 
@@ -90,7 +100,22 @@ type PagingClientGetSinglePagesResponse struct {
 	ProductResult
 }
 
+// PagingClientGetSinglePagesWithBodyParamsResponse contains the response from method PagingClient.NewGetSinglePagesWithBodyParamsPager.
+type PagingClientGetSinglePagesWithBodyParamsResponse struct {
+	ProductResult
+}
+
 // PagingClientGetWithQueryParamsResponse contains the response from method PagingClient.NewGetWithQueryParamsPager.
 type PagingClientGetWithQueryParamsResponse struct {
+	ProductResult
+}
+
+// PagingClientPageWithMaxPageSizeResponse contains the response from method PagingClient.NewPageWithMaxPageSizePager.
+type PagingClientPageWithMaxPageSizeResponse struct {
+	ProductResult
+}
+
+// PagingClientReplaceAPIVersionResponse contains the response from method PagingClient.NewReplaceAPIVersionPager.
+type PagingClientReplaceAPIVersionResponse struct {
 	ProductResult
 }

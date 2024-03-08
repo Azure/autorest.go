@@ -23,6 +23,58 @@ type PagingClient struct {
 	internal *azcore.Client
 }
 
+// NewAppendAPIVersionPager - A paging operation with api version. When calling the next link, you want to append your client's
+// api version to the next link
+//
+// Generated from API version 1.0.0
+//   - options - PagingClientAppendAPIVersionOptions contains the optional parameters for the PagingClient.NewAppendAPIVersionPager
+//     method.
+func (client *PagingClient) NewAppendAPIVersionPager(options *PagingClientAppendAPIVersionOptions) *runtime.Pager[PagingClientAppendAPIVersionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PagingClientAppendAPIVersionResponse]{
+		More: func(page PagingClientAppendAPIVersionResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PagingClientAppendAPIVersionResponse) (PagingClientAppendAPIVersionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagingClient.NewAppendAPIVersionPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.appendAPIVersionCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PagingClientAppendAPIVersionResponse{}, err
+			}
+			return client.appendAPIVersionHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// appendAPIVersionCreateRequest creates the AppendAPIVersion request.
+func (client *PagingClient) appendAPIVersionCreateRequest(ctx context.Context, options *PagingClientAppendAPIVersionOptions) (*policy.Request, error) {
+	urlPath := "/paging/apiVersion/append/1"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "1.0.0")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// appendAPIVersionHandleResponse handles the AppendAPIVersion response.
+func (client *PagingClient) appendAPIVersionHandleResponse(resp *http.Response) (PagingClientAppendAPIVersionResponse, error) {
+	result := PagingClientAppendAPIVersionResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
+		return PagingClientAppendAPIVersionResponse{}, err
+	}
+	return result, nil
+}
+
 // NewDuplicateParamsPager - Define filter as a query param for all calls. However, the returned next link will also include
 // the filter as part of it. Make sure you don't end up duplicating the filter param in the url sent.
 //
@@ -122,6 +174,54 @@ func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response
 	result := PagingClientFirstResponseEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
 		return PagingClientFirstResponseEmptyResponse{}, err
+	}
+	return result, nil
+}
+
+// NewGetEmptyNextLinkNamePagesPager - A paging operation that gets an empty next link and should stop after page 1.
+//
+// Generated from API version 1.0.0
+//   - options - PagingClientGetEmptyNextLinkNamePagesOptions contains the optional parameters for the PagingClient.NewGetEmptyNextLinkNamePagesPager
+//     method.
+func (client *PagingClient) NewGetEmptyNextLinkNamePagesPager(options *PagingClientGetEmptyNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetEmptyNextLinkNamePagesResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetEmptyNextLinkNamePagesResponse]{
+		More: func(page PagingClientGetEmptyNextLinkNamePagesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PagingClientGetEmptyNextLinkNamePagesResponse) (PagingClientGetEmptyNextLinkNamePagesResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagingClient.NewGetEmptyNextLinkNamePagesPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getEmptyNextLinkNamePagesCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PagingClientGetEmptyNextLinkNamePagesResponse{}, err
+			}
+			return client.getEmptyNextLinkNamePagesHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// getEmptyNextLinkNamePagesCreateRequest creates the GetEmptyNextLinkNamePages request.
+func (client *PagingClient) getEmptyNextLinkNamePagesCreateRequest(ctx context.Context, options *PagingClientGetEmptyNextLinkNamePagesOptions) (*policy.Request, error) {
+	urlPath := "/paging/emptynextlink"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// getEmptyNextLinkNamePagesHandleResponse handles the GetEmptyNextLinkNamePages response.
+func (client *PagingClient) getEmptyNextLinkNamePagesHandleResponse(resp *http.Response) (PagingClientGetEmptyNextLinkNamePagesResponse, error) {
+	result := PagingClientGetEmptyNextLinkNamePagesResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
+		return PagingClientGetEmptyNextLinkNamePagesResponse{}, err
 	}
 	return result, nil
 }
@@ -950,6 +1050,58 @@ func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Respo
 	return result, nil
 }
 
+// NewGetSinglePagesWithBodyParamsPager - A paging operation that finishes on the first call with body params without a nextlink
+//
+// Generated from API version 1.0.0
+//   - parameters - put {'name': 'body'} to pass the test
+//   - options - PagingClientGetSinglePagesWithBodyParamsOptions contains the optional parameters for the PagingClient.NewGetSinglePagesWithBodyParamsPager
+//     method.
+func (client *PagingClient) NewGetSinglePagesWithBodyParamsPager(parameters BodyParam, options *PagingClientGetSinglePagesWithBodyParamsOptions) *runtime.Pager[PagingClientGetSinglePagesWithBodyParamsResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetSinglePagesWithBodyParamsResponse]{
+		More: func(page PagingClientGetSinglePagesWithBodyParamsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PagingClientGetSinglePagesWithBodyParamsResponse) (PagingClientGetSinglePagesWithBodyParamsResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagingClient.NewGetSinglePagesWithBodyParamsPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.getSinglePagesWithBodyParamsCreateRequest(ctx, parameters, options)
+			}, nil)
+			if err != nil {
+				return PagingClientGetSinglePagesWithBodyParamsResponse{}, err
+			}
+			return client.getSinglePagesWithBodyParamsHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// getSinglePagesWithBodyParamsCreateRequest creates the GetSinglePagesWithBodyParams request.
+func (client *PagingClient) getSinglePagesWithBodyParamsCreateRequest(ctx context.Context, parameters BodyParam, options *PagingClientGetSinglePagesWithBodyParamsOptions) (*policy.Request, error) {
+	urlPath := "/paging/single/getWithBodyParams"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// getSinglePagesWithBodyParamsHandleResponse handles the GetSinglePagesWithBodyParams response.
+func (client *PagingClient) getSinglePagesWithBodyParamsHandleResponse(resp *http.Response) (PagingClientGetSinglePagesWithBodyParamsResponse, error) {
+	result := PagingClientGetSinglePagesWithBodyParamsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
+		return PagingClientGetSinglePagesWithBodyParamsResponse{}, err
+	}
+	return result, nil
+}
+
 // NewGetWithQueryParamsPager - A paging operation that includes a next operation. It has a different query parameter from
 // it's next operation nextOperationWithQueryParams. Returns a ProductResult
 //
@@ -1004,6 +1156,111 @@ func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response
 	result := PagingClientGetWithQueryParamsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetWithQueryParamsResponse{}, err
+	}
+	return result, nil
+}
+
+// NewPageWithMaxPageSizePager - Paging with max page size. We don't want to
+//
+// Generated from API version 1.0.0
+//   - options - PagingClientPageWithMaxPageSizeOptions contains the optional parameters for the PagingClient.NewPageWithMaxPageSizePager
+//     method.
+func (client *PagingClient) NewPageWithMaxPageSizePager(options *PagingClientPageWithMaxPageSizeOptions) *runtime.Pager[PagingClientPageWithMaxPageSizeResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PagingClientPageWithMaxPageSizeResponse]{
+		More: func(page PagingClientPageWithMaxPageSizeResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PagingClientPageWithMaxPageSizeResponse) (PagingClientPageWithMaxPageSizeResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagingClient.NewPageWithMaxPageSizePager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.pageWithMaxPageSizeCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PagingClientPageWithMaxPageSizeResponse{}, err
+			}
+			return client.pageWithMaxPageSizeHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// pageWithMaxPageSizeCreateRequest creates the PageWithMaxPageSize request.
+func (client *PagingClient) pageWithMaxPageSizeCreateRequest(ctx context.Context, options *PagingClientPageWithMaxPageSizeOptions) (*policy.Request, error) {
+	urlPath := "/paging/maxPageSize"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.Maxpagesize != nil {
+		reqQP.Set("$maxpagesize", "5")
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// pageWithMaxPageSizeHandleResponse handles the PageWithMaxPageSize response.
+func (client *PagingClient) pageWithMaxPageSizeHandleResponse(resp *http.Response) (PagingClientPageWithMaxPageSizeResponse, error) {
+	result := PagingClientPageWithMaxPageSizeResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
+		return PagingClientPageWithMaxPageSizeResponse{}, err
+	}
+	return result, nil
+}
+
+// NewReplaceAPIVersionPager - A paging operation with api version. When calling the next link, you want to reformat it and
+// override the returned api version with your client's api version
+//
+// Generated from API version 1.0.0
+//   - options - PagingClientReplaceAPIVersionOptions contains the optional parameters for the PagingClient.NewReplaceAPIVersionPager
+//     method.
+func (client *PagingClient) NewReplaceAPIVersionPager(options *PagingClientReplaceAPIVersionOptions) *runtime.Pager[PagingClientReplaceAPIVersionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[PagingClientReplaceAPIVersionResponse]{
+		More: func(page PagingClientReplaceAPIVersionResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *PagingClientReplaceAPIVersionResponse) (PagingClientReplaceAPIVersionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PagingClient.NewReplaceAPIVersionPager")
+			nextLink := ""
+			if page != nil {
+				nextLink = *page.NextLink
+			}
+			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
+				return client.replaceAPIVersionCreateRequest(ctx, options)
+			}, nil)
+			if err != nil {
+				return PagingClientReplaceAPIVersionResponse{}, err
+			}
+			return client.replaceAPIVersionHandleResponse(resp)
+		},
+		Tracer: client.internal.Tracer(),
+	})
+}
+
+// replaceAPIVersionCreateRequest creates the ReplaceAPIVersion request.
+func (client *PagingClient) replaceAPIVersionCreateRequest(ctx context.Context, options *PagingClientReplaceAPIVersionOptions) (*policy.Request, error) {
+	urlPath := "/paging/apiVersion/replace/1"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "1.0.0")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// replaceAPIVersionHandleResponse handles the ReplaceAPIVersion response.
+func (client *PagingClient) replaceAPIVersionHandleResponse(resp *http.Response) (PagingClientReplaceAPIVersionResponse, error) {
+	result := PagingClientReplaceAPIVersionResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
+		return PagingClientReplaceAPIVersionResponse{}, err
 	}
 	return result, nil
 }

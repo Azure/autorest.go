@@ -49,7 +49,7 @@
     "typescript": "~5.1.3",
     "@typescript-eslint/eslint-plugin": "~4.1.1",
     "@typescript-eslint/parser": "~4.1.1",
-    "@microsoft.azure/autorest.testserver": "3.3.5",
+    "@microsoft.azure/autorest.testserver": "3.3.49",
     "eslint": "~6.6.0",
     "@autorest/extension-base": "~3.5.2",
     "@azure-tools/codegen": "~2.9.2",

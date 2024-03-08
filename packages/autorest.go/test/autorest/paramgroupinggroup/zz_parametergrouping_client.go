@@ -23,6 +23,51 @@ type ParameterGroupingClient struct {
 	internal *azcore.Client
 }
 
+// GroupWithConstant - Parameter group with a constant. Pass in 'foo' for groupedConstant and 'bar' for groupedParameter.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 1.0.0
+//   - Grouper - Grouper contains a group of parameters for the ParameterGroupingClient.GroupWithConstant method.
+//   - options - ParameterGroupingClientGroupWithConstantOptions contains the optional parameters for the ParameterGroupingClient.GroupWithConstant
+//     method.
+func (client *ParameterGroupingClient) GroupWithConstant(ctx context.Context, grouper *Grouper, options *ParameterGroupingClientGroupWithConstantOptions) (ParameterGroupingClientGroupWithConstantResponse, error) {
+	var err error
+	const operationName = "ParameterGroupingClient.GroupWithConstant"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.groupWithConstantCreateRequest(ctx, grouper, options)
+	if err != nil {
+		return ParameterGroupingClientGroupWithConstantResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return ParameterGroupingClientGroupWithConstantResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return ParameterGroupingClientGroupWithConstantResponse{}, err
+	}
+	return ParameterGroupingClientGroupWithConstantResponse{}, nil
+}
+
+// groupWithConstantCreateRequest creates the GroupWithConstant request.
+func (client *ParameterGroupingClient) groupWithConstantCreateRequest(ctx context.Context, grouper *Grouper, options *ParameterGroupingClientGroupWithConstantOptions) (*policy.Request, error) {
+	urlPath := "/parameterGrouping/groupWithConstant"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	if grouper != nil && grouper.GroupedConstant != nil {
+		req.Raw().Header["groupedConstant"] = []string{"foo"}
+	}
+	if grouper != nil && grouper.GroupedParameter != nil {
+		req.Raw().Header["groupedParameter"] = []string{*grouper.GroupedParameter}
+	}
+	return req, nil
+}
+
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 // If the operation fails it returns an *azcore.ResponseError type.
 //
