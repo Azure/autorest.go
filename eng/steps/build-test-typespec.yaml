@@ -59,7 +59,6 @@ steps:
   - pwsh: |
       cadl-ranch server start ./http
       $testDirs = ($(System.DefaultWorkingDirectory)/eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
-      $env:AZURE_SDK_GO_LOGGING="all"
       foreach ($td in $testDirs) {
         pushd $td
         Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
@@ -68,6 +67,7 @@ steps:
       }
       cadl-ranch server stop
     displayName: "Run All Tests"
+    timeoutInMinutes: 10
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
 
   - task: PublishTestResults@2

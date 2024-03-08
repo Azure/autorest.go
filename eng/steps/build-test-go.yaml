@@ -99,7 +99,6 @@ steps:
       npm run start:prod&
       popd
       $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
-      $env:AZURE_SDK_GO_LOGGING="all"
       foreach ($td in $testDirs) {
         pushd $td
         Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
@@ -113,6 +112,7 @@ steps:
       npm stop
       popd
     displayName: "Run Acceptance Tests"
+    timeoutInMinutes: 10
 
   - pwsh: npm test
     displayName: "Run Unit Tests"
