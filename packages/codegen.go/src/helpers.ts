@@ -113,7 +113,7 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.paramName)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(methodParam.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -188,10 +188,10 @@ export function getMethodParameters(method: go.Method | go.NextPageMethod, param
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
 export function getParamName(param: go.Parameter): string {
-  let paramName = param.paramName;
+  let paramName = param.name;
   // must check paramGroup first as client params can also be grouped
   if (param.group) {
-    paramName = `${uncapitalize(param.group.paramName)}.${capitalize(paramName)}`;
+    paramName = `${uncapitalize(param.group.name)}.${capitalize(paramName)}`;
   }
   if (param.location === 'client') {
     paramName = `client.${paramName}`;
@@ -234,10 +234,10 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
     } else if (go.isBytesType(param.type.elementType)) {
       imports.add('encoding/base64');
       imports.add('strings');
-      return emitConvertOver(param.paramName, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.paramName}[i])`);
+      return emitConvertOver(param.name, `base64.${formatBytesEncoding(param.type.elementType.encoding)}Encoding.EncodeToString(${param.name}[i])`);
     } else if (go.isTimeType(param.type.elementType)) {
       imports.add('strings');
-      return emitConvertOver(param.paramName, `${param.type.elementType.dateTimeFormat}(${param.paramName}[i]).String()`);
+      return emitConvertOver(param.name, `${param.type.elementType.dateTimeFormat}(${param.name}[i]).String()`);
     } else {
       imports.add('fmt');
       imports.add('strings');
@@ -331,7 +331,7 @@ export function formatValue(paramName: string, type: go.PossibleType, imports: I
 // it could also be a constant.
 export function formatLiteralValue(value: go.LiteralValue, withCast: boolean): string {
   if (go.isConstantType(value.type)) {
-    return (<go.ConstantValue>value.literal).valueName;
+    return (<go.ConstantValue>value.literal).name;
   } else if (go.isPrimitiveType(value.type)) {
     // if it's a string, we want the uncasted version to include quotes
     if (!withCast && value.type.typeName !== 'string') {
@@ -374,7 +374,7 @@ export function hasSchemaResponse(method: go.Method): boolean {
 export function getResultFieldName(method: go.Method): string {
   const result = method.responseEnvelope.result;
   if (!result) {
-    throw new Error(`missing result for method ${method.methodName}`);
+    throw new Error(`missing result for method ${method.name}`);
   } else if (go.isAnyResult(result) || go.isBinaryResult(result) || go.isHeadAsBooleanResult(result) || go.isMonomorphicResult(result)) {
     return result.fieldName;
   } else if (go.isPolymorphicResult(result)) {
@@ -382,7 +382,7 @@ export function getResultFieldName(method: go.Method): string {
   } else if (go.isModelResult(result)) {
     return result.modelType.name;
   } else {
-    throw new Error(`unhandled result type for method ${method.client.clientName}.${method.methodName}`);
+    throw new Error(`unhandled result type for method ${method.client.name}.${method.name}`);
   }
 }
 

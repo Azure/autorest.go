@@ -63,7 +63,7 @@ function emit(struct: go.StructType, imports: ImportManager): string {
       if (field.byValue) {
         pointer = '';
       }
-      text += `\t${capitalize(field.fieldName)} ${pointer}${typeName}\n`;
+      text += `\t${capitalize(field.name)} ${pointer}${typeName}\n`;
       first = false;
     }
   }

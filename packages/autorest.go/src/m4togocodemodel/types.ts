@@ -179,7 +179,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
     field.defaultValue = getDiscriminatorLiteral(obj.discriminatorValue);
   } else if (prop.clientDefaultValue) {
     if (!go.isLiteralValueType(field.type)) {
-      throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.fieldName}`);
+      throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.name}`);
     }
     if (go.isConstantType(field.type)) {
       // find the corresponding ConstantValue
@@ -190,7 +190,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
       let found = false;
       for (const val of values((<go.ConstantType>constType).values)) {
         if (val.value === prop.clientDefaultValue) {
-          const keyName = `literal-${val.valueName}`;
+          const keyName = `literal-${val.name}`;
           let literalValue = types.get(keyName);
           if (!literalValue) {
             literalValue = new go.LiteralValue(field.type, val);

@@ -59,7 +59,7 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += '\tvar resp *http.Response\n\tvar err error\n\n';
   text += '\tswitch client {\n';
   for (const client of codeModel.clients) {
-    text += `\tcase "${client.clientName}":\n`;
+    text += `\tcase "${client.name}":\n`;
     const serverName = getServerName(client);
     text += `\t\tinitServer(s, &s.tr${serverName}, func() *${serverName}Transport { return New${serverName}Transport(&s.srv.${serverName}) })\n`;
     text += `\t\tresp, err = s.tr${serverName}.Do(req)\n`;

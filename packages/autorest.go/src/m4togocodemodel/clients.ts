@@ -427,7 +427,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
   if (param.language.go!.paramGroup) {
     const paramGroup = findOrAdaptParamsGroup(param);
     // parameter groups can be shared across methods so don't add any duplicate parameters
-    if (values(paramGroup.params).where((each: go.Parameter) => { return each.paramName === adaptedParam.paramName; }).count() === 0) {
+    if (values(paramGroup.params).where((each: go.Parameter) => { return each.name === adaptedParam.name; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
     }
     if (adaptedParam.paramType === 'required') {

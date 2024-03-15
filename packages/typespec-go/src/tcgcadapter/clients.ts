@@ -51,7 +51,7 @@ export class clientAdapter {
     // depending on the hierarchy, we could end up attempting to adapt the same client.
     // if it's already been adapted, return it.
     let goClient = this.ta.codeModel.clients.find((v: go.Client, i: number, o: Array<go.Client>) => {
-      return o[i].clientName === clientName;
+      return o[i].name === clientName;
     });
     if (goClient) {
       return goClient;
@@ -80,7 +80,7 @@ export class clientAdapter {
           if (!this.ta.codeModel.host) {
             this.ta.codeModel.host = goClient.host;
           } else if (this.ta.codeModel.host !== goClient.host) {
-            throw new Error(`client ${goClient.clientName} has a conflicting host ${goClient.host}`);
+            throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
           }
           continue;
         } else if (param.kind === 'method') {
@@ -112,7 +112,7 @@ export class clientAdapter {
     for (const sdkMethod of sdkClient.methods) {
       if (sdkMethod.kind === 'clientaccessor') {
         const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
-        goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.clientName}`, subClient));
+        goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
       } else {
         this.adaptMethod(sdkMethod, goClient);
       }
@@ -164,11 +164,11 @@ export class clientAdapter {
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
     if (go.isMethod(method)) {
-      let prefix = method.client.clientName;
+      let prefix = method.client.name;
       if (this.opts['single-client']) {
         prefix = '';
       }
-      let optionalParamsGroupName = `${prefix}${method.methodName}Options`;
+      let optionalParamsGroupName = `${prefix}${method.name}Options`;
       if (sdkMethod.access === 'internal') {
         optionalParamsGroupName = uncapitalize(optionalParamsGroupName);
       }
@@ -214,7 +214,7 @@ export class clientAdapter {
       // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
       // in one method and a query param in another.
       if (adaptedParam.location === 'client' && !method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
-        return v.paramName === adaptedParam.paramName;
+        return v.name === adaptedParam.name;
       })) {
         method.client.parameters.push(adaptedParam);
       }
@@ -303,16 +303,16 @@ export class clientAdapter {
   }
 
   private getMethodNameForDocComment(method: go.Method): string {
-    return `${method.client.clientName}.${go.isPageableMethod(method) && !go.isLROMethod(method) ? `New${method.methodName}Pager` : method.methodName}`;
+    return `${method.client.name}.${go.isPageableMethod(method) && !go.isLROMethod(method) ? `New${method.name}Pager` : method.name}`;
   }
 
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method): go.ResponseEnvelope {
     // TODO: add Envelope suffix if name collides with existing type
-    let prefix = method.client.clientName;
+    let prefix = method.client.name;
     if (this.opts['single-client']) {
       prefix = '';
     }
-    let respEnvName = `${prefix}${method.methodName}Response`;
+    let respEnvName = `${prefix}${method.name}Response`;
     if (sdkMethod.access === 'internal') {
       respEnvName = uncapitalize(respEnvName);
     }
@@ -406,7 +406,7 @@ export class clientAdapter {
       if (!byValue) {
         byValue = param.byValue;
       }
-      const field = new go.StructField(param.paramName, param.type, byValue);
+      const field = new go.StructField(param.name, param.type, byValue);
       field.description = param.description;
       structType.fields.push(field);
     }
