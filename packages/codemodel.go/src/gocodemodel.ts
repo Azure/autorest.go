@@ -258,6 +258,10 @@ export interface Client {
 
 // ClientAccessor is a client method that returns a sub-client instance.
 export interface ClientAccessor {
+  // the name of the client accessor method
+  accessorName: string;
+
+  // the client returned by the accessor method
   subClient: Client;
 }
 
@@ -1041,7 +1045,7 @@ export class CodeModel implements CodeModel {
     this.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
     for (const client of this.clients) {
       client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
-      client.clientAccessors.sort((a: ClientAccessor, b: ClientAccessor) => { return sortAscending(a.subClient.clientName, b.subClient.clientName); });
+      client.clientAccessors.sort((a: ClientAccessor, b: ClientAccessor) => { return sortAscending(a.accessorName, b.accessorName); });
     }
   }
 }
@@ -1060,7 +1064,8 @@ export class Client implements Client {
 }
 
 export class ClientAccessor implements ClientAccessor {
-  constructor(subClient: Client) {
+  constructor(accessorName: string, subClient: Client) {
+    this.accessorName = accessorName;
     this.subClient = subClient;
   }
 }
