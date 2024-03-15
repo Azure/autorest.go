@@ -112,7 +112,7 @@ export class clientAdapter {
     for (const sdkMethod of sdkClient.methods) {
       if (sdkMethod.kind === 'clientaccessor') {
         const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
-        goClient.clientAccessors.push(new go.ClientAccessor(subClient));
+        goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.clientName}`, subClient));
       } else {
         this.adaptMethod(sdkMethod, goClient);
       }

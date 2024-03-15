@@ -57,7 +57,18 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (azureARM) {
       clientText += `${client.ctorName}() instead.\n`;
     } else if (client.parent) {
-      clientText += `[${client.parent.clientName}.${client.ctorName}] instead.\n`;
+      // find the accessor method
+      let accessorMethod: string | undefined;
+      for (const clientAccessor of client.parent.clientAccessors) {
+        if (clientAccessor.subClient === client) {
+          accessorMethod = clientAccessor.accessorName;
+          break;
+        }
+      }
+      if (!accessorMethod) {
+        throw new Error(`didn't find accessor method for client ${client.clientName} on parent client ${client.parent.clientName}`);
+      }
+      clientText += `[${client.parent.clientName}.${accessorMethod}] instead.\n`;
     } else {
       clientText += 'a constructor function instead.\n';
     }
@@ -137,8 +148,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      opText += `// ${clientAccessor.subClient.ctorName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
-      opText += `func (client *${client.clientName}) ${clientAccessor.subClient.ctorName}() *${clientAccessor.subClient.clientName} {\n`;
+      opText += `// ${clientAccessor.accessorName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
+      opText += `func (client *${client.clientName}) ${clientAccessor.accessorName}() *${clientAccessor.subClient.clientName} {\n`;
       opText += `\treturn &${clientAccessor.subClient.clientName}{\n`;
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
