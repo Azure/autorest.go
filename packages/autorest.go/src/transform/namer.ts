@@ -78,32 +78,24 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.rawJSONAsBytes = rawJSONAsBytes;
   const sliceElementsByValue = await session.getValue('slice-elements-byval', false);
   model.language.go!.sliceElementsByValue = sliceElementsByValue;
-  const moduleVersion = await session.getValue('module-version', '');
-  if (moduleVersion !== '' && !moduleVersion.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
-    throw new Error(`module version ${moduleVersion} must in the format major.minor.patch[-beta.N]`);
-  }
-  model.language.go!.moduleVersion = moduleVersion;
 
-  let module = await session.getValue('module', 'none');
-  if (module !== 'none') {
-    if (module.match(/\/v\d+$/)) {
-      throw new Error('module name must not contain major version suffix');
-    }
-    if (moduleVersion !== '') {
-      // if the modules major version is greater than one, add a major version suffix to the module name
-      const majorVersion = moduleVersion.substring(0, moduleVersion.indexOf('.'));
-      if (Number(majorVersion) > 1) {
-        module += '/v' + majorVersion;
-      }
-    }
+  const moduleVersion = await session.getValue('module-version', '');
+  if (moduleVersion !== '') {
+    model.language.go!.moduleVersion = moduleVersion;
+  }
+
+  const module = await session.getValue('module', '');
+  if (module !== '') {
+    model.language.go!.module = module;
   }
   model.language.go!.module = module;
 
-  const containingModule = await session.getValue('containing-module', 'none');
-  if (containingModule !== 'none' && module !== 'none') {
+  const containingModule = await session.getValue('containing-module', '');
+  if (containingModule !== '' && module !== '') {
     throw new Error('--module and --containing-module are mutually exclusive');
   }
   model.language.go!.containingModule = containingModule;
+
   const singleClient = await session.getValue('single-client', false);
   model.language.go!.singleClient = singleClient;
 

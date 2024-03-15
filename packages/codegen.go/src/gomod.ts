@@ -9,13 +9,13 @@ import { lt, toSemver } from '@azure-tools/codegen';
 // Creates the content in go.mod if the --module switch was specified.
 // if there's a preexisting go.mod file, update its specified version of azcore as needed.
 export async function generateGoModFile(codeModel: go.CodeModel, existingGoMod?: string): Promise<string> {
-  const modName = codeModel.options.module;
-  if (!modName) {
+  if (!codeModel.options.module) {
     if (!existingGoMod) {
       return '';
     }
-    throw new Error('--module is required when go.mod exists');
+    throw new Error('--module and --module-version are required when go.mod exists');
   }
+  const modName = codeModel.options.module.name;
 
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.

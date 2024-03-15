@@ -62,16 +62,22 @@ export interface Options {
   // the module into which the package is being generated
   containingModule?: string;
 
-  // the module being generated
-  module?: string;
-
-  moduleVersion?: string;
+  // module and containingModule are mutually exclusive
+  module?: Module;
 
   azcoreVersion?: string;
 
   rawJSONAsBytes: boolean;
 
   sliceElementsByval: boolean;
+}
+
+export interface Module {
+  // the full module path excluding any major version suffix
+  name: string;
+  
+  // the semantic version x.y.z[-beta.N]
+  version: string;
 }
 
 // MarshallingRequirements contains flags for required marshalling helpers
@@ -953,6 +959,24 @@ export class Options implements Options {
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
     this.disallowUnknownFields = disallowUnknownFields;
+  }
+}
+
+export class Module implements Module {
+  constructor(name: string, version: string) {
+    if (name.match(/\/v\d+$/)) {
+      throw new Error('module name must not contain major version suffix');
+    }
+    if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
+      throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
+    }
+    // if the module's major version is greater than one, add a major version suffix to the module name
+    const majorVersion = version.substring(0, version.indexOf('.'));
+    if (Number(majorVersion) > 1) {
+      name += '/v' + majorVersion;
+    }
+    this.name = name;
+    this.version = version;
   }
 }
 
