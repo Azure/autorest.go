@@ -968,7 +968,7 @@ export class Module implements Module {
       throw new Error('module name must not contain major version suffix');
     }
     if (!version.match(/^(\d+\.\d+\.\d+(?:-beta\.\d+)?)?$/)) {
-      throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
+      throw new Error(`module version ${version} must be in the format major.minor.patch[-beta.N]`);
     }
     // if the module's major version is greater than one, add a major version suffix to the module name
     const majorVersion = version.substring(0, version.indexOf('.'));
