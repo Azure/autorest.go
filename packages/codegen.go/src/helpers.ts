@@ -553,7 +553,7 @@ export function formatCommentAsBulletItem(description: string): string {
 export function getParentImport(codeModel: go.CodeModel): string {
   const clientPkg = codeModel.packageName;
   if (codeModel.options.module) {
-    return codeModel.options.module;
+    return codeModel.options.module.name;
   } else if (codeModel.options.containingModule) {
     return codeModel.options.containingModule + '/' + clientPkg;
   } else {

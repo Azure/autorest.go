@@ -20,13 +20,13 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
   }
   // data-plane clients must manage their own constants for these values
   if (codeModel.type === 'azure-arm') {
-    if (!codeModel.options.moduleVersion) {
-      throw new Error('--module-version is a required parameter when --azure-arm is set');
+    if (!codeModel.options.module) {
+      throw new Error('--module and --module-version are required parameters when --azure-arm is set');
     }
     text += 'const (\n';
     // strip off any major version suffix
-    text += `\tmoduleName = "${codeModel.options.module?.replace(/\/v\d+$/, '')}"\n`;
-    text += `\tmoduleVersion = "v${codeModel.options.moduleVersion}"\n`;
+    text += `\tmoduleName = "${codeModel.options.module.name.replace(/\/v\d+$/, '')}"\n`;
+    text += `\tmoduleVersion = "v${codeModel.options.module.version}"\n`;
     text += ')\n\n';
   }
   for (const enm of values(codeModel.constants)) {

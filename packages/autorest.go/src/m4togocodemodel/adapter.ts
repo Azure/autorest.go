@@ -57,12 +57,11 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.needsXMLDictionaryUnmarshalling) {
       codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper = true;
     }
-    if (session.model.language.go!.moduleVersion !== '') {
-      codeModel.options.moduleVersion = session.model.language.go!.moduleVersion;
-    }
-    if (session.model.language.go!.module !== 'none') {
-      codeModel.options.module = session.model.language.go!.module;
-    } else if (session.model.language.go!.containingModule !== 'none') {
+    if (session.model.language.go!.module && session.model.language.go!.moduleVersion) {
+      codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion);
+    } else if (session.model.language.go!.module || session.model.language.go!.moduleVersion) {
+      throw new Error('--module and --module-version must both or neither be set');
+    } else if (session.model.language.go!.containingModule !== '') {
       codeModel.options.containingModule = session.model.language.go!.containingModule;
     }
     adaptConstantTypes(session.model, codeModel);

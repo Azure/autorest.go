@@ -23,11 +23,10 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   }
 
   const codeModel = new go.CodeModel(info, 'data-plane', packageNameFromOutputFolder(context.emitterOutputDir), options);
-  if (context.options.module) {
-    codeModel.options.module = context.options.module;
-  }
-  if (context.options['module-version']) {
-    codeModel.options.moduleVersion = context.options['module-version'];
+  if (context.options.module && context.options['module-version']) {
+    codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
+  } else if (context.options.module || context.options['module-version']) {
+    throw new Error('--module and --module-version must both or neither be set');
   }
   if (context.options['rawjson-as-bytes']) {
     codeModel.options.rawJSONAsBytes = true;

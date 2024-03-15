@@ -131,46 +131,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // generate client constructor (we do this only for ARM)
 
     if (azureARM) {
-      // build constructor params
-      const methodParams = new Array<string>();
-      const paramDocs = new Array<string>();
-      // AzureARM is the simplest case, no parametertized host etc
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      if (client.parameters.length > 0) {
-        client.parameters.sort(helpers.sortParametersByRequired);
-        for (const clientParam of values(client.parameters)) {
-          methodParams.push(`${clientParam.paramName} ${helpers.formatParameterTypeName(clientParam)}`);
-          if (clientParam.description) {
-            paramDocs.push(helpers.formatCommentAsBulletItem(`${clientParam.paramName} - ${clientParam.description}`));
-          }
-        }
-      }
-      methodParams.push('credential azcore.TokenCredential');
-      paramDocs.push(helpers.formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
-      methodParams.push('options *arm.ClientOptions');
-      paramDocs.push(helpers.formatCommentAsBulletItem('options - pass nil to accept the default values.'));
-
-      // now build constructor
-      clientText += `// ${client.ctorName} creates a new instance of ${clientName} with the specified values.\n`;
-      for (const doc of values(paramDocs)) {
-        clientText += `${doc}\n`;
-      }
-
-      clientText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
-      clientText += `\tcl, err := ${clientPkg}.NewClient(moduleName, moduleVersion, credential, options)\n`;
-      clientText += '\tif err != nil {\n';
-      clientText += '\t\treturn nil, err\n';
-      clientText += '\t}\n';
-
-      // construct client literal
-      clientText += `\tclient := &${clientName}{\n`;
-      for (const clientParam of values(client.parameters)) {
-        clientText += `\t\t${clientParam.paramName}: ${clientParam.paramName},\n`;
-      }
-      clientText += '\tinternal: cl,\n';
-      clientText += '\t}\n';
-      clientText += '\treturn client, nil\n';
-      clientText += '}\n\n';
+      clientText += generateARMClientConstructor(client, imports);
     }
 
     // generate client accessors and operations
@@ -222,6 +183,50 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     operations.push(new OperationGroupContent(client.clientName, text));
   }
   return operations;
+}
+
+function generateARMClientConstructor(client: go.Client, imports: ImportManager): string {
+  // build constructor params
+  const methodParams = new Array<string>();
+  const paramDocs = new Array<string>();
+  // AzureARM is the simplest case, no parametertized host etc
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  if (client.parameters.length > 0) {
+    client.parameters.sort(helpers.sortParametersByRequired);
+    for (const clientParam of values(client.parameters)) {
+      methodParams.push(`${clientParam.paramName} ${helpers.formatParameterTypeName(clientParam)}`);
+      if (clientParam.description) {
+        paramDocs.push(helpers.formatCommentAsBulletItem(`${clientParam.paramName} - ${clientParam.description}`));
+      }
+    }
+  }
+  methodParams.push('credential azcore.TokenCredential');
+  paramDocs.push(helpers.formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
+  methodParams.push('options *arm.ClientOptions');
+  paramDocs.push(helpers.formatCommentAsBulletItem('options - pass nil to accept the default values.'));
+
+  // now build constructor
+  let ctorText = `// ${client.ctorName} creates a new instance of ${client.clientName} with the specified values.\n`;
+  for (const doc of values(paramDocs)) {
+    ctorText += `${doc}\n`;
+  }
+
+  ctorText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${client.clientName}, error) {\n`;
+  ctorText += '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
+  ctorText += '\tif err != nil {\n';
+  ctorText += '\t\treturn nil, err\n';
+  ctorText += '\t}\n';
+
+  // construct client literal
+  ctorText += `\tclient := &${client.clientName}{\n`;
+  for (const clientParam of values(client.parameters)) {
+    ctorText += `\t\t${clientParam.paramName}: ${clientParam.paramName},\n`;
+  }
+  ctorText += '\tinternal: cl,\n';
+  ctorText += '\t}\n';
+  ctorText += '\treturn client, nil\n';
+  ctorText += '}\n\n';
+  return ctorText;
 }
 
 // use this to generate the code that will help process values returned in response headers
