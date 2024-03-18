@@ -144,7 +144,7 @@ function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
       if (!byValue) {
         byValue = param.byValue;
       }
-      const field = new go.StructField(param.paramName, param.type, byValue);
+      const field = new go.StructField(param.name, param.type, byValue);
       field.description = param.description;
       structType.fields.push(field);
     }

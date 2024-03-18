@@ -38,7 +38,7 @@ const requiredHelpers = new RequiredHelpers();
 
 export function getServerName(client: go.Client): string {
   // for the fake server, we use the suffix Server instead of Client
-  return capitalize(client.clientName.replace(/[C|c]lient$/, 'Server'));
+  return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
 export async function generateServers(codeModel: go.CodeModel): Promise<ServerContent> {
@@ -60,7 +60,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     const serverName = getServerName(client);
 
     let content: string;
-    content = `// ${serverName} is a fake server for instances of the ${clientPkg}.${client.clientName} type.\n`;
+    content = `// ${serverName} is a fake server for instances of the ${clientPkg}.${client.name} type.\n`;
     content += `type ${serverName} struct{\n`;
 
     // we might remove some operations from the list
@@ -84,7 +84,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       }
 
       const operationName = fixUpMethodName(method);
-      content += `\t// ${operationName} is the fake for method ${client.clientName}.${operationName}\n`;
+      content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
       if (method.responseEnvelope.result && go.isAnyResult(method.responseEnvelope.result)) {
         for (const httpStatus of values(method.httpStatusCodes)) {
@@ -122,7 +122,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     const serverTransport = `${serverName}Transport`;
 
     content += `// New${serverTransport} creates a new instance of ${serverTransport} with the provided implementation.\n`;
-    content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${client.clientName} via the\n`;
+    content += `// The returned ${serverTransport} instance is connected to an instance of ${clientPkg}.${client.name} via the\n`;
     content += '// azcore.ClientOptions.Transporter field in the client\'s constructor parameters.\n';
     content += `func New${serverTransport}(srv *${serverName}) *${serverTransport} {\n`;
     if (countLROs === 0 && countPagers === 0) {
@@ -145,7 +145,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       content += '\t}\n}\n\n';
     }
 
-    content += `// ${serverTransport} connects instances of ${clientPkg}.${client.clientName} to instances of ${serverName}.\n`;
+    content += `// ${serverTransport} connects instances of ${clientPkg}.${client.name} to instances of ${serverName}.\n`;
     content += `// Don't use this type directly, use New${serverTransport} instead.\n`;
     content += `type ${serverTransport} struct {\n`;
     content += `\tsrv *${serverName}\n`;
@@ -191,7 +191,7 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
 
   for (const method of values(finalMethods)) {
     const operationName = fixUpMethodName(method);
-    content += `\tcase "${client.clientName}.${operationName}":\n`;
+    content += `\tcase "${client.name}.${operationName}":\n`;
     content += `\t\tresp, err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
   content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled API %s", method)\n';
@@ -309,7 +309,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         if (go.isConstantType(param.type)) {
           pkgPrefix = clientPkg + '.';
         }
-        content += `\tvar ${param.paramName} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+        content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
       }
     }
     content += '\tfor {\n';
@@ -321,7 +321,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\t\tswitch fn := part.FormName(); fn {\n';
     for (const param of values(method.parameters)) {
       if (go.isMultipartFormBodyParameter(param)) {
-        content += `\t\tcase "${param.paramName}":\n`;
+        content += `\t\tcase "${param.name}":\n`;
         content += '\t\t\tcontent, err = io.ReadAll(part)\n';
         content += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
         let assignedValue: string;
@@ -335,14 +335,14 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           if (go.isQualifiedType(param.type.elementType) && param.type.elementType.typeName === 'ReadSeekCloser') {
             imports.add('bytes');
             imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-            assignedValue = `append(${param.paramName}, streaming.NopCloser(bytes.NewReader(content)))`;
+            assignedValue = `append(${param.name}, streaming.NopCloser(bytes.NewReader(content)))`;
           } else {
             throw new Error(`uhandled multipart parameter array element type ${go.getTypeDeclaration(param.type.elementType)}`);
           }
         } else {
           throw new Error(`uhandled multipart parameter type ${go.getTypeDeclaration(param.type)}`);
         }
-        content += `\t\t\t${param.paramName} = ${assignedValue}\n`;
+        content += `\t\t\t${param.name} = ${assignedValue}\n`;
       }
     }
     content += '\t\tdefault:\n\t\t\treturn nil, fmt.Errorf("unexpected part %s", fn)\n';
@@ -355,7 +355,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         if (go.isConstantType(param.type)) {
           pkgPrefix = clientPkg + '.';
         }
-        content += `\tvar ${param.paramName} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
+        content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
       }
     }
     content += '\tif err := req.ParseForm(); err != nil {\n\t\treturn nil, &nonRetriableError{fmt.Errorf("failed parsing form data: %v", err)}\n\t}\n';
@@ -372,7 +372,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         } else {
           throw new Error(`uhandled form parameter type ${go.getTypeDeclaration(param.type)}`);
         }
-        content += `\t\t\t${param.paramName} = ${assignedValue}\n`;
+        content += `\t\t\t${param.name} = ${assignedValue}\n`;
       }
     }
     content += '\t\t}\n'; // end switch
@@ -525,8 +525,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
   const paramValues = new Map<string, string>();
 
   const createLocalVariableName = function(param: go.Parameter, suffix: string): string {
-    const paramName = `${uncapitalize(param.paramName)}${suffix}`;
-    paramValues.set(param.paramName, paramName);
+    const paramName = `${uncapitalize(param.name)}${suffix}`;
+    paramValues.set(param.name, paramName);
     return paramName;
   };
 
@@ -808,13 +808,13 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
   // create the param groups and populate their values
   for (const paramGroup of values(paramGroups.keys())) {
     if (paramGroup.required) {
-      content += `\t${uncapitalize(paramGroup.paramName)} := ${clientPkg}.${paramGroup.groupName}{\n`;
+      content += `\t${uncapitalize(paramGroup.name)} := ${clientPkg}.${paramGroup.groupName}{\n`;
       for (const param of values(paramGroups.get(paramGroup))) {
-        content += `\t\t${capitalize(param.paramName)}: ${getFinalParamValue(clientPkg, param, paramValues)},\n`;
+        content += `\t\t${capitalize(param.name)}: ${getFinalParamValue(clientPkg, param, paramValues)},\n`;
       }
       content += '\t}\n';
     } else {
-      content += `\tvar ${uncapitalize(paramGroup.paramName)} *${clientPkg}.${paramGroup.groupName}\n`;
+      content += `\tvar ${uncapitalize(paramGroup.name)} *${clientPkg}.${paramGroup.groupName}\n`;
       const params = paramGroups.get(paramGroup);
       const paramNilCheck = new Array<string>();
       for (const param of values(params)) {
@@ -831,19 +831,19 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
           }
         } else if (go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param)) {
           imports.add('reflect');
-          paramNilCheck.push(`!reflect.ValueOf(${param.paramName}).IsZero()`);
+          paramNilCheck.push(`!reflect.ValueOf(${param.name}).IsZero()`);
         } else {
           paramNilCheck.push(`${getFinalParamValue(clientPkg, param, paramValues)} != nil`);
         }
       }
       content += `\tif ${paramNilCheck.join(' || ')} {\n`;
-      content += `\t\t${uncapitalize(paramGroup.paramName)} = &${clientPkg}.${paramGroup.groupName}{\n`;
+      content += `\t\t${uncapitalize(paramGroup.name)} = &${clientPkg}.${paramGroup.groupName}{\n`;
       for (const param of values(params)) {
         let byRef = '&';
         if (param.byValue || (!helpers.isRequiredParameter(param) && !go.isBodyParameter(param) && !go.isFormBodyParameter(param) && !go.isMultipartFormBodyParameter(param))) {
           byRef = '';
         }
-        content += `\t\t\t${capitalize(param.paramName)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
+        content += `\t\t\t${capitalize(param.name)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
       }
       content += '\t\t}\n';
       content += '\t}\n';
@@ -882,7 +882,7 @@ function populateApiParams(clientPkg: string, method: go.Method, paramValues: Ma
       }
       // by convention, for param groups, the param parsing code
       // creates a local var with the name of the param
-      params.push(uncapitalize(param.paramName));
+      params.push(uncapitalize(param.name));
       continue;
     }
     imports.addImportForType(param.type);
@@ -899,7 +899,7 @@ function getRawParamValue(param: go.Parameter): string {
     // multipart form data values have been read and assigned
     // to local params with the same name. must check this first
     // as it's a superset of other cases that follow.
-    return param.paramName;
+    return param.name;
   } else if (go.isPathParameter(param)) {
     // path params are in the matches slice
     return `matches[regex.SubexpIndex("${sanitizeRegexpCaptureGroupName(param.pathSegment)}")]`;
@@ -925,13 +925,13 @@ function getRawParamValue(param: go.Parameter): string {
   } else if (go.isURIParameter(param)) {
     return 'req.URL.Host';
   } else {
-    throw new Error(`unhandled parameter ${param.paramName}`);
+    throw new Error(`unhandled parameter ${param.name}`);
   }
 }
 
 // getFinalParamValue returns the "final" value of param to be passed to the fake.
 function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues: Map<string, string>): string {
-  let paramValue = paramValues.get(param.paramName);
+  let paramValue = paramValues.get(param.name);
   if (!paramValue) {
     // the param didn't require parsing so the "raw" value can be used
     paramValue = getRawParamValue(param);
@@ -994,7 +994,7 @@ function getAPIParametersSig(method: go.Method, imports: ImportManager, pkgName?
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    let paramName = uncapitalize(methodParam.paramName);
+    let paramName = uncapitalize(methodParam.name);
     if (helpers.isParameter(methodParam) && go.isURIParameter(methodParam)) {
       paramName = 'host';
     }

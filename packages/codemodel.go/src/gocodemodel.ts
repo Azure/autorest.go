@@ -165,7 +165,7 @@ export type PossibleType = BytesType | ConstantType | InterfaceType | LiteralVal
 
 // StructField describes a field definition within a struct
 export interface StructField {
-  fieldName: string;
+  name: string;
 
   description?: string;
 
@@ -216,7 +216,7 @@ export type ConstantValueValueTypes = boolean | number | string;
 
 // ConstantValue describes a const value definition (e.g. FooTypeValue FooType = "value")
 export interface ConstantValue {
-  valueName: string;
+  name: string;
 
   description?: string;
 
@@ -227,7 +227,7 @@ export interface ConstantValue {
 
 // Client is an SDK client
 export interface Client {
-  clientName: string;
+  name: string;
 
   description: string;
 
@@ -259,7 +259,7 @@ export interface Client {
 // ClientAccessor is a client method that returns a sub-client instance.
 export interface ClientAccessor {
   // the name of the client accessor method
-  accessorName: string;
+  name: string;
 
   // the client returned by the accessor method
   subClient: Client;
@@ -267,7 +267,7 @@ export interface ClientAccessor {
 
 // Method is a method on a client
 export interface Method {
-  methodName: string;
+  name: string;
 
   description?: string;
 
@@ -321,7 +321,7 @@ export interface PageableMethod extends Method {
 // It's unique from a regular Method as it's not exported and has no optional params/response envelope.
 // thus, it's not included in the array of methods for a client.
 export interface NextPageMethod {
-  methodName: string;
+  name: string;
  
   httpPath: string;
 
@@ -369,7 +369,7 @@ export interface ClientSideDefault {
 
 // Parameter is a parameter for a client method
 export interface Parameter {
-  paramName: string;
+  name: string;
 
   description?: string;
 
@@ -409,8 +409,8 @@ export interface XMLInfo {
 export type ParameterLocation = 'client' | 'method';
 
 export interface ParameterGroup {
-  // paramName is the name of the parameter
-  paramName: string;
+  // name is the name of the parameter
+  name: string;
 
   description?: string;
 
@@ -1017,7 +1017,7 @@ export class CodeModel implements CodeModel {
 
     this.constants.sort((a: ConstantType, b: ConstantType) => { return sortAscending(a.name, b.name); });
     for (const enm of this.constants) {
-      enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.valueName, b.valueName); });
+      enm.values.sort((a: ConstantValue, b: ConstantValue) => { return sortAscending(a.name, b.name); });
     }
   
     this.interfaceTypes.sort((a: InterfaceType, b: InterfaceType) => { return sortAscending(a.name, b.name); });
@@ -1029,12 +1029,12 @@ export class CodeModel implements CodeModel {
   
     this.models.sort((a: ModelType | PolymorphicType, b: ModelType | PolymorphicType) => { return sortAscending(a.name, b.name); });
     for (const model of this.models) {
-      model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.fieldName, b.fieldName); });
+      model.fields.sort((a: ModelField, b: ModelField) => { return sortAscending(a.name, b.name); });
     }
   
     this.paramGroups.sort((a: StructType, b: StructType) => { return sortAscending(a.name, b.name); });
     for (const paramGroup of this.paramGroups) {
-      paramGroup.fields.sort((a: StructField, b: StructField) => { return sortAscending(a.fieldName, b.fieldName); });
+      paramGroup.fields.sort((a: StructField, b: StructField) => { return sortAscending(a.name, b.name); });
     }
   
     this.responseEnvelopes.sort((a: ResponseEnvelope, b: ResponseEnvelope) => { return sortAscending(a.name, b.name); });
@@ -1042,17 +1042,17 @@ export class CodeModel implements CodeModel {
       respEnv.headers.sort((a: HeaderResponse | HeaderMapResponse, b: HeaderResponse | HeaderMapResponse) => { return sortAscending(a.fieldName, b.fieldName); });
     }
   
-    this.clients.sort((a: Client, b: Client) => { return sortAscending(a.clientName, b.clientName); });
+    this.clients.sort((a: Client, b: Client) => { return sortAscending(a.name, b.name); });
     for (const client of this.clients) {
-      client.methods.sort((a: Method, b: Method) => { return sortAscending(a.methodName, b.methodName); });
-      client.clientAccessors.sort((a: ClientAccessor, b: ClientAccessor) => { return sortAscending(a.accessorName, b.accessorName); });
+      client.methods.sort((a: Method, b: Method) => { return sortAscending(a.name, b.name); });
+      client.clientAccessors.sort((a: ClientAccessor, b: ClientAccessor) => { return sortAscending(a.name, b.name); });
     }
   }
 }
 
 export class Client implements Client {
   constructor(name: string, description: string, ctorName: string) {
-    this.clientName = name;
+    this.name = name;
     this.complexHostParams = false;
     this.ctorName = ctorName;
     this.description = description;
@@ -1064,8 +1064,8 @@ export class Client implements Client {
 }
 
 export class ClientAccessor implements ClientAccessor {
-  constructor(accessorName: string, subClient: Client) {
-    this.accessorName = accessorName;
+  constructor(name: string, subClient: Client) {
+    this.name = name;
     this.subClient = subClient;
   }
 }
@@ -1080,8 +1080,8 @@ export class ConstantType implements ConstantType {
 }
 
 export class ConstantValue implements ConstantValue {
-  constructor(valueName: string, type: ConstantType, value: ConstantValueValueTypes) {
-    this.valueName = valueName;
+  constructor(name: string, type: ConstantType, value: ConstantValueValueTypes) {
+    this.name = name;
     this.type = type;
     this.value = value;
   }
@@ -1105,7 +1105,7 @@ export class Method implements Method {
     this.httpMethod = httpMethod;
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
-    this.methodName = name;
+    this.name = name;
     this.naming = naming;
     this.parameters = new Array<Parameter>();
   }
@@ -1122,7 +1122,7 @@ export class LROMethod implements LROMethod {
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
     this.isLRO = true;
-    this.methodName = name;
+    this.name = name;
     this.naming = naming;
     this.parameters = new Array<Parameter>();
   }
@@ -1139,7 +1139,7 @@ export class PageableMethod implements PageableMethod {
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
     this.isPageable = true;
-    this.methodName = name;
+    this.name = name;
     this.naming = naming;
     this.parameters = new Array<Parameter>();
   }
@@ -1157,7 +1157,7 @@ export class LROPageableMethod implements LROPageableMethod {
     this.httpStatusCodes = statusCodes;
     this.isLRO = true;
     this.isPageable = true;
-    this.methodName = name;
+    this.name = name;
     this.naming = naming;
     this.parameters = new Array<Parameter>();
   }
@@ -1174,7 +1174,7 @@ export class NextPageMethod implements NextPageMethod {
     this.httpPath = httpPath;
     this.httpStatusCodes = statusCodes;
     this.isNextPageMethod = true;
-    this.methodName = name;
+    this.name = name;
     this.parameters = new Array<Parameter>();
   }
 }
@@ -1187,8 +1187,8 @@ export class StructType implements StructType {
 }
 
 export class StructField implements StructField {
-  constructor(fieldName: string, type: PossibleType, byValue: boolean) {
-    this.fieldName = fieldName;
+  constructor(name: string, type: PossibleType, byValue: boolean) {
+    this.name = name;
     this.type = type;
     this.byValue = byValue;
   }
@@ -1212,7 +1212,7 @@ export class ModelAnnotations implements ModelAnnotations {
 
 export class ModelField implements ModelField {
   constructor(name: string, type: PossibleType, byValue: boolean, serializedName: string, annotations: ModelFieldAnnotations) {
-    this.fieldName = name;
+    this.name = name;
     this.type = type;
     this.byValue = byValue;
     this.serializedName = serializedName;
@@ -1291,8 +1291,8 @@ export class TimeType implements TimeType {
 }
 
 export class Parameter implements Parameter {
-  constructor(paramName: string, type: PossibleType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, type: PossibleType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.type = type;
     this.paramType = paramType;
     this.byValue = byValue;
@@ -1301,8 +1301,8 @@ export class Parameter implements Parameter {
 }
 
 export class BodyParameter implements BodyParameter {
-  constructor(paramName: string, bodyFormat: BodyFormat, contentType: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.paramName = paramName;
+  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
+    this.name = name;
     this.bodyFormat = bodyFormat;
     this.contentType = contentType;
     this.type = type;
@@ -1313,8 +1313,8 @@ export class BodyParameter implements BodyParameter {
 }
 
 export class FormBodyParameter implements FormBodyParameter {
-  constructor(paramName: string, formDataName: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.paramName = paramName;
+  constructor(name: string, formDataName: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
+    this.name = name;
     this.formDataName = formDataName;
     this.type = type;
     this.paramType = paramType;
@@ -1324,8 +1324,8 @@ export class FormBodyParameter implements FormBodyParameter {
 }
 
 export class FormBodyCollectionParameter implements FormBodyCollectionParameter {
-  constructor(paramName: string, formDataName: string, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean) {
-    this.paramName = paramName;
+  constructor(name: string, formDataName: string, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean) {
+    this.name = name;
     this.formDataName = formDataName;
     this.type = type;
     this.collectionFormat = collectionFormat;
@@ -1336,8 +1336,8 @@ export class FormBodyCollectionParameter implements FormBodyCollectionParameter 
 }
 
 export class MultipartFormBodyParameter implements MultipartFormBodyParameter {
-  constructor(paramName: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.paramName = paramName;
+  constructor(name: string, type: PossibleType, paramType: ParameterType, byValue: boolean) {
+    this.name = name;
     this.multipartForm = true;
     this.type = type;
     this.paramType = paramType;
@@ -1347,8 +1347,8 @@ export class MultipartFormBodyParameter implements MultipartFormBodyParameter {
 }
 
 export class HeaderParameter implements HeaderParameter {
-  constructor(paramName: string, headerName: string, type: HeaderType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, headerName: string, type: HeaderType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.headerName = headerName;
     this.type = type;
     this.paramType = paramType;
@@ -1358,8 +1358,8 @@ export class HeaderParameter implements HeaderParameter {
 }
 
 export class HeaderCollectionParameter implements HeaderCollectionParameter {
-  constructor(paramName: string, headerName: string, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, headerName: string, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.headerName = headerName;
     this.type = type;
     this.collectionFormat = collectionFormat;
@@ -1370,8 +1370,8 @@ export class HeaderCollectionParameter implements HeaderCollectionParameter {
 }
 
 export class HeaderMapParameter implements HeaderMapParameter {
-  constructor(paramName: string, headerName: string, type: MapType, collectionPrefix: string, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, headerName: string, type: MapType, collectionPrefix: string, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.headerName = headerName;
     this.type = type;
     this.collectionPrefix = collectionPrefix;
@@ -1382,8 +1382,8 @@ export class HeaderMapParameter implements HeaderMapParameter {
 }
 
 export class PathParameter implements PathParameter {
-  constructor(paramName: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
     this.type = type;
@@ -1394,8 +1394,8 @@ export class PathParameter implements PathParameter {
 }
 
 export class PathCollectionParameter implements PathCollectionParameter {
-  constructor(paramName: string, pathSegment: string, isEncoded: boolean, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
     this.type = type;
@@ -1407,8 +1407,8 @@ export class PathCollectionParameter implements PathCollectionParameter {
 }
 
 export class QueryParameter implements QueryParameter {
-  constructor(paramName: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
     this.type = type;
@@ -1419,8 +1419,8 @@ export class QueryParameter implements QueryParameter {
 }
 
 export class QueryCollectionParameter implements QueryCollectionParameter {
-  constructor(paramName: string, queryParam: string, isEncoded: boolean, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
     this.type = type;
@@ -1432,8 +1432,8 @@ export class QueryCollectionParameter implements QueryCollectionParameter {
 }
 
 export class URIParameter implements URIParameter {
-  constructor(paramName: string, uriPathSegment: string, type: ConstantType | PrimitiveType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.paramName = paramName;
+  constructor(name: string, uriPathSegment: string, type: ConstantType | PrimitiveType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+    this.name = name;
     this.uriPathSegment = uriPathSegment;
     this.type = type;
     this.paramType = paramType;
@@ -1445,7 +1445,7 @@ export class URIParameter implements URIParameter {
 export class ResumeTokenParameter implements ResumeTokenParameter {
   constructor() {
     this.isResumeToken = true;
-    this.paramName = 'ResumeToken';
+    this.name = 'ResumeToken';
     this.type = new PrimitiveType('string');
     this.paramType = 'optional';
     this.byValue = true;
@@ -1460,10 +1460,10 @@ export class ClientSideDefault implements ClientSideDefault {
 }
 
 export class ParameterGroup implements ParameterGroup {
-  constructor(paramName: string, groupName: string, required: boolean, location: ParameterLocation) {
+  constructor(name: string, groupName: string, required: boolean, location: ParameterLocation) {
     this.groupName = groupName;
     this.location = location;
-    this.paramName = paramName;
+    this.name = name;
     // params is required but must be populated post construction
     this.params = new Array<Parameter>();
     this.required = required;

@@ -38,14 +38,14 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
     text += 'const (\n';
     for (const val of values(enm.values)) {
       if (val.description) {
-        text += `\t${comment(`${val.valueName} - ${val.description}`, '//', undefined, commentLength)}\n`;
+        text += `\t${comment(`${val.name} - ${val.description}`, '//', undefined, commentLength)}\n`;
       }
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {
         formatValue = `${val.value}`;
       }
-      text += `\t${val.valueName} ${enm.name} = ${formatValue}\n`;
-      vals.push(val.valueName);
+      text += `\t${val.name} ${enm.name} = ${formatValue}\n`;
+      vals.push(val.name);
     }
     text += ')\n\n';
     text += `// ${enm.valuesFuncName} returns the possible values for the ${enm.name} const type.\n`;

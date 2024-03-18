@@ -51,7 +51,6 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
 
     let clientText = '';
     let hostParamName: string | undefined;
-    const clientName = client.clientName;
     clientText += `${comment(`${client.description}`, '//', undefined, helpers.commentLength)}\n`;
     clientText += '// Don\'t use this type directly, use ';
     if (azureARM) {
@@ -61,18 +60,18 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       let accessorMethod: string | undefined;
       for (const clientAccessor of client.parent.clientAccessors) {
         if (clientAccessor.subClient === client) {
-          accessorMethod = clientAccessor.accessorName;
+          accessorMethod = clientAccessor.name;
           break;
         }
       }
       if (!accessorMethod) {
-        throw new Error(`didn't find accessor method for client ${client.clientName} on parent client ${client.parent.clientName}`);
+        throw new Error(`didn't find accessor method for client ${client.name} on parent client ${client.parent.name}`);
       }
-      clientText += `[${client.parent.clientName}.${accessorMethod}] instead.\n`;
+      clientText += `[${client.parent.name}.${accessorMethod}] instead.\n`;
     } else {
       clientText += 'a constructor function instead.\n';
     }
-    clientText += `type ${clientName} struct {\n`;
+    clientText += `type ${client.name} struct {\n`;
     clientText += `\tinternal *${clientPkg}.Client\n`;
     if (azureARM) {
       hostParamName = 'internal.Endpoint()';
@@ -81,7 +80,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       // the client as the full URL is constructed in the operations.
       // MUST check before non-complex host params case.
       for (const param of values(client.hostParams)) {
-        clientText += `\t${param.paramName} ${go.getTypeDeclaration(param.type)}\n`;
+        clientText += `\t${param.name} ${go.getTypeDeclaration(param.type)}\n`;
       }
     } else if (client.hostParams.length > 0) {
       // non-complex case.  the final endpoint URL will be constructed
@@ -120,7 +119,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
           }
           continue;
         }
-        clientText += `\t${clientParam.paramName} `;
+        clientText += `\t${clientParam.name} `;
         if (!isParamPointer(clientParam)) {
           clientText += `${go.getTypeDeclaration(clientParam.type)}\n`;
         } else {
@@ -148,16 +147,16 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // generate client accessors and operations
     let opText = '';
     for (const clientAccessor of client.clientAccessors) {
-      opText += `// ${clientAccessor.accessorName} creates a new instance of [${clientAccessor.subClient.clientName}].\n`;
-      opText += `func (client *${client.clientName}) ${clientAccessor.accessorName}() *${clientAccessor.subClient.clientName} {\n`;
-      opText += `\treturn &${clientAccessor.subClient.clientName}{\n`;
+      opText += `// ${clientAccessor.name} creates a new instance of [${clientAccessor.subClient.name}].\n`;
+      opText += `func (client *${client.name}) ${clientAccessor.name}() *${clientAccessor.subClient.name} {\n`;
+      opText += `\treturn &${clientAccessor.subClient.name}{\n`;
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
       for (const hostParam of client.hostParams) {
-        opText += `\t\t${hostParam.paramName}: client.${hostParam.paramName},\n`;
+        opText += `\t\t${hostParam.name}: client.${hostParam.name},\n`;
       }
       for (const param of client.parameters) {
-        opText += `\t\t${param.paramName}: client.${param.paramName},\n`;
+        opText += `\t\t${param.name}: client.${param.name},\n`;
       }
       opText += '\t}\n}\n\n';
     }
@@ -191,7 +190,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     text += imports.text();
     text += clientText;
     text += opText;
-    operations.push(new OperationGroupContent(client.clientName, text));
+    operations.push(new OperationGroupContent(client.name, text));
   }
   return operations;
 }
@@ -205,9 +204,9 @@ function generateARMClientConstructor(client: go.Client, imports: ImportManager)
   if (client.parameters.length > 0) {
     client.parameters.sort(helpers.sortParametersByRequired);
     for (const clientParam of values(client.parameters)) {
-      methodParams.push(`${clientParam.paramName} ${helpers.formatParameterTypeName(clientParam)}`);
+      methodParams.push(`${clientParam.name} ${helpers.formatParameterTypeName(clientParam)}`);
       if (clientParam.description) {
-        paramDocs.push(helpers.formatCommentAsBulletItem(`${clientParam.paramName} - ${clientParam.description}`));
+        paramDocs.push(helpers.formatCommentAsBulletItem(`${clientParam.name} - ${clientParam.description}`));
       }
     }
   }
@@ -217,21 +216,21 @@ function generateARMClientConstructor(client: go.Client, imports: ImportManager)
   paramDocs.push(helpers.formatCommentAsBulletItem('options - pass nil to accept the default values.'));
 
   // now build constructor
-  let ctorText = `// ${client.ctorName} creates a new instance of ${client.clientName} with the specified values.\n`;
+  let ctorText = `// ${client.ctorName} creates a new instance of ${client.name} with the specified values.\n`;
   for (const doc of values(paramDocs)) {
     ctorText += `${doc}\n`;
   }
 
-  ctorText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${client.clientName}, error) {\n`;
+  ctorText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${client.name}, error) {\n`;
   ctorText += '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   ctorText += '\tif err != nil {\n';
   ctorText += '\t\treturn nil, err\n';
   ctorText += '\t}\n';
 
   // construct client literal
-  ctorText += `\tclient := &${client.clientName}{\n`;
+  ctorText += `\tclient := &${client.name}{\n`;
   for (const clientParam of values(client.parameters)) {
-    ctorText += `\t\t${clientParam.paramName}: ${clientParam.paramName},\n`;
+    ctorText += `\t\t${clientParam.name}: ${clientParam.name},\n`;
   }
   ctorText += '\tinternal: cl,\n';
   ctorText += '\t}\n';
@@ -357,7 +356,7 @@ function emitPagerDefinition(client: go.Client, method: go.PageableMethod, impor
   text += `\t\tFetcher: func(ctx context.Context, page *${method.responseEnvelope.name}) (${method.responseEnvelope.name}, error) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
   if (generateFakes) {
-    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.clientName}.${fixUpMethodName(method)}")\n`;
+    text += `\t\tctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "${client.name}.${fixUpMethodName(method)}")\n`;
   }
   if (method.nextLinkName) {
     let nextLinkVar: string;
@@ -386,7 +385,7 @@ function emitPagerDefinition(client: go.Client, method: go.PageableMethod, impor
       }
       // add a definition for the nextReq func that uses the nextLinkOperation
       text += '&runtime.FetcherForNextLinkOptions{\n\t\t\t\tNextReq: func(ctx context.Context, encodedNextLink string) (*policy.Request, error) {\n';
-      text += `\t\t\t\t\treturn client.${method.nextPageMethod.methodName}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
+      text += `\t\t\t\t\treturn client.${method.nextPageMethod.name}(${nextOpParams.join(', ')})\n\t\t\t\t},\n\t\t\t})\n`;
     } else {
       text += 'nil)\n';
     }
@@ -426,8 +425,7 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
 function generateOperation(client: go.Client, method: go.Method, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'op');
-  const clientName = client.clientName;
-  let methodName = method.methodName;
+  let methodName = method.name;
   if(go.isPageableMethod(method) && !go.isLROMethod(method)) {
     methodName = fixUpMethodName(method);
   }
@@ -441,11 +439,11 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   } else {
     for (const param of values(helpers.getMethodParameters(method))) {
       if (param.description) {
-        text += `${helpers.formatCommentAsBulletItem(`${param.paramName} - ${param.description}`)}\n`;
+        text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
       }
     }
   }
-  text += `func (client *${clientName}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${client.name}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = helpers.getCreateRequestParameters(method);
   if (go.isPageableMethod(method) && !go.isLROMethod(method)) {
     text += '\treturn ';
@@ -454,7 +452,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
     return text;
   }
   text += '\tvar err error\n';
-  let operationName = `"${clientName}.${fixUpMethodName(method)}"`;
+  let operationName = `"${client.name}.${fixUpMethodName(method)}"`;
   if (generateFakes && injectSpans) {
     text += `\tconst operationName = ${operationName}\n`;
     operationName = 'operationName';
@@ -500,7 +498,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
 }
 
 function createProtocolRequest(client: go.Client, method: go.Method | go.NextPageMethod, imports: ImportManager, hostParamName?: string): string {
-  let name = method.methodName;
+  let name = method.name;
   if (go.isMethod(method)) {
     name = method.naming.requestMethod;
   }
@@ -513,8 +511,8 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
   }
 
   const returns = ['*policy.Request', 'error'];
-  let text = `${comment(name, '// ')} creates the ${method.methodName} request.\n`;
-  text += `func (client *${client.clientName}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
+  let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
+  text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
   let hostParam: string;
   if (client.complexHostParams) {
     imports.add('strings');
@@ -522,7 +520,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     text += `\thost := "${client.host!}"\n`;
     // get all the host params on the client
     for (const hostParam of values(client.hostParams)) {
-      text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${(<string>hostParam.paramName)}`, hostParam.type, imports)})\n`;
+      text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${(<string>hostParam.name)}`, hostParam.type, imports)})\n`;
     }
     // check for any method local host params
     for (const param of values(method.parameters)) {
@@ -538,7 +536,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     // swagger defines a host, use its const
     hostParam = '\thost';
   } else {
-    throw new Error(`no host or endpoint defined for method ${client.clientName}.${method.methodName}`);
+    throw new Error(`no host or endpoint defined for method ${client.name}.${method.name}`);
   }
   const hasPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each); }).any();
   // storage needs the client.u to be the source-of-truth for the full path.
@@ -591,18 +589,18 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (param: go.Parameter): string {
     if (!param.group) {
-      throw new Error(`emitParamGroupCheck called for ungrouped parameter ${param.paramName}`);
+      throw new Error(`emitParamGroupCheck called for ungrouped parameter ${param.name}`);
     }
     let client = '';
     if (param.location === 'client') {
       client = 'client.';
     }
-    const paramGroupName = uncapitalize(param.group.paramName);
+    const paramGroupName = uncapitalize(param.group.name);
     let optionalParamGroupCheck = `${client}${paramGroupName} != nil && `;
     if (param.group.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${capitalize(param.paramName)} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${client}${paramGroupName}.${capitalize(param.name)} != nil {\n`;
   };
   // add query parameters
   const encodedParams = new Array<go.QueryParameter>();
@@ -625,7 +623,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
-      qpText = `\tif client.${qp.paramName} != nil {\n`;
+      qpText = `\tif client.${qp.name} != nil {\n`;
       qpText += `\t\t${setter}\n`;
       qpText += '\t}\n';
     } else {
@@ -727,7 +725,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
-      text += `\tif client.${param.paramName} != nil {\n`;
+      text += `\tif client.${param.name} != nil {\n`;
       text += emitHeaderSet(param, '\t');
       text += '\t}\n';
     } else {
@@ -759,7 +757,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
         tagName = bodyParam.xml.name;
       }
       text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
-      const fieldName = capitalize(bodyParam.paramName);
+      const fieldName = capitalize(bodyParam.name);
       let tag = go.getTypeDeclaration(bodyParam.type.elementType);
       if (go.isModelType(bodyParam.type.elementType) && bodyParam.type.elementType.xml?.name) {
         tag = bodyParam.type.elementType.xml.name;
@@ -818,7 +816,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     }
   } else if (bodyParam.bodyFormat === 'binary') {
     if (helpers.isRequiredParameter(bodyParam)) {
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.paramName}, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
@@ -832,7 +830,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = <go.BodyParameter>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each); }).first();
     if (helpers.isRequiredParameter(bodyParam)) {
-      text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.paramName}))\n`;
+      text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
       text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
       text += '\treturn req, nil\n';
     } else {
@@ -847,7 +845,7 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
     text += '\tif err := runtime.SetMultipartFormData(req, map[string]any{\n';
     for (const param of values(method.parameters)) {
       if (go.isMultipartFormBodyParameter(param)) {
-        text += `\t\t\t"${param.paramName}": ${param.paramName},\n`;
+        text += `\t\t\t"${param.name}": ${param.name},\n`;
       }
     }
     text += '}); err != nil {';
@@ -888,10 +886,10 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
 }
 
 function emitClientSideDefault(param: go.HeaderParameter | go.QueryParameter, csd: go.ClientSideDefault, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
-  const defaultVar = uncapitalize(param.paramName) + 'Default';
+  const defaultVar = uncapitalize(param.name) + 'Default';
   let text = `\t${defaultVar} := ${helpers.formatLiteralValue(csd.defaultValue, true)}\n`;
-  text += `\tif options != nil && options.${capitalize(param.paramName)} != nil {\n`;
-  text += `\t\t${defaultVar} = *options.${capitalize(param.paramName)}\n`;
+  text += `\tif options != nil && options.${capitalize(param.name)} != nil {\n`;
+  text += `\t\t${defaultVar} = *options.${capitalize(param.name)}\n`;
   text += '}\n';
   let serializedName: string;
   if (go.isHeaderParameter(param)) {
@@ -1000,7 +998,7 @@ function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, 
     unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
   } else {
     // the remaining formats should have been handled elsewhere
-    throw new Error(`unhandled format ${format} for operation ${method.client.clientName}.${method.methodName}`);
+    throw new Error(`unhandled format ${format} for operation ${method.client.name}.${method.name}`);
   }
   return unmarshallerText;
 }
@@ -1010,9 +1008,8 @@ function createProtocolResponse(client: go.Client, method: go.Method, imports: I
     return '';
   }
   const name = method.naming.responseMethod;
-  const clientName = client.clientName;
-  let text = `${comment(name, '// ')} handles the ${method.methodName} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
+  let text = `${comment(name, '// ')} handles the ${method.name} response.\n`;
+  text += `func (client *${client.name}) ${name}(resp *http.Response) (${generateReturnsInfo(method, 'handler').join(', ')}) {\n`;
 
   const addHeaders = function (headers: Array<go.HeaderResponse | go.HeaderMapResponse>) {
     for (const header of values(headers)) {
@@ -1068,7 +1065,7 @@ function createProtocolResponse(client: go.Client, method: go.Method, imports: I
     addHeaders(method.responseEnvelope.headers);
     text += generateResponseUnmarshaller(method, result.modelType, result.format, `result.${helpers.getResultFieldName(method)}`);
   } else {
-    throw new Error(`unhandled result type for ${client.clientName}.${method.methodName}`);
+    throw new Error(`unhandled result type for ${client.name}.${method.name}`);
   }
 
   text += '\treturn result, nil\n';
@@ -1109,7 +1106,7 @@ function getAPIParametersSig(method: go.Method, imports: ImportManager, pkgName?
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.paramName)} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);
+    params.push(`${uncapitalize(methodParam.name)} ${helpers.formatParameterTypeName(methodParam, pkgName)}`);
   }
   return params.join(', ');
 }
@@ -1134,7 +1131,7 @@ function generateReturnsInfo(method: go.Method, apiType: 'api' | 'op' | 'handler
       case 'handler':
         // we only have a handler for operations that return a schema
         if (!go.isPageableMethod(method)) {
-          throw new Error(`handler being generated for non-pageable LRO ${method.methodName} which is unexpected`);
+          throw new Error(`handler being generated for non-pageable LRO ${method.name} which is unexpected`);
         }
         break;
       case 'op':
@@ -1155,7 +1152,6 @@ function generateReturnsInfo(method: go.Method, apiType: 'api' | 'op' | 'handler
 function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
   const params = getAPIParametersSig(method, imports);
   const returns = generateReturnsInfo(method, 'api');
-  const clientName = client.clientName;
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
   if (method.description) {
@@ -1166,10 +1162,10 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   const methodParams = helpers.getMethodParameters(method);
   for (const param of values(methodParams)) {
     if (param.description) {
-      text += `${helpers.formatCommentAsBulletItem(`${param.paramName} - ${param.description}`)}\n`;
+      text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
     }
   }
-  text += `func (client *${clientName}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${client.name}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';
   let pollerTypeParam = `[${method.responseEnvelope.name}]`;
   if (go.isPageableMethod(method)) {
@@ -1266,9 +1262,9 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
 
 export function fixUpMethodName(method: go.Method): string {
   if (go.isLROMethod(method)) {
-    return `Begin${method.methodName}`;
+    return `Begin${method.name}`;
   } else if (go.isPageableMethod(method)) {
-    return `New${method.methodName}Pager`;
+    return `New${method.name}Pager`;
   }
-  return method.methodName;
+  return method.name;
 }
