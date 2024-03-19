@@ -1,28 +1,45 @@
 trigger: none
 pr: none
 
-pool:
-  vmImage: "ubuntu-22.04"
 
-steps:
-  - template: ../steps/set-env.yaml
+extends: /eng/pipelines/templates/stages/1es-redirect.yml
+parameters:
+  jobs:
+  - job: Release
+    variables: 
+      - template: /eng/pipelines/templates/variables/image.yml
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXNEXTVMIMAGE)
+      os: linux
 
-  - template: ../steps/build-test-go.yaml
+    steps:
+      - template: ../steps/set-env.yaml
 
-  - pwsh: |
-      $currentVersion = node -p -e "require('./packages/autorest.go/package.json').version";
-      cd packages/autorest.go
-      npm version --no-git-tag-version $currentVersion
-      npm pack;
-      npm install -g autorest-go-$currentVersion.tgz
-      if ($LASTEXITCODE) {
-        exit $LASTEXITCODE
-      }
-      npx publish-release --token $(azuresdk-github-pat) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
-    displayName: "Publish GitHub Release"
+      - template: ../steps/build-test-go.yaml
 
-  # - script: |
-  #     cd packages/autorest.go
-  #     echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-  #     npm publish --access public
-  #   displayName: "Publish to npm"
+      - pwsh: |
+          $currentVersion = node -p -e "require('./packages/autorest.go/package.json').version";
+          cd packages/autorest.go
+          npm version --no-git-tag-version $currentVersion
+          npm pack;
+          npm install -g autorest-go-$currentVersion.tgz
+          if ($LASTEXITCODE) {
+            exit $LASTEXITCODE
+          }
+          # npx publish-release `
+          #   --token $(azuresdk-github-pat) `
+          #   --repo autorest.go `
+          #   --owner azure `
+          #   --name "Autorest for Go v$currentVersion" `
+          #   --tag v$currentVersion --notes='Autorest for Go track 2' `
+          #   --prerelease --editRelease false `
+          #   --assets autorest-go-$currentVersion.tgz `
+          #   --target_commitish $(Build.SourceBranchName);
+        displayName: "Publish GitHub Release"
+
+      # - script: |
+      #     cd packages/autorest.go
+      #     echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
+      #     npm publish --access public
+      #   displayName: "Publish to npm"
