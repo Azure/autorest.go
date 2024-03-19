@@ -21,8 +21,8 @@ steps:
       npx publish-release --token $(azuresdk-github-pat) --repo autorest.go --owner azure --name "Autorest for Go v$currentVersion" --tag v$currentVersion --notes='Autorest for Go track 2' --prerelease --editRelease false --assets autorest-go-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
     displayName: "Publish GitHub Release"
 
-  - script: |
-      cd packages/autorest.go
-      echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-      npm publish --access public
-    displayName: "Publish to npm"
+  # - script: |
+  #     cd packages/autorest.go
+  #     echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
+  #     npm publish --access public
+  #   displayName: "Publish to npm"
