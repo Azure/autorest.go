@@ -15,9 +15,9 @@ extends:
           os: linux
 
         steps:
-          - template: ../steps/set-env.yaml
+          - template: /eng/steps/set-env.yaml
 
-          - template: ../steps/build-test-go.yaml
+          - template: /eng/steps/build-test-go.yaml
 
           - pwsh: |
               $currentVersion = node -p -e "require('./packages/autorest.go/package.json').version";
