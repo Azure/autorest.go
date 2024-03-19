@@ -9,11 +9,9 @@ extends:
       - stage: Release
         jobs:
           - job: Release
-            variables: 
-              - template: /eng/pipelines/templates/variables/image.yml
             pool:
-              name: $(LINUXPOOL)
-              image: $(LINUXNEXTVMIMAGE)
+              name: azsdk-pool-mms-ubuntu-2204-1es-pt
+              image: azsdk-pool-mms-ubuntu-2204-1espt
               os: linux
 
             steps:
