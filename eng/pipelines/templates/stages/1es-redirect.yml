@@ -9,9 +9,6 @@ parameters:
 - name: stages
   type: stageList
   default: []
-- name: jobs
-  type: jobList
-  default: []
 - name: Use1ESOfficial
   type: boolean
   default: true
@@ -34,4 +31,3 @@ extends:
         break: true
 
     stages: ${{ parameters.stages }}
-    jobs: ${{ parameters.jobs }}
