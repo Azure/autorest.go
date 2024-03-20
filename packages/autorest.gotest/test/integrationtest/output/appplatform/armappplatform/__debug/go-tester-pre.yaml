@@ -40238,11 +40238,11 @@ language:
     name: AppPlatformManagementClient
     description: ''
     azureARM: true
-    containingModule: none
+    containingModule: ''
     generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
-    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/v2
+    module: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform
     moduleVersion: 2.0.0-beta.1
     openApiType: arm
     packageName: armappplatform

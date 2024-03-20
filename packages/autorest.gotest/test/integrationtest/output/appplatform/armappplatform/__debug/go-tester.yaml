@@ -45505,7 +45505,7 @@ language:
     name: AppPlatformManagementClient
     description: ''
     azureARM: true
-    containingModule: none
+    containingModule: ''
     generateDateTimeRFC3339Helper: true
     groupParameters: true
     headAsBoolean: true
