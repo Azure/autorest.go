@@ -23,6 +23,10 @@ type ExtendsUnknownDerivedClient struct {
 //     method.
 func (client *ExtendsUnknownDerivedClient) Get(ctx context.Context, options *ExtendsUnknownDerivedClientGetOptions) (ExtendsUnknownDerivedClientGetResponse, error) {
 	var err error
+	const operationName = "ExtendsUnknownDerivedClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ExtendsUnknownDerivedClientGetResponse{}, err
@@ -65,6 +69,10 @@ func (client *ExtendsUnknownDerivedClient) getHandleResponse(resp *http.Response
 //     method.
 func (client *ExtendsUnknownDerivedClient) Put(ctx context.Context, body ExtendsUnknownAdditionalPropertiesDerived, options *ExtendsUnknownDerivedClientPutOptions) (ExtendsUnknownDerivedClientPutResponse, error) {
 	var err error
+	const operationName = "ExtendsUnknownDerivedClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ExtendsUnknownDerivedClientPutResponse{}, err

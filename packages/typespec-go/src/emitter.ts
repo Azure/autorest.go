@@ -14,6 +14,8 @@ import { generateOptions } from '../../codegen.go/src/options.js';
 import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js';
 import { generateResponses } from '../../codegen.go/src/responses.js';
 import { generateTimeHelpers } from '../../codegen.go/src/time.js';
+import { generateServers } from '../../codegen.go/src/fake/servers.js';
+import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';
@@ -103,5 +105,38 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   const timeHelpers = await generateTimeHelpers(codeModel);
   for (const helper of timeHelpers) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+  }
+
+  if (context.options['generate-fakes'] === true) {
+    const fakesDir = context.emitterOutputDir + '/fake';
+    await mkdir(fakesDir, {recursive: true});
+    const serverContent = await generateServers(codeModel);
+    for (const op of serverContent.servers) {
+      let fileName = op.name.toLowerCase();
+      // op.name is the server name, e.g. FooServer.
+      // insert a _ before Server, i.e. Foo_Server
+      // if the name isn't simply Server.
+      if (fileName !== 'server') {
+        fileName = fileName.substring(0, fileName.length-6) + '_server';
+      }
+      writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
+    }
+
+    const serverFactory = generateServerFactory(codeModel);
+    if (serverFactory !== '') {
+      writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
+    }
+
+    writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
+
+    const timeHelpers = await generateTimeHelpers(codeModel, 'fake');
+    for (const helper of timeHelpers) {
+      writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+    }
+
+    const polymorphics = await generatePolymorphicHelpers(codeModel, 'fake');
+    if (polymorphics.length > 0) {
+      writeFile(`${fakesDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
+    }
   }
 }

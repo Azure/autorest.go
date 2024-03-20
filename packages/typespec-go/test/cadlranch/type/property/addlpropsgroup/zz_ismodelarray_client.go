@@ -22,6 +22,10 @@ type IsModelArrayClient struct {
 //   - options - IsModelArrayClientGetOptions contains the optional parameters for the IsModelArrayClient.Get method.
 func (client *IsModelArrayClient) Get(ctx context.Context, options *IsModelArrayClientGetOptions) (IsModelArrayClientGetResponse, error) {
 	var err error
+	const operationName = "IsModelArrayClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsModelArrayClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *IsModelArrayClient) getHandleResponse(resp *http.Response) (IsMode
 //   - options - IsModelArrayClientPutOptions contains the optional parameters for the IsModelArrayClient.Put method.
 func (client *IsModelArrayClient) Put(ctx context.Context, body IsModelArrayAdditionalProperties, options *IsModelArrayClientPutOptions) (IsModelArrayClientPutResponse, error) {
 	var err error
+	const operationName = "IsModelArrayClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsModelArrayClientPutResponse{}, err

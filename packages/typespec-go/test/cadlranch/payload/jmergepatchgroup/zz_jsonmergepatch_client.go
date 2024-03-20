@@ -23,6 +23,10 @@ type JsonMergePatchClient struct {
 //     method.
 func (client *JsonMergePatchClient) CreateResource(ctx context.Context, body Resource, options *JsonMergePatchClientCreateResourceOptions) (JsonMergePatchClientCreateResourceResponse, error) {
 	var err error
+	const operationName = "JsonMergePatchClient.CreateResource"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createResourceCreateRequest(ctx, body, options)
 	if err != nil {
 		return JsonMergePatchClientCreateResourceResponse{}, err
@@ -68,6 +72,10 @@ func (client *JsonMergePatchClient) createResourceHandleResponse(resp *http.Resp
 //     method.
 func (client *JsonMergePatchClient) UpdateOptionalResource(ctx context.Context, options *JsonMergePatchClientUpdateOptionalResourceOptions) (JsonMergePatchClientUpdateOptionalResourceResponse, error) {
 	var err error
+	const operationName = "JsonMergePatchClient.UpdateOptionalResource"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateOptionalResourceCreateRequest(ctx, options)
 	if err != nil {
 		return JsonMergePatchClientUpdateOptionalResourceResponse{}, err
@@ -116,6 +124,10 @@ func (client *JsonMergePatchClient) updateOptionalResourceHandleResponse(resp *h
 //     method.
 func (client *JsonMergePatchClient) UpdateResource(ctx context.Context, body ResourcePatch, options *JsonMergePatchClientUpdateResourceOptions) (JsonMergePatchClientUpdateResourceResponse, error) {
 	var err error
+	const operationName = "JsonMergePatchClient.UpdateResource"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateResourceCreateRequest(ctx, body, options)
 	if err != nil {
 		return JsonMergePatchClientUpdateResourceResponse{}, err

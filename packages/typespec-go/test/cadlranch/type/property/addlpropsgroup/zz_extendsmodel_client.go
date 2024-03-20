@@ -22,6 +22,10 @@ type ExtendsModelClient struct {
 //   - options - ExtendsModelClientGetOptions contains the optional parameters for the ExtendsModelClient.Get method.
 func (client *ExtendsModelClient) Get(ctx context.Context, options *ExtendsModelClientGetOptions) (ExtendsModelClientGetResponse, error) {
 	var err error
+	const operationName = "ExtendsModelClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ExtendsModelClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *ExtendsModelClient) getHandleResponse(resp *http.Response) (Extend
 //   - options - ExtendsModelClientPutOptions contains the optional parameters for the ExtendsModelClient.Put method.
 func (client *ExtendsModelClient) Put(ctx context.Context, body ExtendsModelAdditionalProperties, options *ExtendsModelClientPutOptions) (ExtendsModelClientPutResponse, error) {
 	var err error
+	const operationName = "ExtendsModelClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ExtendsModelClientPutResponse{}, err

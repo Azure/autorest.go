@@ -22,6 +22,10 @@ type ClientRequestIdClient struct {
 //   - options - ClientRequestIdClientGetOptions contains the optional parameters for the ClientRequestIdClient.Get method.
 func (client *ClientRequestIdClient) Get(ctx context.Context, options *ClientRequestIdClientGetOptions) (ClientRequestIdClientGetResponse, error) {
 	var err error
+	const operationName = "ClientRequestIdClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ClientRequestIdClientGetResponse{}, err

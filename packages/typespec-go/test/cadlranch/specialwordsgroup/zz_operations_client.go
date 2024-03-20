@@ -21,6 +21,10 @@ type OperationsClient struct {
 // - options - OperationsClientAndOptions contains the optional parameters for the OperationsClient.And method.
 func (client *OperationsClient) And(ctx context.Context, options *OperationsClientAndOptions) (OperationsClientAndResponse, error) {
 	var err error
+	const operationName = "OperationsClient.And"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.andCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientAndResponse{}, err
@@ -49,6 +53,10 @@ func (client *OperationsClient) andCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientAsOptions contains the optional parameters for the OperationsClient.As method.
 func (client *OperationsClient) As(ctx context.Context, options *OperationsClientAsOptions) (OperationsClientAsResponse, error) {
 	var err error
+	const operationName = "OperationsClient.As"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.asCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientAsResponse{}, err
@@ -77,6 +85,10 @@ func (client *OperationsClient) asCreateRequest(ctx context.Context, options *Op
 // - options - OperationsClientAssertOptions contains the optional parameters for the OperationsClient.Assert method.
 func (client *OperationsClient) Assert(ctx context.Context, options *OperationsClientAssertOptions) (OperationsClientAssertResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Assert"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.assertCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientAssertResponse{}, err
@@ -105,6 +117,10 @@ func (client *OperationsClient) assertCreateRequest(ctx context.Context, options
 // - options - OperationsClientAsyncOptions contains the optional parameters for the OperationsClient.Async method.
 func (client *OperationsClient) Async(ctx context.Context, options *OperationsClientAsyncOptions) (OperationsClientAsyncResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Async"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.asyncCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientAsyncResponse{}, err
@@ -133,6 +149,10 @@ func (client *OperationsClient) asyncCreateRequest(ctx context.Context, options 
 // - options - OperationsClientAwaitOptions contains the optional parameters for the OperationsClient.Await method.
 func (client *OperationsClient) Await(ctx context.Context, options *OperationsClientAwaitOptions) (OperationsClientAwaitResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Await"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.awaitCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientAwaitResponse{}, err
@@ -161,6 +181,10 @@ func (client *OperationsClient) awaitCreateRequest(ctx context.Context, options 
 // - options - OperationsClientBreakOptions contains the optional parameters for the OperationsClient.Break method.
 func (client *OperationsClient) Break(ctx context.Context, options *OperationsClientBreakOptions) (OperationsClientBreakResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Break"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.breakCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientBreakResponse{}, err
@@ -189,6 +213,10 @@ func (client *OperationsClient) breakCreateRequest(ctx context.Context, options 
 // - options - OperationsClientClassOptions contains the optional parameters for the OperationsClient.Class method.
 func (client *OperationsClient) Class(ctx context.Context, options *OperationsClientClassOptions) (OperationsClientClassResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Class"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.classCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientClassResponse{}, err
@@ -217,6 +245,10 @@ func (client *OperationsClient) classCreateRequest(ctx context.Context, options 
 // - options - OperationsClientConstructorOptions contains the optional parameters for the OperationsClient.Constructor method.
 func (client *OperationsClient) Constructor(ctx context.Context, options *OperationsClientConstructorOptions) (OperationsClientConstructorResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Constructor"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.constructorCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientConstructorResponse{}, err
@@ -245,6 +277,10 @@ func (client *OperationsClient) constructorCreateRequest(ctx context.Context, op
 // - options - OperationsClientContinueOptions contains the optional parameters for the OperationsClient.Continue method.
 func (client *OperationsClient) Continue(ctx context.Context, options *OperationsClientContinueOptions) (OperationsClientContinueResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Continue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.continueCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientContinueResponse{}, err
@@ -273,6 +309,10 @@ func (client *OperationsClient) continueCreateRequest(ctx context.Context, optio
 // - options - OperationsClientDefOptions contains the optional parameters for the OperationsClient.Def method.
 func (client *OperationsClient) Def(ctx context.Context, options *OperationsClientDefOptions) (OperationsClientDefResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Def"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientDefResponse{}, err
@@ -301,6 +341,10 @@ func (client *OperationsClient) defCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientDelOptions contains the optional parameters for the OperationsClient.Del method.
 func (client *OperationsClient) Del(ctx context.Context, options *OperationsClientDelOptions) (OperationsClientDelResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Del"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.delCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientDelResponse{}, err
@@ -329,6 +373,10 @@ func (client *OperationsClient) delCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientElifOptions contains the optional parameters for the OperationsClient.Elif method.
 func (client *OperationsClient) Elif(ctx context.Context, options *OperationsClientElifOptions) (OperationsClientElifResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Elif"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.elifCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientElifResponse{}, err
@@ -357,6 +405,10 @@ func (client *OperationsClient) elifCreateRequest(ctx context.Context, options *
 // - options - OperationsClientElseOptions contains the optional parameters for the OperationsClient.Else method.
 func (client *OperationsClient) Else(ctx context.Context, options *OperationsClientElseOptions) (OperationsClientElseResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Else"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.elseCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientElseResponse{}, err
@@ -385,6 +437,10 @@ func (client *OperationsClient) elseCreateRequest(ctx context.Context, options *
 // - options - OperationsClientExceptOptions contains the optional parameters for the OperationsClient.Except method.
 func (client *OperationsClient) Except(ctx context.Context, options *OperationsClientExceptOptions) (OperationsClientExceptResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Except"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exceptCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientExceptResponse{}, err
@@ -413,6 +469,10 @@ func (client *OperationsClient) exceptCreateRequest(ctx context.Context, options
 // - options - OperationsClientExecOptions contains the optional parameters for the OperationsClient.Exec method.
 func (client *OperationsClient) Exec(ctx context.Context, options *OperationsClientExecOptions) (OperationsClientExecResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Exec"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.execCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientExecResponse{}, err
@@ -441,6 +501,10 @@ func (client *OperationsClient) execCreateRequest(ctx context.Context, options *
 // - options - OperationsClientFinallyOptions contains the optional parameters for the OperationsClient.Finally method.
 func (client *OperationsClient) Finally(ctx context.Context, options *OperationsClientFinallyOptions) (OperationsClientFinallyResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Finally"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.finallyCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientFinallyResponse{}, err
@@ -469,6 +533,10 @@ func (client *OperationsClient) finallyCreateRequest(ctx context.Context, option
 // - options - OperationsClientForOptions contains the optional parameters for the OperationsClient.For method.
 func (client *OperationsClient) For(ctx context.Context, options *OperationsClientForOptions) (OperationsClientForResponse, error) {
 	var err error
+	const operationName = "OperationsClient.For"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.forCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientForResponse{}, err
@@ -497,6 +565,10 @@ func (client *OperationsClient) forCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientFromOptions contains the optional parameters for the OperationsClient.From method.
 func (client *OperationsClient) From(ctx context.Context, options *OperationsClientFromOptions) (OperationsClientFromResponse, error) {
 	var err error
+	const operationName = "OperationsClient.From"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fromCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientFromResponse{}, err
@@ -525,6 +597,10 @@ func (client *OperationsClient) fromCreateRequest(ctx context.Context, options *
 // - options - OperationsClientGlobalOptions contains the optional parameters for the OperationsClient.Global method.
 func (client *OperationsClient) Global(ctx context.Context, options *OperationsClientGlobalOptions) (OperationsClientGlobalResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Global"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.globalCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientGlobalResponse{}, err
@@ -553,6 +629,10 @@ func (client *OperationsClient) globalCreateRequest(ctx context.Context, options
 // - options - OperationsClientIfOptions contains the optional parameters for the OperationsClient.If method.
 func (client *OperationsClient) If(ctx context.Context, options *OperationsClientIfOptions) (OperationsClientIfResponse, error) {
 	var err error
+	const operationName = "OperationsClient.If"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.ifCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientIfResponse{}, err
@@ -581,6 +661,10 @@ func (client *OperationsClient) ifCreateRequest(ctx context.Context, options *Op
 // - options - OperationsClientImportOptions contains the optional parameters for the OperationsClient.Import method.
 func (client *OperationsClient) Import(ctx context.Context, options *OperationsClientImportOptions) (OperationsClientImportResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Import"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.importCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientImportResponse{}, err
@@ -609,6 +693,10 @@ func (client *OperationsClient) importCreateRequest(ctx context.Context, options
 // - options - OperationsClientInOptions contains the optional parameters for the OperationsClient.In method.
 func (client *OperationsClient) In(ctx context.Context, options *OperationsClientInOptions) (OperationsClientInResponse, error) {
 	var err error
+	const operationName = "OperationsClient.In"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.inCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientInResponse{}, err
@@ -637,6 +725,10 @@ func (client *OperationsClient) inCreateRequest(ctx context.Context, options *Op
 // - options - OperationsClientIsOptions contains the optional parameters for the OperationsClient.Is method.
 func (client *OperationsClient) Is(ctx context.Context, options *OperationsClientIsOptions) (OperationsClientIsResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Is"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.isCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientIsResponse{}, err
@@ -665,6 +757,10 @@ func (client *OperationsClient) isCreateRequest(ctx context.Context, options *Op
 // - options - OperationsClientLambdaOptions contains the optional parameters for the OperationsClient.Lambda method.
 func (client *OperationsClient) Lambda(ctx context.Context, options *OperationsClientLambdaOptions) (OperationsClientLambdaResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Lambda"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.lambdaCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientLambdaResponse{}, err
@@ -693,6 +789,10 @@ func (client *OperationsClient) lambdaCreateRequest(ctx context.Context, options
 // - options - OperationsClientNotOptions contains the optional parameters for the OperationsClient.Not method.
 func (client *OperationsClient) Not(ctx context.Context, options *OperationsClientNotOptions) (OperationsClientNotResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Not"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.notCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientNotResponse{}, err
@@ -721,6 +821,10 @@ func (client *OperationsClient) notCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientOrOptions contains the optional parameters for the OperationsClient.Or method.
 func (client *OperationsClient) Or(ctx context.Context, options *OperationsClientOrOptions) (OperationsClientOrResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Or"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.orCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientOrResponse{}, err
@@ -749,6 +853,10 @@ func (client *OperationsClient) orCreateRequest(ctx context.Context, options *Op
 // - options - OperationsClientPassOptions contains the optional parameters for the OperationsClient.Pass method.
 func (client *OperationsClient) Pass(ctx context.Context, options *OperationsClientPassOptions) (OperationsClientPassResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Pass"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.passCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientPassResponse{}, err
@@ -777,6 +885,10 @@ func (client *OperationsClient) passCreateRequest(ctx context.Context, options *
 // - options - OperationsClientRaiseOptions contains the optional parameters for the OperationsClient.Raise method.
 func (client *OperationsClient) Raise(ctx context.Context, options *OperationsClientRaiseOptions) (OperationsClientRaiseResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Raise"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.raiseCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientRaiseResponse{}, err
@@ -805,6 +917,10 @@ func (client *OperationsClient) raiseCreateRequest(ctx context.Context, options 
 // - options - OperationsClientReturnOptions contains the optional parameters for the OperationsClient.Return method.
 func (client *OperationsClient) Return(ctx context.Context, options *OperationsClientReturnOptions) (OperationsClientReturnResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Return"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.returnCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientReturnResponse{}, err
@@ -833,6 +949,10 @@ func (client *OperationsClient) returnCreateRequest(ctx context.Context, options
 // - options - OperationsClientTryOptions contains the optional parameters for the OperationsClient.Try method.
 func (client *OperationsClient) Try(ctx context.Context, options *OperationsClientTryOptions) (OperationsClientTryResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Try"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.tryCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientTryResponse{}, err
@@ -861,6 +981,10 @@ func (client *OperationsClient) tryCreateRequest(ctx context.Context, options *O
 // - options - OperationsClientWhileOptions contains the optional parameters for the OperationsClient.While method.
 func (client *OperationsClient) While(ctx context.Context, options *OperationsClientWhileOptions) (OperationsClientWhileResponse, error) {
 	var err error
+	const operationName = "OperationsClient.While"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.whileCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientWhileResponse{}, err
@@ -889,6 +1013,10 @@ func (client *OperationsClient) whileCreateRequest(ctx context.Context, options 
 // - options - OperationsClientWithOptions contains the optional parameters for the OperationsClient.With method.
 func (client *OperationsClient) With(ctx context.Context, options *OperationsClientWithOptions) (OperationsClientWithResponse, error) {
 	var err error
+	const operationName = "OperationsClient.With"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientWithResponse{}, err
@@ -917,6 +1045,10 @@ func (client *OperationsClient) withCreateRequest(ctx context.Context, options *
 // - options - OperationsClientYieldOptions contains the optional parameters for the OperationsClient.Yield method.
 func (client *OperationsClient) Yield(ctx context.Context, options *OperationsClientYieldOptions) (OperationsClientYieldResponse, error) {
 	var err error
+	const operationName = "OperationsClient.Yield"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.yieldCreateRequest(ctx, options)
 	if err != nil {
 		return OperationsClientYieldResponse{}, err

@@ -22,6 +22,10 @@ type CustomClient struct {
 //   - options - CustomClientInvalidOptions contains the optional parameters for the CustomClient.Invalid method.
 func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientInvalidOptions) (CustomClientInvalidResponse, error) {
 	var err error
+	const operationName = "CustomClient.Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.invalidCreateRequest(ctx, options)
 	if err != nil {
 		return CustomClientInvalidResponse{}, err
@@ -52,6 +56,10 @@ func (client *CustomClient) invalidCreateRequest(ctx context.Context, options *C
 //   - options - CustomClientValidOptions contains the optional parameters for the CustomClient.Valid method.
 func (client *CustomClient) Valid(ctx context.Context, options *CustomClientValidOptions) (CustomClientValidResponse, error) {
 	var err error
+	const operationName = "CustomClient.Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.validCreateRequest(ctx, options)
 	if err != nil {
 		return CustomClientValidResponse{}, err

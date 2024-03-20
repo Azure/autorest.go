@@ -23,6 +23,10 @@ type CollectionsByteClient struct {
 //     method.
 func (client *CollectionsByteClient) GetNonNull(ctx context.Context, options *CollectionsByteClientGetNonNullOptions) (CollectionsByteClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "CollectionsByteClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return CollectionsByteClientGetNonNullResponse{}, err
@@ -63,6 +67,10 @@ func (client *CollectionsByteClient) getNonNullHandleResponse(resp *http.Respons
 //   - options - CollectionsByteClientGetNullOptions contains the optional parameters for the CollectionsByteClient.GetNull method.
 func (client *CollectionsByteClient) GetNull(ctx context.Context, options *CollectionsByteClientGetNullOptions) (CollectionsByteClientGetNullResponse, error) {
 	var err error
+	const operationName = "CollectionsByteClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return CollectionsByteClientGetNullResponse{}, err
@@ -104,6 +112,10 @@ func (client *CollectionsByteClient) getNullHandleResponse(resp *http.Response) 
 //     method.
 func (client *CollectionsByteClient) PatchNonNull(ctx context.Context, body CollectionsByteProperty, options *CollectionsByteClientPatchNonNullOptions) (CollectionsByteClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "CollectionsByteClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return CollectionsByteClientPatchNonNullResponse{}, err
@@ -138,6 +150,10 @@ func (client *CollectionsByteClient) patchNonNullCreateRequest(ctx context.Conte
 //     method.
 func (client *CollectionsByteClient) PatchNull(ctx context.Context, body CollectionsByteProperty, options *CollectionsByteClientPatchNullOptions) (CollectionsByteClientPatchNullResponse, error) {
 	var err error
+	const operationName = "CollectionsByteClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return CollectionsByteClientPatchNullResponse{}, err

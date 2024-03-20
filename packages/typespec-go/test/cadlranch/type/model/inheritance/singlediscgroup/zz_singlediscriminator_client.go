@@ -22,6 +22,10 @@ type SingleDiscriminatorClient struct {
 //     method.
 func (client *SingleDiscriminatorClient) GetLegacyModel(ctx context.Context, options *SingleDiscriminatorClientGetLegacyModelOptions) (SingleDiscriminatorClientGetLegacyModelResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.GetLegacyModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getLegacyModelCreateRequest(ctx, options)
 	if err != nil {
 		return SingleDiscriminatorClientGetLegacyModelResponse{}, err
@@ -62,6 +66,10 @@ func (client *SingleDiscriminatorClient) getLegacyModelHandleResponse(resp *http
 //     method.
 func (client *SingleDiscriminatorClient) GetMissingDiscriminator(ctx context.Context, options *SingleDiscriminatorClientGetMissingDiscriminatorOptions) (SingleDiscriminatorClientGetMissingDiscriminatorResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.GetMissingDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getMissingDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return SingleDiscriminatorClientGetMissingDiscriminatorResponse{}, err
@@ -102,6 +110,10 @@ func (client *SingleDiscriminatorClient) getMissingDiscriminatorHandleResponse(r
 //     method.
 func (client *SingleDiscriminatorClient) GetModel(ctx context.Context, options *SingleDiscriminatorClientGetModelOptions) (SingleDiscriminatorClientGetModelResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.GetModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getModelCreateRequest(ctx, options)
 	if err != nil {
 		return SingleDiscriminatorClientGetModelResponse{}, err
@@ -142,6 +154,10 @@ func (client *SingleDiscriminatorClient) getModelHandleResponse(resp *http.Respo
 //     method.
 func (client *SingleDiscriminatorClient) GetRecursiveModel(ctx context.Context, options *SingleDiscriminatorClientGetRecursiveModelOptions) (SingleDiscriminatorClientGetRecursiveModelResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.GetRecursiveModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getRecursiveModelCreateRequest(ctx, options)
 	if err != nil {
 		return SingleDiscriminatorClientGetRecursiveModelResponse{}, err
@@ -182,6 +198,10 @@ func (client *SingleDiscriminatorClient) getRecursiveModelHandleResponse(resp *h
 //     method.
 func (client *SingleDiscriminatorClient) GetWrongDiscriminator(ctx context.Context, options *SingleDiscriminatorClientGetWrongDiscriminatorOptions) (SingleDiscriminatorClientGetWrongDiscriminatorResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.GetWrongDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getWrongDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return SingleDiscriminatorClientGetWrongDiscriminatorResponse{}, err
@@ -222,6 +242,10 @@ func (client *SingleDiscriminatorClient) getWrongDiscriminatorHandleResponse(res
 //     method.
 func (client *SingleDiscriminatorClient) PutModel(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutModelOptions) (SingleDiscriminatorClientPutModelResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.PutModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return SingleDiscriminatorClientPutModelResponse{}, err
@@ -255,6 +279,10 @@ func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Conte
 //     method.
 func (client *SingleDiscriminatorClient) PutRecursiveModel(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutRecursiveModelOptions) (SingleDiscriminatorClientPutRecursiveModelResponse, error) {
 	var err error
+	const operationName = "SingleDiscriminatorClient.PutRecursiveModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putRecursiveModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return SingleDiscriminatorClientPutRecursiveModelResponse{}, err

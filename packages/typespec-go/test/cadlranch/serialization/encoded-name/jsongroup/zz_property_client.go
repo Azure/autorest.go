@@ -21,6 +21,10 @@ type PropertyClient struct {
 // - options - PropertyClientGetOptions contains the optional parameters for the PropertyClient.Get method.
 func (client *PropertyClient) Get(ctx context.Context, options *PropertyClientGetOptions) (PropertyClientGetResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return PropertyClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *PropertyClient) getHandleResponse(resp *http.Response) (PropertyCl
 // - options - PropertyClientSendOptions contains the optional parameters for the PropertyClient.Send method.
 func (client *PropertyClient) Send(ctx context.Context, body JSONEncodedNameModel, options *PropertyClientSendOptions) (PropertyClientSendResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Send"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sendCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientSendResponse{}, err

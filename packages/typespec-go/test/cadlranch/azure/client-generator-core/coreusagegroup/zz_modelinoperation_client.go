@@ -28,6 +28,10 @@ type ModelInOperationClient struct {
 //     method.
 func (client *ModelInOperationClient) InputToInputOutput(ctx context.Context, body InputModel, options *ModelInOperationClientInputToInputOutputOptions) (ModelInOperationClientInputToInputOutputResponse, error) {
 	var err error
+	const operationName = "ModelInOperationClient.InputToInputOutput"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.inputToInputOutputCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelInOperationClientInputToInputOutputResponse{}, err
@@ -67,6 +71,10 @@ func (client *ModelInOperationClient) inputToInputOutputCreateRequest(ctx contex
 //     method.
 func (client *ModelInOperationClient) OutputToInputOutput(ctx context.Context, options *ModelInOperationClientOutputToInputOutputOptions) (ModelInOperationClientOutputToInputOutputResponse, error) {
 	var err error
+	const operationName = "ModelInOperationClient.OutputToInputOutput"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.outputToInputOutputCreateRequest(ctx, options)
 	if err != nil {
 		return ModelInOperationClientOutputToInputOutputResponse{}, err

@@ -32,16 +32,24 @@ func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name str
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[StandardClientCreateOrReplaceResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StandardClientCreateOrReplaceResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[StandardClientCreateOrReplaceResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[StandardClientCreateOrReplaceResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
 func (client *StandardClient) createOrReplace(ctx context.Context, name string, resource User, options *StandardClientCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
+	const operationName = "StandardClient.BeginCreateOrReplace"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrReplaceCreateRequest(ctx, name, resource, options)
 	if err != nil {
 		return nil, err
@@ -88,16 +96,24 @@ func (client *StandardClient) BeginDelete(ctx context.Context, name string, opti
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[StandardClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StandardClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[StandardClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[StandardClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Delete - Deletes a user.
 func (client *StandardClient) deleteOperation(ctx context.Context, name string, options *StandardClientDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "StandardClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, name, options)
 	if err != nil {
 		return nil, err
@@ -141,16 +157,24 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[StandardClientExportResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[StandardClientExportResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[StandardClientExportResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[StandardClientExportResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Export - Exports a user.
 func (client *StandardClient) export(ctx context.Context, name string, formatParam string, options *StandardClientExportOptions) (*http.Response, error) {
 	var err error
+	const operationName = "StandardClient.BeginExport"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exportCreateRequest(ctx, name, formatParam, options)
 	if err != nil {
 		return nil, err

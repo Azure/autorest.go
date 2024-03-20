@@ -22,6 +22,10 @@ type InternalOperationClient struct {
 //     method.
 func (client *InternalOperationClient) internalDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientinternalDecoratorInInternalOptions) (internalOperationClientinternalDecoratorInInternalResponse, error) {
 	var err error
+	const operationName = "InternalOperationClient.internalDecoratorInInternal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.internalDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
 		return internalOperationClientinternalDecoratorInInternalResponse{}, err
@@ -65,6 +69,10 @@ func (client *InternalOperationClient) internalDecoratorInInternalHandleResponse
 //     method.
 func (client *InternalOperationClient) noDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientnoDecoratorInInternalOptions) (internalOperationClientnoDecoratorInInternalResponse, error) {
 	var err error
+	const operationName = "InternalOperationClient.noDecoratorInInternal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.noDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
 		return internalOperationClientnoDecoratorInInternalResponse{}, err
@@ -108,6 +116,10 @@ func (client *InternalOperationClient) noDecoratorInInternalHandleResponse(resp 
 //     method.
 func (client *InternalOperationClient) publicDecoratorInInternal(ctx context.Context, name string, options *internalOperationClientpublicDecoratorInInternalOptions) (internalOperationClientpublicDecoratorInInternalResponse, error) {
 	var err error
+	const operationName = "InternalOperationClient.publicDecoratorInInternal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.publicDecoratorInInternalCreateRequest(ctx, name, options)
 	if err != nil {
 		return internalOperationClientpublicDecoratorInInternalResponse{}, err

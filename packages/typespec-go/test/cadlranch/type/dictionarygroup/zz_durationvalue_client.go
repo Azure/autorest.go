@@ -21,6 +21,10 @@ type DurationValueClient struct {
 // - options - DurationValueClientGetOptions contains the optional parameters for the DurationValueClient.Get method.
 func (client *DurationValueClient) Get(ctx context.Context, options *DurationValueClientGetOptions) (DurationValueClientGetResponse, error) {
 	var err error
+	const operationName = "DurationValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return DurationValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *DurationValueClient) getHandleResponse(resp *http.Response) (Durat
 // - options - DurationValueClientPutOptions contains the optional parameters for the DurationValueClient.Put method.
 func (client *DurationValueClient) Put(ctx context.Context, body map[string]*string, options *DurationValueClientPutOptions) (DurationValueClientPutResponse, error) {
 	var err error
+	const operationName = "DurationValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return DurationValueClientPutResponse{}, err

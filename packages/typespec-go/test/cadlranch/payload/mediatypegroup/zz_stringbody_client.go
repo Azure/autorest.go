@@ -21,6 +21,10 @@ type StringBodyClient struct {
 // - options - StringBodyClientGetAsJSONOptions contains the optional parameters for the StringBodyClient.GetAsJSON method.
 func (client *StringBodyClient) GetAsJSON(ctx context.Context, options *StringBodyClientGetAsJSONOptions) (StringBodyClientGetAsJSONResponse, error) {
 	var err error
+	const operationName = "StringBodyClient.GetAsJSON"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAsJSONCreateRequest(ctx, options)
 	if err != nil {
 		return StringBodyClientGetAsJSONResponse{}, err
@@ -60,6 +64,10 @@ func (client *StringBodyClient) getAsJSONHandleResponse(resp *http.Response) (St
 // - options - StringBodyClientGetAsTextOptions contains the optional parameters for the StringBodyClient.GetAsText method.
 func (client *StringBodyClient) GetAsText(ctx context.Context, options *StringBodyClientGetAsTextOptions) (StringBodyClientGetAsTextResponse, error) {
 	var err error
+	const operationName = "StringBodyClient.GetAsText"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getAsTextCreateRequest(ctx, options)
 	if err != nil {
 		return StringBodyClientGetAsTextResponse{}, err
@@ -99,6 +107,10 @@ func (client *StringBodyClient) getAsTextHandleResponse(resp *http.Response) (St
 // - options - StringBodyClientSendAsJSONOptions contains the optional parameters for the StringBodyClient.SendAsJSON method.
 func (client *StringBodyClient) SendAsJSON(ctx context.Context, textParam string, options *StringBodyClientSendAsJSONOptions) (StringBodyClientSendAsJSONResponse, error) {
 	var err error
+	const operationName = "StringBodyClient.SendAsJSON"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sendAsJSONCreateRequest(ctx, textParam, options)
 	if err != nil {
 		return StringBodyClientSendAsJSONResponse{}, err
@@ -131,6 +143,10 @@ func (client *StringBodyClient) sendAsJSONCreateRequest(ctx context.Context, tex
 // - options - StringBodyClientSendAsTextOptions contains the optional parameters for the StringBodyClient.SendAsText method.
 func (client *StringBodyClient) SendAsText(ctx context.Context, textParam string, options *StringBodyClientSendAsTextOptions) (StringBodyClientSendAsTextResponse, error) {
 	var err error
+	const operationName = "StringBodyClient.SendAsText"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sendAsTextCreateRequest(ctx, textParam, options)
 	if err != nil {
 		return StringBodyClientSendAsTextResponse{}, err

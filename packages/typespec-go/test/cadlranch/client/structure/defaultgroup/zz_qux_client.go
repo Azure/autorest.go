@@ -33,6 +33,10 @@ func (client *QuxClient) NewBarClient() *BarClient {
 // - options - QuxClientEightOptions contains the optional parameters for the QuxClient.Eight method.
 func (client *QuxClient) Eight(ctx context.Context, options *QuxClientEightOptions) (QuxClientEightResponse, error) {
 	var err error
+	const operationName = "QuxClient.Eight"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.eightCreateRequest(ctx, options)
 	if err != nil {
 		return QuxClientEightResponse{}, err

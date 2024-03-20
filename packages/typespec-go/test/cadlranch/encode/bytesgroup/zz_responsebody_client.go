@@ -21,6 +21,10 @@ type ResponseBodyClient struct {
 // - options - ResponseBodyClientBase64Options contains the optional parameters for the ResponseBodyClient.Base64 method.
 func (client *ResponseBodyClient) Base64(ctx context.Context, options *ResponseBodyClientBase64Options) (ResponseBodyClientBase64Response, error) {
 	var err error
+	const operationName = "ResponseBodyClient.Base64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64CreateRequest(ctx, options)
 	if err != nil {
 		return ResponseBodyClientBase64Response{}, err
@@ -60,6 +64,10 @@ func (client *ResponseBodyClient) base64HandleResponse(resp *http.Response) (Res
 // - options - ResponseBodyClientBase64URLOptions contains the optional parameters for the ResponseBodyClient.Base64URL method.
 func (client *ResponseBodyClient) Base64URL(ctx context.Context, options *ResponseBodyClientBase64URLOptions) (ResponseBodyClientBase64URLResponse, error) {
 	var err error
+	const operationName = "ResponseBodyClient.Base64URL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64URLCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseBodyClientBase64URLResponse{}, err
@@ -100,6 +108,10 @@ func (client *ResponseBodyClient) base64URLHandleResponse(resp *http.Response) (
 //     method.
 func (client *ResponseBodyClient) CustomContentType(ctx context.Context, options *ResponseBodyClientCustomContentTypeOptions) (ResponseBodyClientCustomContentTypeResponse, error) {
 	var err error
+	const operationName = "ResponseBodyClient.CustomContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.customContentTypeCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseBodyClientCustomContentTypeResponse{}, err
@@ -139,6 +151,10 @@ func (client *ResponseBodyClient) customContentTypeHandleResponse(resp *http.Res
 // - options - ResponseBodyClientDefaultOptions contains the optional parameters for the ResponseBodyClient.Default method.
 func (client *ResponseBodyClient) Default(ctx context.Context, options *ResponseBodyClientDefaultOptions) (ResponseBodyClientDefaultResponse, error) {
 	var err error
+	const operationName = "ResponseBodyClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseBodyClientDefaultResponse{}, err
@@ -179,6 +195,10 @@ func (client *ResponseBodyClient) defaultHandleResponse(resp *http.Response) (Re
 //     method.
 func (client *ResponseBodyClient) OctetStream(ctx context.Context, options *ResponseBodyClientOctetStreamOptions) (ResponseBodyClientOctetStreamResponse, error) {
 	var err error
+	const operationName = "ResponseBodyClient.OctetStream"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.octetStreamCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseBodyClientOctetStreamResponse{}, err

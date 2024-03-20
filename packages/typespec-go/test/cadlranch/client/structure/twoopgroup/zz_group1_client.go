@@ -24,6 +24,10 @@ type Group1Client struct {
 // - options - Group1ClientFourOptions contains the optional parameters for the Group1Client.Four method.
 func (client *Group1Client) Four(ctx context.Context, options *Group1ClientFourOptions) (Group1ClientFourResponse, error) {
 	var err error
+	const operationName = "Group1Client.Four"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fourCreateRequest(ctx, options)
 	if err != nil {
 		return Group1ClientFourResponse{}, err
@@ -55,6 +59,10 @@ func (client *Group1Client) fourCreateRequest(ctx context.Context, options *Grou
 // - options - Group1ClientOneOptions contains the optional parameters for the Group1Client.One method.
 func (client *Group1Client) One(ctx context.Context, options *Group1ClientOneOptions) (Group1ClientOneResponse, error) {
 	var err error
+	const operationName = "Group1Client.One"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.oneCreateRequest(ctx, options)
 	if err != nil {
 		return Group1ClientOneResponse{}, err
@@ -86,6 +94,10 @@ func (client *Group1Client) oneCreateRequest(ctx context.Context, options *Group
 // - options - Group1ClientThreeOptions contains the optional parameters for the Group1Client.Three method.
 func (client *Group1Client) Three(ctx context.Context, options *Group1ClientThreeOptions) (Group1ClientThreeResponse, error) {
 	var err error
+	const operationName = "Group1Client.Three"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.threeCreateRequest(ctx, options)
 	if err != nil {
 		return Group1ClientThreeResponse{}, err

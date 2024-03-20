@@ -24,6 +24,10 @@ type QueryClient struct {
 // - options - QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
 func (client *QueryClient) Default(ctx context.Context, input string, options *QueryClientDefaultOptions) (QueryClientDefaultResponse, error) {
 	var err error
+	const operationName = "QueryClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, input, options)
 	if err != nil {
 		return QueryClientDefaultResponse{}, err
@@ -55,6 +59,10 @@ func (client *QueryClient) defaultCreateRequest(ctx context.Context, input strin
 // - options - QueryClientFloatSecondsOptions contains the optional parameters for the QueryClient.FloatSeconds method.
 func (client *QueryClient) FloatSeconds(ctx context.Context, input float32, options *QueryClientFloatSecondsOptions) (QueryClientFloatSecondsResponse, error) {
 	var err error
+	const operationName = "QueryClient.FloatSeconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.floatSecondsCreateRequest(ctx, input, options)
 	if err != nil {
 		return QueryClientFloatSecondsResponse{}, err
@@ -86,6 +94,10 @@ func (client *QueryClient) floatSecondsCreateRequest(ctx context.Context, input 
 // - options - QueryClientISO8601Options contains the optional parameters for the QueryClient.ISO8601 method.
 func (client *QueryClient) ISO8601(ctx context.Context, input string, options *QueryClientISO8601Options) (QueryClientISO8601Response, error) {
 	var err error
+	const operationName = "QueryClient.ISO8601"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.iso8601CreateRequest(ctx, input, options)
 	if err != nil {
 		return QueryClientISO8601Response{}, err
@@ -117,6 +129,10 @@ func (client *QueryClient) iso8601CreateRequest(ctx context.Context, input strin
 // - options - QueryClientInt32SecondsOptions contains the optional parameters for the QueryClient.Int32Seconds method.
 func (client *QueryClient) Int32Seconds(ctx context.Context, input int32, options *QueryClientInt32SecondsOptions) (QueryClientInt32SecondsResponse, error) {
 	var err error
+	const operationName = "QueryClient.Int32Seconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.int32SecondsCreateRequest(ctx, input, options)
 	if err != nil {
 		return QueryClientInt32SecondsResponse{}, err
@@ -148,6 +164,10 @@ func (client *QueryClient) int32SecondsCreateRequest(ctx context.Context, input 
 // - options - QueryClientInt32SecondsArrayOptions contains the optional parameters for the QueryClient.Int32SecondsArray method.
 func (client *QueryClient) Int32SecondsArray(ctx context.Context, input []int32, options *QueryClientInt32SecondsArrayOptions) (QueryClientInt32SecondsArrayResponse, error) {
 	var err error
+	const operationName = "QueryClient.Int32SecondsArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.int32SecondsArrayCreateRequest(ctx, input, options)
 	if err != nil {
 		return QueryClientInt32SecondsArrayResponse{}, err

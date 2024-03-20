@@ -22,6 +22,10 @@ type StringClient struct {
 //   - options - StringClientGetNonNullOptions contains the optional parameters for the StringClient.GetNonNull method.
 func (client *StringClient) GetNonNull(ctx context.Context, options *StringClientGetNonNullOptions) (StringClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "StringClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetNonNullResponse{}, err
@@ -62,6 +66,10 @@ func (client *StringClient) getNonNullHandleResponse(resp *http.Response) (Strin
 //   - options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
 	var err error
+	const operationName = "StringClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetNullResponse{}, err
@@ -102,6 +110,10 @@ func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringCl
 //   - options - StringClientPatchNonNullOptions contains the optional parameters for the StringClient.PatchNonNull method.
 func (client *StringClient) PatchNonNull(ctx context.Context, body StringProperty, options *StringClientPatchNonNullOptions) (StringClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "StringClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringClientPatchNonNullResponse{}, err
@@ -135,6 +147,10 @@ func (client *StringClient) patchNonNullCreateRequest(ctx context.Context, body 
 //   - options - StringClientPatchNullOptions contains the optional parameters for the StringClient.PatchNull method.
 func (client *StringClient) PatchNull(ctx context.Context, body StringProperty, options *StringClientPatchNullOptions) (StringClientPatchNullResponse, error) {
 	var err error
+	const operationName = "StringClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringClientPatchNullResponse{}, err

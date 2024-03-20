@@ -21,6 +21,10 @@ type Float32ValueClient struct {
 // - options - Float32ValueClientGetOptions contains the optional parameters for the Float32ValueClient.Get method.
 func (client *Float32ValueClient) Get(ctx context.Context, options *Float32ValueClientGetOptions) (Float32ValueClientGetResponse, error) {
 	var err error
+	const operationName = "Float32ValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return Float32ValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *Float32ValueClient) getHandleResponse(resp *http.Response) (Float3
 // - options - Float32ValueClientPutOptions contains the optional parameters for the Float32ValueClient.Put method.
 func (client *Float32ValueClient) Put(ctx context.Context, body []float32, options *Float32ValueClientPutOptions) (Float32ValueClientPutResponse, error) {
 	var err error
+	const operationName = "Float32ValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return Float32ValueClientPutResponse{}, err

@@ -23,6 +23,10 @@ type Decimal128TypeClient struct {
 //     method.
 func (client *Decimal128TypeClient) RequestBody(ctx context.Context, body float64, options *Decimal128TypeClientRequestBodyOptions) (Decimal128TypeClientRequestBodyResponse, error) {
 	var err error
+	const operationName = "Decimal128TypeClient.RequestBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requestBodyCreateRequest(ctx, body, options)
 	if err != nil {
 		return Decimal128TypeClientRequestBodyResponse{}, err
@@ -56,6 +60,10 @@ func (client *Decimal128TypeClient) requestBodyCreateRequest(ctx context.Context
 //     method.
 func (client *Decimal128TypeClient) RequestParameter(ctx context.Context, value float64, options *Decimal128TypeClientRequestParameterOptions) (Decimal128TypeClientRequestParameterResponse, error) {
 	var err error
+	const operationName = "Decimal128TypeClient.RequestParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requestParameterCreateRequest(ctx, value, options)
 	if err != nil {
 		return Decimal128TypeClientRequestParameterResponse{}, err
@@ -88,6 +96,10 @@ func (client *Decimal128TypeClient) requestParameterCreateRequest(ctx context.Co
 //     method.
 func (client *Decimal128TypeClient) ResponseBody(ctx context.Context, options *Decimal128TypeClientResponseBodyOptions) (Decimal128TypeClientResponseBodyResponse, error) {
 	var err error
+	const operationName = "Decimal128TypeClient.ResponseBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.responseBodyCreateRequest(ctx, options)
 	if err != nil {
 		return Decimal128TypeClientResponseBodyResponse{}, err

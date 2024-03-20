@@ -22,6 +22,10 @@ type IsStringClient struct {
 //   - options - IsStringClientGetOptions contains the optional parameters for the IsStringClient.Get method.
 func (client *IsStringClient) Get(ctx context.Context, options *IsStringClientGetOptions) (IsStringClientGetResponse, error) {
 	var err error
+	const operationName = "IsStringClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsStringClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *IsStringClient) getHandleResponse(resp *http.Response) (IsStringCl
 //   - options - IsStringClientPutOptions contains the optional parameters for the IsStringClient.Put method.
 func (client *IsStringClient) Put(ctx context.Context, body IsStringAdditionalProperties, options *IsStringClientPutOptions) (IsStringClientPutResponse, error) {
 	var err error
+	const operationName = "IsStringClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsStringClientPutResponse{}, err

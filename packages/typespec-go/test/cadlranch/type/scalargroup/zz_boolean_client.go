@@ -22,6 +22,10 @@ type BooleanClient struct {
 //   - options - BooleanClientGetOptions contains the optional parameters for the BooleanClient.Get method.
 func (client *BooleanClient) Get(ctx context.Context, options *BooleanClientGetOptions) (BooleanClientGetResponse, error) {
 	var err error
+	const operationName = "BooleanClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return BooleanClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *BooleanClient) getHandleResponse(resp *http.Response) (BooleanClie
 //   - options - BooleanClientPutOptions contains the optional parameters for the BooleanClient.Put method.
 func (client *BooleanClient) Put(ctx context.Context, body bool, options *BooleanClientPutOptions) (BooleanClientPutResponse, error) {
 	var err error
+	const operationName = "BooleanClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return BooleanClientPutResponse{}, err

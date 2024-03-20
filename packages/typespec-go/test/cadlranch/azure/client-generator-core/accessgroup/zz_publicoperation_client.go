@@ -22,6 +22,10 @@ type PublicOperationClient struct {
 //     method.
 func (client *PublicOperationClient) NoDecoratorInPublic(ctx context.Context, name string, options *PublicOperationClientNoDecoratorInPublicOptions) (PublicOperationClientNoDecoratorInPublicResponse, error) {
 	var err error
+	const operationName = "PublicOperationClient.NoDecoratorInPublic"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.noDecoratorInPublicCreateRequest(ctx, name, options)
 	if err != nil {
 		return PublicOperationClientNoDecoratorInPublicResponse{}, err
@@ -65,6 +69,10 @@ func (client *PublicOperationClient) noDecoratorInPublicHandleResponse(resp *htt
 //     method.
 func (client *PublicOperationClient) PublicDecoratorInPublic(ctx context.Context, name string, options *PublicOperationClientPublicDecoratorInPublicOptions) (PublicOperationClientPublicDecoratorInPublicResponse, error) {
 	var err error
+	const operationName = "PublicOperationClient.PublicDecoratorInPublic"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.publicDecoratorInPublicCreateRequest(ctx, name, options)
 	if err != nil {
 		return PublicOperationClientPublicDecoratorInPublicResponse{}, err

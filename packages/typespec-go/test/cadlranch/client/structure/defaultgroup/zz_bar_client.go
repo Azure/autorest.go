@@ -24,6 +24,10 @@ type BarClient struct {
 // - options - BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
 func (client *BarClient) Five(ctx context.Context, options *BarClientFiveOptions) (BarClientFiveResponse, error) {
 	var err error
+	const operationName = "BarClient.Five"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fiveCreateRequest(ctx, options)
 	if err != nil {
 		return BarClientFiveResponse{}, err
@@ -55,6 +59,10 @@ func (client *BarClient) fiveCreateRequest(ctx context.Context, options *BarClie
 // - options - BarClientNineOptions contains the optional parameters for the BarClient.Nine method.
 func (client *BarClient) Nine(ctx context.Context, options *BarClientNineOptions) (BarClientNineResponse, error) {
 	var err error
+	const operationName = "BarClient.Nine"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.nineCreateRequest(ctx, options)
 	if err != nil {
 		return BarClientNineResponse{}, err
@@ -86,6 +94,10 @@ func (client *BarClient) nineCreateRequest(ctx context.Context, options *BarClie
 // - options - BarClientSixOptions contains the optional parameters for the BarClient.Six method.
 func (client *BarClient) Six(ctx context.Context, options *BarClientSixOptions) (BarClientSixResponse, error) {
 	var err error
+	const operationName = "BarClient.Six"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sixCreateRequest(ctx, options)
 	if err != nil {
 		return BarClientSixResponse{}, err

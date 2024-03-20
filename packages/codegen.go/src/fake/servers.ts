@@ -45,6 +45,12 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
+    if (client.methods.length === 0) {
+      // client is purely hierarchical, skip it
+      // TODO: need to generate fake for this similar to fake for factory
+      continue;
+    }
+
     // the list of packages to import
     const imports = new ImportManager();
     imports.add(helpers.getParentImport(codeModel));

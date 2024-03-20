@@ -24,6 +24,10 @@ type Group2Client struct {
 // - options - Group2ClientFiveOptions contains the optional parameters for the Group2Client.Five method.
 func (client *Group2Client) Five(ctx context.Context, options *Group2ClientFiveOptions) (Group2ClientFiveResponse, error) {
 	var err error
+	const operationName = "Group2Client.Five"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fiveCreateRequest(ctx, options)
 	if err != nil {
 		return Group2ClientFiveResponse{}, err
@@ -55,6 +59,10 @@ func (client *Group2Client) fiveCreateRequest(ctx context.Context, options *Grou
 // - options - Group2ClientSixOptions contains the optional parameters for the Group2Client.Six method.
 func (client *Group2Client) Six(ctx context.Context, options *Group2ClientSixOptions) (Group2ClientSixResponse, error) {
 	var err error
+	const operationName = "Group2Client.Six"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sixCreateRequest(ctx, options)
 	if err != nil {
 		return Group2ClientSixResponse{}, err
@@ -86,6 +94,10 @@ func (client *Group2Client) sixCreateRequest(ctx context.Context, options *Group
 // - options - Group2ClientTwoOptions contains the optional parameters for the Group2Client.Two method.
 func (client *Group2Client) Two(ctx context.Context, options *Group2ClientTwoOptions) (Group2ClientTwoResponse, error) {
 	var err error
+	const operationName = "Group2Client.Two"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.twoCreateRequest(ctx, options)
 	if err != nil {
 		return Group2ClientTwoResponse{}, err

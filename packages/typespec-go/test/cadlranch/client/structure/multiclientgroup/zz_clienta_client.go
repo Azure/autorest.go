@@ -24,6 +24,10 @@ type ClientAClient struct {
 // - options - ClientAClientRenamedFiveOptions contains the optional parameters for the ClientAClient.RenamedFive method.
 func (client *ClientAClient) RenamedFive(ctx context.Context, options *ClientAClientRenamedFiveOptions) (ClientAClientRenamedFiveResponse, error) {
 	var err error
+	const operationName = "ClientAClient.RenamedFive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedFiveCreateRequest(ctx, options)
 	if err != nil {
 		return ClientAClientRenamedFiveResponse{}, err
@@ -55,6 +59,10 @@ func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, optio
 // - options - ClientAClientRenamedOneOptions contains the optional parameters for the ClientAClient.RenamedOne method.
 func (client *ClientAClient) RenamedOne(ctx context.Context, options *ClientAClientRenamedOneOptions) (ClientAClientRenamedOneResponse, error) {
 	var err error
+	const operationName = "ClientAClient.RenamedOne"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedOneCreateRequest(ctx, options)
 	if err != nil {
 		return ClientAClientRenamedOneResponse{}, err
@@ -86,6 +94,10 @@ func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, option
 // - options - ClientAClientRenamedThreeOptions contains the optional parameters for the ClientAClient.RenamedThree method.
 func (client *ClientAClient) RenamedThree(ctx context.Context, options *ClientAClientRenamedThreeOptions) (ClientAClientRenamedThreeResponse, error) {
 	var err error
+	const operationName = "ClientAClient.RenamedThree"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedThreeCreateRequest(ctx, options)
 	if err != nil {
 		return ClientAClientRenamedThreeResponse{}, err

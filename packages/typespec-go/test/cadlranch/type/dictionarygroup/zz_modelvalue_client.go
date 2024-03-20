@@ -21,6 +21,10 @@ type ModelValueClient struct {
 // - options - ModelValueClientGetOptions contains the optional parameters for the ModelValueClient.Get method.
 func (client *ModelValueClient) Get(ctx context.Context, options *ModelValueClientGetOptions) (ModelValueClientGetResponse, error) {
 	var err error
+	const operationName = "ModelValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ModelValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *ModelValueClient) getHandleResponse(resp *http.Response) (ModelVal
 // - options - ModelValueClientPutOptions contains the optional parameters for the ModelValueClient.Put method.
 func (client *ModelValueClient) Put(ctx context.Context, body map[string]*InnerModel, options *ModelValueClientPutOptions) (ModelValueClientPutResponse, error) {
 	var err error
+	const operationName = "ModelValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelValueClientPutResponse{}, err

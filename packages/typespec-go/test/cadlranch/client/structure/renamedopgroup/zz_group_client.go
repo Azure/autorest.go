@@ -24,6 +24,10 @@ type GroupClient struct {
 // - options - GroupClientRenamedFourOptions contains the optional parameters for the GroupClient.RenamedFour method.
 func (client *GroupClient) RenamedFour(ctx context.Context, options *GroupClientRenamedFourOptions) (GroupClientRenamedFourResponse, error) {
 	var err error
+	const operationName = "GroupClient.RenamedFour"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedFourCreateRequest(ctx, options)
 	if err != nil {
 		return GroupClientRenamedFourResponse{}, err
@@ -55,6 +59,10 @@ func (client *GroupClient) renamedFourCreateRequest(ctx context.Context, options
 // - options - GroupClientRenamedSixOptions contains the optional parameters for the GroupClient.RenamedSix method.
 func (client *GroupClient) RenamedSix(ctx context.Context, options *GroupClientRenamedSixOptions) (GroupClientRenamedSixResponse, error) {
 	var err error
+	const operationName = "GroupClient.RenamedSix"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedSixCreateRequest(ctx, options)
 	if err != nil {
 		return GroupClientRenamedSixResponse{}, err
@@ -86,6 +94,10 @@ func (client *GroupClient) renamedSixCreateRequest(ctx context.Context, options 
 // - options - GroupClientRenamedTwoOptions contains the optional parameters for the GroupClient.RenamedTwo method.
 func (client *GroupClient) RenamedTwo(ctx context.Context, options *GroupClientRenamedTwoOptions) (GroupClientRenamedTwoResponse, error) {
 	var err error
+	const operationName = "GroupClient.RenamedTwo"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedTwoCreateRequest(ctx, options)
 	if err != nil {
 		return GroupClientRenamedTwoResponse{}, err

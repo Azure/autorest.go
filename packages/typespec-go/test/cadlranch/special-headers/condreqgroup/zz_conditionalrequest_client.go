@@ -23,6 +23,10 @@ type ConditionalRequestClient struct {
 //     method.
 func (client *ConditionalRequestClient) PostIfMatch(ctx context.Context, options *ConditionalRequestClientPostIfMatchOptions) (ConditionalRequestClientPostIfMatchResponse, error) {
 	var err error
+	const operationName = "ConditionalRequestClient.PostIfMatch"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postIfMatchCreateRequest(ctx, options)
 	if err != nil {
 		return ConditionalRequestClientPostIfMatchResponse{}, err
@@ -56,6 +60,10 @@ func (client *ConditionalRequestClient) postIfMatchCreateRequest(ctx context.Con
 //     method.
 func (client *ConditionalRequestClient) PostIfNoneMatch(ctx context.Context, options *ConditionalRequestClientPostIfNoneMatchOptions) (ConditionalRequestClientPostIfNoneMatchResponse, error) {
 	var err error
+	const operationName = "ConditionalRequestClient.PostIfNoneMatch"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postIfNoneMatchCreateRequest(ctx, options)
 	if err != nil {
 		return ConditionalRequestClientPostIfNoneMatchResponse{}, err

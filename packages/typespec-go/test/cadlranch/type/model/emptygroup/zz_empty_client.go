@@ -21,6 +21,10 @@ type EmptyClient struct {
 // - options - GetEmptyOptions contains the optional parameters for the EmptyClient.GetEmpty method.
 func (client *EmptyClient) GetEmpty(ctx context.Context, options *GetEmptyOptions) (GetEmptyResponse, error) {
 	var err error
+	const operationName = "EmptyClient.GetEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
 		return GetEmptyResponse{}, err
@@ -60,6 +64,10 @@ func (client *EmptyClient) getEmptyHandleResponse(resp *http.Response) (GetEmpty
 // - options - PostRoundTripEmptyOptions contains the optional parameters for the EmptyClient.PostRoundTripEmpty method.
 func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInputOutput, options *PostRoundTripEmptyOptions) (PostRoundTripEmptyResponse, error) {
 	var err error
+	const operationName = "EmptyClient.PostRoundTripEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postRoundTripEmptyCreateRequest(ctx, body, options)
 	if err != nil {
 		return PostRoundTripEmptyResponse{}, err
@@ -103,6 +111,10 @@ func (client *EmptyClient) postRoundTripEmptyHandleResponse(resp *http.Response)
 // - options - PutEmptyOptions contains the optional parameters for the EmptyClient.PutEmpty method.
 func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, options *PutEmptyOptions) (PutEmptyResponse, error) {
 	var err error
+	const operationName = "EmptyClient.PutEmpty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putEmptyCreateRequest(ctx, input, options)
 	if err != nil {
 		return PutEmptyResponse{}, err

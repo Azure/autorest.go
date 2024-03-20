@@ -21,6 +21,10 @@ type PropertyClient struct {
 // - options - PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
 func (client *PropertyClient) Default(ctx context.Context, body DefaultDatetimeProperty, options *PropertyClientDefaultOptions) (PropertyClientDefaultResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientDefaultResponse{}, err
@@ -64,6 +68,10 @@ func (client *PropertyClient) defaultHandleResponse(resp *http.Response) (Proper
 // - options - PropertyClientRFC3339Options contains the optional parameters for the PropertyClient.RFC3339 method.
 func (client *PropertyClient) RFC3339(ctx context.Context, body RFC3339DatetimeProperty, options *PropertyClientRFC3339Options) (PropertyClientRFC3339Response, error) {
 	var err error
+	const operationName = "PropertyClient.RFC3339"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc3339CreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientRFC3339Response{}, err
@@ -107,6 +115,10 @@ func (client *PropertyClient) rfc3339HandleResponse(resp *http.Response) (Proper
 // - options - PropertyClientRFC7231Options contains the optional parameters for the PropertyClient.RFC7231 method.
 func (client *PropertyClient) RFC7231(ctx context.Context, body RFC7231DatetimeProperty, options *PropertyClientRFC7231Options) (PropertyClientRFC7231Response, error) {
 	var err error
+	const operationName = "PropertyClient.RFC7231"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc7231CreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientRFC7231Response{}, err
@@ -150,6 +162,10 @@ func (client *PropertyClient) rfc7231HandleResponse(resp *http.Response) (Proper
 // - options - PropertyClientUnixTimestampOptions contains the optional parameters for the PropertyClient.UnixTimestamp method.
 func (client *PropertyClient) UnixTimestamp(ctx context.Context, body UnixTimestampDatetimeProperty, options *PropertyClientUnixTimestampOptions) (PropertyClientUnixTimestampResponse, error) {
 	var err error
+	const operationName = "PropertyClient.UnixTimestamp"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientUnixTimestampResponse{}, err
@@ -194,6 +210,10 @@ func (client *PropertyClient) unixTimestampHandleResponse(resp *http.Response) (
 //     method.
 func (client *PropertyClient) UnixTimestampArray(ctx context.Context, body UnixTimestampArrayDatetimeProperty, options *PropertyClientUnixTimestampArrayOptions) (PropertyClientUnixTimestampArrayResponse, error) {
 	var err error
+	const operationName = "PropertyClient.UnixTimestampArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampArrayCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientUnixTimestampArrayResponse{}, err

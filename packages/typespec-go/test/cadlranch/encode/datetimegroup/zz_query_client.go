@@ -23,6 +23,10 @@ type QueryClient struct {
 // - options - QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
 func (client *QueryClient) Default(ctx context.Context, value time.Time, options *QueryClientDefaultOptions) (QueryClientDefaultResponse, error) {
 	var err error
+	const operationName = "QueryClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, value, options)
 	if err != nil {
 		return QueryClientDefaultResponse{}, err
@@ -54,6 +58,10 @@ func (client *QueryClient) defaultCreateRequest(ctx context.Context, value time.
 // - options - QueryClientRFC3339Options contains the optional parameters for the QueryClient.RFC3339 method.
 func (client *QueryClient) RFC3339(ctx context.Context, value time.Time, options *QueryClientRFC3339Options) (QueryClientRFC3339Response, error) {
 	var err error
+	const operationName = "QueryClient.RFC3339"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc3339CreateRequest(ctx, value, options)
 	if err != nil {
 		return QueryClientRFC3339Response{}, err
@@ -85,6 +93,10 @@ func (client *QueryClient) rfc3339CreateRequest(ctx context.Context, value time.
 // - options - QueryClientRFC7231Options contains the optional parameters for the QueryClient.RFC7231 method.
 func (client *QueryClient) RFC7231(ctx context.Context, value time.Time, options *QueryClientRFC7231Options) (QueryClientRFC7231Response, error) {
 	var err error
+	const operationName = "QueryClient.RFC7231"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc7231CreateRequest(ctx, value, options)
 	if err != nil {
 		return QueryClientRFC7231Response{}, err
@@ -116,6 +128,10 @@ func (client *QueryClient) rfc7231CreateRequest(ctx context.Context, value time.
 // - options - QueryClientUnixTimestampOptions contains the optional parameters for the QueryClient.UnixTimestamp method.
 func (client *QueryClient) UnixTimestamp(ctx context.Context, value time.Time, options *QueryClientUnixTimestampOptions) (QueryClientUnixTimestampResponse, error) {
 	var err error
+	const operationName = "QueryClient.UnixTimestamp"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampCreateRequest(ctx, value, options)
 	if err != nil {
 		return QueryClientUnixTimestampResponse{}, err
@@ -148,6 +164,10 @@ func (client *QueryClient) unixTimestampCreateRequest(ctx context.Context, value
 //     method.
 func (client *QueryClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *QueryClientUnixTimestampArrayOptions) (QueryClientUnixTimestampArrayResponse, error) {
 	var err error
+	const operationName = "QueryClient.UnixTimestampArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampArrayCreateRequest(ctx, value, options)
 	if err != nil {
 		return QueryClientUnixTimestampArrayResponse{}, err

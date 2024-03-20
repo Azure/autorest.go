@@ -24,6 +24,10 @@ type ResponseHeaderClient struct {
 // - options - ResponseHeaderClientDefaultOptions contains the optional parameters for the ResponseHeaderClient.Default method.
 func (client *ResponseHeaderClient) Default(ctx context.Context, options *ResponseHeaderClientDefaultOptions) (ResponseHeaderClientDefaultResponse, error) {
 	var err error
+	const operationName = "ResponseHeaderClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseHeaderClientDefaultResponse{}, err
@@ -66,6 +70,10 @@ func (client *ResponseHeaderClient) defaultHandleResponse(resp *http.Response) (
 // - options - ResponseHeaderClientRFC3339Options contains the optional parameters for the ResponseHeaderClient.RFC3339 method.
 func (client *ResponseHeaderClient) RFC3339(ctx context.Context, options *ResponseHeaderClientRFC3339Options) (ResponseHeaderClientRFC3339Response, error) {
 	var err error
+	const operationName = "ResponseHeaderClient.RFC3339"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc3339CreateRequest(ctx, options)
 	if err != nil {
 		return ResponseHeaderClientRFC3339Response{}, err
@@ -108,6 +116,10 @@ func (client *ResponseHeaderClient) rfc3339HandleResponse(resp *http.Response) (
 // - options - ResponseHeaderClientRFC7231Options contains the optional parameters for the ResponseHeaderClient.RFC7231 method.
 func (client *ResponseHeaderClient) RFC7231(ctx context.Context, options *ResponseHeaderClientRFC7231Options) (ResponseHeaderClientRFC7231Response, error) {
 	var err error
+	const operationName = "ResponseHeaderClient.RFC7231"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc7231CreateRequest(ctx, options)
 	if err != nil {
 		return ResponseHeaderClientRFC7231Response{}, err
@@ -151,6 +163,10 @@ func (client *ResponseHeaderClient) rfc7231HandleResponse(resp *http.Response) (
 //     method.
 func (client *ResponseHeaderClient) UnixTimestamp(ctx context.Context, options *ResponseHeaderClientUnixTimestampOptions) (ResponseHeaderClientUnixTimestampResponse, error) {
 	var err error
+	const operationName = "ResponseHeaderClient.UnixTimestamp"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampCreateRequest(ctx, options)
 	if err != nil {
 		return ResponseHeaderClientUnixTimestampResponse{}, err

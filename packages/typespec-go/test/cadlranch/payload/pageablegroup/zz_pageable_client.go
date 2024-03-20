@@ -27,6 +27,7 @@ func (client *PageableClient) NewListPager(options *PageableClientListOptions) *
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *PageableClientListResponse) (PageableClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "PageableClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -39,6 +40,7 @@ func (client *PageableClient) NewListPager(options *PageableClientListOptions) *
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

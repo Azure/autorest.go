@@ -27,6 +27,10 @@ type NotVersionedClient struct {
 //     method.
 func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, options *NotVersionedClientWithPathAPIVersionOptions) (NotVersionedClientWithPathAPIVersionResponse, error) {
 	var err error
+	const operationName = "NotVersionedClient.WithPathAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withPathAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return NotVersionedClientWithPathAPIVersionResponse{}, err
@@ -62,6 +66,10 @@ func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Co
 //     method.
 func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, options *NotVersionedClientWithQueryAPIVersionOptions) (NotVersionedClientWithQueryAPIVersionResponse, error) {
 	var err error
+	const operationName = "NotVersionedClient.WithQueryAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withQueryAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return NotVersionedClientWithQueryAPIVersionResponse{}, err
@@ -96,6 +104,10 @@ func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.C
 //     method.
 func (client *NotVersionedClient) WithoutAPIVersion(ctx context.Context, options *NotVersionedClientWithoutAPIVersionOptions) (NotVersionedClientWithoutAPIVersionResponse, error) {
 	var err error
+	const operationName = "NotVersionedClient.WithoutAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withoutAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return NotVersionedClientWithoutAPIVersionResponse{}, err

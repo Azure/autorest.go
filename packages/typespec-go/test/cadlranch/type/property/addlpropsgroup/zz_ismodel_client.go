@@ -22,6 +22,10 @@ type IsModelClient struct {
 //   - options - IsModelClientGetOptions contains the optional parameters for the IsModelClient.Get method.
 func (client *IsModelClient) Get(ctx context.Context, options *IsModelClientGetOptions) (IsModelClientGetResponse, error) {
 	var err error
+	const operationName = "IsModelClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsModelClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *IsModelClient) getHandleResponse(resp *http.Response) (IsModelClie
 //   - options - IsModelClientPutOptions contains the optional parameters for the IsModelClient.Put method.
 func (client *IsModelClient) Put(ctx context.Context, body IsModelAdditionalProperties, options *IsModelClientPutOptions) (IsModelClientPutResponse, error) {
 	var err error
+	const operationName = "IsModelClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsModelClientPutResponse{}, err

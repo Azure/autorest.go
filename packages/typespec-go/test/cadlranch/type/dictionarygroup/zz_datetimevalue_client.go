@@ -22,6 +22,10 @@ type DatetimeValueClient struct {
 // - options - DatetimeValueClientGetOptions contains the optional parameters for the DatetimeValueClient.Get method.
 func (client *DatetimeValueClient) Get(ctx context.Context, options *DatetimeValueClientGetOptions) (DatetimeValueClientGetResponse, error) {
 	var err error
+	const operationName = "DatetimeValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return DatetimeValueClientGetResponse{}, err
@@ -67,6 +71,10 @@ func (client *DatetimeValueClient) getHandleResponse(resp *http.Response) (Datet
 // - options - DatetimeValueClientPutOptions contains the optional parameters for the DatetimeValueClient.Put method.
 func (client *DatetimeValueClient) Put(ctx context.Context, body map[string]*time.Time, options *DatetimeValueClientPutOptions) (DatetimeValueClientPutResponse, error) {
 	var err error
+	const operationName = "DatetimeValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return DatetimeValueClientPutResponse{}, err

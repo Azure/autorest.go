@@ -22,6 +22,10 @@ type ApiKeyClient struct {
 //   - options - ApiKeyClientInvalidOptions contains the optional parameters for the ApiKeyClient.Invalid method.
 func (client *ApiKeyClient) Invalid(ctx context.Context, options *ApiKeyClientInvalidOptions) (ApiKeyClientInvalidResponse, error) {
 	var err error
+	const operationName = "ApiKeyClient.Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.invalidCreateRequest(ctx, options)
 	if err != nil {
 		return ApiKeyClientInvalidResponse{}, err
@@ -52,6 +56,10 @@ func (client *ApiKeyClient) invalidCreateRequest(ctx context.Context, options *A
 //   - options - ApiKeyClientValidOptions contains the optional parameters for the ApiKeyClient.Valid method.
 func (client *ApiKeyClient) Valid(ctx context.Context, options *ApiKeyClientValidOptions) (ApiKeyClientValidResponse, error) {
 	var err error
+	const operationName = "ApiKeyClient.Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.validCreateRequest(ctx, options)
 	if err != nil {
 		return ApiKeyClientValidResponse{}, err

@@ -22,6 +22,10 @@ type NotDiscriminatedClient struct {
 //     method.
 func (client *NotDiscriminatedClient) GetValid(ctx context.Context, options *NotDiscriminatedClientGetValidOptions) (NotDiscriminatedClientGetValidResponse, error) {
 	var err error
+	const operationName = "NotDiscriminatedClient.GetValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
 		return NotDiscriminatedClientGetValidResponse{}, err
@@ -62,6 +66,10 @@ func (client *NotDiscriminatedClient) getValidHandleResponse(resp *http.Response
 //     method.
 func (client *NotDiscriminatedClient) PostValid(ctx context.Context, input Siamese, options *NotDiscriminatedClientPostValidOptions) (NotDiscriminatedClientPostValidResponse, error) {
 	var err error
+	const operationName = "NotDiscriminatedClient.PostValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postValidCreateRequest(ctx, input, options)
 	if err != nil {
 		return NotDiscriminatedClientPostValidResponse{}, err
@@ -95,6 +103,10 @@ func (client *NotDiscriminatedClient) postValidCreateRequest(ctx context.Context
 //     method.
 func (client *NotDiscriminatedClient) PutValid(ctx context.Context, input Siamese, options *NotDiscriminatedClientPutValidOptions) (NotDiscriminatedClientPutValidResponse, error) {
 	var err error
+	const operationName = "NotDiscriminatedClient.PutValid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putValidCreateRequest(ctx, input, options)
 	if err != nil {
 		return NotDiscriminatedClientPutValidResponse{}, err
