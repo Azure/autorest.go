@@ -954,6 +954,7 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
       if (param.collectionFormat !== 'multi' && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+        requiredHelpers.splitHelper = true;
         return `splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
     } else if (go.isHeaderParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {
