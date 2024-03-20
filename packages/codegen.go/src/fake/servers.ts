@@ -41,12 +41,16 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
+function isMethodInternal(method: go.Method): boolean {
+  return !!method.name.match(/^[a-z]{1}/);
+}
+
 export async function generateServers(codeModel: go.CodeModel): Promise<ServerContent> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
-    if (client.methods.length === 0) {
-      // client is purely hierarchical, skip it
+    if (client.methods.length === 0 || values(client.methods).all(method => { return isMethodInternal(method)})) {
+      // client is purely hierarchical or has no exported methods, skip it
       // TODO: need to generate fake for this similar to fake for factory
       continue;
     }
@@ -75,6 +79,11 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     let countPagers = 0;
 
     for (const method of values(client.methods)) {
+      if (isMethodInternal(method)) {
+        // method isn't exported, don't create a fake for it
+        continue;
+      }
+
       let serverResponse: string;
 
       if (go.isLROMethod(method)) {

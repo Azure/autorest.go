@@ -21,10 +21,6 @@ type SharedModelInOperationServer struct {
 	// Public is the fake for method SharedModelInOperationClient.Public
 	// HTTP status codes to indicate success: http.StatusOK
 	Public func(ctx context.Context, name string, options *accessgroup.SharedModelInOperationClientPublicOptions) (resp azfake.Responder[accessgroup.SharedModelInOperationClientPublicResponse], errResp azfake.ErrorResponder)
-
-	// internalMethod is the fake for method SharedModelInOperationClient.internalMethod
-	// HTTP status codes to indicate success: http.StatusOK
-	internalMethod func(ctx context.Context, name string, options *accessgroup.sharedModelInOperationClientinternalMethodOptions) (resp azfake.Responder[accessgroup.sharedModelInOperationClientinternalMethodResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSharedModelInOperationServerTransport creates a new instance of SharedModelInOperationServerTransport with the provided implementation.
@@ -54,8 +50,6 @@ func (s *SharedModelInOperationServerTransport) Do(req *http.Request) (*http.Res
 	switch method {
 	case "SharedModelInOperationClient.Public":
 		resp, err = s.dispatchPublic(req)
-	case "SharedModelInOperationClient.internalMethod":
-		resp, err = s.dispatchinternalMethod(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -77,30 +71,6 @@ func (s *SharedModelInOperationServerTransport) dispatchPublic(req *http.Request
 		return nil, err
 	}
 	respr, errRespr := s.srv.Public(req.Context(), nameParam, nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
-	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).SharedModel, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (s *SharedModelInOperationServerTransport) dispatchinternalMethod(req *http.Request) (*http.Response, error) {
-	if s.srv.internalMethod == nil {
-		return nil, &nonRetriableError{errors.New("fake for method internalMethod not implemented")}
-	}
-	qp := req.URL.Query()
-	nameParam, err := url.QueryUnescape(qp.Get("name"))
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := s.srv.internalMethod(req.Context(), nameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
