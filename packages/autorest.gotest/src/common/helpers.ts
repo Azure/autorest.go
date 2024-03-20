@@ -5,6 +5,7 @@
 
 import { Operation, Parameter, Response, SchemaResponse } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
+import { TestCodeModel } from '@autorest/testmodeler/dist/src/core/model';
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {
@@ -69,4 +70,22 @@ export function isMultiRespOperation(op: Operation): boolean {
     }
   }
   return schemaResponses.length > 1;
+}
+
+// returns the module name with possible major version suffix, or undefined if there's no defined module
+export function getModuleNameWithMajorVersion(codeModel: TestCodeModel): string | undefined {
+  if (!codeModel.language.go!.module || codeModel.language.go!.module === '') {
+    return undefined;
+  }
+
+  if (!codeModel.language.go!.moduleVersion || codeModel.language.go!.moduleVersion === '') {
+    return codeModel.language.go!.module;
+  }
+
+  // if the module's major version is greater than one, add a major version suffix to the module name
+  const majorVersion = codeModel.language.go!.moduleVersion.substring(0, codeModel.language.go!.moduleVersion.indexOf('.'));
+  if (Number(majorVersion) > 1) {
+    return `${codeModel.language.go!.module}/v${majorVersion}`;
+  }
+  return codeModel.language.go!.module;
 }

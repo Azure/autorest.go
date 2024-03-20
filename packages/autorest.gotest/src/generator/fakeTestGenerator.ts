@@ -2,7 +2,7 @@ import { ArraySchema, DictionarySchema, Operation, Parameter, Schema, SchemaType
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from 'lodash';
 import { Config } from '../common/constant';
-import { isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse } from '../common/helpers';
+import { getModuleNameWithMajorVersion, isLROOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse } from '../common/helpers';
 import { ParameterOutput } from '../common/model';
 import { getMethodParameters, getResponseEnvelopeName } from '../util/codegenBridge';
 import { BaseCodeGenerator } from './baseGenerator';
@@ -11,8 +11,8 @@ import { MockTestDataRender } from './mockTestGenerator';
 export class FakeDataRender extends MockTestDataRender {
   public renderData(): void {
     super.renderData();
-    const modName = this.context.codeModel.language.go!.module;
-    if (modName !== 'none' && modName) {
+    const modName = getModuleNameWithMajorVersion(this.context.codeModel);
+    if (modName) {
       this.context.importManager.add(modName + '/fake');
     }
   }
