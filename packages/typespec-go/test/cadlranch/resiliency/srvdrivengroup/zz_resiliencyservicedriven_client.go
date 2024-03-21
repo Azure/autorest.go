@@ -38,6 +38,10 @@ type ResiliencyServiceDrivenClient struct {
 //     method.
 func (client *ResiliencyServiceDrivenClient) AddOperation(ctx context.Context, options *ResiliencyServiceDrivenClientAddOperationOptions) (ResiliencyServiceDrivenClientAddOperationResponse, error) {
 	var err error
+	const operationName = "ResiliencyServiceDrivenClient.AddOperation"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.addOperationCreateRequest(ctx, options)
 	if err != nil {
 		return ResiliencyServiceDrivenClientAddOperationResponse{}, err
@@ -72,6 +76,10 @@ func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx conte
 //     method.
 func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, options *ResiliencyServiceDrivenClientFromNoneOptions) (ResiliencyServiceDrivenClientFromNoneResponse, error) {
 	var err error
+	const operationName = "ResiliencyServiceDrivenClient.FromNone"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fromNoneCreateRequest(ctx, options)
 	if err != nil {
 		return ResiliencyServiceDrivenClientFromNoneResponse{}, err
@@ -112,6 +120,10 @@ func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.C
 //     method.
 func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (ResiliencyServiceDrivenClientFromOneOptionalResponse, error) {
 	var err error
+	const operationName = "ResiliencyServiceDrivenClient.FromOneOptional"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fromOneOptionalCreateRequest(ctx, options)
 	if err != nil {
 		return ResiliencyServiceDrivenClientFromOneOptionalResponse{}, err
@@ -156,6 +168,10 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 //     method.
 func (client *ResiliencyServiceDrivenClient) FromOneRequired(ctx context.Context, parameter string, options *ResiliencyServiceDrivenClientFromOneRequiredOptions) (ResiliencyServiceDrivenClientFromOneRequiredResponse, error) {
 	var err error
+	const operationName = "ResiliencyServiceDrivenClient.FromOneRequired"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fromOneRequiredCreateRequest(ctx, parameter, options)
 	if err != nil {
 		return ResiliencyServiceDrivenClientFromOneRequiredResponse{}, err

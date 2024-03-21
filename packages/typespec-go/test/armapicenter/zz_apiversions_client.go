@@ -48,6 +48,10 @@ func NewApiVersionsClient(credential azcore.TokenCredential, options *arm.Client
 //     method.
 func (client *ApiVersionsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload APIVersion, options *ApiVersionsClientCreateOrUpdateOptions) (ApiVersionsClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "ApiVersionsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, payload, options)
 	if err != nil {
 		return ApiVersionsClientCreateOrUpdateResponse{}, err
@@ -128,6 +132,10 @@ func (client *ApiVersionsClient) createOrUpdateHandleResponse(resp *http.Respons
 //   - options - ApiVersionsClientDeleteOptions contains the optional parameters for the ApiVersionsClient.Delete method.
 func (client *ApiVersionsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *ApiVersionsClientDeleteOptions) (ApiVersionsClientDeleteResponse, error) {
 	var err error
+	const operationName = "ApiVersionsClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return ApiVersionsClientDeleteResponse{}, err
@@ -191,6 +199,10 @@ func (client *ApiVersionsClient) deleteCreateRequest(ctx context.Context, subscr
 //   - options - ApiVersionsClientGetOptions contains the optional parameters for the ApiVersionsClient.Get method.
 func (client *ApiVersionsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *ApiVersionsClientGetOptions) (ApiVersionsClientGetResponse, error) {
 	var err error
+	const operationName = "ApiVersionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return ApiVersionsClientGetResponse{}, err
@@ -267,6 +279,10 @@ func (client *ApiVersionsClient) getHandleResponse(resp *http.Response) (ApiVers
 //   - options - ApiVersionsClientHeadOptions contains the optional parameters for the ApiVersionsClient.Head method.
 func (client *ApiVersionsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *ApiVersionsClientHeadOptions) (ApiVersionsClientHeadResponse, error) {
 	var err error
+	const operationName = "ApiVersionsClient.Head"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return ApiVersionsClientHeadResponse{}, err
@@ -333,6 +349,7 @@ func (client *ApiVersionsClient) NewListPager(subscriptionID string, resourceGro
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ApiVersionsClientListResponse) (ApiVersionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApiVersionsClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -345,6 +362,7 @@ func (client *ApiVersionsClient) NewListPager(subscriptionID string, resourceGro
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

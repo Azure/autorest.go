@@ -28,6 +28,7 @@ func (client *TwoModelsAsPageItemClient) NewListFirstItemPager(options *TwoModel
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TwoModelsAsPageItemClientListFirstItemResponse) (TwoModelsAsPageItemClientListFirstItemResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TwoModelsAsPageItemClient.NewListFirstItemPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -40,6 +41,7 @@ func (client *TwoModelsAsPageItemClient) NewListFirstItemPager(options *TwoModel
 			}
 			return client.listFirstItemHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -76,6 +78,7 @@ func (client *TwoModelsAsPageItemClient) NewListSecondItemPager(options *TwoMode
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *TwoModelsAsPageItemClientListSecondItemResponse) (TwoModelsAsPageItemClientListSecondItemResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "TwoModelsAsPageItemClient.NewListSecondItemPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -88,6 +91,7 @@ func (client *TwoModelsAsPageItemClient) NewListSecondItemPager(options *TwoMode
 			}
 			return client.listSecondItemHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

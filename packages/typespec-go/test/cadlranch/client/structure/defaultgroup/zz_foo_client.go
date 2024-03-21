@@ -24,6 +24,10 @@ type FooClient struct {
 // - options - FooClientFourOptions contains the optional parameters for the FooClient.Four method.
 func (client *FooClient) Four(ctx context.Context, options *FooClientFourOptions) (FooClientFourResponse, error) {
 	var err error
+	const operationName = "FooClient.Four"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.fourCreateRequest(ctx, options)
 	if err != nil {
 		return FooClientFourResponse{}, err
@@ -55,6 +59,10 @@ func (client *FooClient) fourCreateRequest(ctx context.Context, options *FooClie
 // - options - FooClientSevenOptions contains the optional parameters for the FooClient.Seven method.
 func (client *FooClient) Seven(ctx context.Context, options *FooClientSevenOptions) (FooClientSevenResponse, error) {
 	var err error
+	const operationName = "FooClient.Seven"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sevenCreateRequest(ctx, options)
 	if err != nil {
 		return FooClientSevenResponse{}, err
@@ -86,6 +94,10 @@ func (client *FooClient) sevenCreateRequest(ctx context.Context, options *FooCli
 // - options - FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
 func (client *FooClient) Three(ctx context.Context, options *FooClientThreeOptions) (FooClientThreeResponse, error) {
 	var err error
+	const operationName = "FooClient.Three"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.threeCreateRequest(ctx, options)
 	if err != nil {
 		return FooClientThreeResponse{}, err

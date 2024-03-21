@@ -23,6 +23,10 @@ type EnumDiscriminatorClient struct {
 //     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModel(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelOptions) (EnumDiscriminatorClientGetExtensibleModelResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetExtensibleModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getExtensibleModelCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetExtensibleModelResponse{}, err
@@ -64,6 +68,10 @@ func (client *EnumDiscriminatorClient) getExtensibleModelHandleResponse(resp *ht
 //     EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getExtensibleModelMissingDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse{}, err
@@ -105,6 +113,10 @@ func (client *EnumDiscriminatorClient) getExtensibleModelMissingDiscriminatorHan
 //     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getExtensibleModelWrongDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse{}, err
@@ -146,6 +158,10 @@ func (client *EnumDiscriminatorClient) getExtensibleModelWrongDiscriminatorHandl
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModel(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelOptions) (EnumDiscriminatorClientGetFixedModelResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetFixedModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFixedModelCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetFixedModelResponse{}, err
@@ -187,6 +203,10 @@ func (client *EnumDiscriminatorClient) getFixedModelHandleResponse(resp *http.Re
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetFixedModelMissingDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFixedModelMissingDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse{}, err
@@ -228,6 +248,10 @@ func (client *EnumDiscriminatorClient) getFixedModelMissingDiscriminatorHandleRe
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.GetFixedModelWrongDiscriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getFixedModelWrongDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
 		return EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse{}, err
@@ -270,6 +294,10 @@ func (client *EnumDiscriminatorClient) getFixedModelWrongDiscriminatorHandleResp
 //     method.
 func (client *EnumDiscriminatorClient) PutExtensibleModel(ctx context.Context, input DogClassification, options *EnumDiscriminatorClientPutExtensibleModelOptions) (EnumDiscriminatorClientPutExtensibleModelResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.PutExtensibleModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putExtensibleModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return EnumDiscriminatorClientPutExtensibleModelResponse{}, err
@@ -305,6 +333,10 @@ func (client *EnumDiscriminatorClient) putExtensibleModelCreateRequest(ctx conte
 //     method.
 func (client *EnumDiscriminatorClient) PutFixedModel(ctx context.Context, input SnakeClassification, options *EnumDiscriminatorClientPutFixedModelOptions) (EnumDiscriminatorClientPutFixedModelResponse, error) {
 	var err error
+	const operationName = "EnumDiscriminatorClient.PutFixedModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putFixedModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return EnumDiscriminatorClientPutFixedModelResponse{}, err

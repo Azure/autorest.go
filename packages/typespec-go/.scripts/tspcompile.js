@@ -159,6 +159,8 @@ function generate(moduleName, input, outputDir, additionalArgs) {
       options.push(`--option="@azure-tools/typespec-go.module-version=0.1.0"`);
       options.push(`--option="@azure-tools/typespec-go.emitter-output-dir=${fullOutputDir}"`);
       options.push(`--option="@azure-tools/typespec-go.file-prefix=zz_"`);
+      options.push(`--option="@azure-tools/typespec-go.generate-fakes=true"`);
+      options.push(`--option="@azure-tools/typespec-go.inject-spans=true"`);
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }

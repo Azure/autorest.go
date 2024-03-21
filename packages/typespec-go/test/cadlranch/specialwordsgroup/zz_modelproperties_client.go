@@ -22,6 +22,10 @@ type ModelPropertiesClient struct {
 //     method.
 func (client *ModelPropertiesClient) SameAsModel(ctx context.Context, body SameAsModel, options *ModelPropertiesClientSameAsModelOptions) (ModelPropertiesClientSameAsModelResponse, error) {
 	var err error
+	const operationName = "ModelPropertiesClient.SameAsModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.sameAsModelCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelPropertiesClientSameAsModelResponse{}, err

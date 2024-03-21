@@ -23,6 +23,10 @@ type CollectionsModelClient struct {
 //     method.
 func (client *CollectionsModelClient) GetNonNull(ctx context.Context, options *CollectionsModelClientGetNonNullOptions) (CollectionsModelClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "CollectionsModelClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return CollectionsModelClientGetNonNullResponse{}, err
@@ -64,6 +68,10 @@ func (client *CollectionsModelClient) getNonNullHandleResponse(resp *http.Respon
 //     method.
 func (client *CollectionsModelClient) GetNull(ctx context.Context, options *CollectionsModelClientGetNullOptions) (CollectionsModelClientGetNullResponse, error) {
 	var err error
+	const operationName = "CollectionsModelClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return CollectionsModelClientGetNullResponse{}, err
@@ -105,6 +113,10 @@ func (client *CollectionsModelClient) getNullHandleResponse(resp *http.Response)
 //     method.
 func (client *CollectionsModelClient) PatchNonNull(ctx context.Context, body CollectionsModelProperty, options *CollectionsModelClientPatchNonNullOptions) (CollectionsModelClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "CollectionsModelClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return CollectionsModelClientPatchNonNullResponse{}, err
@@ -139,6 +151,10 @@ func (client *CollectionsModelClient) patchNonNullCreateRequest(ctx context.Cont
 //     method.
 func (client *CollectionsModelClient) PatchNull(ctx context.Context, body CollectionsModelProperty, options *CollectionsModelClientPatchNullOptions) (CollectionsModelClientPatchNullResponse, error) {
 	var err error
+	const operationName = "CollectionsModelClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return CollectionsModelClientPatchNullResponse{}, err

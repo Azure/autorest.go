@@ -22,6 +22,10 @@ type UnionClient struct {
 //   - options - UnionClientValidKeyOptions contains the optional parameters for the UnionClient.ValidKey method.
 func (client *UnionClient) ValidKey(ctx context.Context, options *UnionClientValidKeyOptions) (UnionClientValidKeyResponse, error) {
 	var err error
+	const operationName = "UnionClient.ValidKey"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.validKeyCreateRequest(ctx, options)
 	if err != nil {
 		return UnionClientValidKeyResponse{}, err
@@ -51,6 +55,10 @@ func (client *UnionClient) validKeyCreateRequest(ctx context.Context, options *U
 //   - options - UnionClientValidTokenOptions contains the optional parameters for the UnionClient.ValidToken method.
 func (client *UnionClient) ValidToken(ctx context.Context, options *UnionClientValidTokenOptions) (UnionClientValidTokenResponse, error) {
 	var err error
+	const operationName = "UnionClient.ValidToken"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.validTokenCreateRequest(ctx, options)
 	if err != nil {
 		return UnionClientValidTokenResponse{}, err

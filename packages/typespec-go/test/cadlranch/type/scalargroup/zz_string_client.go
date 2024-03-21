@@ -22,6 +22,10 @@ type StringClient struct {
 //   - options - StringClientGetOptions contains the optional parameters for the StringClient.Get method.
 func (client *StringClient) Get(ctx context.Context, options *StringClientGetOptions) (StringClientGetResponse, error) {
 	var err error
+	const operationName = "StringClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *StringClient) getHandleResponse(resp *http.Response) (StringClient
 //   - options - StringClientPutOptions contains the optional parameters for the StringClient.Put method.
 func (client *StringClient) Put(ctx context.Context, body string, options *StringClientPutOptions) (StringClientPutResponse, error) {
 	var err error
+	const operationName = "StringClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringClientPutResponse{}, err

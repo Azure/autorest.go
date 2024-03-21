@@ -21,6 +21,10 @@ type ModelsClient struct {
 // - options - ModelsClientWithAndOptions contains the optional parameters for the ModelsClient.WithAnd method.
 func (client *ModelsClient) WithAnd(ctx context.Context, body And, options *ModelsClientWithAndOptions) (ModelsClientWithAndResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithAnd"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withAndCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithAndResponse{}, err
@@ -53,6 +57,10 @@ func (client *ModelsClient) withAndCreateRequest(ctx context.Context, body And, 
 // - options - ModelsClientWithAsOptions contains the optional parameters for the ModelsClient.WithAs method.
 func (client *ModelsClient) WithAs(ctx context.Context, body As, options *ModelsClientWithAsOptions) (ModelsClientWithAsResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithAs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withAsCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithAsResponse{}, err
@@ -85,6 +93,10 @@ func (client *ModelsClient) withAsCreateRequest(ctx context.Context, body As, op
 // - options - ModelsClientWithAssertOptions contains the optional parameters for the ModelsClient.WithAssert method.
 func (client *ModelsClient) WithAssert(ctx context.Context, body Assert, options *ModelsClientWithAssertOptions) (ModelsClientWithAssertResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithAssert"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withAssertCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithAssertResponse{}, err
@@ -117,6 +129,10 @@ func (client *ModelsClient) withAssertCreateRequest(ctx context.Context, body As
 // - options - ModelsClientWithAsyncOptions contains the optional parameters for the ModelsClient.WithAsync method.
 func (client *ModelsClient) WithAsync(ctx context.Context, body Async, options *ModelsClientWithAsyncOptions) (ModelsClientWithAsyncResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithAsync"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withAsyncCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithAsyncResponse{}, err
@@ -149,6 +165,10 @@ func (client *ModelsClient) withAsyncCreateRequest(ctx context.Context, body Asy
 // - options - ModelsClientWithAwaitOptions contains the optional parameters for the ModelsClient.WithAwait method.
 func (client *ModelsClient) WithAwait(ctx context.Context, body Await, options *ModelsClientWithAwaitOptions) (ModelsClientWithAwaitResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithAwait"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withAwaitCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithAwaitResponse{}, err
@@ -181,6 +201,10 @@ func (client *ModelsClient) withAwaitCreateRequest(ctx context.Context, body Awa
 // - options - ModelsClientWithBreakOptions contains the optional parameters for the ModelsClient.WithBreak method.
 func (client *ModelsClient) WithBreak(ctx context.Context, body Break, options *ModelsClientWithBreakOptions) (ModelsClientWithBreakResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithBreak"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withBreakCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithBreakResponse{}, err
@@ -213,6 +237,10 @@ func (client *ModelsClient) withBreakCreateRequest(ctx context.Context, body Bre
 // - options - ModelsClientWithClassOptions contains the optional parameters for the ModelsClient.WithClass method.
 func (client *ModelsClient) WithClass(ctx context.Context, body Class, options *ModelsClientWithClassOptions) (ModelsClientWithClassResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithClass"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withClassCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithClassResponse{}, err
@@ -245,6 +273,10 @@ func (client *ModelsClient) withClassCreateRequest(ctx context.Context, body Cla
 // - options - ModelsClientWithConstructorOptions contains the optional parameters for the ModelsClient.WithConstructor method.
 func (client *ModelsClient) WithConstructor(ctx context.Context, body Constructor, options *ModelsClientWithConstructorOptions) (ModelsClientWithConstructorResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithConstructor"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withConstructorCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithConstructorResponse{}, err
@@ -277,6 +309,10 @@ func (client *ModelsClient) withConstructorCreateRequest(ctx context.Context, bo
 // - options - ModelsClientWithContinueOptions contains the optional parameters for the ModelsClient.WithContinue method.
 func (client *ModelsClient) WithContinue(ctx context.Context, body Continue, options *ModelsClientWithContinueOptions) (ModelsClientWithContinueResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithContinue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withContinueCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithContinueResponse{}, err
@@ -309,6 +345,10 @@ func (client *ModelsClient) withContinueCreateRequest(ctx context.Context, body 
 // - options - ModelsClientWithDefOptions contains the optional parameters for the ModelsClient.WithDef method.
 func (client *ModelsClient) WithDef(ctx context.Context, body Def, options *ModelsClientWithDefOptions) (ModelsClientWithDefResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithDef"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withDefCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithDefResponse{}, err
@@ -341,6 +381,10 @@ func (client *ModelsClient) withDefCreateRequest(ctx context.Context, body Def, 
 // - options - ModelsClientWithDelOptions contains the optional parameters for the ModelsClient.WithDel method.
 func (client *ModelsClient) WithDel(ctx context.Context, body Del, options *ModelsClientWithDelOptions) (ModelsClientWithDelResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithDel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withDelCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithDelResponse{}, err
@@ -373,6 +417,10 @@ func (client *ModelsClient) withDelCreateRequest(ctx context.Context, body Del, 
 // - options - ModelsClientWithElifOptions contains the optional parameters for the ModelsClient.WithElif method.
 func (client *ModelsClient) WithElif(ctx context.Context, body Elif, options *ModelsClientWithElifOptions) (ModelsClientWithElifResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithElif"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withElifCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithElifResponse{}, err
@@ -405,6 +453,10 @@ func (client *ModelsClient) withElifCreateRequest(ctx context.Context, body Elif
 // - options - ModelsClientWithElseOptions contains the optional parameters for the ModelsClient.WithElse method.
 func (client *ModelsClient) WithElse(ctx context.Context, body Else, options *ModelsClientWithElseOptions) (ModelsClientWithElseResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithElse"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withElseCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithElseResponse{}, err
@@ -437,6 +489,10 @@ func (client *ModelsClient) withElseCreateRequest(ctx context.Context, body Else
 // - options - ModelsClientWithExceptOptions contains the optional parameters for the ModelsClient.WithExcept method.
 func (client *ModelsClient) WithExcept(ctx context.Context, body Except, options *ModelsClientWithExceptOptions) (ModelsClientWithExceptResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithExcept"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withExceptCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithExceptResponse{}, err
@@ -469,6 +525,10 @@ func (client *ModelsClient) withExceptCreateRequest(ctx context.Context, body Ex
 // - options - ModelsClientWithExecOptions contains the optional parameters for the ModelsClient.WithExec method.
 func (client *ModelsClient) WithExec(ctx context.Context, body Exec, options *ModelsClientWithExecOptions) (ModelsClientWithExecResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithExec"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withExecCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithExecResponse{}, err
@@ -501,6 +561,10 @@ func (client *ModelsClient) withExecCreateRequest(ctx context.Context, body Exec
 // - options - ModelsClientWithFinallyOptions contains the optional parameters for the ModelsClient.WithFinally method.
 func (client *ModelsClient) WithFinally(ctx context.Context, body Finally, options *ModelsClientWithFinallyOptions) (ModelsClientWithFinallyResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithFinally"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withFinallyCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithFinallyResponse{}, err
@@ -533,6 +597,10 @@ func (client *ModelsClient) withFinallyCreateRequest(ctx context.Context, body F
 // - options - ModelsClientWithForOptions contains the optional parameters for the ModelsClient.WithFor method.
 func (client *ModelsClient) WithFor(ctx context.Context, body For, options *ModelsClientWithForOptions) (ModelsClientWithForResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithFor"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withForCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithForResponse{}, err
@@ -565,6 +633,10 @@ func (client *ModelsClient) withForCreateRequest(ctx context.Context, body For, 
 // - options - ModelsClientWithFromOptions contains the optional parameters for the ModelsClient.WithFrom method.
 func (client *ModelsClient) WithFrom(ctx context.Context, body From, options *ModelsClientWithFromOptions) (ModelsClientWithFromResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithFrom"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withFromCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithFromResponse{}, err
@@ -597,6 +669,10 @@ func (client *ModelsClient) withFromCreateRequest(ctx context.Context, body From
 // - options - ModelsClientWithGlobalOptions contains the optional parameters for the ModelsClient.WithGlobal method.
 func (client *ModelsClient) WithGlobal(ctx context.Context, body Global, options *ModelsClientWithGlobalOptions) (ModelsClientWithGlobalResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithGlobal"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withGlobalCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithGlobalResponse{}, err
@@ -629,6 +705,10 @@ func (client *ModelsClient) withGlobalCreateRequest(ctx context.Context, body Gl
 // - options - ModelsClientWithIfOptions contains the optional parameters for the ModelsClient.WithIf method.
 func (client *ModelsClient) WithIf(ctx context.Context, body If, options *ModelsClientWithIfOptions) (ModelsClientWithIfResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithIf"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withIfCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithIfResponse{}, err
@@ -661,6 +741,10 @@ func (client *ModelsClient) withIfCreateRequest(ctx context.Context, body If, op
 // - options - ModelsClientWithImportOptions contains the optional parameters for the ModelsClient.WithImport method.
 func (client *ModelsClient) WithImport(ctx context.Context, body Import, options *ModelsClientWithImportOptions) (ModelsClientWithImportResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithImport"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withImportCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithImportResponse{}, err
@@ -693,6 +777,10 @@ func (client *ModelsClient) withImportCreateRequest(ctx context.Context, body Im
 // - options - ModelsClientWithInOptions contains the optional parameters for the ModelsClient.WithIn method.
 func (client *ModelsClient) WithIn(ctx context.Context, body In, options *ModelsClientWithInOptions) (ModelsClientWithInResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithIn"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withInCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithInResponse{}, err
@@ -725,6 +813,10 @@ func (client *ModelsClient) withInCreateRequest(ctx context.Context, body In, op
 // - options - ModelsClientWithIsOptions contains the optional parameters for the ModelsClient.WithIs method.
 func (client *ModelsClient) WithIs(ctx context.Context, body Is, options *ModelsClientWithIsOptions) (ModelsClientWithIsResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithIs"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withIsCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithIsResponse{}, err
@@ -757,6 +849,10 @@ func (client *ModelsClient) withIsCreateRequest(ctx context.Context, body Is, op
 // - options - ModelsClientWithLambdaOptions contains the optional parameters for the ModelsClient.WithLambda method.
 func (client *ModelsClient) WithLambda(ctx context.Context, body Lambda, options *ModelsClientWithLambdaOptions) (ModelsClientWithLambdaResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithLambda"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withLambdaCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithLambdaResponse{}, err
@@ -789,6 +885,10 @@ func (client *ModelsClient) withLambdaCreateRequest(ctx context.Context, body La
 // - options - ModelsClientWithNotOptions contains the optional parameters for the ModelsClient.WithNot method.
 func (client *ModelsClient) WithNot(ctx context.Context, body Not, options *ModelsClientWithNotOptions) (ModelsClientWithNotResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithNot"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withNotCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithNotResponse{}, err
@@ -821,6 +921,10 @@ func (client *ModelsClient) withNotCreateRequest(ctx context.Context, body Not, 
 // - options - ModelsClientWithOrOptions contains the optional parameters for the ModelsClient.WithOr method.
 func (client *ModelsClient) WithOr(ctx context.Context, body Or, options *ModelsClientWithOrOptions) (ModelsClientWithOrResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithOr"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withOrCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithOrResponse{}, err
@@ -853,6 +957,10 @@ func (client *ModelsClient) withOrCreateRequest(ctx context.Context, body Or, op
 // - options - ModelsClientWithPassOptions contains the optional parameters for the ModelsClient.WithPass method.
 func (client *ModelsClient) WithPass(ctx context.Context, body Pass, options *ModelsClientWithPassOptions) (ModelsClientWithPassResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithPass"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withPassCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithPassResponse{}, err
@@ -885,6 +993,10 @@ func (client *ModelsClient) withPassCreateRequest(ctx context.Context, body Pass
 // - options - ModelsClientWithRaiseOptions contains the optional parameters for the ModelsClient.WithRaise method.
 func (client *ModelsClient) WithRaise(ctx context.Context, body Raise, options *ModelsClientWithRaiseOptions) (ModelsClientWithRaiseResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithRaise"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withRaiseCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithRaiseResponse{}, err
@@ -917,6 +1029,10 @@ func (client *ModelsClient) withRaiseCreateRequest(ctx context.Context, body Rai
 // - options - ModelsClientWithReturnOptions contains the optional parameters for the ModelsClient.WithReturn method.
 func (client *ModelsClient) WithReturn(ctx context.Context, body Return, options *ModelsClientWithReturnOptions) (ModelsClientWithReturnResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithReturn"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withReturnCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithReturnResponse{}, err
@@ -949,6 +1065,10 @@ func (client *ModelsClient) withReturnCreateRequest(ctx context.Context, body Re
 // - options - ModelsClientWithTryOptions contains the optional parameters for the ModelsClient.WithTry method.
 func (client *ModelsClient) WithTry(ctx context.Context, body Try, options *ModelsClientWithTryOptions) (ModelsClientWithTryResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithTry"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withTryCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithTryResponse{}, err
@@ -981,6 +1101,10 @@ func (client *ModelsClient) withTryCreateRequest(ctx context.Context, body Try, 
 // - options - ModelsClientWithWhileOptions contains the optional parameters for the ModelsClient.WithWhile method.
 func (client *ModelsClient) WithWhile(ctx context.Context, body While, options *ModelsClientWithWhileOptions) (ModelsClientWithWhileResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithWhile"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withWhileCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithWhileResponse{}, err
@@ -1013,6 +1137,10 @@ func (client *ModelsClient) withWhileCreateRequest(ctx context.Context, body Whi
 // - options - ModelsClientWithWithOptions contains the optional parameters for the ModelsClient.WithWith method.
 func (client *ModelsClient) WithWith(ctx context.Context, body With, options *ModelsClientWithWithOptions) (ModelsClientWithWithResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithWith"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withWithCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithWithResponse{}, err
@@ -1045,6 +1173,10 @@ func (client *ModelsClient) withWithCreateRequest(ctx context.Context, body With
 // - options - ModelsClientWithYieldOptions contains the optional parameters for the ModelsClient.WithYield method.
 func (client *ModelsClient) WithYield(ctx context.Context, body Yield, options *ModelsClientWithYieldOptions) (ModelsClientWithYieldResponse, error) {
 	var err error
+	const operationName = "ModelsClient.WithYield"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withYieldCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelsClientWithYieldResponse{}, err

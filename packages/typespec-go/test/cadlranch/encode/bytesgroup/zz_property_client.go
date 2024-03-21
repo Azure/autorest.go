@@ -21,6 +21,10 @@ type PropertyClient struct {
 // - options - PropertyClientBase64Options contains the optional parameters for the PropertyClient.Base64 method.
 func (client *PropertyClient) Base64(ctx context.Context, body Base64BytesProperty, options *PropertyClientBase64Options) (PropertyClientBase64Response, error) {
 	var err error
+	const operationName = "PropertyClient.Base64"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64CreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientBase64Response{}, err
@@ -64,6 +68,10 @@ func (client *PropertyClient) base64HandleResponse(resp *http.Response) (Propert
 // - options - PropertyClientBase64URLOptions contains the optional parameters for the PropertyClient.Base64URL method.
 func (client *PropertyClient) Base64URL(ctx context.Context, body Base64URLBytesProperty, options *PropertyClientBase64URLOptions) (PropertyClientBase64URLResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Base64URL"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64URLCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientBase64URLResponse{}, err
@@ -107,6 +115,10 @@ func (client *PropertyClient) base64URLHandleResponse(resp *http.Response) (Prop
 // - options - PropertyClientBase64URLArrayOptions contains the optional parameters for the PropertyClient.Base64URLArray method.
 func (client *PropertyClient) Base64URLArray(ctx context.Context, body Base64URLArrayBytesProperty, options *PropertyClientBase64URLArrayOptions) (PropertyClientBase64URLArrayResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Base64URLArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.base64URLArrayCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientBase64URLArrayResponse{}, err
@@ -150,6 +162,10 @@ func (client *PropertyClient) base64URLArrayHandleResponse(resp *http.Response) 
 // - options - PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
 func (client *PropertyClient) Default(ctx context.Context, body DefaultBytesProperty, options *PropertyClientDefaultOptions) (PropertyClientDefaultResponse, error) {
 	var err error
+	const operationName = "PropertyClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, body, options)
 	if err != nil {
 		return PropertyClientDefaultResponse{}, err

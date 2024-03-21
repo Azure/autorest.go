@@ -28,6 +28,10 @@ func (client *NamingClient) NewModelClient() *ModelClient {
 // - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
 func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
+	const operationName = "NamingClient.Client"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.clientCreateRequest(ctx, body, options)
 	if err != nil {
 		return NamingClientClientResponse{}, err
@@ -60,6 +64,10 @@ func (client *NamingClient) clientCreateRequest(ctx context.Context, body Client
 // - options - NamingClientClientNameOptions contains the optional parameters for the NamingClient.ClientName method.
 func (client *NamingClient) ClientName(ctx context.Context, options *NamingClientClientNameOptions) (NamingClientClientNameResponse, error) {
 	var err error
+	const operationName = "NamingClient.ClientName"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.clientNameCreateRequest(ctx, options)
 	if err != nil {
 		return NamingClientClientNameResponse{}, err
@@ -89,6 +97,10 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, options
 //     method.
 func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
 	var err error
+	const operationName = "NamingClient.CompatibleWithEncodedName"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, body, options)
 	if err != nil {
 		return NamingClientCompatibleWithEncodedNameResponse{}, err
@@ -121,6 +133,10 @@ func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.C
 // - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
 func (client *NamingClient) Language(ctx context.Context, body LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
 	var err error
+	const operationName = "NamingClient.Language"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.languageCreateRequest(ctx, body, options)
 	if err != nil {
 		return NamingClientLanguageResponse{}, err
@@ -153,6 +169,10 @@ func (client *NamingClient) languageCreateRequest(ctx context.Context, body Lang
 // - options - NamingClientParameterOptions contains the optional parameters for the NamingClient.Parameter method.
 func (client *NamingClient) Parameter(ctx context.Context, clientName string, options *NamingClientParameterOptions) (NamingClientParameterResponse, error) {
 	var err error
+	const operationName = "NamingClient.Parameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.parameterCreateRequest(ctx, clientName, options)
 	if err != nil {
 		return NamingClientParameterResponse{}, err
@@ -184,6 +204,10 @@ func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientNa
 // - options - NamingClientRequestOptions contains the optional parameters for the NamingClient.Request method.
 func (client *NamingClient) Request(ctx context.Context, clientName string, options *NamingClientRequestOptions) (NamingClientRequestResponse, error) {
 	var err error
+	const operationName = "NamingClient.Request"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requestCreateRequest(ctx, clientName, options)
 	if err != nil {
 		return NamingClientRequestResponse{}, err
@@ -213,6 +237,10 @@ func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName
 // - options - NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
 func (client *NamingClient) Response(ctx context.Context, options *NamingClientResponseOptions) (NamingClientResponseResponse, error) {
 	var err error
+	const operationName = "NamingClient.Response"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.responseCreateRequest(ctx, options)
 	if err != nil {
 		return NamingClientResponseResponse{}, err

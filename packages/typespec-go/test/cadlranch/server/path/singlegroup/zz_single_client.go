@@ -23,6 +23,10 @@ type SingleClient struct {
 // - options - SingleClientMyOpOptions contains the optional parameters for the SingleClient.MyOp method.
 func (client *SingleClient) MyOp(ctx context.Context, options *SingleClientMyOpOptions) (SingleClientMyOpResponse, error) {
 	var err error
+	const operationName = "SingleClient.MyOp"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.myOpCreateRequest(ctx, options)
 	if err != nil {
 		return SingleClientMyOpResponse{}, err

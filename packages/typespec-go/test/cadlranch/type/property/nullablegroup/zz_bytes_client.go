@@ -22,6 +22,10 @@ type BytesClient struct {
 //   - options - BytesClientGetNonNullOptions contains the optional parameters for the BytesClient.GetNonNull method.
 func (client *BytesClient) GetNonNull(ctx context.Context, options *BytesClientGetNonNullOptions) (BytesClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "BytesClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return BytesClientGetNonNullResponse{}, err
@@ -62,6 +66,10 @@ func (client *BytesClient) getNonNullHandleResponse(resp *http.Response) (BytesC
 //   - options - BytesClientGetNullOptions contains the optional parameters for the BytesClient.GetNull method.
 func (client *BytesClient) GetNull(ctx context.Context, options *BytesClientGetNullOptions) (BytesClientGetNullResponse, error) {
 	var err error
+	const operationName = "BytesClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return BytesClientGetNullResponse{}, err
@@ -102,6 +110,10 @@ func (client *BytesClient) getNullHandleResponse(resp *http.Response) (BytesClie
 //   - options - BytesClientPatchNonNullOptions contains the optional parameters for the BytesClient.PatchNonNull method.
 func (client *BytesClient) PatchNonNull(ctx context.Context, body BytesProperty, options *BytesClientPatchNonNullOptions) (BytesClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "BytesClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return BytesClientPatchNonNullResponse{}, err
@@ -135,6 +147,10 @@ func (client *BytesClient) patchNonNullCreateRequest(ctx context.Context, body B
 //   - options - BytesClientPatchNullOptions contains the optional parameters for the BytesClient.PatchNull method.
 func (client *BytesClient) PatchNull(ctx context.Context, body BytesProperty, options *BytesClientPatchNullOptions) (BytesClientPatchNullResponse, error) {
 	var err error
+	const operationName = "BytesClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return BytesClientPatchNullResponse{}, err

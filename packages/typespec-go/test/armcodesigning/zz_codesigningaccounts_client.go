@@ -43,6 +43,10 @@ func NewCodeSigningAccountsClient(credential azcore.TokenCredential, options *ar
 //     method.
 func (client *CodeSigningAccountsClient) CheckNameAvailability(ctx context.Context, subscriptionID string, body CheckNameAvailability, options *CodeSigningAccountsClientCheckNameAvailabilityOptions) (CodeSigningAccountsClientCheckNameAvailabilityResponse, error) {
 	var err error
+	const operationName = "CodeSigningAccountsClient.CheckNameAvailability"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkNameAvailabilityCreateRequest(ctx, subscriptionID, body, options)
 	if err != nil {
 		return CodeSigningAccountsClientCheckNameAvailabilityResponse{}, err
@@ -103,16 +107,24 @@ func (client *CodeSigningAccountsClient) BeginCreate(ctx context.Context, subscr
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CodeSigningAccountsClientCreateResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientCreateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CodeSigningAccountsClientCreateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientCreateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Create - Create a trusted Signing Account.
 func (client *CodeSigningAccountsClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource CodeSigningAccount, options *CodeSigningAccountsClientCreateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CodeSigningAccountsClient.BeginCreate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, resource, options)
 	if err != nil {
 		return nil, err
@@ -170,16 +182,24 @@ func (client *CodeSigningAccountsClient) BeginDelete(ctx context.Context, subscr
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CodeSigningAccountsClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CodeSigningAccountsClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Delete - Delete a trusted signing account.
 func (client *CodeSigningAccountsClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CodeSigningAccountsClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, options)
 	if err != nil {
 		return nil, err
@@ -228,6 +248,10 @@ func (client *CodeSigningAccountsClient) deleteCreateRequest(ctx context.Context
 //   - options - CodeSigningAccountsClientGetOptions contains the optional parameters for the CodeSigningAccountsClient.Get method.
 func (client *CodeSigningAccountsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientGetOptions) (CodeSigningAccountsClientGetResponse, error) {
 	var err error
+	const operationName = "CodeSigningAccountsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, options)
 	if err != nil {
 		return CodeSigningAccountsClientGetResponse{}, err
@@ -290,6 +314,7 @@ func (client *CodeSigningAccountsClient) NewListByResourceGroupPager(subscriptio
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CodeSigningAccountsClientListByResourceGroupResponse) (CodeSigningAccountsClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CodeSigningAccountsClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -302,6 +327,7 @@ func (client *CodeSigningAccountsClient) NewListByResourceGroupPager(subscriptio
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -346,6 +372,7 @@ func (client *CodeSigningAccountsClient) NewListBySubscriptionPager(subscription
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CodeSigningAccountsClientListBySubscriptionResponse) (CodeSigningAccountsClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CodeSigningAccountsClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -358,6 +385,7 @@ func (client *CodeSigningAccountsClient) NewListBySubscriptionPager(subscription
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -401,16 +429,24 @@ func (client *CodeSigningAccountsClient) BeginUpdate(ctx context.Context, subscr
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CodeSigningAccountsClientUpdateResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CodeSigningAccountsClientUpdateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientUpdateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Update - Update a trusted signing account.
 func (client *CodeSigningAccountsClient) update(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties CodeSigningAccountPatch, options *CodeSigningAccountsClientUpdateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CodeSigningAccountsClient.BeginUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, properties, options)
 	if err != nil {
 		return nil, err

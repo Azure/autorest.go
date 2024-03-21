@@ -21,6 +21,10 @@ type FlattenClient struct {
 // - options - FlattenClientPutFlattenModelOptions contains the optional parameters for the FlattenClient.PutFlattenModel method.
 func (client *FlattenClient) PutFlattenModel(ctx context.Context, input FlattenModel, options *FlattenClientPutFlattenModelOptions) (FlattenClientPutFlattenModelResponse, error) {
 	var err error
+	const operationName = "FlattenClient.PutFlattenModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putFlattenModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return FlattenClientPutFlattenModelResponse{}, err
@@ -65,6 +69,10 @@ func (client *FlattenClient) putFlattenModelHandleResponse(resp *http.Response) 
 //     method.
 func (client *FlattenClient) PutNestedFlattenModel(ctx context.Context, input NestedFlattenModel, options *FlattenClientPutNestedFlattenModelOptions) (FlattenClientPutNestedFlattenModelResponse, error) {
 	var err error
+	const operationName = "FlattenClient.PutNestedFlattenModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putNestedFlattenModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return FlattenClientPutNestedFlattenModelResponse{}, err

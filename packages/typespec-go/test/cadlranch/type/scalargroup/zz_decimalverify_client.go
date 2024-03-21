@@ -22,6 +22,10 @@ type DecimalVerifyClient struct {
 //     method.
 func (client *DecimalVerifyClient) PrepareVerify(ctx context.Context, options *DecimalVerifyClientPrepareVerifyOptions) (DecimalVerifyClientPrepareVerifyResponse, error) {
 	var err error
+	const operationName = "DecimalVerifyClient.PrepareVerify"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.prepareVerifyCreateRequest(ctx, options)
 	if err != nil {
 		return DecimalVerifyClientPrepareVerifyResponse{}, err
@@ -61,6 +65,10 @@ func (client *DecimalVerifyClient) prepareVerifyHandleResponse(resp *http.Respon
 // - options - DecimalVerifyClientVerifyOptions contains the optional parameters for the DecimalVerifyClient.Verify method.
 func (client *DecimalVerifyClient) Verify(ctx context.Context, body float64, options *DecimalVerifyClientVerifyOptions) (DecimalVerifyClientVerifyResponse, error) {
 	var err error
+	const operationName = "DecimalVerifyClient.Verify"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.verifyCreateRequest(ctx, body, options)
 	if err != nil {
 		return DecimalVerifyClientVerifyResponse{}, err

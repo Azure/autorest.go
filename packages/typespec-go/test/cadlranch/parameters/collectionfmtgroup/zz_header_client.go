@@ -23,6 +23,10 @@ type HeaderClient struct {
 // - options - HeaderClientCSVOptions contains the optional parameters for the HeaderClient.CSV method.
 func (client *HeaderClient) CSV(ctx context.Context, colors []string, options *HeaderClientCSVOptions) (HeaderClientCSVResponse, error) {
 	var err error
+	const operationName = "HeaderClient.CSV"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.csvCreateRequest(ctx, colors, options)
 	if err != nil {
 		return HeaderClientCSVResponse{}, err

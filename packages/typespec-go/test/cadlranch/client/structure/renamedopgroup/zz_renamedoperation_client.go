@@ -34,6 +34,10 @@ func (client *RenamedOperationClient) NewGroupClient() *GroupClient {
 //     method.
 func (client *RenamedOperationClient) RenamedFive(ctx context.Context, options *RenamedOperationClientRenamedFiveOptions) (RenamedOperationClientRenamedFiveResponse, error) {
 	var err error
+	const operationName = "RenamedOperationClient.RenamedFive"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedFiveCreateRequest(ctx, options)
 	if err != nil {
 		return RenamedOperationClientRenamedFiveResponse{}, err
@@ -66,6 +70,10 @@ func (client *RenamedOperationClient) renamedFiveCreateRequest(ctx context.Conte
 //     method.
 func (client *RenamedOperationClient) RenamedOne(ctx context.Context, options *RenamedOperationClientRenamedOneOptions) (RenamedOperationClientRenamedOneResponse, error) {
 	var err error
+	const operationName = "RenamedOperationClient.RenamedOne"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedOneCreateRequest(ctx, options)
 	if err != nil {
 		return RenamedOperationClientRenamedOneResponse{}, err
@@ -98,6 +106,10 @@ func (client *RenamedOperationClient) renamedOneCreateRequest(ctx context.Contex
 //     method.
 func (client *RenamedOperationClient) RenamedThree(ctx context.Context, options *RenamedOperationClientRenamedThreeOptions) (RenamedOperationClientRenamedThreeResponse, error) {
 	var err error
+	const operationName = "RenamedOperationClient.RenamedThree"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedThreeCreateRequest(ctx, options)
 	if err != nil {
 		return RenamedOperationClientRenamedThreeResponse{}, err

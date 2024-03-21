@@ -22,6 +22,10 @@ type IsUnknownDerivedClient struct {
 //   - options - IsUnknownDerivedClientGetOptions contains the optional parameters for the IsUnknownDerivedClient.Get method.
 func (client *IsUnknownDerivedClient) Get(ctx context.Context, options *IsUnknownDerivedClientGetOptions) (IsUnknownDerivedClientGetResponse, error) {
 	var err error
+	const operationName = "IsUnknownDerivedClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsUnknownDerivedClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *IsUnknownDerivedClient) getHandleResponse(resp *http.Response) (Is
 //   - options - IsUnknownDerivedClientPutOptions contains the optional parameters for the IsUnknownDerivedClient.Put method.
 func (client *IsUnknownDerivedClient) Put(ctx context.Context, body IsUnknownAdditionalPropertiesDerived, options *IsUnknownDerivedClientPutOptions) (IsUnknownDerivedClientPutResponse, error) {
 	var err error
+	const operationName = "IsUnknownDerivedClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsUnknownDerivedClientPutResponse{}, err

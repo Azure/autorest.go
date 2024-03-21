@@ -30,6 +30,10 @@ type RelativeModelInOperationClient struct {
 //     method.
 func (client *RelativeModelInOperationClient) discriminator(ctx context.Context, kind string, options *relativeModelInOperationClientdiscriminatorOptions) (relativeModelInOperationClientdiscriminatorResponse, error) {
 	var err error
+	const operationName = "RelativeModelInOperationClient.discriminator"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.discriminatorCreateRequest(ctx, kind, options)
 	if err != nil {
 		return relativeModelInOperationClientdiscriminatorResponse{}, err
@@ -84,6 +88,10 @@ func (client *RelativeModelInOperationClient) discriminatorHandleResponse(resp *
 //     method.
 func (client *RelativeModelInOperationClient) operation(ctx context.Context, name string, options *relativeModelInOperationClientoperationOptions) (relativeModelInOperationClientoperationResponse, error) {
 	var err error
+	const operationName = "RelativeModelInOperationClient.operation"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.operationCreateRequest(ctx, name, options)
 	if err != nil {
 		return relativeModelInOperationClientoperationResponse{}, err

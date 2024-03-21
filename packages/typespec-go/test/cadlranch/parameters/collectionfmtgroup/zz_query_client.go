@@ -23,6 +23,10 @@ type QueryClient struct {
 // - options - QueryClientCSVOptions contains the optional parameters for the QueryClient.CSV method.
 func (client *QueryClient) CSV(ctx context.Context, colors []string, options *QueryClientCSVOptions) (QueryClientCSVResponse, error) {
 	var err error
+	const operationName = "QueryClient.CSV"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.csvCreateRequest(ctx, colors, options)
 	if err != nil {
 		return QueryClientCSVResponse{}, err
@@ -55,6 +59,10 @@ func (client *QueryClient) csvCreateRequest(ctx context.Context, colors []string
 // - options - QueryClientMultiOptions contains the optional parameters for the QueryClient.Multi method.
 func (client *QueryClient) Multi(ctx context.Context, colors []string, options *QueryClientMultiOptions) (QueryClientMultiResponse, error) {
 	var err error
+	const operationName = "QueryClient.Multi"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.multiCreateRequest(ctx, colors, options)
 	if err != nil {
 		return QueryClientMultiResponse{}, err
@@ -89,6 +97,10 @@ func (client *QueryClient) multiCreateRequest(ctx context.Context, colors []stri
 // - options - QueryClientPipesOptions contains the optional parameters for the QueryClient.Pipes method.
 func (client *QueryClient) Pipes(ctx context.Context, colors []string, options *QueryClientPipesOptions) (QueryClientPipesResponse, error) {
 	var err error
+	const operationName = "QueryClient.Pipes"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.pipesCreateRequest(ctx, colors, options)
 	if err != nil {
 		return QueryClientPipesResponse{}, err
@@ -121,6 +133,10 @@ func (client *QueryClient) pipesCreateRequest(ctx context.Context, colors []stri
 // - options - QueryClientSsvOptions contains the optional parameters for the QueryClient.Ssv method.
 func (client *QueryClient) Ssv(ctx context.Context, colors []string, options *QueryClientSsvOptions) (QueryClientSsvResponse, error) {
 	var err error
+	const operationName = "QueryClient.Ssv"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.ssvCreateRequest(ctx, colors, options)
 	if err != nil {
 		return QueryClientSsvResponse{}, err
@@ -153,6 +169,10 @@ func (client *QueryClient) ssvCreateRequest(ctx context.Context, colors []string
 // - options - QueryClientTsvOptions contains the optional parameters for the QueryClient.Tsv method.
 func (client *QueryClient) Tsv(ctx context.Context, colors []string, options *QueryClientTsvOptions) (QueryClientTsvResponse, error) {
 	var err error
+	const operationName = "QueryClient.Tsv"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.tsvCreateRequest(ctx, colors, options)
 	if err != nil {
 		return QueryClientTsvResponse{}, err

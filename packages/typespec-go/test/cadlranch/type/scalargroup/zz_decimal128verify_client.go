@@ -22,6 +22,10 @@ type Decimal128VerifyClient struct {
 //     method.
 func (client *Decimal128VerifyClient) PrepareVerify(ctx context.Context, options *Decimal128VerifyClientPrepareVerifyOptions) (Decimal128VerifyClientPrepareVerifyResponse, error) {
 	var err error
+	const operationName = "Decimal128VerifyClient.PrepareVerify"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.prepareVerifyCreateRequest(ctx, options)
 	if err != nil {
 		return Decimal128VerifyClientPrepareVerifyResponse{}, err
@@ -61,6 +65,10 @@ func (client *Decimal128VerifyClient) prepareVerifyHandleResponse(resp *http.Res
 // - options - Decimal128VerifyClientVerifyOptions contains the optional parameters for the Decimal128VerifyClient.Verify method.
 func (client *Decimal128VerifyClient) Verify(ctx context.Context, body float64, options *Decimal128VerifyClientVerifyOptions) (Decimal128VerifyClientVerifyResponse, error) {
 	var err error
+	const operationName = "Decimal128VerifyClient.Verify"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.verifyCreateRequest(ctx, body, options)
 	if err != nil {
 		return Decimal128VerifyClientVerifyResponse{}, err

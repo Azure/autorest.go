@@ -23,6 +23,10 @@ type HeaderClient struct {
 // - options - HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
 func (client *HeaderClient) Default(ctx context.Context, value time.Time, options *HeaderClientDefaultOptions) (HeaderClientDefaultResponse, error) {
 	var err error
+	const operationName = "HeaderClient.Default"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.defaultCreateRequest(ctx, value, options)
 	if err != nil {
 		return HeaderClientDefaultResponse{}, err
@@ -52,6 +56,10 @@ func (client *HeaderClient) defaultCreateRequest(ctx context.Context, value time
 // - options - HeaderClientRFC3339Options contains the optional parameters for the HeaderClient.RFC3339 method.
 func (client *HeaderClient) RFC3339(ctx context.Context, value time.Time, options *HeaderClientRFC3339Options) (HeaderClientRFC3339Response, error) {
 	var err error
+	const operationName = "HeaderClient.RFC3339"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc3339CreateRequest(ctx, value, options)
 	if err != nil {
 		return HeaderClientRFC3339Response{}, err
@@ -81,6 +89,10 @@ func (client *HeaderClient) rfc3339CreateRequest(ctx context.Context, value time
 // - options - HeaderClientRFC7231Options contains the optional parameters for the HeaderClient.RFC7231 method.
 func (client *HeaderClient) RFC7231(ctx context.Context, value time.Time, options *HeaderClientRFC7231Options) (HeaderClientRFC7231Response, error) {
 	var err error
+	const operationName = "HeaderClient.RFC7231"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.rfc7231CreateRequest(ctx, value, options)
 	if err != nil {
 		return HeaderClientRFC7231Response{}, err
@@ -110,6 +122,10 @@ func (client *HeaderClient) rfc7231CreateRequest(ctx context.Context, value time
 // - options - HeaderClientUnixTimestampOptions contains the optional parameters for the HeaderClient.UnixTimestamp method.
 func (client *HeaderClient) UnixTimestamp(ctx context.Context, value time.Time, options *HeaderClientUnixTimestampOptions) (HeaderClientUnixTimestampResponse, error) {
 	var err error
+	const operationName = "HeaderClient.UnixTimestamp"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampCreateRequest(ctx, value, options)
 	if err != nil {
 		return HeaderClientUnixTimestampResponse{}, err
@@ -140,6 +156,10 @@ func (client *HeaderClient) unixTimestampCreateRequest(ctx context.Context, valu
 //     method.
 func (client *HeaderClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *HeaderClientUnixTimestampArrayOptions) (HeaderClientUnixTimestampArrayResponse, error) {
 	var err error
+	const operationName = "HeaderClient.UnixTimestampArray"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.unixTimestampArrayCreateRequest(ctx, value, options)
 	if err != nil {
 		return HeaderClientUnixTimestampArrayResponse{}, err

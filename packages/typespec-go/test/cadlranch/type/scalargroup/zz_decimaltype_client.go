@@ -22,6 +22,10 @@ type DecimalTypeClient struct {
 // - options - DecimalTypeClientRequestBodyOptions contains the optional parameters for the DecimalTypeClient.RequestBody method.
 func (client *DecimalTypeClient) RequestBody(ctx context.Context, body float64, options *DecimalTypeClientRequestBodyOptions) (DecimalTypeClientRequestBodyResponse, error) {
 	var err error
+	const operationName = "DecimalTypeClient.RequestBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requestBodyCreateRequest(ctx, body, options)
 	if err != nil {
 		return DecimalTypeClientRequestBodyResponse{}, err
@@ -55,6 +59,10 @@ func (client *DecimalTypeClient) requestBodyCreateRequest(ctx context.Context, b
 //     method.
 func (client *DecimalTypeClient) RequestParameter(ctx context.Context, value float64, options *DecimalTypeClientRequestParameterOptions) (DecimalTypeClientRequestParameterResponse, error) {
 	var err error
+	const operationName = "DecimalTypeClient.RequestParameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requestParameterCreateRequest(ctx, value, options)
 	if err != nil {
 		return DecimalTypeClientRequestParameterResponse{}, err
@@ -87,6 +95,10 @@ func (client *DecimalTypeClient) requestParameterCreateRequest(ctx context.Conte
 //     method.
 func (client *DecimalTypeClient) ResponseBody(ctx context.Context, options *DecimalTypeClientResponseBodyOptions) (DecimalTypeClientResponseBodyResponse, error) {
 	var err error
+	const operationName = "DecimalTypeClient.ResponseBody"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.responseBodyCreateRequest(ctx, options)
 	if err != nil {
 		return DecimalTypeClientResponseBodyResponse{}, err

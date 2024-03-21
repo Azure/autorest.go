@@ -22,6 +22,10 @@ type SharedModelInOperationClient struct {
 //     method.
 func (client *SharedModelInOperationClient) Public(ctx context.Context, name string, options *SharedModelInOperationClientPublicOptions) (SharedModelInOperationClientPublicResponse, error) {
 	var err error
+	const operationName = "SharedModelInOperationClient.Public"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.publicCreateRequest(ctx, name, options)
 	if err != nil {
 		return SharedModelInOperationClientPublicResponse{}, err
@@ -65,6 +69,10 @@ func (client *SharedModelInOperationClient) publicHandleResponse(resp *http.Resp
 //     method.
 func (client *SharedModelInOperationClient) internalMethod(ctx context.Context, name string, options *sharedModelInOperationClientinternalMethodOptions) (sharedModelInOperationClientinternalMethodResponse, error) {
 	var err error
+	const operationName = "SharedModelInOperationClient.internalMethod"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.internalCreateRequest(ctx, name, options)
 	if err != nil {
 		return sharedModelInOperationClientinternalMethodResponse{}, err

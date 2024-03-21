@@ -24,6 +24,10 @@ type ClientBClient struct {
 // - options - ClientBClientRenamedFourOptions contains the optional parameters for the ClientBClient.RenamedFour method.
 func (client *ClientBClient) RenamedFour(ctx context.Context, options *ClientBClientRenamedFourOptions) (ClientBClientRenamedFourResponse, error) {
 	var err error
+	const operationName = "ClientBClient.RenamedFour"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedFourCreateRequest(ctx, options)
 	if err != nil {
 		return ClientBClientRenamedFourResponse{}, err
@@ -55,6 +59,10 @@ func (client *ClientBClient) renamedFourCreateRequest(ctx context.Context, optio
 // - options - ClientBClientRenamedSixOptions contains the optional parameters for the ClientBClient.RenamedSix method.
 func (client *ClientBClient) RenamedSix(ctx context.Context, options *ClientBClientRenamedSixOptions) (ClientBClientRenamedSixResponse, error) {
 	var err error
+	const operationName = "ClientBClient.RenamedSix"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedSixCreateRequest(ctx, options)
 	if err != nil {
 		return ClientBClientRenamedSixResponse{}, err
@@ -86,6 +94,10 @@ func (client *ClientBClient) renamedSixCreateRequest(ctx context.Context, option
 // - options - ClientBClientRenamedTwoOptions contains the optional parameters for the ClientBClient.RenamedTwo method.
 func (client *ClientBClient) RenamedTwo(ctx context.Context, options *ClientBClientRenamedTwoOptions) (ClientBClientRenamedTwoResponse, error) {
 	var err error
+	const operationName = "ClientBClient.RenamedTwo"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.renamedTwoCreateRequest(ctx, options)
 	if err != nil {
 		return ClientBClientRenamedTwoResponse{}, err

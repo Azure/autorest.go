@@ -22,6 +22,10 @@ type FormDataClient struct {
 //   - options - FormDataClientBasicOptions contains the optional parameters for the FormDataClient.Basic method.
 func (client *FormDataClient) Basic(ctx context.Context, body MultiPartRequest, options *FormDataClientBasicOptions) (FormDataClientBasicResponse, error) {
 	var err error
+	const operationName = "FormDataClient.Basic"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.basicCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientBasicResponse{}, err
@@ -56,6 +60,10 @@ func (client *FormDataClient) basicCreateRequest(ctx context.Context, body Multi
 //     method.
 func (client *FormDataClient) BinaryArrayParts(ctx context.Context, body BinaryArrayPartsRequest, options *FormDataClientBinaryArrayPartsOptions) (FormDataClientBinaryArrayPartsResponse, error) {
 	var err error
+	const operationName = "FormDataClient.BinaryArrayParts"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.binaryArrayPartsCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientBinaryArrayPartsResponse{}, err
@@ -90,6 +98,10 @@ func (client *FormDataClient) binaryArrayPartsCreateRequest(ctx context.Context,
 //     method.
 func (client *FormDataClient) CheckFileNameAndContentType(ctx context.Context, body MultiPartRequest, options *FormDataClientCheckFileNameAndContentTypeOptions) (FormDataClientCheckFileNameAndContentTypeResponse, error) {
 	var err error
+	const operationName = "FormDataClient.CheckFileNameAndContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.checkFileNameAndContentTypeCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientCheckFileNameAndContentTypeResponse{}, err
@@ -123,6 +135,10 @@ func (client *FormDataClient) checkFileNameAndContentTypeCreateRequest(ctx conte
 //   - options - FormDataClientComplexOptions contains the optional parameters for the FormDataClient.Complex method.
 func (client *FormDataClient) Complex(ctx context.Context, body ComplexPartsRequest, options *FormDataClientComplexOptions) (FormDataClientComplexResponse, error) {
 	var err error
+	const operationName = "FormDataClient.Complex"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.complexCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientComplexResponse{}, err
@@ -156,6 +172,10 @@ func (client *FormDataClient) complexCreateRequest(ctx context.Context, body Com
 //   - options - FormDataClientJSONArrayPartsOptions contains the optional parameters for the FormDataClient.JSONArrayParts method.
 func (client *FormDataClient) JSONArrayParts(ctx context.Context, body JSONArrayPartsRequest, options *FormDataClientJSONArrayPartsOptions) (FormDataClientJSONArrayPartsResponse, error) {
 	var err error
+	const operationName = "FormDataClient.JSONArrayParts"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.jsonArrayPartsCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientJSONArrayPartsResponse{}, err
@@ -189,6 +209,10 @@ func (client *FormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, b
 //   - options - FormDataClientJSONPartOptions contains the optional parameters for the FormDataClient.JSONPart method.
 func (client *FormDataClient) JSONPart(ctx context.Context, body JSONPartRequest, options *FormDataClientJSONPartOptions) (FormDataClientJSONPartResponse, error) {
 	var err error
+	const operationName = "FormDataClient.JSONPart"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.jsonPartCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientJSONPartResponse{}, err
@@ -223,6 +247,10 @@ func (client *FormDataClient) jsonPartCreateRequest(ctx context.Context, body JS
 //     method.
 func (client *FormDataClient) MultiBinaryParts(ctx context.Context, body MultiBinaryPartsRequest, options *FormDataClientMultiBinaryPartsOptions) (FormDataClientMultiBinaryPartsResponse, error) {
 	var err error
+	const operationName = "FormDataClient.MultiBinaryParts"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.multiBinaryPartsCreateRequest(ctx, body, options)
 	if err != nil {
 		return FormDataClientMultiBinaryPartsResponse{}, err

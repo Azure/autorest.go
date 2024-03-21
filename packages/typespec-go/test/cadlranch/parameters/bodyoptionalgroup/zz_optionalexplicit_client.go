@@ -21,6 +21,10 @@ type OptionalExplicitClient struct {
 // - options - OptionalExplicitClientOmitOptions contains the optional parameters for the OptionalExplicitClient.Omit method.
 func (client *OptionalExplicitClient) Omit(ctx context.Context, options *OptionalExplicitClientOmitOptions) (OptionalExplicitClientOmitResponse, error) {
 	var err error
+	const operationName = "OptionalExplicitClient.Omit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.omitCreateRequest(ctx, options)
 	if err != nil {
 		return OptionalExplicitClientOmitResponse{}, err
@@ -56,6 +60,10 @@ func (client *OptionalExplicitClient) omitCreateRequest(ctx context.Context, opt
 // - options - OptionalExplicitClientSetOptions contains the optional parameters for the OptionalExplicitClient.Set method.
 func (client *OptionalExplicitClient) Set(ctx context.Context, options *OptionalExplicitClientSetOptions) (OptionalExplicitClientSetResponse, error) {
 	var err error
+	const operationName = "OptionalExplicitClient.Set"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.setCreateRequest(ctx, options)
 	if err != nil {
 		return OptionalExplicitClientSetResponse{}, err

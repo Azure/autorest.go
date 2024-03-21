@@ -21,6 +21,10 @@ type BooleanValueClient struct {
 // - options - BooleanValueClientGetOptions contains the optional parameters for the BooleanValueClient.Get method.
 func (client *BooleanValueClient) Get(ctx context.Context, options *BooleanValueClientGetOptions) (BooleanValueClientGetResponse, error) {
 	var err error
+	const operationName = "BooleanValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return BooleanValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *BooleanValueClient) getHandleResponse(resp *http.Response) (Boolea
 // - options - BooleanValueClientPutOptions contains the optional parameters for the BooleanValueClient.Put method.
 func (client *BooleanValueClient) Put(ctx context.Context, body map[string]*bool, options *BooleanValueClientPutOptions) (BooleanValueClientPutResponse, error) {
 	var err error
+	const operationName = "BooleanValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return BooleanValueClientPutResponse{}, err

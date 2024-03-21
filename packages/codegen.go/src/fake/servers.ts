@@ -41,10 +41,20 @@ export function getServerName(client: go.Client): string {
   return capitalize(client.name.replace(/[C|c]lient$/, 'Server'));
 }
 
+function isMethodInternal(method: go.Method): boolean {
+  return !!method.name.match(/^[a-z]{1}/);
+}
+
 export async function generateServers(codeModel: go.CodeModel): Promise<ServerContent> {
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
+    if (client.methods.length === 0 || values(client.methods).all(method => { return isMethodInternal(method)})) {
+      // client is purely hierarchical or has no exported methods, skip it
+      // TODO: need to generate fake for this similar to fake for factory
+      continue;
+    }
+
     // the list of packages to import
     const imports = new ImportManager();
     imports.add(helpers.getParentImport(codeModel));
@@ -69,6 +79,11 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     let countPagers = 0;
 
     for (const method of values(client.methods)) {
+      if (isMethodInternal(method)) {
+        // method isn't exported, don't create a fake for it
+        continue;
+      }
+
       let serverResponse: string;
 
       if (go.isLROMethod(method)) {
@@ -634,21 +649,29 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
 
     // parse params as required
     if (go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
-      if (go.isConstantType(param.type.elementType) || (go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName !== 'string')) {
-        // the param requires some parsing (string -> int32) or casting to a const type
+      // any element type other than string will require some form of conversion/parsing
+      if (!(go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string')) {
         if (param.collectionFormat !== 'multi') {
           requiredHelpers.splitHelper = true;
           const elementsParam = createLocalVariableName(param, 'Elements');
           content += `\t${elementsParam} := splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")\n`;
           paramValue = elementsParam;
         }
+
         const paramVar = createLocalVariableName(param, 'Param');
-        let elementTypeName: go.PrimitiveTypeName; // ConstantTypeTypes is a subset of PrimitiveTypeName
+        let elementFormat: go.PrimitiveTypeName | go.DateTimeFormat | go.BytesEncoding;
         if (go.isConstantType(param.type.elementType)) {
-          elementTypeName = param.type.elementType.type;
+          elementFormat = param.type.elementType.type;
+        } else if (go.isPrimitiveType(param.type.elementType)) {
+          elementFormat = param.type.elementType.typeName;
+        } else if (go.isBytesType(param.type.elementType)) {
+          elementFormat = param.type.elementType.encoding;
+        } else if (go.isTimeType(param.type.elementType)) {
+          elementFormat = param.type.elementType.dateTimeFormat;
         } else {
-          elementTypeName = param.type.elementType.typeName;
+          throw new Error(`unhandled element type ${go.getTypeDeclaration(param.type.elementType)}`);
         }
+
         let toType = go.getTypeDeclaration(param.type.elementType);
         if (go.isConstantType(param.type.elementType)) {
           toType = `${clientPkg}.${toType}`;
@@ -656,21 +679,46 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         content += `\t${paramVar} := make([]${toType}, len(${paramValue}))\n`;
         content += `\tfor i := 0; i < len(${paramValue}); i++ {\n`;
         let fromVar: string;
-        if (elementTypeName === 'bool') {
+
+        // TODO: consolidate with non-collection parsing code
+        if (elementFormat === 'bool') {
           imports.add('strconv');
           fromVar = 'parsedBool';
           content += `\t\t${fromVar}, parseErr := strconv.ParseBool(${paramValue}[i])\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
-        } else if (elementTypeName === 'float32' || elementTypeName === 'float64' || elementTypeName === 'int32' || elementTypeName === 'int64') {
-          fromVar = `parsed${capitalize(elementTypeName)}`;
-          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${paramValue}[i]`, elementTypeName)}\n`;
+        } else if (elementFormat === 'float32' || elementFormat === 'float64' || elementFormat === 'int32' || elementFormat === 'int64') {
+          fromVar = `parsed${capitalize(elementFormat)}`;
+          content += `\t\t${fromVar}, parseErr := ${emitNumericConversion(`${paramValue}[i]`, elementFormat)}\n`;
           content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
-        } else if (elementTypeName === 'string') {
+        } else if (elementFormat === 'string') {
           // we're casting an enum string value to its const type
+          // TODO: what about enums that aren't strings?
           fromVar = `${paramValue}[i]`;
+        } else if (elementFormat === 'Std' || elementFormat === 'URL') {
+          imports.add('encoding/base64');
+          fromVar = `parsed${capitalize(elementFormat)}`;
+          content += `\t\t${fromVar}, parseErr := base64.${elementFormat}Encoding.DecodeString(${paramValue}[i])\n`;
+          content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+        } else if (elementFormat === 'dateTimeRFC1123' || elementFormat === 'dateTimeRFC3339' || elementFormat === 'timeUnix') {
+          imports.add('time');
+          fromVar = `parsed${capitalize(elementFormat)}`;
+          if (elementFormat === 'timeUnix') {
+            imports.add('strconv');
+            content += `\t\tp, parseErr := strconv.ParseInt(${paramValue}[i], 10, 64)\n`;
+            content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+            content += `\t\t${fromVar} := time.Unix(p, 0).UTC()\n`;
+          } else {
+            let format = 'time.RFC3339Nano';
+            if (elementFormat === 'dateTimeRFC1123') {
+              format = 'time.RFC1123';
+            }
+            content += `\t\t${fromVar}, parseErr := time.Parse(${format}, ${paramValue}[i])\n`;
+            content += '\t\tif parseErr != nil {\n\t\t\treturn nil, parseErr\n\t\t}\n';
+          }
         } else {
-          throw new Error(`unhandled array element type ${elementTypeName}`);
+          throw new Error(`unhandled element format ${elementFormat}`);
         }
+        // TODO: remove cast in some cases
         content += `\t\t${paramVar}[i] = ${toType}(${fromVar})\n\t}\n`;
       } else if (!helpers.isRequiredParameter(param) && param.collectionFormat !== 'multi') {
         // for slices of strings that are required, the call to splitHelper(...) is inlined into
@@ -690,7 +738,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (go.isBytesType(param.type)) {
       imports.add('encoding/base64');
-      content += `\t${createLocalVariableName(param, 'Param')}, err := base64.StdEncoding.DecodeString(${paramValue})\n`;
+      content += `\t${createLocalVariableName(param, 'Param')}, err := base64.${param.type.encoding}Encoding.DecodeString(${paramValue})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     } else if (go.isTimeType(param.type)) {
       if (param.type.dateTimeFormat === 'dateType' || param.type.dateTimeFormat === 'timeRFC3339') {
@@ -948,6 +996,7 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
       // for required params that are collections of strings, we split them inline.
       // not necessary for optional params as they're already in slice format.
       if (param.collectionFormat !== 'multi' && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string') {
+        requiredHelpers.splitHelper = true;
         return `splitHelper(${paramValue}, "${helpers.getDelimiterForCollectionFormat(param.collectionFormat)}")`;
       }
     } else if (go.isHeaderParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {

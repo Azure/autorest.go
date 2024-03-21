@@ -21,6 +21,10 @@ type VisibilityClient struct {
 // - options - VisibilityClientDeleteModelOptions contains the optional parameters for the VisibilityClient.DeleteModel method.
 func (client *VisibilityClient) DeleteModel(ctx context.Context, input VisibilityModel, options *VisibilityClientDeleteModelOptions) (VisibilityClientDeleteModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.DeleteModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientDeleteModelResponse{}, err
@@ -53,6 +57,10 @@ func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, in
 // - options - VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
 func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityModel, options *VisibilityClientGetModelOptions) (VisibilityClientGetModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.GetModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientGetModelResponse{}, err
@@ -96,6 +104,10 @@ func (client *VisibilityClient) getModelHandleResponse(resp *http.Response) (Vis
 // - options - VisibilityClientHeadModelOptions contains the optional parameters for the VisibilityClient.HeadModel method.
 func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityModel, options *VisibilityClientHeadModelOptions) (VisibilityClientHeadModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.HeadModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.headModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientHeadModelResponse{}, err
@@ -128,6 +140,10 @@ func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, inpu
 // - options - VisibilityClientPatchModelOptions contains the optional parameters for the VisibilityClient.PatchModel method.
 func (client *VisibilityClient) PatchModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPatchModelOptions) (VisibilityClientPatchModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.PatchModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientPatchModelResponse{}, err
@@ -160,6 +176,10 @@ func (client *VisibilityClient) patchModelCreateRequest(ctx context.Context, inp
 // - options - VisibilityClientPostModelOptions contains the optional parameters for the VisibilityClient.PostModel method.
 func (client *VisibilityClient) PostModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPostModelOptions) (VisibilityClientPostModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.PostModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.postModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientPostModelResponse{}, err
@@ -192,6 +212,10 @@ func (client *VisibilityClient) postModelCreateRequest(ctx context.Context, inpu
 // - options - VisibilityClientPutModelOptions contains the optional parameters for the VisibilityClient.PutModel method.
 func (client *VisibilityClient) PutModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPutModelOptions) (VisibilityClientPutModelResponse, error) {
 	var err error
+	const operationName = "VisibilityClient.PutModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putModelCreateRequest(ctx, input, options)
 	if err != nil {
 		return VisibilityClientPutModelResponse{}, err

@@ -67,6 +67,10 @@ func (client *ServiceClient) NewQuxClient() *QuxClient {
 // - options - ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
 func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneOptions) (ServiceClientOneResponse, error) {
 	var err error
+	const operationName = "ServiceClient.One"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.oneCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceClientOneResponse{}, err
@@ -98,6 +102,10 @@ func (client *ServiceClient) oneCreateRequest(ctx context.Context, options *Serv
 // - options - ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
 func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoOptions) (ServiceClientTwoResponse, error) {
 	var err error
+	const operationName = "ServiceClient.Two"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.twoCreateRequest(ctx, options)
 	if err != nil {
 		return ServiceClientTwoResponse{}, err

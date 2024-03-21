@@ -27,6 +27,10 @@ type MultipleClient struct {
 //     method.
 func (client *MultipleClient) NoOperationParams(ctx context.Context, options *MultipleClientNoOperationParamsOptions) (MultipleClientNoOperationParamsResponse, error) {
 	var err error
+	const operationName = "MultipleClient.NoOperationParams"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.noOperationParamsCreateRequest(ctx, options)
 	if err != nil {
 		return MultipleClientNoOperationParamsResponse{}, err
@@ -58,6 +62,10 @@ func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context
 //     method.
 func (client *MultipleClient) WithOperationPathParam(ctx context.Context, keyword string, options *MultipleClientWithOperationPathParamOptions) (MultipleClientWithOperationPathParamResponse, error) {
 	var err error
+	const operationName = "MultipleClient.WithOperationPathParam"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withOperationPathParamCreateRequest(ctx, keyword, options)
 	if err != nil {
 		return MultipleClientWithOperationPathParamResponse{}, err

@@ -21,6 +21,10 @@ type Int64ValueClient struct {
 // - options - Int64ValueClientGetOptions contains the optional parameters for the Int64ValueClient.Get method.
 func (client *Int64ValueClient) Get(ctx context.Context, options *Int64ValueClientGetOptions) (Int64ValueClientGetResponse, error) {
 	var err error
+	const operationName = "Int64ValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return Int64ValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *Int64ValueClient) getHandleResponse(resp *http.Response) (Int64Val
 // - options - Int64ValueClientPutOptions contains the optional parameters for the Int64ValueClient.Put method.
 func (client *Int64ValueClient) Put(ctx context.Context, body []int64, options *Int64ValueClientPutOptions) (Int64ValueClientPutResponse, error) {
 	var err error
+	const operationName = "Int64ValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return Int64ValueClientPutResponse{}, err

@@ -30,16 +30,24 @@ func (client *CreateResourcePollViaOperationLocationClient) BeginCreateJob(ctx c
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CreateResourcePollViaOperationLocationClientCreateJobResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CreateResourcePollViaOperationLocationClientCreateJobResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CreateResourcePollViaOperationLocationClientCreateJobResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CreateResourcePollViaOperationLocationClientCreateJobResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // CreateJob - Creates a Job
 func (client *CreateResourcePollViaOperationLocationClient) createJob(ctx context.Context, body JobData, options *CreateResourcePollViaOperationLocationClientCreateJobOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CreateResourcePollViaOperationLocationClient.BeginCreateJob"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createJobCreateRequest(ctx, body, options)
 	if err != nil {
 		return nil, err
@@ -79,6 +87,10 @@ func (client *CreateResourcePollViaOperationLocationClient) createJobCreateReque
 //     method.
 func (client *CreateResourcePollViaOperationLocationClient) GetJob(ctx context.Context, jobID string, options *CreateResourcePollViaOperationLocationClientGetJobOptions) (CreateResourcePollViaOperationLocationClientGetJobResponse, error) {
 	var err error
+	const operationName = "CreateResourcePollViaOperationLocationClient.GetJob"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getJobCreateRequest(ctx, jobID, options)
 	if err != nil {
 		return CreateResourcePollViaOperationLocationClientGetJobResponse{}, err

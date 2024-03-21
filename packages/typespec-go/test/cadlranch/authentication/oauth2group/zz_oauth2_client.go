@@ -22,6 +22,10 @@ type OAuth2Client struct {
 //   - options - OAuth2ClientInvalidOptions contains the optional parameters for the OAuth2Client.Invalid method.
 func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientInvalidOptions) (OAuth2ClientInvalidResponse, error) {
 	var err error
+	const operationName = "OAuth2Client.Invalid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.invalidCreateRequest(ctx, options)
 	if err != nil {
 		return OAuth2ClientInvalidResponse{}, err
@@ -52,6 +56,10 @@ func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, options *O
 //   - options - OAuth2ClientValidOptions contains the optional parameters for the OAuth2Client.Valid method.
 func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientValidOptions) (OAuth2ClientValidResponse, error) {
 	var err error
+	const operationName = "OAuth2Client.Valid"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.validCreateRequest(ctx, options)
 	if err != nil {
 		return OAuth2ClientValidResponse{}, err

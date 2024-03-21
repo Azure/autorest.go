@@ -22,6 +22,10 @@ type IsFloatClient struct {
 //   - options - IsFloatClientGetOptions contains the optional parameters for the IsFloatClient.Get method.
 func (client *IsFloatClient) Get(ctx context.Context, options *IsFloatClientGetOptions) (IsFloatClientGetResponse, error) {
 	var err error
+	const operationName = "IsFloatClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsFloatClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *IsFloatClient) getHandleResponse(resp *http.Response) (IsFloatClie
 //   - options - IsFloatClientPutOptions contains the optional parameters for the IsFloatClient.Put method.
 func (client *IsFloatClient) Put(ctx context.Context, body IsFloatAdditionalProperties, options *IsFloatClientPutOptions) (IsFloatClientPutResponse, error) {
 	var err error
+	const operationName = "IsFloatClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsFloatClientPutResponse{}, err

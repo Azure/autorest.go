@@ -49,6 +49,10 @@ func NewApiDefinitionsClient(credential azcore.TokenCredential, options *arm.Cli
 //     method.
 func (client *ApiDefinitionsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APIDefinition, options *ApiDefinitionsClientCreateOrUpdateOptions) (ApiDefinitionsClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 	if err != nil {
 		return ApiDefinitionsClientCreateOrUpdateResponse{}, err
@@ -134,6 +138,10 @@ func (client *ApiDefinitionsClient) createOrUpdateHandleResponse(resp *http.Resp
 //   - options - ApiDefinitionsClientDeleteOptions contains the optional parameters for the ApiDefinitionsClient.Delete method.
 func (client *ApiDefinitionsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientDeleteOptions) (ApiDefinitionsClientDeleteResponse, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
 		return ApiDefinitionsClientDeleteResponse{}, err
@@ -208,16 +216,24 @@ func (client *ApiDefinitionsClient) BeginExportSpecification(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[ApiDefinitionsClientExportSpecificationResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApiDefinitionsClientExportSpecificationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[ApiDefinitionsClientExportSpecificationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApiDefinitionsClientExportSpecificationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // ExportSpecification - Exports the API specification.
 func (client *ApiDefinitionsClient) exportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *ApiDefinitionsClientExportSpecificationOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.BeginExportSpecification"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exportSpecificationCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 	if err != nil {
 		return nil, err
@@ -290,6 +306,10 @@ func (client *ApiDefinitionsClient) exportSpecificationCreateRequest(ctx context
 //   - options - ApiDefinitionsClientGetOptions contains the optional parameters for the ApiDefinitionsClient.Get method.
 func (client *ApiDefinitionsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientGetOptions) (ApiDefinitionsClientGetResponse, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
 		return ApiDefinitionsClientGetResponse{}, err
@@ -371,6 +391,10 @@ func (client *ApiDefinitionsClient) getHandleResponse(resp *http.Response) (ApiD
 //   - options - ApiDefinitionsClientHeadOptions contains the optional parameters for the ApiDefinitionsClient.Head method.
 func (client *ApiDefinitionsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientHeadOptions) (ApiDefinitionsClientHeadResponse, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.Head"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
 		return ApiDefinitionsClientHeadResponse{}, err
@@ -445,16 +469,24 @@ func (client *ApiDefinitionsClient) BeginImportSpecification(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[ApiDefinitionsClientImportSpecificationResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApiDefinitionsClientImportSpecificationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[ApiDefinitionsClientImportSpecificationResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApiDefinitionsClientImportSpecificationResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // ImportSpecification - Imports the API specification.
 func (client *ApiDefinitionsClient) importSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *ApiDefinitionsClientImportSpecificationOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ApiDefinitionsClient.BeginImportSpecification"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.importSpecificationCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 	if err != nil {
 		return nil, err
@@ -530,6 +562,7 @@ func (client *ApiDefinitionsClient) NewListPager(subscriptionID string, resource
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ApiDefinitionsClientListResponse) (ApiDefinitionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApiDefinitionsClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -542,6 +575,7 @@ func (client *ApiDefinitionsClient) NewListPager(subscriptionID string, resource
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

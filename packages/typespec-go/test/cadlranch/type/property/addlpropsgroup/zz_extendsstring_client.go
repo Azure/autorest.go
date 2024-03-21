@@ -22,6 +22,10 @@ type ExtendsStringClient struct {
 //   - options - ExtendsStringClientGetOptions contains the optional parameters for the ExtendsStringClient.Get method.
 func (client *ExtendsStringClient) Get(ctx context.Context, options *ExtendsStringClientGetOptions) (ExtendsStringClientGetResponse, error) {
 	var err error
+	const operationName = "ExtendsStringClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ExtendsStringClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *ExtendsStringClient) getHandleResponse(resp *http.Response) (Exten
 //   - options - ExtendsStringClientPutOptions contains the optional parameters for the ExtendsStringClient.Put method.
 func (client *ExtendsStringClient) Put(ctx context.Context, body ExtendsStringAdditionalProperties, options *ExtendsStringClientPutOptions) (ExtendsStringClientPutResponse, error) {
 	var err error
+	const operationName = "ExtendsStringClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ExtendsStringClientPutResponse{}, err

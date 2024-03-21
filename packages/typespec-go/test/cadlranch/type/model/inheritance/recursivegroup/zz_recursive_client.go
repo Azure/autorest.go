@@ -21,6 +21,10 @@ type RecursiveClient struct {
 // - options - RecursiveClientGetOptions contains the optional parameters for the RecursiveClient.Get method.
 func (client *RecursiveClient) Get(ctx context.Context, options *RecursiveClientGetOptions) (RecursiveClientGetResponse, error) {
 	var err error
+	const operationName = "RecursiveClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return RecursiveClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *RecursiveClient) getHandleResponse(resp *http.Response) (Recursive
 // - options - RecursiveClientPutOptions contains the optional parameters for the RecursiveClient.Put method.
 func (client *RecursiveClient) Put(ctx context.Context, input Extension, options *RecursiveClientPutOptions) (RecursiveClientPutResponse, error) {
 	var err error
+	const operationName = "RecursiveClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
 		return RecursiveClientPutResponse{}, err

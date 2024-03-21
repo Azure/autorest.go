@@ -22,6 +22,10 @@ type ExtendsFloatClient struct {
 //   - options - ExtendsFloatClientGetOptions contains the optional parameters for the ExtendsFloatClient.Get method.
 func (client *ExtendsFloatClient) Get(ctx context.Context, options *ExtendsFloatClientGetOptions) (ExtendsFloatClientGetResponse, error) {
 	var err error
+	const operationName = "ExtendsFloatClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ExtendsFloatClientGetResponse{}, err
@@ -63,6 +67,10 @@ func (client *ExtendsFloatClient) getHandleResponse(resp *http.Response) (Extend
 //   - options - ExtendsFloatClientPutOptions contains the optional parameters for the ExtendsFloatClient.Put method.
 func (client *ExtendsFloatClient) Put(ctx context.Context, body ExtendsFloatAdditionalProperties, options *ExtendsFloatClientPutOptions) (ExtendsFloatClientPutResponse, error) {
 	var err error
+	const operationName = "ExtendsFloatClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ExtendsFloatClientPutResponse{}, err

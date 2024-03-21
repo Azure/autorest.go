@@ -21,6 +21,10 @@ type UnknownValueClient struct {
 // - options - UnknownValueClientGetOptions contains the optional parameters for the UnknownValueClient.Get method.
 func (client *UnknownValueClient) Get(ctx context.Context, options *UnknownValueClientGetOptions) (UnknownValueClientGetResponse, error) {
 	var err error
+	const operationName = "UnknownValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return UnknownValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *UnknownValueClient) getHandleResponse(resp *http.Response) (Unknow
 // - options - UnknownValueClientPutOptions contains the optional parameters for the UnknownValueClient.Put method.
 func (client *UnknownValueClient) Put(ctx context.Context, body map[string]any, options *UnknownValueClientPutOptions) (UnknownValueClientPutResponse, error) {
 	var err error
+	const operationName = "UnknownValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return UnknownValueClientPutResponse{}, err

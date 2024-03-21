@@ -36,6 +36,10 @@ func (client *ProjectedNameClient) NewPropertyClient() *PropertyClient {
 //     method.
 func (client *ProjectedNameClient) ClientName(ctx context.Context, options *ProjectedNameClientClientNameOptions) (ProjectedNameClientClientNameResponse, error) {
 	var err error
+	const operationName = "ProjectedNameClient.ClientName"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.clientNameCreateRequest(ctx, options)
 	if err != nil {
 		return ProjectedNameClientClientNameResponse{}, err
@@ -64,6 +68,10 @@ func (client *ProjectedNameClient) clientNameCreateRequest(ctx context.Context, 
 // - options - ProjectedNameClientParameterOptions contains the optional parameters for the ProjectedNameClient.Parameter method.
 func (client *ProjectedNameClient) Parameter(ctx context.Context, clientName string, options *ProjectedNameClientParameterOptions) (ProjectedNameClientParameterResponse, error) {
 	var err error
+	const operationName = "ProjectedNameClient.Parameter"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.parameterCreateRequest(ctx, clientName, options)
 	if err != nil {
 		return ProjectedNameClientParameterResponse{}, err

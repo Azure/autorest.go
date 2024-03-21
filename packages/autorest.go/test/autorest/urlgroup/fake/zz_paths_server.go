@@ -265,7 +265,7 @@ func (p *PathsServerTransport) dispatchBase64URL(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	base64URLPathParam, err := base64.StdEncoding.DecodeString(base64URLPathUnescaped)
+	base64URLPathParam, err := base64.URLEncoding.DecodeString(base64URLPathUnescaped)
 	if err != nil {
 		return nil, err
 	}

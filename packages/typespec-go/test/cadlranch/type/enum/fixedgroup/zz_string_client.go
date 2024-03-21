@@ -22,6 +22,10 @@ type StringClient struct {
 //   - options - StringClientGetKnownValueOptions contains the optional parameters for the StringClient.GetKnownValue method.
 func (client *StringClient) GetKnownValue(ctx context.Context, options *StringClientGetKnownValueOptions) (StringClientGetKnownValueResponse, error) {
 	var err error
+	const operationName = "StringClient.GetKnownValue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getKnownValueCreateRequest(ctx, options)
 	if err != nil {
 		return StringClientGetKnownValueResponse{}, err
@@ -63,6 +67,10 @@ func (client *StringClient) getKnownValueHandleResponse(resp *http.Response) (St
 //   - options - StringClientPutKnownValueOptions contains the optional parameters for the StringClient.PutKnownValue method.
 func (client *StringClient) PutKnownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutKnownValueOptions) (StringClientPutKnownValueResponse, error) {
 	var err error
+	const operationName = "StringClient.PutKnownValue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putKnownValueCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringClientPutKnownValueResponse{}, err
@@ -97,6 +105,10 @@ func (client *StringClient) putKnownValueCreateRequest(ctx context.Context, body
 //   - options - StringClientPutUnknownValueOptions contains the optional parameters for the StringClient.PutUnknownValue method.
 func (client *StringClient) PutUnknownValue(ctx context.Context, body DaysOfWeekEnum, options *StringClientPutUnknownValueOptions) (StringClientPutUnknownValueResponse, error) {
 	var err error
+	const operationName = "StringClient.PutUnknownValue"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putUnknownValueCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringClientPutUnknownValueResponse{}, err

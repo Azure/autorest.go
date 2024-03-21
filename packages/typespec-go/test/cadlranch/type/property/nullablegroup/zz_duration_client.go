@@ -22,6 +22,10 @@ type DurationClient struct {
 //   - options - DurationClientGetNonNullOptions contains the optional parameters for the DurationClient.GetNonNull method.
 func (client *DurationClient) GetNonNull(ctx context.Context, options *DurationClientGetNonNullOptions) (DurationClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "DurationClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return DurationClientGetNonNullResponse{}, err
@@ -62,6 +66,10 @@ func (client *DurationClient) getNonNullHandleResponse(resp *http.Response) (Dur
 //   - options - DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationClientGetNullOptions) (DurationClientGetNullResponse, error) {
 	var err error
+	const operationName = "DurationClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return DurationClientGetNullResponse{}, err
@@ -102,6 +110,10 @@ func (client *DurationClient) getNullHandleResponse(resp *http.Response) (Durati
 //   - options - DurationClientPatchNonNullOptions contains the optional parameters for the DurationClient.PatchNonNull method.
 func (client *DurationClient) PatchNonNull(ctx context.Context, body DurationProperty, options *DurationClientPatchNonNullOptions) (DurationClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "DurationClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return DurationClientPatchNonNullResponse{}, err
@@ -135,6 +147,10 @@ func (client *DurationClient) patchNonNullCreateRequest(ctx context.Context, bod
 //   - options - DurationClientPatchNullOptions contains the optional parameters for the DurationClient.PatchNull method.
 func (client *DurationClient) PatchNull(ctx context.Context, body DurationProperty, options *DurationClientPatchNullOptions) (DurationClientPatchNullResponse, error) {
 	var err error
+	const operationName = "DurationClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return DurationClientPatchNullResponse{}, err

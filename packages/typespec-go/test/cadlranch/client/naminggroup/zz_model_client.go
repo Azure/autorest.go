@@ -21,6 +21,10 @@ type ModelClient struct {
 // - options - ModelClientClientOptions contains the optional parameters for the ModelClient.Client method.
 func (client *ModelClient) Client(ctx context.Context, body ClientModel, options *ModelClientClientOptions) (ModelClientClientResponse, error) {
 	var err error
+	const operationName = "ModelClient.Client"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.clientCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelClientClientResponse{}, err
@@ -53,6 +57,10 @@ func (client *ModelClient) clientCreateRequest(ctx context.Context, body ClientM
 // - options - ModelClientLanguageOptions contains the optional parameters for the ModelClient.Language method.
 func (client *ModelClient) Language(ctx context.Context, body GoModel, options *ModelClientLanguageOptions) (ModelClientLanguageResponse, error) {
 	var err error
+	const operationName = "ModelClient.Language"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.languageCreateRequest(ctx, body, options)
 	if err != nil {
 		return ModelClientLanguageResponse{}, err

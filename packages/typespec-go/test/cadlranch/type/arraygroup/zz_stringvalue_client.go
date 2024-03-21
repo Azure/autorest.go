@@ -21,6 +21,10 @@ type StringValueClient struct {
 // - options - StringValueClientGetOptions contains the optional parameters for the StringValueClient.Get method.
 func (client *StringValueClient) Get(ctx context.Context, options *StringValueClientGetOptions) (StringValueClientGetResponse, error) {
 	var err error
+	const operationName = "StringValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return StringValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *StringValueClient) getHandleResponse(resp *http.Response) (StringV
 // - options - StringValueClientPutOptions contains the optional parameters for the StringValueClient.Put method.
 func (client *StringValueClient) Put(ctx context.Context, body []string, options *StringValueClientPutOptions) (StringValueClientPutResponse, error) {
 	var err error
+	const operationName = "StringValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return StringValueClientPutResponse{}, err

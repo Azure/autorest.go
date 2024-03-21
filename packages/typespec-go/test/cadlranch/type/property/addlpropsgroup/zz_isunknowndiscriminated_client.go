@@ -23,6 +23,10 @@ type IsUnknownDiscriminatedClient struct {
 //     method.
 func (client *IsUnknownDiscriminatedClient) Get(ctx context.Context, options *IsUnknownDiscriminatedClientGetOptions) (IsUnknownDiscriminatedClientGetResponse, error) {
 	var err error
+	const operationName = "IsUnknownDiscriminatedClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return IsUnknownDiscriminatedClientGetResponse{}, err
@@ -65,6 +69,10 @@ func (client *IsUnknownDiscriminatedClient) getHandleResponse(resp *http.Respons
 //     method.
 func (client *IsUnknownDiscriminatedClient) Put(ctx context.Context, body IsUnknownAdditionalPropertiesDiscriminatedClassification, options *IsUnknownDiscriminatedClientPutOptions) (IsUnknownDiscriminatedClientPutResponse, error) {
 	var err error
+	const operationName = "IsUnknownDiscriminatedClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return IsUnknownDiscriminatedClientPutResponse{}, err

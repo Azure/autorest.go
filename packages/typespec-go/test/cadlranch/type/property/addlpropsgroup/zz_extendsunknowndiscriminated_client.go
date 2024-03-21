@@ -23,6 +23,10 @@ type ExtendsUnknownDiscriminatedClient struct {
 //     method.
 func (client *ExtendsUnknownDiscriminatedClient) Get(ctx context.Context, options *ExtendsUnknownDiscriminatedClientGetOptions) (ExtendsUnknownDiscriminatedClientGetResponse, error) {
 	var err error
+	const operationName = "ExtendsUnknownDiscriminatedClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return ExtendsUnknownDiscriminatedClientGetResponse{}, err
@@ -65,6 +69,10 @@ func (client *ExtendsUnknownDiscriminatedClient) getHandleResponse(resp *http.Re
 //     method.
 func (client *ExtendsUnknownDiscriminatedClient) Put(ctx context.Context, body ExtendsUnknownAdditionalPropertiesDiscriminatedClassification, options *ExtendsUnknownDiscriminatedClientPutOptions) (ExtendsUnknownDiscriminatedClientPutResponse, error) {
 	var err error
+	const operationName = "ExtendsUnknownDiscriminatedClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return ExtendsUnknownDiscriminatedClientPutResponse{}, err

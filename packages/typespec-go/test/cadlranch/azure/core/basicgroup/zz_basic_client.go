@@ -34,6 +34,10 @@ func (client *BasicClient) NewTwoModelsAsPageItemClient() *TwoModelsAsPageItemCl
 //   - options - BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
 func (client *BasicClient) CreateOrReplace(ctx context.Context, id int32, resource User, options *BasicClientCreateOrReplaceOptions) (BasicClientCreateOrReplaceResponse, error) {
 	var err error
+	const operationName = "BasicClient.CreateOrReplace"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrReplaceCreateRequest(ctx, id, resource, options)
 	if err != nil {
 		return BasicClientCreateOrReplaceResponse{}, err
@@ -84,6 +88,10 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 //   - options - BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
 func (client *BasicClient) CreateOrUpdate(ctx context.Context, id int32, resource User, options *BasicClientCreateOrUpdateOptions) (BasicClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "BasicClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, id, resource, options)
 	if err != nil {
 		return BasicClientCreateOrUpdateResponse{}, err
@@ -133,6 +141,10 @@ func (client *BasicClient) createOrUpdateHandleResponse(resp *http.Response) (Ba
 //   - options - BasicClientDeleteOptions contains the optional parameters for the BasicClient.Delete method.
 func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicClientDeleteOptions) (BasicClientDeleteResponse, error) {
 	var err error
+	const operationName = "BasicClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, id, options)
 	if err != nil {
 		return BasicClientDeleteResponse{}, err
@@ -169,6 +181,10 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, op
 //   - options - BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
 func (client *BasicClient) Export(ctx context.Context, id int32, formatParam string, options *BasicClientExportOptions) (BasicClientExportResponse, error) {
 	var err error
+	const operationName = "BasicClient.Export"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exportCreateRequest(ctx, id, formatParam, options)
 	if err != nil {
 		return BasicClientExportResponse{}, err
@@ -215,6 +231,10 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 //   - options - BasicClientGetOptions contains the optional parameters for the BasicClient.Get method.
 func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClientGetOptions) (BasicClientGetResponse, error) {
 	var err error
+	const operationName = "BasicClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, id, options)
 	if err != nil {
 		return BasicClientGetResponse{}, err
@@ -263,6 +283,7 @@ func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtim
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListResponse) (BasicClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BasicClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -275,6 +296,7 @@ func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtim
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -337,6 +359,7 @@ func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientL
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithCustomPageModelResponse) (BasicClientListWithCustomPageModelResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BasicClient.NewListWithCustomPageModelPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -349,6 +372,7 @@ func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientL
 			}
 			return client.listWithCustomPageModelHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -383,6 +407,7 @@ func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPage
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithPageResponse) (BasicClientListWithPageResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BasicClient.NewListWithPagePager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -395,6 +420,7 @@ func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPage
 			}
 			return client.listWithPageHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -431,6 +457,7 @@ func (client *BasicClient) NewListWithParametersPager(bodyInput ListItemInputBod
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *BasicClientListWithParametersResponse) (BasicClientListWithParametersResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "BasicClient.NewListWithParametersPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -443,6 +470,7 @@ func (client *BasicClient) NewListWithParametersPager(bodyInput ListItemInputBod
 			}
 			return client.listWithParametersHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

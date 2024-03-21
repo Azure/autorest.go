@@ -13,7 +13,6 @@ export interface GoEmitterOptions {
   'inject-spans'?: boolean;
   'module'?: string;
   'module-version'?: string;
-  'package-name'?: string;
   'rawjson-as-bytes'?: boolean;
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
@@ -30,7 +29,6 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'inject-spans': { type: 'boolean', nullable: true },
     'module': { type: 'string', nullable: true },
     'module-version': { type: 'string', nullable: true },
-    'package-name': { type: 'string', nullable: true },
     'rawjson-as-bytes': { type: 'boolean', nullable: true },
     'slice-elements-byval': { type: 'boolean', nullable: true },
     'single-client': { type: 'boolean', nullable: true }

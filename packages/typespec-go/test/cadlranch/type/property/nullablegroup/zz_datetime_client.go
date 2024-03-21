@@ -22,6 +22,10 @@ type DatetimeClient struct {
 //   - options - DatetimeClientGetNonNullOptions contains the optional parameters for the DatetimeClient.GetNonNull method.
 func (client *DatetimeClient) GetNonNull(ctx context.Context, options *DatetimeClientGetNonNullOptions) (DatetimeClientGetNonNullResponse, error) {
 	var err error
+	const operationName = "DatetimeClient.GetNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNonNullCreateRequest(ctx, options)
 	if err != nil {
 		return DatetimeClientGetNonNullResponse{}, err
@@ -62,6 +66,10 @@ func (client *DatetimeClient) getNonNullHandleResponse(resp *http.Response) (Dat
 //   - options - DatetimeClientGetNullOptions contains the optional parameters for the DatetimeClient.GetNull method.
 func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeClientGetNullOptions) (DatetimeClientGetNullResponse, error) {
 	var err error
+	const operationName = "DatetimeClient.GetNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
 		return DatetimeClientGetNullResponse{}, err
@@ -102,6 +110,10 @@ func (client *DatetimeClient) getNullHandleResponse(resp *http.Response) (Dateti
 //   - options - DatetimeClientPatchNonNullOptions contains the optional parameters for the DatetimeClient.PatchNonNull method.
 func (client *DatetimeClient) PatchNonNull(ctx context.Context, body DatetimeProperty, options *DatetimeClientPatchNonNullOptions) (DatetimeClientPatchNonNullResponse, error) {
 	var err error
+	const operationName = "DatetimeClient.PatchNonNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNonNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return DatetimeClientPatchNonNullResponse{}, err
@@ -135,6 +147,10 @@ func (client *DatetimeClient) patchNonNullCreateRequest(ctx context.Context, bod
 //   - options - DatetimeClientPatchNullOptions contains the optional parameters for the DatetimeClient.PatchNull method.
 func (client *DatetimeClient) PatchNull(ctx context.Context, body DatetimeProperty, options *DatetimeClientPatchNullOptions) (DatetimeClientPatchNullResponse, error) {
 	var err error
+	const operationName = "DatetimeClient.PatchNull"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.patchNullCreateRequest(ctx, body, options)
 	if err != nil {
 		return DatetimeClientPatchNullResponse{}, err

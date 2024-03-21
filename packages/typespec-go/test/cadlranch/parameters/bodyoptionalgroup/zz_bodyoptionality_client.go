@@ -29,6 +29,10 @@ func (client *BodyOptionalityClient) NewOptionalExplicitClient() *OptionalExplic
 //     method.
 func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredExplicitOptions) (BodyOptionalityClientRequiredExplicitResponse, error) {
 	var err error
+	const operationName = "BodyOptionalityClient.RequiredExplicit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requiredExplicitCreateRequest(ctx, body, options)
 	if err != nil {
 		return BodyOptionalityClientRequiredExplicitResponse{}, err
@@ -62,6 +66,10 @@ func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.C
 //     method.
 func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredImplicitOptions) (BodyOptionalityClientRequiredImplicitResponse, error) {
 	var err error
+	const operationName = "BodyOptionalityClient.RequiredImplicit"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.requiredImplicitCreateRequest(ctx, body, options)
 	if err != nil {
 		return BodyOptionalityClientRequiredImplicitResponse{}, err

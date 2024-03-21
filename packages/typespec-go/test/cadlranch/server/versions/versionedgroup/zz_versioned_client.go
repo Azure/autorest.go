@@ -25,6 +25,10 @@ type VersionedClient struct {
 //     method.
 func (client *VersionedClient) WithPathAPIVersion(ctx context.Context, options *VersionedClientWithPathAPIVersionOptions) (VersionedClientWithPathAPIVersionResponse, error) {
 	var err error
+	const operationName = "VersionedClient.WithPathAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withPathAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return VersionedClientWithPathAPIVersionResponse{}, err
@@ -57,6 +61,10 @@ func (client *VersionedClient) withPathAPIVersionCreateRequest(ctx context.Conte
 //     method.
 func (client *VersionedClient) WithQueryAPIVersion(ctx context.Context, options *VersionedClientWithQueryAPIVersionOptions) (VersionedClientWithQueryAPIVersionResponse, error) {
 	var err error
+	const operationName = "VersionedClient.WithQueryAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withQueryAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return VersionedClientWithQueryAPIVersionResponse{}, err
@@ -91,6 +99,10 @@ func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Cont
 //     method.
 func (client *VersionedClient) WithoutAPIVersion(ctx context.Context, options *VersionedClientWithoutAPIVersionOptions) (VersionedClientWithoutAPIVersionResponse, error) {
 	var err error
+	const operationName = "VersionedClient.WithoutAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.withoutAPIVersionCreateRequest(ctx, options)
 	if err != nil {
 		return VersionedClientWithoutAPIVersionResponse{}, err

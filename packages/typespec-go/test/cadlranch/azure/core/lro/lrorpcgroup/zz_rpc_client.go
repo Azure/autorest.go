@@ -26,16 +26,24 @@ func (client *RpcClient) BeginLongRunningRPC(ctx context.Context, body Generatio
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[RpcClientLongRunningRPCResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RpcClientLongRunningRPCResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[RpcClientLongRunningRPCResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RpcClientLongRunningRPCResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // LongRunningRPC - Generate data.
 func (client *RpcClient) longRunningRPC(ctx context.Context, body GenerationOptions, options *RpcClientLongRunningRPCOptions) (*http.Response, error) {
 	var err error
+	const operationName = "RpcClient.BeginLongRunningRPC"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.longRunningRPCCreateRequest(ctx, body, options)
 	if err != nil {
 		return nil, err

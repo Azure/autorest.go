@@ -21,6 +21,10 @@ type NullableFloatValueClient struct {
 // - options - NullableFloatValueClientGetOptions contains the optional parameters for the NullableFloatValueClient.Get method.
 func (client *NullableFloatValueClient) Get(ctx context.Context, options *NullableFloatValueClientGetOptions) (NullableFloatValueClientGetResponse, error) {
 	var err error
+	const operationName = "NullableFloatValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return NullableFloatValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *NullableFloatValueClient) getHandleResponse(resp *http.Response) (
 // - options - NullableFloatValueClientPutOptions contains the optional parameters for the NullableFloatValueClient.Put method.
 func (client *NullableFloatValueClient) Put(ctx context.Context, body map[string]*float32, options *NullableFloatValueClientPutOptions) (NullableFloatValueClientPutResponse, error) {
 	var err error
+	const operationName = "NullableFloatValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return NullableFloatValueClientPutResponse{}, err

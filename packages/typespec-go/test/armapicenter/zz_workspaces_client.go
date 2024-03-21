@@ -46,6 +46,10 @@ func NewWorkspacesClient(credential azcore.TokenCredential, options *arm.ClientO
 //     method.
 func (client *WorkspacesClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, payload Workspace, options *WorkspacesClientCreateOrUpdateOptions) (WorkspacesClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "WorkspacesClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, payload, options)
 	if err != nil {
 		return WorkspacesClientCreateOrUpdateResponse{}, err
@@ -116,6 +120,10 @@ func (client *WorkspacesClient) createOrUpdateHandleResponse(resp *http.Response
 //   - options - WorkspacesClientDeleteOptions contains the optional parameters for the WorkspacesClient.Delete method.
 func (client *WorkspacesClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientDeleteOptions) (WorkspacesClientDeleteResponse, error) {
 	var err error
+	const operationName = "WorkspacesClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, options)
 	if err != nil {
 		return WorkspacesClientDeleteResponse{}, err
@@ -169,6 +177,10 @@ func (client *WorkspacesClient) deleteCreateRequest(ctx context.Context, subscri
 //   - options - WorkspacesClientGetOptions contains the optional parameters for the WorkspacesClient.Get method.
 func (client *WorkspacesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientGetOptions) (WorkspacesClientGetResponse, error) {
 	var err error
+	const operationName = "WorkspacesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, options)
 	if err != nil {
 		return WorkspacesClientGetResponse{}, err
@@ -235,6 +247,10 @@ func (client *WorkspacesClient) getHandleResponse(resp *http.Response) (Workspac
 //   - options - WorkspacesClientHeadOptions contains the optional parameters for the WorkspacesClient.Head method.
 func (client *WorkspacesClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientHeadOptions) (WorkspacesClientHeadResponse, error) {
 	var err error
+	const operationName = "WorkspacesClient.Head"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, options)
 	if err != nil {
 		return WorkspacesClientHeadResponse{}, err
@@ -291,6 +307,7 @@ func (client *WorkspacesClient) NewListPager(subscriptionID string, resourceGrou
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *WorkspacesClientListResponse) (WorkspacesClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WorkspacesClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -303,6 +320,7 @@ func (client *WorkspacesClient) NewListPager(subscriptionID string, resourceGrou
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

@@ -21,6 +21,10 @@ type RecursiveModelValueClient struct {
 // - options - RecursiveModelValueClientGetOptions contains the optional parameters for the RecursiveModelValueClient.Get method.
 func (client *RecursiveModelValueClient) Get(ctx context.Context, options *RecursiveModelValueClientGetOptions) (RecursiveModelValueClientGetResponse, error) {
 	var err error
+	const operationName = "RecursiveModelValueClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return RecursiveModelValueClientGetResponse{}, err
@@ -60,6 +64,10 @@ func (client *RecursiveModelValueClient) getHandleResponse(resp *http.Response) 
 // - options - RecursiveModelValueClientPutOptions contains the optional parameters for the RecursiveModelValueClient.Put method.
 func (client *RecursiveModelValueClient) Put(ctx context.Context, body map[string]*InnerModel, options *RecursiveModelValueClientPutOptions) (RecursiveModelValueClientPutResponse, error) {
 	var err error
+	const operationName = "RecursiveModelValueClient.Put"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.putCreateRequest(ctx, body, options)
 	if err != nil {
 		return RecursiveModelValueClientPutResponse{}, err
