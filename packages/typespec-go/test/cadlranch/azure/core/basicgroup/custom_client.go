@@ -17,7 +17,6 @@ func NewBasicClient(options *azcore.ClientOptions) (*BasicClient, error) {
 		return nil, err
 	}
 	return &BasicClient{
-		internal:   internal,
-		apiVersion: "2022-12-01-preview",
+		internal: internal,
 	}, nil
 }

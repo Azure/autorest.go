@@ -206,7 +206,7 @@ export class clientAdapter {
         optionalGroup.params.push(new go.ResumeTokenParameter());
       }
     }
-  
+
     for (const param of sdkMethod.operation.parameters) {
       const adaptedParam = this.adaptMethodParameter(param, optionalGroup);
       method.parameters.push(adaptedParam);
@@ -231,6 +231,22 @@ export class clientAdapter {
   }
 
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
+    if (param.isApiVersionParam && param.clientDefaultValue) {
+      // we emit the api version param inline as a literal, never as a param.
+      // the ClientOptions.APIVersion setting is used to change the version.
+      const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
+      switch (param.kind) {
+        case 'header':
+          return new go.HeaderParameter(param.nameInClient, param.serializedName, paramType, 'literal', true, 'method');
+        case 'path':
+          return new go.PathParameter(param.nameInClient, param.serializedName, true, paramType, 'literal', true, 'method');
+        case 'query':
+          return new go.QueryParameter(param.nameInClient, param.serializedName, true, paramType, 'literal', true, 'method');
+        default:
+          throw new Error(`unhandled param kind ${param.kind} for API version param`);
+      }
+    }
+
     let location: go.ParameterLocation = 'method';
     const getClientParamsKey = function(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
       // include the param kind in the key name as a client param can be used

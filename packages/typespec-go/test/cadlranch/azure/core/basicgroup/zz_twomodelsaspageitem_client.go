@@ -15,8 +15,7 @@ import (
 // TwoModelsAsPageItemClient contains the methods for the _Specs_.Azure.Core.Basic namespace.
 // Don't use this type directly, use [BasicClient.NewTwoModelsAsPageItemClient] instead.
 type TwoModelsAsPageItemClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *azcore.Client
 }
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate
@@ -52,7 +51,7 @@ func (client *TwoModelsAsPageItemClient) listFirstItemCreateRequest(ctx context.
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -100,7 +99,7 @@ func (client *TwoModelsAsPageItemClient) listSecondItemCreateRequest(ctx context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

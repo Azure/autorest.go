@@ -18,15 +18,13 @@ import (
 // BasicClient - Illustrates bodies templated with Azure Core
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *azcore.Client
 }
 
 // NewTwoModelsAsPageItemClient creates a new instance of [TwoModelsAsPageItemClient].
 func (client *BasicClient) NewTwoModelsAsPageItemClient() *TwoModelsAsPageItemClient {
 	return &TwoModelsAsPageItemClient{
-		internal:   client.internal,
-		apiVersion: client.apiVersion,
+		internal: client.internal,
 	}
 }
 
@@ -61,7 +59,7 @@ func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -111,7 +109,7 @@ func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id i
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/merge-patch+json"}
@@ -159,7 +157,7 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, op
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -196,7 +194,7 @@ func (client *BasicClient) exportCreateRequest(ctx context.Context, id int32, fo
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	reqQP.Set("format", formatParam)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
@@ -242,7 +240,7 @@ func (client *BasicClient) getCreateRequest(ctx context.Context, id int32, optio
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -288,7 +286,7 @@ func (client *BasicClient) listCreateRequest(ctx context.Context, options *Basic
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	if options != nil && options.Expand != nil {
 		for _, qv := range options.Expand {
 			reqQP.Add("expand", qv)
@@ -362,7 +360,7 @@ func (client *BasicClient) listWithCustomPageModelCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -408,7 +406,7 @@ func (client *BasicClient) listWithPageCreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -459,7 +457,7 @@ func (client *BasicClient) listWithParametersCreateRequest(ctx context.Context, 
 	if options != nil && options.Another != nil {
 		reqQP.Set("another", string(*options.Another))
 	}
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

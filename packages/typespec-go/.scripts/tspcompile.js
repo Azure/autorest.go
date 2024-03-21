@@ -109,6 +109,15 @@ function should_generate(name) {
   return true
 }
 
+const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
+generate('armcodesigning', armcodesigning, 'test/armcodesigning');
+
+const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
+generate('armapicenter', armapicenter, 'test/armapicenter');
+
+const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
+generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let additionalArgs;

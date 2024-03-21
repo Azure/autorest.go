@@ -6,7 +6,6 @@ package versionedgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -18,9 +17,8 @@ import (
 // VersionedClient - Illustrates versioned server.
 // Don't use this type directly, use a constructor function instead.
 type VersionedClient struct {
-	internal   *azcore.Client
-	endpoint   string
-	apiVersion string
+	internal *azcore.Client
+	endpoint string
 }
 
 //   - options - VersionedClientWithPathAPIVersionOptions contains the optional parameters for the VersionedClient.WithPathAPIVersion
@@ -47,10 +45,7 @@ func (client *VersionedClient) withPathAPIVersionCreateRequest(ctx context.Conte
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/versioned/with-path-api-version/{apiVersion}"
-	if client.apiVersion == "" {
-		return nil, errors.New("parameter client.apiVersion cannot be empty")
-	}
-	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape(client.apiVersion))
+	urlPath = strings.ReplaceAll(urlPath, "{apiVersion}", url.PathEscape("2022-12-01-preview"))
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
@@ -87,7 +82,7 @@ func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }

@@ -10,6 +10,7 @@ import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import { packageNameFromOutputFolder } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
+import { values } from '@azure-tools/linq';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -22,7 +23,16 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     options.azcoreVersion = context.options['azcore-version'];
   }
 
-  const codeModel = new go.CodeModel(info, 'data-plane', packageNameFromOutputFolder(context.emitterOutputDir), options);
+  const sdkContext = tcgc.createSdkContext(context);
+  let codeModelType: go.CodeModelType = 'data-plane';
+  if (values(sdkContext.experimental_sdkPackage.clients).any(client => { return client.arm; })) {
+    // if one client is ARM then mark the code model as ARM.
+    // we should never have an SDK that mixes ARM and data-plane.
+    // TODO: tcgc to move arm property to sdkPackage
+    codeModelType = 'azure-arm';
+  }
+
+  const codeModel = new go.CodeModel(info, codeModelType, packageNameFromOutputFolder(context.emitterOutputDir), options);
   if (context.options.module && context.options['module-version']) {
     codeModel.options.module = new go.Module(context.options.module, context.options['module-version']);
   } else if (context.options.module || context.options['module-version']) {
@@ -35,7 +45,6 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     codeModel.options.sliceElementsByval = true;
   }
 
-  const sdkContext = tcgc.createSdkContext(context);
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
 

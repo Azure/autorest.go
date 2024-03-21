@@ -101,10 +101,6 @@ export class typeAdapter {
     for (const modelType of modelTypes) {
       const content = aggregateProperties(modelType.tcgc);
       for (const prop of values(content.props)) {
-        if (prop.kind !== 'property') {
-          // TODO: unexpected kind path for property name in model Product
-          throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.tcgc.name}`);
-        }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
@@ -558,14 +554,22 @@ export class typeAdapter {
     }
   }
 
-  private getModelField(prop: tcgc.SdkBodyModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
+  private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     // TODO: hard-coded values
+    if (prop.kind !== 'path' && prop.kind !== 'property') {
+      throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.name}`);
+    }
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.nameInClient)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
-    // the presence of modelType.discriminatorValue tells us that this
-    // property is on a model that's not the root discriminator
-    if (prop.discriminator && modelType.discriminatorValue) {
+    if (prop.kind === 'path') {
+      // for ARM resources, a property of kind path is usually the model
+      // key and will be exposed as a discrete method parameter. this also
+      // means that the value is read-only.
+      annotations.readOnly = true;
+    } else if (prop.discriminator && modelType.discriminatorValue) {
+      // the presence of modelType.discriminatorValue tells us that this
+      // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     } /*else if (prop.clientDefaultValue) {

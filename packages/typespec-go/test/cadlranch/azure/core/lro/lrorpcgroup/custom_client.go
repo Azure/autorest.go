@@ -20,8 +20,7 @@ func NewRpcClient(options *azcore.ClientOptions) (*RpcClient, error) {
 		return nil, err
 	}
 	return &RpcClient{
-		internal:   internal,
-		apiVersion: apiVersion,
+		internal: internal,
 	}, nil
 }
 

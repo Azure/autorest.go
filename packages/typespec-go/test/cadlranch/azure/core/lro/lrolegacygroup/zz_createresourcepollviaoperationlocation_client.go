@@ -18,8 +18,7 @@ import (
 // CreateResourcePollViaOperationLocationClient - POST to create resource, poll URL via operation-location header.
 // Don't use this type directly, use [LegacyClient.NewCreateResourcePollViaOperationLocationClient] instead.
 type CreateResourcePollViaOperationLocationClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *azcore.Client
 }
 
 // BeginCreateJob - Creates a Job
@@ -64,7 +63,7 @@ func (client *CreateResourcePollViaOperationLocationClient) createJobCreateReque
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -108,7 +107,7 @@ func (client *CreateResourcePollViaOperationLocationClient) getJobCreateRequest(
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
