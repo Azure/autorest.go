@@ -15,8 +15,7 @@ import (
 // RpcClient - Illustrates bodies templated with Azure Core with long-running RPC operation
 // Don't use this type directly, use a constructor function instead.
 type RpcClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *azcore.Client
 }
 
 // BeginLongRunningRPC - Generate data.
@@ -60,7 +59,7 @@ func (client *RpcClient) longRunningRPCCreateRequest(ctx context.Context, body G
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2022-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

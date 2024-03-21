@@ -14,7 +14,6 @@ func NewLegacyClient(options *azcore.ClientOptions) (*LegacyClient, error) {
 		return nil, err
 	}
 	return &LegacyClient{
-		internal:   internal,
-		apiVersion: "2022-12-01-preview",
+		internal: internal,
 	}, nil
 }

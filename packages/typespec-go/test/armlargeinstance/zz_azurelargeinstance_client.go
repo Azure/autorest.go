@@ -4,35 +4,48 @@
 
 package armlargeinstance
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+)
 
 // AzureLargeInstanceClient - The AzureLargeInstance Management client
-// Don't use this type directly, use a constructor function instead.
+// Don't use this type directly, use NewAzureLargeInstanceClient() instead.
 type AzureLargeInstanceClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *arm.Client
+}
+
+// NewAzureLargeInstanceClient creates a new instance of AzureLargeInstanceClient with the specified values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
+func NewAzureLargeInstanceClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeInstanceClient, error) {
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &AzureLargeInstanceClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 // NewAzureLargeInstancesClient creates a new instance of [AzureLargeInstancesClient].
 func (client *AzureLargeInstanceClient) NewAzureLargeInstancesClient() *AzureLargeInstancesClient {
 	return &AzureLargeInstancesClient{
-		internal:   client.internal,
-		apiVersion: client.apiVersion,
+		internal: client.internal,
 	}
 }
 
 // NewAzureLargeStorageInstancesClient creates a new instance of [AzureLargeStorageInstancesClient].
 func (client *AzureLargeInstanceClient) NewAzureLargeStorageInstancesClient() *AzureLargeStorageInstancesClient {
 	return &AzureLargeStorageInstancesClient{
-		internal:   client.internal,
-		apiVersion: client.apiVersion,
+		internal: client.internal,
 	}
 }
 
 // NewOperationsClient creates a new instance of [OperationsClient].
 func (client *AzureLargeInstanceClient) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
-		internal:   client.internal,
-		apiVersion: client.apiVersion,
+		internal: client.internal,
 	}
 }

@@ -9,14 +9,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // LegacyClient - Illustrates bodies templated with Azure Core with long-running operation
 // Don't use this type directly, use a constructor function instead.
 type LegacyClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *azcore.Client
 }
 
 // NewCreateResourcePollViaOperationLocationClient creates a new instance of [CreateResourcePollViaOperationLocationClient].
 func (client *LegacyClient) NewCreateResourcePollViaOperationLocationClient() *CreateResourcePollViaOperationLocationClient {
 	return &CreateResourcePollViaOperationLocationClient{
-		internal:   client.internal,
-		apiVersion: client.apiVersion,
+		internal: client.internal,
 	}
 }

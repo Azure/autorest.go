@@ -20,8 +20,7 @@ func NewStandardClient(options *azcore.ClientOptions) (*StandardClient, error) {
 		return nil, err
 	}
 	return &StandardClient{
-		internal:   internal,
-		apiVersion: apiVersion,
+		internal: internal,
 	}, nil
 }
 

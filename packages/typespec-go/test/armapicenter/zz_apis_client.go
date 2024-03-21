@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -16,10 +17,23 @@ import (
 )
 
 // ApisClient contains the methods for the Microsoft.ApiCenter namespace.
-// Don't use this type directly, use [ApiCenterClient.NewApisClient] instead.
+// Don't use this type directly, use NewApisClient() instead.
 type ApisClient struct {
-	internal   *azcore.Client
-	apiVersion string
+	internal *arm.Client
+}
+
+// NewApisClient creates a new instance of ApisClient with the specified values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
+func NewApisClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ApisClient, error) {
+	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
+	if err != nil {
+		return nil, err
+	}
+	client := &ApisClient{
+		internal: cl,
+	}
+	return client, nil
 }
 
 // CreateOrUpdate - Creates new or updates existing API.
@@ -71,12 +85,12 @@ func (client *ApisClient) createOrUpdateCreateRequest(ctx context.Context, subsc
 		return nil, errors.New("parameter apiName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{apiName}", url.PathEscape(apiName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2024-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -145,12 +159,12 @@ func (client *ApisClient) deleteCreateRequest(ctx context.Context, subscriptionI
 		return nil, errors.New("parameter apiName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{apiName}", url.PathEscape(apiName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2024-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -204,12 +218,12 @@ func (client *ApisClient) getCreateRequest(ctx context.Context, subscriptionID s
 		return nil, errors.New("parameter apiName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{apiName}", url.PathEscape(apiName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2024-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -274,12 +288,12 @@ func (client *ApisClient) headCreateRequest(ctx context.Context, subscriptionID 
 		return nil, errors.New("parameter apiName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{apiName}", url.PathEscape(apiName))
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2024-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -331,7 +345,7 @@ func (client *ApisClient) listCreateRequest(ctx context.Context, subscriptionID 
 		return nil, errors.New("parameter workspaceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{workspaceName}", url.PathEscape(workspaceName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +353,7 @@ func (client *ApisClient) listCreateRequest(ctx context.Context, subscriptionID 
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
-	reqQP.Set("api-version", client.apiVersion)
+	reqQP.Set("api-version", "2024-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

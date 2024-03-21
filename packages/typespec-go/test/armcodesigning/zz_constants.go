@@ -6,6 +6,11 @@ package armcodesigning
 
 const host = "https://management.azure.com"
 
+const (
+	moduleName    = "armcodesigning"
+	moduleVersion = "v0.1.0"
+)
+
 // ActionType - Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 

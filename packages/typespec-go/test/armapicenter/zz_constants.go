@@ -6,6 +6,11 @@ package armapicenter
 
 const host = "https://management.azure.com"
 
+const (
+	moduleName    = "armapicenter"
+	moduleVersion = "v0.1.0"
+)
+
 // APIKind - The kind of the API
 type APIKind string
 
