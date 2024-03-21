@@ -4,7 +4,10 @@
 
 package fake
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+)
 
 type nonRetriableError struct {
 	error
@@ -37,4 +40,11 @@ func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) 
 		return *new(T), err
 	}
 	return t, err
+}
+
+func splitHelper(s, sep string) []string {
+	if s == "" {
+		return nil
+	}
+	return strings.Split(s, sep)
 }

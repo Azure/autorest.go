@@ -4,7 +4,10 @@
 
 package fake
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+)
 
 type nonRetriableError struct {
 	error
@@ -29,4 +32,11 @@ func getHeaderValue(h http.Header, k string) string {
 		return ""
 	}
 	return v[0]
+}
+
+func splitHelper(s, sep string) []string {
+	if s == "" {
+		return nil
+	}
+	return strings.Split(s, sep)
 }

@@ -122,10 +122,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
       writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
     }
 
-    const serverFactory = generateServerFactory(codeModel);
+    // skip server factory for now as we don't generate it (yet)
+    /*const serverFactory = generateServerFactory(codeModel);
     if (serverFactory !== '') {
       writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
-    }
+    }*/
 
     writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
 

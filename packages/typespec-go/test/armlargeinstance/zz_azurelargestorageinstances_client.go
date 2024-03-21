@@ -45,6 +45,10 @@ func NewAzureLargeStorageInstancesClient(credential azcore.TokenCredential, opti
 //     method.
 func (client *AzureLargeStorageInstancesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeStorageInstancesClientGetOptions) (AzureLargeStorageInstancesClientGetResponse, error) {
 	var err error
+	const operationName = "AzureLargeStorageInstancesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, azureLargeStorageInstanceName, options)
 	if err != nil {
 		return AzureLargeStorageInstancesClientGetResponse{}, err
@@ -109,6 +113,7 @@ func (client *AzureLargeStorageInstancesClient) NewListByResourceGroupPager(subs
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstancesClientListByResourceGroupResponse) (AzureLargeStorageInstancesClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstancesClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -121,6 +126,7 @@ func (client *AzureLargeStorageInstancesClient) NewListByResourceGroupPager(subs
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -166,6 +172,7 @@ func (client *AzureLargeStorageInstancesClient) NewListBySubscriptionPager(subsc
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstancesClientListBySubscriptionResponse) (AzureLargeStorageInstancesClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstancesClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -178,6 +185,7 @@ func (client *AzureLargeStorageInstancesClient) NewListBySubscriptionPager(subsc
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -218,6 +226,10 @@ func (client *AzureLargeStorageInstancesClient) listBySubscriptionHandleResponse
 //     method.
 func (client *AzureLargeStorageInstancesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeStorageInstancesClientUpdateOptions) (AzureLargeStorageInstancesClientUpdateResponse, error) {
 	var err error
+	const operationName = "AzureLargeStorageInstancesClient.Update"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, azureLargeStorageInstanceName, properties, options)
 	if err != nil {
 		return AzureLargeStorageInstancesClientUpdateResponse{}, err

@@ -117,7 +117,7 @@ func (q *QueryServerTransport) dispatchBase64URL(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	valueParam, err := base64.StdEncoding.DecodeString(valueUnescaped)
+	valueParam, err := base64.URLEncoding.DecodeString(valueUnescaped)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,16 @@ func (q *QueryServerTransport) dispatchBase64URLArray(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := q.srv.Base64URLArray(req.Context(), valueUnescaped, nil)
+	valueElements := splitHelper(valueUnescaped, ",")
+	valueParam := make([][]byte, len(valueElements))
+	for i := 0; i < len(valueElements); i++ {
+		parsedURL, parseErr := base64.URLEncoding.DecodeString(valueElements[i])
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		valueParam[i] = []byte(parsedURL)
+	}
+	respr, errRespr := q.srv.Base64URLArray(req.Context(), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

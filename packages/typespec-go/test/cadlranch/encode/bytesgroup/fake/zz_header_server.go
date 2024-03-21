@@ -106,7 +106,7 @@ func (h *HeaderServerTransport) dispatchBase64URL(req *http.Request) (*http.Resp
 	if h.srv.Base64URL == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Base64URL not implemented")}
 	}
-	valueParam, err := base64.StdEncoding.DecodeString(getHeaderValue(req.Header, "value"))
+	valueParam, err := base64.URLEncoding.DecodeString(getHeaderValue(req.Header, "value"))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,16 @@ func (h *HeaderServerTransport) dispatchBase64URLArray(req *http.Request) (*http
 	if h.srv.Base64URLArray == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Base64URLArray not implemented")}
 	}
-	respr, errRespr := h.srv.Base64URLArray(req.Context(), getHeaderValue(req.Header, "value"), nil)
+	valueElements := splitHelper(getHeaderValue(req.Header, "value"), ",")
+	valueParam := make([][]byte, len(valueElements))
+	for i := 0; i < len(valueElements); i++ {
+		parsedURL, parseErr := base64.URLEncoding.DecodeString(valueElements[i])
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		valueParam[i] = []byte(parsedURL)
+	}
+	respr, errRespr := h.srv.Base64URLArray(req.Context(), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

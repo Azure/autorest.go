@@ -214,7 +214,17 @@ func (q *QueryServerTransport) dispatchUnixTimestampArray(req *http.Request) (*h
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := q.srv.UnixTimestampArray(req.Context(), valueUnescaped, nil)
+	valueElements := splitHelper(valueUnescaped, ",")
+	valueParam := make([]time.Time, len(valueElements))
+	for i := 0; i < len(valueElements); i++ {
+		p, parseErr := strconv.ParseInt(valueElements[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		parsedTimeUnix := time.Unix(p, 0).UTC()
+		valueParam[i] = time.Time(parsedTimeUnix)
+	}
+	respr, errRespr := q.srv.UnixTimestampArray(req.Context(), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

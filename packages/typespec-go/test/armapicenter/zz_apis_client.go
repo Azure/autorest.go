@@ -46,6 +46,10 @@ func NewApisClient(credential azcore.TokenCredential, options *arm.ClientOptions
 //   - options - ApisClientCreateOrUpdateOptions contains the optional parameters for the ApisClient.CreateOrUpdate method.
 func (client *ApisClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, payload API, options *ApisClientCreateOrUpdateOptions) (ApisClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "ApisClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, payload, options)
 	if err != nil {
 		return ApisClientCreateOrUpdateResponse{}, err
@@ -121,6 +125,10 @@ func (client *ApisClient) createOrUpdateHandleResponse(resp *http.Response) (Api
 //   - options - ApisClientDeleteOptions contains the optional parameters for the ApisClient.Delete method.
 func (client *ApisClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *ApisClientDeleteOptions) (ApisClientDeleteResponse, error) {
 	var err error
+	const operationName = "ApisClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, options)
 	if err != nil {
 		return ApisClientDeleteResponse{}, err
@@ -179,6 +187,10 @@ func (client *ApisClient) deleteCreateRequest(ctx context.Context, subscriptionI
 //   - options - ApisClientGetOptions contains the optional parameters for the ApisClient.Get method.
 func (client *ApisClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *ApisClientGetOptions) (ApisClientGetResponse, error) {
 	var err error
+	const operationName = "ApisClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, options)
 	if err != nil {
 		return ApisClientGetResponse{}, err
@@ -250,6 +262,10 @@ func (client *ApisClient) getHandleResponse(resp *http.Response) (ApisClientGetR
 //   - options - ApisClientHeadOptions contains the optional parameters for the ApisClient.Head method.
 func (client *ApisClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *ApisClientHeadOptions) (ApisClientHeadResponse, error) {
 	var err error
+	const operationName = "ApisClient.Head"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, options)
 	if err != nil {
 		return ApisClientHeadResponse{}, err
@@ -311,6 +327,7 @@ func (client *ApisClient) NewListPager(subscriptionID string, resourceGroupName 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ApisClientListResponse) (ApisClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApisClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -323,6 +340,7 @@ func (client *ApisClient) NewListPager(subscriptionID string, resourceGroupName 
 			}
 			return client.listHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 

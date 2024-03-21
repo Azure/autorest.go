@@ -50,16 +50,24 @@ func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, subscr
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CertificateProfilesClientCreateResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CertificateProfilesClientCreateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CertificateProfilesClientCreateResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CertificateProfilesClientCreateResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Create - Create a certificate profile.
 func (client *CertificateProfilesClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientCreateOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CertificateProfilesClient.BeginCreate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, profileName, resource, options)
 	if err != nil {
 		return nil, err
@@ -122,16 +130,24 @@ func (client *CertificateProfilesClient) BeginDelete(ctx context.Context, subscr
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[CertificateProfilesClientDeleteResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CertificateProfilesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[CertificateProfilesClientDeleteResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CertificateProfilesClientDeleteResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // Delete - Delete a certificate profile.
 func (client *CertificateProfilesClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientDeleteOptions) (*http.Response, error) {
 	var err error
+	const operationName = "CertificateProfilesClient.BeginDelete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, profileName, options)
 	if err != nil {
 		return nil, err
@@ -185,6 +201,10 @@ func (client *CertificateProfilesClient) deleteCreateRequest(ctx context.Context
 //   - options - CertificateProfilesClientGetOptions contains the optional parameters for the CertificateProfilesClient.Get method.
 func (client *CertificateProfilesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientGetOptions) (CertificateProfilesClientGetResponse, error) {
 	var err error
+	const operationName = "CertificateProfilesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, profileName, options)
 	if err != nil {
 		return CertificateProfilesClientGetResponse{}, err
@@ -252,6 +272,7 @@ func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(subscr
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *CertificateProfilesClientListByCodeSigningAccountResponse) (CertificateProfilesClientListByCodeSigningAccountResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CertificateProfilesClient.NewListByCodeSigningAccountPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -264,6 +285,7 @@ func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(subscr
 			}
 			return client.listByCodeSigningAccountHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -312,6 +334,10 @@ func (client *CertificateProfilesClient) listByCodeSigningAccountHandleResponse(
 //     method.
 func (client *CertificateProfilesClient) RevokeCertificate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, body RevokeCertificate, options *CertificateProfilesClientRevokeCertificateOptions) (CertificateProfilesClientRevokeCertificateResponse, error) {
 	var err error
+	const operationName = "CertificateProfilesClient.RevokeCertificate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.revokeCertificateCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, profileName, body, options)
 	if err != nil {
 		return CertificateProfilesClientRevokeCertificateResponse{}, err

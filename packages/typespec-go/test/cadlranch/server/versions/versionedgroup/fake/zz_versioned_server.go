@@ -12,7 +12,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"regexp"
 	"versionedgroup"
 )
 
@@ -76,12 +75,6 @@ func (v *VersionedServerTransport) Do(req *http.Request) (*http.Response, error)
 func (v *VersionedServerTransport) dispatchWithPathAPIVersion(req *http.Request) (*http.Response, error) {
 	if v.srv.WithPathAPIVersion == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithPathAPIVersion not implemented")}
-	}
-	const regexStr = `/server/versions/versioned/with-path-api-version/(?P<apiVersion>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-	regex := regexp.MustCompile(regexStr)
-	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-	if matches == nil || len(matches) < 1 {
-		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	respr, errRespr := v.srv.WithPathAPIVersion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {

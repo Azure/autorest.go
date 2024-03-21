@@ -188,7 +188,17 @@ func (h *HeaderServerTransport) dispatchUnixTimestampArray(req *http.Request) (*
 	if h.srv.UnixTimestampArray == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UnixTimestampArray not implemented")}
 	}
-	respr, errRespr := h.srv.UnixTimestampArray(req.Context(), getHeaderValue(req.Header, "value"), nil)
+	valueElements := splitHelper(getHeaderValue(req.Header, "value"), ",")
+	valueParam := make([]time.Time, len(valueElements))
+	for i := 0; i < len(valueElements); i++ {
+		p, parseErr := strconv.ParseInt(valueElements[i], 10, 64)
+		if parseErr != nil {
+			return nil, parseErr
+		}
+		parsedTimeUnix := time.Unix(p, 0).UTC()
+		valueParam[i] = time.Time(parsedTimeUnix)
+	}
+	respr, errRespr := h.srv.UnixTimestampArray(req.Context(), valueParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -44,6 +44,10 @@ func NewServicesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 //   - options - ServicesClientCreateOrUpdateOptions contains the optional parameters for the ServicesClient.CreateOrUpdate method.
 func (client *ServicesClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, resource Service, options *ServicesClientCreateOrUpdateOptions) (ServicesClientCreateOrUpdateResponse, error) {
 	var err error
+	const operationName = "ServicesClient.CreateOrUpdate"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, resource, options)
 	if err != nil {
 		return ServicesClientCreateOrUpdateResponse{}, err
@@ -106,6 +110,10 @@ func (client *ServicesClient) createOrUpdateHandleResponse(resp *http.Response) 
 //   - options - ServicesClientDeleteOptions contains the optional parameters for the ServicesClient.Delete method.
 func (client *ServicesClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, options *ServicesClientDeleteOptions) (ServicesClientDeleteResponse, error) {
 	var err error
+	const operationName = "ServicesClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, options)
 	if err != nil {
 		return ServicesClientDeleteResponse{}, err
@@ -160,16 +168,24 @@ func (client *ServicesClient) BeginExportMetadataSchema(ctx context.Context, sub
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller[ServicesClientExportMetadataSchemaResponse](resp, client.internal.Pipeline(), nil)
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ServicesClientExportMetadataSchemaResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken[ServicesClientExportMetadataSchemaResponse](options.ResumeToken, client.internal.Pipeline(), nil)
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ServicesClientExportMetadataSchemaResponse]{
+			Tracer: client.internal.Tracer(),
+		})
 	}
 }
 
 // ExportMetadataSchema - Exports the effective metadata schema.
 func (client *ServicesClient) exportMetadataSchema(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, payload MetadataSchemaExportRequest, options *ServicesClientExportMetadataSchemaOptions) (*http.Response, error) {
 	var err error
+	const operationName = "ServicesClient.BeginExportMetadataSchema"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.exportMetadataSchemaCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, payload, options)
 	if err != nil {
 		return nil, err
@@ -222,6 +238,10 @@ func (client *ServicesClient) exportMetadataSchemaCreateRequest(ctx context.Cont
 //   - options - ServicesClientGetOptions contains the optional parameters for the ServicesClient.Get method.
 func (client *ServicesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, options *ServicesClientGetOptions) (ServicesClientGetResponse, error) {
 	var err error
+	const operationName = "ServicesClient.Get"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, options)
 	if err != nil {
 		return ServicesClientGetResponse{}, err
@@ -284,6 +304,7 @@ func (client *ServicesClient) NewListByResourceGroupPager(subscriptionID string,
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ServicesClientListByResourceGroupResponse) (ServicesClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ServicesClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -296,6 +317,7 @@ func (client *ServicesClient) NewListByResourceGroupPager(subscriptionID string,
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -340,6 +362,7 @@ func (client *ServicesClient) NewListBySubscriptionPager(subscriptionID string, 
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *ServicesClientListBySubscriptionResponse) (ServicesClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ServicesClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -352,6 +375,7 @@ func (client *ServicesClient) NewListBySubscriptionPager(subscriptionID string, 
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
+		Tracer: client.internal.Tracer(),
 	})
 }
 
@@ -390,6 +414,10 @@ func (client *ServicesClient) listBySubscriptionHandleResponse(resp *http.Respon
 //   - options - ServicesClientUpdateOptions contains the optional parameters for the ServicesClient.Update method.
 func (client *ServicesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, payload ServiceUpdate, options *ServicesClientUpdateOptions) (ServicesClientUpdateResponse, error) {
 	var err error
+	const operationName = "ServicesClient.Update"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, payload, options)
 	if err != nil {
 		return ServicesClientUpdateResponse{}, err
