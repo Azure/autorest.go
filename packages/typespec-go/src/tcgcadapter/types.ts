@@ -562,14 +562,14 @@ export class typeAdapter {
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.nameInClient)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
-    // the presence of modelType.discriminatorValue tells us that this
-    // property is on a model that's not the root discriminator
     if (prop.kind === 'path') {
       // for ARM resources, a property of kind path is usually the model
       // key and will be exposed as a discrete method parameter. this also
       // means that the value is read-only.
       annotations.readOnly = true;
     } else if (prop.discriminator && modelType.discriminatorValue) {
+      // the presence of modelType.discriminatorValue tells us that this
+      // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     } /*else if (prop.clientDefaultValue) {
