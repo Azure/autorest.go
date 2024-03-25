@@ -51,6 +51,10 @@ func (n *NotDiscriminatedServerTransport) Do(req *http.Request) (*http.Response,
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return n.dispatchToMethodFake(req, method)
+}
+
+func (n *NotDiscriminatedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -65,11 +69,7 @@ func (n *NotDiscriminatedServerTransport) Do(req *http.Request) (*http.Response,
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (n *NotDiscriminatedServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {

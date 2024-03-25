@@ -64,6 +64,10 @@ func (d *DiagnosticSettingsServerTransport) Do(req *http.Request) (*http.Respons
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return d.dispatchToMethodFake(req, method)
+}
+
+func (d *DiagnosticSettingsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -80,11 +84,7 @@ func (d *DiagnosticSettingsServerTransport) Do(req *http.Request) (*http.Respons
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (d *DiagnosticSettingsServerTransport) dispatchGetDiagnosticProactiveLogCollectionSettings(req *http.Request) (*http.Response, error) {

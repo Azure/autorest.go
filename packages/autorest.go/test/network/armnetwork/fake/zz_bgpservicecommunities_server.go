@@ -49,6 +49,10 @@ func (b *BgpServiceCommunitiesServerTransport) Do(req *http.Request) (*http.Resp
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return b.dispatchToMethodFake(req, method)
+}
+
+func (b *BgpServiceCommunitiesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -59,11 +63,7 @@ func (b *BgpServiceCommunitiesServerTransport) Do(req *http.Request) (*http.Resp
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (b *BgpServiceCommunitiesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {

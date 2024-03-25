@@ -67,6 +67,10 @@ func (p *PrivateDNSZoneGroupsServerTransport) Do(req *http.Request) (*http.Respo
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return p.dispatchToMethodFake(req, method)
+}
+
+func (p *PrivateDNSZoneGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -83,11 +87,7 @@ func (p *PrivateDNSZoneGroupsServerTransport) Do(req *http.Request) (*http.Respo
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

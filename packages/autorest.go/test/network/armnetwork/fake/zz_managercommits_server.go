@@ -50,6 +50,10 @@ func (m *ManagerCommitsServerTransport) Do(req *http.Request) (*http.Response, e
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return m.dispatchToMethodFake(req, method)
+}
+
+func (m *ManagerCommitsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -60,11 +64,7 @@ func (m *ManagerCommitsServerTransport) Do(req *http.Request) (*http.Response, e
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (m *ManagerCommitsServerTransport) dispatchBeginPost(req *http.Request) (*http.Response, error) {

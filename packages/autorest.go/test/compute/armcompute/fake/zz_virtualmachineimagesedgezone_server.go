@@ -63,6 +63,10 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) Do(req *http.Request) (*ht
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return v.dispatchToMethodFake(req, method)
+}
+
+func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -81,11 +85,7 @@ func (v *VirtualMachineImagesEdgeZoneServerTransport) Do(req *http.Request) (*ht
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (v *VirtualMachineImagesEdgeZoneServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

@@ -67,6 +67,10 @@ func (c *ConfigurationPolicyGroupsServerTransport) Do(req *http.Request) (*http.
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return c.dispatchToMethodFake(req, method)
+}
+
+func (c *ConfigurationPolicyGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -83,11 +87,7 @@ func (c *ConfigurationPolicyGroupsServerTransport) Do(req *http.Request) (*http.
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

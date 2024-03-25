@@ -13,10 +13,21 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
+	"sync"
 )
 
 // ServiceServer is a fake server for instances of the defaultgroup.ServiceClient type.
 type ServiceServer struct {
+	// BarServer contains the fakes for client BarClient
+	BarServer BarServer
+
+	// FooServer contains the fakes for client FooClient
+	FooServer FooServer
+
+	// QuxServer contains the fakes for client QuxClient
+	QuxServer QuxServer
+
 	// One is the fake for method ServiceClient.One
 	// HTTP status codes to indicate success: http.StatusNoContent
 	One func(ctx context.Context, options *defaultgroup.ServiceClientOneOptions) (resp azfake.Responder[defaultgroup.ServiceClientOneResponse], errResp azfake.ErrorResponder)
@@ -36,7 +47,11 @@ func NewServiceServerTransport(srv *ServiceServer) *ServiceServerTransport {
 // ServiceServerTransport connects instances of defaultgroup.ServiceClient to instances of ServiceServer.
 // Don't use this type directly, use NewServiceServerTransport instead.
 type ServiceServerTransport struct {
-	srv *ServiceServer
+	srv         *ServiceServer
+	trMu        sync.Mutex
+	trBarServer *BarServerTransport
+	trFooServer *FooServerTransport
+	trQuxServer *QuxServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServiceServerTransport.
@@ -47,6 +62,40 @@ func (s *ServiceServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "ServiceClient" {
+		return s.dispatchToClientFake(req, client)
+	}
+	return s.dispatchToMethodFake(req, method)
+}
+
+func (s *ServiceServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "BarClient":
+		initServer(&s.trMu, &s.trBarServer, func() *BarServerTransport {
+			return NewBarServerTransport(&s.srv.BarServer)
+		})
+		resp, err = s.trBarServer.Do(req)
+	case "FooClient":
+		initServer(&s.trMu, &s.trFooServer, func() *FooServerTransport {
+			return NewFooServerTransport(&s.srv.FooServer)
+		})
+		resp, err = s.trFooServer.Do(req)
+	case "QuxClient":
+		initServer(&s.trMu, &s.trQuxServer, func() *QuxServerTransport {
+			return NewQuxServerTransport(&s.srv.QuxServer)
+		})
+		resp, err = s.trQuxServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (s *ServiceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -59,11 +108,7 @@ func (s *ServiceServerTransport) Do(req *http.Request) (*http.Response, error) {
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (s *ServiceServerTransport) dispatchOne(req *http.Request) (*http.Response, error) {

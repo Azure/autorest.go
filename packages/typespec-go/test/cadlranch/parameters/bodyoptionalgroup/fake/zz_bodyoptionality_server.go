@@ -13,10 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
+	"sync"
 )
 
 // BodyOptionalityServer is a fake server for instances of the bodyoptionalgroup.BodyOptionalityClient type.
 type BodyOptionalityServer struct {
+	// OptionalExplicitServer contains the fakes for client OptionalExplicitClient
+	OptionalExplicitServer OptionalExplicitServer
+
 	// RequiredExplicit is the fake for method BodyOptionalityClient.RequiredExplicit
 	// HTTP status codes to indicate success: http.StatusNoContent
 	RequiredExplicit func(ctx context.Context, body bodyoptionalgroup.BodyModel, options *bodyoptionalgroup.BodyOptionalityClientRequiredExplicitOptions) (resp azfake.Responder[bodyoptionalgroup.BodyOptionalityClientRequiredExplicitResponse], errResp azfake.ErrorResponder)
@@ -36,7 +41,9 @@ func NewBodyOptionalityServerTransport(srv *BodyOptionalityServer) *BodyOptional
 // BodyOptionalityServerTransport connects instances of bodyoptionalgroup.BodyOptionalityClient to instances of BodyOptionalityServer.
 // Don't use this type directly, use NewBodyOptionalityServerTransport instead.
 type BodyOptionalityServerTransport struct {
-	srv *BodyOptionalityServer
+	srv                      *BodyOptionalityServer
+	trMu                     sync.Mutex
+	trOptionalExplicitServer *OptionalExplicitServerTransport
 }
 
 // Do implements the policy.Transporter interface for BodyOptionalityServerTransport.
@@ -47,6 +54,30 @@ func (b *BodyOptionalityServerTransport) Do(req *http.Request) (*http.Response, 
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "BodyOptionalityClient" {
+		return b.dispatchToClientFake(req, client)
+	}
+	return b.dispatchToMethodFake(req, method)
+}
+
+func (b *BodyOptionalityServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "OptionalExplicitClient":
+		initServer(&b.trMu, &b.trOptionalExplicitServer, func() *OptionalExplicitServerTransport {
+			return NewOptionalExplicitServerTransport(&b.srv.OptionalExplicitServer)
+		})
+		resp, err = b.trOptionalExplicitServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (b *BodyOptionalityServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -59,11 +90,7 @@ func (b *BodyOptionalityServerTransport) Do(req *http.Request) (*http.Response, 
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (b *BodyOptionalityServerTransport) dispatchRequiredExplicit(req *http.Request) (*http.Response, error) {

@@ -14,10 +14,15 @@ import (
 	"naminggroup"
 	"net/http"
 	"net/url"
+	"strings"
+	"sync"
 )
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.
 type NamingServer struct {
+	// ModelServer contains the fakes for client ModelClient
+	ModelServer ModelServer
+
 	// Client is the fake for method NamingClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Client func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
@@ -57,7 +62,9 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 // NamingServerTransport connects instances of naminggroup.NamingClient to instances of NamingServer.
 // Don't use this type directly, use NewNamingServerTransport instead.
 type NamingServerTransport struct {
-	srv *NamingServer
+	srv           *NamingServer
+	trMu          sync.Mutex
+	trModelServer *ModelServerTransport
 }
 
 // Do implements the policy.Transporter interface for NamingServerTransport.
@@ -68,6 +75,30 @@ func (n *NamingServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "NamingClient" {
+		return n.dispatchToClientFake(req, client)
+	}
+	return n.dispatchToMethodFake(req, method)
+}
+
+func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "ModelClient":
+		initServer(&n.trMu, &n.trModelServer, func() *ModelServerTransport {
+			return NewModelServerTransport(&n.srv.ModelServer)
+		})
+		resp, err = n.trModelServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (n *NamingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -90,11 +121,7 @@ func (n *NamingServerTransport) Do(req *http.Request) (*http.Response, error) {
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (n *NamingServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
