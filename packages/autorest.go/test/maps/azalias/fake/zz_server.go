@@ -14,8 +14,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"io"
+	"mime"
+	"mime/multipart"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strconv"
 	"time"
 )
@@ -49,6 +53,10 @@ type Server struct {
 	// PolicyAssignment is the fake for method Client.PolicyAssignment
 	// HTTP status codes to indicate success: http.StatusOK
 	PolicyAssignment func(ctx context.Context, things []azalias.Things, polymorphicParam azalias.GeoJSONObjectClassification, options *azalias.PolicyAssignmentOptions) (resp azfake.Responder[azalias.PolicyAssignmentResponse], errResp azfake.ErrorResponder)
+
+	// UploadForm is the fake for method Client.UploadForm
+	// HTTP status codes to indicate success: http.StatusNoContent
+	UploadForm func(ctx context.Context, requiredString string, requiredEnum azalias.DataSetting, requiredInt int32, options *azalias.UploadFormOptions) (resp azfake.Responder[azalias.UploadFormResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServerTransport creates a new instance of ServerTransport with the provided implementation.
@@ -100,6 +108,8 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 		resp, err = s.dispatchNewListWithSharedNextTwoPager(req)
 	case "Client.PolicyAssignment":
 		resp, err = s.dispatchPolicyAssignment(req)
+	case "Client.UploadForm":
+		resp, err = s.dispatchUploadForm(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -594,6 +604,102 @@ func (s *ServerTransport) dispatchPolicyAssignment(req *http.Request) (*http.Res
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).PolicyAssignmentProperties, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response, error) {
+	if s.srv.UploadForm == nil {
+		return nil, &nonRetriableError{errors.New("fake for method UploadForm not implemented")}
+	}
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var requiredString string
+	var OptionalString string
+	var requiredEnum azalias.DataSetting
+	var requiredInt int32
+	var OptionalBool bool
+	var OptionalIntEnum azalias.IntEnum
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "requiredString":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			requiredString = string(content)
+		case "OptionalString":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			OptionalString = string(content)
+		case "requiredEnum":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			requiredEnum = azalias.DataSetting(content)
+		case "requiredInt":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			parsed, parseErr := strconv.ParseInt(string(content), 10, 32)
+			if parseErr != nil {
+				return nil, parseErr
+			}
+			requiredInt = int32(parsed)
+		case "OptionalBool":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			OptionalBool, err = strconv.ParseBool(string(content))
+		case "OptionalIntEnum":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			parsed, parseErr := strconv.ParseInt(string(content), 10, 32)
+			if parseErr != nil {
+				return nil, parseErr
+			}
+			OptionalIntEnum = azalias.IntEnum(parsed)
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	var options *azalias.UploadFormOptions
+	if !reflect.ValueOf(OptionalString).IsZero() || !reflect.ValueOf(OptionalBool).IsZero() || !reflect.ValueOf(OptionalIntEnum).IsZero() {
+		options = &azalias.UploadFormOptions{
+			OptionalString:  &OptionalString,
+			OptionalBool:    &OptionalBool,
+			OptionalIntEnum: &OptionalIntEnum,
+		}
+	}
+	respr, errRespr := s.srv.UploadForm(req.Context(), requiredString, requiredEnum, requiredInt, options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -563,6 +563,55 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SomeFormData.
+func (s SomeFormData) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "optionalBool", s.OptionalBool)
+	populate(objectMap, "optionalIntEnum", s.OptionalIntEnum)
+	populate(objectMap, "optionalString", s.OptionalString)
+	populate(objectMap, "requiredEnum", s.RequiredEnum)
+	populate(objectMap, "requiredInt", s.RequiredInt)
+	populate(objectMap, "requiredString", s.RequiredString)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SomeFormData.
+func (s *SomeFormData) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "optionalBool":
+			err = unpopulate(val, "OptionalBool", &s.OptionalBool)
+			delete(rawMsg, key)
+		case "optionalIntEnum":
+			err = unpopulate(val, "OptionalIntEnum", &s.OptionalIntEnum)
+			delete(rawMsg, key)
+		case "optionalString":
+			err = unpopulate(val, "OptionalString", &s.OptionalString)
+			delete(rawMsg, key)
+		case "requiredEnum":
+			err = unpopulate(val, "RequiredEnum", &s.RequiredEnum)
+			delete(rawMsg, key)
+		case "requiredInt":
+			err = unpopulate(val, "RequiredInt", &s.RequiredInt)
+			delete(rawMsg, key)
+		case "requiredString":
+			err = unpopulate(val, "RequiredString", &s.RequiredString)
+			delete(rawMsg, key)
+		default:
+			err = fmt.Errorf("unmarshalling type %T, unknown field %q", s, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type TypeWithRawJSON.
 func (t TypeWithRawJSON) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

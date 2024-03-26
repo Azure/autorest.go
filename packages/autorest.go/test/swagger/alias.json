@@ -767,6 +767,28 @@
           }
         }
       }
+    },
+    "/formdata": {
+      "post": {
+        "operationId": "Alias_UploadForm",
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "name": "props",
+            "description": "properties in form data",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SomeFormData"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "success"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -974,16 +996,7 @@
           "x-ms-client-default": "default-value"
         },
         "setting": {
-          "description": "test enum with a default",
-          "type": "string",
-          "enum": [
-            "one",
-            "two",
-            "three"
-          ],
-          "x-ms-enum": {
-            "name": "DataSetting"
-          },
+          "$ref": "#/definitions/Setting",
           "x-ms-client-default": "two"
         }
       },
@@ -1166,6 +1179,18 @@
       "type": "integer",
       "enum": [200, 403, 405, 406, 429]
     },
+    "Setting": {
+      "description": "test enum with a default",
+      "type": "string",
+      "enum": [
+        "one",
+        "two",
+        "three"
+      ],
+      "x-ms-enum": {
+        "name": "DataSetting"
+      }
+    },
     "PagesOfThings": {
       "type": "object",
       "properties": {
@@ -1179,6 +1204,32 @@
           "type": "string"
         }
       }
+    },
+    "SomeFormData": {
+      "type": "object",
+      "properties": {
+        "requiredString": {
+          "type": "string"
+        },
+        "optionalString": {
+          "type": "string"
+        },
+        "requiredEnum": {
+          "$ref": "#/definitions/Setting"
+        },
+        "requiredInt": {
+          "type": "integer"
+        },
+        "optionalBool": {
+          "type": "boolean"
+        },
+        "optionalIntEnum": {
+          "$ref": "#/definitions/IntEnum"
+        }
+      },
+      "required": [
+        "requiredString", "requiredEnum", "requiredInt"
+      ]
     }
   }
 }
