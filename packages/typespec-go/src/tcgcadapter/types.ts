@@ -161,15 +161,6 @@ export class typeAdapter {
         types.set(m4.SchemaType.Binary, binaryType);
         return binaryType;
       }*/
-      /*case m4.SchemaType.Char: {
-        let rune = types.get(m4.SchemaType.Char);
-        if (rune) {
-          return rune;
-        }
-        rune = new go.PrimitiveType('rune');
-        types.set(m4.SchemaType.Char, rune);
-        return rune;
-      }*/
       case 'enum':
         return this.getConstantType(type);
       case 'constant':
@@ -331,51 +322,32 @@ export class typeAdapter {
           return float64;
         }
         float64 = new go.PrimitiveType(float64Key);
-        this. types.set(float64Key, float64);
+        this.types.set(float64Key, float64);
         return float64;
       }
-      case 'int8': {
-        const int8Key = 'int8';
-        let int8 = this.types.get(int8Key);
-        if (int8) {
-          return int8;
+      case 'int8':
+      case 'int16':
+      case 'int32':
+      case 'int64':
+      case 'uint8':
+      case 'uint16':
+      case 'uint32':
+      case 'uint64': {
+        const keyName = type.kind;
+        let intType = this.types.get(keyName);
+        if (intType) {
+          return intType;
         }
-        int8 = new go.PrimitiveType(int8Key);
-        this.types.set(int8Key, int8);
-        return int8;
-      }
-      case 'int16': {
-        const int16Key = 'int16';
-        let int16 = this.types.get(int16Key);
-        if (int16) {
-          return int16;
-        }
-        int16 = new go.PrimitiveType(int16Key);
-        this.types.set(int16Key, int16);
-        return int16;
-      }
-      case 'int32': {
-        const int32Key = 'int32';
-        let int32 = this.types.get(int32Key);
-        if (int32) {
-          return int32;
-        }
-        int32 = new go.PrimitiveType(int32Key);
-        this.types.set(int32Key, int32);
-        return int32;
-      }
-      case 'int64': {
-        const int64Key = 'int64';
-        let int64 = this.types.get(int64Key);
-        if (int64) {
-          return int64;
-        }
-        int64 = new go.PrimitiveType(int64Key);
-        this.types.set(int64Key, int64);
-        return int64;
+        intType = new go.PrimitiveType(type.kind);
+        this.types.set(keyName, intType);
+        return intType;
       }
       case 'armId':
-      case 'string': {
+      case 'guid':
+      case 'string':
+      case 'uuid':
+      case 'uri':
+      case 'url': {
         const stringKey = 'string';
         let stringType = this.types.get(stringKey);
         if (stringType) {
@@ -398,27 +370,7 @@ export class typeAdapter {
         this.types.set(encoding, time);
         this.codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
         return time;
-      }
-      case 'url': {
-        const urlKey = 'url';
-        let uriType = this.types.get(urlKey);
-        if (uriType) {
-          return uriType;
-        }
-        uriType = new go.PrimitiveType('string');
-        this.types.set(urlKey, uriType);
-        return uriType;
-      }
-      case 'uuid':
-      case 'guid': {
-        const uuidKey = 'uuid';
-        let uuid = this.types.get(uuidKey);
-        if (uuid) {
-          return uuid;
-        }
-        uuid = new go.PrimitiveType('string');
-        this.types.set(uuidKey, uuid);
-        return uuid;
+      
       }
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
@@ -499,7 +451,7 @@ export class typeAdapter {
     if (model.usage & tsp.UsageFlags.Output) {
       usage |= go.UsageFlags.Output;
     }
-    // TODO: what's the extension equivalent in TS?
+
     const annotations = new go.ModelAnnotations(false);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
       let iface: go.InterfaceType | undefined;
@@ -555,7 +507,6 @@ export class typeAdapter {
   }
 
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
-    // TODO: hard-coded values
     if (prop.kind !== 'path' && prop.kind !== 'property') {
       throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.name}`);
     }
@@ -572,43 +523,7 @@ export class typeAdapter {
       // property is on a model that's not the root discriminator
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
-    } /*else if (prop.clientDefaultValue) {
-      if (!go.isLiteralValueType(field.type)) {
-        throw new Error(`unsupported default value type ${go.getTypeDeclaration(field.type)} for field ${field.fieldName}`);
-      }
-      if (go.isConstantType(field.type)) {
-        // find the corresponding ConstantValue
-        const constType = types.get(field.type.name);
-        if (!constType) {
-          throw new Error(`didn't find ConstantType for ${field.type.name}`);
-        }
-        let found = false;
-        for (const val of values((<go.ConstantType>constType).values)) {
-          if (val.value === prop.clientDefaultValue) {
-            const keyName = `literal-${val.valueName}`;
-            let literalValue = types.get(keyName);
-            if (!literalValue) {
-              literalValue = new go.LiteralValue(field.type, val);
-              types.set(keyName, literalValue);
-            }
-            field.defaultValue = <go.LiteralValue>literalValue;
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          throw new Error(`didn't find ConstantValue for ${prop.clientDefaultValue}`);
-        }
-      } else {
-        const keyName = `literal-${go.getTypeDeclaration(field.type)}-${prop.clientDefaultValue}`;
-        let literalValue = types.get(keyName);
-        if (!literalValue) {
-          literalValue = new go.LiteralValue(field.type, prop.clientDefaultValue);
-          types.set(keyName, literalValue);
-        }
-        field.defaultValue = <go.LiteralValue>literalValue;
-      }
-    }*/
+    }
   
     // TODO: XMLInfo
     //field.xml = adaptXMLInfo(prop.schema);
@@ -677,16 +592,27 @@ export class typeAdapter {
         this.types.set(keyName, literalBool);
         return literalBool;
       }
-      /*case m4.SchemaType.ByteArray: {
-        const keyName = `literal-${m4.SchemaType.ByteArray}-${constType.value.value}`;
-        let literalByteArray = types.get(keyName);
+      case 'bytes': {
+        const keyName = `literal-bytes-${constType.value}`;
+        let literalByteArray = this.types.get(keyName);
         if (literalByteArray) {
           return <go.LiteralValue>literalByteArray;
         }
-        literalByteArray = new go.LiteralValue(adaptBytesType(<m4.ByteArraySchema>constType.valueType), constType.value.value);
-        types.set(keyName, literalByteArray);
+        literalByteArray = new go.LiteralValue(this.adaptBytesType(constType.valueType), constType.value);
+        this.types.set(keyName, literalByteArray);
         return literalByteArray;
-      }*/
+      }
+      case 'decimal':
+      case 'decimal128': {
+        const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
+        let literalDecimal = this.types.get(keyName);
+        if (literalDecimal) {
+          return <go.LiteralValue>literalDecimal;
+        }
+        literalDecimal = new go.LiteralValue(new go.PrimitiveType('float64'), constType.value);
+        this. types.set(keyName, literalDecimal);
+        return literalDecimal;
+      }
       /*case 'date':
       case 'datetime': {
         // TODO: tcgc doesn't expose the encoding for date/datetime constant types
@@ -700,8 +626,14 @@ export class typeAdapter {
         this.types.set(keyName, literalTime);
         return literalTime;
       }*/
+      case 'int8':
+      case 'int16':
       case 'int32':
-      case 'int64': {
+      case 'int64':
+      case 'uint8':
+      case 'uint16':
+      case 'uint32':
+      case 'uint64': {
         const keyName = `literal-${constType.valueType.kind}-${constType.value}`;
         let literalInt = this.types.get(keyName);
         if (literalInt) {
@@ -724,7 +656,9 @@ export class typeAdapter {
       }
       case 'string':
       case 'guid':
-      case 'uuid': {
+      case 'uuid':
+      case 'uri':
+      case 'url': {
         const keyName = `literal-string-${constType.value}`;
         let literalString = this.types.get(keyName);
         if (literalString) {

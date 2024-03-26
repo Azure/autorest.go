@@ -15,22 +15,13 @@ import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js
 import { generateResponses } from '../../codegen.go/src/responses.js';
 import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
-import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
+//import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';
-import { waitForDebugger } from 'inspector';
 import 'source-map-support/register.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
-  // TODO: get debugger pause integrated
-  /*if (context.program.getOption('debugger')) {
-    console.warn('got debugger');
-    waitForDebugger();
-  } else {
-    console.warn('no debugger!');
-  }*/
-
   const codeModel = tcgcToGoCodeModel(context);
   await mkdir(context.emitterOutputDir, {recursive: true});
 

@@ -8,7 +8,6 @@ import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
 import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
-import { values } from '@azure-tools/linq';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -19,13 +18,11 @@ export class clientAdapter {
   // as not every option might contain them, and parameter groups can be shared
   // across multiple operations
   private clientParams: Map<string, go.Parameter>;
-  private paramGroups: Map<string, go.ParameterGroup>;
 
   constructor(ta: typeAdapter, opts: GoEmitterOptions) {
     this.ta = ta;
     this.opts = opts;
     this.clientParams = new Map<string, go.Parameter>();
-    this.paramGroups = new Map<string, go.ParameterGroup>();
   }
 
   // converts all clients and their methods to Go code model types.
@@ -188,10 +185,6 @@ export class clientAdapter {
     }
   
     this.adaptMethodParameters(sdkMethod, method);
-  
-    /*for (const apiver of values(op.apiVersions)) {
-      method.apiVersions.push(apiver.version);
-    }*/
 
     // we must do this after adapting method params as it can add optional params
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
@@ -255,7 +248,6 @@ export class clientAdapter {
     };
     if (param.onClient) {
       // check if we've already adapted this client parameter
-      // TODO: grouped client params
       const clientParam = this.clientParams.get(getClientParamsKey(param));
       if (clientParam) {
         return clientParam;
