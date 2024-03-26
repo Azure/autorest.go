@@ -167,6 +167,22 @@ type ScheduleCreateOrUpdateProperties struct {
 	StartTime *time.Time
 }
 
+type SomeFormData struct {
+	// REQUIRED; test enum with a default
+	RequiredEnum *DataSetting
+
+	// REQUIRED
+	RequiredInt *int32
+
+	// REQUIRED
+	RequiredString *string
+	OptionalBool   *bool
+
+	// List of integer enums
+	OptionalIntEnum *IntEnum
+	OptionalString  *string
+}
+
 type TypeWithRawJSON struct {
 	// any JSON object
 	AnyObject any

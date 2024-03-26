@@ -334,18 +334,89 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\t\t} else if err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
     content += '\t\tvar content []byte\n';
     content += '\t\tswitch fn := part.FormName(); fn {\n';
+
+    // specify boolTarget if parsing bools happens in place.
+    // in this case, the err check is omitted and assumed to happen elsewhere.
+    // the parsed value is in a local var named parsed.
+    const parsePrimitiveType = function(typeName: go.PrimitiveTypeName, boolTarget?: string): string {
+      const parseResults = 'parsed, parseErr';
+      let parsingCode = '';
+      imports.add('strconv');
+      switch (typeName) {
+        case 'bool':
+          if (boolTarget) {
+            parsingCode = `\t\t\t${boolTarget} = strconv.ParseBool(string(content))\n`;
+          } else {
+            parsingCode = `\t\t\t${parseResults} := strconv.ParseBool(string(content))\n`;
+          }
+          break;
+        case 'float32':
+        case 'float64':
+          parsingCode = `\t\t\t${parseResults} := strconv.ParseFloat(string(content), ${helpers.getBitSizeForNumber(typeName)})\n`;
+          break;
+        case 'int8':
+        case 'int16':
+        case 'int32':
+        case 'int64':
+          parsingCode = `\t\t\t${parseResults} := strconv.ParseInt(string(content), 10, ${helpers.getBitSizeForNumber(typeName)})\n`;
+          break;
+        default:
+          throw new Error(`unhandled multipart parameter primitive type ${typeName}`);
+      }
+      if (!boolTarget) {
+        parsingCode += '\t\t\tif parseErr != nil {\n\t\t\t\treturn nil, parseErr\n\t\t\t}\n';
+      }
+      return parsingCode;
+    };
+
     for (const param of values(method.parameters)) {
       if (go.isMultipartFormBodyParameter(param)) {
         content += `\t\tcase "${param.name}":\n`;
         content += '\t\t\tcontent, err = io.ReadAll(part)\n';
         content += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
-        let assignedValue: string;
+        let assignedValue: string | undefined;
         if (go.isQualifiedType(param.type) && param.type.typeName === 'ReadSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
-        } else if (go.isConstantType(param.type) || (go.isPrimitiveType(param.type) && param.type.typeName === 'string')) {
-          assignedValue = 'string(content)';
+        } else if (go.isConstantType(param.type)) {
+          let from: string;
+          switch (param.type.type) {
+            case 'bool':
+            case 'float32':
+            case 'float64':
+            case 'int32':
+            case 'int64':
+              content += parsePrimitiveType(param.type.type);
+              from = 'parsed';
+              break;
+            case 'string':
+              from = 'content';
+              break;
+          }
+          assignedValue = `${clientPkg}.${param.type.name}(${from})`;
+        } else if (go.isPrimitiveType(param.type)) {
+          switch (param.type.typeName) {
+            case 'bool':
+              imports.add('strconv');
+              // ParseBool happens in place, so no need to set assignedValue
+              content += parsePrimitiveType(param.type.typeName, `${param.name}, err`);
+              break;
+            case 'float32':
+            case 'float64':
+            case 'int8':
+            case 'int16':
+            case 'int32':
+            case 'int64':
+              content += parsePrimitiveType(param.type.typeName);
+              assignedValue = `${param.type.typeName}(parsed)`;
+              break;
+            case 'string':
+              assignedValue = 'string(content)';
+              break;
+            default:
+              throw new Error(`unhandled multipart parameter primitive type ${param.type.typeName}`);
+          }
         } else if (go.isSliceType(param.type)) {
           if (go.isQualifiedType(param.type.elementType) && param.type.elementType.typeName === 'ReadSeekCloser') {
             imports.add('bytes');
@@ -357,7 +428,9 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         } else {
           throw new Error(`uhandled multipart parameter type ${go.getTypeDeclaration(param.type)}`);
         }
-        content += `\t\t\t${param.name} = ${assignedValue}\n`;
+        if (assignedValue) {
+          content += `\t\t\t${param.name} = ${assignedValue}\n`;
+        }
       }
     }
     content += '\t\tdefault:\n\t\t\treturn nil, fmt.Errorf("unexpected part %s", fn)\n';

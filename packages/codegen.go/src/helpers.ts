@@ -560,3 +560,18 @@ export function getParentImport(codeModel: go.CodeModel): string {
     throw new Error('unable to determine containing module for fakes. specify either the module or containing-module switch');
   }
 }
+
+export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'int16' | 'int32' | 'int64'): string {
+  switch (intSize) {
+    case 'int8':
+      return '8';
+    case 'int16':
+      return '16';
+    case 'int32':
+    case 'float32':
+      return '32';
+    case 'int64':
+    case 'float64':
+      return '64';
+  }
+}

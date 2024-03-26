@@ -46,3 +46,8 @@ type ListWithSharedNextTwoResponse struct {
 type PolicyAssignmentResponse struct {
 	PolicyAssignmentProperties
 }
+
+// UploadFormResponse contains the response from method Client.UploadForm.
+type UploadFormResponse struct {
+	// placeholder for future response values
+}

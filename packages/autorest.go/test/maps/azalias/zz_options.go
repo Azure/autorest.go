@@ -84,3 +84,10 @@ type PolicyAssignmentOptions struct {
 type SomeGroup struct {
 	HeaderStrings []string
 }
+
+// UploadFormOptions contains the optional parameters for the Client.UploadForm method.
+type UploadFormOptions struct {
+	OptionalBool    *bool
+	OptionalIntEnum *IntEnum
+	OptionalString  *string
+}

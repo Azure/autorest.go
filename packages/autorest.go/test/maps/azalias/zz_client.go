@@ -530,6 +530,58 @@ func (client *Client) policyAssignmentHandleResponse(resp *http.Response) (Polic
 	return result, nil
 }
 
+// UploadForm -
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2.0
+//   - options - UploadFormOptions contains the optional parameters for the Client.UploadForm method.
+func (client *Client) UploadForm(ctx context.Context, requiredString string, requiredEnum DataSetting, requiredInt int32, options *UploadFormOptions) (UploadFormResponse, error) {
+	var err error
+	const operationName = "Client.UploadForm"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.uploadFormCreateRequest(ctx, requiredString, requiredEnum, requiredInt, options)
+	if err != nil {
+		return UploadFormResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return UploadFormResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return UploadFormResponse{}, err
+	}
+	return UploadFormResponse{}, nil
+}
+
+// uploadFormCreateRequest creates the UploadForm request.
+func (client *Client) uploadFormCreateRequest(ctx context.Context, requiredString string, requiredEnum DataSetting, requiredInt int32, options *UploadFormOptions) (*policy.Request, error) {
+	urlPath := "/formdata"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	formData := map[string]any{}
+	formData["requiredString"] = requiredString
+	if options != nil && options.OptionalString != nil {
+		formData["OptionalString"] = *options.OptionalString
+	}
+	formData["requiredEnum"] = requiredEnum
+	formData["requiredInt"] = requiredInt
+	if options != nil && options.OptionalBool != nil {
+		formData["OptionalBool"] = *options.OptionalBool
+	}
+	if options != nil && options.OptionalIntEnum != nil {
+		formData["OptionalIntEnum"] = *options.OptionalIntEnum
+	}
+	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // listLRONextCreateRequest creates the listLRONextCreateRequest request.
 func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
 	urlPath := "/paged"
