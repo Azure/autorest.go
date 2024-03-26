@@ -1,0 +1,23 @@
+{
+    "tool": "Credential Scanner",
+    "suppressions": [
+      {
+        "file": [  
+            "packages/autorest.gotest/test/integrationtest/output/appplatform/armappplatform/__debug/go-tester-pre.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/appplatform/armappplatform/__debug/go-tester.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/appplatform/armappplatform/__debug/test-modeler-pre.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/appplatform/armappplatform/__debug/test-modeler.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/compute/armcompute/__debug/go-tester.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/machinelearningservices/armmachinelearningservices/__debug/go-tester-pre.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/machinelearningservices/armmachinelearningservices/__debug/go-tester.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/machinelearningservices/armmachinelearningservices/__debug/test-modeler-pre.yaml",
+            "packages/autorest.gotest/test/integrationtest/output/machinelearningservices/armmachinelearningservices/__debug/test-modeler.yaml",
+            "swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json",
+            "swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json",
+            "swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json",
+            "swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json"
+        ],
+        "_justification": "Files contain test data and placeholder passwords to fake resources."
+      }
+    ]
+  }
