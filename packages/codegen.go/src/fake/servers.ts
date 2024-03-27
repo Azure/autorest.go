@@ -454,70 +454,76 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
-    for (const param of values(method.parameters)) {
-      if (go.isMultipartFormBodyParameter(param)) {
-        content += `\t\tcase "${param.name}":\n`;
-        content += '\t\t\tcontent, err = io.ReadAll(part)\n';
-        content += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
-        let assignedValue: string | undefined;
-        if (go.isQualifiedType(param.type) && param.type.typeName === 'ReadSeekCloser') {
+    const emitCase = function(caseValue: string, paramVar: string, type: go.PossibleType): string {
+      let caseContent = `\t\tcase "${caseValue}":\n`;
+      caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
+      caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
+      let assignedValue: string | undefined;
+      if (go.isQualifiedType(type) && type.typeName === 'ReadSeekCloser') {
+        imports.add('bytes');
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+        assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
+      } else if (go.isConstantType(type)) {
+        let from: string;
+        switch (type.type) {
+          case 'bool':
+          case 'float32':
+          case 'float64':
+          case 'int32':
+          case 'int64':
+            caseContent += parsePrimitiveType(type.type);
+            from = 'parsed';
+            break;
+          case 'string':
+            from = 'content';
+            break;
+        }
+        assignedValue = `${clientPkg}.${type.name}(${from})`;
+      } else if (go.isPrimitiveType(type)) {
+        switch (type.typeName) {
+          case 'bool':
+            imports.add('strconv');
+            // ParseBool happens in place, so no need to set assignedValue
+            caseContent += parsePrimitiveType(type.typeName, `${paramVar}, err`);
+            break;
+          case 'float32':
+          case 'float64':
+          case 'int8':
+          case 'int16':
+          case 'int32':
+          case 'int64':
+            caseContent += parsePrimitiveType(type.typeName);
+            assignedValue = `${type.typeName}(parsed)`;
+            break;
+          case 'string':
+            assignedValue = 'string(content)';
+            break;
+          default:
+            throw new Error(`unhandled multipart parameter primitive type ${type.typeName}`);
+        }
+      } else if (go.isSliceType(type)) {
+        if (go.isQualifiedType(type.elementType) && type.elementType.typeName === 'ReadSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-          assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
-        } else if (go.isConstantType(param.type)) {
-          let from: string;
-          switch (param.type.type) {
-            case 'bool':
-            case 'float32':
-            case 'float64':
-            case 'int32':
-            case 'int64':
-              content += parsePrimitiveType(param.type.type);
-              from = 'parsed';
-              break;
-            case 'string':
-              from = 'content';
-              break;
-          }
-          assignedValue = `${clientPkg}.${param.type.name}(${from})`;
-        } else if (go.isPrimitiveType(param.type)) {
-          switch (param.type.typeName) {
-            case 'bool':
-              imports.add('strconv');
-              // ParseBool happens in place, so no need to set assignedValue
-              content += parsePrimitiveType(param.type.typeName, `${param.name}, err`);
-              break;
-            case 'float32':
-            case 'float64':
-            case 'int8':
-            case 'int16':
-            case 'int32':
-            case 'int64':
-              content += parsePrimitiveType(param.type.typeName);
-              assignedValue = `${param.type.typeName}(parsed)`;
-              break;
-            case 'string':
-              assignedValue = 'string(content)';
-              break;
-            default:
-              throw new Error(`unhandled multipart parameter primitive type ${param.type.typeName}`);
-          }
-        } else if (go.isSliceType(param.type)) {
-          if (go.isQualifiedType(param.type.elementType) && param.type.elementType.typeName === 'ReadSeekCloser') {
-            imports.add('bytes');
-            imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
-            assignedValue = `append(${param.name}, streaming.NopCloser(bytes.NewReader(content)))`;
-          } else {
-            throw new Error(`uhandled multipart parameter array element type ${go.getTypeDeclaration(param.type.elementType)}`);
-          }
+          assignedValue = `append(${paramVar}, streaming.NopCloser(bytes.NewReader(content)))`;
         } else {
-          throw new Error(`uhandled multipart parameter type ${go.getTypeDeclaration(param.type)}`);
+          throw new Error(`uhandled multipart parameter array element type ${go.getTypeDeclaration(type.elementType)}`);
         }
-        if (assignedValue) {
-          content += `\t\t\t${param.name} = ${assignedValue}\n`;
-        }
+      } else {
+        throw new Error(`uhandled multipart parameter type ${go.getTypeDeclaration(type)}`);
+      }
+      if (assignedValue) {
+        caseContent += `\t\t\t${paramVar} = ${assignedValue}\n`;
+      }
+      return caseContent;
+    };
+
+    for (const param of values(method.parameters)) {
+      if (go.isMultipartFormBodyParameter(param)) {
+        content += emitCase(param.name, param.name, param.type);
       }
     }
+
     content += '\t\tdefault:\n\t\t\treturn nil, fmt.Errorf("unexpected part %s", fn)\n';
     content += '\t\t}\n'; // end switch
     content += '\t}\n'; // end for
