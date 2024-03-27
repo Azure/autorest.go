@@ -225,15 +225,15 @@ export class clientAdapter {
 
   private adaptContentType(contentTypeStr: string): 'binary' | 'JSON' | 'Text' | 'XML' {
     // we only recognize/support JSON, text, and XML content types, so assume anything else is binary
-    // TODO: this seems goofy but maybe it's ok?
+    // NOTE: we check XML before text in order to support text/xml
     let contentType: go.BodyFormat = 'binary';
     if (contentTypeStr.match(/json/i)) {
       contentType = 'JSON';
-    } else if (contentTypeStr.match(/text/i)) {
-      contentType = 'Text';
     } else if (contentTypeStr.match(/xml/i)) {
       contentType = 'XML';
-    }
+    } else if (contentTypeStr.match(/text/i)) {
+      contentType = 'Text';
+    } 
     return contentType;
   }
 
@@ -393,7 +393,7 @@ export class clientAdapter {
       // return only headers, thus have no content type. while it's highly likely
       // to only ever be JSON, this will be broken for LROs that return text/plain
       // or a binary response. the former seems unlikely, the latter though...??
-      // TODO: follow up with tcgc team about this
+      // TODO: https://github.com/Azure/typespec-azure/issues/535
       contentType = 'JSON';
     } else {
       let foundResp = false;
