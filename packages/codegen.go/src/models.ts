@@ -6,7 +6,7 @@
 import * as go from '../../codemodel.go/src/gocodemodel.js';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, contentPreamble, formatLiteralValue, sortAscending } from './helpers.js';
+import { commentLength, contentPreamble, formatLiteralValue, recursiveUnwrapMapSlice, sortAscending } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 export interface ModelsSerDe {
@@ -38,6 +38,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   let needsJSONUnpopulate = false;
   let needsJSONPopulateByteArray = false;
   let needsJSONPopulateAny = false;
+  let needsJSONPopulateMultipart = false;
   let serdeTextBody = '';
   for (const modelDef of values(modelDefs)) {
     modelText += modelDef.text();
@@ -68,6 +69,9 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
     }
     if (modelDef.SerDe.needsJSONPopulateAny) {
       needsJSONPopulateAny = true;
+    }
+    if (modelDef.SerDe.needsJSONPopulateMultipart) {
+      needsJSONPopulateMultipart = true;
     }
   }
   if (needsJSONPopulate) {
@@ -114,6 +118,14 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
     serdeTextBody += '\t\treturn fmt.Errorf("struct field %s: %v", fn, err)\n';
     serdeTextBody += '\t}\n';
     serdeTextBody += '\treturn nil\n';
+    serdeTextBody += '}\n\n';
+  }
+  if (needsJSONPopulateMultipart) {
+    serdeImports.add('encoding/json');
+    serdeTextBody += 'func populateMultipartJSON(m map[string]any, k string, v any) error {\n';
+    serdeTextBody += '\tdata, err := json.Marshal(v)\n';
+    serdeTextBody += '\tif err != nil {\n\t\treturn err\n\t}\n';
+    serdeTextBody += '\tm[k] = data\n\treturn nil\n';
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';
@@ -192,7 +204,10 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         generateDiscriminatorMarkerMethod(parent, modelDef);
       }
     }
-    if (!model.annotations.omitSerDeMethods) {
+    if (model.annotations.multipartFormData) {
+      generateToMultipartForm(modelDef);
+      modelDef.SerDe.needsJSONPopulateMultipart = true;
+    } else if (!model.annotations.omitSerDeMethods) {
       generateJSONMarshaller(model, modelDef, serdeImports);
       generateJSONUnmarshaller(model, modelDef, serdeImports, codeModel.options);
     }
@@ -246,6 +261,22 @@ function generateDiscriminatorMarkerMethod(type: go.InterfaceType, modelDef: Mod
     method += '\t}\n}\n\n';
   }
   modelDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${type.name} interface for type ${modelDef.Name}.`, text: method });
+}
+
+function generateToMultipartForm(modelDef: ModelDef) {
+  const receiver = modelDef.receiverName();
+  let method = `func (${receiver} ${modelDef.Name}) toMultipartFormData() (map[string]any, error) {\n`;
+  method += '\tobjectMap := make(map[string]any)\n';
+  for (const field of modelDef.Fields) {
+    const fieldType = recursiveUnwrapMapSlice(field.type);
+    if (go.isModelType(fieldType) && !fieldType.annotations.multipartFormData) {
+      method += `\tif err := populateMultipartJSON(objectMap, "${field.serializedName}", ${receiver}.${field.name}); err != nil {\n\t\treturn nil, err\n\t}\n`;
+    } else {
+      method += `\tobjectMap["${field.serializedName}"] = ${receiver}.${field.name}\n`;
+    }
+  }
+  method += '\treturn objectMap, nil\n}\n\n';
+  modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Name} to multipart/form data.`, text: method });
 }
 
 function generateJSONMarshaller(modelType: go.ModelType | go.PolymorphicType, modelDef: ModelDef, imports: ImportManager) {
@@ -682,6 +713,7 @@ class SerDeInfo {
   needsJSONUnpopulate: boolean;
   needsJSONPopulateByteArray: boolean;
   needsJSONPopulateAny: boolean;
+  needsJSONPopulateMultipart: boolean;
 
   constructor() {
     this.methods = new Array<ModelMethod>();
@@ -689,6 +721,7 @@ class SerDeInfo {
     this.needsJSONUnpopulate = false;
     this.needsJSONPopulateByteArray = false;
     this.needsJSONPopulateAny = false;
+    this.needsJSONPopulateMultipart = false;
   }
 }
 

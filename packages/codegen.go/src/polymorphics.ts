@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/gocodemodel.js';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatLiteralValue, getParentImport } from './helpers.js';
+import { contentPreamble, formatLiteralValue, getParentImport, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in polymorphic_helpers.go
@@ -176,13 +176,4 @@ export async function generatePolymorphicHelpers(codeModel: go.CodeModel, fakeSe
     }
   }
   return text;
-}
-
-function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType {
-  if (go.isMapType(item)) {
-    return recursiveUnwrapMapSlice(item.valueType);
-  } else if (go.isSliceType(item)) {
-    return recursiveUnwrapMapSlice(item.elementType);
-  }
-  return item;
 }
