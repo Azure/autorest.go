@@ -226,12 +226,35 @@ export class typeAdapter {
         if (type.discriminatedSubtypes && substituteDiscriminator) {
           return this.getInterfaceType(type);
         } else if (this.isFoundationsError(type)) {
-          return new go.QualifiedType('ResponseError', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+          const keyName = 'azcore-response-error';
+          let respErrType = this.types.get(keyName);
+          if (!respErrType) {
+            respErrType = new go.QualifiedType('ResponseError', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+            this.types.set(keyName, respErrType);
+          }
+          return respErrType;
         }
         return this.getModel(type);
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
+  }
+
+  // returns the Go code model type for an io.ReadSeekCloser
+  getReadSeekCloser(sliceOf: boolean): go.PossibleType {
+    let keyName = 'io-readseekcloser';
+    if (sliceOf) {
+      keyName = 'sliceof-' + keyName;
+    }
+    let rsc = this.types.get(keyName);
+    if (!rsc) {
+      rsc = new go.QualifiedType('ReadSeekCloser', 'io');
+      if (sliceOf) {
+        rsc = new go.SliceType(rsc, true);
+      }
+      this.types.set(keyName, rsc);
+    }
+    return rsc;
   }
 
   private isFoundationsError(sdkModel: tcgc.SdkModelType): boolean {

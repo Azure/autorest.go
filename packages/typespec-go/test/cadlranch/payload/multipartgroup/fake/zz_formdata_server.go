@@ -11,6 +11,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"multipartgroup"
 	"net/http"
 )
@@ -19,31 +20,31 @@ import (
 type FormDataServer struct {
 	// Basic is the fake for method FormDataClient.Basic
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Basic func(ctx context.Context, body multipartgroup.MultiPartRequest, options *multipartgroup.FormDataClientBasicOptions) (resp azfake.Responder[multipartgroup.FormDataClientBasicResponse], errResp azfake.ErrorResponder)
+	Basic func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientBasicOptions) (resp azfake.Responder[multipartgroup.FormDataClientBasicResponse], errResp azfake.ErrorResponder)
 
 	// BinaryArrayParts is the fake for method FormDataClient.BinaryArrayParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	BinaryArrayParts func(ctx context.Context, body multipartgroup.BinaryArrayPartsRequest, options *multipartgroup.FormDataClientBinaryArrayPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientBinaryArrayPartsResponse], errResp azfake.ErrorResponder)
+	BinaryArrayParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientBinaryArrayPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientBinaryArrayPartsResponse], errResp azfake.ErrorResponder)
 
 	// CheckFileNameAndContentType is the fake for method FormDataClient.CheckFileNameAndContentType
 	// HTTP status codes to indicate success: http.StatusNoContent
-	CheckFileNameAndContentType func(ctx context.Context, body multipartgroup.MultiPartRequest, options *multipartgroup.FormDataClientCheckFileNameAndContentTypeOptions) (resp azfake.Responder[multipartgroup.FormDataClientCheckFileNameAndContentTypeResponse], errResp azfake.ErrorResponder)
+	CheckFileNameAndContentType func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientCheckFileNameAndContentTypeOptions) (resp azfake.Responder[multipartgroup.FormDataClientCheckFileNameAndContentTypeResponse], errResp azfake.ErrorResponder)
 
 	// Complex is the fake for method FormDataClient.Complex
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Complex func(ctx context.Context, body multipartgroup.ComplexPartsRequest, options *multipartgroup.FormDataClientComplexOptions) (resp azfake.Responder[multipartgroup.FormDataClientComplexResponse], errResp azfake.ErrorResponder)
+	Complex func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientComplexOptions) (resp azfake.Responder[multipartgroup.FormDataClientComplexResponse], errResp azfake.ErrorResponder)
 
 	// JSONArrayParts is the fake for method FormDataClient.JSONArrayParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONArrayParts func(ctx context.Context, body multipartgroup.JSONArrayPartsRequest, options *multipartgroup.FormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder)
+	JSONArrayParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder)
 
 	// JSONPart is the fake for method FormDataClient.JSONPart
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONPart func(ctx context.Context, body multipartgroup.JSONPartRequest, options *multipartgroup.FormDataClientJSONPartOptions) (resp azfake.Responder[multipartgroup.FormDataClientJSONPartResponse], errResp azfake.ErrorResponder)
+	JSONPart func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientJSONPartOptions) (resp azfake.Responder[multipartgroup.FormDataClientJSONPartResponse], errResp azfake.ErrorResponder)
 
 	// MultiBinaryParts is the fake for method FormDataClient.MultiBinaryParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	MultiBinaryParts func(ctx context.Context, body multipartgroup.MultiBinaryPartsRequest, options *multipartgroup.FormDataClientMultiBinaryPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientMultiBinaryPartsResponse], errResp azfake.ErrorResponder)
+	MultiBinaryParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.FormDataClientMultiBinaryPartsOptions) (resp azfake.Responder[multipartgroup.FormDataClientMultiBinaryPartsResponse], errResp azfake.ErrorResponder)
 }
 
 // NewFormDataServerTransport creates a new instance of FormDataServerTransport with the provided implementation.
@@ -100,11 +101,7 @@ func (f *FormDataServerTransport) dispatchBasic(req *http.Request) (*http.Respon
 	if f.srv.Basic == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Basic not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.MultiPartRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.Basic(req.Context(), body, nil)
+	respr, errRespr := f.srv.Basic(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -123,11 +120,7 @@ func (f *FormDataServerTransport) dispatchBinaryArrayParts(req *http.Request) (*
 	if f.srv.BinaryArrayParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BinaryArrayParts not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.BinaryArrayPartsRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.BinaryArrayParts(req.Context(), body, nil)
+	respr, errRespr := f.srv.BinaryArrayParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -146,11 +139,7 @@ func (f *FormDataServerTransport) dispatchCheckFileNameAndContentType(req *http.
 	if f.srv.CheckFileNameAndContentType == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckFileNameAndContentType not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.MultiPartRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.CheckFileNameAndContentType(req.Context(), body, nil)
+	respr, errRespr := f.srv.CheckFileNameAndContentType(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -169,11 +158,7 @@ func (f *FormDataServerTransport) dispatchComplex(req *http.Request) (*http.Resp
 	if f.srv.Complex == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Complex not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.ComplexPartsRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.Complex(req.Context(), body, nil)
+	respr, errRespr := f.srv.Complex(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -192,11 +177,7 @@ func (f *FormDataServerTransport) dispatchJSONArrayParts(req *http.Request) (*ht
 	if f.srv.JSONArrayParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method JSONArrayParts not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.JSONArrayPartsRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.JSONArrayParts(req.Context(), body, nil)
+	respr, errRespr := f.srv.JSONArrayParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -215,11 +196,7 @@ func (f *FormDataServerTransport) dispatchJSONPart(req *http.Request) (*http.Res
 	if f.srv.JSONPart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method JSONPart not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.JSONPartRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.JSONPart(req.Context(), body, nil)
+	respr, errRespr := f.srv.JSONPart(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -238,11 +215,7 @@ func (f *FormDataServerTransport) dispatchMultiBinaryParts(req *http.Request) (*
 	if f.srv.MultiBinaryParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method MultiBinaryParts not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[multipartgroup.MultiBinaryPartsRequest](req)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := f.srv.MultiBinaryParts(req.Context(), body, nil)
+	respr, errRespr := f.srv.MultiBinaryParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

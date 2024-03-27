@@ -134,7 +134,10 @@ func (r *ResponseBodyServerTransport) dispatchCustomContentType(req *http.Reques
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).Value, runtime.Base64StdFormat, req)
+	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
+		Body:        server.GetResponse(respr).Body,
+		ContentType: "application/octet-stream",
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +175,10 @@ func (r *ResponseBodyServerTransport) dispatchOctetStream(req *http.Request) (*h
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsByteArray(respContent, server.GetResponse(respr).Value, runtime.Base64StdFormat, req)
+	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
+		Body:        server.GetResponse(respr).Body,
+		ContentType: "application/octet-stream",
+	})
 	if err != nil {
 		return nil, err
 	}

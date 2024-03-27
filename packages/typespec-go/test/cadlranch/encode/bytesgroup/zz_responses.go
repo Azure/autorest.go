@@ -4,6 +4,8 @@
 
 package bytesgroup
 
+import "io"
+
 // HeaderClientBase64Response contains the response from method HeaderClient.Base64.
 type HeaderClientBase64Response struct {
 	// placeholder for future response values
@@ -101,7 +103,8 @@ type ResponseBodyClientBase64URLResponse struct {
 
 // ResponseBodyClientCustomContentTypeResponse contains the response from method ResponseBodyClient.CustomContentType.
 type ResponseBodyClientCustomContentTypeResponse struct {
-	Value []byte
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // ResponseBodyClientDefaultResponse contains the response from method ResponseBodyClient.Default.
@@ -111,5 +114,6 @@ type ResponseBodyClientDefaultResponse struct {
 
 // ResponseBodyClientOctetStreamResponse contains the response from method ResponseBodyClient.OctetStream.
 type ResponseBodyClientOctetStreamResponse struct {
-	Value []byte
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }

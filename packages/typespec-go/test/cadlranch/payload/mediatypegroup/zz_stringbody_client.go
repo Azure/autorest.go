@@ -9,7 +9,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
+	"strings"
 )
 
 // StringBodyClient contains the methods for the Payload.MediaType namespace.
@@ -98,9 +100,12 @@ func (client *StringBodyClient) getAsTextCreateRequest(ctx context.Context, opti
 // getAsTextHandleResponse handles the GetAsText response.
 func (client *StringBodyClient) getAsTextHandleResponse(resp *http.Response) (StringBodyClientGetAsTextResponse, error) {
 	result := StringBodyClientGetAsTextResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
+	body, err := runtime.Payload(resp)
+	if err != nil {
 		return StringBodyClientGetAsTextResponse{}, err
 	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -170,7 +175,8 @@ func (client *StringBodyClient) sendAsTextCreateRequest(ctx context.Context, tex
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"text/plain"}
-	if err := runtime.MarshalAsJSON(req, textParam); err != nil {
+	body := streaming.NopCloser(strings.NewReader(textParam))
+	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}
 	return req, nil

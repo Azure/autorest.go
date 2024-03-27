@@ -12,6 +12,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 )
 
@@ -27,7 +28,7 @@ type RequestBodyServer struct {
 
 	// CustomContentType is the fake for method RequestBodyClient.CustomContentType
 	// HTTP status codes to indicate success: http.StatusNoContent
-	CustomContentType func(ctx context.Context, value []byte, options *bytesgroup.RequestBodyClientCustomContentTypeOptions) (resp azfake.Responder[bytesgroup.RequestBodyClientCustomContentTypeResponse], errResp azfake.ErrorResponder)
+	CustomContentType func(ctx context.Context, value io.ReadSeekCloser, options *bytesgroup.RequestBodyClientCustomContentTypeOptions) (resp azfake.Responder[bytesgroup.RequestBodyClientCustomContentTypeResponse], errResp azfake.ErrorResponder)
 
 	// Default is the fake for method RequestBodyClient.Default
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -35,7 +36,7 @@ type RequestBodyServer struct {
 
 	// OctetStream is the fake for method RequestBodyClient.OctetStream
 	// HTTP status codes to indicate success: http.StatusNoContent
-	OctetStream func(ctx context.Context, value []byte, options *bytesgroup.RequestBodyClientOctetStreamOptions) (resp azfake.Responder[bytesgroup.RequestBodyClientOctetStreamResponse], errResp azfake.ErrorResponder)
+	OctetStream func(ctx context.Context, value io.ReadSeekCloser, options *bytesgroup.RequestBodyClientOctetStreamOptions) (resp azfake.Responder[bytesgroup.RequestBodyClientOctetStreamResponse], errResp azfake.ErrorResponder)
 }
 
 // NewRequestBodyServerTransport creates a new instance of RequestBodyServerTransport with the provided implementation.
@@ -134,11 +135,7 @@ func (r *RequestBodyServerTransport) dispatchCustomContentType(req *http.Request
 	if r.srv.CustomContentType == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CustomContentType not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64StdFormat)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := r.srv.CustomContentType(req.Context(), body, nil)
+	respr, errRespr := r.srv.CustomContentType(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -180,11 +177,7 @@ func (r *RequestBodyServerTransport) dispatchOctetStream(req *http.Request) (*ht
 	if r.srv.OctetStream == nil {
 		return nil, &nonRetriableError{errors.New("fake for method OctetStream not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64StdFormat)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := r.srv.OctetStream(req.Context(), body, nil)
+	respr, errRespr := r.srv.OctetStream(req.Context(), req.Body.(io.ReadSeekCloser), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
