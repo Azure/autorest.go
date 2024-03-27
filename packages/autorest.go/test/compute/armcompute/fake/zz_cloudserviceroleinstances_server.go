@@ -87,6 +87,10 @@ func (c *CloudServiceRoleInstancesServerTransport) Do(req *http.Request) (*http.
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return c.dispatchToMethodFake(req, method)
+}
+
+func (c *CloudServiceRoleInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -111,11 +115,7 @@ func (c *CloudServiceRoleInstancesServerTransport) Do(req *http.Request) (*http.
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {

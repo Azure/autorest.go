@@ -73,6 +73,10 @@ func (g *GalleryImagesServerTransport) Do(req *http.Request) (*http.Response, er
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return g.dispatchToMethodFake(req, method)
+}
+
+func (g *GalleryImagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -91,11 +95,7 @@ func (g *GalleryImagesServerTransport) Do(req *http.Request) (*http.Response, er
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (g *GalleryImagesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

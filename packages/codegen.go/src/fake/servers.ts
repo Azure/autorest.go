@@ -49,22 +49,18 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
-    if (client.methods.length === 0 || values(client.methods).all(method => { return isMethodInternal(method)})) {
-      // client is purely hierarchical or has no exported methods, skip it
-      // TODO: need to generate fake for this similar to fake for factory
+    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return isMethodInternal(method)})) {
+      // client has no client accessors and no exported methods, skip it
       continue;
     }
 
     // the list of packages to import
     const imports = new ImportManager();
-    imports.add(helpers.getParentImport(codeModel));
 
     // add standard imports
     imports.add('errors');
     imports.add('fmt');
     imports.add('net/http');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
     const serverName = getServerName(client);
@@ -77,6 +73,20 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     const finalMethods = new Array<go.Method>();
     let countLROs = 0;
     let countPagers = 0;
+
+    // add server transports for client accessors
+    // we might remove some clients from the list
+    const finalSubClients = new Array<go.Client>();
+    for (const clientAccessor of client.clientAccessors) {
+      if (values(clientAccessor.subClient.methods).all(method => { return isMethodInternal(method)})) {
+        // client has no exported methods, skip it
+        continue;
+      }
+      const serverName = getServerName(clientAccessor.subClient);
+      content += `\t// ${serverName} contains the fakes for client ${clientAccessor.subClient.name}\n`;
+      content += `\t${serverName} ${serverName}\n\n`;
+      finalSubClients.push(clientAccessor.subClient);
+    }
 
     for (const method of values(client.methods)) {
       if (isMethodInternal(method)) {
@@ -164,6 +174,18 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     content += `// Don't use this type directly, use New${serverTransport} instead.\n`;
     content += `type ${serverTransport} struct {\n`;
     content += `\tsrv *${serverName}\n`;
+
+    // add server transports for client accessors
+    if (finalSubClients.length > 0) {
+      requiredHelpers.initServer = true;
+      imports.add('sync');
+      content += '\ttrMu sync.Mutex\n';
+      for (const subClient of finalSubClients) {
+        const serverName = getServerName(subClient);
+        content += `\ttr${serverName} *${serverName}Transport\n`;
+      }
+    }
+
     for (const method of values(finalMethods)) {
       // create state machines for any pager/poller operations
       let respType = `${clientPkg}.${method.responseEnvelope.name}`;
@@ -180,7 +202,10 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     }
     content += '}\n\n';
 
-    content += generateServerTransportMethods(clientPkg, serverTransport, client, finalMethods, imports);
+    content += generateServerTransportDo(serverTransport, client, finalSubClients, finalMethods);
+    content += generateServerTransportClientDispatch(serverTransport, finalSubClients, imports);
+    content += generateServerTransportMethodDispatch(serverTransport, client, finalMethods);
+    content += generateServerTransportMethods(codeModel, serverTransport, finalMethods, imports);
 
     ///////////////////////////////////////////////////////////////////////////
 
@@ -193,13 +218,63 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
   return new ServerContent(operations, generateServerInternal(codeModel, requiredHelpers));
 }
 
-function generateServerTransportMethods(clientPkg: string, serverTransport: string, client: go.Client, finalMethods: Array<go.Method>, imports: ImportManager): string {
+// method names for fakes dispatching
+const dispatchMethodFake = 'dispatchToMethodFake';
+const dispatchToClientFake = 'dispatchToClientFake';
+
+function generateServerTransportDo(serverTransport: string, client: go.Client, finalSubClients: Array<go.Client>, finalMethods: Array<go.Method>): string {
   const receiverName = serverTransport[0].toLowerCase();
   let content = `// Do implements the policy.Transporter interface for ${serverTransport}.\n`;
   content += `func (${receiverName} *${serverTransport}) Do(req *http.Request) (*http.Response, error) {\n`;
   content += '\trawMethod := req.Context().Value(runtime.CtxAPINameKey{})\n';
   content += '\tmethod, ok := rawMethod.(string)\n';
   content += '\tif !ok {\n\t\treturn nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}\n\t}\n\n';
+
+  if (finalSubClients.length > 0 && finalMethods.length > 0) {
+    // client contains client accessors and methods.
+    // if the method isn't for this client, dispatch to the correct client
+    content += `\tif client := method[:strings.Index(method, ".")]; client != "${client.name}" {\n`;
+    content += `\t\treturn ${receiverName}.${dispatchToClientFake}(req, client)\n\t}\n`;
+    // else dispatch to our method fakes
+    content += `\treturn ${receiverName}.${dispatchMethodFake}(req, method)\n`;
+  } else if (finalSubClients.length > 0) {
+    content += `\treturn ${receiverName}.${dispatchToClientFake}(req, method[:strings.Index(method, ".")])\n`;
+  } else {
+    content += `\treturn ${receiverName}.${dispatchMethodFake}(req, method)\n`;
+  }
+  content += '}\n\n'; // end Do
+  return content;
+}
+
+function generateServerTransportClientDispatch(serverTransport: string, subClients: Array<go.Client>, imports: ImportManager): string {
+  if (subClients.length === 0) {
+    return '';
+  }
+
+  const receiverName = serverTransport[0].toLowerCase();
+  imports.add('strings');
+  let content = `func (${receiverName} *${serverTransport}) ${dispatchToClientFake}(req *http.Request, client string) (*http.Response, error) {\n`;
+  content += '\tvar resp *http.Response\n\tvar err error\n\n';
+  content += '\tswitch client {\n';
+  for (const subClient of subClients) {
+    content += `\tcase "${subClient.name}":\n`;
+    const serverName = getServerName(subClient);
+    content += `\t\tinitServer(&${receiverName}.trMu, &${receiverName}.tr${serverName}, func() *${serverName}Transport {\n\t\treturn New${serverName}Transport(&${receiverName}.srv.${serverName}) })\n`;
+    content += `\t\tresp, err = ${receiverName}.tr${serverName}.Do(req)\n`;
+  }
+  content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled client %s", client)\n';
+  content += '\t}\n\n'; // end switch
+  content += '\treturn resp, err\n}\n\n';
+  return content;
+}
+
+function generateServerTransportMethodDispatch(serverTransport: string, client: go.Client, finalMethods: Array<go.Method>): string {
+  if (finalMethods.length === 0) {
+    return '';
+  }
+
+  const receiverName = serverTransport[0].toLowerCase();
+  let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
   content += '\tvar resp *http.Response\n';
   content += '\tvar err error\n\n';
   content += '\tswitch method {\n';
@@ -209,14 +284,24 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
     content += `\tcase "${client.name}.${operationName}":\n`;
     content += `\t\tresp, err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
+
   content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled API %s", method)\n';
-
   content += '\t}\n\n'; // end switch
-  content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
-  content += '\treturn resp, nil\n}\n\n';
+  content += '\treturn resp, err\n}\n\n';
+  return content;
+}
 
-  ///////////////////////////////////////////////////////////////////////////
+function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport: string, finalMethods: Array<go.Method>, imports: ImportManager): string {
+  if (finalMethods.length === 0) {
+    return '';
+  }
 
+  imports.add(helpers.getParentImport(codeModel));
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server');
+
+  const receiverName = serverTransport[0].toLowerCase();
+  let content = '';
   for (const method of values(finalMethods)) {
     content += `func (${receiverName} *${serverTransport}) dispatch${fixUpMethodName(method)}(req *http.Request) (*http.Response, error) {\n`;
     content += `\tif ${receiverName}.srv.${fixUpMethodName(method)} == nil {\n`;
@@ -224,11 +309,11 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
 
     if (go.isLROMethod(method)) {
       // must check LRO before pager as you can have paged LROs
-      content += dispatchForLROBody(clientPkg, receiverName, method, imports);
+      content += dispatchForLROBody(codeModel.packageName, receiverName, method, imports);
     } else if (go.isPageableMethod(method)) {
-      content += dispatchForPagerBody(clientPkg, receiverName, method, imports);
+      content += dispatchForPagerBody(codeModel.packageName, receiverName, method, imports);
     } else {
-      content += dispatchForOperationBody(clientPkg, receiverName, method, imports);
+      content += dispatchForOperationBody(codeModel.packageName, receiverName, method, imports);
       content += '\trespContent := server.GetResponseContent(respr)\n';
       const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
       content += `\tif !contains([]int{${formattedStatusCodes}}, respContent.HTTPStatus) {\n`;

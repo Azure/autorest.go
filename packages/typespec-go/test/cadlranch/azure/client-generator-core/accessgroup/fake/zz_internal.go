@@ -4,6 +4,8 @@
 
 package fake
 
+import "sync"
+
 type nonRetriableError struct {
 	error
 }
@@ -19,4 +21,12 @@ func contains[T comparable](s []T, v T) bool {
 		}
 	}
 	return false
+}
+
+func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
+	mu.Lock()
+	if *dst == nil {
+		*dst = src()
+	}
+	mu.Unlock()
 }

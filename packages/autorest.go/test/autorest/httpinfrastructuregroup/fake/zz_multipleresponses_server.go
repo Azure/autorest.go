@@ -194,6 +194,10 @@ func (m *MultipleResponsesServerTransport) Do(req *http.Request) (*http.Response
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return m.dispatchToMethodFake(req, method)
+}
+
+func (m *MultipleResponsesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -270,11 +274,7 @@ func (m *MultipleResponsesServerTransport) Do(req *http.Request) (*http.Response
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (m *MultipleResponsesServerTransport) dispatchGet200Model201ModelDefaultError200Valid(req *http.Request) (*http.Response, error) {

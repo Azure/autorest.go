@@ -64,6 +64,10 @@ func (e *EnumServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return e.dispatchToMethodFake(req, method)
+}
+
+func (e *EnumServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -84,11 +88,7 @@ func (e *EnumServerTransport) Do(req *http.Request) (*http.Response, error) {
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (e *EnumServerTransport) dispatchGetNotExpandable(req *http.Request) (*http.Response, error) {

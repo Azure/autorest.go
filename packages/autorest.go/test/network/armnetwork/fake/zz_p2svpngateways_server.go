@@ -109,6 +109,10 @@ func (p *P2SVPNGatewaysServerTransport) Do(req *http.Request) (*http.Response, e
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return p.dispatchToMethodFake(req, method)
+}
+
+func (p *P2SVPNGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -139,11 +143,7 @@ func (p *P2SVPNGatewaysServerTransport) Do(req *http.Request) (*http.Response, e
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (p *P2SVPNGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

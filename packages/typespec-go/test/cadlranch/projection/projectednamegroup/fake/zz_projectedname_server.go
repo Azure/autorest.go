@@ -14,10 +14,18 @@ import (
 	"net/http"
 	"net/url"
 	"projectednamegroup"
+	"strings"
+	"sync"
 )
 
 // ProjectedNameServer is a fake server for instances of the projectednamegroup.ProjectedNameClient type.
 type ProjectedNameServer struct {
+	// ModelServer contains the fakes for client ModelClient
+	ModelServer ModelServer
+
+	// PropertyServer contains the fakes for client PropertyClient
+	PropertyServer PropertyServer
+
 	// ClientName is the fake for method ProjectedNameClient.ClientName
 	// HTTP status codes to indicate success: http.StatusNoContent
 	ClientName func(ctx context.Context, options *projectednamegroup.ProjectedNameClientClientNameOptions) (resp azfake.Responder[projectednamegroup.ProjectedNameClientClientNameResponse], errResp azfake.ErrorResponder)
@@ -37,7 +45,10 @@ func NewProjectedNameServerTransport(srv *ProjectedNameServer) *ProjectedNameSer
 // ProjectedNameServerTransport connects instances of projectednamegroup.ProjectedNameClient to instances of ProjectedNameServer.
 // Don't use this type directly, use NewProjectedNameServerTransport instead.
 type ProjectedNameServerTransport struct {
-	srv *ProjectedNameServer
+	srv              *ProjectedNameServer
+	trMu             sync.Mutex
+	trModelServer    *ModelServerTransport
+	trPropertyServer *PropertyServerTransport
 }
 
 // Do implements the policy.Transporter interface for ProjectedNameServerTransport.
@@ -48,6 +59,35 @@ func (p *ProjectedNameServerTransport) Do(req *http.Request) (*http.Response, er
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "ProjectedNameClient" {
+		return p.dispatchToClientFake(req, client)
+	}
+	return p.dispatchToMethodFake(req, method)
+}
+
+func (p *ProjectedNameServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "ModelClient":
+		initServer(&p.trMu, &p.trModelServer, func() *ModelServerTransport {
+			return NewModelServerTransport(&p.srv.ModelServer)
+		})
+		resp, err = p.trModelServer.Do(req)
+	case "PropertyClient":
+		initServer(&p.trMu, &p.trPropertyServer, func() *PropertyServerTransport {
+			return NewPropertyServerTransport(&p.srv.PropertyServer)
+		})
+		resp, err = p.trPropertyServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (p *ProjectedNameServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -60,11 +100,7 @@ func (p *ProjectedNameServerTransport) Do(req *http.Request) (*http.Response, er
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (p *ProjectedNameServerTransport) dispatchClientName(req *http.Request) (*http.Response, error) {

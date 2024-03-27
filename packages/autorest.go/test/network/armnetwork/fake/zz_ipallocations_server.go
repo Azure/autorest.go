@@ -77,6 +77,10 @@ func (i *IPAllocationsServerTransport) Do(req *http.Request) (*http.Response, er
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return i.dispatchToMethodFake(req, method)
+}
+
+func (i *IPAllocationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -97,11 +101,7 @@ func (i *IPAllocationsServerTransport) Do(req *http.Request) (*http.Response, er
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (i *IPAllocationsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

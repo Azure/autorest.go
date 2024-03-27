@@ -4,7 +4,10 @@
 
 package fake
 
-import "net/http"
+import (
+	"net/http"
+	"sync"
+)
 
 type nonRetriableError struct {
 	error
@@ -29,4 +32,12 @@ func getHeaderValue(h http.Header, k string) string {
 		return ""
 	}
 	return v[0]
+}
+
+func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
+	mu.Lock()
+	if *dst == nil {
+		*dst = src()
+	}
+	mu.Unlock()
 }

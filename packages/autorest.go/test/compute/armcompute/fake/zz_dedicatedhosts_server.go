@@ -79,6 +79,10 @@ func (d *DedicatedHostsServerTransport) Do(req *http.Request) (*http.Response, e
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return d.dispatchToMethodFake(req, method)
+}
+
+func (d *DedicatedHostsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -99,11 +103,7 @@ func (d *DedicatedHostsServerTransport) Do(req *http.Request) (*http.Response, e
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

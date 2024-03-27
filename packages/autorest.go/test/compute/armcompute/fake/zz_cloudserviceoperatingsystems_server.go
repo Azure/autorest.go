@@ -65,6 +65,10 @@ func (c *CloudServiceOperatingSystemsServerTransport) Do(req *http.Request) (*ht
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return c.dispatchToMethodFake(req, method)
+}
+
+func (c *CloudServiceOperatingSystemsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -81,11 +85,7 @@ func (c *CloudServiceOperatingSystemsServerTransport) Do(req *http.Request) (*ht
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (c *CloudServiceOperatingSystemsServerTransport) dispatchGetOSFamily(req *http.Request) (*http.Response, error) {

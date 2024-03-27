@@ -46,6 +46,10 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) Do(req *ht
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return a.dispatchToMethodFake(req, method)
+}
+
+func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -56,11 +60,7 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) Do(req *ht
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

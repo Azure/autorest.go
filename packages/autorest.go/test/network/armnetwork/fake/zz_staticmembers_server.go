@@ -64,6 +64,10 @@ func (s *StaticMembersServerTransport) Do(req *http.Request) (*http.Response, er
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return s.dispatchToMethodFake(req, method)
+}
+
+func (s *StaticMembersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -80,11 +84,7 @@ func (s *StaticMembersServerTransport) Do(req *http.Request) (*http.Response, er
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (s *StaticMembersServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

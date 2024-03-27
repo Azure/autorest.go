@@ -67,6 +67,10 @@ func (t *TriggersServerTransport) Do(req *http.Request) (*http.Response, error) 
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return t.dispatchToMethodFake(req, method)
+}
+
+func (t *TriggersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -83,11 +87,7 @@ func (t *TriggersServerTransport) Do(req *http.Request) (*http.Response, error) 
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (t *TriggersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

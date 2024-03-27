@@ -67,6 +67,10 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return p.dispatchToMethodFake(req, method)
+}
+
+func (p *ParameterGroupingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -87,11 +91,7 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (p *ParameterGroupingServerTransport) dispatchGroupWithConstant(req *http.Request) (*http.Response, error) {

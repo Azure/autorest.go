@@ -10,6 +10,7 @@ import { ImportManager } from '../imports.js';
 export class RequiredHelpers {
   getHeaderValue: boolean;
   getOptional: boolean;
+  initServer: boolean;
   parseOptional: boolean;
   parseWithCast: boolean;
   readRequestBody: boolean;
@@ -19,6 +20,7 @@ export class RequiredHelpers {
   constructor() {
     this.getHeaderValue = false;
     this.getOptional = false;
+    this.initServer = false;
     this.parseOptional = false;
     this.parseWithCast = false;
     this.readRequestBody = false;
@@ -40,6 +42,9 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
   }
   if (requiredHelpers.getOptional) {
     body += emitGetOptional(imports);
+  }
+  if (requiredHelpers.initServer) {
+    body += emitInitServer(imports);
   }
   if (requiredHelpers.parseOptional) {
     body += emitParseOptional();
@@ -101,6 +106,19 @@ func getHeaderValue(h http.Header, k string) string {
 		return ""
 	}
 	return v[0]
+}
+`;
+}
+
+function emitInitServer(imports: ImportManager): string {
+  imports.add('sync');
+  return `
+func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
+	mu.Lock()
+	if *dst == nil {
+		*dst = src()
+	}
+	mu.Unlock()
 }
 `;
 }

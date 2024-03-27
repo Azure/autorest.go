@@ -17,10 +17,15 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"strings"
+	"sync"
 )
 
 // BasicServer is a fake server for instances of the basicgroup.BasicClient type.
 type BasicServer struct {
+	// TwoModelsAsPageItemServer contains the fakes for client TwoModelsAsPageItemClient
+	TwoModelsAsPageItemServer TwoModelsAsPageItemServer
+
 	// CreateOrReplace is the fake for method BasicClient.CreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrReplace func(ctx context.Context, id int32, resource basicgroup.User, options *basicgroup.BasicClientCreateOrReplaceOptions) (resp azfake.Responder[basicgroup.BasicClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
@@ -75,6 +80,8 @@ func NewBasicServerTransport(srv *BasicServer) *BasicServerTransport {
 // Don't use this type directly, use NewBasicServerTransport instead.
 type BasicServerTransport struct {
 	srv                             *BasicServer
+	trMu                            sync.Mutex
+	trTwoModelsAsPageItemServer     *TwoModelsAsPageItemServerTransport
 	newListPager                    *tracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]]
 	newListWithCustomPageModelPager *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse]]
 	newListWithPagePager            *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse]]
@@ -89,6 +96,30 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "BasicClient" {
+		return b.dispatchToClientFake(req, client)
+	}
+	return b.dispatchToMethodFake(req, method)
+}
+
+func (b *BasicServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "TwoModelsAsPageItemClient":
+		initServer(&b.trMu, &b.trTwoModelsAsPageItemServer, func() *TwoModelsAsPageItemServerTransport {
+			return NewTwoModelsAsPageItemServerTransport(&b.srv.TwoModelsAsPageItemServer)
+		})
+		resp, err = b.trTwoModelsAsPageItemServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -115,11 +146,7 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http.Response, error) {

@@ -29,7 +29,8 @@ export function generateServerFactory(codeModel: go.CodeModel): string {
   text += 'type ServerFactory struct {\n';
   for (const client of codeModel.clients) {
     const serverName = getServerName(client);
-    text += `\t${serverName} ${serverName}\n`;
+    text += `\t// ${serverName} contains the fakes for client ${client.name}\n`;
+    text += `\t${serverName} ${serverName}\n\n`;
   }
   text += '}\n\n';
 

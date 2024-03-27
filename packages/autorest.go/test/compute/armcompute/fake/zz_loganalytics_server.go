@@ -56,6 +56,10 @@ func (l *LogAnalyticsServerTransport) Do(req *http.Request) (*http.Response, err
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	return l.dispatchToMethodFake(req, method)
+}
+
+func (l *LogAnalyticsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -68,11 +72,7 @@ func (l *LogAnalyticsServerTransport) Do(req *http.Request) (*http.Response, err
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (l *LogAnalyticsServerTransport) dispatchBeginExportRequestRateByInterval(req *http.Request) (*http.Response, error) {

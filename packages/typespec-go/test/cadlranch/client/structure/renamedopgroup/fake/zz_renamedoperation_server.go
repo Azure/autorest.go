@@ -13,10 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"renamedopgroup"
+	"strings"
+	"sync"
 )
 
 // RenamedOperationServer is a fake server for instances of the renamedopgroup.RenamedOperationClient type.
 type RenamedOperationServer struct {
+	// GroupServer contains the fakes for client GroupClient
+	GroupServer GroupServer
+
 	// RenamedFive is the fake for method RenamedOperationClient.RenamedFive
 	// HTTP status codes to indicate success: http.StatusNoContent
 	RenamedFive func(ctx context.Context, options *renamedopgroup.RenamedOperationClientRenamedFiveOptions) (resp azfake.Responder[renamedopgroup.RenamedOperationClientRenamedFiveResponse], errResp azfake.ErrorResponder)
@@ -40,7 +45,9 @@ func NewRenamedOperationServerTransport(srv *RenamedOperationServer) *RenamedOpe
 // RenamedOperationServerTransport connects instances of renamedopgroup.RenamedOperationClient to instances of RenamedOperationServer.
 // Don't use this type directly, use NewRenamedOperationServerTransport instead.
 type RenamedOperationServerTransport struct {
-	srv *RenamedOperationServer
+	srv           *RenamedOperationServer
+	trMu          sync.Mutex
+	trGroupServer *GroupServerTransport
 }
 
 // Do implements the policy.Transporter interface for RenamedOperationServerTransport.
@@ -51,6 +58,30 @@ func (r *RenamedOperationServerTransport) Do(req *http.Request) (*http.Response,
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "RenamedOperationClient" {
+		return r.dispatchToClientFake(req, client)
+	}
+	return r.dispatchToMethodFake(req, method)
+}
+
+func (r *RenamedOperationServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "GroupClient":
+		initServer(&r.trMu, &r.trGroupServer, func() *GroupServerTransport {
+			return NewGroupServerTransport(&r.srv.GroupServer)
+		})
+		resp, err = r.trGroupServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (r *RenamedOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -65,11 +96,7 @@ func (r *RenamedOperationServerTransport) Do(req *http.Request) (*http.Response,
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (r *RenamedOperationServerTransport) dispatchRenamedFive(req *http.Request) (*http.Response, error) {

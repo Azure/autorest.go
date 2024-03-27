@@ -13,10 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
+	"sync"
 )
 
 // QuxServer is a fake server for instances of the defaultgroup.QuxClient type.
 type QuxServer struct {
+	// BarServer contains the fakes for client BarClient
+	BarServer BarServer
+
 	// Eight is the fake for method QuxClient.Eight
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Eight func(ctx context.Context, options *defaultgroup.QuxClientEightOptions) (resp azfake.Responder[defaultgroup.QuxClientEightResponse], errResp azfake.ErrorResponder)
@@ -32,7 +37,9 @@ func NewQuxServerTransport(srv *QuxServer) *QuxServerTransport {
 // QuxServerTransport connects instances of defaultgroup.QuxClient to instances of QuxServer.
 // Don't use this type directly, use NewQuxServerTransport instead.
 type QuxServerTransport struct {
-	srv *QuxServer
+	srv         *QuxServer
+	trMu        sync.Mutex
+	trBarServer *BarServerTransport
 }
 
 // Do implements the policy.Transporter interface for QuxServerTransport.
@@ -43,6 +50,30 @@ func (q *QuxServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
+	if client := method[:strings.Index(method, ".")]; client != "QuxClient" {
+		return q.dispatchToClientFake(req, client)
+	}
+	return q.dispatchToMethodFake(req, method)
+}
+
+func (q *QuxServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	var resp *http.Response
+	var err error
+
+	switch client {
+	case "BarClient":
+		initServer(&q.trMu, &q.trBarServer, func() *BarServerTransport {
+			return NewBarServerTransport(&q.srv.BarServer)
+		})
+		resp, err = q.trBarServer.Do(req)
+	default:
+		err = fmt.Errorf("unhandled client %s", client)
+	}
+
+	return resp, err
+}
+
+func (q *QuxServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
@@ -53,11 +84,7 @@ func (q *QuxServerTransport) Do(req *http.Request) (*http.Response, error) {
 		err = fmt.Errorf("unhandled API %s", method)
 	}
 
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
+	return resp, err
 }
 
 func (q *QuxServerTransport) dispatchEight(req *http.Request) (*http.Response, error) {
