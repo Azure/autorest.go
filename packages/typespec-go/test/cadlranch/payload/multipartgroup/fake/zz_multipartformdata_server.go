@@ -288,7 +288,7 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 			if err != nil {
 				return nil, err
 			}
-			if err := json.Unmarshal(content, &body.Address); err != nil {
+			if err = json.Unmarshal(content, &body.Address); err != nil {
 				return nil, err
 			}
 		case "id":
@@ -312,7 +312,7 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 			if err != nil {
 				return nil, err
 			}
-			if err := json.Unmarshal(content, &body.PreviousAddresses); err != nil {
+			if err = json.Unmarshal(content, &body.PreviousAddresses); err != nil {
 				return nil, err
 			}
 		case "profileImage":
@@ -367,7 +367,7 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONArrayParts(req *http.Requ
 			if err != nil {
 				return nil, err
 			}
-			if err := json.Unmarshal(content, &body.PreviousAddresses); err != nil {
+			if err = json.Unmarshal(content, &body.PreviousAddresses); err != nil {
 				return nil, err
 			}
 		case "profileImage":
@@ -422,7 +422,7 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONPart(req *http.Request) (
 			if err != nil {
 				return nil, err
 			}
-			if err := json.Unmarshal(content, &body.Address); err != nil {
+			if err = json.Unmarshal(content, &body.Address); err != nil {
 				return nil, err
 			}
 		case "profileImage":
