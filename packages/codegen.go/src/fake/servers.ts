@@ -467,7 +467,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       let assignedValue: string | undefined;
       if (go.isModelType(helpers.recursiveUnwrapMapSlice(type))) {
         imports.add('encoding/json');
-        caseContent += `\t\t\tif err := json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
+        caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
       } else if (go.isQualifiedType(type) && type.typeName === 'ReadSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
