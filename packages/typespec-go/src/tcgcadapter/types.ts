@@ -291,7 +291,7 @@ export class typeAdapter {
           return decimalType;
         }
         decimalType = new go.PrimitiveType(decimalKey);
-        this. types.set(decimalKey, decimalType);
+        this.types.set(decimalKey, decimalType);
         return decimalType;
       }
       case 'eTag': {
@@ -610,7 +610,7 @@ export class typeAdapter {
           return <go.LiteralValue>literalDecimal;
         }
         literalDecimal = new go.LiteralValue(new go.PrimitiveType('float64'), constType.value);
-        this. types.set(keyName, literalDecimal);
+        this.types.set(keyName, literalDecimal);
         return literalDecimal;
       }
       /*case 'date':
