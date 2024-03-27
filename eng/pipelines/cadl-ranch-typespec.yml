@@ -7,6 +7,10 @@ trigger:
       - packages/typespec-go/test/cadlranch
 pr: none
 
+variables:
+  - name: cadl-ranch
+    value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch/node_modules/.bin/cadl-ranch
+
 steps:
   - template: ../steps/set-env.yaml
 
@@ -18,5 +22,5 @@ steps:
       azureSubscription: "Cadl Ranch Storage"
       scriptType: "bash"
       scriptLocation: "inlineScript"
-      inlineScript: cadl-ranch upload-coverage --generatorName go --storageAccountName azuresdkcadlranch --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
+      inlineScript: $(cadl-ranch) upload-coverage --generatorName go --storageAccountName azuresdkcadlranch --generatorVersion $(node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version") --generatorMode azure
       workingDirectory: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch-specs
