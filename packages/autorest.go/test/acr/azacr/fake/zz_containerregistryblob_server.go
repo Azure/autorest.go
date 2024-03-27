@@ -303,7 +303,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchDeleteBlob(req *http.Requ
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -342,7 +342,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetBlob(req *http.Request
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -384,7 +384,7 @@ func (c *ContainerRegistryBlobServerTransport) dispatchGetChunk(req *http.Reques
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err

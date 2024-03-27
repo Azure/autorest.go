@@ -9,6 +9,8 @@ package bytesgroup_test
 import (
 	"bytesgroup"
 	"context"
+	"io"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -139,7 +141,14 @@ func TestRequestBodyClientBase64URL(t *testing.T) {
 }
 
 func TestRequestBodyClientCustomContentType(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/issues/15")
+	client, err := bytesgroup.NewBytesClient(nil)
+	require.NoError(t, err)
+	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	defer pngFile.Close()
+	resp, err := client.NewRequestBodyClient().CustomContentType(context.Background(), pngFile, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
 }
 
 func TestRequestBodyClientDefault(t *testing.T) {
@@ -151,7 +160,14 @@ func TestRequestBodyClientDefault(t *testing.T) {
 }
 
 func TestRequestBodyClientOctetStream(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/issues/15")
+	client, err := bytesgroup.NewBytesClient(nil)
+	require.NoError(t, err)
+	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	defer pngFile.Close()
+	resp, err := client.NewRequestBodyClient().OctetStream(context.Background(), pngFile, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
 }
 
 func TestResponseBodyClientBase64(t *testing.T) {
@@ -173,7 +189,19 @@ func TestResponseBodyClientBase64URL(t *testing.T) {
 }
 
 func TestResponseBodyClientCustomContent(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/issues/15")
+	client, err := bytesgroup.NewBytesClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewResponseBodyClient().CustomContentType(context.Background(), nil)
+	require.NoError(t, err)
+	respBody, err := io.ReadAll(resp.Body)
+	require.NoError(t, err)
+	require.NoError(t, resp.Body.Close())
+	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	pngBody, err := io.ReadAll(pngFile)
+	require.NoError(t, err)
+	require.NoError(t, pngFile.Close())
+	require.EqualValues(t, pngBody, respBody)
 }
 
 func TestResponseBodyClientDefault(t *testing.T) {
@@ -186,5 +214,17 @@ func TestResponseBodyClientDefault(t *testing.T) {
 }
 
 func TestResponseBodyClientOctetStream(t *testing.T) {
-	t.Skip("https://github.com/Azure/typespec-azure/issues/15")
+	client, err := bytesgroup.NewBytesClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewResponseBodyClient().OctetStream(context.Background(), nil)
+	require.NoError(t, err)
+	respBody, err := io.ReadAll(resp.Body)
+	require.NoError(t, err)
+	require.NoError(t, resp.Body.Close())
+	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	pngBody, err := io.ReadAll(pngFile)
+	require.NoError(t, err)
+	require.NoError(t, pngFile.Close())
+	require.EqualValues(t, pngBody, respBody)
 }

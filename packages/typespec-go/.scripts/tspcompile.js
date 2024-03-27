@@ -42,7 +42,7 @@ const cadlRanch = {
   //'spreadgroup': ['parameters/spread'], // needs more investigation
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
   'jmergepatchgroup': ['payload/json-merge-patch'],
-  'mediatypegroup': ['payload/media-type'], // missing tests
+  'mediatypegroup': ['payload/media-type'],
   'multipartgroup': ['payload/multipart'],  // missing tests
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],

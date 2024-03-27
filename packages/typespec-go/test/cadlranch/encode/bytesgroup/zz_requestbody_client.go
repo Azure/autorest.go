@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 )
 
@@ -92,7 +93,7 @@ func (client *RequestBodyClient) base64URLCreateRequest(ctx context.Context, val
 
 //   - options - RequestBodyClientCustomContentTypeOptions contains the optional parameters for the RequestBodyClient.CustomContentType
 //     method.
-func (client *RequestBodyClient) CustomContentType(ctx context.Context, value []byte, options *RequestBodyClientCustomContentTypeOptions) (RequestBodyClientCustomContentTypeResponse, error) {
+func (client *RequestBodyClient) CustomContentType(ctx context.Context, value io.ReadSeekCloser, options *RequestBodyClientCustomContentTypeOptions) (RequestBodyClientCustomContentTypeResponse, error) {
 	var err error
 	const operationName = "RequestBodyClient.CustomContentType"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -114,14 +115,14 @@ func (client *RequestBodyClient) CustomContentType(ctx context.Context, value []
 }
 
 // customContentTypeCreateRequest creates the CustomContentType request.
-func (client *RequestBodyClient) customContentTypeCreateRequest(ctx context.Context, value []byte, options *RequestBodyClientCustomContentTypeOptions) (*policy.Request, error) {
+func (client *RequestBodyClient) customContentTypeCreateRequest(ctx context.Context, value io.ReadSeekCloser, options *RequestBodyClientCustomContentTypeOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/custom-content-type"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"image/png"}
-	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
+	if err := req.SetBody(value, "image/png"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -164,7 +165,7 @@ func (client *RequestBodyClient) defaultCreateRequest(ctx context.Context, value
 }
 
 // - options - RequestBodyClientOctetStreamOptions contains the optional parameters for the RequestBodyClient.OctetStream method.
-func (client *RequestBodyClient) OctetStream(ctx context.Context, value []byte, options *RequestBodyClientOctetStreamOptions) (RequestBodyClientOctetStreamResponse, error) {
+func (client *RequestBodyClient) OctetStream(ctx context.Context, value io.ReadSeekCloser, options *RequestBodyClientOctetStreamOptions) (RequestBodyClientOctetStreamResponse, error) {
 	var err error
 	const operationName = "RequestBodyClient.OctetStream"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -186,14 +187,14 @@ func (client *RequestBodyClient) OctetStream(ctx context.Context, value []byte, 
 }
 
 // octetStreamCreateRequest creates the OctetStream request.
-func (client *RequestBodyClient) octetStreamCreateRequest(ctx context.Context, value []byte, options *RequestBodyClientOctetStreamOptions) (*policy.Request, error) {
+func (client *RequestBodyClient) octetStreamCreateRequest(ctx context.Context, value io.ReadSeekCloser, options *RequestBodyClientOctetStreamOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/octet-stream"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/octet-stream"}
-	if err := runtime.MarshalAsByteArray(req, value, runtime.Base64StdFormat); err != nil {
+	if err := req.SetBody(value, "application/octet-stream"); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -124,8 +124,7 @@ func (client *ResponseBodyClient) CustomContentType(ctx context.Context, options
 		err = runtime.NewResponseError(httpResp)
 		return ResponseBodyClientCustomContentTypeResponse{}, err
 	}
-	resp, err := client.customContentTypeHandleResponse(httpResp)
-	return resp, err
+	return ResponseBodyClientCustomContentTypeResponse{Body: httpResp.Body}, nil
 }
 
 // customContentTypeCreateRequest creates the CustomContentType request.
@@ -135,17 +134,9 @@ func (client *ResponseBodyClient) customContentTypeCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"image/png"}
 	return req, nil
-}
-
-// customContentTypeHandleResponse handles the CustomContentType response.
-func (client *ResponseBodyClient) customContentTypeHandleResponse(resp *http.Response) (ResponseBodyClientCustomContentTypeResponse, error) {
-	result := ResponseBodyClientCustomContentTypeResponse{}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ResponseBodyClientCustomContentTypeResponse{}, err
-	}
-	return result, nil
 }
 
 // - options - ResponseBodyClientDefaultOptions contains the optional parameters for the ResponseBodyClient.Default method.
@@ -211,8 +202,7 @@ func (client *ResponseBodyClient) OctetStream(ctx context.Context, options *Resp
 		err = runtime.NewResponseError(httpResp)
 		return ResponseBodyClientOctetStreamResponse{}, err
 	}
-	resp, err := client.octetStreamHandleResponse(httpResp)
-	return resp, err
+	return ResponseBodyClientOctetStreamResponse{Body: httpResp.Body}, nil
 }
 
 // octetStreamCreateRequest creates the OctetStream request.
@@ -222,15 +212,7 @@ func (client *ResponseBodyClient) octetStreamCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
-}
-
-// octetStreamHandleResponse handles the OctetStream response.
-func (client *ResponseBodyClient) octetStreamHandleResponse(resp *http.Response) (ResponseBodyClientOctetStreamResponse, error) {
-	result := ResponseBodyClientOctetStreamResponse{}
-	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ResponseBodyClientOctetStreamResponse{}, err
-	}
-	return result, nil
 }

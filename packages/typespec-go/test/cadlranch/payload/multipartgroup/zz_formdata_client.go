@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 )
 
@@ -20,7 +21,7 @@ type FormDataClient struct {
 
 // Basic - Test content-type: multipart/form-data
 //   - options - FormDataClientBasicOptions contains the optional parameters for the FormDataClient.Basic method.
-func (client *FormDataClient) Basic(ctx context.Context, body MultiPartRequest, options *FormDataClientBasicOptions) (FormDataClientBasicResponse, error) {
+func (client *FormDataClient) Basic(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientBasicOptions) (FormDataClientBasicResponse, error) {
 	var err error
 	const operationName = "FormDataClient.Basic"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -42,14 +43,14 @@ func (client *FormDataClient) Basic(ctx context.Context, body MultiPartRequest, 
 }
 
 // basicCreateRequest creates the Basic request.
-func (client *FormDataClient) basicCreateRequest(ctx context.Context, body MultiPartRequest, options *FormDataClientBasicOptions) (*policy.Request, error) {
+func (client *FormDataClient) basicCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientBasicOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/mixed-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -58,7 +59,7 @@ func (client *FormDataClient) basicCreateRequest(ctx context.Context, body Multi
 // BinaryArrayParts - Test content-type: multipart/form-data for scenario contains multi binary parts
 //   - options - FormDataClientBinaryArrayPartsOptions contains the optional parameters for the FormDataClient.BinaryArrayParts
 //     method.
-func (client *FormDataClient) BinaryArrayParts(ctx context.Context, body BinaryArrayPartsRequest, options *FormDataClientBinaryArrayPartsOptions) (FormDataClientBinaryArrayPartsResponse, error) {
+func (client *FormDataClient) BinaryArrayParts(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientBinaryArrayPartsOptions) (FormDataClientBinaryArrayPartsResponse, error) {
 	var err error
 	const operationName = "FormDataClient.BinaryArrayParts"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -80,14 +81,14 @@ func (client *FormDataClient) BinaryArrayParts(ctx context.Context, body BinaryA
 }
 
 // binaryArrayPartsCreateRequest creates the BinaryArrayParts request.
-func (client *FormDataClient) binaryArrayPartsCreateRequest(ctx context.Context, body BinaryArrayPartsRequest, options *FormDataClientBinaryArrayPartsOptions) (*policy.Request, error) {
+func (client *FormDataClient) binaryArrayPartsCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientBinaryArrayPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/binary-array-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -96,7 +97,7 @@ func (client *FormDataClient) binaryArrayPartsCreateRequest(ctx context.Context,
 // CheckFileNameAndContentType - Test content-type: multipart/form-data
 //   - options - FormDataClientCheckFileNameAndContentTypeOptions contains the optional parameters for the FormDataClient.CheckFileNameAndContentType
 //     method.
-func (client *FormDataClient) CheckFileNameAndContentType(ctx context.Context, body MultiPartRequest, options *FormDataClientCheckFileNameAndContentTypeOptions) (FormDataClientCheckFileNameAndContentTypeResponse, error) {
+func (client *FormDataClient) CheckFileNameAndContentType(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientCheckFileNameAndContentTypeOptions) (FormDataClientCheckFileNameAndContentTypeResponse, error) {
 	var err error
 	const operationName = "FormDataClient.CheckFileNameAndContentType"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -118,14 +119,14 @@ func (client *FormDataClient) CheckFileNameAndContentType(ctx context.Context, b
 }
 
 // checkFileNameAndContentTypeCreateRequest creates the CheckFileNameAndContentType request.
-func (client *FormDataClient) checkFileNameAndContentTypeCreateRequest(ctx context.Context, body MultiPartRequest, options *FormDataClientCheckFileNameAndContentTypeOptions) (*policy.Request, error) {
+func (client *FormDataClient) checkFileNameAndContentTypeCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientCheckFileNameAndContentTypeOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/check-filename-and-content-type"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -133,7 +134,7 @@ func (client *FormDataClient) checkFileNameAndContentTypeCreateRequest(ctx conte
 
 // Complex - Test content-type: multipart/form-data for mixed scenarios
 //   - options - FormDataClientComplexOptions contains the optional parameters for the FormDataClient.Complex method.
-func (client *FormDataClient) Complex(ctx context.Context, body ComplexPartsRequest, options *FormDataClientComplexOptions) (FormDataClientComplexResponse, error) {
+func (client *FormDataClient) Complex(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientComplexOptions) (FormDataClientComplexResponse, error) {
 	var err error
 	const operationName = "FormDataClient.Complex"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -155,14 +156,14 @@ func (client *FormDataClient) Complex(ctx context.Context, body ComplexPartsRequ
 }
 
 // complexCreateRequest creates the Complex request.
-func (client *FormDataClient) complexCreateRequest(ctx context.Context, body ComplexPartsRequest, options *FormDataClientComplexOptions) (*policy.Request, error) {
+func (client *FormDataClient) complexCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientComplexOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/complex-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -170,7 +171,7 @@ func (client *FormDataClient) complexCreateRequest(ctx context.Context, body Com
 
 // JSONArrayParts - Test content-type: multipart/form-data for scenario contains multi json parts
 //   - options - FormDataClientJSONArrayPartsOptions contains the optional parameters for the FormDataClient.JSONArrayParts method.
-func (client *FormDataClient) JSONArrayParts(ctx context.Context, body JSONArrayPartsRequest, options *FormDataClientJSONArrayPartsOptions) (FormDataClientJSONArrayPartsResponse, error) {
+func (client *FormDataClient) JSONArrayParts(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientJSONArrayPartsOptions) (FormDataClientJSONArrayPartsResponse, error) {
 	var err error
 	const operationName = "FormDataClient.JSONArrayParts"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -192,14 +193,14 @@ func (client *FormDataClient) JSONArrayParts(ctx context.Context, body JSONArray
 }
 
 // jsonArrayPartsCreateRequest creates the JSONArrayParts request.
-func (client *FormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, body JSONArrayPartsRequest, options *FormDataClientJSONArrayPartsOptions) (*policy.Request, error) {
+func (client *FormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientJSONArrayPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/json-array-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -207,7 +208,7 @@ func (client *FormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, b
 
 // JSONPart - Test content-type: multipart/form-data for scenario contains json part and binary part
 //   - options - FormDataClientJSONPartOptions contains the optional parameters for the FormDataClient.JSONPart method.
-func (client *FormDataClient) JSONPart(ctx context.Context, body JSONPartRequest, options *FormDataClientJSONPartOptions) (FormDataClientJSONPartResponse, error) {
+func (client *FormDataClient) JSONPart(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientJSONPartOptions) (FormDataClientJSONPartResponse, error) {
 	var err error
 	const operationName = "FormDataClient.JSONPart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -229,14 +230,14 @@ func (client *FormDataClient) JSONPart(ctx context.Context, body JSONPartRequest
 }
 
 // jsonPartCreateRequest creates the JSONPart request.
-func (client *FormDataClient) jsonPartCreateRequest(ctx context.Context, body JSONPartRequest, options *FormDataClientJSONPartOptions) (*policy.Request, error) {
+func (client *FormDataClient) jsonPartCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientJSONPartOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/json-part"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -245,7 +246,7 @@ func (client *FormDataClient) jsonPartCreateRequest(ctx context.Context, body JS
 // MultiBinaryParts - Test content-type: multipart/form-data for scenario contains multi binary parts
 //   - options - FormDataClientMultiBinaryPartsOptions contains the optional parameters for the FormDataClient.MultiBinaryParts
 //     method.
-func (client *FormDataClient) MultiBinaryParts(ctx context.Context, body MultiBinaryPartsRequest, options *FormDataClientMultiBinaryPartsOptions) (FormDataClientMultiBinaryPartsResponse, error) {
+func (client *FormDataClient) MultiBinaryParts(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientMultiBinaryPartsOptions) (FormDataClientMultiBinaryPartsResponse, error) {
 	var err error
 	const operationName = "FormDataClient.MultiBinaryParts"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -267,14 +268,14 @@ func (client *FormDataClient) MultiBinaryParts(ctx context.Context, body MultiBi
 }
 
 // multiBinaryPartsCreateRequest creates the MultiBinaryParts request.
-func (client *FormDataClient) multiBinaryPartsCreateRequest(ctx context.Context, body MultiBinaryPartsRequest, options *FormDataClientMultiBinaryPartsOptions) (*policy.Request, error) {
+func (client *FormDataClient) multiBinaryPartsCreateRequest(ctx context.Context, body io.ReadSeekCloser, options *FormDataClientMultiBinaryPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/multi-binary-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := req.SetBody(body, "multipart/form-data"); err != nil {
 		return nil, err
 	}
 	return req, nil

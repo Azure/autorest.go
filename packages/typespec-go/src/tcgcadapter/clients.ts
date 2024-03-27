@@ -223,6 +223,20 @@ export class clientAdapter {
     }
   }
 
+  private adaptContentType(contentTypeStr: string): 'binary' | 'JSON' | 'Text' | 'XML' {
+    // we only recognize/support JSON, text, and XML content types, so assume anything else is binary
+    // NOTE: we check XML before text in order to support text/xml
+    let contentType: go.BodyFormat = 'binary';
+    if (contentTypeStr.match(/json/i)) {
+      contentType = 'JSON';
+    } else if (contentTypeStr.match(/xml/i)) {
+      contentType = 'XML';
+    } else if (contentTypeStr.match(/text/i)) {
+      contentType = 'Text';
+    } 
+    return contentType;
+  }
+
   private adaptMethodParameter(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter, optionalGroup?: go.ParameterGroup): go.Parameter {
     if (param.isApiVersionParam && param.clientDefaultValue) {
       // we emit the api version param inline as a literal, never as a param.
@@ -261,8 +275,14 @@ export class clientAdapter {
     const byVal = isTypePassedByValue(param.type);
 
     if (param.kind === 'body') {
-      // TODO: hard-coded format type
-      adaptedParam = new go.BodyParameter(paramName, 'JSON', param.defaultContentType, this.ta.getPossibleType(param.type, false, true), paramType, byVal);
+      // TODO: form data? (non-multipart)
+      const contentType = this.adaptContentType(param.defaultContentType);
+      let bodyType = this.ta.getPossibleType(param.type, false, true);
+      if (contentType === 'binary') {
+        // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
+        bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+      }
+      adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramType, byVal);
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
         if (param.collectionFormat === 'multi') {
@@ -327,17 +347,9 @@ export class clientAdapter {
     const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this. getMethodNameForDocComment(method)), method);
     this.ta.codeModel.responseEnvelopes.push(respEnv);
 
-    // used to track possible operation response body types
-    const bodyResponses = new Array<tcgc.SdkType>();
-
     // add any headers
     const addedHeaders = new Set<string>();
     for (const httpResp of Object.values(sdkMethod.operation.responses)) { 
-      // for LROs we don't look at the operation response as it contains the polling response type
-      if (!go.isLROMethod(method) && httpResp.type && !bodyResponses.includes(httpResp.type)) {
-        bodyResponses.push(httpResp.type);
-      }
-
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
@@ -354,25 +366,57 @@ export class clientAdapter {
       }
     }
 
-    let sdkResponse: tcgc.SdkType | undefined;
+    let sdkResponseType = sdkMethod.response.type;
 
-    if (go.isLROMethod(method) && sdkMethod.response.type) {
-      // use the method response for LROs as it contains the "final response" type
-      sdkResponse = sdkMethod.response.type;
-    } else if (bodyResponses.length === 1) {
-      sdkResponse = bodyResponses[0];
-    } else if (bodyResponses.length > 1) {
-      throw new Error('any response NYI');
+    if (!sdkResponseType) {
+      // method doesn't return a type, so we're done
+      return respEnv;
     }
 
-    if (sdkResponse?.kind === 'model') {
-      // workaround until https://github.com/Azure/typespec-azure/issues/124 is fixed
-      if (sdkResponse.name === 'OperationStatus' || sdkResponse.name === 'ResourceOperationStatus') {
-        return respEnv;
+    // workaround until https://github.com/Azure/typespec-azure/issues/124 is fixed
+    if (sdkResponseType.kind === 'model' && (sdkResponseType.name === 'OperationStatus' || sdkResponseType.name === 'ResourceOperationStatus')) {
+      return respEnv;
+    }
+    // end workaround
+
+    // for paged methods, tcgc models the method response type as an Array<T>.
+    // however, we want the synthesized paged response envelope as that's what Go returns.
+    if (sdkMethod.kind === 'paging') {
+      // grab the paged response envelope type from the first response
+      sdkResponseType = Object.values(sdkMethod.operation.responses)[0].type!;
+    }
+
+    // we have a response type, determine the content type
+    let contentType: go.BodyFormat = 'binary';
+    if (sdkMethod.kind === 'lro') {
+      // we can't grovel through the operation responses for LROs as some of them
+      // return only headers, thus have no content type. while it's highly likely
+      // to only ever be JSON, this will be broken for LROs that return text/plain
+      // or a binary response. the former seems unlikely, the latter though...??
+      // TODO: https://github.com/Azure/typespec-azure/issues/535
+      contentType = 'JSON';
+    } else {
+      let foundResp = false;
+      for (const httpResp of Object.values(sdkMethod.operation.responses)) {
+        if (!httpResp.type || !httpResp.defaultContentType || httpResp.type.kind !== sdkResponseType.kind) {
+          continue;
+        }
+        contentType = this.adaptContentType(httpResp.defaultContentType);
+        foundResp = true;
+        break;
       }
-      // end workaround
+      if (!foundResp) {
+        throw new Error(`didn't find HTTP response for kind ${sdkResponseType.kind} in method ${method.name}`);
+      }
+    }
+
+    if (contentType === 'binary') {
+      respEnv.result = new go.BinaryResult('Body', 'binary');
+      respEnv.result.description = 'Body contains the streaming response.';
+      return respEnv;
+    } else if (sdkResponseType.kind === 'model') {
       let modelType: go.ModelType | undefined;
-      const modelName = ensureNameCase(sdkResponse.name).toUpperCase();
+      const modelName = ensureNameCase(sdkResponseType.name).toUpperCase();
       for (const model of this.ta.codeModel.models) {
         if (model.name.toUpperCase() === modelName) {
           modelType = model;
@@ -380,22 +424,20 @@ export class clientAdapter {
         }
       }
       if (!modelType) {
-        throw new Error(`didn't find type name ${sdkResponse.name} for response envelope ${respEnv.name}`);
+        throw new Error(`didn't find model type name ${sdkResponseType.name} for response envelope ${respEnv.name}`);
       }
       if (go.isPolymorphicType(modelType)) {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
       } else {
-        // TODO: hard-coded JSON
-        respEnv.result = new go.ModelResult(modelType, 'JSON');
+        respEnv.result = new go.ModelResult(modelType, contentType);
       }
-      respEnv.result.description = sdkResponse.description;
-    } else if (sdkResponse) {
-      const resultType = this.ta.getPossibleType(sdkResponse, false, false);
+      respEnv.result.description = sdkResponseType.description;
+    } else {
+      const resultType = this.ta.getPossibleType(sdkResponseType, false, false);
       if (go.isInterfaceType(resultType) || go.isLiteralValue(resultType) || go.isModelType(resultType) || go.isPolymorphicType(resultType) || go.isQualifiedType(resultType)) {
         throw new Error(`invalid monomorphic result type ${go.getTypeDeclaration(resultType)}`);
       }
-      // TODO: hard-coded JSON
-      respEnv.result = new go.MonomorphicResult('Value', 'JSON', resultType, isTypePassedByValue(sdkResponse));
+      respEnv.result = new go.MonomorphicResult('Value', contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
   
     return respEnv;

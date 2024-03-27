@@ -87,7 +87,7 @@ func (f *FilesServerTransport) dispatchGetEmptyFile(req *http.Request) (*http.Re
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -109,7 +109,7 @@ func (f *FilesServerTransport) dispatchGetFile(req *http.Request) (*http.Respons
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -131,7 +131,7 @@ func (f *FilesServerTransport) dispatchGetFileLarge(req *http.Request) (*http.Re
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
