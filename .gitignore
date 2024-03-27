@@ -384,3 +384,5 @@ package-deps.json
 
 tempoutput
 junit.xml
+
+cadl-ranch-coverage.json
