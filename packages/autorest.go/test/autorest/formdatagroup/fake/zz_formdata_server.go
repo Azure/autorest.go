@@ -125,7 +125,7 @@ func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.R
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -147,7 +147,7 @@ func (f *FormdataServerTransport) dispatchUploadFileViaBody(req *http.Request) (
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -195,7 +195,7 @@ func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err

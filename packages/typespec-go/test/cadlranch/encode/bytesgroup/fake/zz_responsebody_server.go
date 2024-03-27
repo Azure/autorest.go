@@ -136,7 +136,7 @@ func (r *ResponseBodyServerTransport) dispatchCustomContentType(req *http.Reques
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ func (r *ResponseBodyServerTransport) dispatchOctetStream(req *http.Request) (*h
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err

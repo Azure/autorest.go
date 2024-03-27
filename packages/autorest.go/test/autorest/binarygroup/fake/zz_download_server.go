@@ -75,7 +75,7 @@ func (d *DownloadServerTransport) dispatchErrorStream(req *http.Request) (*http.
 	}
 	resp, err := server.NewResponse(respContent, req, &server.ResponseOptions{
 		Body:        server.GetResponse(respr).Body,
-		ContentType: "application/octet-stream",
+		ContentType: req.Header.Get("Content-Type"),
 	})
 	if err != nil {
 		return nil, err

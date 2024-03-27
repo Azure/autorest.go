@@ -240,7 +240,7 @@ function generateServerTransportMethods(clientPkg: string, serverTransport: stri
       } else if (go.isBinaryResult(method.responseEnvelope.result)) {
         content += '\tresp, err := server.NewResponse(respContent, req, &server.ResponseOptions{\n';
         content += `\t\tBody: server.GetResponse(respr).${getResultFieldName(method.responseEnvelope.result)},\n`;
-        content += '\t\tContentType: "application/octet-stream",\n';
+        content += '\t\tContentType: req.Header.Get("Content-Type"),\n';
         content += '\t})\n';
       } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
         if (go.isBytesType(method.responseEnvelope.result.monomorphicType)) {
