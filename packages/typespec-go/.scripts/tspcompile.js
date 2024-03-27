@@ -43,7 +43,7 @@ const cadlRanch = {
   //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
-  'multipartgroup': ['payload/multipart'],  // missing tests
+  'multipartgroup': ['payload/multipart'],
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests

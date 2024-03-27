@@ -3,7 +3,7 @@ module multipartgroup
 go 1.18
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.10.0
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.10.1-0.20240321175614-ce45097b4b27
 	github.com/stretchr/testify v1.8.4
 )
 
@@ -15,5 +15,3 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/Azure/azure-sdk-for-go/sdk/azcore => ../../../../../../../azure-sdk-for-go/sdk/azcore
