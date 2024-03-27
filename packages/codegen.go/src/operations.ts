@@ -842,22 +842,25 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       text += '\treturn req, nil\n';
     }
   } else if (go.isMultipartFormBodyParameter(bodyParam)) {
-    text += '\tformData := map[string]any{}\n';
-    for (const param of values(method.parameters)) {
-      if (!go.isMultipartFormBodyParameter(param)) {
-        continue;
-      }
-      const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
-      if (helpers.isRequiredParameter(param)) {
-        text += `\t${setter}\n`;
-      } else {
-        text += emitParamGroupCheck(param);
-        text += `\t${setter}\n\t}\n`;
+    if (go.isModelType(bodyParam.type) && bodyParam.type.annotations.multipartFormData) {
+      text += `\tformData, err := ${bodyParam.name}.toMultipartFormData()\n`;
+      text += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+    } else {
+      text += '\tformData := map[string]any{}\n';
+      for (const param of values(method.parameters)) {
+        if (!go.isMultipartFormBodyParameter(param)) {
+          continue;
+        }
+        const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
+        if (helpers.isRequiredParameter(param)) {
+          text += `\t${setter}\n`;
+        } else {
+          text += emitParamGroupCheck(param);
+          text += `\t${setter}\n\t}\n`;
+        }
       }
     }
-    text += '\tif err := runtime.SetMultipartFormData(req, formData); err != nil {\n';
-    text += '\t\treturn nil, err\n';
-    text += '\t}\n';
+    text += '\tif err := runtime.SetMultipartFormData(req, formData); err != nil {\n\t\treturn nil, err\n\t}\n';
     text += '\treturn req, nil\n';
   } else if (go.isFormBodyParameter(bodyParam)) {
     const emitFormData = function (param: go.Parameter, setter: string): string {

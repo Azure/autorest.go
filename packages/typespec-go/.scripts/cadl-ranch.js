@@ -5,7 +5,14 @@ import { execSync } from 'child_process';
 const toolsModRoot = execSync('git rev-parse --show-toplevel').toString().trim() + '/packages/typespec-go/node_modules/@azure-tools/';
 
 const switches = [];
+let execSyncOptions;
+
 switch (process.argv[2]) {
+  case '--serve':
+    switches.push('serve');
+    switches.push(toolsModRoot + 'cadl-ranch-specs/http');
+    execSyncOptions = {stdio: 'inherit'};
+    break;
   case '--start':
     switches.push('server');
     switches.push('start');
@@ -23,4 +30,4 @@ if (switches.length === 0) {
 
 const cmdLine = toolsModRoot + 'cadl-ranch/node_modules/.bin/cadl-ranch ' + switches.join(' ');
 console.log(cmdLine);
-execSync(cmdLine);
+execSync(cmdLine, execSyncOptions);

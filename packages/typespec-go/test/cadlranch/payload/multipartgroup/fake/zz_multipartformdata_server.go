@@ -5,13 +5,18 @@
 package fake
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"io"
+	"mime"
+	"mime/multipart"
 	"multipartgroup"
 	"net/http"
 )
@@ -20,31 +25,31 @@ import (
 type MultiPartFormDataServer struct {
 	// Basic is the fake for method MultiPartFormDataClient.Basic
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Basic func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientBasicOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientBasicResponse], errResp azfake.ErrorResponder)
+	Basic func(ctx context.Context, body multipartgroup.MultiPartRequest, options *multipartgroup.MultiPartFormDataClientBasicOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientBasicResponse], errResp azfake.ErrorResponder)
 
 	// BinaryArrayParts is the fake for method MultiPartFormDataClient.BinaryArrayParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	BinaryArrayParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientBinaryArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientBinaryArrayPartsResponse], errResp azfake.ErrorResponder)
+	BinaryArrayParts func(ctx context.Context, body multipartgroup.BinaryArrayPartsRequest, options *multipartgroup.MultiPartFormDataClientBinaryArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientBinaryArrayPartsResponse], errResp azfake.ErrorResponder)
 
 	// CheckFileNameAndContentType is the fake for method MultiPartFormDataClient.CheckFileNameAndContentType
 	// HTTP status codes to indicate success: http.StatusNoContent
-	CheckFileNameAndContentType func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientCheckFileNameAndContentTypeOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientCheckFileNameAndContentTypeResponse], errResp azfake.ErrorResponder)
+	CheckFileNameAndContentType func(ctx context.Context, body multipartgroup.MultiPartRequest, options *multipartgroup.MultiPartFormDataClientCheckFileNameAndContentTypeOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientCheckFileNameAndContentTypeResponse], errResp azfake.ErrorResponder)
 
 	// Complex is the fake for method MultiPartFormDataClient.Complex
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Complex func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientComplexOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientComplexResponse], errResp azfake.ErrorResponder)
+	Complex func(ctx context.Context, body multipartgroup.ComplexPartsRequest, options *multipartgroup.MultiPartFormDataClientComplexOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientComplexResponse], errResp azfake.ErrorResponder)
 
 	// JSONArrayParts is the fake for method MultiPartFormDataClient.JSONArrayParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONArrayParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder)
+	JSONArrayParts func(ctx context.Context, body multipartgroup.JSONArrayPartsRequest, options *multipartgroup.MultiPartFormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder)
 
 	// JSONPart is the fake for method MultiPartFormDataClient.JSONPart
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONPart func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientJSONPartOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONPartResponse], errResp azfake.ErrorResponder)
+	JSONPart func(ctx context.Context, body multipartgroup.JSONPartRequest, options *multipartgroup.MultiPartFormDataClientJSONPartOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONPartResponse], errResp azfake.ErrorResponder)
 
 	// MultiBinaryParts is the fake for method MultiPartFormDataClient.MultiBinaryParts
 	// HTTP status codes to indicate success: http.StatusNoContent
-	MultiBinaryParts func(ctx context.Context, body io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientMultiBinaryPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientMultiBinaryPartsResponse], errResp azfake.ErrorResponder)
+	MultiBinaryParts func(ctx context.Context, body multipartgroup.MultiBinaryPartsRequest, options *multipartgroup.MultiPartFormDataClientMultiBinaryPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientMultiBinaryPartsResponse], errResp azfake.ErrorResponder)
 }
 
 // NewMultiPartFormDataServerTransport creates a new instance of MultiPartFormDataServerTransport with the provided implementation.
@@ -101,7 +106,41 @@ func (m *MultiPartFormDataServerTransport) dispatchBasic(req *http.Request) (*ht
 	if m.srv.Basic == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Basic not implemented")}
 	}
-	respr, errRespr := m.srv.Basic(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.MultiPartRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "id":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ID = string(content)
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.Basic(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -120,7 +159,43 @@ func (m *MultiPartFormDataServerTransport) dispatchBinaryArrayParts(req *http.Re
 	if m.srv.BinaryArrayParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BinaryArrayParts not implemented")}
 	}
-	respr, errRespr := m.srv.BinaryArrayParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.BinaryArrayPartsRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "id":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ID = string(content)
+		case "pictures":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.Pictures = append(body.Pictures, streaming.MultipartContent{
+				Body:        streaming.NopCloser(bytes.NewReader(content)),
+				ContentType: part.Header.Get("Content-Type"),
+				Filename:    part.FileName(),
+			})
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.BinaryArrayParts(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -139,7 +214,41 @@ func (m *MultiPartFormDataServerTransport) dispatchCheckFileNameAndContentType(r
 	if m.srv.CheckFileNameAndContentType == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckFileNameAndContentType not implemented")}
 	}
-	respr, errRespr := m.srv.CheckFileNameAndContentType(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.MultiPartRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "id":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ID = string(content)
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.CheckFileNameAndContentType(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -158,7 +267,67 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 	if m.srv.Complex == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Complex not implemented")}
 	}
-	respr, errRespr := m.srv.Complex(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.ComplexPartsRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "address":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			if err := json.Unmarshal(content, &body.Address); err != nil {
+				return nil, err
+			}
+		case "id":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ID = string(content)
+		case "pictures":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.Pictures = append(body.Pictures, streaming.MultipartContent{
+				Body:        streaming.NopCloser(bytes.NewReader(content)),
+				ContentType: part.Header.Get("Content-Type"),
+				Filename:    part.FileName(),
+			})
+		case "previousAddresses":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			if err := json.Unmarshal(content, &body.PreviousAddresses); err != nil {
+				return nil, err
+			}
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.Complex(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -177,7 +346,43 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONArrayParts(req *http.Requ
 	if m.srv.JSONArrayParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method JSONArrayParts not implemented")}
 	}
-	respr, errRespr := m.srv.JSONArrayParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.JSONArrayPartsRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "previousAddresses":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			if err := json.Unmarshal(content, &body.PreviousAddresses); err != nil {
+				return nil, err
+			}
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.JSONArrayParts(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -196,7 +401,43 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONPart(req *http.Request) (
 	if m.srv.JSONPart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method JSONPart not implemented")}
 	}
-	respr, errRespr := m.srv.JSONPart(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.JSONPartRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "address":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			if err := json.Unmarshal(content, &body.Address); err != nil {
+				return nil, err
+			}
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.JSONPart(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -215,7 +456,43 @@ func (m *MultiPartFormDataServerTransport) dispatchMultiBinaryParts(req *http.Re
 	if m.srv.MultiBinaryParts == nil {
 		return nil, &nonRetriableError{errors.New("fake for method MultiBinaryParts not implemented")}
 	}
-	respr, errRespr := m.srv.MultiBinaryParts(req.Context(), req.Body.(io.ReadSeekCloser), nil)
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.MultiBinaryPartsRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		case "picture":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.Picture.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.Picture.ContentType = part.Header.Get("Content-Type")
+			body.Picture.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.MultiBinaryParts(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

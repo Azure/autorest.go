@@ -575,3 +575,14 @@ export function getBitSizeForNumber(intSize: 'float32' | 'float64' | 'int8' | 'i
       return '64';
   }
 }
+
+// returns the underlying map/slice element/value type
+// if item isn't a map or slice, item is returned
+export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType {
+  if (go.isMapType(item)) {
+    return recursiveUnwrapMapSlice(item.valueType);
+  } else if (go.isSliceType(item)) {
+    return recursiveUnwrapMapSlice(item.elementType);
+  }
+  return item;
+}

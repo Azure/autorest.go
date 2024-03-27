@@ -304,13 +304,17 @@ export class clientAdapter {
 
     if (param.kind === 'body') {
       // TODO: form data? (non-multipart)
-      const contentType = this.adaptContentType(param.defaultContentType);
-      let bodyType = this.ta.getPossibleType(param.type, false, true);
-      if (contentType === 'binary') {
-        // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
-        bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+      if (param.defaultContentType.match(/multipart/i)) {
+        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getPossibleType(param.type, false, true), paramType, byVal);
+      } else {
+        const contentType = this.adaptContentType(param.defaultContentType);
+        let bodyType = this.ta.getPossibleType(param.type, false, true);
+        if (contentType === 'binary') {
+          // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
+          bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
+        }
+        adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramType, byVal);
       }
-      adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramType, byVal);
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
         if (param.collectionFormat === 'multi') {
@@ -385,7 +389,7 @@ export class clientAdapter {
           // we omit the LRO polling headers as they aren't useful on the response envelope
           continue;
         }
-        
+
         // TODO: x-ms-header-collection-prefix
         const headerResp = new go.HeaderResponse(ensureNameCase(httpHeader.serializedName), this.adaptHeaderType(httpHeader.type, false), httpHeader.serializedName, isTypePassedByValue(httpHeader.type));
         headerResp.description = httpHeader.description;
@@ -467,7 +471,7 @@ export class clientAdapter {
       }
       respEnv.result = new go.MonomorphicResult('Value', contentType, resultType, isTypePassedByValue(sdkResponseType));
     }
-  
+
     return respEnv;
   }
 
