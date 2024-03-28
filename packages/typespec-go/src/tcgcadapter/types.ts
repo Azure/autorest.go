@@ -127,6 +127,7 @@ export class typeAdapter {
     switch (type.kind) {
       case 'any':
       case 'armId':
+      case 'azureLocation':
       case 'boolean':
       case 'bytes':
       case 'decimal':
@@ -372,6 +373,7 @@ export class typeAdapter {
         return intType;
       }
       case 'armId':
+      case 'azureLocation':
       case 'guid':
       case 'string':
       case 'uuid':

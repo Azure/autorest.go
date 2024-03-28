@@ -28,6 +28,7 @@ const cadlRanch = {
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
   'lrostdgroup': ['azure/core/lro/standard'],
+  'corescalargroup': ['azure/core/scalar'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
