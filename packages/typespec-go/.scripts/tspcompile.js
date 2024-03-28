@@ -40,7 +40,7 @@ const cadlRanch = {
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
   //'spreadgroup': ['parameters/spread'], // needs more investigation
-  //'contentneggroup': ['payload/content-negotiation'], // https://github.com/Azure/typespec-azure/issues/107
+  'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
   'multipartgroup': ['payload/multipart'],  // missing tests

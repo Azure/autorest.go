@@ -101,6 +101,12 @@ export class typeAdapter {
     for (const modelType of modelTypes) {
       const content = aggregateProperties(modelType.tcgc);
       for (const prop of values(content.props)) {
+        if (prop.kind === 'header') {
+          // the common case here is the @header decorator specifying
+          // the content-type for the model. we can just skip it.
+          // TODO: follow up with tcgc to see if we can remove the entry.
+          continue;
+        }
         const field = this.getModelField(prop, modelType.tcgc);
         modelType.go.fields.push(field);
       }
