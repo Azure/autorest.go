@@ -49,3 +49,14 @@ type NamingClientRequestOptions struct {
 type NamingClientResponseOptions struct {
 	// placeholder for future optional parameters
 }
+
+// UnionEnumClientUnionEnumMemberNameOptions contains the optional parameters for the UnionEnumClient.UnionEnumMemberName
+// method.
+type UnionEnumClientUnionEnumMemberNameOptions struct {
+	// placeholder for future optional parameters
+}
+
+// UnionEnumClientUnionEnumNameOptions contains the optional parameters for the UnionEnumClient.UnionEnumName method.
+type UnionEnumClientUnionEnumNameOptions struct {
+	// placeholder for future optional parameters
+}

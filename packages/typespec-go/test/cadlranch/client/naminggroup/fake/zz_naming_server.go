@@ -23,6 +23,9 @@ type NamingServer struct {
 	// ModelServer contains the fakes for client ModelClient
 	ModelServer ModelServer
 
+	// UnionEnumServer contains the fakes for client UnionEnumClient
+	UnionEnumServer UnionEnumServer
+
 	// Client is the fake for method NamingClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Client func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
@@ -62,9 +65,10 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 // NamingServerTransport connects instances of naminggroup.NamingClient to instances of NamingServer.
 // Don't use this type directly, use NewNamingServerTransport instead.
 type NamingServerTransport struct {
-	srv           *NamingServer
-	trMu          sync.Mutex
-	trModelServer *ModelServerTransport
+	srv               *NamingServer
+	trMu              sync.Mutex
+	trModelServer     *ModelServerTransport
+	trUnionEnumServer *UnionEnumServerTransport
 }
 
 // Do implements the policy.Transporter interface for NamingServerTransport.
@@ -91,6 +95,11 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 			return NewModelServerTransport(&n.srv.ModelServer)
 		})
 		resp, err = n.trModelServer.Do(req)
+	case "UnionEnumClient":
+		initServer(&n.trMu, &n.trUnionEnumServer, func() *UnionEnumServerTransport {
+			return NewUnionEnumServerTransport(&n.srv.UnionEnumServer)
+		})
+		resp, err = n.trUnionEnumServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

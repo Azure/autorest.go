@@ -48,3 +48,13 @@ type NamingClientRequestResponse struct {
 type NamingClientResponseResponse struct {
 	DefaultName *string
 }
+
+// UnionEnumClientUnionEnumMemberNameResponse contains the response from method UnionEnumClient.UnionEnumMemberName.
+type UnionEnumClientUnionEnumMemberNameResponse struct {
+	// placeholder for future response values
+}
+
+// UnionEnumClientUnionEnumNameResponse contains the response from method UnionEnumClient.UnionEnumName.
+type UnionEnumClientUnionEnumNameResponse struct {
+	// placeholder for future response values
+}
