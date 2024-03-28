@@ -25,6 +25,13 @@ func (client *NamingClient) NewModelClient() *ModelClient {
 	}
 }
 
+// NewUnionEnumClient creates a new instance of [UnionEnumClient].
+func (client *NamingClient) NewUnionEnumClient() *UnionEnumClient {
+	return &UnionEnumClient{
+		internal: client.internal,
+	}
+}
+
 // - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
 func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
