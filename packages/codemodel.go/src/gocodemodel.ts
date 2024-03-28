@@ -127,6 +127,9 @@ export interface ModelType extends StructType {
 
 export interface ModelAnnotations {
   omitSerDeMethods: boolean;
+
+  // indicates the model should be converted into multipart/form data
+  multipartFormData: boolean;
 }
 
 // UsageFlags are bit flags indicating how a model/polymorphic type is used
@@ -1208,8 +1211,9 @@ export class ModelType implements ModelType {
 }
 
 export class ModelAnnotations implements ModelAnnotations {
-  constructor(omitSerDe: boolean) {
+  constructor(omitSerDe: boolean, multipartForm: boolean) {
     this.omitSerDeMethods = omitSerDe;
+    this.multipartFormData = multipartForm;
   }
 }
 

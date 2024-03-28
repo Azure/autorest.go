@@ -129,6 +129,12 @@
       "longName": "--stop",
       "description": "Stops the cadl-ranch test server",
       "associatedCommands": ["cadl-ranch"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--serve",
+      "description": "Starts the cadl-ranch test server with output",
+      "associatedCommands": ["cadl-ranch"]
     }
   ]
 }

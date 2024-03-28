@@ -628,7 +628,7 @@ func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response,
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
-		if err == io.EOF {
+		if errors.Is(err, io.EOF) {
 			break
 		} else if err != nil {
 			return nil, err

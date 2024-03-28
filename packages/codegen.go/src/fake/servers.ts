@@ -406,16 +406,17 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     for (const param of values(method.parameters)) {
       if (go.isMultipartFormBodyParameter(param)) {
         let pkgPrefix = '';
-        if (go.isConstantType(param.type)) {
+        if (go.isConstantType(param.type) || go.isModelType(param.type)) {
           pkgPrefix = clientPkg + '.';
         }
         content += `\tvar ${param.name} ${pkgPrefix}${go.getTypeDeclaration(param.type)}\n`;
       }
     }
+
     content += '\tfor {\n';
     content += '\t\tvar part *multipart.Part\n';
     content += '\t\tpart, err = reader.NextPart()\n';
-    content += '\t\tif err == io.EOF {\n\t\t\tbreak\n';
+    content += '\t\tif errors.Is(err, io.EOF) {\n\t\t\tbreak\n';
     content += '\t\t} else if err != nil {\n\t\t\treturn nil, err\n\t\t}\n';
     content += '\t\tvar content []byte\n';
     content += '\t\tswitch fn := part.FormName(); fn {\n';
@@ -454,12 +455,20 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
+    const isMultipartContentType = function(type: go.PossibleType): type is go.QualifiedType {
+      type = helpers.recursiveUnwrapMapSlice(type);
+      return (go.isQualifiedType(type) && type.typeName === 'MultipartContent');
+    };
+
     const emitCase = function(caseValue: string, paramVar: string, type: go.PossibleType): string {
       let caseContent = `\t\tcase "${caseValue}":\n`;
       caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
       caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
       let assignedValue: string | undefined;
-      if (go.isQualifiedType(type) && type.typeName === 'ReadSeekCloser') {
+      if (go.isModelType(helpers.recursiveUnwrapMapSlice(type))) {
+        imports.add('encoding/json');
+        caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
+      } else if (go.isQualifiedType(type) && type.typeName === 'ReadSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
@@ -501,6 +510,23 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           default:
             throw new Error(`unhandled multipart parameter primitive type ${type.typeName}`);
         }
+      } else if (isMultipartContentType(type)) {
+        imports.add('bytes');
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+        const bodyContent = 'streaming.NopCloser(bytes.NewReader(content))';
+        const contentType = 'part.Header.Get("Content-Type")';
+        const filename = 'part.FileName()';
+        if (go.isSliceType(type)) {
+          caseContent += `\t\t\t${paramVar} = append(${paramVar}, streaming.MultipartContent{\n`;
+          caseContent += `\t\t\t\tBody: ${bodyContent},\n`;
+          caseContent += `\t\t\t\tContentType: ${contentType},\n`;
+          caseContent += `\t\t\t\tFilename: ${filename},\n`;
+          caseContent += '\t\t\t})\n';
+        } else {
+          caseContent += `\t\t\t${paramVar}.Body = ${bodyContent}\n`;
+          caseContent += `\t\t\t${paramVar}.ContentType = ${contentType}\n`;
+          caseContent += `\t\t\t${paramVar}.Filename = ${filename}\n`;
+        }
       } else if (go.isSliceType(type)) {
         if (go.isQualifiedType(type.elementType) && type.elementType.typeName === 'ReadSeekCloser') {
           imports.add('bytes');
@@ -520,7 +546,13 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
 
     for (const param of values(method.parameters)) {
       if (go.isMultipartFormBodyParameter(param)) {
-        content += emitCase(param.name, param.name, param.type);
+        if (go.isModelType(param.type)) {
+          for (const field of param.type.fields) {
+            content += emitCase(field.serializedName, `${param.name}.${field.name}`, field.type);
+          }
+        } else {
+          content += emitCase(param.name, param.name, param.type);
+        }
       }
     }
 
