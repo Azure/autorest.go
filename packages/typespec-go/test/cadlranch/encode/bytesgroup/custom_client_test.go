@@ -196,12 +196,9 @@ func TestResponseBodyClientCustomContent(t *testing.T) {
 	respBody, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	require.NoError(t, resp.Body.Close())
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
 	require.NoError(t, err)
-	pngBody, err := io.ReadAll(pngFile)
-	require.NoError(t, err)
-	require.NoError(t, pngFile.Close())
-	require.EqualValues(t, pngBody, respBody)
+	require.EqualValues(t, pngFile, respBody)
 }
 
 func TestResponseBodyClientDefault(t *testing.T) {
@@ -221,10 +218,7 @@ func TestResponseBodyClientOctetStream(t *testing.T) {
 	respBody, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 	require.NoError(t, resp.Body.Close())
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
 	require.NoError(t, err)
-	pngBody, err := io.ReadAll(pngFile)
-	require.NoError(t, err)
-	require.NoError(t, pngFile.Close())
-	require.EqualValues(t, pngBody, respBody)
+	require.EqualValues(t, pngFile, respBody)
 }
