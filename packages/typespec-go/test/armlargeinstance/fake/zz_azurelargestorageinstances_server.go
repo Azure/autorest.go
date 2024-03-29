@@ -18,46 +18,46 @@ import (
 	"regexp"
 )
 
-// AzureLargeInstanceAzureLargeStorageInstancesServer is a fake server for instances of the armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClient type.
-type AzureLargeInstanceAzureLargeStorageInstancesServer struct {
-	// Get is the fake for method AzureLargeInstanceAzureLargeStorageInstancesClient.Get
+// AzureLargeStorageInstancesServer is a fake server for instances of the armlargeinstance.AzureLargeStorageInstancesClient type.
+type AzureLargeStorageInstancesServer struct {
+	// Get is the fake for method AzureLargeStorageInstancesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeStorageInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientGetResponse], errResp azfake.ErrorResponder)
 
-	// NewListByResourceGroupPager is the fake for method AzureLargeInstanceAzureLargeStorageInstancesClient.NewListByResourceGroupPager
+	// NewListByResourceGroupPager is the fake for method AzureLargeStorageInstancesClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse])
 
-	// NewListBySubscriptionPager is the fake for method AzureLargeInstanceAzureLargeStorageInstancesClient.NewListBySubscriptionPager
+	// NewListBySubscriptionPager is the fake for method AzureLargeStorageInstancesClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(subscriptionID string, options *armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse])
 
-	// Update is the fake for method AzureLargeInstanceAzureLargeStorageInstancesClient.Update
+	// Update is the fake for method AzureLargeStorageInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties armlargeinstance.AzureLargeStorageInstanceTagsUpdate, options *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties armlargeinstance.AzureLargeStorageInstanceTagsUpdate, options *armlargeinstance.AzureLargeStorageInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
-// NewAzureLargeInstanceAzureLargeStorageInstancesServerTransport creates a new instance of AzureLargeInstanceAzureLargeStorageInstancesServerTransport with the provided implementation.
-// The returned AzureLargeInstanceAzureLargeStorageInstancesServerTransport instance is connected to an instance of armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClient via the
+// NewAzureLargeStorageInstancesServerTransport creates a new instance of AzureLargeStorageInstancesServerTransport with the provided implementation.
+// The returned AzureLargeStorageInstancesServerTransport instance is connected to an instance of armlargeinstance.AzureLargeStorageInstancesClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewAzureLargeInstanceAzureLargeStorageInstancesServerTransport(srv *AzureLargeInstanceAzureLargeStorageInstancesServer) *AzureLargeInstanceAzureLargeStorageInstancesServerTransport {
-	return &AzureLargeInstanceAzureLargeStorageInstancesServerTransport{
+func NewAzureLargeStorageInstancesServerTransport(srv *AzureLargeStorageInstancesServer) *AzureLargeStorageInstancesServerTransport {
+	return &AzureLargeStorageInstancesServerTransport{
 		srv:                         srv,
-		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse]](),
-		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse]](),
+		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse]](),
+		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse]](),
 	}
 }
 
-// AzureLargeInstanceAzureLargeStorageInstancesServerTransport connects instances of armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClient to instances of AzureLargeInstanceAzureLargeStorageInstancesServer.
-// Don't use this type directly, use NewAzureLargeInstanceAzureLargeStorageInstancesServerTransport instead.
-type AzureLargeInstanceAzureLargeStorageInstancesServerTransport struct {
-	srv                         *AzureLargeInstanceAzureLargeStorageInstancesServer
-	newListByResourceGroupPager *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse]]
-	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse]]
+// AzureLargeStorageInstancesServerTransport connects instances of armlargeinstance.AzureLargeStorageInstancesClient to instances of AzureLargeStorageInstancesServer.
+// Don't use this type directly, use NewAzureLargeStorageInstancesServerTransport instead.
+type AzureLargeStorageInstancesServerTransport struct {
+	srv                         *AzureLargeStorageInstancesServer
+	newListByResourceGroupPager *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse]]
+	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse]]
 }
 
-// Do implements the policy.Transporter interface for AzureLargeInstanceAzureLargeStorageInstancesServerTransport.
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for AzureLargeStorageInstancesServerTransport.
+func (a *AzureLargeStorageInstancesServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -67,18 +67,18 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) Do(req *ht
 	return a.dispatchToMethodFake(req, method)
 }
 
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (a *AzureLargeStorageInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "AzureLargeInstanceAzureLargeStorageInstancesClient.Get":
+	case "AzureLargeStorageInstancesClient.Get":
 		resp, err = a.dispatchGet(req)
-	case "AzureLargeInstanceAzureLargeStorageInstancesClient.NewListByResourceGroupPager":
+	case "AzureLargeStorageInstancesClient.NewListByResourceGroupPager":
 		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeInstanceAzureLargeStorageInstancesClient.NewListBySubscriptionPager":
+	case "AzureLargeStorageInstancesClient.NewListBySubscriptionPager":
 		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeInstanceAzureLargeStorageInstancesClient.Update":
+	case "AzureLargeStorageInstancesClient.Update":
 		resp, err = a.dispatchUpdate(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -87,7 +87,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchTo
 	return resp, err
 }
 
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeStorageInstancesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if a.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
@@ -124,7 +124,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchGe
 	return resp, nil
 }
 
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeStorageInstancesServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
 	if a.srv.NewListByResourceGroupPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByResourceGroupPager not implemented")}
 	}
@@ -147,7 +147,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNe
 		resp := a.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
-		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -165,7 +165,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNe
 	return resp, nil
 }
 
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeStorageInstancesServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
 	if a.srv.NewListBySubscriptionPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListBySubscriptionPager not implemented")}
 	}
@@ -184,7 +184,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNe
 		resp := a.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
 		newListBySubscriptionPager = &resp
 		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
-		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -202,7 +202,7 @@ func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchNe
 	return resp, nil
 }
 
-func (a *AzureLargeInstanceAzureLargeStorageInstancesServerTransport) dispatchUpdate(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeStorageInstancesServerTransport) dispatchUpdate(req *http.Request) (*http.Response, error) {
 	if a.srv.Update == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Update not implemented")}
 	}

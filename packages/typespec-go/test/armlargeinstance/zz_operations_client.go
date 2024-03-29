@@ -13,36 +13,35 @@ import (
 	"net/http"
 )
 
-// AzureLargeInstanceOperationsClient contains the methods for the Microsoft.AzureLargeInstance namespace.
-// Don't use this type directly, use NewAzureLargeInstanceOperationsClient() instead.
-type AzureLargeInstanceOperationsClient struct {
+// OperationsClient contains the methods for the Microsoft.AzureLargeInstance namespace.
+// Don't use this type directly, use NewOperationsClient() instead.
+type OperationsClient struct {
 	internal *arm.Client
 }
 
-// NewAzureLargeInstanceOperationsClient creates a new instance of AzureLargeInstanceOperationsClient with the specified values.
+// NewOperationsClient creates a new instance of OperationsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewAzureLargeInstanceOperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeInstanceOperationsClient, error) {
+func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*OperationsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &AzureLargeInstanceOperationsClient{
+	client := &OperationsClient{
 		internal: cl,
 	}
 	return client, nil
 }
 
 // NewListPager - List the operations for the provider
-//   - options - AzureLargeInstanceOperationsClientListOptions contains the optional parameters for the AzureLargeInstanceOperationsClient.NewListPager
-//     method.
-func (client *AzureLargeInstanceOperationsClient) NewListPager(options *AzureLargeInstanceOperationsClientListOptions) *runtime.Pager[AzureLargeInstanceOperationsClientListResponse] {
-	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstanceOperationsClientListResponse]{
-		More: func(page AzureLargeInstanceOperationsClientListResponse) bool {
+//   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
+func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
+	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
+		More: func(page OperationsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *AzureLargeInstanceOperationsClientListResponse) (AzureLargeInstanceOperationsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstanceOperationsClient.NewListPager")
+		Fetcher: func(ctx context.Context, page *OperationsClientListResponse) (OperationsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -51,7 +50,7 @@ func (client *AzureLargeInstanceOperationsClient) NewListPager(options *AzureLar
 				return client.listCreateRequest(ctx, options)
 			}, nil)
 			if err != nil {
-				return AzureLargeInstanceOperationsClientListResponse{}, err
+				return OperationsClientListResponse{}, err
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -60,7 +59,7 @@ func (client *AzureLargeInstanceOperationsClient) NewListPager(options *AzureLar
 }
 
 // listCreateRequest creates the List request.
-func (client *AzureLargeInstanceOperationsClient) listCreateRequest(ctx context.Context, options *AzureLargeInstanceOperationsClientListOptions) (*policy.Request, error) {
+func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.AzureLargeInstance/operations"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
@@ -74,10 +73,10 @@ func (client *AzureLargeInstanceOperationsClient) listCreateRequest(ctx context.
 }
 
 // listHandleResponse handles the List response.
-func (client *AzureLargeInstanceOperationsClient) listHandleResponse(resp *http.Response) (AzureLargeInstanceOperationsClientListResponse, error) {
-	result := AzureLargeInstanceOperationsClientListResponse{}
+func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
+	result := OperationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PagedOperation); err != nil {
-		return AzureLargeInstanceOperationsClientListResponse{}, err
+		return OperationsClientListResponse{}, err
 	}
 	return result, nil
 }

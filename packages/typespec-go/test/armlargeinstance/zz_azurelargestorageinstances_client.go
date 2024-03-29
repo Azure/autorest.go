@@ -16,21 +16,21 @@ import (
 	"strings"
 )
 
-// AzureLargeInstanceAzureLargeStorageInstancesClient contains the methods for the Microsoft.AzureLargeInstance namespace.
-// Don't use this type directly, use NewAzureLargeInstanceAzureLargeStorageInstancesClient() instead.
-type AzureLargeInstanceAzureLargeStorageInstancesClient struct {
+// AzureLargeStorageInstancesClient contains the methods for the Microsoft.AzureLargeInstance namespace.
+// Don't use this type directly, use NewAzureLargeStorageInstancesClient() instead.
+type AzureLargeStorageInstancesClient struct {
 	internal *arm.Client
 }
 
-// NewAzureLargeInstanceAzureLargeStorageInstancesClient creates a new instance of AzureLargeInstanceAzureLargeStorageInstancesClient with the specified values.
+// NewAzureLargeStorageInstancesClient creates a new instance of AzureLargeStorageInstancesClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewAzureLargeInstanceAzureLargeStorageInstancesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeInstanceAzureLargeStorageInstancesClient, error) {
+func NewAzureLargeStorageInstancesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeStorageInstancesClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &AzureLargeInstanceAzureLargeStorageInstancesClient{
+	client := &AzureLargeStorageInstancesClient{
 		internal: cl,
 	}
 	return client, nil
@@ -41,32 +41,32 @@ func NewAzureLargeInstanceAzureLargeStorageInstancesClient(credential azcore.Tok
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
-//   - options - AzureLargeInstanceAzureLargeStorageInstancesClientGetOptions contains the optional parameters for the AzureLargeInstanceAzureLargeStorageInstancesClient.Get
+//   - options - AzureLargeStorageInstancesClientGetOptions contains the optional parameters for the AzureLargeStorageInstancesClient.Get
 //     method.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeInstanceAzureLargeStorageInstancesClientGetOptions) (AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse, error) {
+func (client *AzureLargeStorageInstancesClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeStorageInstancesClientGetOptions) (AzureLargeStorageInstancesClientGetResponse, error) {
 	var err error
-	const operationName = "AzureLargeInstanceAzureLargeStorageInstancesClient.Get"
+	const operationName = "AzureLargeStorageInstancesClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, azureLargeStorageInstanceName, options)
 	if err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse{}, err
+		return AzureLargeStorageInstancesClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse{}, err
+		return AzureLargeStorageInstancesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse{}, err
+		return AzureLargeStorageInstancesClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeInstanceAzureLargeStorageInstancesClientGetOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeStorageInstancesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -92,10 +92,10 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) getCreateReque
 }
 
 // getHandleResponse handles the Get response.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) getHandleResponse(resp *http.Response) (AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse, error) {
-	result := AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse{}
+func (client *AzureLargeStorageInstancesClient) getHandleResponse(resp *http.Response) (AzureLargeStorageInstancesClientGetResponse, error) {
+	result := AzureLargeStorageInstancesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeStorageInstance); err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientGetResponse{}, err
+		return AzureLargeStorageInstancesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -105,15 +105,15 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) getHandleRespo
 // LargeStorage instance.
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - options - AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupOptions contains the optional parameters
-//     for the AzureLargeInstanceAzureLargeStorageInstancesClient.NewListByResourceGroupPager method.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListByResourceGroupPager(subscriptionID string, resourceGroupName string, options *AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupOptions) *runtime.Pager[AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse]{
-		More: func(page AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse) bool {
+//   - options - AzureLargeStorageInstancesClientListByResourceGroupOptions contains the optional parameters for the AzureLargeStorageInstancesClient.NewListByResourceGroupPager
+//     method.
+func (client *AzureLargeStorageInstancesClient) NewListByResourceGroupPager(subscriptionID string, resourceGroupName string, options *AzureLargeStorageInstancesClientListByResourceGroupOptions) *runtime.Pager[AzureLargeStorageInstancesClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AzureLargeStorageInstancesClientListByResourceGroupResponse]{
+		More: func(page AzureLargeStorageInstancesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse) (AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstanceAzureLargeStorageInstancesClient.NewListByResourceGroupPager")
+		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstancesClientListByResourceGroupResponse) (AzureLargeStorageInstancesClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstancesClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -122,7 +122,7 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListByResou
 				return client.listByResourceGroupCreateRequest(ctx, subscriptionID, resourceGroupName, options)
 			}, nil)
 			if err != nil {
-				return AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse{}, err
+				return AzureLargeStorageInstancesClientListByResourceGroupResponse{}, err
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -131,7 +131,7 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListByResou
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, options *AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, options *AzureLargeStorageInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -153,10 +153,10 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listByResource
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listByResourceGroupHandleResponse(resp *http.Response) (AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse, error) {
-	result := AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse{}
+func (client *AzureLargeStorageInstancesClient) listByResourceGroupHandleResponse(resp *http.Response) (AzureLargeStorageInstancesClientListByResourceGroupResponse, error) {
+	result := AzureLargeStorageInstancesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeStorageInstanceListResult); err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientListByResourceGroupResponse{}, err
+		return AzureLargeStorageInstancesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -164,15 +164,15 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listByResource
 // NewListBySubscriptionPager - Gets a list of AzureLargeStorageInstances in the specified subscription. The
 // operations returns various properties of each Azure LargeStorage instance.
 //   - subscriptionID - The ID of the target subscription.
-//   - options - AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionOptions contains the optional parameters
-//     for the AzureLargeInstanceAzureLargeStorageInstancesClient.NewListBySubscriptionPager method.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListBySubscriptionPager(subscriptionID string, options *AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionOptions) *runtime.Pager[AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse] {
-	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse]{
-		More: func(page AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse) bool {
+//   - options - AzureLargeStorageInstancesClientListBySubscriptionOptions contains the optional parameters for the AzureLargeStorageInstancesClient.NewListBySubscriptionPager
+//     method.
+func (client *AzureLargeStorageInstancesClient) NewListBySubscriptionPager(subscriptionID string, options *AzureLargeStorageInstancesClientListBySubscriptionOptions) *runtime.Pager[AzureLargeStorageInstancesClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AzureLargeStorageInstancesClientListBySubscriptionResponse]{
+		More: func(page AzureLargeStorageInstancesClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse) (AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstanceAzureLargeStorageInstancesClient.NewListBySubscriptionPager")
+		Fetcher: func(ctx context.Context, page *AzureLargeStorageInstancesClientListBySubscriptionResponse) (AzureLargeStorageInstancesClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeStorageInstancesClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -181,7 +181,7 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListBySubsc
 				return client.listBySubscriptionCreateRequest(ctx, subscriptionID, options)
 			}, nil)
 			if err != nil {
-				return AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse{}, err
+				return AzureLargeStorageInstancesClientListBySubscriptionResponse{}, err
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
@@ -190,7 +190,7 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) NewListBySubsc
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, subscriptionID string, options *AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, subscriptionID string, options *AzureLargeStorageInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -208,10 +208,10 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listBySubscrip
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listBySubscriptionHandleResponse(resp *http.Response) (AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse, error) {
-	result := AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse{}
+func (client *AzureLargeStorageInstancesClient) listBySubscriptionHandleResponse(resp *http.Response) (AzureLargeStorageInstancesClientListBySubscriptionResponse, error) {
+	result := AzureLargeStorageInstancesClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeStorageInstanceListResult); err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientListBySubscriptionResponse{}, err
+		return AzureLargeStorageInstancesClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -222,32 +222,32 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) listBySubscrip
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
 //   - properties - The resource properties to be updated.
-//   - options - AzureLargeInstanceAzureLargeStorageInstancesClientUpdateOptions contains the optional parameters for the AzureLargeInstanceAzureLargeStorageInstancesClient.Update
+//   - options - AzureLargeStorageInstancesClientUpdateOptions contains the optional parameters for the AzureLargeStorageInstancesClient.Update
 //     method.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeInstanceAzureLargeStorageInstancesClientUpdateOptions) (AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse, error) {
+func (client *AzureLargeStorageInstancesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeStorageInstancesClientUpdateOptions) (AzureLargeStorageInstancesClientUpdateResponse, error) {
 	var err error
-	const operationName = "AzureLargeInstanceAzureLargeStorageInstancesClient.Update"
+	const operationName = "AzureLargeStorageInstancesClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, azureLargeStorageInstanceName, properties, options)
 	if err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse{}, err
+		return AzureLargeStorageInstancesClientUpdateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse{}, err
+		return AzureLargeStorageInstancesClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse{}, err
+		return AzureLargeStorageInstancesClientUpdateResponse{}, err
 	}
 	resp, err := client.updateHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeInstanceAzureLargeStorageInstancesClientUpdateOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeStorageInstancesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -277,10 +277,10 @@ func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) updateCreateRe
 }
 
 // updateHandleResponse handles the Update response.
-func (client *AzureLargeInstanceAzureLargeStorageInstancesClient) updateHandleResponse(resp *http.Response) (AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse, error) {
-	result := AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse{}
+func (client *AzureLargeStorageInstancesClient) updateHandleResponse(resp *http.Response) (AzureLargeStorageInstancesClientUpdateResponse, error) {
+	result := AzureLargeStorageInstancesClientUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeStorageInstance); err != nil {
-		return AzureLargeInstanceAzureLargeStorageInstancesClientUpdateResponse{}, err
+		return AzureLargeStorageInstancesClientUpdateResponse{}, err
 	}
 	return result, nil
 }

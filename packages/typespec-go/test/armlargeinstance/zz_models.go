@@ -35,7 +35,7 @@ type AzureLargeInstance struct {
 	Type *string
 
 	// The resource-specific properties for this resource.
-	Properties *AzureLargeInstanceProperties
+	Properties *Properties
 
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
@@ -45,55 +45,6 @@ type AzureLargeInstance struct {
 
 	// READ-ONLY; Name of the AzureLargeInstance.
 	Name *string
-}
-
-// The response of a AzureLargeInstance list operation.
-type AzureLargeInstanceListResult struct {
-	// REQUIRED; The AzureLargeInstance items on this page
-	Value []*AzureLargeInstance
-
-	// The link to the next page of items
-	NextLink *string
-}
-
-// Describes the properties of an Azure Large Instance.
-type AzureLargeInstanceProperties struct {
-	// Specifies the Azure Large Instance unique ID.
-	AzureLargeInstanceID *string
-
-	// Specifies the hardware settings for the Azure Large Instance.
-	HardwareProfile *HardwareProfile
-
-	// Hardware revision of an Azure Large Instance
-	HwRevision *string
-
-	// Specifies the network settings for the Azure Large Instance.
-	NetworkProfile *NetworkProfile
-
-	// Specifies the operating system settings for the Azure Large Instance.
-	OSProfile *OsProfile
-
-	// ARM ID of another AzureLargeInstance that will share a network with this
-	// AzureLargeInstance
-	PartnerNodeID *string
-
-	// Resource power state
-	PowerState *AzureLargeInstancePowerStateEnum
-
-	// State of provisioning of the AzureLargeInstance
-	ProvisioningState *AzureLargeInstanceProvisioningStatesEnum
-
-	// Resource proximity placement group
-	ProximityPlacementGroup *string
-
-	// Specifies the storage settings for the Azure Large Instance disks.
-	StorageProfile *StorageProfile
-}
-
-// The type used for updating tags in AzureLargeInstance resources.
-type AzureLargeInstanceTagsUpdate struct {
-	// Resource tags.
-	Tags map[string]*string
 }
 
 // AzureLargeStorageInstance info on Azure (ARM properties and
@@ -199,22 +150,31 @@ type ErrorResponse struct {
 // and halt any existing processes that may be running on the server
 type ForceState struct {
 	// Whether to force restart by shutting all processes.
-	ForceState *AzureLargeInstanceForcePowerState
+	ForceState *ForcePowerState
 }
 
 // Specifies the hardware settings for the Azure Large Instance.
 type HardwareProfile struct {
 	// Specifies the Azure Large Instance SKU.
-	AzureLargeInstanceSize *AzureLargeInstanceSizeNamesEnum
+	AzureLargeInstanceSize *SizeNamesEnum
 
 	// Name of the hardware type (vendor and/or their product name)
-	HardwareType *AzureLargeInstanceHardwareTypeNamesEnum
+	HardwareType *HardwareTypeNamesEnum
 }
 
 // Specifies the IP address of the network interface.
 type IPAddress struct {
 	// Specifies the IP address of the network interface.
 	IPAddress *string
+}
+
+// The response of a AzureLargeInstance list operation.
+type ListResult struct {
+	// REQUIRED; The AzureLargeInstance items on this page
+	Value []*AzureLargeInstance
+
+	// The link to the next page of items
+	NextLink *string
 }
 
 // Specifies the network settings for the Azure Large Instance disks.
@@ -287,6 +247,40 @@ type PagedOperation struct {
 	NextLink *string
 }
 
+// Describes the properties of an Azure Large Instance.
+type Properties struct {
+	// Specifies the Azure Large Instance unique ID.
+	AzureLargeInstanceID *string
+
+	// Specifies the hardware settings for the Azure Large Instance.
+	HardwareProfile *HardwareProfile
+
+	// Hardware revision of an Azure Large Instance
+	HwRevision *string
+
+	// Specifies the network settings for the Azure Large Instance.
+	NetworkProfile *NetworkProfile
+
+	// Specifies the operating system settings for the Azure Large Instance.
+	OSProfile *OsProfile
+
+	// ARM ID of another AzureLargeInstance that will share a network with this
+	// AzureLargeInstance
+	PartnerNodeID *string
+
+	// Resource power state
+	PowerState *PowerStateEnum
+
+	// State of provisioning of the AzureLargeInstance
+	ProvisioningState *ProvisioningStatesEnum
+
+	// Resource proximity placement group
+	ProximityPlacementGroup *string
+
+	// Specifies the storage settings for the Azure Large Instance disks.
+	StorageProfile *StorageProfile
+}
+
 // Describes the billing related details of the AzureLargeStorageInstance.
 type StorageBillingProperties struct {
 	// the billing mode for the storage instance
@@ -312,7 +306,7 @@ type StorageProperties struct {
 	Generation *string
 
 	// the hardware type of the storage instance
-	HardwareType *AzureLargeInstanceHardwareTypeNamesEnum
+	HardwareType *HardwareTypeNamesEnum
 
 	// the offering type for which the resource is getting provisioned
 	OfferingType *string
@@ -349,6 +343,12 @@ type SystemData struct {
 
 	// The type of identity that last modified the resource.
 	LastModifiedByType *CreatedByType
+}
+
+// The type used for updating tags in AzureLargeInstance resources.
+type TagsUpdate struct {
+	// Resource tags.
+	Tags map[string]*string
 }
 
 // The resource model definition for an Azure Resource Manager tracked top level resource

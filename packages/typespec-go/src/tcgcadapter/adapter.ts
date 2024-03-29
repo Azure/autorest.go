@@ -41,7 +41,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     codeModel.options.sliceElementsByval = true;
   }
 
-  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel);
+  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options.stutter);
 
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
@@ -52,14 +52,18 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   return codeModel;
 }
 
-function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel): void {
+function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, customPrefix?: string): void {
   let stutteringPrefix = codeModel.packageName;
 
-  // if there's a well-known prefix, remove it
-  if (stutteringPrefix.startsWith('arm')) {
-    stutteringPrefix = stutteringPrefix.substring(3);
-  } else if (stutteringPrefix.startsWith('az')) {
-    stutteringPrefix = stutteringPrefix.substring(2);
+  if (customPrefix) {
+    stutteringPrefix = customPrefix;
+  } else {
+    // if there's a well-known prefix, remove it
+    if (stutteringPrefix.startsWith('arm')) {
+      stutteringPrefix = stutteringPrefix.substring(3);
+    } else if (stutteringPrefix.startsWith('az')) {
+      stutteringPrefix = stutteringPrefix.substring(2);
+    }
   }
   stutteringPrefix = stutteringPrefix.toUpperCase();
 

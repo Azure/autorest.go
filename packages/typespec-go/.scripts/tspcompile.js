@@ -117,7 +117,7 @@ const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
 generate('armapicenter', armapicenter, 'test/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance');
+generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
