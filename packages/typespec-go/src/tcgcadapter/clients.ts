@@ -353,7 +353,7 @@ export class clientAdapter {
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
-        } else if (go.isLROMethod(method) && httpHeader.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location/i)) {
+        } else if (go.isLROMethod(method) && httpHeader.serializedName.match(/Azure-AsyncOperation|Location|Operation-Location|Retry-After/i)) {
           // we omit the LRO polling headers as they aren't useful on the response envelope
           continue;
         }
@@ -374,7 +374,7 @@ export class clientAdapter {
     }
 
     // workaround until https://github.com/Azure/typespec-azure/issues/124 is fixed
-    if (sdkResponseType.kind === 'model' && (sdkResponseType.name === 'OperationStatus' || sdkResponseType.name === 'ResourceOperationStatus')) {
+    if (sdkMethod.kind === 'lro' && sdkResponseType.kind === 'model' && sdkResponseType.name.match(/OperationStatus/)) {
       return respEnv;
     }
     // end workaround
