@@ -18,92 +18,92 @@ import (
 	"regexp"
 )
 
-// CodeSigningAccountsServer is a fake server for instances of the armcodesigning.CodeSigningAccountsClient type.
-type CodeSigningAccountsServer struct {
-	// CheckNameAvailability is the fake for method CodeSigningAccountsClient.CheckNameAvailability
+// AccountsServer is a fake server for instances of the armcodesigning.AccountsClient type.
+type AccountsServer struct {
+	// CheckNameAvailability is the fake for method AccountsClient.CheckNameAvailability
 	// HTTP status codes to indicate success: http.StatusOK
-	CheckNameAvailability func(ctx context.Context, subscriptionID string, body armcodesigning.CheckNameAvailability, options *armcodesigning.CodeSigningAccountsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armcodesigning.CodeSigningAccountsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder)
+	CheckNameAvailability func(ctx context.Context, subscriptionID string, body armcodesigning.CheckNameAvailability, options *armcodesigning.AccountsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armcodesigning.AccountsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder)
 
-	// BeginCreate is the fake for method CodeSigningAccountsClient.BeginCreate
+	// BeginCreate is the fake for method AccountsClient.BeginCreate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource armcodesigning.CodeSigningAccount, options *armcodesigning.CodeSigningAccountsClientCreateOptions) (resp azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientCreateResponse], errResp azfake.ErrorResponder)
+	BeginCreate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource armcodesigning.Account, options *armcodesigning.AccountsClientCreateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse], errResp azfake.ErrorResponder)
 
-	// BeginDelete is the fake for method CodeSigningAccountsClient.BeginDelete
+	// BeginDelete is the fake for method AccountsClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
-	BeginDelete func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.CodeSigningAccountsClientDeleteOptions) (resp azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientDeleteOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse], errResp azfake.ErrorResponder)
 
-	// Get is the fake for method CodeSigningAccountsClient.Get
+	// Get is the fake for method AccountsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.CodeSigningAccountsClientGetOptions) (resp azfake.Responder[armcodesigning.CodeSigningAccountsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientGetOptions) (resp azfake.Responder[armcodesigning.AccountsClientGetResponse], errResp azfake.ErrorResponder)
 
-	// NewListByResourceGroupPager is the fake for method CodeSigningAccountsClient.NewListByResourceGroupPager
+	// NewListByResourceGroupPager is the fake for method AccountsClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armcodesigning.CodeSigningAccountsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armcodesigning.AccountsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListByResourceGroupResponse])
 
-	// NewListBySubscriptionPager is the fake for method CodeSigningAccountsClient.NewListBySubscriptionPager
+	// NewListBySubscriptionPager is the fake for method AccountsClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armcodesigning.CodeSigningAccountsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(subscriptionID string, options *armcodesigning.AccountsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListBySubscriptionResponse])
 
-	// BeginUpdate is the fake for method CodeSigningAccountsClient.BeginUpdate
+	// BeginUpdate is the fake for method AccountsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties armcodesigning.CodeSigningAccountPatch, options *armcodesigning.CodeSigningAccountsClientUpdateOptions) (resp azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties armcodesigning.AccountPatch, options *armcodesigning.AccountsClientUpdateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
-// NewCodeSigningAccountsServerTransport creates a new instance of CodeSigningAccountsServerTransport with the provided implementation.
-// The returned CodeSigningAccountsServerTransport instance is connected to an instance of armcodesigning.CodeSigningAccountsClient via the
+// NewAccountsServerTransport creates a new instance of AccountsServerTransport with the provided implementation.
+// The returned AccountsServerTransport instance is connected to an instance of armcodesigning.AccountsClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewCodeSigningAccountsServerTransport(srv *CodeSigningAccountsServer) *CodeSigningAccountsServerTransport {
-	return &CodeSigningAccountsServerTransport{
+func NewAccountsServerTransport(srv *AccountsServer) *AccountsServerTransport {
+	return &AccountsServerTransport{
 		srv:                         srv,
-		beginCreate:                 newTracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientCreateResponse]](),
-		beginDelete:                 newTracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientDeleteResponse]](),
-		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListByResourceGroupResponse]](),
-		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListBySubscriptionResponse]](),
-		beginUpdate:                 newTracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientUpdateResponse]](),
+		beginCreate:                 newTracker[azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse]](),
+		beginDelete:                 newTracker[azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse]](),
+		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armcodesigning.AccountsClientListByResourceGroupResponse]](),
+		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armcodesigning.AccountsClientListBySubscriptionResponse]](),
+		beginUpdate:                 newTracker[azfake.PollerResponder[armcodesigning.AccountsClientUpdateResponse]](),
 	}
 }
 
-// CodeSigningAccountsServerTransport connects instances of armcodesigning.CodeSigningAccountsClient to instances of CodeSigningAccountsServer.
-// Don't use this type directly, use NewCodeSigningAccountsServerTransport instead.
-type CodeSigningAccountsServerTransport struct {
-	srv                         *CodeSigningAccountsServer
-	beginCreate                 *tracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientCreateResponse]]
-	beginDelete                 *tracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientDeleteResponse]]
-	newListByResourceGroupPager *tracker[azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListByResourceGroupResponse]]
-	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armcodesigning.CodeSigningAccountsClientListBySubscriptionResponse]]
-	beginUpdate                 *tracker[azfake.PollerResponder[armcodesigning.CodeSigningAccountsClientUpdateResponse]]
+// AccountsServerTransport connects instances of armcodesigning.AccountsClient to instances of AccountsServer.
+// Don't use this type directly, use NewAccountsServerTransport instead.
+type AccountsServerTransport struct {
+	srv                         *AccountsServer
+	beginCreate                 *tracker[azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse]]
+	beginDelete                 *tracker[azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse]]
+	newListByResourceGroupPager *tracker[azfake.PagerResponder[armcodesigning.AccountsClientListByResourceGroupResponse]]
+	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armcodesigning.AccountsClientListBySubscriptionResponse]]
+	beginUpdate                 *tracker[azfake.PollerResponder[armcodesigning.AccountsClientUpdateResponse]]
 }
 
-// Do implements the policy.Transporter interface for CodeSigningAccountsServerTransport.
-func (c *CodeSigningAccountsServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for AccountsServerTransport.
+func (a *AccountsServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return c.dispatchToMethodFake(req, method)
+	return a.dispatchToMethodFake(req, method)
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (a *AccountsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "CodeSigningAccountsClient.CheckNameAvailability":
-		resp, err = c.dispatchCheckNameAvailability(req)
-	case "CodeSigningAccountsClient.BeginCreate":
-		resp, err = c.dispatchBeginCreate(req)
-	case "CodeSigningAccountsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CodeSigningAccountsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CodeSigningAccountsClient.NewListByResourceGroupPager":
-		resp, err = c.dispatchNewListByResourceGroupPager(req)
-	case "CodeSigningAccountsClient.NewListBySubscriptionPager":
-		resp, err = c.dispatchNewListBySubscriptionPager(req)
-	case "CodeSigningAccountsClient.BeginUpdate":
-		resp, err = c.dispatchBeginUpdate(req)
+	case "AccountsClient.CheckNameAvailability":
+		resp, err = a.dispatchCheckNameAvailability(req)
+	case "AccountsClient.BeginCreate":
+		resp, err = a.dispatchBeginCreate(req)
+	case "AccountsClient.BeginDelete":
+		resp, err = a.dispatchBeginDelete(req)
+	case "AccountsClient.Get":
+		resp, err = a.dispatchGet(req)
+	case "AccountsClient.NewListByResourceGroupPager":
+		resp, err = a.dispatchNewListByResourceGroupPager(req)
+	case "AccountsClient.NewListBySubscriptionPager":
+		resp, err = a.dispatchNewListBySubscriptionPager(req)
+	case "AccountsClient.BeginUpdate":
+		resp, err = a.dispatchBeginUpdate(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -111,8 +111,8 @@ func (c *CodeSigningAccountsServerTransport) dispatchToMethodFake(req *http.Requ
 	return resp, err
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchCheckNameAvailability(req *http.Request) (*http.Response, error) {
-	if c.srv.CheckNameAvailability == nil {
+func (a *AccountsServerTransport) dispatchCheckNameAvailability(req *http.Request) (*http.Response, error) {
+	if a.srv.CheckNameAvailability == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CheckNameAvailability not implemented")}
 	}
 	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/checkNameAvailability`
@@ -129,7 +129,7 @@ func (c *CodeSigningAccountsServerTransport) dispatchCheckNameAvailability(req *
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.CheckNameAvailability(req.Context(), subscriptionIDParam, body, nil)
+	respr, errRespr := a.srv.CheckNameAvailability(req.Context(), subscriptionIDParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -144,11 +144,11 @@ func (c *CodeSigningAccountsServerTransport) dispatchCheckNameAvailability(req *
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {
-	if c.srv.BeginCreate == nil {
+func (a *AccountsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {
+	if a.srv.BeginCreate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginCreate not implemented")}
 	}
-	beginCreate := c.beginCreate.get(req)
+	beginCreate := a.beginCreate.get(req)
 	if beginCreate == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
@@ -156,7 +156,7 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginCreate(req *http.Reque
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armcodesigning.CodeSigningAccount](req)
+		body, err := server.UnmarshalRequestAsJSON[armcodesigning.Account](req)
 		if err != nil {
 			return nil, err
 		}
@@ -172,12 +172,12 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginCreate(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginCreate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
+		respr, errRespr := a.srv.BeginCreate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
 		beginCreate = &respr
-		c.beginCreate.add(req, beginCreate)
+		a.beginCreate.add(req, beginCreate)
 	}
 
 	resp, err := server.PollerResponderNext(beginCreate, req)
@@ -186,21 +186,21 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginCreate(req *http.Reque
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
-		c.beginCreate.remove(req)
+		a.beginCreate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreate) {
-		c.beginCreate.remove(req)
+		a.beginCreate.remove(req)
 	}
 
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
-	if c.srv.BeginDelete == nil {
+func (a *AccountsServerTransport) dispatchBeginDelete(req *http.Request) (*http.Response, error) {
+	if a.srv.BeginDelete == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginDelete not implemented")}
 	}
-	beginDelete := c.beginDelete.get(req)
+	beginDelete := a.beginDelete.get(req)
 	if beginDelete == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
@@ -220,12 +220,12 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginDelete(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
 		beginDelete = &respr
-		c.beginDelete.add(req, beginDelete)
+		a.beginDelete.add(req, beginDelete)
 	}
 
 	resp, err := server.PollerResponderNext(beginDelete, req)
@@ -234,18 +234,18 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginDelete(req *http.Reque
 	}
 
 	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
-		c.beginDelete.remove(req)
+		a.beginDelete.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
-		c.beginDelete.remove(req)
+		a.beginDelete.remove(req)
 	}
 
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
-	if c.srv.Get == nil {
+func (a *AccountsServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+	if a.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
@@ -266,7 +266,7 @@ func (c *CodeSigningAccountsServerTransport) dispatchGet(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -274,18 +274,18 @@ func (c *CodeSigningAccountsServerTransport) dispatchGet(req *http.Request) (*ht
 	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).CodeSigningAccount, req)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Account, req)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
-	if c.srv.NewListByResourceGroupPager == nil {
+func (a *AccountsServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
+	if a.srv.NewListByResourceGroupPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByResourceGroupPager not implemented")}
 	}
-	newListByResourceGroupPager := c.newListByResourceGroupPager.get(req)
+	newListByResourceGroupPager := a.newListByResourceGroupPager.get(req)
 	if newListByResourceGroupPager == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts`
 		regex := regexp.MustCompile(regexStr)
@@ -301,10 +301,10 @@ func (c *CodeSigningAccountsServerTransport) dispatchNewListByResourceGroupPager
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
+		resp := a.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
-		c.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
-		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcodesigning.CodeSigningAccountsClientListByResourceGroupResponse, createLink func() string) {
+		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
+		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcodesigning.AccountsClientListByResourceGroupResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -313,20 +313,20 @@ func (c *CodeSigningAccountsServerTransport) dispatchNewListByResourceGroupPager
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		c.newListByResourceGroupPager.remove(req)
+		a.newListByResourceGroupPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
 	if !server.PagerResponderMore(newListByResourceGroupPager) {
-		c.newListByResourceGroupPager.remove(req)
+		a.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
-	if c.srv.NewListBySubscriptionPager == nil {
+func (a *AccountsServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
+	if a.srv.NewListBySubscriptionPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListBySubscriptionPager not implemented")}
 	}
-	newListBySubscriptionPager := c.newListBySubscriptionPager.get(req)
+	newListBySubscriptionPager := a.newListBySubscriptionPager.get(req)
 	if newListBySubscriptionPager == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts`
 		regex := regexp.MustCompile(regexStr)
@@ -338,10 +338,10 @@ func (c *CodeSigningAccountsServerTransport) dispatchNewListBySubscriptionPager(
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
+		resp := a.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
 		newListBySubscriptionPager = &resp
-		c.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
-		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armcodesigning.CodeSigningAccountsClientListBySubscriptionResponse, createLink func() string) {
+		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
+		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armcodesigning.AccountsClientListBySubscriptionResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -350,20 +350,20 @@ func (c *CodeSigningAccountsServerTransport) dispatchNewListBySubscriptionPager(
 		return nil, err
 	}
 	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		c.newListBySubscriptionPager.remove(req)
+		a.newListBySubscriptionPager.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
 	}
 	if !server.PagerResponderMore(newListBySubscriptionPager) {
-		c.newListBySubscriptionPager.remove(req)
+		a.newListBySubscriptionPager.remove(req)
 	}
 	return resp, nil
 }
 
-func (c *CodeSigningAccountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
-	if c.srv.BeginUpdate == nil {
+func (a *AccountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Response, error) {
+	if a.srv.BeginUpdate == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginUpdate not implemented")}
 	}
-	beginUpdate := c.beginUpdate.get(req)
+	beginUpdate := a.beginUpdate.get(req)
 	if beginUpdate == nil {
 		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.CodeSigning/codeSigningAccounts/(?P<accountName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 		regex := regexp.MustCompile(regexStr)
@@ -371,7 +371,7 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginUpdate(req *http.Reque
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armcodesigning.CodeSigningAccountPatch](req)
+		body, err := server.UnmarshalRequestAsJSON[armcodesigning.AccountPatch](req)
 		if err != nil {
 			return nil, err
 		}
@@ -387,12 +387,12 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginUpdate(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
+		respr, errRespr := a.srv.BeginUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
 		beginUpdate = &respr
-		c.beginUpdate.add(req, beginUpdate)
+		a.beginUpdate.add(req, beginUpdate)
 	}
 
 	resp, err := server.PollerResponderNext(beginUpdate, req)
@@ -401,11 +401,11 @@ func (c *CodeSigningAccountsServerTransport) dispatchBeginUpdate(req *http.Reque
 	}
 
 	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
-		c.beginUpdate.remove(req)
+		a.beginUpdate.remove(req)
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdate) {
-		c.beginUpdate.remove(req)
+		a.beginUpdate.remove(req)
 	}
 
 	return resp, nil

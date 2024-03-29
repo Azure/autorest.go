@@ -9,84 +9,84 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 )
 
-// ApiCenterClient - Azure API Center Resource Provider.
-// Don't use this type directly, use NewApiCenterClient() instead.
-type ApiCenterClient struct {
+// Client - Azure API Center Resource Provider.
+// Don't use this type directly, use NewClient() instead.
+type Client struct {
 	internal *arm.Client
 }
 
-// NewApiCenterClient creates a new instance of ApiCenterClient with the specified values.
+// NewClient creates a new instance of Client with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewApiCenterClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ApiCenterClient, error) {
+func NewClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*Client, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &ApiCenterClient{
+	client := &Client{
 		internal: cl,
 	}
 	return client, nil
 }
 
 // NewApiDefinitionsClient creates a new instance of [ApiDefinitionsClient].
-func (client *ApiCenterClient) NewApiDefinitionsClient() *ApiDefinitionsClient {
+func (client *Client) NewApiDefinitionsClient() *ApiDefinitionsClient {
 	return &ApiDefinitionsClient{
 		internal: client.internal,
 	}
 }
 
 // NewApiVersionsClient creates a new instance of [ApiVersionsClient].
-func (client *ApiCenterClient) NewApiVersionsClient() *ApiVersionsClient {
+func (client *Client) NewApiVersionsClient() *ApiVersionsClient {
 	return &ApiVersionsClient{
 		internal: client.internal,
 	}
 }
 
 // NewApisClient creates a new instance of [ApisClient].
-func (client *ApiCenterClient) NewApisClient() *ApisClient {
+func (client *Client) NewApisClient() *ApisClient {
 	return &ApisClient{
 		internal: client.internal,
 	}
 }
 
 // NewDeploymentsClient creates a new instance of [DeploymentsClient].
-func (client *ApiCenterClient) NewDeploymentsClient() *DeploymentsClient {
+func (client *Client) NewDeploymentsClient() *DeploymentsClient {
 	return &DeploymentsClient{
 		internal: client.internal,
 	}
 }
 
 // NewEnvironmentsClient creates a new instance of [EnvironmentsClient].
-func (client *ApiCenterClient) NewEnvironmentsClient() *EnvironmentsClient {
+func (client *Client) NewEnvironmentsClient() *EnvironmentsClient {
 	return &EnvironmentsClient{
 		internal: client.internal,
 	}
 }
 
 // NewMetadataSchemasClient creates a new instance of [MetadataSchemasClient].
-func (client *ApiCenterClient) NewMetadataSchemasClient() *MetadataSchemasClient {
+func (client *Client) NewMetadataSchemasClient() *MetadataSchemasClient {
 	return &MetadataSchemasClient{
 		internal: client.internal,
 	}
 }
 
 // NewOperationsClient creates a new instance of [OperationsClient].
-func (client *ApiCenterClient) NewOperationsClient() *OperationsClient {
+func (client *Client) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
 		internal: client.internal,
 	}
 }
 
 // NewServicesClient creates a new instance of [ServicesClient].
-func (client *ApiCenterClient) NewServicesClient() *ServicesClient {
+func (client *Client) NewServicesClient() *ServicesClient {
 	return &ServicesClient{
 		internal: client.internal,
 	}
 }
 
 // NewWorkspacesClient creates a new instance of [WorkspacesClient].
-func (client *ApiCenterClient) NewWorkspacesClient() *WorkspacesClient {
+func (client *Client) NewWorkspacesClient() *WorkspacesClient {
 	return &WorkspacesClient{
 		internal: client.internal,
 	}
