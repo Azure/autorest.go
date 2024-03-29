@@ -16,21 +16,21 @@ import (
 	"strings"
 )
 
-// CodeSigningAccountsClient contains the methods for the Microsoft.CodeSigning namespace.
-// Don't use this type directly, use NewCodeSigningAccountsClient() instead.
-type CodeSigningAccountsClient struct {
+// AccountsClient contains the methods for the Microsoft.CodeSigning namespace.
+// Don't use this type directly, use NewAccountsClient() instead.
+type AccountsClient struct {
 	internal *arm.Client
 }
 
-// NewCodeSigningAccountsClient creates a new instance of CodeSigningAccountsClient with the specified values.
+// NewAccountsClient creates a new instance of AccountsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewCodeSigningAccountsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*CodeSigningAccountsClient, error) {
+func NewAccountsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AccountsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &CodeSigningAccountsClient{
+	client := &AccountsClient{
 		internal: cl,
 	}
 	return client, nil
@@ -39,32 +39,32 @@ func NewCodeSigningAccountsClient(credential azcore.TokenCredential, options *ar
 // CheckNameAvailability - Checks that the trusted signing account name is valid and is not already in use.
 //   - subscriptionID - The ID of the target subscription.
 //   - body - The CheckAvailability request
-//   - options - CodeSigningAccountsClientCheckNameAvailabilityOptions contains the optional parameters for the CodeSigningAccountsClient.CheckNameAvailability
+//   - options - AccountsClientCheckNameAvailabilityOptions contains the optional parameters for the AccountsClient.CheckNameAvailability
 //     method.
-func (client *CodeSigningAccountsClient) CheckNameAvailability(ctx context.Context, subscriptionID string, body CheckNameAvailability, options *CodeSigningAccountsClientCheckNameAvailabilityOptions) (CodeSigningAccountsClientCheckNameAvailabilityResponse, error) {
+func (client *AccountsClient) CheckNameAvailability(ctx context.Context, subscriptionID string, body CheckNameAvailability, options *AccountsClientCheckNameAvailabilityOptions) (AccountsClientCheckNameAvailabilityResponse, error) {
 	var err error
-	const operationName = "CodeSigningAccountsClient.CheckNameAvailability"
+	const operationName = "AccountsClient.CheckNameAvailability"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.checkNameAvailabilityCreateRequest(ctx, subscriptionID, body, options)
 	if err != nil {
-		return CodeSigningAccountsClientCheckNameAvailabilityResponse{}, err
+		return AccountsClientCheckNameAvailabilityResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CodeSigningAccountsClientCheckNameAvailabilityResponse{}, err
+		return AccountsClientCheckNameAvailabilityResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return CodeSigningAccountsClientCheckNameAvailabilityResponse{}, err
+		return AccountsClientCheckNameAvailabilityResponse{}, err
 	}
 	resp, err := client.checkNameAvailabilityHandleResponse(httpResp)
 	return resp, err
 }
 
 // checkNameAvailabilityCreateRequest creates the CheckNameAvailability request.
-func (client *CodeSigningAccountsClient) checkNameAvailabilityCreateRequest(ctx context.Context, subscriptionID string, body CheckNameAvailability, options *CodeSigningAccountsClientCheckNameAvailabilityOptions) (*policy.Request, error) {
+func (client *AccountsClient) checkNameAvailabilityCreateRequest(ctx context.Context, subscriptionID string, body CheckNameAvailability, options *AccountsClientCheckNameAvailabilityOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/checkNameAvailability"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -86,10 +86,10 @@ func (client *CodeSigningAccountsClient) checkNameAvailabilityCreateRequest(ctx 
 }
 
 // checkNameAvailabilityHandleResponse handles the CheckNameAvailability response.
-func (client *CodeSigningAccountsClient) checkNameAvailabilityHandleResponse(resp *http.Response) (CodeSigningAccountsClientCheckNameAvailabilityResponse, error) {
-	result := CodeSigningAccountsClientCheckNameAvailabilityResponse{}
+func (client *AccountsClient) checkNameAvailabilityHandleResponse(resp *http.Response) (AccountsClientCheckNameAvailabilityResponse, error) {
+	result := AccountsClientCheckNameAvailabilityResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CheckNameAvailabilityResult); err != nil {
-		return CodeSigningAccountsClientCheckNameAvailabilityResponse{}, err
+		return AccountsClientCheckNameAvailabilityResponse{}, err
 	}
 	return result, nil
 }
@@ -99,29 +99,28 @@ func (client *CodeSigningAccountsClient) checkNameAvailabilityHandleResponse(res
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - resource - Parameters to create the trusted signing account
-//   - options - CodeSigningAccountsClientCreateOptions contains the optional parameters for the CodeSigningAccountsClient.Create
-//     method.
-func (client *CodeSigningAccountsClient) BeginCreate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource CodeSigningAccount, options *CodeSigningAccountsClientCreateOptions) (*runtime.Poller[CodeSigningAccountsClientCreateResponse], error) {
+//   - options - AccountsClientCreateOptions contains the optional parameters for the AccountsClient.Create method.
+func (client *AccountsClient) BeginCreate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource Account, options *AccountsClientCreateOptions) (*runtime.Poller[AccountsClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.create(ctx, subscriptionID, resourceGroupName, accountName, resource, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientCreateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AccountsClientCreateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientCreateResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AccountsClientCreateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // Create - Create a trusted Signing Account.
-func (client *CodeSigningAccountsClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource CodeSigningAccount, options *CodeSigningAccountsClientCreateOptions) (*http.Response, error) {
+func (client *AccountsClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource Account, options *AccountsClientCreateOptions) (*http.Response, error) {
 	var err error
-	const operationName = "CodeSigningAccountsClient.BeginCreate"
+	const operationName = "AccountsClient.BeginCreate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -141,7 +140,7 @@ func (client *CodeSigningAccountsClient) create(ctx context.Context, subscriptio
 }
 
 // createCreateRequest creates the Create request.
-func (client *CodeSigningAccountsClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource CodeSigningAccount, options *CodeSigningAccountsClientCreateOptions) (*policy.Request, error) {
+func (client *AccountsClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource Account, options *AccountsClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -174,29 +173,28 @@ func (client *CodeSigningAccountsClient) createCreateRequest(ctx context.Context
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
-//   - options - CodeSigningAccountsClientDeleteOptions contains the optional parameters for the CodeSigningAccountsClient.Delete
-//     method.
-func (client *CodeSigningAccountsClient) BeginDelete(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientDeleteOptions) (*runtime.Poller[CodeSigningAccountsClientDeleteResponse], error) {
+//   - options - AccountsClientDeleteOptions contains the optional parameters for the AccountsClient.Delete method.
+func (client *AccountsClient) BeginDelete(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *AccountsClientDeleteOptions) (*runtime.Poller[AccountsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, subscriptionID, resourceGroupName, accountName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientDeleteResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AccountsClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientDeleteResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AccountsClientDeleteResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // Delete - Delete a trusted signing account.
-func (client *CodeSigningAccountsClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientDeleteOptions) (*http.Response, error) {
+func (client *AccountsClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *AccountsClientDeleteOptions) (*http.Response, error) {
 	var err error
-	const operationName = "CodeSigningAccountsClient.BeginDelete"
+	const operationName = "AccountsClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -216,7 +214,7 @@ func (client *CodeSigningAccountsClient) deleteOperation(ctx context.Context, su
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *CodeSigningAccountsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientDeleteOptions) (*policy.Request, error) {
+func (client *AccountsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *AccountsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -245,31 +243,31 @@ func (client *CodeSigningAccountsClient) deleteCreateRequest(ctx context.Context
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
-//   - options - CodeSigningAccountsClientGetOptions contains the optional parameters for the CodeSigningAccountsClient.Get method.
-func (client *CodeSigningAccountsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientGetOptions) (CodeSigningAccountsClientGetResponse, error) {
+//   - options - AccountsClientGetOptions contains the optional parameters for the AccountsClient.Get method.
+func (client *AccountsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *AccountsClientGetOptions) (AccountsClientGetResponse, error) {
 	var err error
-	const operationName = "CodeSigningAccountsClient.Get"
+	const operationName = "AccountsClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, accountName, options)
 	if err != nil {
-		return CodeSigningAccountsClientGetResponse{}, err
+		return AccountsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return CodeSigningAccountsClientGetResponse{}, err
+		return AccountsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return CodeSigningAccountsClientGetResponse{}, err
+		return AccountsClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *CodeSigningAccountsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *CodeSigningAccountsClientGetOptions) (*policy.Request, error) {
+func (client *AccountsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *AccountsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -295,10 +293,10 @@ func (client *CodeSigningAccountsClient) getCreateRequest(ctx context.Context, s
 }
 
 // getHandleResponse handles the Get response.
-func (client *CodeSigningAccountsClient) getHandleResponse(resp *http.Response) (CodeSigningAccountsClientGetResponse, error) {
-	result := CodeSigningAccountsClientGetResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.CodeSigningAccount); err != nil {
-		return CodeSigningAccountsClientGetResponse{}, err
+func (client *AccountsClient) getHandleResponse(resp *http.Response) (AccountsClientGetResponse, error) {
+	result := AccountsClientGetResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Account); err != nil {
+		return AccountsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -306,15 +304,15 @@ func (client *CodeSigningAccountsClient) getHandleResponse(resp *http.Response) 
 // NewListByResourceGroupPager - Lists trusted signing accounts within a resource group.
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - options - CodeSigningAccountsClientListByResourceGroupOptions contains the optional parameters for the CodeSigningAccountsClient.NewListByResourceGroupPager
+//   - options - AccountsClientListByResourceGroupOptions contains the optional parameters for the AccountsClient.NewListByResourceGroupPager
 //     method.
-func (client *CodeSigningAccountsClient) NewListByResourceGroupPager(subscriptionID string, resourceGroupName string, options *CodeSigningAccountsClientListByResourceGroupOptions) *runtime.Pager[CodeSigningAccountsClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PagingHandler[CodeSigningAccountsClientListByResourceGroupResponse]{
-		More: func(page CodeSigningAccountsClientListByResourceGroupResponse) bool {
+func (client *AccountsClient) NewListByResourceGroupPager(subscriptionID string, resourceGroupName string, options *AccountsClientListByResourceGroupOptions) *runtime.Pager[AccountsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AccountsClientListByResourceGroupResponse]{
+		More: func(page AccountsClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *CodeSigningAccountsClientListByResourceGroupResponse) (CodeSigningAccountsClientListByResourceGroupResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CodeSigningAccountsClient.NewListByResourceGroupPager")
+		Fetcher: func(ctx context.Context, page *AccountsClientListByResourceGroupResponse) (AccountsClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AccountsClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -323,7 +321,7 @@ func (client *CodeSigningAccountsClient) NewListByResourceGroupPager(subscriptio
 				return client.listByResourceGroupCreateRequest(ctx, subscriptionID, resourceGroupName, options)
 			}, nil)
 			if err != nil {
-				return CodeSigningAccountsClientListByResourceGroupResponse{}, err
+				return AccountsClientListByResourceGroupResponse{}, err
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -332,7 +330,7 @@ func (client *CodeSigningAccountsClient) NewListByResourceGroupPager(subscriptio
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *CodeSigningAccountsClient) listByResourceGroupCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, options *CodeSigningAccountsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AccountsClient) listByResourceGroupCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, options *AccountsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -354,25 +352,25 @@ func (client *CodeSigningAccountsClient) listByResourceGroupCreateRequest(ctx co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *CodeSigningAccountsClient) listByResourceGroupHandleResponse(resp *http.Response) (CodeSigningAccountsClientListByResourceGroupResponse, error) {
-	result := CodeSigningAccountsClientListByResourceGroupResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.CodeSigningAccountListResult); err != nil {
-		return CodeSigningAccountsClientListByResourceGroupResponse{}, err
+func (client *AccountsClient) listByResourceGroupHandleResponse(resp *http.Response) (AccountsClientListByResourceGroupResponse, error) {
+	result := AccountsClientListByResourceGroupResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AccountListResult); err != nil {
+		return AccountsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
 // NewListBySubscriptionPager - Lists trusted signing accounts within a subscription.
 //   - subscriptionID - The ID of the target subscription.
-//   - options - CodeSigningAccountsClientListBySubscriptionOptions contains the optional parameters for the CodeSigningAccountsClient.NewListBySubscriptionPager
+//   - options - AccountsClientListBySubscriptionOptions contains the optional parameters for the AccountsClient.NewListBySubscriptionPager
 //     method.
-func (client *CodeSigningAccountsClient) NewListBySubscriptionPager(subscriptionID string, options *CodeSigningAccountsClientListBySubscriptionOptions) *runtime.Pager[CodeSigningAccountsClientListBySubscriptionResponse] {
-	return runtime.NewPager(runtime.PagingHandler[CodeSigningAccountsClientListBySubscriptionResponse]{
-		More: func(page CodeSigningAccountsClientListBySubscriptionResponse) bool {
+func (client *AccountsClient) NewListBySubscriptionPager(subscriptionID string, options *AccountsClientListBySubscriptionOptions) *runtime.Pager[AccountsClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AccountsClientListBySubscriptionResponse]{
+		More: func(page AccountsClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *CodeSigningAccountsClientListBySubscriptionResponse) (CodeSigningAccountsClientListBySubscriptionResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "CodeSigningAccountsClient.NewListBySubscriptionPager")
+		Fetcher: func(ctx context.Context, page *AccountsClientListBySubscriptionResponse) (AccountsClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AccountsClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -381,7 +379,7 @@ func (client *CodeSigningAccountsClient) NewListBySubscriptionPager(subscription
 				return client.listBySubscriptionCreateRequest(ctx, subscriptionID, options)
 			}, nil)
 			if err != nil {
-				return CodeSigningAccountsClientListBySubscriptionResponse{}, err
+				return AccountsClientListBySubscriptionResponse{}, err
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
@@ -390,7 +388,7 @@ func (client *CodeSigningAccountsClient) NewListBySubscriptionPager(subscription
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *CodeSigningAccountsClient) listBySubscriptionCreateRequest(ctx context.Context, subscriptionID string, options *CodeSigningAccountsClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AccountsClient) listBySubscriptionCreateRequest(ctx context.Context, subscriptionID string, options *AccountsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/codeSigningAccounts"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -408,10 +406,10 @@ func (client *CodeSigningAccountsClient) listBySubscriptionCreateRequest(ctx con
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *CodeSigningAccountsClient) listBySubscriptionHandleResponse(resp *http.Response) (CodeSigningAccountsClientListBySubscriptionResponse, error) {
-	result := CodeSigningAccountsClientListBySubscriptionResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.CodeSigningAccountListResult); err != nil {
-		return CodeSigningAccountsClientListBySubscriptionResponse{}, err
+func (client *AccountsClient) listBySubscriptionHandleResponse(resp *http.Response) (AccountsClientListBySubscriptionResponse, error) {
+	result := AccountsClientListBySubscriptionResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AccountListResult); err != nil {
+		return AccountsClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -421,29 +419,28 @@ func (client *CodeSigningAccountsClient) listBySubscriptionHandleResponse(resp *
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - properties - Parameters supplied to update the trusted signing account
-//   - options - CodeSigningAccountsClientUpdateOptions contains the optional parameters for the CodeSigningAccountsClient.Update
-//     method.
-func (client *CodeSigningAccountsClient) BeginUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties CodeSigningAccountPatch, options *CodeSigningAccountsClientUpdateOptions) (*runtime.Poller[CodeSigningAccountsClientUpdateResponse], error) {
+//   - options - AccountsClientUpdateOptions contains the optional parameters for the AccountsClient.Update method.
+func (client *AccountsClient) BeginUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties AccountPatch, options *AccountsClientUpdateOptions) (*runtime.Poller[AccountsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, subscriptionID, resourceGroupName, accountName, properties, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CodeSigningAccountsClientUpdateResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AccountsClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[CodeSigningAccountsClientUpdateResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AccountsClientUpdateResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // Update - Update a trusted signing account.
-func (client *CodeSigningAccountsClient) update(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties CodeSigningAccountPatch, options *CodeSigningAccountsClientUpdateOptions) (*http.Response, error) {
+func (client *AccountsClient) update(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties AccountPatch, options *AccountsClientUpdateOptions) (*http.Response, error) {
 	var err error
-	const operationName = "CodeSigningAccountsClient.BeginUpdate"
+	const operationName = "AccountsClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -463,7 +460,7 @@ func (client *CodeSigningAccountsClient) update(ctx context.Context, subscriptio
 }
 
 // updateCreateRequest creates the Update request.
-func (client *CodeSigningAccountsClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties CodeSigningAccountPatch, options *CodeSigningAccountsClientUpdateOptions) (*policy.Request, error) {
+func (client *AccountsClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties AccountPatch, options *AccountsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

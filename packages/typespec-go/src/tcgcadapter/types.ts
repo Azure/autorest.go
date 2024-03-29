@@ -31,7 +31,7 @@ export class typeAdapter {
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
     }
-  
+
     // we must adapt all interface/model types first. this is because models can contain cyclic references
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
