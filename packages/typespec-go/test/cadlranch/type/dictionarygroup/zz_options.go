@@ -4,112 +4,116 @@
 
 package dictionarygroup
 
-// BooleanValueClientGetOptions contains the optional parameters for the BooleanValueClient.Get method.
-type BooleanValueClientGetOptions struct {
+// DictionaryBooleanValueClientGetOptions contains the optional parameters for the DictionaryBooleanValueClient.Get method.
+type DictionaryBooleanValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BooleanValueClientPutOptions contains the optional parameters for the BooleanValueClient.Put method.
-type BooleanValueClientPutOptions struct {
+// DictionaryBooleanValueClientPutOptions contains the optional parameters for the DictionaryBooleanValueClient.Put method.
+type DictionaryBooleanValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeValueClientGetOptions contains the optional parameters for the DatetimeValueClient.Get method.
-type DatetimeValueClientGetOptions struct {
+// DictionaryDatetimeValueClientGetOptions contains the optional parameters for the DictionaryDatetimeValueClient.Get method.
+type DictionaryDatetimeValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeValueClientPutOptions contains the optional parameters for the DatetimeValueClient.Put method.
-type DatetimeValueClientPutOptions struct {
+// DictionaryDatetimeValueClientPutOptions contains the optional parameters for the DictionaryDatetimeValueClient.Put method.
+type DictionaryDatetimeValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationValueClientGetOptions contains the optional parameters for the DurationValueClient.Get method.
-type DurationValueClientGetOptions struct {
+// DictionaryDurationValueClientGetOptions contains the optional parameters for the DictionaryDurationValueClient.Get method.
+type DictionaryDurationValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationValueClientPutOptions contains the optional parameters for the DurationValueClient.Put method.
-type DurationValueClientPutOptions struct {
+// DictionaryDurationValueClientPutOptions contains the optional parameters for the DictionaryDurationValueClient.Put method.
+type DictionaryDurationValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Float32ValueClientGetOptions contains the optional parameters for the Float32ValueClient.Get method.
-type Float32ValueClientGetOptions struct {
+// DictionaryFloat32ValueClientGetOptions contains the optional parameters for the DictionaryFloat32ValueClient.Get method.
+type DictionaryFloat32ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Float32ValueClientPutOptions contains the optional parameters for the Float32ValueClient.Put method.
-type Float32ValueClientPutOptions struct {
+// DictionaryFloat32ValueClientPutOptions contains the optional parameters for the DictionaryFloat32ValueClient.Put method.
+type DictionaryFloat32ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int32ValueClientGetOptions contains the optional parameters for the Int32ValueClient.Get method.
-type Int32ValueClientGetOptions struct {
+// DictionaryInt32ValueClientGetOptions contains the optional parameters for the DictionaryInt32ValueClient.Get method.
+type DictionaryInt32ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int32ValueClientPutOptions contains the optional parameters for the Int32ValueClient.Put method.
-type Int32ValueClientPutOptions struct {
+// DictionaryInt32ValueClientPutOptions contains the optional parameters for the DictionaryInt32ValueClient.Put method.
+type DictionaryInt32ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int64ValueClientGetOptions contains the optional parameters for the Int64ValueClient.Get method.
-type Int64ValueClientGetOptions struct {
+// DictionaryInt64ValueClientGetOptions contains the optional parameters for the DictionaryInt64ValueClient.Get method.
+type DictionaryInt64ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int64ValueClientPutOptions contains the optional parameters for the Int64ValueClient.Put method.
-type Int64ValueClientPutOptions struct {
+// DictionaryInt64ValueClientPutOptions contains the optional parameters for the DictionaryInt64ValueClient.Put method.
+type DictionaryInt64ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ModelValueClientGetOptions contains the optional parameters for the ModelValueClient.Get method.
-type ModelValueClientGetOptions struct {
+// DictionaryModelValueClientGetOptions contains the optional parameters for the DictionaryModelValueClient.Get method.
+type DictionaryModelValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ModelValueClientPutOptions contains the optional parameters for the ModelValueClient.Put method.
-type ModelValueClientPutOptions struct {
+// DictionaryModelValueClientPutOptions contains the optional parameters for the DictionaryModelValueClient.Put method.
+type DictionaryModelValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NullableFloatValueClientGetOptions contains the optional parameters for the NullableFloatValueClient.Get method.
-type NullableFloatValueClientGetOptions struct {
+// DictionaryNullableFloatValueClientGetOptions contains the optional parameters for the DictionaryNullableFloatValueClient.Get
+// method.
+type DictionaryNullableFloatValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NullableFloatValueClientPutOptions contains the optional parameters for the NullableFloatValueClient.Put method.
-type NullableFloatValueClientPutOptions struct {
+// DictionaryNullableFloatValueClientPutOptions contains the optional parameters for the DictionaryNullableFloatValueClient.Put
+// method.
+type DictionaryNullableFloatValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RecursiveModelValueClientGetOptions contains the optional parameters for the RecursiveModelValueClient.Get method.
-type RecursiveModelValueClientGetOptions struct {
+// DictionaryRecursiveModelValueClientGetOptions contains the optional parameters for the DictionaryRecursiveModelValueClient.Get
+// method.
+type DictionaryRecursiveModelValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RecursiveModelValueClientPutOptions contains the optional parameters for the RecursiveModelValueClient.Put method.
-type RecursiveModelValueClientPutOptions struct {
+// DictionaryRecursiveModelValueClientPutOptions contains the optional parameters for the DictionaryRecursiveModelValueClient.Put
+// method.
+type DictionaryRecursiveModelValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringValueClientGetOptions contains the optional parameters for the StringValueClient.Get method.
-type StringValueClientGetOptions struct {
+// DictionaryStringValueClientGetOptions contains the optional parameters for the DictionaryStringValueClient.Get method.
+type DictionaryStringValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringValueClientPutOptions contains the optional parameters for the StringValueClient.Put method.
-type StringValueClientPutOptions struct {
+// DictionaryStringValueClientPutOptions contains the optional parameters for the DictionaryStringValueClient.Put method.
+type DictionaryStringValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownValueClientGetOptions contains the optional parameters for the UnknownValueClient.Get method.
-type UnknownValueClientGetOptions struct {
+// DictionaryUnknownValueClientGetOptions contains the optional parameters for the DictionaryUnknownValueClient.Get method.
+type DictionaryUnknownValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownValueClientPutOptions contains the optional parameters for the UnknownValueClient.Put method.
-type UnknownValueClientPutOptions struct {
+// DictionaryUnknownValueClientPutOptions contains the optional parameters for the DictionaryUnknownValueClient.Put method.
+type DictionaryUnknownValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }

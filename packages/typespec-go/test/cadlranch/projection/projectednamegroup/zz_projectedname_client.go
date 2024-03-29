@@ -18,16 +18,16 @@ type ProjectedNameClient struct {
 	internal *azcore.Client
 }
 
-// NewModelClient creates a new instance of [ModelClient].
-func (client *ProjectedNameClient) NewModelClient() *ModelClient {
-	return &ModelClient{
+// NewProjectedNameModelClient creates a new instance of [ProjectedNameModelClient].
+func (client *ProjectedNameClient) NewProjectedNameModelClient() *ProjectedNameModelClient {
+	return &ProjectedNameModelClient{
 		internal: client.internal,
 	}
 }
 
-// NewPropertyClient creates a new instance of [PropertyClient].
-func (client *ProjectedNameClient) NewPropertyClient() *PropertyClient {
-	return &PropertyClient{
+// NewProjectedNamePropertyClient creates a new instance of [ProjectedNamePropertyClient].
+func (client *ProjectedNameClient) NewProjectedNamePropertyClient() *ProjectedNamePropertyClient {
+	return &ProjectedNamePropertyClient{
 		internal: client.internal,
 	}
 }

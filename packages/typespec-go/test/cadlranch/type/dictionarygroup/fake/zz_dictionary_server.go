@@ -15,38 +15,38 @@ import (
 
 // DictionaryServer is a fake server for instances of the dictionarygroup.DictionaryClient type.
 type DictionaryServer struct {
-	// BooleanValueServer contains the fakes for client BooleanValueClient
-	BooleanValueServer BooleanValueServer
+	// DictionaryBooleanValueServer contains the fakes for client DictionaryBooleanValueClient
+	DictionaryBooleanValueServer DictionaryBooleanValueServer
 
-	// DatetimeValueServer contains the fakes for client DatetimeValueClient
-	DatetimeValueServer DatetimeValueServer
+	// DictionaryDatetimeValueServer contains the fakes for client DictionaryDatetimeValueClient
+	DictionaryDatetimeValueServer DictionaryDatetimeValueServer
 
-	// DurationValueServer contains the fakes for client DurationValueClient
-	DurationValueServer DurationValueServer
+	// DictionaryDurationValueServer contains the fakes for client DictionaryDurationValueClient
+	DictionaryDurationValueServer DictionaryDurationValueServer
 
-	// Float32ValueServer contains the fakes for client Float32ValueClient
-	Float32ValueServer Float32ValueServer
+	// DictionaryFloat32ValueServer contains the fakes for client DictionaryFloat32ValueClient
+	DictionaryFloat32ValueServer DictionaryFloat32ValueServer
 
-	// Int32ValueServer contains the fakes for client Int32ValueClient
-	Int32ValueServer Int32ValueServer
+	// DictionaryInt32ValueServer contains the fakes for client DictionaryInt32ValueClient
+	DictionaryInt32ValueServer DictionaryInt32ValueServer
 
-	// Int64ValueServer contains the fakes for client Int64ValueClient
-	Int64ValueServer Int64ValueServer
+	// DictionaryInt64ValueServer contains the fakes for client DictionaryInt64ValueClient
+	DictionaryInt64ValueServer DictionaryInt64ValueServer
 
-	// ModelValueServer contains the fakes for client ModelValueClient
-	ModelValueServer ModelValueServer
+	// DictionaryModelValueServer contains the fakes for client DictionaryModelValueClient
+	DictionaryModelValueServer DictionaryModelValueServer
 
-	// NullableFloatValueServer contains the fakes for client NullableFloatValueClient
-	NullableFloatValueServer NullableFloatValueServer
+	// DictionaryNullableFloatValueServer contains the fakes for client DictionaryNullableFloatValueClient
+	DictionaryNullableFloatValueServer DictionaryNullableFloatValueServer
 
-	// RecursiveModelValueServer contains the fakes for client RecursiveModelValueClient
-	RecursiveModelValueServer RecursiveModelValueServer
+	// DictionaryRecursiveModelValueServer contains the fakes for client DictionaryRecursiveModelValueClient
+	DictionaryRecursiveModelValueServer DictionaryRecursiveModelValueServer
 
-	// StringValueServer contains the fakes for client StringValueClient
-	StringValueServer StringValueServer
+	// DictionaryStringValueServer contains the fakes for client DictionaryStringValueClient
+	DictionaryStringValueServer DictionaryStringValueServer
 
-	// UnknownValueServer contains the fakes for client UnknownValueClient
-	UnknownValueServer UnknownValueServer
+	// DictionaryUnknownValueServer contains the fakes for client DictionaryUnknownValueClient
+	DictionaryUnknownValueServer DictionaryUnknownValueServer
 }
 
 // NewDictionaryServerTransport creates a new instance of DictionaryServerTransport with the provided implementation.
@@ -59,19 +59,19 @@ func NewDictionaryServerTransport(srv *DictionaryServer) *DictionaryServerTransp
 // DictionaryServerTransport connects instances of dictionarygroup.DictionaryClient to instances of DictionaryServer.
 // Don't use this type directly, use NewDictionaryServerTransport instead.
 type DictionaryServerTransport struct {
-	srv                         *DictionaryServer
-	trMu                        sync.Mutex
-	trBooleanValueServer        *BooleanValueServerTransport
-	trDatetimeValueServer       *DatetimeValueServerTransport
-	trDurationValueServer       *DurationValueServerTransport
-	trFloat32ValueServer        *Float32ValueServerTransport
-	trInt32ValueServer          *Int32ValueServerTransport
-	trInt64ValueServer          *Int64ValueServerTransport
-	trModelValueServer          *ModelValueServerTransport
-	trNullableFloatValueServer  *NullableFloatValueServerTransport
-	trRecursiveModelValueServer *RecursiveModelValueServerTransport
-	trStringValueServer         *StringValueServerTransport
-	trUnknownValueServer        *UnknownValueServerTransport
+	srv                                   *DictionaryServer
+	trMu                                  sync.Mutex
+	trDictionaryBooleanValueServer        *DictionaryBooleanValueServerTransport
+	trDictionaryDatetimeValueServer       *DictionaryDatetimeValueServerTransport
+	trDictionaryDurationValueServer       *DictionaryDurationValueServerTransport
+	trDictionaryFloat32ValueServer        *DictionaryFloat32ValueServerTransport
+	trDictionaryInt32ValueServer          *DictionaryInt32ValueServerTransport
+	trDictionaryInt64ValueServer          *DictionaryInt64ValueServerTransport
+	trDictionaryModelValueServer          *DictionaryModelValueServerTransport
+	trDictionaryNullableFloatValueServer  *DictionaryNullableFloatValueServerTransport
+	trDictionaryRecursiveModelValueServer *DictionaryRecursiveModelValueServerTransport
+	trDictionaryStringValueServer         *DictionaryStringValueServerTransport
+	trDictionaryUnknownValueServer        *DictionaryUnknownValueServerTransport
 }
 
 // Do implements the policy.Transporter interface for DictionaryServerTransport.
@@ -90,61 +90,61 @@ func (d *DictionaryServerTransport) dispatchToClientFake(req *http.Request, clie
 	var err error
 
 	switch client {
-	case "BooleanValueClient":
-		initServer(&d.trMu, &d.trBooleanValueServer, func() *BooleanValueServerTransport {
-			return NewBooleanValueServerTransport(&d.srv.BooleanValueServer)
+	case "DictionaryBooleanValueClient":
+		initServer(&d.trMu, &d.trDictionaryBooleanValueServer, func() *DictionaryBooleanValueServerTransport {
+			return NewDictionaryBooleanValueServerTransport(&d.srv.DictionaryBooleanValueServer)
 		})
-		resp, err = d.trBooleanValueServer.Do(req)
-	case "DatetimeValueClient":
-		initServer(&d.trMu, &d.trDatetimeValueServer, func() *DatetimeValueServerTransport {
-			return NewDatetimeValueServerTransport(&d.srv.DatetimeValueServer)
+		resp, err = d.trDictionaryBooleanValueServer.Do(req)
+	case "DictionaryDatetimeValueClient":
+		initServer(&d.trMu, &d.trDictionaryDatetimeValueServer, func() *DictionaryDatetimeValueServerTransport {
+			return NewDictionaryDatetimeValueServerTransport(&d.srv.DictionaryDatetimeValueServer)
 		})
-		resp, err = d.trDatetimeValueServer.Do(req)
-	case "DurationValueClient":
-		initServer(&d.trMu, &d.trDurationValueServer, func() *DurationValueServerTransport {
-			return NewDurationValueServerTransport(&d.srv.DurationValueServer)
+		resp, err = d.trDictionaryDatetimeValueServer.Do(req)
+	case "DictionaryDurationValueClient":
+		initServer(&d.trMu, &d.trDictionaryDurationValueServer, func() *DictionaryDurationValueServerTransport {
+			return NewDictionaryDurationValueServerTransport(&d.srv.DictionaryDurationValueServer)
 		})
-		resp, err = d.trDurationValueServer.Do(req)
-	case "Float32ValueClient":
-		initServer(&d.trMu, &d.trFloat32ValueServer, func() *Float32ValueServerTransport {
-			return NewFloat32ValueServerTransport(&d.srv.Float32ValueServer)
+		resp, err = d.trDictionaryDurationValueServer.Do(req)
+	case "DictionaryFloat32ValueClient":
+		initServer(&d.trMu, &d.trDictionaryFloat32ValueServer, func() *DictionaryFloat32ValueServerTransport {
+			return NewDictionaryFloat32ValueServerTransport(&d.srv.DictionaryFloat32ValueServer)
 		})
-		resp, err = d.trFloat32ValueServer.Do(req)
-	case "Int32ValueClient":
-		initServer(&d.trMu, &d.trInt32ValueServer, func() *Int32ValueServerTransport {
-			return NewInt32ValueServerTransport(&d.srv.Int32ValueServer)
+		resp, err = d.trDictionaryFloat32ValueServer.Do(req)
+	case "DictionaryInt32ValueClient":
+		initServer(&d.trMu, &d.trDictionaryInt32ValueServer, func() *DictionaryInt32ValueServerTransport {
+			return NewDictionaryInt32ValueServerTransport(&d.srv.DictionaryInt32ValueServer)
 		})
-		resp, err = d.trInt32ValueServer.Do(req)
-	case "Int64ValueClient":
-		initServer(&d.trMu, &d.trInt64ValueServer, func() *Int64ValueServerTransport {
-			return NewInt64ValueServerTransport(&d.srv.Int64ValueServer)
+		resp, err = d.trDictionaryInt32ValueServer.Do(req)
+	case "DictionaryInt64ValueClient":
+		initServer(&d.trMu, &d.trDictionaryInt64ValueServer, func() *DictionaryInt64ValueServerTransport {
+			return NewDictionaryInt64ValueServerTransport(&d.srv.DictionaryInt64ValueServer)
 		})
-		resp, err = d.trInt64ValueServer.Do(req)
-	case "ModelValueClient":
-		initServer(&d.trMu, &d.trModelValueServer, func() *ModelValueServerTransport {
-			return NewModelValueServerTransport(&d.srv.ModelValueServer)
+		resp, err = d.trDictionaryInt64ValueServer.Do(req)
+	case "DictionaryModelValueClient":
+		initServer(&d.trMu, &d.trDictionaryModelValueServer, func() *DictionaryModelValueServerTransport {
+			return NewDictionaryModelValueServerTransport(&d.srv.DictionaryModelValueServer)
 		})
-		resp, err = d.trModelValueServer.Do(req)
-	case "NullableFloatValueClient":
-		initServer(&d.trMu, &d.trNullableFloatValueServer, func() *NullableFloatValueServerTransport {
-			return NewNullableFloatValueServerTransport(&d.srv.NullableFloatValueServer)
+		resp, err = d.trDictionaryModelValueServer.Do(req)
+	case "DictionaryNullableFloatValueClient":
+		initServer(&d.trMu, &d.trDictionaryNullableFloatValueServer, func() *DictionaryNullableFloatValueServerTransport {
+			return NewDictionaryNullableFloatValueServerTransport(&d.srv.DictionaryNullableFloatValueServer)
 		})
-		resp, err = d.trNullableFloatValueServer.Do(req)
-	case "RecursiveModelValueClient":
-		initServer(&d.trMu, &d.trRecursiveModelValueServer, func() *RecursiveModelValueServerTransport {
-			return NewRecursiveModelValueServerTransport(&d.srv.RecursiveModelValueServer)
+		resp, err = d.trDictionaryNullableFloatValueServer.Do(req)
+	case "DictionaryRecursiveModelValueClient":
+		initServer(&d.trMu, &d.trDictionaryRecursiveModelValueServer, func() *DictionaryRecursiveModelValueServerTransport {
+			return NewDictionaryRecursiveModelValueServerTransport(&d.srv.DictionaryRecursiveModelValueServer)
 		})
-		resp, err = d.trRecursiveModelValueServer.Do(req)
-	case "StringValueClient":
-		initServer(&d.trMu, &d.trStringValueServer, func() *StringValueServerTransport {
-			return NewStringValueServerTransport(&d.srv.StringValueServer)
+		resp, err = d.trDictionaryRecursiveModelValueServer.Do(req)
+	case "DictionaryStringValueClient":
+		initServer(&d.trMu, &d.trDictionaryStringValueServer, func() *DictionaryStringValueServerTransport {
+			return NewDictionaryStringValueServerTransport(&d.srv.DictionaryStringValueServer)
 		})
-		resp, err = d.trStringValueServer.Do(req)
-	case "UnknownValueClient":
-		initServer(&d.trMu, &d.trUnknownValueServer, func() *UnknownValueServerTransport {
-			return NewUnknownValueServerTransport(&d.srv.UnknownValueServer)
+		resp, err = d.trDictionaryStringValueServer.Do(req)
+	case "DictionaryUnknownValueClient":
+		initServer(&d.trMu, &d.trDictionaryUnknownValueServer, func() *DictionaryUnknownValueServerTransport {
+			return NewDictionaryUnknownValueServerTransport(&d.srv.DictionaryUnknownValueServer)
 		})
-		resp, err = d.trUnknownValueServer.Do(req)
+		resp, err = d.trDictionaryUnknownValueServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

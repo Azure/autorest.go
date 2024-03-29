@@ -4,102 +4,102 @@
 
 package arraygroup
 
-// BooleanValueClientGetOptions contains the optional parameters for the BooleanValueClient.Get method.
-type BooleanValueClientGetOptions struct {
+// ArrayBooleanValueClientGetOptions contains the optional parameters for the ArrayBooleanValueClient.Get method.
+type ArrayBooleanValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BooleanValueClientPutOptions contains the optional parameters for the BooleanValueClient.Put method.
-type BooleanValueClientPutOptions struct {
+// ArrayBooleanValueClientPutOptions contains the optional parameters for the ArrayBooleanValueClient.Put method.
+type ArrayBooleanValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeValueClientGetOptions contains the optional parameters for the DatetimeValueClient.Get method.
-type DatetimeValueClientGetOptions struct {
+// ArrayDatetimeValueClientGetOptions contains the optional parameters for the ArrayDatetimeValueClient.Get method.
+type ArrayDatetimeValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeValueClientPutOptions contains the optional parameters for the DatetimeValueClient.Put method.
-type DatetimeValueClientPutOptions struct {
+// ArrayDatetimeValueClientPutOptions contains the optional parameters for the ArrayDatetimeValueClient.Put method.
+type ArrayDatetimeValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationValueClientGetOptions contains the optional parameters for the DurationValueClient.Get method.
-type DurationValueClientGetOptions struct {
+// ArrayDurationValueClientGetOptions contains the optional parameters for the ArrayDurationValueClient.Get method.
+type ArrayDurationValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationValueClientPutOptions contains the optional parameters for the DurationValueClient.Put method.
-type DurationValueClientPutOptions struct {
+// ArrayDurationValueClientPutOptions contains the optional parameters for the ArrayDurationValueClient.Put method.
+type ArrayDurationValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Float32ValueClientGetOptions contains the optional parameters for the Float32ValueClient.Get method.
-type Float32ValueClientGetOptions struct {
+// ArrayFloat32ValueClientGetOptions contains the optional parameters for the ArrayFloat32ValueClient.Get method.
+type ArrayFloat32ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Float32ValueClientPutOptions contains the optional parameters for the Float32ValueClient.Put method.
-type Float32ValueClientPutOptions struct {
+// ArrayFloat32ValueClientPutOptions contains the optional parameters for the ArrayFloat32ValueClient.Put method.
+type ArrayFloat32ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int32ValueClientGetOptions contains the optional parameters for the Int32ValueClient.Get method.
-type Int32ValueClientGetOptions struct {
+// ArrayInt32ValueClientGetOptions contains the optional parameters for the ArrayInt32ValueClient.Get method.
+type ArrayInt32ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int32ValueClientPutOptions contains the optional parameters for the Int32ValueClient.Put method.
-type Int32ValueClientPutOptions struct {
+// ArrayInt32ValueClientPutOptions contains the optional parameters for the ArrayInt32ValueClient.Put method.
+type ArrayInt32ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int64ValueClientGetOptions contains the optional parameters for the Int64ValueClient.Get method.
-type Int64ValueClientGetOptions struct {
+// ArrayInt64ValueClientGetOptions contains the optional parameters for the ArrayInt64ValueClient.Get method.
+type ArrayInt64ValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Int64ValueClientPutOptions contains the optional parameters for the Int64ValueClient.Put method.
-type Int64ValueClientPutOptions struct {
+// ArrayInt64ValueClientPutOptions contains the optional parameters for the ArrayInt64ValueClient.Put method.
+type ArrayInt64ValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ModelValueClientGetOptions contains the optional parameters for the ModelValueClient.Get method.
-type ModelValueClientGetOptions struct {
+// ArrayModelValueClientGetOptions contains the optional parameters for the ArrayModelValueClient.Get method.
+type ArrayModelValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ModelValueClientPutOptions contains the optional parameters for the ModelValueClient.Put method.
-type ModelValueClientPutOptions struct {
+// ArrayModelValueClientPutOptions contains the optional parameters for the ArrayModelValueClient.Put method.
+type ArrayModelValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NullableFloatValueClientGetOptions contains the optional parameters for the NullableFloatValueClient.Get method.
-type NullableFloatValueClientGetOptions struct {
+// ArrayNullableFloatValueClientGetOptions contains the optional parameters for the ArrayNullableFloatValueClient.Get method.
+type ArrayNullableFloatValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NullableFloatValueClientPutOptions contains the optional parameters for the NullableFloatValueClient.Put method.
-type NullableFloatValueClientPutOptions struct {
+// ArrayNullableFloatValueClientPutOptions contains the optional parameters for the ArrayNullableFloatValueClient.Put method.
+type ArrayNullableFloatValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringValueClientGetOptions contains the optional parameters for the StringValueClient.Get method.
-type StringValueClientGetOptions struct {
+// ArrayStringValueClientGetOptions contains the optional parameters for the ArrayStringValueClient.Get method.
+type ArrayStringValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringValueClientPutOptions contains the optional parameters for the StringValueClient.Put method.
-type StringValueClientPutOptions struct {
+// ArrayStringValueClientPutOptions contains the optional parameters for the ArrayStringValueClient.Put method.
+type ArrayStringValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownValueClientGetOptions contains the optional parameters for the UnknownValueClient.Get method.
-type UnknownValueClientGetOptions struct {
+// ArrayUnknownValueClientGetOptions contains the optional parameters for the ArrayUnknownValueClient.Get method.
+type ArrayUnknownValueClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownValueClientPutOptions contains the optional parameters for the UnknownValueClient.Put method.
-type UnknownValueClientPutOptions struct {
+// ArrayUnknownValueClientPutOptions contains the optional parameters for the ArrayUnknownValueClient.Put method.
+type ArrayUnknownValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }

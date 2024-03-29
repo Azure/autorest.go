@@ -14,7 +14,7 @@ import (
 func TestRelativeModelInOperationClient_discriminator(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewRelativeModelInOperationClient().discriminator(context.Background(), "anything", nil)
+	resp, err := client.NewAccessRelativeModelInOperationClient().discriminator(context.Background(), "anything", nil)
 	require.NoError(t, err)
 	require.Equal(t, &realModel{
 		Kind: to.Ptr("real"),
@@ -25,7 +25,7 @@ func TestRelativeModelInOperationClient_discriminator(t *testing.T) {
 func TestRelativeModelInOperationClient_operation(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewRelativeModelInOperationClient().operation(context.Background(), "anything", nil)
+	resp, err := client.NewAccessRelativeModelInOperationClient().operation(context.Background(), "anything", nil)
 	require.NoError(t, err)
 	require.Equal(t, outerModel{
 		Name: to.Ptr("Madge"),

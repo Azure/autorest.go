@@ -18,7 +18,7 @@ import (
 func TestExtendsStringClient_Get(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewExtendsStringClient().Get(context.Background(), nil)
+	resp, err := client.NewAdditionalPropertiesExtendsStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.ExtendsStringAdditionalProperties{
 		Name: to.Ptr("ExtendsStringAdditionalProperties"),
@@ -31,7 +31,7 @@ func TestExtendsStringClient_Get(t *testing.T) {
 func TestExtendsStringClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewExtendsStringClient().Put(context.Background(), addlpropsgroup.ExtendsStringAdditionalProperties{
+	resp, err := client.NewAdditionalPropertiesExtendsStringClient().Put(context.Background(), addlpropsgroup.ExtendsStringAdditionalProperties{
 		Name: to.Ptr("ExtendsStringAdditionalProperties"),
 		AdditionalProperties: map[string]*string{
 			"prop": to.Ptr("abc"),

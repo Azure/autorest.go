@@ -15,26 +15,26 @@ import (
 
 // ScalarServer is a fake server for instances of the scalargroup.ScalarClient type.
 type ScalarServer struct {
-	// BooleanServer contains the fakes for client BooleanClient
-	BooleanServer BooleanServer
+	// ScalarBooleanServer contains the fakes for client ScalarBooleanClient
+	ScalarBooleanServer ScalarBooleanServer
 
-	// Decimal128TypeServer contains the fakes for client Decimal128TypeClient
-	Decimal128TypeServer Decimal128TypeServer
+	// ScalarDecimal128TypeServer contains the fakes for client ScalarDecimal128TypeClient
+	ScalarDecimal128TypeServer ScalarDecimal128TypeServer
 
-	// Decimal128VerifyServer contains the fakes for client Decimal128VerifyClient
-	Decimal128VerifyServer Decimal128VerifyServer
+	// ScalarDecimal128VerifyServer contains the fakes for client ScalarDecimal128VerifyClient
+	ScalarDecimal128VerifyServer ScalarDecimal128VerifyServer
 
-	// DecimalTypeServer contains the fakes for client DecimalTypeClient
-	DecimalTypeServer DecimalTypeServer
+	// ScalarDecimalTypeServer contains the fakes for client ScalarDecimalTypeClient
+	ScalarDecimalTypeServer ScalarDecimalTypeServer
 
-	// DecimalVerifyServer contains the fakes for client DecimalVerifyClient
-	DecimalVerifyServer DecimalVerifyServer
+	// ScalarDecimalVerifyServer contains the fakes for client ScalarDecimalVerifyClient
+	ScalarDecimalVerifyServer ScalarDecimalVerifyServer
 
-	// StringServer contains the fakes for client StringClient
-	StringServer StringServer
+	// ScalarStringServer contains the fakes for client ScalarStringClient
+	ScalarStringServer ScalarStringServer
 
-	// UnknownServer contains the fakes for client UnknownClient
-	UnknownServer UnknownServer
+	// ScalarUnknownServer contains the fakes for client ScalarUnknownClient
+	ScalarUnknownServer ScalarUnknownServer
 }
 
 // NewScalarServerTransport creates a new instance of ScalarServerTransport with the provided implementation.
@@ -47,15 +47,15 @@ func NewScalarServerTransport(srv *ScalarServer) *ScalarServerTransport {
 // ScalarServerTransport connects instances of scalargroup.ScalarClient to instances of ScalarServer.
 // Don't use this type directly, use NewScalarServerTransport instead.
 type ScalarServerTransport struct {
-	srv                      *ScalarServer
-	trMu                     sync.Mutex
-	trBooleanServer          *BooleanServerTransport
-	trDecimal128TypeServer   *Decimal128TypeServerTransport
-	trDecimal128VerifyServer *Decimal128VerifyServerTransport
-	trDecimalTypeServer      *DecimalTypeServerTransport
-	trDecimalVerifyServer    *DecimalVerifyServerTransport
-	trStringServer           *StringServerTransport
-	trUnknownServer          *UnknownServerTransport
+	srv                            *ScalarServer
+	trMu                           sync.Mutex
+	trScalarBooleanServer          *ScalarBooleanServerTransport
+	trScalarDecimal128TypeServer   *ScalarDecimal128TypeServerTransport
+	trScalarDecimal128VerifyServer *ScalarDecimal128VerifyServerTransport
+	trScalarDecimalTypeServer      *ScalarDecimalTypeServerTransport
+	trScalarDecimalVerifyServer    *ScalarDecimalVerifyServerTransport
+	trScalarStringServer           *ScalarStringServerTransport
+	trScalarUnknownServer          *ScalarUnknownServerTransport
 }
 
 // Do implements the policy.Transporter interface for ScalarServerTransport.
@@ -74,41 +74,41 @@ func (s *ScalarServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "BooleanClient":
-		initServer(&s.trMu, &s.trBooleanServer, func() *BooleanServerTransport {
-			return NewBooleanServerTransport(&s.srv.BooleanServer)
+	case "ScalarBooleanClient":
+		initServer(&s.trMu, &s.trScalarBooleanServer, func() *ScalarBooleanServerTransport {
+			return NewScalarBooleanServerTransport(&s.srv.ScalarBooleanServer)
 		})
-		resp, err = s.trBooleanServer.Do(req)
-	case "Decimal128TypeClient":
-		initServer(&s.trMu, &s.trDecimal128TypeServer, func() *Decimal128TypeServerTransport {
-			return NewDecimal128TypeServerTransport(&s.srv.Decimal128TypeServer)
+		resp, err = s.trScalarBooleanServer.Do(req)
+	case "ScalarDecimal128TypeClient":
+		initServer(&s.trMu, &s.trScalarDecimal128TypeServer, func() *ScalarDecimal128TypeServerTransport {
+			return NewScalarDecimal128TypeServerTransport(&s.srv.ScalarDecimal128TypeServer)
 		})
-		resp, err = s.trDecimal128TypeServer.Do(req)
-	case "Decimal128VerifyClient":
-		initServer(&s.trMu, &s.trDecimal128VerifyServer, func() *Decimal128VerifyServerTransport {
-			return NewDecimal128VerifyServerTransport(&s.srv.Decimal128VerifyServer)
+		resp, err = s.trScalarDecimal128TypeServer.Do(req)
+	case "ScalarDecimal128VerifyClient":
+		initServer(&s.trMu, &s.trScalarDecimal128VerifyServer, func() *ScalarDecimal128VerifyServerTransport {
+			return NewScalarDecimal128VerifyServerTransport(&s.srv.ScalarDecimal128VerifyServer)
 		})
-		resp, err = s.trDecimal128VerifyServer.Do(req)
-	case "DecimalTypeClient":
-		initServer(&s.trMu, &s.trDecimalTypeServer, func() *DecimalTypeServerTransport {
-			return NewDecimalTypeServerTransport(&s.srv.DecimalTypeServer)
+		resp, err = s.trScalarDecimal128VerifyServer.Do(req)
+	case "ScalarDecimalTypeClient":
+		initServer(&s.trMu, &s.trScalarDecimalTypeServer, func() *ScalarDecimalTypeServerTransport {
+			return NewScalarDecimalTypeServerTransport(&s.srv.ScalarDecimalTypeServer)
 		})
-		resp, err = s.trDecimalTypeServer.Do(req)
-	case "DecimalVerifyClient":
-		initServer(&s.trMu, &s.trDecimalVerifyServer, func() *DecimalVerifyServerTransport {
-			return NewDecimalVerifyServerTransport(&s.srv.DecimalVerifyServer)
+		resp, err = s.trScalarDecimalTypeServer.Do(req)
+	case "ScalarDecimalVerifyClient":
+		initServer(&s.trMu, &s.trScalarDecimalVerifyServer, func() *ScalarDecimalVerifyServerTransport {
+			return NewScalarDecimalVerifyServerTransport(&s.srv.ScalarDecimalVerifyServer)
 		})
-		resp, err = s.trDecimalVerifyServer.Do(req)
-	case "StringClient":
-		initServer(&s.trMu, &s.trStringServer, func() *StringServerTransport {
-			return NewStringServerTransport(&s.srv.StringServer)
+		resp, err = s.trScalarDecimalVerifyServer.Do(req)
+	case "ScalarStringClient":
+		initServer(&s.trMu, &s.trScalarStringServer, func() *ScalarStringServerTransport {
+			return NewScalarStringServerTransport(&s.srv.ScalarStringServer)
 		})
-		resp, err = s.trStringServer.Do(req)
-	case "UnknownClient":
-		initServer(&s.trMu, &s.trUnknownServer, func() *UnknownServerTransport {
-			return NewUnknownServerTransport(&s.srv.UnknownServer)
+		resp, err = s.trScalarStringServer.Do(req)
+	case "ScalarUnknownClient":
+		initServer(&s.trMu, &s.trScalarUnknownServer, func() *ScalarUnknownServerTransport {
+			return NewScalarUnknownServerTransport(&s.srv.ScalarUnknownServer)
 		})
-		resp, err = s.trUnknownServer.Do(req)
+		resp, err = s.trScalarUnknownServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

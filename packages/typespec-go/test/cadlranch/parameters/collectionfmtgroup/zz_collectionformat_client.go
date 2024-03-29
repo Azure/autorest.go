@@ -12,16 +12,16 @@ type CollectionFormatClient struct {
 	internal *azcore.Client
 }
 
-// NewHeaderClient creates a new instance of [HeaderClient].
-func (client *CollectionFormatClient) NewHeaderClient() *HeaderClient {
-	return &HeaderClient{
+// NewCollectionFormatHeaderClient creates a new instance of [CollectionFormatHeaderClient].
+func (client *CollectionFormatClient) NewCollectionFormatHeaderClient() *CollectionFormatHeaderClient {
+	return &CollectionFormatHeaderClient{
 		internal: client.internal,
 	}
 }
 
-// NewQueryClient creates a new instance of [QueryClient].
-func (client *CollectionFormatClient) NewQueryClient() *QueryClient {
-	return &QueryClient{
+// NewCollectionFormatQueryClient creates a new instance of [CollectionFormatQueryClient].
+func (client *CollectionFormatClient) NewCollectionFormatQueryClient() *CollectionFormatQueryClient {
+	return &CollectionFormatQueryClient{
 		internal: client.internal,
 	}
 }

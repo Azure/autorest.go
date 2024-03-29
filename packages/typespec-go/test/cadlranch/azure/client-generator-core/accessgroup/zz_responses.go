@@ -4,56 +4,56 @@
 
 package accessgroup
 
-// PublicOperationClientNoDecoratorInPublicResponse contains the response from method PublicOperationClient.NoDecoratorInPublic.
-type PublicOperationClientNoDecoratorInPublicResponse struct {
+// AccessPublicOperationClientNoDecoratorInPublicResponse contains the response from method AccessPublicOperationClient.NoDecoratorInPublic.
+type AccessPublicOperationClientNoDecoratorInPublicResponse struct {
 	// Used in a public operation, should be generated and exported.
 	NoDecoratorModelInPublic
 }
 
-// PublicOperationClientPublicDecoratorInPublicResponse contains the response from method PublicOperationClient.PublicDecoratorInPublic.
-type PublicOperationClientPublicDecoratorInPublicResponse struct {
+// AccessPublicOperationClientPublicDecoratorInPublicResponse contains the response from method AccessPublicOperationClient.PublicDecoratorInPublic.
+type AccessPublicOperationClientPublicDecoratorInPublicResponse struct {
 	// Used in a public operation, should be generated and exported.
 	PublicDecoratorModelInPublic
 }
 
-// SharedModelInOperationClientPublicResponse contains the response from method SharedModelInOperationClient.Public.
-type SharedModelInOperationClientPublicResponse struct {
+// AccessSharedModelInOperationClientPublicResponse contains the response from method AccessSharedModelInOperationClient.Public.
+type AccessSharedModelInOperationClientPublicResponse struct {
 	// Used by both public and internal operation. It should be generated and exported.
 	SharedModel
 }
 
-// internalOperationClientinternalDecoratorInInternalResponse contains the response from method InternalOperationClient.internalDecoratorInInternal.
-type internalOperationClientinternalDecoratorInInternalResponse struct {
+// accessInternalOperationClientinternalDecoratorInInternalResponse contains the response from method AccessInternalOperationClient.internalDecoratorInInternal.
+type accessInternalOperationClientinternalDecoratorInInternalResponse struct {
 	// Used in an internal operation, should be generated but not exported.
 	internalDecoratorModelInInternal
 }
 
-// internalOperationClientnoDecoratorInInternalResponse contains the response from method InternalOperationClient.noDecoratorInInternal.
-type internalOperationClientnoDecoratorInInternalResponse struct {
+// accessInternalOperationClientnoDecoratorInInternalResponse contains the response from method AccessInternalOperationClient.noDecoratorInInternal.
+type accessInternalOperationClientnoDecoratorInInternalResponse struct {
 	// Used in an internal operation, should be generated but not exported.
 	noDecoratorModelInInternal
 }
 
-// internalOperationClientpublicDecoratorInInternalResponse contains the response from method InternalOperationClient.publicDecoratorInInternal.
-type internalOperationClientpublicDecoratorInInternalResponse struct {
+// accessInternalOperationClientpublicDecoratorInInternalResponse contains the response from method AccessInternalOperationClient.publicDecoratorInInternal.
+type accessInternalOperationClientpublicDecoratorInInternalResponse struct {
 	// Used in an internal operation but with public decorator, should be generated and exported.
 	PublicDecoratorModelInInternal
 }
 
-// relativeModelInOperationClientdiscriminatorResponse contains the response from method RelativeModelInOperationClient.discriminator.
-type relativeModelInOperationClientdiscriminatorResponse struct {
+// accessRelativeModelInOperationClientdiscriminatorResponse contains the response from method AccessRelativeModelInOperationClient.discriminator.
+type accessRelativeModelInOperationClientdiscriminatorResponse struct {
 	// Used in internal operations, should be generated but not exported.
 	abstractModelClassification
 }
 
-// relativeModelInOperationClientoperationResponse contains the response from method RelativeModelInOperationClient.operation.
-type relativeModelInOperationClientoperationResponse struct {
+// accessRelativeModelInOperationClientoperationResponse contains the response from method AccessRelativeModelInOperationClient.operation.
+type accessRelativeModelInOperationClientoperationResponse struct {
 	// Used in internal operations, should be generated but not exported.
 	outerModel
 }
 
-// sharedModelInOperationClientinternalMethodResponse contains the response from method SharedModelInOperationClient.internalMethod.
-type sharedModelInOperationClientinternalMethodResponse struct {
+// accessSharedModelInOperationClientinternalMethodResponse contains the response from method AccessSharedModelInOperationClient.internalMethod.
+type accessSharedModelInOperationClientinternalMethodResponse struct {
 	// Used by both public and internal operation. It should be generated and exported.
 	SharedModel
 }

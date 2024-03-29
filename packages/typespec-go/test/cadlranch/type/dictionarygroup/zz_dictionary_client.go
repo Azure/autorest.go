@@ -12,79 +12,79 @@ type DictionaryClient struct {
 	internal *azcore.Client
 }
 
-// NewBooleanValueClient creates a new instance of [BooleanValueClient].
-func (client *DictionaryClient) NewBooleanValueClient() *BooleanValueClient {
-	return &BooleanValueClient{
+// NewDictionaryBooleanValueClient creates a new instance of [DictionaryBooleanValueClient].
+func (client *DictionaryClient) NewDictionaryBooleanValueClient() *DictionaryBooleanValueClient {
+	return &DictionaryBooleanValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewDatetimeValueClient creates a new instance of [DatetimeValueClient].
-func (client *DictionaryClient) NewDatetimeValueClient() *DatetimeValueClient {
-	return &DatetimeValueClient{
+// NewDictionaryDatetimeValueClient creates a new instance of [DictionaryDatetimeValueClient].
+func (client *DictionaryClient) NewDictionaryDatetimeValueClient() *DictionaryDatetimeValueClient {
+	return &DictionaryDatetimeValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewDurationValueClient creates a new instance of [DurationValueClient].
-func (client *DictionaryClient) NewDurationValueClient() *DurationValueClient {
-	return &DurationValueClient{
+// NewDictionaryDurationValueClient creates a new instance of [DictionaryDurationValueClient].
+func (client *DictionaryClient) NewDictionaryDurationValueClient() *DictionaryDurationValueClient {
+	return &DictionaryDurationValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewFloat32ValueClient creates a new instance of [Float32ValueClient].
-func (client *DictionaryClient) NewFloat32ValueClient() *Float32ValueClient {
-	return &Float32ValueClient{
+// NewDictionaryFloat32ValueClient creates a new instance of [DictionaryFloat32ValueClient].
+func (client *DictionaryClient) NewDictionaryFloat32ValueClient() *DictionaryFloat32ValueClient {
+	return &DictionaryFloat32ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewInt32ValueClient creates a new instance of [Int32ValueClient].
-func (client *DictionaryClient) NewInt32ValueClient() *Int32ValueClient {
-	return &Int32ValueClient{
+// NewDictionaryInt32ValueClient creates a new instance of [DictionaryInt32ValueClient].
+func (client *DictionaryClient) NewDictionaryInt32ValueClient() *DictionaryInt32ValueClient {
+	return &DictionaryInt32ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewInt64ValueClient creates a new instance of [Int64ValueClient].
-func (client *DictionaryClient) NewInt64ValueClient() *Int64ValueClient {
-	return &Int64ValueClient{
+// NewDictionaryInt64ValueClient creates a new instance of [DictionaryInt64ValueClient].
+func (client *DictionaryClient) NewDictionaryInt64ValueClient() *DictionaryInt64ValueClient {
+	return &DictionaryInt64ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewModelValueClient creates a new instance of [ModelValueClient].
-func (client *DictionaryClient) NewModelValueClient() *ModelValueClient {
-	return &ModelValueClient{
+// NewDictionaryModelValueClient creates a new instance of [DictionaryModelValueClient].
+func (client *DictionaryClient) NewDictionaryModelValueClient() *DictionaryModelValueClient {
+	return &DictionaryModelValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewNullableFloatValueClient creates a new instance of [NullableFloatValueClient].
-func (client *DictionaryClient) NewNullableFloatValueClient() *NullableFloatValueClient {
-	return &NullableFloatValueClient{
+// NewDictionaryNullableFloatValueClient creates a new instance of [DictionaryNullableFloatValueClient].
+func (client *DictionaryClient) NewDictionaryNullableFloatValueClient() *DictionaryNullableFloatValueClient {
+	return &DictionaryNullableFloatValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewRecursiveModelValueClient creates a new instance of [RecursiveModelValueClient].
-func (client *DictionaryClient) NewRecursiveModelValueClient() *RecursiveModelValueClient {
-	return &RecursiveModelValueClient{
+// NewDictionaryRecursiveModelValueClient creates a new instance of [DictionaryRecursiveModelValueClient].
+func (client *DictionaryClient) NewDictionaryRecursiveModelValueClient() *DictionaryRecursiveModelValueClient {
+	return &DictionaryRecursiveModelValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewStringValueClient creates a new instance of [StringValueClient].
-func (client *DictionaryClient) NewStringValueClient() *StringValueClient {
-	return &StringValueClient{
+// NewDictionaryStringValueClient creates a new instance of [DictionaryStringValueClient].
+func (client *DictionaryClient) NewDictionaryStringValueClient() *DictionaryStringValueClient {
+	return &DictionaryStringValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewUnknownValueClient creates a new instance of [UnknownValueClient].
-func (client *DictionaryClient) NewUnknownValueClient() *UnknownValueClient {
-	return &UnknownValueClient{
+// NewDictionaryUnknownValueClient creates a new instance of [DictionaryUnknownValueClient].
+func (client *DictionaryClient) NewDictionaryUnknownValueClient() *DictionaryUnknownValueClient {
+	return &DictionaryUnknownValueClient{
 		internal: client.internal,
 	}
 }

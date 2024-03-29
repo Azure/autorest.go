@@ -15,11 +15,11 @@ import (
 
 // CollectionFormatServer is a fake server for instances of the collectionfmtgroup.CollectionFormatClient type.
 type CollectionFormatServer struct {
-	// HeaderServer contains the fakes for client HeaderClient
-	HeaderServer HeaderServer
+	// CollectionFormatHeaderServer contains the fakes for client CollectionFormatHeaderClient
+	CollectionFormatHeaderServer CollectionFormatHeaderServer
 
-	// QueryServer contains the fakes for client QueryClient
-	QueryServer QueryServer
+	// CollectionFormatQueryServer contains the fakes for client CollectionFormatQueryClient
+	CollectionFormatQueryServer CollectionFormatQueryServer
 }
 
 // NewCollectionFormatServerTransport creates a new instance of CollectionFormatServerTransport with the provided implementation.
@@ -32,10 +32,10 @@ func NewCollectionFormatServerTransport(srv *CollectionFormatServer) *Collection
 // CollectionFormatServerTransport connects instances of collectionfmtgroup.CollectionFormatClient to instances of CollectionFormatServer.
 // Don't use this type directly, use NewCollectionFormatServerTransport instead.
 type CollectionFormatServerTransport struct {
-	srv            *CollectionFormatServer
-	trMu           sync.Mutex
-	trHeaderServer *HeaderServerTransport
-	trQueryServer  *QueryServerTransport
+	srv                            *CollectionFormatServer
+	trMu                           sync.Mutex
+	trCollectionFormatHeaderServer *CollectionFormatHeaderServerTransport
+	trCollectionFormatQueryServer  *CollectionFormatQueryServerTransport
 }
 
 // Do implements the policy.Transporter interface for CollectionFormatServerTransport.
@@ -54,16 +54,16 @@ func (c *CollectionFormatServerTransport) dispatchToClientFake(req *http.Request
 	var err error
 
 	switch client {
-	case "HeaderClient":
-		initServer(&c.trMu, &c.trHeaderServer, func() *HeaderServerTransport {
-			return NewHeaderServerTransport(&c.srv.HeaderServer)
+	case "CollectionFormatHeaderClient":
+		initServer(&c.trMu, &c.trCollectionFormatHeaderServer, func() *CollectionFormatHeaderServerTransport {
+			return NewCollectionFormatHeaderServerTransport(&c.srv.CollectionFormatHeaderServer)
 		})
-		resp, err = c.trHeaderServer.Do(req)
-	case "QueryClient":
-		initServer(&c.trMu, &c.trQueryServer, func() *QueryServerTransport {
-			return NewQueryServerTransport(&c.srv.QueryServer)
+		resp, err = c.trCollectionFormatHeaderServer.Do(req)
+	case "CollectionFormatQueryClient":
+		initServer(&c.trMu, &c.trCollectionFormatQueryServer, func() *CollectionFormatQueryServerTransport {
+			return NewCollectionFormatQueryServerTransport(&c.srv.CollectionFormatQueryServer)
 		})
-		resp, err = c.trQueryServer.Do(req)
+		resp, err = c.trCollectionFormatQueryServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

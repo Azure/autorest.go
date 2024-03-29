@@ -12,100 +12,100 @@ type AdditionalPropertiesClient struct {
 	internal *azcore.Client
 }
 
-// NewExtendsFloatClient creates a new instance of [ExtendsFloatClient].
-func (client *AdditionalPropertiesClient) NewExtendsFloatClient() *ExtendsFloatClient {
-	return &ExtendsFloatClient{
+// NewAdditionalPropertiesExtendsFloatClient creates a new instance of [AdditionalPropertiesExtendsFloatClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsFloatClient() *AdditionalPropertiesExtendsFloatClient {
+	return &AdditionalPropertiesExtendsFloatClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsModelArrayClient creates a new instance of [ExtendsModelArrayClient].
-func (client *AdditionalPropertiesClient) NewExtendsModelArrayClient() *ExtendsModelArrayClient {
-	return &ExtendsModelArrayClient{
+// NewAdditionalPropertiesExtendsModelArrayClient creates a new instance of [AdditionalPropertiesExtendsModelArrayClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsModelArrayClient() *AdditionalPropertiesExtendsModelArrayClient {
+	return &AdditionalPropertiesExtendsModelArrayClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsModelClient creates a new instance of [ExtendsModelClient].
-func (client *AdditionalPropertiesClient) NewExtendsModelClient() *ExtendsModelClient {
-	return &ExtendsModelClient{
+// NewAdditionalPropertiesExtendsModelClient creates a new instance of [AdditionalPropertiesExtendsModelClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsModelClient() *AdditionalPropertiesExtendsModelClient {
+	return &AdditionalPropertiesExtendsModelClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsStringClient creates a new instance of [ExtendsStringClient].
-func (client *AdditionalPropertiesClient) NewExtendsStringClient() *ExtendsStringClient {
-	return &ExtendsStringClient{
+// NewAdditionalPropertiesExtendsStringClient creates a new instance of [AdditionalPropertiesExtendsStringClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsStringClient() *AdditionalPropertiesExtendsStringClient {
+	return &AdditionalPropertiesExtendsStringClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsUnknownClient creates a new instance of [ExtendsUnknownClient].
-func (client *AdditionalPropertiesClient) NewExtendsUnknownClient() *ExtendsUnknownClient {
-	return &ExtendsUnknownClient{
+// NewAdditionalPropertiesExtendsUnknownClient creates a new instance of [AdditionalPropertiesExtendsUnknownClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsUnknownClient() *AdditionalPropertiesExtendsUnknownClient {
+	return &AdditionalPropertiesExtendsUnknownClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsUnknownDerivedClient creates a new instance of [ExtendsUnknownDerivedClient].
-func (client *AdditionalPropertiesClient) NewExtendsUnknownDerivedClient() *ExtendsUnknownDerivedClient {
-	return &ExtendsUnknownDerivedClient{
+// NewAdditionalPropertiesExtendsUnknownDerivedClient creates a new instance of [AdditionalPropertiesExtendsUnknownDerivedClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsUnknownDerivedClient() *AdditionalPropertiesExtendsUnknownDerivedClient {
+	return &AdditionalPropertiesExtendsUnknownDerivedClient{
 		internal: client.internal,
 	}
 }
 
-// NewExtendsUnknownDiscriminatedClient creates a new instance of [ExtendsUnknownDiscriminatedClient].
-func (client *AdditionalPropertiesClient) NewExtendsUnknownDiscriminatedClient() *ExtendsUnknownDiscriminatedClient {
-	return &ExtendsUnknownDiscriminatedClient{
+// NewAdditionalPropertiesExtendsUnknownDiscriminatedClient creates a new instance of [AdditionalPropertiesExtendsUnknownDiscriminatedClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesExtendsUnknownDiscriminatedClient() *AdditionalPropertiesExtendsUnknownDiscriminatedClient {
+	return &AdditionalPropertiesExtendsUnknownDiscriminatedClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsFloatClient creates a new instance of [IsFloatClient].
-func (client *AdditionalPropertiesClient) NewIsFloatClient() *IsFloatClient {
-	return &IsFloatClient{
+// NewAdditionalPropertiesIsFloatClient creates a new instance of [AdditionalPropertiesIsFloatClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsFloatClient() *AdditionalPropertiesIsFloatClient {
+	return &AdditionalPropertiesIsFloatClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsModelArrayClient creates a new instance of [IsModelArrayClient].
-func (client *AdditionalPropertiesClient) NewIsModelArrayClient() *IsModelArrayClient {
-	return &IsModelArrayClient{
+// NewAdditionalPropertiesIsModelArrayClient creates a new instance of [AdditionalPropertiesIsModelArrayClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsModelArrayClient() *AdditionalPropertiesIsModelArrayClient {
+	return &AdditionalPropertiesIsModelArrayClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsModelClient creates a new instance of [IsModelClient].
-func (client *AdditionalPropertiesClient) NewIsModelClient() *IsModelClient {
-	return &IsModelClient{
+// NewAdditionalPropertiesIsModelClient creates a new instance of [AdditionalPropertiesIsModelClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsModelClient() *AdditionalPropertiesIsModelClient {
+	return &AdditionalPropertiesIsModelClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsStringClient creates a new instance of [IsStringClient].
-func (client *AdditionalPropertiesClient) NewIsStringClient() *IsStringClient {
-	return &IsStringClient{
+// NewAdditionalPropertiesIsStringClient creates a new instance of [AdditionalPropertiesIsStringClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsStringClient() *AdditionalPropertiesIsStringClient {
+	return &AdditionalPropertiesIsStringClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsUnknownClient creates a new instance of [IsUnknownClient].
-func (client *AdditionalPropertiesClient) NewIsUnknownClient() *IsUnknownClient {
-	return &IsUnknownClient{
+// NewAdditionalPropertiesIsUnknownClient creates a new instance of [AdditionalPropertiesIsUnknownClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsUnknownClient() *AdditionalPropertiesIsUnknownClient {
+	return &AdditionalPropertiesIsUnknownClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsUnknownDerivedClient creates a new instance of [IsUnknownDerivedClient].
-func (client *AdditionalPropertiesClient) NewIsUnknownDerivedClient() *IsUnknownDerivedClient {
-	return &IsUnknownDerivedClient{
+// NewAdditionalPropertiesIsUnknownDerivedClient creates a new instance of [AdditionalPropertiesIsUnknownDerivedClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsUnknownDerivedClient() *AdditionalPropertiesIsUnknownDerivedClient {
+	return &AdditionalPropertiesIsUnknownDerivedClient{
 		internal: client.internal,
 	}
 }
 
-// NewIsUnknownDiscriminatedClient creates a new instance of [IsUnknownDiscriminatedClient].
-func (client *AdditionalPropertiesClient) NewIsUnknownDiscriminatedClient() *IsUnknownDiscriminatedClient {
-	return &IsUnknownDiscriminatedClient{
+// NewAdditionalPropertiesIsUnknownDiscriminatedClient creates a new instance of [AdditionalPropertiesIsUnknownDiscriminatedClient].
+func (client *AdditionalPropertiesClient) NewAdditionalPropertiesIsUnknownDiscriminatedClient() *AdditionalPropertiesIsUnknownDiscriminatedClient {
+	return &AdditionalPropertiesIsUnknownDiscriminatedClient{
 		internal: client.internal,
 	}
 }

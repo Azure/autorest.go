@@ -4,22 +4,26 @@
 
 package extensiblegroup
 
-// StringClientGetKnownValueOptions contains the optional parameters for the StringClient.GetKnownValue method.
-type StringClientGetKnownValueOptions struct {
+// ExtensibleStringClientGetKnownValueOptions contains the optional parameters for the ExtensibleStringClient.GetKnownValue
+// method.
+type ExtensibleStringClientGetKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientGetUnknownValueOptions contains the optional parameters for the StringClient.GetUnknownValue method.
-type StringClientGetUnknownValueOptions struct {
+// ExtensibleStringClientGetUnknownValueOptions contains the optional parameters for the ExtensibleStringClient.GetUnknownValue
+// method.
+type ExtensibleStringClientGetUnknownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPutKnownValueOptions contains the optional parameters for the StringClient.PutKnownValue method.
-type StringClientPutKnownValueOptions struct {
+// ExtensibleStringClientPutKnownValueOptions contains the optional parameters for the ExtensibleStringClient.PutKnownValue
+// method.
+type ExtensibleStringClientPutKnownValueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPutUnknownValueOptions contains the optional parameters for the StringClient.PutUnknownValue method.
-type StringClientPutUnknownValueOptions struct {
+// ExtensibleStringClientPutUnknownValueOptions contains the optional parameters for the ExtensibleStringClient.PutUnknownValue
+// method.
+type ExtensibleStringClientPutUnknownValueOptions struct {
 	// placeholder for future optional parameters
 }

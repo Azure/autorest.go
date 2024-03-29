@@ -12,9 +12,9 @@ type JsonClient struct {
 	internal *azcore.Client
 }
 
-// NewPropertyClient creates a new instance of [PropertyClient].
-func (client *JsonClient) NewPropertyClient() *PropertyClient {
-	return &PropertyClient{
+// NewJsonPropertyClient creates a new instance of [JsonPropertyClient].
+func (client *JsonClient) NewJsonPropertyClient() *JsonPropertyClient {
+	return &JsonPropertyClient{
 		internal: client.internal,
 	}
 }

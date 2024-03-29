@@ -18,7 +18,7 @@ import (
 func TestModelsClient_WithAnd(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithAnd(context.Background(), specialwordsgroup.And{
+	resp, err := client.NewSpecialWordsModelsClient().WithAnd(context.Background(), specialwordsgroup.And{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestModelsClient_WithAnd(t *testing.T) {
 func TestModelsClient_WithAs(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithAs(context.Background(), specialwordsgroup.As{
+	resp, err := client.NewSpecialWordsModelsClient().WithAs(context.Background(), specialwordsgroup.As{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -38,7 +38,7 @@ func TestModelsClient_WithAs(t *testing.T) {
 func TestModelsClient_WithAssert(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithAssert(context.Background(), specialwordsgroup.Assert{
+	resp, err := client.NewSpecialWordsModelsClient().WithAssert(context.Background(), specialwordsgroup.Assert{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -48,7 +48,7 @@ func TestModelsClient_WithAssert(t *testing.T) {
 func TestModelsClient_WithAsync(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithAsync(context.Background(), specialwordsgroup.Async{
+	resp, err := client.NewSpecialWordsModelsClient().WithAsync(context.Background(), specialwordsgroup.Async{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -58,7 +58,7 @@ func TestModelsClient_WithAsync(t *testing.T) {
 func TestModelsClient_WithAwait(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithAwait(context.Background(), specialwordsgroup.Await{
+	resp, err := client.NewSpecialWordsModelsClient().WithAwait(context.Background(), specialwordsgroup.Await{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -68,7 +68,7 @@ func TestModelsClient_WithAwait(t *testing.T) {
 func TestModelsClient_WithBreak(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithBreak(context.Background(), specialwordsgroup.Break{
+	resp, err := client.NewSpecialWordsModelsClient().WithBreak(context.Background(), specialwordsgroup.Break{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -78,7 +78,7 @@ func TestModelsClient_WithBreak(t *testing.T) {
 func TestModelsClient_WithClass(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithClass(context.Background(), specialwordsgroup.Class{
+	resp, err := client.NewSpecialWordsModelsClient().WithClass(context.Background(), specialwordsgroup.Class{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -88,7 +88,7 @@ func TestModelsClient_WithClass(t *testing.T) {
 func TestModelsClient_WithConstructor(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithConstructor(context.Background(), specialwordsgroup.Constructor{
+	resp, err := client.NewSpecialWordsModelsClient().WithConstructor(context.Background(), specialwordsgroup.Constructor{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -98,7 +98,7 @@ func TestModelsClient_WithConstructor(t *testing.T) {
 func TestModelsClient_WithContinue(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithContinue(context.Background(), specialwordsgroup.Continue{
+	resp, err := client.NewSpecialWordsModelsClient().WithContinue(context.Background(), specialwordsgroup.Continue{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -108,7 +108,7 @@ func TestModelsClient_WithContinue(t *testing.T) {
 func TestModelsClient_WithDef(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithDef(context.Background(), specialwordsgroup.Def{
+	resp, err := client.NewSpecialWordsModelsClient().WithDef(context.Background(), specialwordsgroup.Def{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -118,7 +118,7 @@ func TestModelsClient_WithDef(t *testing.T) {
 func TestModelsClient_WithDel(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithDel(context.Background(), specialwordsgroup.Del{
+	resp, err := client.NewSpecialWordsModelsClient().WithDel(context.Background(), specialwordsgroup.Del{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -128,7 +128,7 @@ func TestModelsClient_WithDel(t *testing.T) {
 func TestModelsClient_WithElif(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithElif(context.Background(), specialwordsgroup.Elif{
+	resp, err := client.NewSpecialWordsModelsClient().WithElif(context.Background(), specialwordsgroup.Elif{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -138,7 +138,7 @@ func TestModelsClient_WithElif(t *testing.T) {
 func TestModelsClient_WithElse(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithElse(context.Background(), specialwordsgroup.Else{
+	resp, err := client.NewSpecialWordsModelsClient().WithElse(context.Background(), specialwordsgroup.Else{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -148,7 +148,7 @@ func TestModelsClient_WithElse(t *testing.T) {
 func TestModelsClient_WithExcept(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithExcept(context.Background(), specialwordsgroup.Except{
+	resp, err := client.NewSpecialWordsModelsClient().WithExcept(context.Background(), specialwordsgroup.Except{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -158,7 +158,7 @@ func TestModelsClient_WithExcept(t *testing.T) {
 func TestModelsClient_WithExec(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithExec(context.Background(), specialwordsgroup.Exec{
+	resp, err := client.NewSpecialWordsModelsClient().WithExec(context.Background(), specialwordsgroup.Exec{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -168,7 +168,7 @@ func TestModelsClient_WithExec(t *testing.T) {
 func TestModelsClient_WithFinally(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithFinally(context.Background(), specialwordsgroup.Finally{
+	resp, err := client.NewSpecialWordsModelsClient().WithFinally(context.Background(), specialwordsgroup.Finally{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -178,7 +178,7 @@ func TestModelsClient_WithFinally(t *testing.T) {
 func TestModelsClient_WithFor(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithFor(context.Background(), specialwordsgroup.For{
+	resp, err := client.NewSpecialWordsModelsClient().WithFor(context.Background(), specialwordsgroup.For{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -188,7 +188,7 @@ func TestModelsClient_WithFor(t *testing.T) {
 func TestModelsClient_WithFrom(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithFrom(context.Background(), specialwordsgroup.From{
+	resp, err := client.NewSpecialWordsModelsClient().WithFrom(context.Background(), specialwordsgroup.From{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -198,7 +198,7 @@ func TestModelsClient_WithFrom(t *testing.T) {
 func TestModelsClient_WithGlobal(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithGlobal(context.Background(), specialwordsgroup.Global{
+	resp, err := client.NewSpecialWordsModelsClient().WithGlobal(context.Background(), specialwordsgroup.Global{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -208,7 +208,7 @@ func TestModelsClient_WithGlobal(t *testing.T) {
 func TestModelsClient_WithIf(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithIf(context.Background(), specialwordsgroup.If{
+	resp, err := client.NewSpecialWordsModelsClient().WithIf(context.Background(), specialwordsgroup.If{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -218,7 +218,7 @@ func TestModelsClient_WithIf(t *testing.T) {
 func TestModelsClient_WithImport(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithImport(context.Background(), specialwordsgroup.Import{
+	resp, err := client.NewSpecialWordsModelsClient().WithImport(context.Background(), specialwordsgroup.Import{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -228,7 +228,7 @@ func TestModelsClient_WithImport(t *testing.T) {
 func TestModelsClient_WithIn(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithIn(context.Background(), specialwordsgroup.In{
+	resp, err := client.NewSpecialWordsModelsClient().WithIn(context.Background(), specialwordsgroup.In{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -238,7 +238,7 @@ func TestModelsClient_WithIn(t *testing.T) {
 func TestModelsClient_WithIs(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithIs(context.Background(), specialwordsgroup.Is{
+	resp, err := client.NewSpecialWordsModelsClient().WithIs(context.Background(), specialwordsgroup.Is{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -248,7 +248,7 @@ func TestModelsClient_WithIs(t *testing.T) {
 func TestModelsClient_WithLambda(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithLambda(context.Background(), specialwordsgroup.Lambda{
+	resp, err := client.NewSpecialWordsModelsClient().WithLambda(context.Background(), specialwordsgroup.Lambda{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -258,7 +258,7 @@ func TestModelsClient_WithLambda(t *testing.T) {
 func TestModelsClient_WithNot(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithNot(context.Background(), specialwordsgroup.Not{
+	resp, err := client.NewSpecialWordsModelsClient().WithNot(context.Background(), specialwordsgroup.Not{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -268,7 +268,7 @@ func TestModelsClient_WithNot(t *testing.T) {
 func TestModelsClient_WithOr(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithOr(context.Background(), specialwordsgroup.Or{
+	resp, err := client.NewSpecialWordsModelsClient().WithOr(context.Background(), specialwordsgroup.Or{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -278,7 +278,7 @@ func TestModelsClient_WithOr(t *testing.T) {
 func TestModelsClient_WithPass(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithPass(context.Background(), specialwordsgroup.Pass{
+	resp, err := client.NewSpecialWordsModelsClient().WithPass(context.Background(), specialwordsgroup.Pass{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -288,7 +288,7 @@ func TestModelsClient_WithPass(t *testing.T) {
 func TestModelsClient_WithRaise(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithRaise(context.Background(), specialwordsgroup.Raise{
+	resp, err := client.NewSpecialWordsModelsClient().WithRaise(context.Background(), specialwordsgroup.Raise{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -298,7 +298,7 @@ func TestModelsClient_WithRaise(t *testing.T) {
 func TestModelsClient_WithReturn(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithReturn(context.Background(), specialwordsgroup.Return{
+	resp, err := client.NewSpecialWordsModelsClient().WithReturn(context.Background(), specialwordsgroup.Return{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -308,7 +308,7 @@ func TestModelsClient_WithReturn(t *testing.T) {
 func TestModelsClient_WithTry(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithTry(context.Background(), specialwordsgroup.Try{
+	resp, err := client.NewSpecialWordsModelsClient().WithTry(context.Background(), specialwordsgroup.Try{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -318,7 +318,7 @@ func TestModelsClient_WithTry(t *testing.T) {
 func TestModelsClient_WithWhile(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithWhile(context.Background(), specialwordsgroup.While{
+	resp, err := client.NewSpecialWordsModelsClient().WithWhile(context.Background(), specialwordsgroup.While{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -328,7 +328,7 @@ func TestModelsClient_WithWhile(t *testing.T) {
 func TestModelsClient_WithWith(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithWith(context.Background(), specialwordsgroup.With{
+	resp, err := client.NewSpecialWordsModelsClient().WithWith(context.Background(), specialwordsgroup.With{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)
@@ -338,7 +338,7 @@ func TestModelsClient_WithWith(t *testing.T) {
 func TestModelsClient_WithYield(t *testing.T) {
 	client, err := specialwordsgroup.NewSpecialWordsClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelsClient().WithYield(context.Background(), specialwordsgroup.Yield{
+	resp, err := client.NewSpecialWordsModelsClient().WithYield(context.Background(), specialwordsgroup.Yield{
 		Name: to.Ptr("ok"),
 	}, nil)
 	require.NoError(t, err)

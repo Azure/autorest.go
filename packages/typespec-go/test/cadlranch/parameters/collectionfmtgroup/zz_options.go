@@ -4,32 +4,32 @@
 
 package collectionfmtgroup
 
-// HeaderClientCSVOptions contains the optional parameters for the HeaderClient.CSV method.
-type HeaderClientCSVOptions struct {
+// CollectionFormatHeaderClientCSVOptions contains the optional parameters for the CollectionFormatHeaderClient.CSV method.
+type CollectionFormatHeaderClientCSVOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientCSVOptions contains the optional parameters for the QueryClient.CSV method.
-type QueryClientCSVOptions struct {
+// CollectionFormatQueryClientCSVOptions contains the optional parameters for the CollectionFormatQueryClient.CSV method.
+type CollectionFormatQueryClientCSVOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientMultiOptions contains the optional parameters for the QueryClient.Multi method.
-type QueryClientMultiOptions struct {
+// CollectionFormatQueryClientMultiOptions contains the optional parameters for the CollectionFormatQueryClient.Multi method.
+type CollectionFormatQueryClientMultiOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientPipesOptions contains the optional parameters for the QueryClient.Pipes method.
-type QueryClientPipesOptions struct {
+// CollectionFormatQueryClientPipesOptions contains the optional parameters for the CollectionFormatQueryClient.Pipes method.
+type CollectionFormatQueryClientPipesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientSsvOptions contains the optional parameters for the QueryClient.Ssv method.
-type QueryClientSsvOptions struct {
+// CollectionFormatQueryClientSsvOptions contains the optional parameters for the CollectionFormatQueryClient.Ssv method.
+type CollectionFormatQueryClientSsvOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientTsvOptions contains the optional parameters for the QueryClient.Tsv method.
-type QueryClientTsvOptions struct {
+// CollectionFormatQueryClientTsvOptions contains the optional parameters for the CollectionFormatQueryClient.Tsv method.
+type CollectionFormatQueryClientTsvOptions struct {
 	// placeholder for future optional parameters
 }

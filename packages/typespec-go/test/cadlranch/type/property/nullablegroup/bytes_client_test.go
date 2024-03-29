@@ -19,7 +19,7 @@ import (
 func TestBytesClientGetNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBytesClient().GetNonNull(context.Background(), nil)
+	resp, err := client.NewNullableBytesClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.BytesProperty{
 		NullableProperty: []byte("hello, world!"),
@@ -30,7 +30,7 @@ func TestBytesClientGetNonNull(t *testing.T) {
 func TestBytesClientGetNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBytesClient().GetNull(context.Background(), nil)
+	resp, err := client.NewNullableBytesClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.BytesProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -40,7 +40,7 @@ func TestBytesClientGetNull(t *testing.T) {
 func TestBytesClientPatchNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBytesClient().PatchNonNull(context.Background(), nullablegroup.BytesProperty{
+	resp, err := client.NewNullableBytesClient().PatchNonNull(context.Background(), nullablegroup.BytesProperty{
 		NullableProperty: []byte("hello, world!"),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)
@@ -51,7 +51,7 @@ func TestBytesClientPatchNonNull(t *testing.T) {
 func TestBytesClientPatchNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBytesClient().PatchNull(context.Background(), nullablegroup.BytesProperty{
+	resp, err := client.NewNullableBytesClient().PatchNull(context.Background(), nullablegroup.BytesProperty{
 		NullableProperty: azcore.NullValue[[]byte](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

@@ -12,9 +12,9 @@ type UsageClient struct {
 	internal *azcore.Client
 }
 
-// NewModelInOperationClient creates a new instance of [ModelInOperationClient].
-func (client *UsageClient) NewModelInOperationClient() *ModelInOperationClient {
-	return &ModelInOperationClient{
+// NewUsageModelInOperationClient creates a new instance of [UsageModelInOperationClient].
+func (client *UsageClient) NewUsageModelInOperationClient() *UsageModelInOperationClient {
+	return &UsageModelInOperationClient{
 		internal: client.internal,
 	}
 }

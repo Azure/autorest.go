@@ -17,7 +17,7 @@ import (
 func TestQueryClient_CSV(t *testing.T) {
 	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().CSV(context.Background(), []string{"blue", "red", "green"}, nil)
+	resp, err := client.NewCollectionFormatQueryClient().CSV(context.Background(), []string{"blue", "red", "green"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -25,7 +25,7 @@ func TestQueryClient_CSV(t *testing.T) {
 func TestQueryClient_Multi(t *testing.T) {
 	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Multi(context.Background(), []string{"blue", "red", "green"}, nil)
+	resp, err := client.NewCollectionFormatQueryClient().Multi(context.Background(), []string{"blue", "red", "green"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -33,7 +33,7 @@ func TestQueryClient_Multi(t *testing.T) {
 func TestQueryClient_Pipes(t *testing.T) {
 	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Pipes(context.Background(), []string{"blue", "red", "green"}, nil)
+	resp, err := client.NewCollectionFormatQueryClient().Pipes(context.Background(), []string{"blue", "red", "green"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -41,7 +41,7 @@ func TestQueryClient_Pipes(t *testing.T) {
 func TestQueryClient_Ssv(t *testing.T) {
 	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Ssv(context.Background(), []string{"blue", "red", "green"}, nil)
+	resp, err := client.NewCollectionFormatQueryClient().Ssv(context.Background(), []string{"blue", "red", "green"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -49,7 +49,7 @@ func TestQueryClient_Ssv(t *testing.T) {
 func TestQueryClient_Tsv(t *testing.T) {
 	client, err := collectionfmtgroup.NewCollectionFormatClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Tsv(context.Background(), []string{"blue", "red", "green"}, nil)
+	resp, err := client.NewCollectionFormatQueryClient().Tsv(context.Background(), []string{"blue", "red", "green"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

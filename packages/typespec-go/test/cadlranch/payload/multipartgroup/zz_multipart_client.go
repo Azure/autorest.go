@@ -12,9 +12,9 @@ type MultiPartClient struct {
 	internal *azcore.Client
 }
 
-// NewFormDataClient creates a new instance of [FormDataClient].
-func (client *MultiPartClient) NewFormDataClient() *FormDataClient {
-	return &FormDataClient{
+// NewMultiPartFormDataClient creates a new instance of [MultiPartFormDataClient].
+func (client *MultiPartClient) NewMultiPartFormDataClient() *MultiPartFormDataClient {
+	return &MultiPartFormDataClient{
 		internal: client.internal,
 	}
 }

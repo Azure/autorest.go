@@ -4,37 +4,37 @@
 
 package multipartgroup
 
-// FormDataClientBasicResponse contains the response from method FormDataClient.Basic.
-type FormDataClientBasicResponse struct {
+// MultiPartFormDataClientBasicResponse contains the response from method MultiPartFormDataClient.Basic.
+type MultiPartFormDataClientBasicResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientBinaryArrayPartsResponse contains the response from method FormDataClient.BinaryArrayParts.
-type FormDataClientBinaryArrayPartsResponse struct {
+// MultiPartFormDataClientBinaryArrayPartsResponse contains the response from method MultiPartFormDataClient.BinaryArrayParts.
+type MultiPartFormDataClientBinaryArrayPartsResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientCheckFileNameAndContentTypeResponse contains the response from method FormDataClient.CheckFileNameAndContentType.
-type FormDataClientCheckFileNameAndContentTypeResponse struct {
+// MultiPartFormDataClientCheckFileNameAndContentTypeResponse contains the response from method MultiPartFormDataClient.CheckFileNameAndContentType.
+type MultiPartFormDataClientCheckFileNameAndContentTypeResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientComplexResponse contains the response from method FormDataClient.Complex.
-type FormDataClientComplexResponse struct {
+// MultiPartFormDataClientComplexResponse contains the response from method MultiPartFormDataClient.Complex.
+type MultiPartFormDataClientComplexResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientJSONArrayPartsResponse contains the response from method FormDataClient.JSONArrayParts.
-type FormDataClientJSONArrayPartsResponse struct {
+// MultiPartFormDataClientJSONArrayPartsResponse contains the response from method MultiPartFormDataClient.JSONArrayParts.
+type MultiPartFormDataClientJSONArrayPartsResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientJSONPartResponse contains the response from method FormDataClient.JSONPart.
-type FormDataClientJSONPartResponse struct {
+// MultiPartFormDataClientJSONPartResponse contains the response from method MultiPartFormDataClient.JSONPart.
+type MultiPartFormDataClientJSONPartResponse struct {
 	// placeholder for future response values
 }
 
-// FormDataClientMultiBinaryPartsResponse contains the response from method FormDataClient.MultiBinaryParts.
-type FormDataClientMultiBinaryPartsResponse struct {
+// MultiPartFormDataClientMultiBinaryPartsResponse contains the response from method MultiPartFormDataClient.MultiBinaryParts.
+type MultiPartFormDataClientMultiBinaryPartsResponse struct {
 	// placeholder for future response values
 }

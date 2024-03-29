@@ -4,22 +4,26 @@
 
 package mediatypegroup
 
-// StringBodyClientGetAsJSONOptions contains the optional parameters for the StringBodyClient.GetAsJSON method.
-type StringBodyClientGetAsJSONOptions struct {
+// MediaTypeStringBodyClientGetAsJSONOptions contains the optional parameters for the MediaTypeStringBodyClient.GetAsJSON
+// method.
+type MediaTypeStringBodyClientGetAsJSONOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringBodyClientGetAsTextOptions contains the optional parameters for the StringBodyClient.GetAsText method.
-type StringBodyClientGetAsTextOptions struct {
+// MediaTypeStringBodyClientGetAsTextOptions contains the optional parameters for the MediaTypeStringBodyClient.GetAsText
+// method.
+type MediaTypeStringBodyClientGetAsTextOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringBodyClientSendAsJSONOptions contains the optional parameters for the StringBodyClient.SendAsJSON method.
-type StringBodyClientSendAsJSONOptions struct {
+// MediaTypeStringBodyClientSendAsJSONOptions contains the optional parameters for the MediaTypeStringBodyClient.SendAsJSON
+// method.
+type MediaTypeStringBodyClientSendAsJSONOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringBodyClientSendAsTextOptions contains the optional parameters for the StringBodyClient.SendAsText method.
-type StringBodyClientSendAsTextOptions struct {
+// MediaTypeStringBodyClientSendAsTextOptions contains the optional parameters for the MediaTypeStringBodyClient.SendAsText
+// method.
+type MediaTypeStringBodyClientSendAsTextOptions struct {
 	// placeholder for future optional parameters
 }

@@ -15,14 +15,14 @@ import (
 
 // DurationServer is a fake server for instances of the durationgroup.DurationClient type.
 type DurationServer struct {
-	// HeaderServer contains the fakes for client HeaderClient
-	HeaderServer HeaderServer
+	// DurationHeaderServer contains the fakes for client DurationHeaderClient
+	DurationHeaderServer DurationHeaderServer
 
-	// PropertyServer contains the fakes for client PropertyClient
-	PropertyServer PropertyServer
+	// DurationPropertyServer contains the fakes for client DurationPropertyClient
+	DurationPropertyServer DurationPropertyServer
 
-	// QueryServer contains the fakes for client QueryClient
-	QueryServer QueryServer
+	// DurationQueryServer contains the fakes for client DurationQueryClient
+	DurationQueryServer DurationQueryServer
 }
 
 // NewDurationServerTransport creates a new instance of DurationServerTransport with the provided implementation.
@@ -35,11 +35,11 @@ func NewDurationServerTransport(srv *DurationServer) *DurationServerTransport {
 // DurationServerTransport connects instances of durationgroup.DurationClient to instances of DurationServer.
 // Don't use this type directly, use NewDurationServerTransport instead.
 type DurationServerTransport struct {
-	srv              *DurationServer
-	trMu             sync.Mutex
-	trHeaderServer   *HeaderServerTransport
-	trPropertyServer *PropertyServerTransport
-	trQueryServer    *QueryServerTransport
+	srv                      *DurationServer
+	trMu                     sync.Mutex
+	trDurationHeaderServer   *DurationHeaderServerTransport
+	trDurationPropertyServer *DurationPropertyServerTransport
+	trDurationQueryServer    *DurationQueryServerTransport
 }
 
 // Do implements the policy.Transporter interface for DurationServerTransport.
@@ -58,21 +58,21 @@ func (d *DurationServerTransport) dispatchToClientFake(req *http.Request, client
 	var err error
 
 	switch client {
-	case "HeaderClient":
-		initServer(&d.trMu, &d.trHeaderServer, func() *HeaderServerTransport {
-			return NewHeaderServerTransport(&d.srv.HeaderServer)
+	case "DurationHeaderClient":
+		initServer(&d.trMu, &d.trDurationHeaderServer, func() *DurationHeaderServerTransport {
+			return NewDurationHeaderServerTransport(&d.srv.DurationHeaderServer)
 		})
-		resp, err = d.trHeaderServer.Do(req)
-	case "PropertyClient":
-		initServer(&d.trMu, &d.trPropertyServer, func() *PropertyServerTransport {
-			return NewPropertyServerTransport(&d.srv.PropertyServer)
+		resp, err = d.trDurationHeaderServer.Do(req)
+	case "DurationPropertyClient":
+		initServer(&d.trMu, &d.trDurationPropertyServer, func() *DurationPropertyServerTransport {
+			return NewDurationPropertyServerTransport(&d.srv.DurationPropertyServer)
 		})
-		resp, err = d.trPropertyServer.Do(req)
-	case "QueryClient":
-		initServer(&d.trMu, &d.trQueryServer, func() *QueryServerTransport {
-			return NewQueryServerTransport(&d.srv.QueryServer)
+		resp, err = d.trDurationPropertyServer.Do(req)
+	case "DurationQueryClient":
+		initServer(&d.trMu, &d.trDurationQueryServer, func() *DurationQueryServerTransport {
+			return NewDurationQueryServerTransport(&d.srv.DurationQueryServer)
 		})
-		resp, err = d.trQueryServer.Do(req)
+		resp, err = d.trDurationQueryServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

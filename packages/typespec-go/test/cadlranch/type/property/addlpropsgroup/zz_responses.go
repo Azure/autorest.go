@@ -4,156 +4,156 @@
 
 package addlpropsgroup
 
-// ExtendsFloatClientGetResponse contains the response from method ExtendsFloatClient.Get.
-type ExtendsFloatClientGetResponse struct {
+// AdditionalPropertiesExtendsFloatClientGetResponse contains the response from method AdditionalPropertiesExtendsFloatClient.Get.
+type AdditionalPropertiesExtendsFloatClientGetResponse struct {
 	// The model extends from Record<float32> type.
 	ExtendsFloatAdditionalProperties
 }
 
-// ExtendsFloatClientPutResponse contains the response from method ExtendsFloatClient.Put.
-type ExtendsFloatClientPutResponse struct {
+// AdditionalPropertiesExtendsFloatClientPutResponse contains the response from method AdditionalPropertiesExtendsFloatClient.Put.
+type AdditionalPropertiesExtendsFloatClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsModelArrayClientGetResponse contains the response from method ExtendsModelArrayClient.Get.
-type ExtendsModelArrayClientGetResponse struct {
+// AdditionalPropertiesExtendsModelArrayClientGetResponse contains the response from method AdditionalPropertiesExtendsModelArrayClient.Get.
+type AdditionalPropertiesExtendsModelArrayClientGetResponse struct {
 	// The model extends from Record<ModelForRecord[]> type.
 	ExtendsModelArrayAdditionalProperties
 }
 
-// ExtendsModelArrayClientPutResponse contains the response from method ExtendsModelArrayClient.Put.
-type ExtendsModelArrayClientPutResponse struct {
+// AdditionalPropertiesExtendsModelArrayClientPutResponse contains the response from method AdditionalPropertiesExtendsModelArrayClient.Put.
+type AdditionalPropertiesExtendsModelArrayClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsModelClientGetResponse contains the response from method ExtendsModelClient.Get.
-type ExtendsModelClientGetResponse struct {
+// AdditionalPropertiesExtendsModelClientGetResponse contains the response from method AdditionalPropertiesExtendsModelClient.Get.
+type AdditionalPropertiesExtendsModelClientGetResponse struct {
 	// The model extends from Record<ModelForRecord> type.
 	ExtendsModelAdditionalProperties
 }
 
-// ExtendsModelClientPutResponse contains the response from method ExtendsModelClient.Put.
-type ExtendsModelClientPutResponse struct {
+// AdditionalPropertiesExtendsModelClientPutResponse contains the response from method AdditionalPropertiesExtendsModelClient.Put.
+type AdditionalPropertiesExtendsModelClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsStringClientGetResponse contains the response from method ExtendsStringClient.Get.
-type ExtendsStringClientGetResponse struct {
+// AdditionalPropertiesExtendsStringClientGetResponse contains the response from method AdditionalPropertiesExtendsStringClient.Get.
+type AdditionalPropertiesExtendsStringClientGetResponse struct {
 	// The model extends from Record<string> type.
 	ExtendsStringAdditionalProperties
 }
 
-// ExtendsStringClientPutResponse contains the response from method ExtendsStringClient.Put.
-type ExtendsStringClientPutResponse struct {
+// AdditionalPropertiesExtendsStringClientPutResponse contains the response from method AdditionalPropertiesExtendsStringClient.Put.
+type AdditionalPropertiesExtendsStringClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsUnknownClientGetResponse contains the response from method ExtendsUnknownClient.Get.
-type ExtendsUnknownClientGetResponse struct {
+// AdditionalPropertiesExtendsUnknownClientGetResponse contains the response from method AdditionalPropertiesExtendsUnknownClient.Get.
+type AdditionalPropertiesExtendsUnknownClientGetResponse struct {
 	// The model extends from Record<unknown> type.
 	ExtendsUnknownAdditionalProperties
 }
 
-// ExtendsUnknownClientPutResponse contains the response from method ExtendsUnknownClient.Put.
-type ExtendsUnknownClientPutResponse struct {
+// AdditionalPropertiesExtendsUnknownClientPutResponse contains the response from method AdditionalPropertiesExtendsUnknownClient.Put.
+type AdditionalPropertiesExtendsUnknownClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsUnknownDerivedClientGetResponse contains the response from method ExtendsUnknownDerivedClient.Get.
-type ExtendsUnknownDerivedClientGetResponse struct {
+// AdditionalPropertiesExtendsUnknownDerivedClientGetResponse contains the response from method AdditionalPropertiesExtendsUnknownDerivedClient.Get.
+type AdditionalPropertiesExtendsUnknownDerivedClientGetResponse struct {
 	// The model extends from a type that extends from Record<unknown>.
 	ExtendsUnknownAdditionalPropertiesDerived
 }
 
-// ExtendsUnknownDerivedClientPutResponse contains the response from method ExtendsUnknownDerivedClient.Put.
-type ExtendsUnknownDerivedClientPutResponse struct {
+// AdditionalPropertiesExtendsUnknownDerivedClientPutResponse contains the response from method AdditionalPropertiesExtendsUnknownDerivedClient.Put.
+type AdditionalPropertiesExtendsUnknownDerivedClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ExtendsUnknownDiscriminatedClientGetResponse contains the response from method ExtendsUnknownDiscriminatedClient.Get.
-type ExtendsUnknownDiscriminatedClientGetResponse struct {
+// AdditionalPropertiesExtendsUnknownDiscriminatedClientGetResponse contains the response from method AdditionalPropertiesExtendsUnknownDiscriminatedClient.Get.
+type AdditionalPropertiesExtendsUnknownDiscriminatedClientGetResponse struct {
 	// The model extends from Record<unknown> with a discriminator.
 	ExtendsUnknownAdditionalPropertiesDiscriminatedClassification
 }
 
-// ExtendsUnknownDiscriminatedClientPutResponse contains the response from method ExtendsUnknownDiscriminatedClient.Put.
-type ExtendsUnknownDiscriminatedClientPutResponse struct {
+// AdditionalPropertiesExtendsUnknownDiscriminatedClientPutResponse contains the response from method AdditionalPropertiesExtendsUnknownDiscriminatedClient.Put.
+type AdditionalPropertiesExtendsUnknownDiscriminatedClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsFloatClientGetResponse contains the response from method IsFloatClient.Get.
-type IsFloatClientGetResponse struct {
+// AdditionalPropertiesIsFloatClientGetResponse contains the response from method AdditionalPropertiesIsFloatClient.Get.
+type AdditionalPropertiesIsFloatClientGetResponse struct {
 	// The model is from Record<float32> type.
 	IsFloatAdditionalProperties
 }
 
-// IsFloatClientPutResponse contains the response from method IsFloatClient.Put.
-type IsFloatClientPutResponse struct {
+// AdditionalPropertiesIsFloatClientPutResponse contains the response from method AdditionalPropertiesIsFloatClient.Put.
+type AdditionalPropertiesIsFloatClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsModelArrayClientGetResponse contains the response from method IsModelArrayClient.Get.
-type IsModelArrayClientGetResponse struct {
+// AdditionalPropertiesIsModelArrayClientGetResponse contains the response from method AdditionalPropertiesIsModelArrayClient.Get.
+type AdditionalPropertiesIsModelArrayClientGetResponse struct {
 	// The model is from Record<ModelForRecord[]> type.
 	IsModelArrayAdditionalProperties
 }
 
-// IsModelArrayClientPutResponse contains the response from method IsModelArrayClient.Put.
-type IsModelArrayClientPutResponse struct {
+// AdditionalPropertiesIsModelArrayClientPutResponse contains the response from method AdditionalPropertiesIsModelArrayClient.Put.
+type AdditionalPropertiesIsModelArrayClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsModelClientGetResponse contains the response from method IsModelClient.Get.
-type IsModelClientGetResponse struct {
+// AdditionalPropertiesIsModelClientGetResponse contains the response from method AdditionalPropertiesIsModelClient.Get.
+type AdditionalPropertiesIsModelClientGetResponse struct {
 	// The model is from Record<ModelForRecord> type.
 	IsModelAdditionalProperties
 }
 
-// IsModelClientPutResponse contains the response from method IsModelClient.Put.
-type IsModelClientPutResponse struct {
+// AdditionalPropertiesIsModelClientPutResponse contains the response from method AdditionalPropertiesIsModelClient.Put.
+type AdditionalPropertiesIsModelClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsStringClientGetResponse contains the response from method IsStringClient.Get.
-type IsStringClientGetResponse struct {
+// AdditionalPropertiesIsStringClientGetResponse contains the response from method AdditionalPropertiesIsStringClient.Get.
+type AdditionalPropertiesIsStringClientGetResponse struct {
 	// The model is from Record<string> type.
 	IsStringAdditionalProperties
 }
 
-// IsStringClientPutResponse contains the response from method IsStringClient.Put.
-type IsStringClientPutResponse struct {
+// AdditionalPropertiesIsStringClientPutResponse contains the response from method AdditionalPropertiesIsStringClient.Put.
+type AdditionalPropertiesIsStringClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsUnknownClientGetResponse contains the response from method IsUnknownClient.Get.
-type IsUnknownClientGetResponse struct {
+// AdditionalPropertiesIsUnknownClientGetResponse contains the response from method AdditionalPropertiesIsUnknownClient.Get.
+type AdditionalPropertiesIsUnknownClientGetResponse struct {
 	// The model is from Record<unknown> type.
 	IsUnknownAdditionalProperties
 }
 
-// IsUnknownClientPutResponse contains the response from method IsUnknownClient.Put.
-type IsUnknownClientPutResponse struct {
+// AdditionalPropertiesIsUnknownClientPutResponse contains the response from method AdditionalPropertiesIsUnknownClient.Put.
+type AdditionalPropertiesIsUnknownClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsUnknownDerivedClientGetResponse contains the response from method IsUnknownDerivedClient.Get.
-type IsUnknownDerivedClientGetResponse struct {
+// AdditionalPropertiesIsUnknownDerivedClientGetResponse contains the response from method AdditionalPropertiesIsUnknownDerivedClient.Get.
+type AdditionalPropertiesIsUnknownDerivedClientGetResponse struct {
 	// The model extends from a type that is Record<unknown> type
 	IsUnknownAdditionalPropertiesDerived
 }
 
-// IsUnknownDerivedClientPutResponse contains the response from method IsUnknownDerivedClient.Put.
-type IsUnknownDerivedClientPutResponse struct {
+// AdditionalPropertiesIsUnknownDerivedClientPutResponse contains the response from method AdditionalPropertiesIsUnknownDerivedClient.Put.
+type AdditionalPropertiesIsUnknownDerivedClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// IsUnknownDiscriminatedClientGetResponse contains the response from method IsUnknownDiscriminatedClient.Get.
-type IsUnknownDiscriminatedClientGetResponse struct {
+// AdditionalPropertiesIsUnknownDiscriminatedClientGetResponse contains the response from method AdditionalPropertiesIsUnknownDiscriminatedClient.Get.
+type AdditionalPropertiesIsUnknownDiscriminatedClientGetResponse struct {
 	// The model is Record<unknown> with a discriminator.
 	IsUnknownAdditionalPropertiesDiscriminatedClassification
 }
 
-// IsUnknownDiscriminatedClientPutResponse contains the response from method IsUnknownDiscriminatedClient.Put.
-type IsUnknownDiscriminatedClientPutResponse struct {
+// AdditionalPropertiesIsUnknownDiscriminatedClientPutResponse contains the response from method AdditionalPropertiesIsUnknownDiscriminatedClient.Put.
+type AdditionalPropertiesIsUnknownDiscriminatedClientPutResponse struct {
 	// placeholder for future response values
 }

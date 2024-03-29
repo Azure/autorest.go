@@ -12,23 +12,23 @@ type DurationClient struct {
 	internal *azcore.Client
 }
 
-// NewHeaderClient creates a new instance of [HeaderClient].
-func (client *DurationClient) NewHeaderClient() *HeaderClient {
-	return &HeaderClient{
+// NewDurationHeaderClient creates a new instance of [DurationHeaderClient].
+func (client *DurationClient) NewDurationHeaderClient() *DurationHeaderClient {
+	return &DurationHeaderClient{
 		internal: client.internal,
 	}
 }
 
-// NewPropertyClient creates a new instance of [PropertyClient].
-func (client *DurationClient) NewPropertyClient() *PropertyClient {
-	return &PropertyClient{
+// NewDurationPropertyClient creates a new instance of [DurationPropertyClient].
+func (client *DurationClient) NewDurationPropertyClient() *DurationPropertyClient {
+	return &DurationPropertyClient{
 		internal: client.internal,
 	}
 }
 
-// NewQueryClient creates a new instance of [QueryClient].
-func (client *DurationClient) NewQueryClient() *QueryClient {
-	return &QueryClient{
+// NewDurationQueryClient creates a new instance of [DurationQueryClient].
+func (client *DurationClient) NewDurationQueryClient() *DurationQueryClient {
+	return &DurationQueryClient{
 		internal: client.internal,
 	}
 }

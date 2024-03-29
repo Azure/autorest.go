@@ -16,12 +16,14 @@ type BodyOptionalityClientRequiredImplicitOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OptionalExplicitClientOmitOptions contains the optional parameters for the OptionalExplicitClient.Omit method.
-type OptionalExplicitClientOmitOptions struct {
+// BodyOptionalityOptionalExplicitClientOmitOptions contains the optional parameters for the BodyOptionalityOptionalExplicitClient.Omit
+// method.
+type BodyOptionalityOptionalExplicitClientOmitOptions struct {
 	Body *BodyModel
 }
 
-// OptionalExplicitClientSetOptions contains the optional parameters for the OptionalExplicitClient.Set method.
-type OptionalExplicitClientSetOptions struct {
+// BodyOptionalityOptionalExplicitClientSetOptions contains the optional parameters for the BodyOptionalityOptionalExplicitClient.Set
+// method.
+type BodyOptionalityOptionalExplicitClientSetOptions struct {
 	Body *BodyModel
 }

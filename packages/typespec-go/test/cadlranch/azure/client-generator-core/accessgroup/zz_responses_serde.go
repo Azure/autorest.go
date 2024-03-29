@@ -4,12 +4,12 @@
 
 package accessgroup
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type relativeModelInOperationClientdiscriminatorResponse.
-func (r *relativeModelInOperationClientdiscriminatorResponse) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type accessRelativeModelInOperationClientdiscriminatorResponse.
+func (a *accessRelativeModelInOperationClientdiscriminatorResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalabstractModelClassification(data)
 	if err != nil {
 		return err
 	}
-	r.abstractModelClassification = res
+	a.abstractModelClassification = res
 	return nil
 }

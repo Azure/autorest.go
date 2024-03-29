@@ -23,8 +23,8 @@ import (
 
 // BasicServer is a fake server for instances of the basicgroup.BasicClient type.
 type BasicServer struct {
-	// TwoModelsAsPageItemServer contains the fakes for client TwoModelsAsPageItemClient
-	TwoModelsAsPageItemServer TwoModelsAsPageItemServer
+	// BasicTwoModelsAsPageItemServer contains the fakes for client BasicTwoModelsAsPageItemClient
+	BasicTwoModelsAsPageItemServer BasicTwoModelsAsPageItemServer
 
 	// CreateOrReplace is the fake for method BasicClient.CreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
@@ -79,13 +79,13 @@ func NewBasicServerTransport(srv *BasicServer) *BasicServerTransport {
 // BasicServerTransport connects instances of basicgroup.BasicClient to instances of BasicServer.
 // Don't use this type directly, use NewBasicServerTransport instead.
 type BasicServerTransport struct {
-	srv                             *BasicServer
-	trMu                            sync.Mutex
-	trTwoModelsAsPageItemServer     *TwoModelsAsPageItemServerTransport
-	newListPager                    *tracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]]
-	newListWithCustomPageModelPager *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse]]
-	newListWithPagePager            *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse]]
-	newListWithParametersPager      *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithParametersResponse]]
+	srv                              *BasicServer
+	trMu                             sync.Mutex
+	trBasicTwoModelsAsPageItemServer *BasicTwoModelsAsPageItemServerTransport
+	newListPager                     *tracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]]
+	newListWithCustomPageModelPager  *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse]]
+	newListWithPagePager             *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse]]
+	newListWithParametersPager       *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithParametersResponse]]
 }
 
 // Do implements the policy.Transporter interface for BasicServerTransport.
@@ -107,11 +107,11 @@ func (b *BasicServerTransport) dispatchToClientFake(req *http.Request, client st
 	var err error
 
 	switch client {
-	case "TwoModelsAsPageItemClient":
-		initServer(&b.trMu, &b.trTwoModelsAsPageItemServer, func() *TwoModelsAsPageItemServerTransport {
-			return NewTwoModelsAsPageItemServerTransport(&b.srv.TwoModelsAsPageItemServer)
+	case "BasicTwoModelsAsPageItemClient":
+		initServer(&b.trMu, &b.trBasicTwoModelsAsPageItemServer, func() *BasicTwoModelsAsPageItemServerTransport {
+			return NewBasicTwoModelsAsPageItemServerTransport(&b.srv.BasicTwoModelsAsPageItemServer)
 		})
-		resp, err = b.trTwoModelsAsPageItemServer.Do(req)
+		resp, err = b.trBasicTwoModelsAsPageItemServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

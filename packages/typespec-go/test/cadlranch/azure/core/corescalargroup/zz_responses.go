@@ -4,27 +4,27 @@
 
 package corescalargroup
 
-// AzureLocationScalarClientGetResponse contains the response from method AzureLocationScalarClient.Get.
-type AzureLocationScalarClientGetResponse struct {
+// ScalarAzureLocationScalarClientGetResponse contains the response from method ScalarAzureLocationScalarClient.Get.
+type ScalarAzureLocationScalarClientGetResponse struct {
 	Value *string
 }
 
-// AzureLocationScalarClientHeaderResponse contains the response from method AzureLocationScalarClient.Header.
-type AzureLocationScalarClientHeaderResponse struct {
+// ScalarAzureLocationScalarClientHeaderResponse contains the response from method ScalarAzureLocationScalarClient.Header.
+type ScalarAzureLocationScalarClientHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// AzureLocationScalarClientPostResponse contains the response from method AzureLocationScalarClient.Post.
-type AzureLocationScalarClientPostResponse struct {
+// ScalarAzureLocationScalarClientPostResponse contains the response from method ScalarAzureLocationScalarClient.Post.
+type ScalarAzureLocationScalarClientPostResponse struct {
 	AzureLocationModel
 }
 
-// AzureLocationScalarClientPutResponse contains the response from method AzureLocationScalarClient.Put.
-type AzureLocationScalarClientPutResponse struct {
+// ScalarAzureLocationScalarClientPutResponse contains the response from method ScalarAzureLocationScalarClient.Put.
+type ScalarAzureLocationScalarClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// AzureLocationScalarClientQueryResponse contains the response from method AzureLocationScalarClient.Query.
-type AzureLocationScalarClientQueryResponse struct {
+// ScalarAzureLocationScalarClientQueryResponse contains the response from method ScalarAzureLocationScalarClient.Query.
+type ScalarAzureLocationScalarClientQueryResponse struct {
 	// placeholder for future response values
 }

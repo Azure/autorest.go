@@ -15,11 +15,11 @@ import (
 
 // AccessServer is a fake server for instances of the accessgroup.AccessClient type.
 type AccessServer struct {
-	// PublicOperationServer contains the fakes for client PublicOperationClient
-	PublicOperationServer PublicOperationServer
+	// AccessPublicOperationServer contains the fakes for client AccessPublicOperationClient
+	AccessPublicOperationServer AccessPublicOperationServer
 
-	// SharedModelInOperationServer contains the fakes for client SharedModelInOperationClient
-	SharedModelInOperationServer SharedModelInOperationServer
+	// AccessSharedModelInOperationServer contains the fakes for client AccessSharedModelInOperationClient
+	AccessSharedModelInOperationServer AccessSharedModelInOperationServer
 }
 
 // NewAccessServerTransport creates a new instance of AccessServerTransport with the provided implementation.
@@ -32,10 +32,10 @@ func NewAccessServerTransport(srv *AccessServer) *AccessServerTransport {
 // AccessServerTransport connects instances of accessgroup.AccessClient to instances of AccessServer.
 // Don't use this type directly, use NewAccessServerTransport instead.
 type AccessServerTransport struct {
-	srv                            *AccessServer
-	trMu                           sync.Mutex
-	trPublicOperationServer        *PublicOperationServerTransport
-	trSharedModelInOperationServer *SharedModelInOperationServerTransport
+	srv                                  *AccessServer
+	trMu                                 sync.Mutex
+	trAccessPublicOperationServer        *AccessPublicOperationServerTransport
+	trAccessSharedModelInOperationServer *AccessSharedModelInOperationServerTransport
 }
 
 // Do implements the policy.Transporter interface for AccessServerTransport.
@@ -54,16 +54,16 @@ func (a *AccessServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "PublicOperationClient":
-		initServer(&a.trMu, &a.trPublicOperationServer, func() *PublicOperationServerTransport {
-			return NewPublicOperationServerTransport(&a.srv.PublicOperationServer)
+	case "AccessPublicOperationClient":
+		initServer(&a.trMu, &a.trAccessPublicOperationServer, func() *AccessPublicOperationServerTransport {
+			return NewAccessPublicOperationServerTransport(&a.srv.AccessPublicOperationServer)
 		})
-		resp, err = a.trPublicOperationServer.Do(req)
-	case "SharedModelInOperationClient":
-		initServer(&a.trMu, &a.trSharedModelInOperationServer, func() *SharedModelInOperationServerTransport {
-			return NewSharedModelInOperationServerTransport(&a.srv.SharedModelInOperationServer)
+		resp, err = a.trAccessPublicOperationServer.Do(req)
+	case "AccessSharedModelInOperationClient":
+		initServer(&a.trMu, &a.trAccessSharedModelInOperationServer, func() *AccessSharedModelInOperationServerTransport {
+			return NewAccessSharedModelInOperationServerTransport(&a.srv.AccessSharedModelInOperationServer)
 		})
-		resp, err = a.trSharedModelInOperationServer.Do(req)
+		resp, err = a.trAccessSharedModelInOperationServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

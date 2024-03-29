@@ -4,97 +4,105 @@
 
 package datetimegroup
 
-// HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
-type HeaderClientDefaultOptions struct {
+// DatetimeHeaderClientDefaultOptions contains the optional parameters for the DatetimeHeaderClient.Default method.
+type DatetimeHeaderClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientRFC3339Options contains the optional parameters for the HeaderClient.RFC3339 method.
-type HeaderClientRFC3339Options struct {
+// DatetimeHeaderClientRFC3339Options contains the optional parameters for the DatetimeHeaderClient.RFC3339 method.
+type DatetimeHeaderClientRFC3339Options struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientRFC7231Options contains the optional parameters for the HeaderClient.RFC7231 method.
-type HeaderClientRFC7231Options struct {
+// DatetimeHeaderClientRFC7231Options contains the optional parameters for the DatetimeHeaderClient.RFC7231 method.
+type DatetimeHeaderClientRFC7231Options struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientUnixTimestampArrayOptions contains the optional parameters for the HeaderClient.UnixTimestampArray method.
-type HeaderClientUnixTimestampArrayOptions struct {
+// DatetimeHeaderClientUnixTimestampArrayOptions contains the optional parameters for the DatetimeHeaderClient.UnixTimestampArray
+// method.
+type DatetimeHeaderClientUnixTimestampArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientUnixTimestampOptions contains the optional parameters for the HeaderClient.UnixTimestamp method.
-type HeaderClientUnixTimestampOptions struct {
+// DatetimeHeaderClientUnixTimestampOptions contains the optional parameters for the DatetimeHeaderClient.UnixTimestamp method.
+type DatetimeHeaderClientUnixTimestampOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
-type PropertyClientDefaultOptions struct {
+// DatetimePropertyClientDefaultOptions contains the optional parameters for the DatetimePropertyClient.Default method.
+type DatetimePropertyClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientRFC3339Options contains the optional parameters for the PropertyClient.RFC3339 method.
-type PropertyClientRFC3339Options struct {
+// DatetimePropertyClientRFC3339Options contains the optional parameters for the DatetimePropertyClient.RFC3339 method.
+type DatetimePropertyClientRFC3339Options struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientRFC7231Options contains the optional parameters for the PropertyClient.RFC7231 method.
-type PropertyClientRFC7231Options struct {
+// DatetimePropertyClientRFC7231Options contains the optional parameters for the DatetimePropertyClient.RFC7231 method.
+type DatetimePropertyClientRFC7231Options struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientUnixTimestampArrayOptions contains the optional parameters for the PropertyClient.UnixTimestampArray method.
-type PropertyClientUnixTimestampArrayOptions struct {
+// DatetimePropertyClientUnixTimestampArrayOptions contains the optional parameters for the DatetimePropertyClient.UnixTimestampArray
+// method.
+type DatetimePropertyClientUnixTimestampArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientUnixTimestampOptions contains the optional parameters for the PropertyClient.UnixTimestamp method.
-type PropertyClientUnixTimestampOptions struct {
+// DatetimePropertyClientUnixTimestampOptions contains the optional parameters for the DatetimePropertyClient.UnixTimestamp
+// method.
+type DatetimePropertyClientUnixTimestampOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
-type QueryClientDefaultOptions struct {
+// DatetimeQueryClientDefaultOptions contains the optional parameters for the DatetimeQueryClient.Default method.
+type DatetimeQueryClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientRFC3339Options contains the optional parameters for the QueryClient.RFC3339 method.
-type QueryClientRFC3339Options struct {
+// DatetimeQueryClientRFC3339Options contains the optional parameters for the DatetimeQueryClient.RFC3339 method.
+type DatetimeQueryClientRFC3339Options struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientRFC7231Options contains the optional parameters for the QueryClient.RFC7231 method.
-type QueryClientRFC7231Options struct {
+// DatetimeQueryClientRFC7231Options contains the optional parameters for the DatetimeQueryClient.RFC7231 method.
+type DatetimeQueryClientRFC7231Options struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientUnixTimestampArrayOptions contains the optional parameters for the QueryClient.UnixTimestampArray method.
-type QueryClientUnixTimestampArrayOptions struct {
+// DatetimeQueryClientUnixTimestampArrayOptions contains the optional parameters for the DatetimeQueryClient.UnixTimestampArray
+// method.
+type DatetimeQueryClientUnixTimestampArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientUnixTimestampOptions contains the optional parameters for the QueryClient.UnixTimestamp method.
-type QueryClientUnixTimestampOptions struct {
+// DatetimeQueryClientUnixTimestampOptions contains the optional parameters for the DatetimeQueryClient.UnixTimestamp method.
+type DatetimeQueryClientUnixTimestampOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseHeaderClientDefaultOptions contains the optional parameters for the ResponseHeaderClient.Default method.
-type ResponseHeaderClientDefaultOptions struct {
+// DatetimeResponseHeaderClientDefaultOptions contains the optional parameters for the DatetimeResponseHeaderClient.Default
+// method.
+type DatetimeResponseHeaderClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseHeaderClientRFC3339Options contains the optional parameters for the ResponseHeaderClient.RFC3339 method.
-type ResponseHeaderClientRFC3339Options struct {
+// DatetimeResponseHeaderClientRFC3339Options contains the optional parameters for the DatetimeResponseHeaderClient.RFC3339
+// method.
+type DatetimeResponseHeaderClientRFC3339Options struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseHeaderClientRFC7231Options contains the optional parameters for the ResponseHeaderClient.RFC7231 method.
-type ResponseHeaderClientRFC7231Options struct {
+// DatetimeResponseHeaderClientRFC7231Options contains the optional parameters for the DatetimeResponseHeaderClient.RFC7231
+// method.
+type DatetimeResponseHeaderClientRFC7231Options struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseHeaderClientUnixTimestampOptions contains the optional parameters for the ResponseHeaderClient.UnixTimestamp method.
-type ResponseHeaderClientUnixTimestampOptions struct {
+// DatetimeResponseHeaderClientUnixTimestampOptions contains the optional parameters for the DatetimeResponseHeaderClient.UnixTimestamp
+// method.
+type DatetimeResponseHeaderClientUnixTimestampOptions struct {
 	// placeholder for future optional parameters
 }

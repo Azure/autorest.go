@@ -17,7 +17,7 @@ import (
 func TestExtensibleClientGetKnownValue(t *testing.T) {
 	client, err := extensiblegroup.NewExtensibleClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().GetKnownValue(context.Background(), nil)
+	resp, err := client.NewExtensibleStringClient().GetKnownValue(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.Equal(t, extensiblegroup.DaysOfWeekExtensibleEnumMonday, *resp.Value)
@@ -26,7 +26,7 @@ func TestExtensibleClientGetKnownValue(t *testing.T) {
 func TestExtensibleClientGetUnknownValue(t *testing.T) {
 	client, err := extensiblegroup.NewExtensibleClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().GetUnknownValue(context.Background(), nil)
+	resp, err := client.NewExtensibleStringClient().GetUnknownValue(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.Equal(t, extensiblegroup.DaysOfWeekExtensibleEnum("Weekend"), *resp.Value)
@@ -35,7 +35,7 @@ func TestExtensibleClientGetUnknownValue(t *testing.T) {
 func TestExtensibleClientPutKnownValue(t *testing.T) {
 	client, err := extensiblegroup.NewExtensibleClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().PutKnownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnumMonday, nil)
+	resp, err := client.NewExtensibleStringClient().PutKnownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnumMonday, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -43,7 +43,7 @@ func TestExtensibleClientPutKnownValue(t *testing.T) {
 func TestExtensibleClientPutUnknownValue(t *testing.T) {
 	client, err := extensiblegroup.NewExtensibleClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().PutUnknownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnum("Weekend"), nil)
+	resp, err := client.NewExtensibleStringClient().PutUnknownValue(context.Background(), extensiblegroup.DaysOfWeekExtensibleEnum("Weekend"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

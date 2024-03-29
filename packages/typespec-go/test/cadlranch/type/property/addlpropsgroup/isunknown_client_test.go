@@ -18,7 +18,7 @@ import (
 func TestIsUnknownClient_Get(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsUnknownClient().Get(context.Background(), nil)
+	resp, err := client.NewAdditionalPropertiesIsUnknownClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.IsUnknownAdditionalProperties{
 		Name: to.Ptr("IsUnknownAdditionalProperties"),
@@ -33,7 +33,7 @@ func TestIsUnknownClient_Get(t *testing.T) {
 func TestIsUnknownClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsUnknownClient().Put(context.Background(), addlpropsgroup.IsUnknownAdditionalProperties{
+	resp, err := client.NewAdditionalPropertiesIsUnknownClient().Put(context.Background(), addlpropsgroup.IsUnknownAdditionalProperties{
 		Name: to.Ptr("IsUnknownAdditionalProperties"),
 		AdditionalProperties: map[string]any{
 			"prop1": float64(32),

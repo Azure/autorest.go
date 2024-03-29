@@ -15,8 +15,8 @@ import (
 
 // JsonServer is a fake server for instances of the jsongroup.JsonClient type.
 type JsonServer struct {
-	// PropertyServer contains the fakes for client PropertyClient
-	PropertyServer PropertyServer
+	// JsonPropertyServer contains the fakes for client JsonPropertyClient
+	JsonPropertyServer JsonPropertyServer
 }
 
 // NewJsonServerTransport creates a new instance of JsonServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewJsonServerTransport(srv *JsonServer) *JsonServerTransport {
 // JsonServerTransport connects instances of jsongroup.JsonClient to instances of JsonServer.
 // Don't use this type directly, use NewJsonServerTransport instead.
 type JsonServerTransport struct {
-	srv              *JsonServer
-	trMu             sync.Mutex
-	trPropertyServer *PropertyServerTransport
+	srv                  *JsonServer
+	trMu                 sync.Mutex
+	trJsonPropertyServer *JsonPropertyServerTransport
 }
 
 // Do implements the policy.Transporter interface for JsonServerTransport.
@@ -50,11 +50,11 @@ func (j *JsonServerTransport) dispatchToClientFake(req *http.Request, client str
 	var err error
 
 	switch client {
-	case "PropertyClient":
-		initServer(&j.trMu, &j.trPropertyServer, func() *PropertyServerTransport {
-			return NewPropertyServerTransport(&j.srv.PropertyServer)
+	case "JsonPropertyClient":
+		initServer(&j.trMu, &j.trJsonPropertyServer, func() *JsonPropertyServerTransport {
+			return NewJsonPropertyServerTransport(&j.srv.JsonPropertyServer)
 		})
-		resp, err = j.trPropertyServer.Do(req)
+		resp, err = j.trJsonPropertyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

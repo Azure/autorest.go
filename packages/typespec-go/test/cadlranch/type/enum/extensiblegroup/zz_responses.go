@@ -4,22 +4,22 @@
 
 package extensiblegroup
 
-// StringClientGetKnownValueResponse contains the response from method StringClient.GetKnownValue.
-type StringClientGetKnownValueResponse struct {
+// ExtensibleStringClientGetKnownValueResponse contains the response from method ExtensibleStringClient.GetKnownValue.
+type ExtensibleStringClientGetKnownValueResponse struct {
 	Value *DaysOfWeekExtensibleEnum
 }
 
-// StringClientGetUnknownValueResponse contains the response from method StringClient.GetUnknownValue.
-type StringClientGetUnknownValueResponse struct {
+// ExtensibleStringClientGetUnknownValueResponse contains the response from method ExtensibleStringClient.GetUnknownValue.
+type ExtensibleStringClientGetUnknownValueResponse struct {
 	Value *DaysOfWeekExtensibleEnum
 }
 
-// StringClientPutKnownValueResponse contains the response from method StringClient.PutKnownValue.
-type StringClientPutKnownValueResponse struct {
+// ExtensibleStringClientPutKnownValueResponse contains the response from method ExtensibleStringClient.PutKnownValue.
+type ExtensibleStringClientPutKnownValueResponse struct {
 	// placeholder for future response values
 }
 
-// StringClientPutUnknownValueResponse contains the response from method StringClient.PutUnknownValue.
-type StringClientPutUnknownValueResponse struct {
+// ExtensibleStringClientPutUnknownValueResponse contains the response from method ExtensibleStringClient.PutUnknownValue.
+type ExtensibleStringClientPutUnknownValueResponse struct {
 	// placeholder for future response values
 }

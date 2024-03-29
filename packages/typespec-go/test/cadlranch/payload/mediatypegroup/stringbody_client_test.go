@@ -14,7 +14,7 @@ import (
 func TestStringBodyClient_GetAsJSON(t *testing.T) {
 	client, err := mediatypegroup.NewMediaTypeClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringBodyClient().GetAsJSON(context.Background(), nil)
+	resp, err := client.NewMediaTypeStringBodyClient().GetAsJSON(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.Equal(t, "foo", *resp.Value)
@@ -23,7 +23,7 @@ func TestStringBodyClient_GetAsJSON(t *testing.T) {
 func TestStringBodyClient_GetAsText(t *testing.T) {
 	client, err := mediatypegroup.NewMediaTypeClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringBodyClient().GetAsText(context.Background(), nil)
+	resp, err := client.NewMediaTypeStringBodyClient().GetAsText(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.Equal(t, "{cat}", *resp.Value)
@@ -32,7 +32,7 @@ func TestStringBodyClient_GetAsText(t *testing.T) {
 func TestStringBodyClient_SendAsJSON(t *testing.T) {
 	client, err := mediatypegroup.NewMediaTypeClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringBodyClient().SendAsJSON(context.Background(), "foo", nil)
+	resp, err := client.NewMediaTypeStringBodyClient().SendAsJSON(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -40,7 +40,7 @@ func TestStringBodyClient_SendAsJSON(t *testing.T) {
 func TestStringBodyClient_SendAsText(t *testing.T) {
 	client, err := mediatypegroup.NewMediaTypeClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringBodyClient().SendAsText(context.Background(), "{cat}", nil)
+	resp, err := client.NewMediaTypeStringBodyClient().SendAsText(context.Background(), "{cat}", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

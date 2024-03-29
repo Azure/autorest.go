@@ -4,32 +4,32 @@
 
 package twoopgroup
 
-// Group1ClientFourResponse contains the response from method Group1Client.Four.
-type Group1ClientFourResponse struct {
+// TwoOperationGroupGroup1ClientFourResponse contains the response from method TwoOperationGroupGroup1Client.Four.
+type TwoOperationGroupGroup1ClientFourResponse struct {
 	// placeholder for future response values
 }
 
-// Group1ClientOneResponse contains the response from method Group1Client.One.
-type Group1ClientOneResponse struct {
+// TwoOperationGroupGroup1ClientOneResponse contains the response from method TwoOperationGroupGroup1Client.One.
+type TwoOperationGroupGroup1ClientOneResponse struct {
 	// placeholder for future response values
 }
 
-// Group1ClientThreeResponse contains the response from method Group1Client.Three.
-type Group1ClientThreeResponse struct {
+// TwoOperationGroupGroup1ClientThreeResponse contains the response from method TwoOperationGroupGroup1Client.Three.
+type TwoOperationGroupGroup1ClientThreeResponse struct {
 	// placeholder for future response values
 }
 
-// Group2ClientFiveResponse contains the response from method Group2Client.Five.
-type Group2ClientFiveResponse struct {
+// TwoOperationGroupGroup2ClientFiveResponse contains the response from method TwoOperationGroupGroup2Client.Five.
+type TwoOperationGroupGroup2ClientFiveResponse struct {
 	// placeholder for future response values
 }
 
-// Group2ClientSixResponse contains the response from method Group2Client.Six.
-type Group2ClientSixResponse struct {
+// TwoOperationGroupGroup2ClientSixResponse contains the response from method TwoOperationGroupGroup2Client.Six.
+type TwoOperationGroupGroup2ClientSixResponse struct {
 	// placeholder for future response values
 }
 
-// Group2ClientTwoResponse contains the response from method Group2Client.Two.
-type Group2ClientTwoResponse struct {
+// TwoOperationGroupGroup2ClientTwoResponse contains the response from method TwoOperationGroupGroup2Client.Two.
+type TwoOperationGroupGroup2ClientTwoResponse struct {
 	// placeholder for future response values
 }

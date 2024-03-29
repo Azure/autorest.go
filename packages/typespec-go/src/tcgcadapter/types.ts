@@ -28,6 +28,10 @@ export class typeAdapter {
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
     for (const enumType of sdkContext.experimental_sdkPackage.enums) {
+      if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
+        // we have a pipeline policy for controlling the api-version
+        continue;
+      }
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
     }
@@ -73,7 +77,7 @@ export class typeAdapter {
           continue;
         }
 
-        for (const httpResp of Object.values(sdkMethod.operation.responses)) {
+        for (const httpResp of sdkMethod.operation.responses.values()) {
           if (!httpResp.type || httpResp.type.kind !== 'model') {
             continue;
           }
@@ -171,6 +175,16 @@ export class typeAdapter {
         types.set(m4.SchemaType.Binary, binaryType);
         return binaryType;
       }*/
+      case 'endpoint': {
+        const stringKey = 'string';
+        let stringType = this.types.get(stringKey);
+        if (stringType) {
+          return stringType;
+        }
+        stringType = new go.PrimitiveType('string');
+        this.types.set(stringKey, stringType);
+        return stringType;
+      }
       case 'enum':
         return this.getConstantType(type);
       case 'constant':
@@ -463,11 +477,7 @@ export class typeAdapter {
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
     let modelName = model.name;
     if (modelName.length === 0) {
-      if (model.generatedName && model.generatedName.length > 0) {
-        modelName = model.generatedName;
-      } else {
-        throw new Error('unnamed model');
-      }
+      throw new Error('unnamed model');
     }
     modelName = naming.ensureNameCase(modelName);
     if (model.access === 'internal') {
@@ -536,16 +546,16 @@ export class typeAdapter {
       case 'enumvalue':
         return this.getLiteralValue(sdkProp.type);
       default:
-        throw new Error(`unhandled kind ${sdkProp.type.kind} for discriminator property ${sdkProp.nameInClient}`);
+        throw new Error(`unhandled kind ${sdkProp.type.kind} for discriminator property ${sdkProp.name}`);
     }
   }
 
   private getModelField(prop: tcgc.SdkModelPropertyType, modelType: tcgc.SdkModelType): go.ModelField {
     if (prop.kind !== 'path' && prop.kind !== 'property') {
-      throw new Error(`unexpected kind ${prop.kind} for property ${prop.nameInClient} in model ${modelType.name}`);
+      throw new Error(`unexpected kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`);
     }
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.nameInClient)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
+    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
     field.description = prop.description;
     if (prop.kind === 'path') {
       // for ARM resources, a property of kind path is usually the model
@@ -802,7 +812,7 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
   let parent = model.baseModel;
   while (parent) {
     for (const parentProp of parent.properties) {
-      const exists = values(allProps).where(p => { return p.nameInClient === parentProp.nameInClient; }).first();
+      const exists = values(allProps).where(p => { return p.name === parentProp.name; }).first();
       if (exists) {
         // don't add the duplicate. the TS compiler has better enforcement than OpenAPI
         // to ensure that duplicate fields with different types aren't added.

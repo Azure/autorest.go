@@ -6,114 +6,114 @@ package bytesgroup
 
 import "io"
 
-// HeaderClientBase64Response contains the response from method HeaderClient.Base64.
-type HeaderClientBase64Response struct {
+// BytesHeaderClientBase64Response contains the response from method BytesHeaderClient.Base64.
+type BytesHeaderClientBase64Response struct {
 	// placeholder for future response values
 }
 
-// HeaderClientBase64URLArrayResponse contains the response from method HeaderClient.Base64URLArray.
-type HeaderClientBase64URLArrayResponse struct {
+// BytesHeaderClientBase64URLArrayResponse contains the response from method BytesHeaderClient.Base64URLArray.
+type BytesHeaderClientBase64URLArrayResponse struct {
 	// placeholder for future response values
 }
 
-// HeaderClientBase64URLResponse contains the response from method HeaderClient.Base64URL.
-type HeaderClientBase64URLResponse struct {
+// BytesHeaderClientBase64URLResponse contains the response from method BytesHeaderClient.Base64URL.
+type BytesHeaderClientBase64URLResponse struct {
 	// placeholder for future response values
 }
 
-// HeaderClientDefaultResponse contains the response from method HeaderClient.Default.
-type HeaderClientDefaultResponse struct {
+// BytesHeaderClientDefaultResponse contains the response from method BytesHeaderClient.Default.
+type BytesHeaderClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientBase64Response contains the response from method PropertyClient.Base64.
-type PropertyClientBase64Response struct {
+// BytesPropertyClientBase64Response contains the response from method BytesPropertyClient.Base64.
+type BytesPropertyClientBase64Response struct {
 	Base64BytesProperty
 }
 
-// PropertyClientBase64URLArrayResponse contains the response from method PropertyClient.Base64URLArray.
-type PropertyClientBase64URLArrayResponse struct {
+// BytesPropertyClientBase64URLArrayResponse contains the response from method BytesPropertyClient.Base64URLArray.
+type BytesPropertyClientBase64URLArrayResponse struct {
 	Base64URLArrayBytesProperty
 }
 
-// PropertyClientBase64URLResponse contains the response from method PropertyClient.Base64URL.
-type PropertyClientBase64URLResponse struct {
+// BytesPropertyClientBase64URLResponse contains the response from method BytesPropertyClient.Base64URL.
+type BytesPropertyClientBase64URLResponse struct {
 	Base64URLBytesProperty
 }
 
-// PropertyClientDefaultResponse contains the response from method PropertyClient.Default.
-type PropertyClientDefaultResponse struct {
+// BytesPropertyClientDefaultResponse contains the response from method BytesPropertyClient.Default.
+type BytesPropertyClientDefaultResponse struct {
 	DefaultBytesProperty
 }
 
-// QueryClientBase64Response contains the response from method QueryClient.Base64.
-type QueryClientBase64Response struct {
+// BytesQueryClientBase64Response contains the response from method BytesQueryClient.Base64.
+type BytesQueryClientBase64Response struct {
 	// placeholder for future response values
 }
 
-// QueryClientBase64URLArrayResponse contains the response from method QueryClient.Base64URLArray.
-type QueryClientBase64URLArrayResponse struct {
+// BytesQueryClientBase64URLArrayResponse contains the response from method BytesQueryClient.Base64URLArray.
+type BytesQueryClientBase64URLArrayResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientBase64URLResponse contains the response from method QueryClient.Base64URL.
-type QueryClientBase64URLResponse struct {
+// BytesQueryClientBase64URLResponse contains the response from method BytesQueryClient.Base64URL.
+type BytesQueryClientBase64URLResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientDefaultResponse contains the response from method QueryClient.Default.
-type QueryClientDefaultResponse struct {
+// BytesQueryClientDefaultResponse contains the response from method BytesQueryClient.Default.
+type BytesQueryClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
-// RequestBodyClientBase64Response contains the response from method RequestBodyClient.Base64.
-type RequestBodyClientBase64Response struct {
+// BytesRequestBodyClientBase64Response contains the response from method BytesRequestBodyClient.Base64.
+type BytesRequestBodyClientBase64Response struct {
 	// placeholder for future response values
 }
 
-// RequestBodyClientBase64URLResponse contains the response from method RequestBodyClient.Base64URL.
-type RequestBodyClientBase64URLResponse struct {
+// BytesRequestBodyClientBase64URLResponse contains the response from method BytesRequestBodyClient.Base64URL.
+type BytesRequestBodyClientBase64URLResponse struct {
 	// placeholder for future response values
 }
 
-// RequestBodyClientCustomContentTypeResponse contains the response from method RequestBodyClient.CustomContentType.
-type RequestBodyClientCustomContentTypeResponse struct {
+// BytesRequestBodyClientCustomContentTypeResponse contains the response from method BytesRequestBodyClient.CustomContentType.
+type BytesRequestBodyClientCustomContentTypeResponse struct {
 	// placeholder for future response values
 }
 
-// RequestBodyClientDefaultResponse contains the response from method RequestBodyClient.Default.
-type RequestBodyClientDefaultResponse struct {
+// BytesRequestBodyClientDefaultResponse contains the response from method BytesRequestBodyClient.Default.
+type BytesRequestBodyClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
-// RequestBodyClientOctetStreamResponse contains the response from method RequestBodyClient.OctetStream.
-type RequestBodyClientOctetStreamResponse struct {
+// BytesRequestBodyClientOctetStreamResponse contains the response from method BytesRequestBodyClient.OctetStream.
+type BytesRequestBodyClientOctetStreamResponse struct {
 	// placeholder for future response values
 }
 
-// ResponseBodyClientBase64Response contains the response from method ResponseBodyClient.Base64.
-type ResponseBodyClientBase64Response struct {
+// BytesResponseBodyClientBase64Response contains the response from method BytesResponseBodyClient.Base64.
+type BytesResponseBodyClientBase64Response struct {
 	Value []byte
 }
 
-// ResponseBodyClientBase64URLResponse contains the response from method ResponseBodyClient.Base64URL.
-type ResponseBodyClientBase64URLResponse struct {
+// BytesResponseBodyClientBase64URLResponse contains the response from method BytesResponseBodyClient.Base64URL.
+type BytesResponseBodyClientBase64URLResponse struct {
 	Value []byte
 }
 
-// ResponseBodyClientCustomContentTypeResponse contains the response from method ResponseBodyClient.CustomContentType.
-type ResponseBodyClientCustomContentTypeResponse struct {
+// BytesResponseBodyClientCustomContentTypeResponse contains the response from method BytesResponseBodyClient.CustomContentType.
+type BytesResponseBodyClientCustomContentTypeResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }
 
-// ResponseBodyClientDefaultResponse contains the response from method ResponseBodyClient.Default.
-type ResponseBodyClientDefaultResponse struct {
+// BytesResponseBodyClientDefaultResponse contains the response from method BytesResponseBodyClient.Default.
+type BytesResponseBodyClientDefaultResponse struct {
 	Value []byte
 }
 
-// ResponseBodyClientOctetStreamResponse contains the response from method ResponseBodyClient.OctetStream.
-type ResponseBodyClientOctetStreamResponse struct {
+// BytesResponseBodyClientOctetStreamResponse contains the response from method BytesResponseBodyClient.OctetStream.
+type BytesResponseBodyClientOctetStreamResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }

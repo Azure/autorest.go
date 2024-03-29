@@ -14,7 +14,7 @@ import (
 func TestInternalOperationClient_internalDecoratorInInternal(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewInternalOperationClient().internalDecoratorInInternal(context.Background(), "foo", nil)
+	resp, err := client.NewAccessInternalOperationClient().internalDecoratorInInternal(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Equal(t, internalDecoratorModelInInternal{
 		Name: to.Ptr("foo"),
@@ -24,7 +24,7 @@ func TestInternalOperationClient_internalDecoratorInInternal(t *testing.T) {
 func TestInternalOperationClient_noDecoratorInInternal(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewInternalOperationClient().noDecoratorInInternal(context.Background(), "foo", nil)
+	resp, err := client.NewAccessInternalOperationClient().noDecoratorInInternal(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Equal(t, noDecoratorModelInInternal{
 		Name: to.Ptr("foo"),
@@ -34,7 +34,7 @@ func TestInternalOperationClient_noDecoratorInInternal(t *testing.T) {
 func TestInternalOperationClient_publicDecoratorInInternal(t *testing.T) {
 	client, err := NewAccessClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewInternalOperationClient().publicDecoratorInInternal(context.Background(), "foo", nil)
+	resp, err := client.NewAccessInternalOperationClient().publicDecoratorInInternal(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Equal(t, PublicDecoratorModelInInternal{
 		Name: to.Ptr("foo"),

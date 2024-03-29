@@ -15,8 +15,8 @@ import (
 
 // ExtensibleServer is a fake server for instances of the extensiblegroup.ExtensibleClient type.
 type ExtensibleServer struct {
-	// StringServer contains the fakes for client StringClient
-	StringServer StringServer
+	// ExtensibleStringServer contains the fakes for client ExtensibleStringClient
+	ExtensibleStringServer ExtensibleStringServer
 }
 
 // NewExtensibleServerTransport creates a new instance of ExtensibleServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewExtensibleServerTransport(srv *ExtensibleServer) *ExtensibleServerTransp
 // ExtensibleServerTransport connects instances of extensiblegroup.ExtensibleClient to instances of ExtensibleServer.
 // Don't use this type directly, use NewExtensibleServerTransport instead.
 type ExtensibleServerTransport struct {
-	srv            *ExtensibleServer
-	trMu           sync.Mutex
-	trStringServer *StringServerTransport
+	srv                      *ExtensibleServer
+	trMu                     sync.Mutex
+	trExtensibleStringServer *ExtensibleStringServerTransport
 }
 
 // Do implements the policy.Transporter interface for ExtensibleServerTransport.
@@ -50,11 +50,11 @@ func (e *ExtensibleServerTransport) dispatchToClientFake(req *http.Request, clie
 	var err error
 
 	switch client {
-	case "StringClient":
-		initServer(&e.trMu, &e.trStringServer, func() *StringServerTransport {
-			return NewStringServerTransport(&e.srv.StringServer)
+	case "ExtensibleStringClient":
+		initServer(&e.trMu, &e.trExtensibleStringServer, func() *ExtensibleStringServerTransport {
+			return NewExtensibleStringServerTransport(&e.srv.ExtensibleStringServer)
 		})
-		resp, err = e.trStringServer.Do(req)
+		resp, err = e.trExtensibleStringServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

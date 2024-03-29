@@ -15,8 +15,8 @@ import (
 
 // FixedServer is a fake server for instances of the fixedgroup.FixedClient type.
 type FixedServer struct {
-	// StringServer contains the fakes for client StringClient
-	StringServer StringServer
+	// FixedStringServer contains the fakes for client FixedStringClient
+	FixedStringServer FixedStringServer
 }
 
 // NewFixedServerTransport creates a new instance of FixedServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewFixedServerTransport(srv *FixedServer) *FixedServerTransport {
 // FixedServerTransport connects instances of fixedgroup.FixedClient to instances of FixedServer.
 // Don't use this type directly, use NewFixedServerTransport instead.
 type FixedServerTransport struct {
-	srv            *FixedServer
-	trMu           sync.Mutex
-	trStringServer *StringServerTransport
+	srv                 *FixedServer
+	trMu                sync.Mutex
+	trFixedStringServer *FixedStringServerTransport
 }
 
 // Do implements the policy.Transporter interface for FixedServerTransport.
@@ -50,11 +50,11 @@ func (f *FixedServerTransport) dispatchToClientFake(req *http.Request, client st
 	var err error
 
 	switch client {
-	case "StringClient":
-		initServer(&f.trMu, &f.trStringServer, func() *StringServerTransport {
-			return NewStringServerTransport(&f.srv.StringServer)
+	case "FixedStringClient":
+		initServer(&f.trMu, &f.trFixedStringServer, func() *FixedStringServerTransport {
+			return NewFixedStringServerTransport(&f.srv.FixedStringServer)
 		})
-		resp, err = f.trStringServer.Do(req)
+		resp, err = f.trFixedStringServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

@@ -15,8 +15,8 @@ import (
 
 // MediaTypeServer is a fake server for instances of the mediatypegroup.MediaTypeClient type.
 type MediaTypeServer struct {
-	// StringBodyServer contains the fakes for client StringBodyClient
-	StringBodyServer StringBodyServer
+	// MediaTypeStringBodyServer contains the fakes for client MediaTypeStringBodyClient
+	MediaTypeStringBodyServer MediaTypeStringBodyServer
 }
 
 // NewMediaTypeServerTransport creates a new instance of MediaTypeServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewMediaTypeServerTransport(srv *MediaTypeServer) *MediaTypeServerTransport
 // MediaTypeServerTransport connects instances of mediatypegroup.MediaTypeClient to instances of MediaTypeServer.
 // Don't use this type directly, use NewMediaTypeServerTransport instead.
 type MediaTypeServerTransport struct {
-	srv                *MediaTypeServer
-	trMu               sync.Mutex
-	trStringBodyServer *StringBodyServerTransport
+	srv                         *MediaTypeServer
+	trMu                        sync.Mutex
+	trMediaTypeStringBodyServer *MediaTypeStringBodyServerTransport
 }
 
 // Do implements the policy.Transporter interface for MediaTypeServerTransport.
@@ -50,11 +50,11 @@ func (m *MediaTypeServerTransport) dispatchToClientFake(req *http.Request, clien
 	var err error
 
 	switch client {
-	case "StringBodyClient":
-		initServer(&m.trMu, &m.trStringBodyServer, func() *StringBodyServerTransport {
-			return NewStringBodyServerTransport(&m.srv.StringBodyServer)
+	case "MediaTypeStringBodyClient":
+		initServer(&m.trMu, &m.trMediaTypeStringBodyServer, func() *MediaTypeStringBodyServerTransport {
+			return NewMediaTypeStringBodyServerTransport(&m.srv.MediaTypeStringBodyServer)
 		})
-		resp, err = m.trStringBodyServer.Do(req)
+		resp, err = m.trMediaTypeStringBodyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

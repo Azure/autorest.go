@@ -18,7 +18,7 @@ import (
 func TestExtendsModelArrayClient_Get(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewExtendsModelArrayClient().Get(context.Background(), nil)
+	resp, err := client.NewAdditionalPropertiesExtendsModelArrayClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.ExtendsModelArrayAdditionalProperties{
 		AdditionalProperties: map[string][]*addlpropsgroup.ModelForRecord{
@@ -37,7 +37,7 @@ func TestExtendsModelArrayClient_Get(t *testing.T) {
 func TestExtendsModelArrayClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewExtendsModelArrayClient().Put(context.Background(), addlpropsgroup.ExtendsModelArrayAdditionalProperties{
+	resp, err := client.NewAdditionalPropertiesExtendsModelArrayClient().Put(context.Background(), addlpropsgroup.ExtendsModelArrayAdditionalProperties{
 		AdditionalProperties: map[string][]*addlpropsgroup.ModelForRecord{
 			"prop": {
 				{

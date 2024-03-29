@@ -18,7 +18,7 @@ import (
 func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
 	client, err := basicgroup.NewBasicClient(nil)
 	require.NoError(t, err)
-	pager := client.NewTwoModelsAsPageItemClient().NewListFirstItemPager(nil)
+	pager := client.NewBasicTwoModelsAsPageItemClient().NewListFirstItemPager(nil)
 	pages := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -36,7 +36,7 @@ func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
 func TestTwoModelsAsPageItemClient_NewListSecondItemPager(t *testing.T) {
 	client, err := basicgroup.NewBasicClient(nil)
 	require.NoError(t, err)
-	pager := client.NewTwoModelsAsPageItemClient().NewListSecondItemPager(nil)
+	pager := client.NewBasicTwoModelsAsPageItemClient().NewListSecondItemPager(nil)
 	pages := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())

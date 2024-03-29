@@ -6,112 +6,112 @@ package dictionarygroup
 
 import "time"
 
-// BooleanValueClientGetResponse contains the response from method BooleanValueClient.Get.
-type BooleanValueClientGetResponse struct {
+// DictionaryBooleanValueClientGetResponse contains the response from method DictionaryBooleanValueClient.Get.
+type DictionaryBooleanValueClientGetResponse struct {
 	Value map[string]*bool
 }
 
-// BooleanValueClientPutResponse contains the response from method BooleanValueClient.Put.
-type BooleanValueClientPutResponse struct {
+// DictionaryBooleanValueClientPutResponse contains the response from method DictionaryBooleanValueClient.Put.
+type DictionaryBooleanValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// DatetimeValueClientGetResponse contains the response from method DatetimeValueClient.Get.
-type DatetimeValueClientGetResponse struct {
+// DictionaryDatetimeValueClientGetResponse contains the response from method DictionaryDatetimeValueClient.Get.
+type DictionaryDatetimeValueClientGetResponse struct {
 	Value map[string]*time.Time
 }
 
-// DatetimeValueClientPutResponse contains the response from method DatetimeValueClient.Put.
-type DatetimeValueClientPutResponse struct {
+// DictionaryDatetimeValueClientPutResponse contains the response from method DictionaryDatetimeValueClient.Put.
+type DictionaryDatetimeValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// DurationValueClientGetResponse contains the response from method DurationValueClient.Get.
-type DurationValueClientGetResponse struct {
+// DictionaryDurationValueClientGetResponse contains the response from method DictionaryDurationValueClient.Get.
+type DictionaryDurationValueClientGetResponse struct {
 	Value map[string]*string
 }
 
-// DurationValueClientPutResponse contains the response from method DurationValueClient.Put.
-type DurationValueClientPutResponse struct {
+// DictionaryDurationValueClientPutResponse contains the response from method DictionaryDurationValueClient.Put.
+type DictionaryDurationValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Float32ValueClientGetResponse contains the response from method Float32ValueClient.Get.
-type Float32ValueClientGetResponse struct {
+// DictionaryFloat32ValueClientGetResponse contains the response from method DictionaryFloat32ValueClient.Get.
+type DictionaryFloat32ValueClientGetResponse struct {
 	Value map[string]*float32
 }
 
-// Float32ValueClientPutResponse contains the response from method Float32ValueClient.Put.
-type Float32ValueClientPutResponse struct {
+// DictionaryFloat32ValueClientPutResponse contains the response from method DictionaryFloat32ValueClient.Put.
+type DictionaryFloat32ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Int32ValueClientGetResponse contains the response from method Int32ValueClient.Get.
-type Int32ValueClientGetResponse struct {
+// DictionaryInt32ValueClientGetResponse contains the response from method DictionaryInt32ValueClient.Get.
+type DictionaryInt32ValueClientGetResponse struct {
 	Value map[string]*int32
 }
 
-// Int32ValueClientPutResponse contains the response from method Int32ValueClient.Put.
-type Int32ValueClientPutResponse struct {
+// DictionaryInt32ValueClientPutResponse contains the response from method DictionaryInt32ValueClient.Put.
+type DictionaryInt32ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Int64ValueClientGetResponse contains the response from method Int64ValueClient.Get.
-type Int64ValueClientGetResponse struct {
+// DictionaryInt64ValueClientGetResponse contains the response from method DictionaryInt64ValueClient.Get.
+type DictionaryInt64ValueClientGetResponse struct {
 	Value map[string]*int64
 }
 
-// Int64ValueClientPutResponse contains the response from method Int64ValueClient.Put.
-type Int64ValueClientPutResponse struct {
+// DictionaryInt64ValueClientPutResponse contains the response from method DictionaryInt64ValueClient.Put.
+type DictionaryInt64ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ModelValueClientGetResponse contains the response from method ModelValueClient.Get.
-type ModelValueClientGetResponse struct {
+// DictionaryModelValueClientGetResponse contains the response from method DictionaryModelValueClient.Get.
+type DictionaryModelValueClientGetResponse struct {
 	Value map[string]*InnerModel
 }
 
-// ModelValueClientPutResponse contains the response from method ModelValueClient.Put.
-type ModelValueClientPutResponse struct {
+// DictionaryModelValueClientPutResponse contains the response from method DictionaryModelValueClient.Put.
+type DictionaryModelValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// NullableFloatValueClientGetResponse contains the response from method NullableFloatValueClient.Get.
-type NullableFloatValueClientGetResponse struct {
+// DictionaryNullableFloatValueClientGetResponse contains the response from method DictionaryNullableFloatValueClient.Get.
+type DictionaryNullableFloatValueClientGetResponse struct {
 	Value map[string]*float32
 }
 
-// NullableFloatValueClientPutResponse contains the response from method NullableFloatValueClient.Put.
-type NullableFloatValueClientPutResponse struct {
+// DictionaryNullableFloatValueClientPutResponse contains the response from method DictionaryNullableFloatValueClient.Put.
+type DictionaryNullableFloatValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// RecursiveModelValueClientGetResponse contains the response from method RecursiveModelValueClient.Get.
-type RecursiveModelValueClientGetResponse struct {
+// DictionaryRecursiveModelValueClientGetResponse contains the response from method DictionaryRecursiveModelValueClient.Get.
+type DictionaryRecursiveModelValueClientGetResponse struct {
 	Value map[string]*InnerModel
 }
 
-// RecursiveModelValueClientPutResponse contains the response from method RecursiveModelValueClient.Put.
-type RecursiveModelValueClientPutResponse struct {
+// DictionaryRecursiveModelValueClientPutResponse contains the response from method DictionaryRecursiveModelValueClient.Put.
+type DictionaryRecursiveModelValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// StringValueClientGetResponse contains the response from method StringValueClient.Get.
-type StringValueClientGetResponse struct {
+// DictionaryStringValueClientGetResponse contains the response from method DictionaryStringValueClient.Get.
+type DictionaryStringValueClientGetResponse struct {
 	Value map[string]*string
 }
 
-// StringValueClientPutResponse contains the response from method StringValueClient.Put.
-type StringValueClientPutResponse struct {
+// DictionaryStringValueClientPutResponse contains the response from method DictionaryStringValueClient.Put.
+type DictionaryStringValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// UnknownValueClientGetResponse contains the response from method UnknownValueClient.Get.
-type UnknownValueClientGetResponse struct {
+// DictionaryUnknownValueClientGetResponse contains the response from method DictionaryUnknownValueClient.Get.
+type DictionaryUnknownValueClientGetResponse struct {
 	Value map[string]any
 }
 
-// UnknownValueClientPutResponse contains the response from method UnknownValueClient.Put.
-type UnknownValueClientPutResponse struct {
+// DictionaryUnknownValueClientPutResponse contains the response from method DictionaryUnknownValueClient.Put.
+type DictionaryUnknownValueClientPutResponse struct {
 	// placeholder for future response values
 }

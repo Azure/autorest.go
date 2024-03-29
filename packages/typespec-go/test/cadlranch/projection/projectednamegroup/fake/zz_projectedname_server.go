@@ -20,11 +20,11 @@ import (
 
 // ProjectedNameServer is a fake server for instances of the projectednamegroup.ProjectedNameClient type.
 type ProjectedNameServer struct {
-	// ModelServer contains the fakes for client ModelClient
-	ModelServer ModelServer
+	// ProjectedNameModelServer contains the fakes for client ProjectedNameModelClient
+	ProjectedNameModelServer ProjectedNameModelServer
 
-	// PropertyServer contains the fakes for client PropertyClient
-	PropertyServer PropertyServer
+	// ProjectedNamePropertyServer contains the fakes for client ProjectedNamePropertyClient
+	ProjectedNamePropertyServer ProjectedNamePropertyServer
 
 	// ClientName is the fake for method ProjectedNameClient.ClientName
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -45,10 +45,10 @@ func NewProjectedNameServerTransport(srv *ProjectedNameServer) *ProjectedNameSer
 // ProjectedNameServerTransport connects instances of projectednamegroup.ProjectedNameClient to instances of ProjectedNameServer.
 // Don't use this type directly, use NewProjectedNameServerTransport instead.
 type ProjectedNameServerTransport struct {
-	srv              *ProjectedNameServer
-	trMu             sync.Mutex
-	trModelServer    *ModelServerTransport
-	trPropertyServer *PropertyServerTransport
+	srv                           *ProjectedNameServer
+	trMu                          sync.Mutex
+	trProjectedNameModelServer    *ProjectedNameModelServerTransport
+	trProjectedNamePropertyServer *ProjectedNamePropertyServerTransport
 }
 
 // Do implements the policy.Transporter interface for ProjectedNameServerTransport.
@@ -70,16 +70,16 @@ func (p *ProjectedNameServerTransport) dispatchToClientFake(req *http.Request, c
 	var err error
 
 	switch client {
-	case "ModelClient":
-		initServer(&p.trMu, &p.trModelServer, func() *ModelServerTransport {
-			return NewModelServerTransport(&p.srv.ModelServer)
+	case "ProjectedNameModelClient":
+		initServer(&p.trMu, &p.trProjectedNameModelServer, func() *ProjectedNameModelServerTransport {
+			return NewProjectedNameModelServerTransport(&p.srv.ProjectedNameModelServer)
 		})
-		resp, err = p.trModelServer.Do(req)
-	case "PropertyClient":
-		initServer(&p.trMu, &p.trPropertyServer, func() *PropertyServerTransport {
-			return NewPropertyServerTransport(&p.srv.PropertyServer)
+		resp, err = p.trProjectedNameModelServer.Do(req)
+	case "ProjectedNamePropertyClient":
+		initServer(&p.trMu, &p.trProjectedNamePropertyServer, func() *ProjectedNamePropertyServerTransport {
+			return NewProjectedNamePropertyServerTransport(&p.srv.ProjectedNamePropertyServer)
 		})
-		resp, err = p.trPropertyServer.Do(req)
+		resp, err = p.trProjectedNamePropertyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

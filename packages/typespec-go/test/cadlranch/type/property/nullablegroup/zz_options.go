@@ -4,123 +4,132 @@
 
 package nullablegroup
 
-// BytesClientGetNonNullOptions contains the optional parameters for the BytesClient.GetNonNull method.
-type BytesClientGetNonNullOptions struct {
+// NullableBytesClientGetNonNullOptions contains the optional parameters for the NullableBytesClient.GetNonNull method.
+type NullableBytesClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BytesClientGetNullOptions contains the optional parameters for the BytesClient.GetNull method.
-type BytesClientGetNullOptions struct {
+// NullableBytesClientGetNullOptions contains the optional parameters for the NullableBytesClient.GetNull method.
+type NullableBytesClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BytesClientPatchNonNullOptions contains the optional parameters for the BytesClient.PatchNonNull method.
-type BytesClientPatchNonNullOptions struct {
+// NullableBytesClientPatchNonNullOptions contains the optional parameters for the NullableBytesClient.PatchNonNull method.
+type NullableBytesClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BytesClientPatchNullOptions contains the optional parameters for the BytesClient.PatchNull method.
-type BytesClientPatchNullOptions struct {
+// NullableBytesClientPatchNullOptions contains the optional parameters for the NullableBytesClient.PatchNull method.
+type NullableBytesClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// CollectionsByteClientGetNonNullOptions contains the optional parameters for the CollectionsByteClient.GetNonNull method.
-type CollectionsByteClientGetNonNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsByteClientGetNullOptions contains the optional parameters for the CollectionsByteClient.GetNull method.
-type CollectionsByteClientGetNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsByteClientPatchNonNullOptions contains the optional parameters for the CollectionsByteClient.PatchNonNull method.
-type CollectionsByteClientPatchNonNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsByteClientPatchNullOptions contains the optional parameters for the CollectionsByteClient.PatchNull method.
-type CollectionsByteClientPatchNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsModelClientGetNonNullOptions contains the optional parameters for the CollectionsModelClient.GetNonNull method.
-type CollectionsModelClientGetNonNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsModelClientGetNullOptions contains the optional parameters for the CollectionsModelClient.GetNull method.
-type CollectionsModelClientGetNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// CollectionsModelClientPatchNonNullOptions contains the optional parameters for the CollectionsModelClient.PatchNonNull
+// NullableCollectionsByteClientGetNonNullOptions contains the optional parameters for the NullableCollectionsByteClient.GetNonNull
 // method.
-type CollectionsModelClientPatchNonNullOptions struct {
+type NullableCollectionsByteClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// CollectionsModelClientPatchNullOptions contains the optional parameters for the CollectionsModelClient.PatchNull method.
-type CollectionsModelClientPatchNullOptions struct {
+// NullableCollectionsByteClientGetNullOptions contains the optional parameters for the NullableCollectionsByteClient.GetNull
+// method.
+type NullableCollectionsByteClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeClientGetNonNullOptions contains the optional parameters for the DatetimeClient.GetNonNull method.
-type DatetimeClientGetNonNullOptions struct {
+// NullableCollectionsByteClientPatchNonNullOptions contains the optional parameters for the NullableCollectionsByteClient.PatchNonNull
+// method.
+type NullableCollectionsByteClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeClientGetNullOptions contains the optional parameters for the DatetimeClient.GetNull method.
-type DatetimeClientGetNullOptions struct {
+// NullableCollectionsByteClientPatchNullOptions contains the optional parameters for the NullableCollectionsByteClient.PatchNull
+// method.
+type NullableCollectionsByteClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeClientPatchNonNullOptions contains the optional parameters for the DatetimeClient.PatchNonNull method.
-type DatetimeClientPatchNonNullOptions struct {
+// NullableCollectionsModelClientGetNonNullOptions contains the optional parameters for the NullableCollectionsModelClient.GetNonNull
+// method.
+type NullableCollectionsModelClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatetimeClientPatchNullOptions contains the optional parameters for the DatetimeClient.PatchNull method.
-type DatetimeClientPatchNullOptions struct {
+// NullableCollectionsModelClientGetNullOptions contains the optional parameters for the NullableCollectionsModelClient.GetNull
+// method.
+type NullableCollectionsModelClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationClientGetNonNullOptions contains the optional parameters for the DurationClient.GetNonNull method.
-type DurationClientGetNonNullOptions struct {
+// NullableCollectionsModelClientPatchNonNullOptions contains the optional parameters for the NullableCollectionsModelClient.PatchNonNull
+// method.
+type NullableCollectionsModelClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
-type DurationClientGetNullOptions struct {
+// NullableCollectionsModelClientPatchNullOptions contains the optional parameters for the NullableCollectionsModelClient.PatchNull
+// method.
+type NullableCollectionsModelClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationClientPatchNonNullOptions contains the optional parameters for the DurationClient.PatchNonNull method.
-type DurationClientPatchNonNullOptions struct {
+// NullableDatetimeClientGetNonNullOptions contains the optional parameters for the NullableDatetimeClient.GetNonNull method.
+type NullableDatetimeClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationClientPatchNullOptions contains the optional parameters for the DurationClient.PatchNull method.
-type DurationClientPatchNullOptions struct {
+// NullableDatetimeClientGetNullOptions contains the optional parameters for the NullableDatetimeClient.GetNull method.
+type NullableDatetimeClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientGetNonNullOptions contains the optional parameters for the StringClient.GetNonNull method.
-type StringClientGetNonNullOptions struct {
+// NullableDatetimeClientPatchNonNullOptions contains the optional parameters for the NullableDatetimeClient.PatchNonNull
+// method.
+type NullableDatetimeClientPatchNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
-type StringClientGetNullOptions struct {
+// NullableDatetimeClientPatchNullOptions contains the optional parameters for the NullableDatetimeClient.PatchNull method.
+type NullableDatetimeClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPatchNonNullOptions contains the optional parameters for the StringClient.PatchNonNull method.
-type StringClientPatchNonNullOptions struct {
+// NullableDurationClientGetNonNullOptions contains the optional parameters for the NullableDurationClient.GetNonNull method.
+type NullableDurationClientGetNonNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPatchNullOptions contains the optional parameters for the StringClient.PatchNull method.
-type StringClientPatchNullOptions struct {
+// NullableDurationClientGetNullOptions contains the optional parameters for the NullableDurationClient.GetNull method.
+type NullableDurationClientGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableDurationClientPatchNonNullOptions contains the optional parameters for the NullableDurationClient.PatchNonNull
+// method.
+type NullableDurationClientPatchNonNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableDurationClientPatchNullOptions contains the optional parameters for the NullableDurationClient.PatchNull method.
+type NullableDurationClientPatchNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableStringClientGetNonNullOptions contains the optional parameters for the NullableStringClient.GetNonNull method.
+type NullableStringClientGetNonNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableStringClientGetNullOptions contains the optional parameters for the NullableStringClient.GetNull method.
+type NullableStringClientGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableStringClientPatchNonNullOptions contains the optional parameters for the NullableStringClient.PatchNonNull method.
+type NullableStringClientPatchNonNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableStringClientPatchNullOptions contains the optional parameters for the NullableStringClient.PatchNull method.
+type NullableStringClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }

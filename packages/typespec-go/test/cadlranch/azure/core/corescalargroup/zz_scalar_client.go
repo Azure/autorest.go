@@ -12,9 +12,9 @@ type ScalarClient struct {
 	internal *azcore.Client
 }
 
-// NewAzureLocationScalarClient creates a new instance of [AzureLocationScalarClient].
-func (client *ScalarClient) NewAzureLocationScalarClient() *AzureLocationScalarClient {
-	return &AzureLocationScalarClient{
+// NewScalarAzureLocationScalarClient creates a new instance of [ScalarAzureLocationScalarClient].
+func (client *ScalarClient) NewScalarAzureLocationScalarClient() *ScalarAzureLocationScalarClient {
+	return &ScalarAzureLocationScalarClient{
 		internal: client.internal,
 	}
 }

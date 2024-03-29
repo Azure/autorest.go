@@ -4,16 +4,6 @@
 
 package projectednamegroup
 
-// ModelClientClientResponse contains the response from method ModelClient.Client.
-type ModelClientClientResponse struct {
-	// placeholder for future response values
-}
-
-// ModelClientLanguageResponse contains the response from method ModelClient.Language.
-type ModelClientLanguageResponse struct {
-	// placeholder for future response values
-}
-
 // ProjectedNameClientClientNameResponse contains the response from method ProjectedNameClient.ClientName.
 type ProjectedNameClientClientNameResponse struct {
 	// placeholder for future response values
@@ -24,22 +14,32 @@ type ProjectedNameClientParameterResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientClientResponse contains the response from method PropertyClient.Client.
-type PropertyClientClientResponse struct {
+// ProjectedNameModelClientClientResponse contains the response from method ProjectedNameModelClient.Client.
+type ProjectedNameModelClientClientResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientJSONAndClientResponse contains the response from method PropertyClient.JSONAndClient.
-type PropertyClientJSONAndClientResponse struct {
+// ProjectedNameModelClientLanguageResponse contains the response from method ProjectedNameModelClient.Language.
+type ProjectedNameModelClientLanguageResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientJSONResponse contains the response from method PropertyClient.JSON.
-type PropertyClientJSONResponse struct {
+// ProjectedNamePropertyClientClientResponse contains the response from method ProjectedNamePropertyClient.Client.
+type ProjectedNamePropertyClientClientResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientLanguageResponse contains the response from method PropertyClient.Language.
-type PropertyClientLanguageResponse struct {
+// ProjectedNamePropertyClientJSONAndClientResponse contains the response from method ProjectedNamePropertyClient.JSONAndClient.
+type ProjectedNamePropertyClientJSONAndClientResponse struct {
+	// placeholder for future response values
+}
+
+// ProjectedNamePropertyClientJSONResponse contains the response from method ProjectedNamePropertyClient.JSON.
+type ProjectedNamePropertyClientJSONResponse struct {
+	// placeholder for future response values
+}
+
+// ProjectedNamePropertyClientLanguageResponse contains the response from method ProjectedNamePropertyClient.Language.
+type ProjectedNamePropertyClientLanguageResponse struct {
 	// placeholder for future response values
 }

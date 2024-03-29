@@ -70,14 +70,14 @@ type BasicClientListWithParametersOptions struct {
 	Another *ListItemInputExtensibleEnum
 }
 
-// TwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListFirstItemPager
+// BasicTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListFirstItemPager
 // method.
-type TwoModelsAsPageItemClientListFirstItemOptions struct {
+type BasicTwoModelsAsPageItemClientListFirstItemOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the TwoModelsAsPageItemClient.NewListSecondItemPager
+// BasicTwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListSecondItemPager
 // method.
-type TwoModelsAsPageItemClientListSecondItemOptions struct {
+type BasicTwoModelsAsPageItemClientListSecondItemOptions struct {
 	// placeholder for future optional parameters
 }

@@ -28,36 +28,36 @@ type ServiceClient struct {
 	client   ClientType
 }
 
-// NewBarClient creates a new instance of [BarClient].
-func (client *ServiceClient) NewBarClient() *BarClient {
-	return &BarClient{
+// NewServiceBarClient creates a new instance of [ServiceBarClient].
+func (client *ServiceClient) NewServiceBarClient() *ServiceBarClient {
+	return &ServiceBarClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,
 	}
 }
 
-// NewBazClient creates a new instance of [BazClient].
-func (client *ServiceClient) NewBazClient() *BazClient {
-	return &BazClient{
+// NewServiceBazClient creates a new instance of [ServiceBazClient].
+func (client *ServiceClient) NewServiceBazClient() *ServiceBazClient {
+	return &ServiceBazClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,
 	}
 }
 
-// NewFooClient creates a new instance of [FooClient].
-func (client *ServiceClient) NewFooClient() *FooClient {
-	return &FooClient{
+// NewServiceFooClient creates a new instance of [ServiceFooClient].
+func (client *ServiceClient) NewServiceFooClient() *ServiceFooClient {
+	return &ServiceFooClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,
 	}
 }
 
-// NewQuxClient creates a new instance of [QuxClient].
-func (client *ServiceClient) NewQuxClient() *QuxClient {
-	return &QuxClient{
+// NewServiceQuxClient creates a new instance of [ServiceQuxClient].
+func (client *ServiceClient) NewServiceQuxClient() *ServiceQuxClient {
+	return &ServiceQuxClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,

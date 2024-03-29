@@ -17,7 +17,7 @@ import (
 func TestBooleanClient_Get(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBooleanClient().Get(context.Background(), nil)
+	resp, err := client.NewScalarBooleanClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, *resp.Value, true)
@@ -26,7 +26,7 @@ func TestBooleanClient_Get(t *testing.T) {
 func TestBooleanClient_Put(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewBooleanClient().Put(context.Background(), true, nil)
+	resp, err := client.NewScalarBooleanClient().Put(context.Background(), true, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

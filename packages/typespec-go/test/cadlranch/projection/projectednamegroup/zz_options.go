@@ -4,16 +4,6 @@
 
 package projectednamegroup
 
-// ModelClientClientOptions contains the optional parameters for the ModelClient.Client method.
-type ModelClientClientOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelClientLanguageOptions contains the optional parameters for the ModelClient.Language method.
-type ModelClientLanguageOptions struct {
-	// placeholder for future optional parameters
-}
-
 // ProjectedNameClientClientNameOptions contains the optional parameters for the ProjectedNameClient.ClientName method.
 type ProjectedNameClientClientNameOptions struct {
 	// placeholder for future optional parameters
@@ -24,22 +14,34 @@ type ProjectedNameClientParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientClientOptions contains the optional parameters for the PropertyClient.Client method.
-type PropertyClientClientOptions struct {
+// ProjectedNameModelClientClientOptions contains the optional parameters for the ProjectedNameModelClient.Client method.
+type ProjectedNameModelClientClientOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientJSONAndClientOptions contains the optional parameters for the PropertyClient.JSONAndClient method.
-type PropertyClientJSONAndClientOptions struct {
+// ProjectedNameModelClientLanguageOptions contains the optional parameters for the ProjectedNameModelClient.Language method.
+type ProjectedNameModelClientLanguageOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientJSONOptions contains the optional parameters for the PropertyClient.JSON method.
-type PropertyClientJSONOptions struct {
+// ProjectedNamePropertyClientClientOptions contains the optional parameters for the ProjectedNamePropertyClient.Client method.
+type ProjectedNamePropertyClientClientOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientLanguageOptions contains the optional parameters for the PropertyClient.Language method.
-type PropertyClientLanguageOptions struct {
+// ProjectedNamePropertyClientJSONAndClientOptions contains the optional parameters for the ProjectedNamePropertyClient.JSONAndClient
+// method.
+type ProjectedNamePropertyClientJSONAndClientOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ProjectedNamePropertyClientJSONOptions contains the optional parameters for the ProjectedNamePropertyClient.JSON method.
+type ProjectedNamePropertyClientJSONOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ProjectedNamePropertyClientLanguageOptions contains the optional parameters for the ProjectedNamePropertyClient.Language
+// method.
+type ProjectedNamePropertyClientLanguageOptions struct {
 	// placeholder for future optional parameters
 }

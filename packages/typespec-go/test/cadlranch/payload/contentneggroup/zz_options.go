@@ -4,23 +4,26 @@
 
 package contentneggroup
 
-// DifferentBodyClientGetAvatarAsJSONOptions contains the optional parameters for the DifferentBodyClient.GetAvatarAsJSON
+// ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions contains the optional parameters for the ContentNegotiationDifferentBodyClient.GetAvatarAsJSON
 // method.
-type DifferentBodyClientGetAvatarAsJSONOptions struct {
+type ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DifferentBodyClientGetAvatarAsPNGOptions contains the optional parameters for the DifferentBodyClient.GetAvatarAsPNG method.
-type DifferentBodyClientGetAvatarAsPNGOptions struct {
+// ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions contains the optional parameters for the ContentNegotiationDifferentBodyClient.GetAvatarAsPNG
+// method.
+type ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SameBodyClientGetAvatarAsJPEGOptions contains the optional parameters for the SameBodyClient.GetAvatarAsJPEG method.
-type SameBodyClientGetAvatarAsJPEGOptions struct {
+// ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions contains the optional parameters for the ContentNegotiationSameBodyClient.GetAvatarAsJPEG
+// method.
+type ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SameBodyClientGetAvatarAsPNGOptions contains the optional parameters for the SameBodyClient.GetAvatarAsPNG method.
-type SameBodyClientGetAvatarAsPNGOptions struct {
+// ContentNegotiationSameBodyClientGetAvatarAsPNGOptions contains the optional parameters for the ContentNegotiationSameBodyClient.GetAvatarAsPNG
+// method.
+type ContentNegotiationSameBodyClientGetAvatarAsPNGOptions struct {
 	// placeholder for future optional parameters
 }

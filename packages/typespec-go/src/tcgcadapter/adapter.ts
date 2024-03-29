@@ -10,7 +10,6 @@ import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
-import { values } from '@azure-tools/linq';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -25,10 +24,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
 
   const sdkContext = tcgc.createSdkContext(context);
   let codeModelType: go.CodeModelType = 'data-plane';
-  if (values(sdkContext.experimental_sdkPackage.clients).any(client => { return client.arm; })) {
-    // if one client is ARM then mark the code model as ARM.
-    // we should never have an SDK that mixes ARM and data-plane.
-    // TODO: tcgc to move arm property to sdkPackage
+  if (sdkContext.arm === true) {
     codeModelType = 'azure-arm';
   }
 

@@ -4,134 +4,134 @@
 
 package nullablegroup
 
-// BytesClientGetNonNullResponse contains the response from method BytesClient.GetNonNull.
-type BytesClientGetNonNullResponse struct {
+// NullableBytesClientGetNonNullResponse contains the response from method NullableBytesClient.GetNonNull.
+type NullableBytesClientGetNonNullResponse struct {
 	// Template type for testing models with nullable property. Pass in the type of the property you are looking for
 	BytesProperty
 }
 
-// BytesClientGetNullResponse contains the response from method BytesClient.GetNull.
-type BytesClientGetNullResponse struct {
+// NullableBytesClientGetNullResponse contains the response from method NullableBytesClient.GetNull.
+type NullableBytesClientGetNullResponse struct {
 	// Template type for testing models with nullable property. Pass in the type of the property you are looking for
 	BytesProperty
 }
 
-// BytesClientPatchNonNullResponse contains the response from method BytesClient.PatchNonNull.
-type BytesClientPatchNonNullResponse struct {
+// NullableBytesClientPatchNonNullResponse contains the response from method NullableBytesClient.PatchNonNull.
+type NullableBytesClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// BytesClientPatchNullResponse contains the response from method BytesClient.PatchNull.
-type BytesClientPatchNullResponse struct {
+// NullableBytesClientPatchNullResponse contains the response from method NullableBytesClient.PatchNull.
+type NullableBytesClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
-// CollectionsByteClientGetNonNullResponse contains the response from method CollectionsByteClient.GetNonNull.
-type CollectionsByteClientGetNonNullResponse struct {
+// NullableCollectionsByteClientGetNonNullResponse contains the response from method NullableCollectionsByteClient.GetNonNull.
+type NullableCollectionsByteClientGetNonNullResponse struct {
 	// Model with collection bytes properties
 	CollectionsByteProperty
 }
 
-// CollectionsByteClientGetNullResponse contains the response from method CollectionsByteClient.GetNull.
-type CollectionsByteClientGetNullResponse struct {
+// NullableCollectionsByteClientGetNullResponse contains the response from method NullableCollectionsByteClient.GetNull.
+type NullableCollectionsByteClientGetNullResponse struct {
 	// Model with collection bytes properties
 	CollectionsByteProperty
 }
 
-// CollectionsByteClientPatchNonNullResponse contains the response from method CollectionsByteClient.PatchNonNull.
-type CollectionsByteClientPatchNonNullResponse struct {
+// NullableCollectionsByteClientPatchNonNullResponse contains the response from method NullableCollectionsByteClient.PatchNonNull.
+type NullableCollectionsByteClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// CollectionsByteClientPatchNullResponse contains the response from method CollectionsByteClient.PatchNull.
-type CollectionsByteClientPatchNullResponse struct {
+// NullableCollectionsByteClientPatchNullResponse contains the response from method NullableCollectionsByteClient.PatchNull.
+type NullableCollectionsByteClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
-// CollectionsModelClientGetNonNullResponse contains the response from method CollectionsModelClient.GetNonNull.
-type CollectionsModelClientGetNonNullResponse struct {
+// NullableCollectionsModelClientGetNonNullResponse contains the response from method NullableCollectionsModelClient.GetNonNull.
+type NullableCollectionsModelClientGetNonNullResponse struct {
 	// Model with collection models properties
 	CollectionsModelProperty
 }
 
-// CollectionsModelClientGetNullResponse contains the response from method CollectionsModelClient.GetNull.
-type CollectionsModelClientGetNullResponse struct {
+// NullableCollectionsModelClientGetNullResponse contains the response from method NullableCollectionsModelClient.GetNull.
+type NullableCollectionsModelClientGetNullResponse struct {
 	// Model with collection models properties
 	CollectionsModelProperty
 }
 
-// CollectionsModelClientPatchNonNullResponse contains the response from method CollectionsModelClient.PatchNonNull.
-type CollectionsModelClientPatchNonNullResponse struct {
+// NullableCollectionsModelClientPatchNonNullResponse contains the response from method NullableCollectionsModelClient.PatchNonNull.
+type NullableCollectionsModelClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// CollectionsModelClientPatchNullResponse contains the response from method CollectionsModelClient.PatchNull.
-type CollectionsModelClientPatchNullResponse struct {
+// NullableCollectionsModelClientPatchNullResponse contains the response from method NullableCollectionsModelClient.PatchNull.
+type NullableCollectionsModelClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
-// DatetimeClientGetNonNullResponse contains the response from method DatetimeClient.GetNonNull.
-type DatetimeClientGetNonNullResponse struct {
+// NullableDatetimeClientGetNonNullResponse contains the response from method NullableDatetimeClient.GetNonNull.
+type NullableDatetimeClientGetNonNullResponse struct {
 	// Model with a datetime property
 	DatetimeProperty
 }
 
-// DatetimeClientGetNullResponse contains the response from method DatetimeClient.GetNull.
-type DatetimeClientGetNullResponse struct {
+// NullableDatetimeClientGetNullResponse contains the response from method NullableDatetimeClient.GetNull.
+type NullableDatetimeClientGetNullResponse struct {
 	// Model with a datetime property
 	DatetimeProperty
 }
 
-// DatetimeClientPatchNonNullResponse contains the response from method DatetimeClient.PatchNonNull.
-type DatetimeClientPatchNonNullResponse struct {
+// NullableDatetimeClientPatchNonNullResponse contains the response from method NullableDatetimeClient.PatchNonNull.
+type NullableDatetimeClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// DatetimeClientPatchNullResponse contains the response from method DatetimeClient.PatchNull.
-type DatetimeClientPatchNullResponse struct {
+// NullableDatetimeClientPatchNullResponse contains the response from method NullableDatetimeClient.PatchNull.
+type NullableDatetimeClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
-// DurationClientGetNonNullResponse contains the response from method DurationClient.GetNonNull.
-type DurationClientGetNonNullResponse struct {
+// NullableDurationClientGetNonNullResponse contains the response from method NullableDurationClient.GetNonNull.
+type NullableDurationClientGetNonNullResponse struct {
 	// Model with a duration property
 	DurationProperty
 }
 
-// DurationClientGetNullResponse contains the response from method DurationClient.GetNull.
-type DurationClientGetNullResponse struct {
+// NullableDurationClientGetNullResponse contains the response from method NullableDurationClient.GetNull.
+type NullableDurationClientGetNullResponse struct {
 	// Model with a duration property
 	DurationProperty
 }
 
-// DurationClientPatchNonNullResponse contains the response from method DurationClient.PatchNonNull.
-type DurationClientPatchNonNullResponse struct {
+// NullableDurationClientPatchNonNullResponse contains the response from method NullableDurationClient.PatchNonNull.
+type NullableDurationClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// DurationClientPatchNullResponse contains the response from method DurationClient.PatchNull.
-type DurationClientPatchNullResponse struct {
+// NullableDurationClientPatchNullResponse contains the response from method NullableDurationClient.PatchNull.
+type NullableDurationClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
-// StringClientGetNonNullResponse contains the response from method StringClient.GetNonNull.
-type StringClientGetNonNullResponse struct {
+// NullableStringClientGetNonNullResponse contains the response from method NullableStringClient.GetNonNull.
+type NullableStringClientGetNonNullResponse struct {
 	// Template type for testing models with nullable property. Pass in the type of the property you are looking for
 	StringProperty
 }
 
-// StringClientGetNullResponse contains the response from method StringClient.GetNull.
-type StringClientGetNullResponse struct {
+// NullableStringClientGetNullResponse contains the response from method NullableStringClient.GetNull.
+type NullableStringClientGetNullResponse struct {
 	// Template type for testing models with nullable property. Pass in the type of the property you are looking for
 	StringProperty
 }
 
-// StringClientPatchNonNullResponse contains the response from method StringClient.PatchNonNull.
-type StringClientPatchNonNullResponse struct {
+// NullableStringClientPatchNonNullResponse contains the response from method NullableStringClient.PatchNonNull.
+type NullableStringClientPatchNonNullResponse struct {
 	// placeholder for future response values
 }
 
-// StringClientPatchNullResponse contains the response from method StringClient.PatchNull.
-type StringClientPatchNullResponse struct {
+// NullableStringClientPatchNullResponse contains the response from method NullableStringClient.PatchNull.
+type NullableStringClientPatchNullResponse struct {
 	// placeholder for future response values
 }

@@ -12,9 +12,9 @@ type LegacyClient struct {
 	internal *azcore.Client
 }
 
-// NewCreateResourcePollViaOperationLocationClient creates a new instance of [CreateResourcePollViaOperationLocationClient].
-func (client *LegacyClient) NewCreateResourcePollViaOperationLocationClient() *CreateResourcePollViaOperationLocationClient {
-	return &CreateResourcePollViaOperationLocationClient{
+// NewLegacyCreateResourcePollViaOperationLocationClient creates a new instance of [LegacyCreateResourcePollViaOperationLocationClient].
+func (client *LegacyClient) NewLegacyCreateResourcePollViaOperationLocationClient() *LegacyCreateResourcePollViaOperationLocationClient {
+	return &LegacyCreateResourcePollViaOperationLocationClient{
 		internal: client.internal,
 	}
 }

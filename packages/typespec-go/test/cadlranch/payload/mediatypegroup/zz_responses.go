@@ -4,22 +4,22 @@
 
 package mediatypegroup
 
-// StringBodyClientGetAsJSONResponse contains the response from method StringBodyClient.GetAsJSON.
-type StringBodyClientGetAsJSONResponse struct {
+// MediaTypeStringBodyClientGetAsJSONResponse contains the response from method MediaTypeStringBodyClient.GetAsJSON.
+type MediaTypeStringBodyClientGetAsJSONResponse struct {
 	Value *string
 }
 
-// StringBodyClientGetAsTextResponse contains the response from method StringBodyClient.GetAsText.
-type StringBodyClientGetAsTextResponse struct {
+// MediaTypeStringBodyClientGetAsTextResponse contains the response from method MediaTypeStringBodyClient.GetAsText.
+type MediaTypeStringBodyClientGetAsTextResponse struct {
 	Value *string
 }
 
-// StringBodyClientSendAsJSONResponse contains the response from method StringBodyClient.SendAsJSON.
-type StringBodyClientSendAsJSONResponse struct {
+// MediaTypeStringBodyClientSendAsJSONResponse contains the response from method MediaTypeStringBodyClient.SendAsJSON.
+type MediaTypeStringBodyClientSendAsJSONResponse struct {
 	// placeholder for future response values
 }
 
-// StringBodyClientSendAsTextResponse contains the response from method StringBodyClient.SendAsText.
-type StringBodyClientSendAsTextResponse struct {
+// MediaTypeStringBodyClientSendAsTextResponse contains the response from method MediaTypeStringBodyClient.SendAsText.
+type MediaTypeStringBodyClientSendAsTextResponse struct {
 	// placeholder for future response values
 }

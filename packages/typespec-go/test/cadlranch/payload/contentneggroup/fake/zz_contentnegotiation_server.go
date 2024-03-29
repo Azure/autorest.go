@@ -15,11 +15,11 @@ import (
 
 // ContentNegotiationServer is a fake server for instances of the contentneggroup.ContentNegotiationClient type.
 type ContentNegotiationServer struct {
-	// DifferentBodyServer contains the fakes for client DifferentBodyClient
-	DifferentBodyServer DifferentBodyServer
+	// ContentNegotiationDifferentBodyServer contains the fakes for client ContentNegotiationDifferentBodyClient
+	ContentNegotiationDifferentBodyServer ContentNegotiationDifferentBodyServer
 
-	// SameBodyServer contains the fakes for client SameBodyClient
-	SameBodyServer SameBodyServer
+	// ContentNegotiationSameBodyServer contains the fakes for client ContentNegotiationSameBodyClient
+	ContentNegotiationSameBodyServer ContentNegotiationSameBodyServer
 }
 
 // NewContentNegotiationServerTransport creates a new instance of ContentNegotiationServerTransport with the provided implementation.
@@ -32,10 +32,10 @@ func NewContentNegotiationServerTransport(srv *ContentNegotiationServer) *Conten
 // ContentNegotiationServerTransport connects instances of contentneggroup.ContentNegotiationClient to instances of ContentNegotiationServer.
 // Don't use this type directly, use NewContentNegotiationServerTransport instead.
 type ContentNegotiationServerTransport struct {
-	srv                   *ContentNegotiationServer
-	trMu                  sync.Mutex
-	trDifferentBodyServer *DifferentBodyServerTransport
-	trSameBodyServer      *SameBodyServerTransport
+	srv                                     *ContentNegotiationServer
+	trMu                                    sync.Mutex
+	trContentNegotiationDifferentBodyServer *ContentNegotiationDifferentBodyServerTransport
+	trContentNegotiationSameBodyServer      *ContentNegotiationSameBodyServerTransport
 }
 
 // Do implements the policy.Transporter interface for ContentNegotiationServerTransport.
@@ -54,16 +54,16 @@ func (c *ContentNegotiationServerTransport) dispatchToClientFake(req *http.Reque
 	var err error
 
 	switch client {
-	case "DifferentBodyClient":
-		initServer(&c.trMu, &c.trDifferentBodyServer, func() *DifferentBodyServerTransport {
-			return NewDifferentBodyServerTransport(&c.srv.DifferentBodyServer)
+	case "ContentNegotiationDifferentBodyClient":
+		initServer(&c.trMu, &c.trContentNegotiationDifferentBodyServer, func() *ContentNegotiationDifferentBodyServerTransport {
+			return NewContentNegotiationDifferentBodyServerTransport(&c.srv.ContentNegotiationDifferentBodyServer)
 		})
-		resp, err = c.trDifferentBodyServer.Do(req)
-	case "SameBodyClient":
-		initServer(&c.trMu, &c.trSameBodyServer, func() *SameBodyServerTransport {
-			return NewSameBodyServerTransport(&c.srv.SameBodyServer)
+		resp, err = c.trContentNegotiationDifferentBodyServer.Do(req)
+	case "ContentNegotiationSameBodyClient":
+		initServer(&c.trMu, &c.trContentNegotiationSameBodyServer, func() *ContentNegotiationSameBodyServerTransport {
+			return NewContentNegotiationSameBodyServerTransport(&c.srv.ContentNegotiationSameBodyServer)
 		})
-		resp, err = c.trSameBodyServer.Do(req)
+		resp, err = c.trContentNegotiationSameBodyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

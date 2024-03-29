@@ -15,47 +15,47 @@ import (
 
 // AdditionalPropertiesServer is a fake server for instances of the addlpropsgroup.AdditionalPropertiesClient type.
 type AdditionalPropertiesServer struct {
-	// ExtendsFloatServer contains the fakes for client ExtendsFloatClient
-	ExtendsFloatServer ExtendsFloatServer
+	// AdditionalPropertiesExtendsFloatServer contains the fakes for client AdditionalPropertiesExtendsFloatClient
+	AdditionalPropertiesExtendsFloatServer AdditionalPropertiesExtendsFloatServer
 
-	// ExtendsModelArrayServer contains the fakes for client ExtendsModelArrayClient
-	ExtendsModelArrayServer ExtendsModelArrayServer
+	// AdditionalPropertiesExtendsModelArrayServer contains the fakes for client AdditionalPropertiesExtendsModelArrayClient
+	AdditionalPropertiesExtendsModelArrayServer AdditionalPropertiesExtendsModelArrayServer
 
-	// ExtendsModelServer contains the fakes for client ExtendsModelClient
-	ExtendsModelServer ExtendsModelServer
+	// AdditionalPropertiesExtendsModelServer contains the fakes for client AdditionalPropertiesExtendsModelClient
+	AdditionalPropertiesExtendsModelServer AdditionalPropertiesExtendsModelServer
 
-	// ExtendsStringServer contains the fakes for client ExtendsStringClient
-	ExtendsStringServer ExtendsStringServer
+	// AdditionalPropertiesExtendsStringServer contains the fakes for client AdditionalPropertiesExtendsStringClient
+	AdditionalPropertiesExtendsStringServer AdditionalPropertiesExtendsStringServer
 
-	// ExtendsUnknownServer contains the fakes for client ExtendsUnknownClient
-	ExtendsUnknownServer ExtendsUnknownServer
+	// AdditionalPropertiesExtendsUnknownServer contains the fakes for client AdditionalPropertiesExtendsUnknownClient
+	AdditionalPropertiesExtendsUnknownServer AdditionalPropertiesExtendsUnknownServer
 
-	// ExtendsUnknownDerivedServer contains the fakes for client ExtendsUnknownDerivedClient
-	ExtendsUnknownDerivedServer ExtendsUnknownDerivedServer
+	// AdditionalPropertiesExtendsUnknownDerivedServer contains the fakes for client AdditionalPropertiesExtendsUnknownDerivedClient
+	AdditionalPropertiesExtendsUnknownDerivedServer AdditionalPropertiesExtendsUnknownDerivedServer
 
-	// ExtendsUnknownDiscriminatedServer contains the fakes for client ExtendsUnknownDiscriminatedClient
-	ExtendsUnknownDiscriminatedServer ExtendsUnknownDiscriminatedServer
+	// AdditionalPropertiesExtendsUnknownDiscriminatedServer contains the fakes for client AdditionalPropertiesExtendsUnknownDiscriminatedClient
+	AdditionalPropertiesExtendsUnknownDiscriminatedServer AdditionalPropertiesExtendsUnknownDiscriminatedServer
 
-	// IsFloatServer contains the fakes for client IsFloatClient
-	IsFloatServer IsFloatServer
+	// AdditionalPropertiesIsFloatServer contains the fakes for client AdditionalPropertiesIsFloatClient
+	AdditionalPropertiesIsFloatServer AdditionalPropertiesIsFloatServer
 
-	// IsModelArrayServer contains the fakes for client IsModelArrayClient
-	IsModelArrayServer IsModelArrayServer
+	// AdditionalPropertiesIsModelArrayServer contains the fakes for client AdditionalPropertiesIsModelArrayClient
+	AdditionalPropertiesIsModelArrayServer AdditionalPropertiesIsModelArrayServer
 
-	// IsModelServer contains the fakes for client IsModelClient
-	IsModelServer IsModelServer
+	// AdditionalPropertiesIsModelServer contains the fakes for client AdditionalPropertiesIsModelClient
+	AdditionalPropertiesIsModelServer AdditionalPropertiesIsModelServer
 
-	// IsStringServer contains the fakes for client IsStringClient
-	IsStringServer IsStringServer
+	// AdditionalPropertiesIsStringServer contains the fakes for client AdditionalPropertiesIsStringClient
+	AdditionalPropertiesIsStringServer AdditionalPropertiesIsStringServer
 
-	// IsUnknownServer contains the fakes for client IsUnknownClient
-	IsUnknownServer IsUnknownServer
+	// AdditionalPropertiesIsUnknownServer contains the fakes for client AdditionalPropertiesIsUnknownClient
+	AdditionalPropertiesIsUnknownServer AdditionalPropertiesIsUnknownServer
 
-	// IsUnknownDerivedServer contains the fakes for client IsUnknownDerivedClient
-	IsUnknownDerivedServer IsUnknownDerivedServer
+	// AdditionalPropertiesIsUnknownDerivedServer contains the fakes for client AdditionalPropertiesIsUnknownDerivedClient
+	AdditionalPropertiesIsUnknownDerivedServer AdditionalPropertiesIsUnknownDerivedServer
 
-	// IsUnknownDiscriminatedServer contains the fakes for client IsUnknownDiscriminatedClient
-	IsUnknownDiscriminatedServer IsUnknownDiscriminatedServer
+	// AdditionalPropertiesIsUnknownDiscriminatedServer contains the fakes for client AdditionalPropertiesIsUnknownDiscriminatedClient
+	AdditionalPropertiesIsUnknownDiscriminatedServer AdditionalPropertiesIsUnknownDiscriminatedServer
 }
 
 // NewAdditionalPropertiesServerTransport creates a new instance of AdditionalPropertiesServerTransport with the provided implementation.
@@ -68,22 +68,22 @@ func NewAdditionalPropertiesServerTransport(srv *AdditionalPropertiesServer) *Ad
 // AdditionalPropertiesServerTransport connects instances of addlpropsgroup.AdditionalPropertiesClient to instances of AdditionalPropertiesServer.
 // Don't use this type directly, use NewAdditionalPropertiesServerTransport instead.
 type AdditionalPropertiesServerTransport struct {
-	srv                                 *AdditionalPropertiesServer
-	trMu                                sync.Mutex
-	trExtendsFloatServer                *ExtendsFloatServerTransport
-	trExtendsModelArrayServer           *ExtendsModelArrayServerTransport
-	trExtendsModelServer                *ExtendsModelServerTransport
-	trExtendsStringServer               *ExtendsStringServerTransport
-	trExtendsUnknownServer              *ExtendsUnknownServerTransport
-	trExtendsUnknownDerivedServer       *ExtendsUnknownDerivedServerTransport
-	trExtendsUnknownDiscriminatedServer *ExtendsUnknownDiscriminatedServerTransport
-	trIsFloatServer                     *IsFloatServerTransport
-	trIsModelArrayServer                *IsModelArrayServerTransport
-	trIsModelServer                     *IsModelServerTransport
-	trIsStringServer                    *IsStringServerTransport
-	trIsUnknownServer                   *IsUnknownServerTransport
-	trIsUnknownDerivedServer            *IsUnknownDerivedServerTransport
-	trIsUnknownDiscriminatedServer      *IsUnknownDiscriminatedServerTransport
+	srv                                                     *AdditionalPropertiesServer
+	trMu                                                    sync.Mutex
+	trAdditionalPropertiesExtendsFloatServer                *AdditionalPropertiesExtendsFloatServerTransport
+	trAdditionalPropertiesExtendsModelArrayServer           *AdditionalPropertiesExtendsModelArrayServerTransport
+	trAdditionalPropertiesExtendsModelServer                *AdditionalPropertiesExtendsModelServerTransport
+	trAdditionalPropertiesExtendsStringServer               *AdditionalPropertiesExtendsStringServerTransport
+	trAdditionalPropertiesExtendsUnknownServer              *AdditionalPropertiesExtendsUnknownServerTransport
+	trAdditionalPropertiesExtendsUnknownDerivedServer       *AdditionalPropertiesExtendsUnknownDerivedServerTransport
+	trAdditionalPropertiesExtendsUnknownDiscriminatedServer *AdditionalPropertiesExtendsUnknownDiscriminatedServerTransport
+	trAdditionalPropertiesIsFloatServer                     *AdditionalPropertiesIsFloatServerTransport
+	trAdditionalPropertiesIsModelArrayServer                *AdditionalPropertiesIsModelArrayServerTransport
+	trAdditionalPropertiesIsModelServer                     *AdditionalPropertiesIsModelServerTransport
+	trAdditionalPropertiesIsStringServer                    *AdditionalPropertiesIsStringServerTransport
+	trAdditionalPropertiesIsUnknownServer                   *AdditionalPropertiesIsUnknownServerTransport
+	trAdditionalPropertiesIsUnknownDerivedServer            *AdditionalPropertiesIsUnknownDerivedServerTransport
+	trAdditionalPropertiesIsUnknownDiscriminatedServer      *AdditionalPropertiesIsUnknownDiscriminatedServerTransport
 }
 
 // Do implements the policy.Transporter interface for AdditionalPropertiesServerTransport.
@@ -102,76 +102,76 @@ func (a *AdditionalPropertiesServerTransport) dispatchToClientFake(req *http.Req
 	var err error
 
 	switch client {
-	case "ExtendsFloatClient":
-		initServer(&a.trMu, &a.trExtendsFloatServer, func() *ExtendsFloatServerTransport {
-			return NewExtendsFloatServerTransport(&a.srv.ExtendsFloatServer)
+	case "AdditionalPropertiesExtendsFloatClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsFloatServer, func() *AdditionalPropertiesExtendsFloatServerTransport {
+			return NewAdditionalPropertiesExtendsFloatServerTransport(&a.srv.AdditionalPropertiesExtendsFloatServer)
 		})
-		resp, err = a.trExtendsFloatServer.Do(req)
-	case "ExtendsModelArrayClient":
-		initServer(&a.trMu, &a.trExtendsModelArrayServer, func() *ExtendsModelArrayServerTransport {
-			return NewExtendsModelArrayServerTransport(&a.srv.ExtendsModelArrayServer)
+		resp, err = a.trAdditionalPropertiesExtendsFloatServer.Do(req)
+	case "AdditionalPropertiesExtendsModelArrayClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsModelArrayServer, func() *AdditionalPropertiesExtendsModelArrayServerTransport {
+			return NewAdditionalPropertiesExtendsModelArrayServerTransport(&a.srv.AdditionalPropertiesExtendsModelArrayServer)
 		})
-		resp, err = a.trExtendsModelArrayServer.Do(req)
-	case "ExtendsModelClient":
-		initServer(&a.trMu, &a.trExtendsModelServer, func() *ExtendsModelServerTransport {
-			return NewExtendsModelServerTransport(&a.srv.ExtendsModelServer)
+		resp, err = a.trAdditionalPropertiesExtendsModelArrayServer.Do(req)
+	case "AdditionalPropertiesExtendsModelClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsModelServer, func() *AdditionalPropertiesExtendsModelServerTransport {
+			return NewAdditionalPropertiesExtendsModelServerTransport(&a.srv.AdditionalPropertiesExtendsModelServer)
 		})
-		resp, err = a.trExtendsModelServer.Do(req)
-	case "ExtendsStringClient":
-		initServer(&a.trMu, &a.trExtendsStringServer, func() *ExtendsStringServerTransport {
-			return NewExtendsStringServerTransport(&a.srv.ExtendsStringServer)
+		resp, err = a.trAdditionalPropertiesExtendsModelServer.Do(req)
+	case "AdditionalPropertiesExtendsStringClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsStringServer, func() *AdditionalPropertiesExtendsStringServerTransport {
+			return NewAdditionalPropertiesExtendsStringServerTransport(&a.srv.AdditionalPropertiesExtendsStringServer)
 		})
-		resp, err = a.trExtendsStringServer.Do(req)
-	case "ExtendsUnknownClient":
-		initServer(&a.trMu, &a.trExtendsUnknownServer, func() *ExtendsUnknownServerTransport {
-			return NewExtendsUnknownServerTransport(&a.srv.ExtendsUnknownServer)
+		resp, err = a.trAdditionalPropertiesExtendsStringServer.Do(req)
+	case "AdditionalPropertiesExtendsUnknownClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsUnknownServer, func() *AdditionalPropertiesExtendsUnknownServerTransport {
+			return NewAdditionalPropertiesExtendsUnknownServerTransport(&a.srv.AdditionalPropertiesExtendsUnknownServer)
 		})
-		resp, err = a.trExtendsUnknownServer.Do(req)
-	case "ExtendsUnknownDerivedClient":
-		initServer(&a.trMu, &a.trExtendsUnknownDerivedServer, func() *ExtendsUnknownDerivedServerTransport {
-			return NewExtendsUnknownDerivedServerTransport(&a.srv.ExtendsUnknownDerivedServer)
+		resp, err = a.trAdditionalPropertiesExtendsUnknownServer.Do(req)
+	case "AdditionalPropertiesExtendsUnknownDerivedClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsUnknownDerivedServer, func() *AdditionalPropertiesExtendsUnknownDerivedServerTransport {
+			return NewAdditionalPropertiesExtendsUnknownDerivedServerTransport(&a.srv.AdditionalPropertiesExtendsUnknownDerivedServer)
 		})
-		resp, err = a.trExtendsUnknownDerivedServer.Do(req)
-	case "ExtendsUnknownDiscriminatedClient":
-		initServer(&a.trMu, &a.trExtendsUnknownDiscriminatedServer, func() *ExtendsUnknownDiscriminatedServerTransport {
-			return NewExtendsUnknownDiscriminatedServerTransport(&a.srv.ExtendsUnknownDiscriminatedServer)
+		resp, err = a.trAdditionalPropertiesExtendsUnknownDerivedServer.Do(req)
+	case "AdditionalPropertiesExtendsUnknownDiscriminatedClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesExtendsUnknownDiscriminatedServer, func() *AdditionalPropertiesExtendsUnknownDiscriminatedServerTransport {
+			return NewAdditionalPropertiesExtendsUnknownDiscriminatedServerTransport(&a.srv.AdditionalPropertiesExtendsUnknownDiscriminatedServer)
 		})
-		resp, err = a.trExtendsUnknownDiscriminatedServer.Do(req)
-	case "IsFloatClient":
-		initServer(&a.trMu, &a.trIsFloatServer, func() *IsFloatServerTransport {
-			return NewIsFloatServerTransport(&a.srv.IsFloatServer)
+		resp, err = a.trAdditionalPropertiesExtendsUnknownDiscriminatedServer.Do(req)
+	case "AdditionalPropertiesIsFloatClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsFloatServer, func() *AdditionalPropertiesIsFloatServerTransport {
+			return NewAdditionalPropertiesIsFloatServerTransport(&a.srv.AdditionalPropertiesIsFloatServer)
 		})
-		resp, err = a.trIsFloatServer.Do(req)
-	case "IsModelArrayClient":
-		initServer(&a.trMu, &a.trIsModelArrayServer, func() *IsModelArrayServerTransport {
-			return NewIsModelArrayServerTransport(&a.srv.IsModelArrayServer)
+		resp, err = a.trAdditionalPropertiesIsFloatServer.Do(req)
+	case "AdditionalPropertiesIsModelArrayClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsModelArrayServer, func() *AdditionalPropertiesIsModelArrayServerTransport {
+			return NewAdditionalPropertiesIsModelArrayServerTransport(&a.srv.AdditionalPropertiesIsModelArrayServer)
 		})
-		resp, err = a.trIsModelArrayServer.Do(req)
-	case "IsModelClient":
-		initServer(&a.trMu, &a.trIsModelServer, func() *IsModelServerTransport {
-			return NewIsModelServerTransport(&a.srv.IsModelServer)
+		resp, err = a.trAdditionalPropertiesIsModelArrayServer.Do(req)
+	case "AdditionalPropertiesIsModelClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsModelServer, func() *AdditionalPropertiesIsModelServerTransport {
+			return NewAdditionalPropertiesIsModelServerTransport(&a.srv.AdditionalPropertiesIsModelServer)
 		})
-		resp, err = a.trIsModelServer.Do(req)
-	case "IsStringClient":
-		initServer(&a.trMu, &a.trIsStringServer, func() *IsStringServerTransport {
-			return NewIsStringServerTransport(&a.srv.IsStringServer)
+		resp, err = a.trAdditionalPropertiesIsModelServer.Do(req)
+	case "AdditionalPropertiesIsStringClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsStringServer, func() *AdditionalPropertiesIsStringServerTransport {
+			return NewAdditionalPropertiesIsStringServerTransport(&a.srv.AdditionalPropertiesIsStringServer)
 		})
-		resp, err = a.trIsStringServer.Do(req)
-	case "IsUnknownClient":
-		initServer(&a.trMu, &a.trIsUnknownServer, func() *IsUnknownServerTransport {
-			return NewIsUnknownServerTransport(&a.srv.IsUnknownServer)
+		resp, err = a.trAdditionalPropertiesIsStringServer.Do(req)
+	case "AdditionalPropertiesIsUnknownClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsUnknownServer, func() *AdditionalPropertiesIsUnknownServerTransport {
+			return NewAdditionalPropertiesIsUnknownServerTransport(&a.srv.AdditionalPropertiesIsUnknownServer)
 		})
-		resp, err = a.trIsUnknownServer.Do(req)
-	case "IsUnknownDerivedClient":
-		initServer(&a.trMu, &a.trIsUnknownDerivedServer, func() *IsUnknownDerivedServerTransport {
-			return NewIsUnknownDerivedServerTransport(&a.srv.IsUnknownDerivedServer)
+		resp, err = a.trAdditionalPropertiesIsUnknownServer.Do(req)
+	case "AdditionalPropertiesIsUnknownDerivedClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsUnknownDerivedServer, func() *AdditionalPropertiesIsUnknownDerivedServerTransport {
+			return NewAdditionalPropertiesIsUnknownDerivedServerTransport(&a.srv.AdditionalPropertiesIsUnknownDerivedServer)
 		})
-		resp, err = a.trIsUnknownDerivedServer.Do(req)
-	case "IsUnknownDiscriminatedClient":
-		initServer(&a.trMu, &a.trIsUnknownDiscriminatedServer, func() *IsUnknownDiscriminatedServerTransport {
-			return NewIsUnknownDiscriminatedServerTransport(&a.srv.IsUnknownDiscriminatedServer)
+		resp, err = a.trAdditionalPropertiesIsUnknownDerivedServer.Do(req)
+	case "AdditionalPropertiesIsUnknownDiscriminatedClient":
+		initServer(&a.trMu, &a.trAdditionalPropertiesIsUnknownDiscriminatedServer, func() *AdditionalPropertiesIsUnknownDiscriminatedServerTransport {
+			return NewAdditionalPropertiesIsUnknownDiscriminatedServerTransport(&a.srv.AdditionalPropertiesIsUnknownDiscriminatedServer)
 		})
-		resp, err = a.trIsUnknownDiscriminatedServer.Do(req)
+		resp, err = a.trAdditionalPropertiesIsUnknownDiscriminatedServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

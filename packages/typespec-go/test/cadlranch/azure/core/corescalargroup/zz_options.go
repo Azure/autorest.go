@@ -4,27 +4,32 @@
 
 package corescalargroup
 
-// AzureLocationScalarClientGetOptions contains the optional parameters for the AzureLocationScalarClient.Get method.
-type AzureLocationScalarClientGetOptions struct {
+// ScalarAzureLocationScalarClientGetOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Get
+// method.
+type ScalarAzureLocationScalarClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AzureLocationScalarClientHeaderOptions contains the optional parameters for the AzureLocationScalarClient.Header method.
-type AzureLocationScalarClientHeaderOptions struct {
+// ScalarAzureLocationScalarClientHeaderOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Header
+// method.
+type ScalarAzureLocationScalarClientHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AzureLocationScalarClientPostOptions contains the optional parameters for the AzureLocationScalarClient.Post method.
-type AzureLocationScalarClientPostOptions struct {
+// ScalarAzureLocationScalarClientPostOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Post
+// method.
+type ScalarAzureLocationScalarClientPostOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AzureLocationScalarClientPutOptions contains the optional parameters for the AzureLocationScalarClient.Put method.
-type AzureLocationScalarClientPutOptions struct {
+// ScalarAzureLocationScalarClientPutOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Put
+// method.
+type ScalarAzureLocationScalarClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AzureLocationScalarClientQueryOptions contains the optional parameters for the AzureLocationScalarClient.Query method.
-type AzureLocationScalarClientQueryOptions struct {
+// ScalarAzureLocationScalarClientQueryOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Query
+// method.
+type ScalarAzureLocationScalarClientQueryOptions struct {
 	// placeholder for future optional parameters
 }

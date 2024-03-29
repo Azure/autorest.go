@@ -15,23 +15,23 @@ import (
 
 // NullableServer is a fake server for instances of the nullablegroup.NullableClient type.
 type NullableServer struct {
-	// BytesServer contains the fakes for client BytesClient
-	BytesServer BytesServer
+	// NullableBytesServer contains the fakes for client NullableBytesClient
+	NullableBytesServer NullableBytesServer
 
-	// CollectionsByteServer contains the fakes for client CollectionsByteClient
-	CollectionsByteServer CollectionsByteServer
+	// NullableCollectionsByteServer contains the fakes for client NullableCollectionsByteClient
+	NullableCollectionsByteServer NullableCollectionsByteServer
 
-	// CollectionsModelServer contains the fakes for client CollectionsModelClient
-	CollectionsModelServer CollectionsModelServer
+	// NullableCollectionsModelServer contains the fakes for client NullableCollectionsModelClient
+	NullableCollectionsModelServer NullableCollectionsModelServer
 
-	// DatetimeServer contains the fakes for client DatetimeClient
-	DatetimeServer DatetimeServer
+	// NullableDatetimeServer contains the fakes for client NullableDatetimeClient
+	NullableDatetimeServer NullableDatetimeServer
 
-	// DurationServer contains the fakes for client DurationClient
-	DurationServer DurationServer
+	// NullableDurationServer contains the fakes for client NullableDurationClient
+	NullableDurationServer NullableDurationServer
 
-	// StringServer contains the fakes for client StringClient
-	StringServer StringServer
+	// NullableStringServer contains the fakes for client NullableStringClient
+	NullableStringServer NullableStringServer
 }
 
 // NewNullableServerTransport creates a new instance of NullableServerTransport with the provided implementation.
@@ -44,14 +44,14 @@ func NewNullableServerTransport(srv *NullableServer) *NullableServerTransport {
 // NullableServerTransport connects instances of nullablegroup.NullableClient to instances of NullableServer.
 // Don't use this type directly, use NewNullableServerTransport instead.
 type NullableServerTransport struct {
-	srv                      *NullableServer
-	trMu                     sync.Mutex
-	trBytesServer            *BytesServerTransport
-	trCollectionsByteServer  *CollectionsByteServerTransport
-	trCollectionsModelServer *CollectionsModelServerTransport
-	trDatetimeServer         *DatetimeServerTransport
-	trDurationServer         *DurationServerTransport
-	trStringServer           *StringServerTransport
+	srv                              *NullableServer
+	trMu                             sync.Mutex
+	trNullableBytesServer            *NullableBytesServerTransport
+	trNullableCollectionsByteServer  *NullableCollectionsByteServerTransport
+	trNullableCollectionsModelServer *NullableCollectionsModelServerTransport
+	trNullableDatetimeServer         *NullableDatetimeServerTransport
+	trNullableDurationServer         *NullableDurationServerTransport
+	trNullableStringServer           *NullableStringServerTransport
 }
 
 // Do implements the policy.Transporter interface for NullableServerTransport.
@@ -70,36 +70,36 @@ func (n *NullableServerTransport) dispatchToClientFake(req *http.Request, client
 	var err error
 
 	switch client {
-	case "BytesClient":
-		initServer(&n.trMu, &n.trBytesServer, func() *BytesServerTransport {
-			return NewBytesServerTransport(&n.srv.BytesServer)
+	case "NullableBytesClient":
+		initServer(&n.trMu, &n.trNullableBytesServer, func() *NullableBytesServerTransport {
+			return NewNullableBytesServerTransport(&n.srv.NullableBytesServer)
 		})
-		resp, err = n.trBytesServer.Do(req)
-	case "CollectionsByteClient":
-		initServer(&n.trMu, &n.trCollectionsByteServer, func() *CollectionsByteServerTransport {
-			return NewCollectionsByteServerTransport(&n.srv.CollectionsByteServer)
+		resp, err = n.trNullableBytesServer.Do(req)
+	case "NullableCollectionsByteClient":
+		initServer(&n.trMu, &n.trNullableCollectionsByteServer, func() *NullableCollectionsByteServerTransport {
+			return NewNullableCollectionsByteServerTransport(&n.srv.NullableCollectionsByteServer)
 		})
-		resp, err = n.trCollectionsByteServer.Do(req)
-	case "CollectionsModelClient":
-		initServer(&n.trMu, &n.trCollectionsModelServer, func() *CollectionsModelServerTransport {
-			return NewCollectionsModelServerTransport(&n.srv.CollectionsModelServer)
+		resp, err = n.trNullableCollectionsByteServer.Do(req)
+	case "NullableCollectionsModelClient":
+		initServer(&n.trMu, &n.trNullableCollectionsModelServer, func() *NullableCollectionsModelServerTransport {
+			return NewNullableCollectionsModelServerTransport(&n.srv.NullableCollectionsModelServer)
 		})
-		resp, err = n.trCollectionsModelServer.Do(req)
-	case "DatetimeClient":
-		initServer(&n.trMu, &n.trDatetimeServer, func() *DatetimeServerTransport {
-			return NewDatetimeServerTransport(&n.srv.DatetimeServer)
+		resp, err = n.trNullableCollectionsModelServer.Do(req)
+	case "NullableDatetimeClient":
+		initServer(&n.trMu, &n.trNullableDatetimeServer, func() *NullableDatetimeServerTransport {
+			return NewNullableDatetimeServerTransport(&n.srv.NullableDatetimeServer)
 		})
-		resp, err = n.trDatetimeServer.Do(req)
-	case "DurationClient":
-		initServer(&n.trMu, &n.trDurationServer, func() *DurationServerTransport {
-			return NewDurationServerTransport(&n.srv.DurationServer)
+		resp, err = n.trNullableDatetimeServer.Do(req)
+	case "NullableDurationClient":
+		initServer(&n.trMu, &n.trNullableDurationServer, func() *NullableDurationServerTransport {
+			return NewNullableDurationServerTransport(&n.srv.NullableDurationServer)
 		})
-		resp, err = n.trDurationServer.Do(req)
-	case "StringClient":
-		initServer(&n.trMu, &n.trStringServer, func() *StringServerTransport {
-			return NewStringServerTransport(&n.srv.StringServer)
+		resp, err = n.trNullableDurationServer.Do(req)
+	case "NullableStringClient":
+		initServer(&n.trMu, &n.trNullableStringServer, func() *NullableStringServerTransport {
+			return NewNullableStringServerTransport(&n.srv.NullableStringServer)
 		})
-		resp, err = n.trStringServer.Do(req)
+		resp, err = n.trNullableStringServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

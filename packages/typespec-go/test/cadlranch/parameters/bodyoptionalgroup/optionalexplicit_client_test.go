@@ -18,7 +18,7 @@ import (
 func TestOptionalExplicitClient_Omit(t *testing.T) {
 	client, err := bodyoptionalgroup.NewBodyOptionalityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewOptionalExplicitClient().Omit(context.Background(), nil)
+	resp, err := client.NewBodyOptionalityOptionalExplicitClient().Omit(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -26,7 +26,7 @@ func TestOptionalExplicitClient_Omit(t *testing.T) {
 func TestOptionalExplicitClient_Set(t *testing.T) {
 	client, err := bodyoptionalgroup.NewBodyOptionalityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewOptionalExplicitClient().Set(context.Background(), &bodyoptionalgroup.OptionalExplicitClientSetOptions{
+	resp, err := client.NewBodyOptionalityOptionalExplicitClient().Set(context.Background(), &bodyoptionalgroup.BodyOptionalityOptionalExplicitClientSetOptions{
 		Body: &bodyoptionalgroup.BodyModel{
 			Name: to.Ptr("foo"),
 		},

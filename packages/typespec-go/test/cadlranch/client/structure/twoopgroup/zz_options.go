@@ -4,32 +4,33 @@
 
 package twoopgroup
 
-// Group1ClientFourOptions contains the optional parameters for the Group1Client.Four method.
-type Group1ClientFourOptions struct {
+// TwoOperationGroupGroup1ClientFourOptions contains the optional parameters for the TwoOperationGroupGroup1Client.Four method.
+type TwoOperationGroupGroup1ClientFourOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Group1ClientOneOptions contains the optional parameters for the Group1Client.One method.
-type Group1ClientOneOptions struct {
+// TwoOperationGroupGroup1ClientOneOptions contains the optional parameters for the TwoOperationGroupGroup1Client.One method.
+type TwoOperationGroupGroup1ClientOneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Group1ClientThreeOptions contains the optional parameters for the Group1Client.Three method.
-type Group1ClientThreeOptions struct {
+// TwoOperationGroupGroup1ClientThreeOptions contains the optional parameters for the TwoOperationGroupGroup1Client.Three
+// method.
+type TwoOperationGroupGroup1ClientThreeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Group2ClientFiveOptions contains the optional parameters for the Group2Client.Five method.
-type Group2ClientFiveOptions struct {
+// TwoOperationGroupGroup2ClientFiveOptions contains the optional parameters for the TwoOperationGroupGroup2Client.Five method.
+type TwoOperationGroupGroup2ClientFiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Group2ClientSixOptions contains the optional parameters for the Group2Client.Six method.
-type Group2ClientSixOptions struct {
+// TwoOperationGroupGroup2ClientSixOptions contains the optional parameters for the TwoOperationGroupGroup2Client.Six method.
+type TwoOperationGroupGroup2ClientSixOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Group2ClientTwoOptions contains the optional parameters for the Group2Client.Two method.
-type Group2ClientTwoOptions struct {
+// TwoOperationGroupGroup2ClientTwoOptions contains the optional parameters for the TwoOperationGroupGroup2Client.Two method.
+type TwoOperationGroupGroup2ClientTwoOptions struct {
 	// placeholder for future optional parameters
 }

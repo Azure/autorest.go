@@ -17,7 +17,7 @@ import (
 func TestGroupClient_RenamedFour(t *testing.T) {
 	client, err := renamedopgroup.NewRenamedOperationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroupClient().RenamedFour(context.Background(), nil)
+	resp, err := client.NewRenamedOperationGroupClient().RenamedFour(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -25,7 +25,7 @@ func TestGroupClient_RenamedFour(t *testing.T) {
 func TestGroupClient_RenamedSix(t *testing.T) {
 	client, err := renamedopgroup.NewRenamedOperationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroupClient().RenamedSix(context.Background(), nil)
+	resp, err := client.NewRenamedOperationGroupClient().RenamedSix(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -33,7 +33,7 @@ func TestGroupClient_RenamedSix(t *testing.T) {
 func TestGroupClient_RenamedTwo(t *testing.T) {
 	client, err := renamedopgroup.NewRenamedOperationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroupClient().RenamedTwo(context.Background(), nil)
+	resp, err := client.NewRenamedOperationGroupClient().RenamedTwo(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
