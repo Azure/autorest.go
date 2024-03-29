@@ -14,18 +14,11 @@ type AccountsClientCheckNameAvailabilityResponse struct {
 type AccountsClientCreateResponse struct {
 	// Trusted signing account resource.
 	Account
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
 }
 
 // AccountsClientDeleteResponse contains the response from method AccountsClient.Delete.
 type AccountsClientDeleteResponse struct {
-	// Standard Azure Resource Manager operation status response
-	ArmOperationStatus
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
+	// placeholder for future response values
 }
 
 // AccountsClientGetResponse contains the response from method AccountsClient.Get.
@@ -50,27 +43,17 @@ type AccountsClientListBySubscriptionResponse struct {
 type AccountsClientUpdateResponse struct {
 	// Trusted signing account resource.
 	Account
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
 }
 
 // CertificateProfilesClientCreateResponse contains the response from method CertificateProfilesClient.Create.
 type CertificateProfilesClientCreateResponse struct {
 	// Certificate profile resource.
 	CertificateProfile
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
 }
 
 // CertificateProfilesClientDeleteResponse contains the response from method CertificateProfilesClient.Delete.
 type CertificateProfilesClientDeleteResponse struct {
-	// Standard Azure Resource Manager operation status response
-	ArmOperationStatus
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
+	// placeholder for future response values
 }
 
 // CertificateProfilesClientGetResponse contains the response from method CertificateProfilesClient.Get.

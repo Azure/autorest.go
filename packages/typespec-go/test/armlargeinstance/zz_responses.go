@@ -25,29 +25,17 @@ type AzureLargeInstancesClientListBySubscriptionResponse struct {
 
 // AzureLargeInstancesClientRestartResponse contains the response from method AzureLargeInstancesClient.Restart.
 type AzureLargeInstancesClientRestartResponse struct {
-	// Standard Azure Resource Manager operation status response
-	ArmOperationStatus
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
+	// placeholder for future response values
 }
 
 // AzureLargeInstancesClientShutdownResponse contains the response from method AzureLargeInstancesClient.Shutdown.
 type AzureLargeInstancesClientShutdownResponse struct {
-	// Standard Azure Resource Manager operation status response
-	ArmOperationStatus
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
+	// placeholder for future response values
 }
 
 // AzureLargeInstancesClientStartResponse contains the response from method AzureLargeInstancesClient.Start.
 type AzureLargeInstancesClientStartResponse struct {
-	// Standard Azure Resource Manager operation status response
-	ArmOperationStatus
-
-	// The Retry-After header can indicate how long the client should wait before polling the operation status.
-	RetryAfter *int32
+	// placeholder for future response values
 }
 
 // AzureLargeInstancesClientUpdateResponse contains the response from method AzureLargeInstancesClient.Update.

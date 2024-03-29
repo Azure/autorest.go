@@ -39,6 +39,9 @@ export class typeAdapter {
       if (this.isFoundationsError(modelType)) {
         // don't create a model as we use azcore.ResponseError instead
         continue;
+      } else if (modelType.name.match(/OperationStatus/)) {
+        // don't create a model for the LRO polling status as they aren't used
+        continue;
       }
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
