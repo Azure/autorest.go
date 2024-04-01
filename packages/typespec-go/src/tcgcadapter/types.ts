@@ -56,17 +56,6 @@ export class typeAdapter {
       // TODO: what's the equivalent of x-ms-external?
       const model = this.getModel(modelType);
       modelTypes.push({go: model, tcgc: modelType});
-      // workaround until https://github.com/Azure/typespec-azure/issues/153 is fixed
-      if (modelType.additionalProperties) {
-        const leafType = recursiveGetType(modelType.additionalProperties);
-        if (leafType.kind === 'model') {
-          const model = this.getModel(leafType);
-          if (!values(modelTypes).any(e => { return e.tcgc.name === model.name; })) {
-            modelTypes.push({go: model, tcgc: leafType});
-          }
-        }
-      }
-      // end workaround
     }
   
     // add the synthesized models from TCGC for paged results
@@ -744,13 +733,6 @@ function getDateTimeEncoding(encoding: tsp.DateTimeKnownEncoding): go.DateTimeFo
     case 'unixTimestamp':
       return 'timeUnix';
   }
-}
-
-function recursiveGetType(sdkType: tcgc.SdkType): tcgc.SdkType {
-  if (sdkType.kind !== 'array' && sdkType.kind !== 'dict') {
-    return sdkType;
-  }
-  return recursiveGetType(sdkType.valueType);
 }
 
 function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminator: boolean): string {
