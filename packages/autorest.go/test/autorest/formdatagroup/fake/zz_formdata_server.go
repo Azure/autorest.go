@@ -92,7 +92,7 @@ func (f *FormdataServerTransport) dispatchUploadFile(req *http.Request) (*http.R
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
-		if err == io.EOF {
+		if errors.Is(err, io.EOF) {
 			break
 		} else if err != nil {
 			return nil, err
@@ -168,7 +168,7 @@ func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
-		if err == io.EOF {
+		if errors.Is(err, io.EOF) {
 			break
 		} else if err != nil {
 			return nil, err

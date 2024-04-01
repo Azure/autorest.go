@@ -270,6 +270,23 @@ export class typeAdapter {
     return rsc;
   }
 
+  // returns the Go code model type for streaming.MultipartContent
+  getMultipartContent(sliceOf: boolean): go.PossibleType {
+    let keyName = 'streaming-multipartcontent';
+    if (sliceOf) {
+      keyName = 'sliceof-' + keyName;
+    }
+    let rsc = this.types.get(keyName);
+    if (!rsc) {
+      rsc = new go.QualifiedType('MultipartContent', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
+      if (sliceOf) {
+        rsc = new go.SliceType(rsc, true);
+      }
+      this.types.set(keyName, rsc);
+    }
+    return rsc;
+  }
+
   private isFoundationsError(sdkModel: tcgc.SdkModelType): boolean {
     return !!sdkModel.crossLanguageDefinitionId.match(/Foundations\.ErrorResponse$/i);
   }
@@ -485,7 +502,7 @@ export class typeAdapter {
       usage |= go.UsageFlags.Output;
     }
 
-    const annotations = new go.ModelAnnotations(false);
+    const annotations = new go.ModelAnnotations(false, model.isFormDataType);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
       let iface: go.InterfaceType | undefined;
       let discriminatorLiteral: go.LiteralValue | undefined;
@@ -544,7 +561,13 @@ export class typeAdapter {
       throw new Error(`unexpected kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`);
     }
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), this.getPossibleType(prop.type, false, true), isTypePassedByValue(prop.type), prop.serializedName, annotations);
+    // for multipart/form data containing models, the fields don't need to be pointer-to-type
+    const fieldByValue = modelType.isFormDataType ? true : isTypePassedByValue(prop.type);
+    let type = this.getPossibleType(prop.type, modelType.isFormDataType, true);
+    if (prop.kind === 'property' && prop.isMultipartFileInput) {
+      type = this.getMultipartContent(prop.type.kind === 'array');
+    }
+    const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
     field.description = prop.description;
     if (prop.kind === 'path') {
       // for ARM resources, a property of kind path is usually the model

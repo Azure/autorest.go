@@ -44,7 +44,7 @@ const cadlRanch = {
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
-  'multipartgroup': ['payload/multipart'],  // missing tests
+  'multipartgroup': ['payload/multipart'],
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
   'srvdrivengroup': ['resiliency/srv-driven'], // missing tests

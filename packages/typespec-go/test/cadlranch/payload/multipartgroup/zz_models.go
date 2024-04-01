@@ -4,6 +4,8 @@
 
 package multipartgroup
 
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
+
 type Address struct {
 	// REQUIRED
 	City *string
@@ -11,55 +13,55 @@ type Address struct {
 
 type BinaryArrayPartsRequest struct {
 	// REQUIRED
-	ID *string
+	ID string
 
 	// REQUIRED
-	Pictures [][]byte
+	Pictures []streaming.MultipartContent
 }
 
 type ComplexPartsRequest struct {
 	// REQUIRED
-	Address *Address
+	Address Address
 
 	// REQUIRED
-	ID *string
+	ID string
 
 	// REQUIRED
-	Pictures [][]byte
+	Pictures []streaming.MultipartContent
 
 	// REQUIRED
-	PreviousAddresses []*Address
+	PreviousAddresses []Address
 
 	// REQUIRED
-	ProfileImage []byte
+	ProfileImage streaming.MultipartContent
 }
 
 type JSONArrayPartsRequest struct {
 	// REQUIRED
-	PreviousAddresses []*Address
+	PreviousAddresses []Address
 
 	// REQUIRED
-	ProfileImage []byte
+	ProfileImage streaming.MultipartContent
 }
 
 type JSONPartRequest struct {
 	// REQUIRED
-	Address *Address
+	Address Address
 
 	// REQUIRED
-	ProfileImage []byte
+	ProfileImage streaming.MultipartContent
 }
 
 type MultiBinaryPartsRequest struct {
 	// REQUIRED
-	ProfileImage []byte
-	Picture      []byte
+	ProfileImage streaming.MultipartContent
+	Picture      streaming.MultipartContent
 }
 
 type MultiPartRequest struct {
 	// REQUIRED
-	ID *string
+	ID string
 
 	// REQUIRED
-	ProfileImage []byte
+	ProfileImage streaming.MultipartContent
 }

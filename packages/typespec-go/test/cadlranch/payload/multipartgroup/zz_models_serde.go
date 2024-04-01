@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 )
 
@@ -39,252 +38,63 @@ func (a *Address) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type BinaryArrayPartsRequest.
-func (b BinaryArrayPartsRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts BinaryArrayPartsRequest to multipart/form data.
+func (b BinaryArrayPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "id", b.ID)
-	populateByteArray(objectMap, "pictures", b.Pictures, func() any {
-		encodedValue := make([]string, len(b.Pictures))
-		for i := 0; i < len(b.Pictures); i++ {
-			encodedValue[i] = runtime.EncodeByteArray(b.Pictures[i], runtime.Base64StdFormat)
-		}
-		return encodedValue
-	})
-	return json.Marshal(objectMap)
+	objectMap["id"] = b.ID
+	objectMap["pictures"] = b.Pictures
+	return objectMap, nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type BinaryArrayPartsRequest.
-func (b *BinaryArrayPartsRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", b, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "id":
-			err = unpopulate(val, "ID", &b.ID)
-			delete(rawMsg, key)
-		case "pictures":
-			var encodedValue []string
-			err = unpopulate(val, "Pictures", &encodedValue)
-			if err == nil && len(encodedValue) > 0 {
-				b.Pictures = make([][]byte, len(encodedValue))
-				for i := 0; i < len(encodedValue) && err == nil; i++ {
-					err = runtime.DecodeByteArray(encodedValue[i], &b.Pictures[i], runtime.Base64StdFormat)
-				}
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", b, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ComplexPartsRequest.
-func (c ComplexPartsRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts ComplexPartsRequest to multipart/form data.
+func (c ComplexPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "address", c.Address)
-	populate(objectMap, "id", c.ID)
-	populateByteArray(objectMap, "pictures", c.Pictures, func() any {
-		encodedValue := make([]string, len(c.Pictures))
-		for i := 0; i < len(c.Pictures); i++ {
-			encodedValue[i] = runtime.EncodeByteArray(c.Pictures[i], runtime.Base64StdFormat)
-		}
-		return encodedValue
-	})
-	populate(objectMap, "previousAddresses", c.PreviousAddresses)
-	populateByteArray(objectMap, "profileImage", c.ProfileImage, func() any {
-		return runtime.EncodeByteArray(c.ProfileImage, runtime.Base64StdFormat)
-	})
-	return json.Marshal(objectMap)
+	if err := populateMultipartJSON(objectMap, "address", c.Address); err != nil {
+		return nil, err
+	}
+	objectMap["id"] = c.ID
+	objectMap["pictures"] = c.Pictures
+	if err := populateMultipartJSON(objectMap, "previousAddresses", c.PreviousAddresses); err != nil {
+		return nil, err
+	}
+	objectMap["profileImage"] = c.ProfileImage
+	return objectMap, nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ComplexPartsRequest.
-func (c *ComplexPartsRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", c, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "address":
-			err = unpopulate(val, "Address", &c.Address)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, "ID", &c.ID)
-			delete(rawMsg, key)
-		case "pictures":
-			var encodedValue []string
-			err = unpopulate(val, "Pictures", &encodedValue)
-			if err == nil && len(encodedValue) > 0 {
-				c.Pictures = make([][]byte, len(encodedValue))
-				for i := 0; i < len(encodedValue) && err == nil; i++ {
-					err = runtime.DecodeByteArray(encodedValue[i], &c.Pictures[i], runtime.Base64StdFormat)
-				}
-			}
-			delete(rawMsg, key)
-		case "previousAddresses":
-			err = unpopulate(val, "PreviousAddresses", &c.PreviousAddresses)
-			delete(rawMsg, key)
-		case "profileImage":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &c.ProfileImage, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", c, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type JSONArrayPartsRequest.
-func (j JSONArrayPartsRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts JSONArrayPartsRequest to multipart/form data.
+func (j JSONArrayPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "previousAddresses", j.PreviousAddresses)
-	populateByteArray(objectMap, "profileImage", j.ProfileImage, func() any {
-		return runtime.EncodeByteArray(j.ProfileImage, runtime.Base64StdFormat)
-	})
-	return json.Marshal(objectMap)
+	if err := populateMultipartJSON(objectMap, "previousAddresses", j.PreviousAddresses); err != nil {
+		return nil, err
+	}
+	objectMap["profileImage"] = j.ProfileImage
+	return objectMap, nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type JSONArrayPartsRequest.
-func (j *JSONArrayPartsRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", j, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "previousAddresses":
-			err = unpopulate(val, "PreviousAddresses", &j.PreviousAddresses)
-			delete(rawMsg, key)
-		case "profileImage":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &j.ProfileImage, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", j, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type JSONPartRequest.
-func (j JSONPartRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts JSONPartRequest to multipart/form data.
+func (j JSONPartRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "address", j.Address)
-	populateByteArray(objectMap, "profileImage", j.ProfileImage, func() any {
-		return runtime.EncodeByteArray(j.ProfileImage, runtime.Base64StdFormat)
-	})
-	return json.Marshal(objectMap)
+	if err := populateMultipartJSON(objectMap, "address", j.Address); err != nil {
+		return nil, err
+	}
+	objectMap["profileImage"] = j.ProfileImage
+	return objectMap, nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type JSONPartRequest.
-func (j *JSONPartRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", j, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "address":
-			err = unpopulate(val, "Address", &j.Address)
-			delete(rawMsg, key)
-		case "profileImage":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &j.ProfileImage, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", j, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type MultiBinaryPartsRequest.
-func (m MultiBinaryPartsRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts MultiBinaryPartsRequest to multipart/form data.
+func (m MultiBinaryPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populateByteArray(objectMap, "picture", m.Picture, func() any {
-		return runtime.EncodeByteArray(m.Picture, runtime.Base64StdFormat)
-	})
-	populateByteArray(objectMap, "profileImage", m.ProfileImage, func() any {
-		return runtime.EncodeByteArray(m.ProfileImage, runtime.Base64StdFormat)
-	})
-	return json.Marshal(objectMap)
+	objectMap["picture"] = m.Picture
+	objectMap["profileImage"] = m.ProfileImage
+	return objectMap, nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type MultiBinaryPartsRequest.
-func (m *MultiBinaryPartsRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", m, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "picture":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &m.Picture, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		case "profileImage":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &m.ProfileImage, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", m, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type MultiPartRequest.
-func (m MultiPartRequest) MarshalJSON() ([]byte, error) {
+// toMultipartFormData converts MultiPartRequest to multipart/form data.
+func (m MultiPartRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "id", m.ID)
-	populateByteArray(objectMap, "profileImage", m.ProfileImage, func() any {
-		return runtime.EncodeByteArray(m.ProfileImage, runtime.Base64StdFormat)
-	})
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type MultiPartRequest.
-func (m *MultiPartRequest) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", m, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "id":
-			err = unpopulate(val, "ID", &m.ID)
-			delete(rawMsg, key)
-		case "profileImage":
-			if val != nil && string(val) != "null" {
-				err = runtime.DecodeByteArray(string(val), &m.ProfileImage, runtime.Base64StdFormat)
-			}
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", m, err)
-		}
-	}
-	return nil
+	objectMap["id"] = m.ID
+	objectMap["profileImage"] = m.ProfileImage
+	return objectMap, nil
 }
 
 func populate(m map[string]any, k string, v any) {
@@ -297,16 +107,6 @@ func populate(m map[string]any, k string, v any) {
 	}
 }
 
-func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
-	if azcore.IsNullValue(b) {
-		m[k] = nil
-	} else if len(b) == 0 {
-		return
-	} else {
-		m[k] = convert()
-	}
-}
-
 func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil || string(data) == "null" {
 		return nil
@@ -314,5 +114,14 @@ func unpopulate(data json.RawMessage, fn string, v any) error {
 	if err := json.Unmarshal(data, v); err != nil {
 		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
+	return nil
+}
+
+func populateMultipartJSON(m map[string]any, k string, v any) error {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	m[k] = data
 	return nil
 }

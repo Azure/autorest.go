@@ -81,7 +81,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     return <go.ModelType | go.PolymorphicType>modelType;
   }
 
-  const annotations = new go.ModelAnnotations(obj.language.go!.omitSerDeMethods);
+  const annotations = new go.ModelAnnotations(obj.language.go!.omitSerDeMethods, false);
   if (obj.discriminator || obj.discriminatorValue) {
     let ifaceName: string | undefined;
     if (obj.language.go!.discriminatorInterface) {
