@@ -21,9 +21,9 @@ type BasicClient struct {
 	internal *azcore.Client
 }
 
-// NewTwoModelsAsPageItemClient creates a new instance of [TwoModelsAsPageItemClient].
-func (client *BasicClient) NewTwoModelsAsPageItemClient() *TwoModelsAsPageItemClient {
-	return &TwoModelsAsPageItemClient{
+// NewBasicTwoModelsAsPageItemClient creates a new instance of [BasicTwoModelsAsPageItemClient].
+func (client *BasicClient) NewBasicTwoModelsAsPageItemClient() *BasicTwoModelsAsPageItemClient {
+	return &BasicTwoModelsAsPageItemClient{
 		internal: client.internal,
 	}
 }

@@ -20,7 +20,7 @@ import (
 func TestDatetimeClientGetNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDatetimeClient().GetNonNull(context.Background(), nil)
+	resp, err := client.NewNullableDatetimeClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	timeProp, err := time.Parse(time.RFC3339, "2022-08-26T18:38:00Z")
 	require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestDatetimeClientGetNonNull(t *testing.T) {
 func TestDatetimeClientGetNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDatetimeClient().GetNull(context.Background(), nil)
+	resp, err := client.NewNullableDatetimeClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.DatetimeProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -45,7 +45,7 @@ func TestDatetimeClientPatchNonNull(t *testing.T) {
 	require.NoError(t, err)
 	timeProp, err := time.Parse(time.RFC3339, "2022-08-26T18:38:00Z")
 	require.NoError(t, err)
-	resp, err := client.NewDatetimeClient().PatchNonNull(context.Background(), nullablegroup.DatetimeProperty{
+	resp, err := client.NewNullableDatetimeClient().PatchNonNull(context.Background(), nullablegroup.DatetimeProperty{
 		NullableProperty: &timeProp,
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)
@@ -56,7 +56,7 @@ func TestDatetimeClientPatchNonNull(t *testing.T) {
 func TestDatetimeClientPatchNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDatetimeClient().PatchNull(context.Background(), nullablegroup.DatetimeProperty{
+	resp, err := client.NewNullableDatetimeClient().PatchNull(context.Background(), nullablegroup.DatetimeProperty{
 		NullableProperty: azcore.NullValue[*time.Time](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

@@ -14,18 +14,18 @@ type TwoOperationGroupClient struct {
 	client   ClientType
 }
 
-// NewGroup1Client creates a new instance of [Group1Client].
-func (client *TwoOperationGroupClient) NewGroup1Client() *Group1Client {
-	return &Group1Client{
+// NewTwoOperationGroupGroup1Client creates a new instance of [TwoOperationGroupGroup1Client].
+func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup1Client() *TwoOperationGroupGroup1Client {
+	return &TwoOperationGroupGroup1Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,
 	}
 }
 
-// NewGroup2Client creates a new instance of [Group2Client].
-func (client *TwoOperationGroupClient) NewGroup2Client() *Group2Client {
-	return &Group2Client{
+// NewTwoOperationGroupGroup2Client creates a new instance of [TwoOperationGroupGroup2Client].
+func (client *TwoOperationGroupClient) NewTwoOperationGroupGroup2Client() *TwoOperationGroupGroup2Client {
+	return &TwoOperationGroupGroup2Client{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,

@@ -12,16 +12,16 @@ type ContentNegotiationClient struct {
 	internal *azcore.Client
 }
 
-// NewDifferentBodyClient creates a new instance of [DifferentBodyClient].
-func (client *ContentNegotiationClient) NewDifferentBodyClient() *DifferentBodyClient {
-	return &DifferentBodyClient{
+// NewContentNegotiationDifferentBodyClient creates a new instance of [ContentNegotiationDifferentBodyClient].
+func (client *ContentNegotiationClient) NewContentNegotiationDifferentBodyClient() *ContentNegotiationDifferentBodyClient {
+	return &ContentNegotiationDifferentBodyClient{
 		internal: client.internal,
 	}
 }
 
-// NewSameBodyClient creates a new instance of [SameBodyClient].
-func (client *ContentNegotiationClient) NewSameBodyClient() *SameBodyClient {
-	return &SameBodyClient{
+// NewContentNegotiationSameBodyClient creates a new instance of [ContentNegotiationSameBodyClient].
+func (client *ContentNegotiationClient) NewContentNegotiationSameBodyClient() *ContentNegotiationSameBodyClient {
+	return &ContentNegotiationSameBodyClient{
 		internal: client.internal,
 	}
 }

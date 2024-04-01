@@ -4,21 +4,6 @@
 
 package renamedopgroup
 
-// GroupClientRenamedFourOptions contains the optional parameters for the GroupClient.RenamedFour method.
-type GroupClientRenamedFourOptions struct {
-	// placeholder for future optional parameters
-}
-
-// GroupClientRenamedSixOptions contains the optional parameters for the GroupClient.RenamedSix method.
-type GroupClientRenamedSixOptions struct {
-	// placeholder for future optional parameters
-}
-
-// GroupClientRenamedTwoOptions contains the optional parameters for the GroupClient.RenamedTwo method.
-type GroupClientRenamedTwoOptions struct {
-	// placeholder for future optional parameters
-}
-
 // RenamedOperationClientRenamedFiveOptions contains the optional parameters for the RenamedOperationClient.RenamedFive method.
 type RenamedOperationClientRenamedFiveOptions struct {
 	// placeholder for future optional parameters
@@ -32,5 +17,23 @@ type RenamedOperationClientRenamedOneOptions struct {
 // RenamedOperationClientRenamedThreeOptions contains the optional parameters for the RenamedOperationClient.RenamedThree
 // method.
 type RenamedOperationClientRenamedThreeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// RenamedOperationGroupClientRenamedFourOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedFour
+// method.
+type RenamedOperationGroupClientRenamedFourOptions struct {
+	// placeholder for future optional parameters
+}
+
+// RenamedOperationGroupClientRenamedSixOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedSix
+// method.
+type RenamedOperationGroupClientRenamedSixOptions struct {
+	// placeholder for future optional parameters
+}
+
+// RenamedOperationGroupClientRenamedTwoOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedTwo
+// method.
+type RenamedOperationGroupClientRenamedTwoOptions struct {
 	// placeholder for future optional parameters
 }

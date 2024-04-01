@@ -4,38 +4,18 @@
 
 package defaultgroup
 
-// BarClientFiveResponse contains the response from method BarClient.Five.
-type BarClientFiveResponse struct {
+// ServiceBarClientFiveResponse contains the response from method ServiceBarClient.Five.
+type ServiceBarClientFiveResponse struct {
 	// placeholder for future response values
 }
 
-// BarClientNineResponse contains the response from method BarClient.Nine.
-type BarClientNineResponse struct {
+// ServiceBarClientSixResponse contains the response from method ServiceBarClient.Six.
+type ServiceBarClientSixResponse struct {
 	// placeholder for future response values
 }
 
-// BarClientSixResponse contains the response from method BarClient.Six.
-type BarClientSixResponse struct {
-	// placeholder for future response values
-}
-
-// FooClientFourResponse contains the response from method FooClient.Four.
-type FooClientFourResponse struct {
-	// placeholder for future response values
-}
-
-// FooClientSevenResponse contains the response from method FooClient.Seven.
-type FooClientSevenResponse struct {
-	// placeholder for future response values
-}
-
-// FooClientThreeResponse contains the response from method FooClient.Three.
-type FooClientThreeResponse struct {
-	// placeholder for future response values
-}
-
-// QuxClientEightResponse contains the response from method QuxClient.Eight.
-type QuxClientEightResponse struct {
+// ServiceBazFooClientSevenResponse contains the response from method ServiceBazFooClient.Seven.
+type ServiceBazFooClientSevenResponse struct {
 	// placeholder for future response values
 }
 
@@ -46,5 +26,25 @@ type ServiceClientOneResponse struct {
 
 // ServiceClientTwoResponse contains the response from method ServiceClient.Two.
 type ServiceClientTwoResponse struct {
+	// placeholder for future response values
+}
+
+// ServiceFooClientFourResponse contains the response from method ServiceFooClient.Four.
+type ServiceFooClientFourResponse struct {
+	// placeholder for future response values
+}
+
+// ServiceFooClientThreeResponse contains the response from method ServiceFooClient.Three.
+type ServiceFooClientThreeResponse struct {
+	// placeholder for future response values
+}
+
+// ServiceQuxBarClientNineResponse contains the response from method ServiceQuxBarClient.Nine.
+type ServiceQuxBarClientNineResponse struct {
+	// placeholder for future response values
+}
+
+// ServiceQuxClientEightResponse contains the response from method ServiceQuxClient.Eight.
+type ServiceQuxClientEightResponse struct {
 	// placeholder for future response values
 }

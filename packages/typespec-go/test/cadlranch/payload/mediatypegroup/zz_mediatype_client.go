@@ -12,9 +12,9 @@ type MediaTypeClient struct {
 	internal *azcore.Client
 }
 
-// NewStringBodyClient creates a new instance of [StringBodyClient].
-func (client *MediaTypeClient) NewStringBodyClient() *StringBodyClient {
-	return &StringBodyClient{
+// NewMediaTypeStringBodyClient creates a new instance of [MediaTypeStringBodyClient].
+func (client *MediaTypeClient) NewMediaTypeStringBodyClient() *MediaTypeStringBodyClient {
+	return &MediaTypeStringBodyClient{
 		internal: client.internal,
 	}
 }

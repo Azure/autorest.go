@@ -4,38 +4,18 @@
 
 package defaultgroup
 
-// BarClientFiveOptions contains the optional parameters for the BarClient.Five method.
-type BarClientFiveOptions struct {
+// ServiceBarClientFiveOptions contains the optional parameters for the ServiceBarClient.Five method.
+type ServiceBarClientFiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BarClientNineOptions contains the optional parameters for the BarClient.Nine method.
-type BarClientNineOptions struct {
+// ServiceBarClientSixOptions contains the optional parameters for the ServiceBarClient.Six method.
+type ServiceBarClientSixOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BarClientSixOptions contains the optional parameters for the BarClient.Six method.
-type BarClientSixOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FooClientFourOptions contains the optional parameters for the FooClient.Four method.
-type FooClientFourOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FooClientSevenOptions contains the optional parameters for the FooClient.Seven method.
-type FooClientSevenOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FooClientThreeOptions contains the optional parameters for the FooClient.Three method.
-type FooClientThreeOptions struct {
-	// placeholder for future optional parameters
-}
-
-// QuxClientEightOptions contains the optional parameters for the QuxClient.Eight method.
-type QuxClientEightOptions struct {
+// ServiceBazFooClientSevenOptions contains the optional parameters for the ServiceBazFooClient.Seven method.
+type ServiceBazFooClientSevenOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -46,5 +26,25 @@ type ServiceClientOneOptions struct {
 
 // ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
 type ServiceClientTwoOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ServiceFooClientFourOptions contains the optional parameters for the ServiceFooClient.Four method.
+type ServiceFooClientFourOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ServiceFooClientThreeOptions contains the optional parameters for the ServiceFooClient.Three method.
+type ServiceFooClientThreeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ServiceQuxBarClientNineOptions contains the optional parameters for the ServiceQuxBarClient.Nine method.
+type ServiceQuxBarClientNineOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ServiceQuxClientEightOptions contains the optional parameters for the ServiceQuxClient.Eight method.
+type ServiceQuxClientEightOptions struct {
 	// placeholder for future optional parameters
 }

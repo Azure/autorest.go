@@ -4,508 +4,560 @@
 
 package specialwordsgroup
 
-// ModelPropertiesClientSameAsModelOptions contains the optional parameters for the ModelPropertiesClient.SameAsModel method.
-type ModelPropertiesClientSameAsModelOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithAndOptions contains the optional parameters for the ModelsClient.WithAnd method.
-type ModelsClientWithAndOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithAsOptions contains the optional parameters for the ModelsClient.WithAs method.
-type ModelsClientWithAsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithAssertOptions contains the optional parameters for the ModelsClient.WithAssert method.
-type ModelsClientWithAssertOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithAsyncOptions contains the optional parameters for the ModelsClient.WithAsync method.
-type ModelsClientWithAsyncOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithAwaitOptions contains the optional parameters for the ModelsClient.WithAwait method.
-type ModelsClientWithAwaitOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithBreakOptions contains the optional parameters for the ModelsClient.WithBreak method.
-type ModelsClientWithBreakOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithClassOptions contains the optional parameters for the ModelsClient.WithClass method.
-type ModelsClientWithClassOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithConstructorOptions contains the optional parameters for the ModelsClient.WithConstructor method.
-type ModelsClientWithConstructorOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithContinueOptions contains the optional parameters for the ModelsClient.WithContinue method.
-type ModelsClientWithContinueOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithDefOptions contains the optional parameters for the ModelsClient.WithDef method.
-type ModelsClientWithDefOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithDelOptions contains the optional parameters for the ModelsClient.WithDel method.
-type ModelsClientWithDelOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithElifOptions contains the optional parameters for the ModelsClient.WithElif method.
-type ModelsClientWithElifOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithElseOptions contains the optional parameters for the ModelsClient.WithElse method.
-type ModelsClientWithElseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithExceptOptions contains the optional parameters for the ModelsClient.WithExcept method.
-type ModelsClientWithExceptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithExecOptions contains the optional parameters for the ModelsClient.WithExec method.
-type ModelsClientWithExecOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithFinallyOptions contains the optional parameters for the ModelsClient.WithFinally method.
-type ModelsClientWithFinallyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithForOptions contains the optional parameters for the ModelsClient.WithFor method.
-type ModelsClientWithForOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithFromOptions contains the optional parameters for the ModelsClient.WithFrom method.
-type ModelsClientWithFromOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithGlobalOptions contains the optional parameters for the ModelsClient.WithGlobal method.
-type ModelsClientWithGlobalOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithIfOptions contains the optional parameters for the ModelsClient.WithIf method.
-type ModelsClientWithIfOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithImportOptions contains the optional parameters for the ModelsClient.WithImport method.
-type ModelsClientWithImportOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithInOptions contains the optional parameters for the ModelsClient.WithIn method.
-type ModelsClientWithInOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithIsOptions contains the optional parameters for the ModelsClient.WithIs method.
-type ModelsClientWithIsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithLambdaOptions contains the optional parameters for the ModelsClient.WithLambda method.
-type ModelsClientWithLambdaOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithNotOptions contains the optional parameters for the ModelsClient.WithNot method.
-type ModelsClientWithNotOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithOrOptions contains the optional parameters for the ModelsClient.WithOr method.
-type ModelsClientWithOrOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithPassOptions contains the optional parameters for the ModelsClient.WithPass method.
-type ModelsClientWithPassOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithRaiseOptions contains the optional parameters for the ModelsClient.WithRaise method.
-type ModelsClientWithRaiseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithReturnOptions contains the optional parameters for the ModelsClient.WithReturn method.
-type ModelsClientWithReturnOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithTryOptions contains the optional parameters for the ModelsClient.WithTry method.
-type ModelsClientWithTryOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithWhileOptions contains the optional parameters for the ModelsClient.WithWhile method.
-type ModelsClientWithWhileOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithWithOptions contains the optional parameters for the ModelsClient.WithWith method.
-type ModelsClientWithWithOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelsClientWithYieldOptions contains the optional parameters for the ModelsClient.WithYield method.
-type ModelsClientWithYieldOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientAndOptions contains the optional parameters for the OperationsClient.And method.
-type OperationsClientAndOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientAsOptions contains the optional parameters for the OperationsClient.As method.
-type OperationsClientAsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientAssertOptions contains the optional parameters for the OperationsClient.Assert method.
-type OperationsClientAssertOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientAsyncOptions contains the optional parameters for the OperationsClient.Async method.
-type OperationsClientAsyncOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientAwaitOptions contains the optional parameters for the OperationsClient.Await method.
-type OperationsClientAwaitOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientBreakOptions contains the optional parameters for the OperationsClient.Break method.
-type OperationsClientBreakOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientClassOptions contains the optional parameters for the OperationsClient.Class method.
-type OperationsClientClassOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientConstructorOptions contains the optional parameters for the OperationsClient.Constructor method.
-type OperationsClientConstructorOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientContinueOptions contains the optional parameters for the OperationsClient.Continue method.
-type OperationsClientContinueOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientDefOptions contains the optional parameters for the OperationsClient.Def method.
-type OperationsClientDefOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientDelOptions contains the optional parameters for the OperationsClient.Del method.
-type OperationsClientDelOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientElifOptions contains the optional parameters for the OperationsClient.Elif method.
-type OperationsClientElifOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientElseOptions contains the optional parameters for the OperationsClient.Else method.
-type OperationsClientElseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientExceptOptions contains the optional parameters for the OperationsClient.Except method.
-type OperationsClientExceptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientExecOptions contains the optional parameters for the OperationsClient.Exec method.
-type OperationsClientExecOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientFinallyOptions contains the optional parameters for the OperationsClient.Finally method.
-type OperationsClientFinallyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientForOptions contains the optional parameters for the OperationsClient.For method.
-type OperationsClientForOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientFromOptions contains the optional parameters for the OperationsClient.From method.
-type OperationsClientFromOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientGlobalOptions contains the optional parameters for the OperationsClient.Global method.
-type OperationsClientGlobalOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientIfOptions contains the optional parameters for the OperationsClient.If method.
-type OperationsClientIfOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientImportOptions contains the optional parameters for the OperationsClient.Import method.
-type OperationsClientImportOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientInOptions contains the optional parameters for the OperationsClient.In method.
-type OperationsClientInOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientIsOptions contains the optional parameters for the OperationsClient.Is method.
-type OperationsClientIsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientLambdaOptions contains the optional parameters for the OperationsClient.Lambda method.
-type OperationsClientLambdaOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientNotOptions contains the optional parameters for the OperationsClient.Not method.
-type OperationsClientNotOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientOrOptions contains the optional parameters for the OperationsClient.Or method.
-type OperationsClientOrOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientPassOptions contains the optional parameters for the OperationsClient.Pass method.
-type OperationsClientPassOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientRaiseOptions contains the optional parameters for the OperationsClient.Raise method.
-type OperationsClientRaiseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientReturnOptions contains the optional parameters for the OperationsClient.Return method.
-type OperationsClientReturnOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientTryOptions contains the optional parameters for the OperationsClient.Try method.
-type OperationsClientTryOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientWhileOptions contains the optional parameters for the OperationsClient.While method.
-type OperationsClientWhileOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientWithOptions contains the optional parameters for the OperationsClient.With method.
-type OperationsClientWithOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsClientYieldOptions contains the optional parameters for the OperationsClient.Yield method.
-type OperationsClientYieldOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithAndOptions contains the optional parameters for the ParametersClient.WithAnd method.
-type ParametersClientWithAndOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithAsOptions contains the optional parameters for the ParametersClient.WithAs method.
-type ParametersClientWithAsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithAssertOptions contains the optional parameters for the ParametersClient.WithAssert method.
-type ParametersClientWithAssertOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithAsyncOptions contains the optional parameters for the ParametersClient.WithAsync method.
-type ParametersClientWithAsyncOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithAwaitOptions contains the optional parameters for the ParametersClient.WithAwait method.
-type ParametersClientWithAwaitOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithBreakOptions contains the optional parameters for the ParametersClient.WithBreak method.
-type ParametersClientWithBreakOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ParametersClientWithCancellationTokenOptions contains the optional parameters for the ParametersClient.WithCancellationToken
+// SpecialWordsModelPropertiesClientSameAsModelOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.SameAsModel
 // method.
-type ParametersClientWithCancellationTokenOptions struct {
+type SpecialWordsModelPropertiesClientSameAsModelOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithClassOptions contains the optional parameters for the ParametersClient.WithClass method.
-type ParametersClientWithClassOptions struct {
+// SpecialWordsModelsClientWithAndOptions contains the optional parameters for the SpecialWordsModelsClient.WithAnd method.
+type SpecialWordsModelsClientWithAndOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithConstructorOptions contains the optional parameters for the ParametersClient.WithConstructor method.
-type ParametersClientWithConstructorOptions struct {
+// SpecialWordsModelsClientWithAsOptions contains the optional parameters for the SpecialWordsModelsClient.WithAs method.
+type SpecialWordsModelsClientWithAsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithContinueOptions contains the optional parameters for the ParametersClient.WithContinue method.
-type ParametersClientWithContinueOptions struct {
+// SpecialWordsModelsClientWithAssertOptions contains the optional parameters for the SpecialWordsModelsClient.WithAssert
+// method.
+type SpecialWordsModelsClientWithAssertOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithDefOptions contains the optional parameters for the ParametersClient.WithDef method.
-type ParametersClientWithDefOptions struct {
+// SpecialWordsModelsClientWithAsyncOptions contains the optional parameters for the SpecialWordsModelsClient.WithAsync method.
+type SpecialWordsModelsClientWithAsyncOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithDelOptions contains the optional parameters for the ParametersClient.WithDel method.
-type ParametersClientWithDelOptions struct {
+// SpecialWordsModelsClientWithAwaitOptions contains the optional parameters for the SpecialWordsModelsClient.WithAwait method.
+type SpecialWordsModelsClientWithAwaitOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithElifOptions contains the optional parameters for the ParametersClient.WithElif method.
-type ParametersClientWithElifOptions struct {
+// SpecialWordsModelsClientWithBreakOptions contains the optional parameters for the SpecialWordsModelsClient.WithBreak method.
+type SpecialWordsModelsClientWithBreakOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithElseOptions contains the optional parameters for the ParametersClient.WithElse method.
-type ParametersClientWithElseOptions struct {
+// SpecialWordsModelsClientWithClassOptions contains the optional parameters for the SpecialWordsModelsClient.WithClass method.
+type SpecialWordsModelsClientWithClassOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithExceptOptions contains the optional parameters for the ParametersClient.WithExcept method.
-type ParametersClientWithExceptOptions struct {
+// SpecialWordsModelsClientWithConstructorOptions contains the optional parameters for the SpecialWordsModelsClient.WithConstructor
+// method.
+type SpecialWordsModelsClientWithConstructorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithExecOptions contains the optional parameters for the ParametersClient.WithExec method.
-type ParametersClientWithExecOptions struct {
+// SpecialWordsModelsClientWithContinueOptions contains the optional parameters for the SpecialWordsModelsClient.WithContinue
+// method.
+type SpecialWordsModelsClientWithContinueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithFinallyOptions contains the optional parameters for the ParametersClient.WithFinally method.
-type ParametersClientWithFinallyOptions struct {
+// SpecialWordsModelsClientWithDefOptions contains the optional parameters for the SpecialWordsModelsClient.WithDef method.
+type SpecialWordsModelsClientWithDefOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithForOptions contains the optional parameters for the ParametersClient.WithFor method.
-type ParametersClientWithForOptions struct {
+// SpecialWordsModelsClientWithDelOptions contains the optional parameters for the SpecialWordsModelsClient.WithDel method.
+type SpecialWordsModelsClientWithDelOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithFromOptions contains the optional parameters for the ParametersClient.WithFrom method.
-type ParametersClientWithFromOptions struct {
+// SpecialWordsModelsClientWithElifOptions contains the optional parameters for the SpecialWordsModelsClient.WithElif method.
+type SpecialWordsModelsClientWithElifOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithGlobalOptions contains the optional parameters for the ParametersClient.WithGlobal method.
-type ParametersClientWithGlobalOptions struct {
+// SpecialWordsModelsClientWithElseOptions contains the optional parameters for the SpecialWordsModelsClient.WithElse method.
+type SpecialWordsModelsClientWithElseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithIfOptions contains the optional parameters for the ParametersClient.WithIf method.
-type ParametersClientWithIfOptions struct {
+// SpecialWordsModelsClientWithExceptOptions contains the optional parameters for the SpecialWordsModelsClient.WithExcept
+// method.
+type SpecialWordsModelsClientWithExceptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithImportOptions contains the optional parameters for the ParametersClient.WithImport method.
-type ParametersClientWithImportOptions struct {
+// SpecialWordsModelsClientWithExecOptions contains the optional parameters for the SpecialWordsModelsClient.WithExec method.
+type SpecialWordsModelsClientWithExecOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithInOptions contains the optional parameters for the ParametersClient.WithIn method.
-type ParametersClientWithInOptions struct {
+// SpecialWordsModelsClientWithFinallyOptions contains the optional parameters for the SpecialWordsModelsClient.WithFinally
+// method.
+type SpecialWordsModelsClientWithFinallyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithIsOptions contains the optional parameters for the ParametersClient.WithIs method.
-type ParametersClientWithIsOptions struct {
+// SpecialWordsModelsClientWithForOptions contains the optional parameters for the SpecialWordsModelsClient.WithFor method.
+type SpecialWordsModelsClientWithForOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithLambdaOptions contains the optional parameters for the ParametersClient.WithLambda method.
-type ParametersClientWithLambdaOptions struct {
+// SpecialWordsModelsClientWithFromOptions contains the optional parameters for the SpecialWordsModelsClient.WithFrom method.
+type SpecialWordsModelsClientWithFromOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithNotOptions contains the optional parameters for the ParametersClient.WithNot method.
-type ParametersClientWithNotOptions struct {
+// SpecialWordsModelsClientWithGlobalOptions contains the optional parameters for the SpecialWordsModelsClient.WithGlobal
+// method.
+type SpecialWordsModelsClientWithGlobalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithOrOptions contains the optional parameters for the ParametersClient.WithOr method.
-type ParametersClientWithOrOptions struct {
+// SpecialWordsModelsClientWithIfOptions contains the optional parameters for the SpecialWordsModelsClient.WithIf method.
+type SpecialWordsModelsClientWithIfOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithPassOptions contains the optional parameters for the ParametersClient.WithPass method.
-type ParametersClientWithPassOptions struct {
+// SpecialWordsModelsClientWithImportOptions contains the optional parameters for the SpecialWordsModelsClient.WithImport
+// method.
+type SpecialWordsModelsClientWithImportOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithRaiseOptions contains the optional parameters for the ParametersClient.WithRaise method.
-type ParametersClientWithRaiseOptions struct {
+// SpecialWordsModelsClientWithInOptions contains the optional parameters for the SpecialWordsModelsClient.WithIn method.
+type SpecialWordsModelsClientWithInOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithReturnOptions contains the optional parameters for the ParametersClient.WithReturn method.
-type ParametersClientWithReturnOptions struct {
+// SpecialWordsModelsClientWithIsOptions contains the optional parameters for the SpecialWordsModelsClient.WithIs method.
+type SpecialWordsModelsClientWithIsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithTryOptions contains the optional parameters for the ParametersClient.WithTry method.
-type ParametersClientWithTryOptions struct {
+// SpecialWordsModelsClientWithLambdaOptions contains the optional parameters for the SpecialWordsModelsClient.WithLambda
+// method.
+type SpecialWordsModelsClientWithLambdaOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithWhileOptions contains the optional parameters for the ParametersClient.WithWhile method.
-type ParametersClientWithWhileOptions struct {
+// SpecialWordsModelsClientWithNotOptions contains the optional parameters for the SpecialWordsModelsClient.WithNot method.
+type SpecialWordsModelsClientWithNotOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithWithOptions contains the optional parameters for the ParametersClient.WithWith method.
-type ParametersClientWithWithOptions struct {
+// SpecialWordsModelsClientWithOrOptions contains the optional parameters for the SpecialWordsModelsClient.WithOr method.
+type SpecialWordsModelsClientWithOrOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParametersClientWithYieldOptions contains the optional parameters for the ParametersClient.WithYield method.
-type ParametersClientWithYieldOptions struct {
+// SpecialWordsModelsClientWithPassOptions contains the optional parameters for the SpecialWordsModelsClient.WithPass method.
+type SpecialWordsModelsClientWithPassOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithRaiseOptions contains the optional parameters for the SpecialWordsModelsClient.WithRaise method.
+type SpecialWordsModelsClientWithRaiseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithReturnOptions contains the optional parameters for the SpecialWordsModelsClient.WithReturn
+// method.
+type SpecialWordsModelsClientWithReturnOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithTryOptions contains the optional parameters for the SpecialWordsModelsClient.WithTry method.
+type SpecialWordsModelsClientWithTryOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithWhileOptions contains the optional parameters for the SpecialWordsModelsClient.WithWhile method.
+type SpecialWordsModelsClientWithWhileOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithWithOptions contains the optional parameters for the SpecialWordsModelsClient.WithWith method.
+type SpecialWordsModelsClientWithWithOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsModelsClientWithYieldOptions contains the optional parameters for the SpecialWordsModelsClient.WithYield method.
+type SpecialWordsModelsClientWithYieldOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientAndOptions contains the optional parameters for the SpecialWordsOperationsClient.And method.
+type SpecialWordsOperationsClientAndOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientAsOptions contains the optional parameters for the SpecialWordsOperationsClient.As method.
+type SpecialWordsOperationsClientAsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientAssertOptions contains the optional parameters for the SpecialWordsOperationsClient.Assert
+// method.
+type SpecialWordsOperationsClientAssertOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientAsyncOptions contains the optional parameters for the SpecialWordsOperationsClient.Async method.
+type SpecialWordsOperationsClientAsyncOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientAwaitOptions contains the optional parameters for the SpecialWordsOperationsClient.Await method.
+type SpecialWordsOperationsClientAwaitOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientBreakOptions contains the optional parameters for the SpecialWordsOperationsClient.Break method.
+type SpecialWordsOperationsClientBreakOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientClassOptions contains the optional parameters for the SpecialWordsOperationsClient.Class method.
+type SpecialWordsOperationsClientClassOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientConstructorOptions contains the optional parameters for the SpecialWordsOperationsClient.Constructor
+// method.
+type SpecialWordsOperationsClientConstructorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientContinueOptions contains the optional parameters for the SpecialWordsOperationsClient.Continue
+// method.
+type SpecialWordsOperationsClientContinueOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientDefOptions contains the optional parameters for the SpecialWordsOperationsClient.Def method.
+type SpecialWordsOperationsClientDefOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientDelOptions contains the optional parameters for the SpecialWordsOperationsClient.Del method.
+type SpecialWordsOperationsClientDelOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientElifOptions contains the optional parameters for the SpecialWordsOperationsClient.Elif method.
+type SpecialWordsOperationsClientElifOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientElseOptions contains the optional parameters for the SpecialWordsOperationsClient.Else method.
+type SpecialWordsOperationsClientElseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientExceptOptions contains the optional parameters for the SpecialWordsOperationsClient.Except
+// method.
+type SpecialWordsOperationsClientExceptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientExecOptions contains the optional parameters for the SpecialWordsOperationsClient.Exec method.
+type SpecialWordsOperationsClientExecOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientFinallyOptions contains the optional parameters for the SpecialWordsOperationsClient.Finally
+// method.
+type SpecialWordsOperationsClientFinallyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientForOptions contains the optional parameters for the SpecialWordsOperationsClient.For method.
+type SpecialWordsOperationsClientForOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientFromOptions contains the optional parameters for the SpecialWordsOperationsClient.From method.
+type SpecialWordsOperationsClientFromOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientGlobalOptions contains the optional parameters for the SpecialWordsOperationsClient.Global
+// method.
+type SpecialWordsOperationsClientGlobalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientIfOptions contains the optional parameters for the SpecialWordsOperationsClient.If method.
+type SpecialWordsOperationsClientIfOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientImportOptions contains the optional parameters for the SpecialWordsOperationsClient.Import
+// method.
+type SpecialWordsOperationsClientImportOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientInOptions contains the optional parameters for the SpecialWordsOperationsClient.In method.
+type SpecialWordsOperationsClientInOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientIsOptions contains the optional parameters for the SpecialWordsOperationsClient.Is method.
+type SpecialWordsOperationsClientIsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientLambdaOptions contains the optional parameters for the SpecialWordsOperationsClient.Lambda
+// method.
+type SpecialWordsOperationsClientLambdaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientNotOptions contains the optional parameters for the SpecialWordsOperationsClient.Not method.
+type SpecialWordsOperationsClientNotOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientOrOptions contains the optional parameters for the SpecialWordsOperationsClient.Or method.
+type SpecialWordsOperationsClientOrOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientPassOptions contains the optional parameters for the SpecialWordsOperationsClient.Pass method.
+type SpecialWordsOperationsClientPassOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientRaiseOptions contains the optional parameters for the SpecialWordsOperationsClient.Raise method.
+type SpecialWordsOperationsClientRaiseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientReturnOptions contains the optional parameters for the SpecialWordsOperationsClient.Return
+// method.
+type SpecialWordsOperationsClientReturnOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientTryOptions contains the optional parameters for the SpecialWordsOperationsClient.Try method.
+type SpecialWordsOperationsClientTryOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientWhileOptions contains the optional parameters for the SpecialWordsOperationsClient.While method.
+type SpecialWordsOperationsClientWhileOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientWithOptions contains the optional parameters for the SpecialWordsOperationsClient.With method.
+type SpecialWordsOperationsClientWithOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsOperationsClientYieldOptions contains the optional parameters for the SpecialWordsOperationsClient.Yield method.
+type SpecialWordsOperationsClientYieldOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithAndOptions contains the optional parameters for the SpecialWordsParametersClient.WithAnd
+// method.
+type SpecialWordsParametersClientWithAndOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithAsOptions contains the optional parameters for the SpecialWordsParametersClient.WithAs
+// method.
+type SpecialWordsParametersClientWithAsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithAssertOptions contains the optional parameters for the SpecialWordsParametersClient.WithAssert
+// method.
+type SpecialWordsParametersClientWithAssertOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithAsyncOptions contains the optional parameters for the SpecialWordsParametersClient.WithAsync
+// method.
+type SpecialWordsParametersClientWithAsyncOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithAwaitOptions contains the optional parameters for the SpecialWordsParametersClient.WithAwait
+// method.
+type SpecialWordsParametersClientWithAwaitOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithBreakOptions contains the optional parameters for the SpecialWordsParametersClient.WithBreak
+// method.
+type SpecialWordsParametersClientWithBreakOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithCancellationTokenOptions contains the optional parameters for the SpecialWordsParametersClient.WithCancellationToken
+// method.
+type SpecialWordsParametersClientWithCancellationTokenOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithClassOptions contains the optional parameters for the SpecialWordsParametersClient.WithClass
+// method.
+type SpecialWordsParametersClientWithClassOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithConstructorOptions contains the optional parameters for the SpecialWordsParametersClient.WithConstructor
+// method.
+type SpecialWordsParametersClientWithConstructorOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithContinueOptions contains the optional parameters for the SpecialWordsParametersClient.WithContinue
+// method.
+type SpecialWordsParametersClientWithContinueOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithDefOptions contains the optional parameters for the SpecialWordsParametersClient.WithDef
+// method.
+type SpecialWordsParametersClientWithDefOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithDelOptions contains the optional parameters for the SpecialWordsParametersClient.WithDel
+// method.
+type SpecialWordsParametersClientWithDelOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithElifOptions contains the optional parameters for the SpecialWordsParametersClient.WithElif
+// method.
+type SpecialWordsParametersClientWithElifOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithElseOptions contains the optional parameters for the SpecialWordsParametersClient.WithElse
+// method.
+type SpecialWordsParametersClientWithElseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithExceptOptions contains the optional parameters for the SpecialWordsParametersClient.WithExcept
+// method.
+type SpecialWordsParametersClientWithExceptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithExecOptions contains the optional parameters for the SpecialWordsParametersClient.WithExec
+// method.
+type SpecialWordsParametersClientWithExecOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithFinallyOptions contains the optional parameters for the SpecialWordsParametersClient.WithFinally
+// method.
+type SpecialWordsParametersClientWithFinallyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithForOptions contains the optional parameters for the SpecialWordsParametersClient.WithFor
+// method.
+type SpecialWordsParametersClientWithForOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithFromOptions contains the optional parameters for the SpecialWordsParametersClient.WithFrom
+// method.
+type SpecialWordsParametersClientWithFromOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithGlobalOptions contains the optional parameters for the SpecialWordsParametersClient.WithGlobal
+// method.
+type SpecialWordsParametersClientWithGlobalOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithIfOptions contains the optional parameters for the SpecialWordsParametersClient.WithIf
+// method.
+type SpecialWordsParametersClientWithIfOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithImportOptions contains the optional parameters for the SpecialWordsParametersClient.WithImport
+// method.
+type SpecialWordsParametersClientWithImportOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithInOptions contains the optional parameters for the SpecialWordsParametersClient.WithIn
+// method.
+type SpecialWordsParametersClientWithInOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithIsOptions contains the optional parameters for the SpecialWordsParametersClient.WithIs
+// method.
+type SpecialWordsParametersClientWithIsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithLambdaOptions contains the optional parameters for the SpecialWordsParametersClient.WithLambda
+// method.
+type SpecialWordsParametersClientWithLambdaOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithNotOptions contains the optional parameters for the SpecialWordsParametersClient.WithNot
+// method.
+type SpecialWordsParametersClientWithNotOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithOrOptions contains the optional parameters for the SpecialWordsParametersClient.WithOr
+// method.
+type SpecialWordsParametersClientWithOrOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithPassOptions contains the optional parameters for the SpecialWordsParametersClient.WithPass
+// method.
+type SpecialWordsParametersClientWithPassOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithRaiseOptions contains the optional parameters for the SpecialWordsParametersClient.WithRaise
+// method.
+type SpecialWordsParametersClientWithRaiseOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithReturnOptions contains the optional parameters for the SpecialWordsParametersClient.WithReturn
+// method.
+type SpecialWordsParametersClientWithReturnOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithTryOptions contains the optional parameters for the SpecialWordsParametersClient.WithTry
+// method.
+type SpecialWordsParametersClientWithTryOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithWhileOptions contains the optional parameters for the SpecialWordsParametersClient.WithWhile
+// method.
+type SpecialWordsParametersClientWithWhileOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithWithOptions contains the optional parameters for the SpecialWordsParametersClient.WithWith
+// method.
+type SpecialWordsParametersClientWithWithOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpecialWordsParametersClientWithYieldOptions contains the optional parameters for the SpecialWordsParametersClient.WithYield
+// method.
+type SpecialWordsParametersClientWithYieldOptions struct {
 	// placeholder for future optional parameters
 }

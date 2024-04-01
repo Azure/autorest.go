@@ -15,8 +15,8 @@ import (
 
 // ScalarServer is a fake server for instances of the corescalargroup.ScalarClient type.
 type ScalarServer struct {
-	// AzureLocationScalarServer contains the fakes for client AzureLocationScalarClient
-	AzureLocationScalarServer AzureLocationScalarServer
+	// ScalarAzureLocationScalarServer contains the fakes for client ScalarAzureLocationScalarClient
+	ScalarAzureLocationScalarServer ScalarAzureLocationScalarServer
 }
 
 // NewScalarServerTransport creates a new instance of ScalarServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewScalarServerTransport(srv *ScalarServer) *ScalarServerTransport {
 // ScalarServerTransport connects instances of corescalargroup.ScalarClient to instances of ScalarServer.
 // Don't use this type directly, use NewScalarServerTransport instead.
 type ScalarServerTransport struct {
-	srv                         *ScalarServer
-	trMu                        sync.Mutex
-	trAzureLocationScalarServer *AzureLocationScalarServerTransport
+	srv                               *ScalarServer
+	trMu                              sync.Mutex
+	trScalarAzureLocationScalarServer *ScalarAzureLocationScalarServerTransport
 }
 
 // Do implements the policy.Transporter interface for ScalarServerTransport.
@@ -50,11 +50,11 @@ func (s *ScalarServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "AzureLocationScalarClient":
-		initServer(&s.trMu, &s.trAzureLocationScalarServer, func() *AzureLocationScalarServerTransport {
-			return NewAzureLocationScalarServerTransport(&s.srv.AzureLocationScalarServer)
+	case "ScalarAzureLocationScalarClient":
+		initServer(&s.trMu, &s.trScalarAzureLocationScalarServer, func() *ScalarAzureLocationScalarServerTransport {
+			return NewScalarAzureLocationScalarServerTransport(&s.srv.ScalarAzureLocationScalarServer)
 		})
-		resp, err = s.trAzureLocationScalarServer.Do(req)
+		resp, err = s.trScalarAzureLocationScalarServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

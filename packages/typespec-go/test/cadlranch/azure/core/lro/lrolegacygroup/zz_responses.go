@@ -4,14 +4,14 @@
 
 package lrolegacygroup
 
-// CreateResourcePollViaOperationLocationClientCreateJobResponse contains the response from method CreateResourcePollViaOperationLocationClient.CreateJob.
-type CreateResourcePollViaOperationLocationClientCreateJobResponse struct {
+// LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse contains the response from method LegacyCreateResourcePollViaOperationLocationClient.CreateJob.
+type LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse struct {
 	// Result of the job
 	JobResult
 }
 
-// CreateResourcePollViaOperationLocationClientGetJobResponse contains the response from method CreateResourcePollViaOperationLocationClient.GetJob.
-type CreateResourcePollViaOperationLocationClientGetJobResponse struct {
+// LegacyCreateResourcePollViaOperationLocationClientGetJobResponse contains the response from method LegacyCreateResourcePollViaOperationLocationClient.GetJob.
+type LegacyCreateResourcePollViaOperationLocationClientGetJobResponse struct {
 	// Result of the job
 	JobResult
 }

@@ -15,8 +15,8 @@ import (
 
 // MultiPartServer is a fake server for instances of the multipartgroup.MultiPartClient type.
 type MultiPartServer struct {
-	// FormDataServer contains the fakes for client FormDataClient
-	FormDataServer FormDataServer
+	// MultiPartFormDataServer contains the fakes for client MultiPartFormDataClient
+	MultiPartFormDataServer MultiPartFormDataServer
 }
 
 // NewMultiPartServerTransport creates a new instance of MultiPartServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewMultiPartServerTransport(srv *MultiPartServer) *MultiPartServerTransport
 // MultiPartServerTransport connects instances of multipartgroup.MultiPartClient to instances of MultiPartServer.
 // Don't use this type directly, use NewMultiPartServerTransport instead.
 type MultiPartServerTransport struct {
-	srv              *MultiPartServer
-	trMu             sync.Mutex
-	trFormDataServer *FormDataServerTransport
+	srv                       *MultiPartServer
+	trMu                      sync.Mutex
+	trMultiPartFormDataServer *MultiPartFormDataServerTransport
 }
 
 // Do implements the policy.Transporter interface for MultiPartServerTransport.
@@ -50,11 +50,11 @@ func (m *MultiPartServerTransport) dispatchToClientFake(req *http.Request, clien
 	var err error
 
 	switch client {
-	case "FormDataClient":
-		initServer(&m.trMu, &m.trFormDataServer, func() *FormDataServerTransport {
-			return NewFormDataServerTransport(&m.srv.FormDataServer)
+	case "MultiPartFormDataClient":
+		initServer(&m.trMu, &m.trMultiPartFormDataServer, func() *MultiPartFormDataServerTransport {
+			return NewMultiPartFormDataServerTransport(&m.srv.MultiPartFormDataServer)
 		})
-		resp, err = m.trFormDataServer.Do(req)
+		resp, err = m.trMultiPartFormDataServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

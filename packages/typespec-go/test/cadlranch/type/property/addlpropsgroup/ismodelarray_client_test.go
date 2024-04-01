@@ -18,7 +18,7 @@ import (
 func TestIsModelArrayClient_Get(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsModelArrayClient().Get(context.Background(), nil)
+	resp, err := client.NewAdditionalPropertiesIsModelArrayClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.IsModelArrayAdditionalProperties{
 		AdditionalProperties: map[string][]*addlpropsgroup.ModelForRecord{
@@ -37,7 +37,7 @@ func TestIsModelArrayClient_Get(t *testing.T) {
 func TestIsModelArrayClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsModelArrayClient().Put(context.Background(), addlpropsgroup.IsModelArrayAdditionalProperties{
+	resp, err := client.NewAdditionalPropertiesIsModelArrayClient().Put(context.Background(), addlpropsgroup.IsModelArrayAdditionalProperties{
 		AdditionalProperties: map[string][]*addlpropsgroup.ModelForRecord{
 			"prop": {
 				{

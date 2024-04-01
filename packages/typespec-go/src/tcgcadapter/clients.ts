@@ -7,6 +7,7 @@ import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescrip
 import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
 import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 
 // used to convert SDK clients and their methods to Go code model types
@@ -33,7 +34,7 @@ export class clientAdapter {
     }
     for (const sdkClient of sdkPackage.clients) {
       // start with instantiable clients and recursively work down
-      if (sdkClient.initialization) {
+      if (sdkClient.initialization.access === 'public') {
         this.recursiveAdaptClient(sdkClient);
       }
     }
@@ -41,17 +42,27 @@ export class clientAdapter {
 
   private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client {
     let clientName = sdkClient.name;
-    if (!clientName.match(/Client$/)) {
-      clientName += 'Client';
+    if (parent) {
+      // for hierarchical clients, the child client names are built
+      // from the parent client name. this is because tsp allows subclients
+      // with the same name. consider the following example.
+      //
+      // namespace Chat {
+      //   interface Completions {
+      //     ...
+      //   }
+      // }
+      // interface Completions { ... }
+      //
+      // we want to generate two clients from this,
+      // one name ChatCompletions and the other Completions
+
+      // strip off the Client suffix from the parent client name
+      clientName = parent.name.substring(0, parent.name.length - 6) + clientName;
     }
 
-    // depending on the hierarchy, we could end up attempting to adapt the same client.
-    // if it's already been adapted, return it.
-    let goClient = this.ta.codeModel.clients.find((v: go.Client, i: number, o: Array<go.Client>) => {
-      return o[i].name === clientName;
-    });
-    if (goClient) {
-      return goClient;
+    if (!clientName.match(/Client$/)) {
+      clientName += 'Client';
     }
 
     let description: string;
@@ -61,23 +72,30 @@ export class clientAdapter {
       description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
     }
 
-    goClient = new go.Client(clientName, description, `New${clientName}`);
+    const goClient = new go.Client(clientName, description, `New${clientName}`);
     goClient.parent = parent;
-    goClient.host = sdkClient.endpoint;
-    goClient.complexHostParams = sdkClient.hasParameterizedEndpoint;
 
-    if (sdkClient.initialization) {
+    // anything other than public means non-instantiable client
+    if (sdkClient.initialization.access === 'public') {
       for (const param of sdkClient.initialization.properties) {
         if (param.kind === 'credential') {
           // skip this for now as we don't generate client constructors
           continue;
-        } else if (param.kind === 'endpoint' && param.type.kind === 'constant') {
-          // this is the param for the fixed host, don't create a param for it
-          goClient.host = <string>param.type.value;
-          if (!this.ta.codeModel.host) {
-            this.ta.codeModel.host = goClient.host;
-          } else if (this.ta.codeModel.host !== goClient.host) {
-            throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
+        } else if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
+          // this will either be a fixed or templated host
+          goClient.host = param.type.serverUrl;
+          if (param.type.templateArguments.length === 0) {
+            // this is the param for the fixed host, don't create a param for it
+            if (!this.ta.codeModel.host) {
+              this.ta.codeModel.host = goClient.host;
+            } else if (this.ta.codeModel.host !== goClient.host) {
+              throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
+            }
+          } else {
+            goClient.complexHostParams = true;
+            for (const templateArg of param.type.templateArguments) {
+              goClient.hostParams.push(this.adaptURIParam(templateArg));
+            }
           }
           continue;
         } else if (param.kind === 'method') {
@@ -89,21 +107,18 @@ export class clientAdapter {
           continue;
         }
 
-        const paramType = this.ta.getPossibleType(param.type, true, false);
-        if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
-          throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
-        }
-        // TODO: follow up with tcgc if serializedName should actually be optional
-        const uriParam = new go.URIParameter(param.nameInClient, param.serializedName ? param.serializedName : param.nameInClient, paramType,
-          this.adaptParameterType(param), isTypePassedByValue(param.type) || !param.optional, 'client');
-        goClient.hostParams.push(uriParam);
+        goClient.hostParams.push(this.adaptURIParam(param));
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
       // NOTE: we must propagate parant params before a potential recursive call
       // to create a child client that will need to inherit our client params.
+      goClient.complexHostParams = parent.complexHostParams;
+      goClient.host = parent.host;
       goClient.hostParams = parent.hostParams;
       goClient.parameters = parent.parameters;
+    } else {
+      throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
     }
 
     for (const sdkMethod of sdkClient.methods) {
@@ -119,6 +134,16 @@ export class clientAdapter {
     return goClient;
   }
 
+  private adaptURIParam(sdkParam: tcgc.SdkEndpointParameter | tcgc.SdkPathParameter): go.URIParameter {
+    const paramType = this.ta.getPossibleType(sdkParam.type, true, false);
+    if (!go.isConstantType(paramType) && !go.isPrimitiveType(paramType)) {
+      throw new Error(`unexpected URI parameter type ${go.getTypeDeclaration(paramType)}`);
+    }
+    // TODO: follow up with tcgc if serializedName should actually be optional
+    return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
+      this.adaptParameterType(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+  }
+
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
     let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
@@ -126,8 +151,14 @@ export class clientAdapter {
   
     const getStatusCodes = function(httpOp: tcgc.SdkHttpOperation): Array<number> {
       const statusCodes = new Array<number>();
-      for (const statusCode of Object.keys(httpOp.responses)) {
-        statusCodes.push(parseInt(statusCode));
+      for (const statusCode of httpOp.responses.keys()) {
+        if (isHttpStatusCodeRange(statusCode)) {
+          for (let code = statusCode.start; code <= statusCode.end; ++code) {
+            statusCodes.push(code);  
+          }
+        } else {
+          statusCodes.push(statusCode);
+        }
       }
       return statusCodes;
     };
@@ -172,7 +203,7 @@ export class clientAdapter {
       let optsGroupName = 'options';
       // if there's an existing parameter with the name options then pick something else
       for (const param of sdkMethod.parameters) {
-        if (param.nameInClient === optsGroupName) {
+        if (param.name === optsGroupName) {
           optsGroupName = 'opts';
           break;
         }
@@ -215,11 +246,8 @@ export class clientAdapter {
 
     // we add the body param after any required params. this way,
     // if the body param is required it shows up last in the list.
-    if (sdkMethod.operation.bodyParams.length > 1) {
-      throw new Error('multipart body NYI');
-    } else if (sdkMethod.operation.bodyParams.length === 1) {
-      const bodyParam = sdkMethod.operation.bodyParams[0];
-      method.parameters.push(this.adaptMethodParameter(bodyParam, optionalGroup));
+    if (sdkMethod.operation.bodyParam) {
+      method.parameters.push(this.adaptMethodParameter(sdkMethod.operation.bodyParam, optionalGroup));
     }
   }
 
@@ -244,11 +272,11 @@ export class clientAdapter {
       const paramType = new go.LiteralValue(new go.PrimitiveType('string'), param.clientDefaultValue);
       switch (param.kind) {
         case 'header':
-          return new go.HeaderParameter(param.nameInClient, param.serializedName, paramType, 'literal', true, 'method');
+          return new go.HeaderParameter(param.name, param.serializedName, paramType, 'literal', true, 'method');
         case 'path':
-          return new go.PathParameter(param.nameInClient, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.PathParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         case 'query':
-          return new go.QueryParameter(param.nameInClient, param.serializedName, true, paramType, 'literal', true, 'method');
+          return new go.QueryParameter(param.name, param.serializedName, true, paramType, 'literal', true, 'method');
         default:
           throw new Error(`unhandled param kind ${param.kind} for API version param`);
       }
@@ -258,7 +286,7 @@ export class clientAdapter {
     const getClientParamsKey = function(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
-      return `${param.nameInClient}-${param.kind}`;
+      return `${param.name}-${param.kind}`;
     };
     if (param.onClient) {
       // check if we've already adapted this client parameter
@@ -270,7 +298,7 @@ export class clientAdapter {
     }
 
     let adaptedParam: go.Parameter;
-    const paramName = getEscapedReservedName(ensureNameCase(param.nameInClient, true), 'Param');
+    const paramName = getEscapedReservedName(ensureNameCase(param.name, true), 'Param');
     const paramType = this.adaptParameterType(param);
     const byVal = isTypePassedByValue(param.type);
 
@@ -291,7 +319,7 @@ export class clientAdapter {
         // TODO: is hard-coded false for element type by value correct?
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.nameInClient}`);
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`);
         }
         adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramType, byVal, location);
       } else {
@@ -303,7 +331,7 @@ export class clientAdapter {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
         if (!go.isSliceType(type)) {
-          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.nameInClient}`);
+          throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`);
         }
         // TODO: unencoded query param
         adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramType, byVal, location);
@@ -321,7 +349,7 @@ export class clientAdapter {
     } else if (paramType !== 'required' && paramType !== 'literal') {
       // add optional method param to the options param group
       if (!optionalGroup) {
-        throw new Error(`optional parameter ${param.nameInClient} has no optional parameter group`);
+        throw new Error(`optional parameter ${param.name} has no optional parameter group`);
       }
       adaptedParam.group = optionalGroup;
       optionalGroup.params.push(adaptedParam);
@@ -349,7 +377,7 @@ export class clientAdapter {
 
     // add any headers
     const addedHeaders = new Set<string>();
-    for (const httpResp of Object.values(sdkMethod.operation.responses)) { 
+    for (const httpResp of sdkMethod.operation.responses.values()) { 
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
@@ -383,7 +411,7 @@ export class clientAdapter {
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'paging') {
       // grab the paged response envelope type from the first response
-      sdkResponseType = Object.values(sdkMethod.operation.responses)[0].type!;
+      sdkResponseType = values(sdkMethod.operation.responses).first()!.type!;
     }
 
     // we have a response type, determine the content type
@@ -397,7 +425,7 @@ export class clientAdapter {
       contentType = 'JSON';
     } else {
       let foundResp = false;
-      for (const httpResp of Object.values(sdkMethod.operation.responses)) {
+      for (const httpResp of sdkMethod.operation.responses.values()) {
         if (!httpResp.type || !httpResp.defaultContentType || httpResp.type.kind !== sdkResponseType.kind) {
           continue;
         }
@@ -500,7 +528,7 @@ export class clientAdapter {
     } else if (param.clientDefaultValue) {
       const adaptedType = this.ta.getPossibleType(param.type, false, false);
       if (!go.isLiteralValueType(adaptedType)) {
-        throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.nameInClient}`);
+        throw new Error(`unsupported client side default type ${go.getTypeDeclaration(adaptedType)} for parameter ${param.name}`);
       }
       return new go.ClientSideDefault(new go.LiteralValue(adaptedType, param.clientDefaultValue));
     } else if (param.optional) {
@@ -509,4 +537,13 @@ export class clientAdapter {
       return 'required';
     }
   }
+}
+
+interface HttpStatusCodeRange {
+  start: number;
+  end: number;
+}
+
+function isHttpStatusCodeRange(statusCode: HttpStatusCodeRange | number): statusCode is HttpStatusCodeRange {
+  return (<HttpStatusCodeRange>statusCode).start !== undefined;
 }

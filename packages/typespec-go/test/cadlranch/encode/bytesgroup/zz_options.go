@@ -4,114 +4,115 @@
 
 package bytesgroup
 
-// HeaderClientBase64Options contains the optional parameters for the HeaderClient.Base64 method.
-type HeaderClientBase64Options struct {
+// BytesHeaderClientBase64Options contains the optional parameters for the BytesHeaderClient.Base64 method.
+type BytesHeaderClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientBase64URLArrayOptions contains the optional parameters for the HeaderClient.Base64URLArray method.
-type HeaderClientBase64URLArrayOptions struct {
+// BytesHeaderClientBase64URLArrayOptions contains the optional parameters for the BytesHeaderClient.Base64URLArray method.
+type BytesHeaderClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientBase64URLOptions contains the optional parameters for the HeaderClient.Base64URL method.
-type HeaderClientBase64URLOptions struct {
+// BytesHeaderClientBase64URLOptions contains the optional parameters for the BytesHeaderClient.Base64URL method.
+type BytesHeaderClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderClientDefaultOptions contains the optional parameters for the HeaderClient.Default method.
-type HeaderClientDefaultOptions struct {
+// BytesHeaderClientDefaultOptions contains the optional parameters for the BytesHeaderClient.Default method.
+type BytesHeaderClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientBase64Options contains the optional parameters for the PropertyClient.Base64 method.
-type PropertyClientBase64Options struct {
+// BytesPropertyClientBase64Options contains the optional parameters for the BytesPropertyClient.Base64 method.
+type BytesPropertyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientBase64URLArrayOptions contains the optional parameters for the PropertyClient.Base64URLArray method.
-type PropertyClientBase64URLArrayOptions struct {
+// BytesPropertyClientBase64URLArrayOptions contains the optional parameters for the BytesPropertyClient.Base64URLArray method.
+type BytesPropertyClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientBase64URLOptions contains the optional parameters for the PropertyClient.Base64URL method.
-type PropertyClientBase64URLOptions struct {
+// BytesPropertyClientBase64URLOptions contains the optional parameters for the BytesPropertyClient.Base64URL method.
+type BytesPropertyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientDefaultOptions contains the optional parameters for the PropertyClient.Default method.
-type PropertyClientDefaultOptions struct {
+// BytesPropertyClientDefaultOptions contains the optional parameters for the BytesPropertyClient.Default method.
+type BytesPropertyClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientBase64Options contains the optional parameters for the QueryClient.Base64 method.
-type QueryClientBase64Options struct {
+// BytesQueryClientBase64Options contains the optional parameters for the BytesQueryClient.Base64 method.
+type BytesQueryClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientBase64URLArrayOptions contains the optional parameters for the QueryClient.Base64URLArray method.
-type QueryClientBase64URLArrayOptions struct {
+// BytesQueryClientBase64URLArrayOptions contains the optional parameters for the BytesQueryClient.Base64URLArray method.
+type BytesQueryClientBase64URLArrayOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientBase64URLOptions contains the optional parameters for the QueryClient.Base64URL method.
-type QueryClientBase64URLOptions struct {
+// BytesQueryClientBase64URLOptions contains the optional parameters for the BytesQueryClient.Base64URL method.
+type BytesQueryClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueryClientDefaultOptions contains the optional parameters for the QueryClient.Default method.
-type QueryClientDefaultOptions struct {
+// BytesQueryClientDefaultOptions contains the optional parameters for the BytesQueryClient.Default method.
+type BytesQueryClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RequestBodyClientBase64Options contains the optional parameters for the RequestBodyClient.Base64 method.
-type RequestBodyClientBase64Options struct {
+// BytesRequestBodyClientBase64Options contains the optional parameters for the BytesRequestBodyClient.Base64 method.
+type BytesRequestBodyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-// RequestBodyClientBase64URLOptions contains the optional parameters for the RequestBodyClient.Base64URL method.
-type RequestBodyClientBase64URLOptions struct {
+// BytesRequestBodyClientBase64URLOptions contains the optional parameters for the BytesRequestBodyClient.Base64URL method.
+type BytesRequestBodyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RequestBodyClientCustomContentTypeOptions contains the optional parameters for the RequestBodyClient.CustomContentType
+// BytesRequestBodyClientCustomContentTypeOptions contains the optional parameters for the BytesRequestBodyClient.CustomContentType
 // method.
-type RequestBodyClientCustomContentTypeOptions struct {
+type BytesRequestBodyClientCustomContentTypeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RequestBodyClientDefaultOptions contains the optional parameters for the RequestBodyClient.Default method.
-type RequestBodyClientDefaultOptions struct {
+// BytesRequestBodyClientDefaultOptions contains the optional parameters for the BytesRequestBodyClient.Default method.
+type BytesRequestBodyClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RequestBodyClientOctetStreamOptions contains the optional parameters for the RequestBodyClient.OctetStream method.
-type RequestBodyClientOctetStreamOptions struct {
+// BytesRequestBodyClientOctetStreamOptions contains the optional parameters for the BytesRequestBodyClient.OctetStream method.
+type BytesRequestBodyClientOctetStreamOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseBodyClientBase64Options contains the optional parameters for the ResponseBodyClient.Base64 method.
-type ResponseBodyClientBase64Options struct {
+// BytesResponseBodyClientBase64Options contains the optional parameters for the BytesResponseBodyClient.Base64 method.
+type BytesResponseBodyClientBase64Options struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseBodyClientBase64URLOptions contains the optional parameters for the ResponseBodyClient.Base64URL method.
-type ResponseBodyClientBase64URLOptions struct {
+// BytesResponseBodyClientBase64URLOptions contains the optional parameters for the BytesResponseBodyClient.Base64URL method.
+type BytesResponseBodyClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseBodyClientCustomContentTypeOptions contains the optional parameters for the ResponseBodyClient.CustomContentType
+// BytesResponseBodyClientCustomContentTypeOptions contains the optional parameters for the BytesResponseBodyClient.CustomContentType
 // method.
-type ResponseBodyClientCustomContentTypeOptions struct {
+type BytesResponseBodyClientCustomContentTypeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseBodyClientDefaultOptions contains the optional parameters for the ResponseBodyClient.Default method.
-type ResponseBodyClientDefaultOptions struct {
+// BytesResponseBodyClientDefaultOptions contains the optional parameters for the BytesResponseBodyClient.Default method.
+type BytesResponseBodyClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ResponseBodyClientOctetStreamOptions contains the optional parameters for the ResponseBodyClient.OctetStream method.
-type ResponseBodyClientOctetStreamOptions struct {
+// BytesResponseBodyClientOctetStreamOptions contains the optional parameters for the BytesResponseBodyClient.OctetStream
+// method.
+type BytesResponseBodyClientOctetStreamOptions struct {
 	// placeholder for future optional parameters
 }

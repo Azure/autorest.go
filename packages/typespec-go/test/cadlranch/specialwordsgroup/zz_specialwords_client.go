@@ -48,30 +48,30 @@ type SpecialWordsClient struct {
 	internal *azcore.Client
 }
 
-// NewModelPropertiesClient creates a new instance of [ModelPropertiesClient].
-func (client *SpecialWordsClient) NewModelPropertiesClient() *ModelPropertiesClient {
-	return &ModelPropertiesClient{
+// NewSpecialWordsModelPropertiesClient creates a new instance of [SpecialWordsModelPropertiesClient].
+func (client *SpecialWordsClient) NewSpecialWordsModelPropertiesClient() *SpecialWordsModelPropertiesClient {
+	return &SpecialWordsModelPropertiesClient{
 		internal: client.internal,
 	}
 }
 
-// NewModelsClient creates a new instance of [ModelsClient].
-func (client *SpecialWordsClient) NewModelsClient() *ModelsClient {
-	return &ModelsClient{
+// NewSpecialWordsModelsClient creates a new instance of [SpecialWordsModelsClient].
+func (client *SpecialWordsClient) NewSpecialWordsModelsClient() *SpecialWordsModelsClient {
+	return &SpecialWordsModelsClient{
 		internal: client.internal,
 	}
 }
 
-// NewOperationsClient creates a new instance of [OperationsClient].
-func (client *SpecialWordsClient) NewOperationsClient() *OperationsClient {
-	return &OperationsClient{
+// NewSpecialWordsOperationsClient creates a new instance of [SpecialWordsOperationsClient].
+func (client *SpecialWordsClient) NewSpecialWordsOperationsClient() *SpecialWordsOperationsClient {
+	return &SpecialWordsOperationsClient{
 		internal: client.internal,
 	}
 }
 
-// NewParametersClient creates a new instance of [ParametersClient].
-func (client *SpecialWordsClient) NewParametersClient() *ParametersClient {
-	return &ParametersClient{
+// NewSpecialWordsParametersClient creates a new instance of [SpecialWordsParametersClient].
+func (client *SpecialWordsClient) NewSpecialWordsParametersClient() *SpecialWordsParametersClient {
+	return &SpecialWordsParametersClient{
 		internal: client.internal,
 	}
 }

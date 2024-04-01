@@ -6,25 +6,25 @@ package contentneggroup
 
 import "io"
 
-// DifferentBodyClientGetAvatarAsJSONResponse contains the response from method DifferentBodyClient.GetAvatarAsJSON.
-type DifferentBodyClientGetAvatarAsJSONResponse struct {
+// ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse contains the response from method ContentNegotiationDifferentBodyClient.GetAvatarAsJSON.
+type ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse struct {
 	PNGImageAsJSON
 }
 
-// DifferentBodyClientGetAvatarAsPNGResponse contains the response from method DifferentBodyClient.GetAvatarAsPNG.
-type DifferentBodyClientGetAvatarAsPNGResponse struct {
+// ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse contains the response from method ContentNegotiationDifferentBodyClient.GetAvatarAsPNG.
+type ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }
 
-// SameBodyClientGetAvatarAsJPEGResponse contains the response from method SameBodyClient.GetAvatarAsJPEG.
-type SameBodyClientGetAvatarAsJPEGResponse struct {
+// ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse contains the response from method ContentNegotiationSameBodyClient.GetAvatarAsJPEG.
+type ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }
 
-// SameBodyClientGetAvatarAsPNGResponse contains the response from method SameBodyClient.GetAvatarAsPNG.
-type SameBodyClientGetAvatarAsPNGResponse struct {
+// ContentNegotiationSameBodyClientGetAvatarAsPNGResponse contains the response from method ContentNegotiationSameBodyClient.GetAvatarAsPNG.
+type ContentNegotiationSameBodyClientGetAvatarAsPNGResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }

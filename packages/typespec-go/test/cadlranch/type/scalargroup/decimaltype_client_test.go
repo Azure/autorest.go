@@ -17,7 +17,7 @@ import (
 func TestDecimalTypeClient_RequestBody(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimalTypeClient().RequestBody(context.Background(), 0.33333, nil)
+	resp, err := client.NewScalarDecimalTypeClient().RequestBody(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -25,7 +25,7 @@ func TestDecimalTypeClient_RequestBody(t *testing.T) {
 func TestDecimalTypeClient_RequestParameter(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimalTypeClient().RequestParameter(context.Background(), 0.33333, nil)
+	resp, err := client.NewScalarDecimalTypeClient().RequestParameter(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -33,7 +33,7 @@ func TestDecimalTypeClient_RequestParameter(t *testing.T) {
 func TestDecimalTypeClient_ResponseBody(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimalTypeClient().ResponseBody(context.Background(), nil)
+	resp, err := client.NewScalarDecimalTypeClient().ResponseBody(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, 0.33333, *resp.Value)

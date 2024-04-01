@@ -16,7 +16,7 @@ import (
 func TestDifferentBodyClient_GetAvatarAsJSON(t *testing.T) {
 	client, err := contentneggroup.NewContentNegotiationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDifferentBodyClient().GetAvatarAsJSON(context.Background(), nil)
+	resp, err := client.NewContentNegotiationDifferentBodyClient().GetAvatarAsJSON(context.Background(), nil)
 	require.NoError(t, err)
 	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
 	require.NoError(t, err)
@@ -26,7 +26,7 @@ func TestDifferentBodyClient_GetAvatarAsJSON(t *testing.T) {
 func TestDifferentBodyClient_GetAvatarAsPNG(t *testing.T) {
 	client, err := contentneggroup.NewContentNegotiationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDifferentBodyClient().GetAvatarAsPNG(context.Background(), nil)
+	resp, err := client.NewContentNegotiationDifferentBodyClient().GetAvatarAsPNG(context.Background(), nil)
 	require.NoError(t, err)
 	pngResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)

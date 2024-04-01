@@ -19,8 +19,8 @@ import (
 
 // BodyOptionalityServer is a fake server for instances of the bodyoptionalgroup.BodyOptionalityClient type.
 type BodyOptionalityServer struct {
-	// OptionalExplicitServer contains the fakes for client OptionalExplicitClient
-	OptionalExplicitServer OptionalExplicitServer
+	// BodyOptionalityOptionalExplicitServer contains the fakes for client BodyOptionalityOptionalExplicitClient
+	BodyOptionalityOptionalExplicitServer BodyOptionalityOptionalExplicitServer
 
 	// RequiredExplicit is the fake for method BodyOptionalityClient.RequiredExplicit
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -41,9 +41,9 @@ func NewBodyOptionalityServerTransport(srv *BodyOptionalityServer) *BodyOptional
 // BodyOptionalityServerTransport connects instances of bodyoptionalgroup.BodyOptionalityClient to instances of BodyOptionalityServer.
 // Don't use this type directly, use NewBodyOptionalityServerTransport instead.
 type BodyOptionalityServerTransport struct {
-	srv                      *BodyOptionalityServer
-	trMu                     sync.Mutex
-	trOptionalExplicitServer *OptionalExplicitServerTransport
+	srv                                     *BodyOptionalityServer
+	trMu                                    sync.Mutex
+	trBodyOptionalityOptionalExplicitServer *BodyOptionalityOptionalExplicitServerTransport
 }
 
 // Do implements the policy.Transporter interface for BodyOptionalityServerTransport.
@@ -65,11 +65,11 @@ func (b *BodyOptionalityServerTransport) dispatchToClientFake(req *http.Request,
 	var err error
 
 	switch client {
-	case "OptionalExplicitClient":
-		initServer(&b.trMu, &b.trOptionalExplicitServer, func() *OptionalExplicitServerTransport {
-			return NewOptionalExplicitServerTransport(&b.srv.OptionalExplicitServer)
+	case "BodyOptionalityOptionalExplicitClient":
+		initServer(&b.trMu, &b.trBodyOptionalityOptionalExplicitServer, func() *BodyOptionalityOptionalExplicitServerTransport {
+			return NewBodyOptionalityOptionalExplicitServerTransport(&b.srv.BodyOptionalityOptionalExplicitServer)
 		})
-		resp, err = b.trOptionalExplicitServer.Do(req)
+		resp, err = b.trBodyOptionalityOptionalExplicitServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

@@ -4,507 +4,507 @@
 
 package specialwordsgroup
 
-// ModelPropertiesClientSameAsModelResponse contains the response from method ModelPropertiesClient.SameAsModel.
-type ModelPropertiesClientSameAsModelResponse struct {
+// SpecialWordsModelPropertiesClientSameAsModelResponse contains the response from method SpecialWordsModelPropertiesClient.SameAsModel.
+type SpecialWordsModelPropertiesClientSameAsModelResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithAndResponse contains the response from method ModelsClient.WithAnd.
-type ModelsClientWithAndResponse struct {
+// SpecialWordsModelsClientWithAndResponse contains the response from method SpecialWordsModelsClient.WithAnd.
+type SpecialWordsModelsClientWithAndResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithAsResponse contains the response from method ModelsClient.WithAs.
-type ModelsClientWithAsResponse struct {
+// SpecialWordsModelsClientWithAsResponse contains the response from method SpecialWordsModelsClient.WithAs.
+type SpecialWordsModelsClientWithAsResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithAssertResponse contains the response from method ModelsClient.WithAssert.
-type ModelsClientWithAssertResponse struct {
+// SpecialWordsModelsClientWithAssertResponse contains the response from method SpecialWordsModelsClient.WithAssert.
+type SpecialWordsModelsClientWithAssertResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithAsyncResponse contains the response from method ModelsClient.WithAsync.
-type ModelsClientWithAsyncResponse struct {
+// SpecialWordsModelsClientWithAsyncResponse contains the response from method SpecialWordsModelsClient.WithAsync.
+type SpecialWordsModelsClientWithAsyncResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithAwaitResponse contains the response from method ModelsClient.WithAwait.
-type ModelsClientWithAwaitResponse struct {
+// SpecialWordsModelsClientWithAwaitResponse contains the response from method SpecialWordsModelsClient.WithAwait.
+type SpecialWordsModelsClientWithAwaitResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithBreakResponse contains the response from method ModelsClient.WithBreak.
-type ModelsClientWithBreakResponse struct {
+// SpecialWordsModelsClientWithBreakResponse contains the response from method SpecialWordsModelsClient.WithBreak.
+type SpecialWordsModelsClientWithBreakResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithClassResponse contains the response from method ModelsClient.WithClass.
-type ModelsClientWithClassResponse struct {
+// SpecialWordsModelsClientWithClassResponse contains the response from method SpecialWordsModelsClient.WithClass.
+type SpecialWordsModelsClientWithClassResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithConstructorResponse contains the response from method ModelsClient.WithConstructor.
-type ModelsClientWithConstructorResponse struct {
+// SpecialWordsModelsClientWithConstructorResponse contains the response from method SpecialWordsModelsClient.WithConstructor.
+type SpecialWordsModelsClientWithConstructorResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithContinueResponse contains the response from method ModelsClient.WithContinue.
-type ModelsClientWithContinueResponse struct {
+// SpecialWordsModelsClientWithContinueResponse contains the response from method SpecialWordsModelsClient.WithContinue.
+type SpecialWordsModelsClientWithContinueResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithDefResponse contains the response from method ModelsClient.WithDef.
-type ModelsClientWithDefResponse struct {
+// SpecialWordsModelsClientWithDefResponse contains the response from method SpecialWordsModelsClient.WithDef.
+type SpecialWordsModelsClientWithDefResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithDelResponse contains the response from method ModelsClient.WithDel.
-type ModelsClientWithDelResponse struct {
+// SpecialWordsModelsClientWithDelResponse contains the response from method SpecialWordsModelsClient.WithDel.
+type SpecialWordsModelsClientWithDelResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithElifResponse contains the response from method ModelsClient.WithElif.
-type ModelsClientWithElifResponse struct {
+// SpecialWordsModelsClientWithElifResponse contains the response from method SpecialWordsModelsClient.WithElif.
+type SpecialWordsModelsClientWithElifResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithElseResponse contains the response from method ModelsClient.WithElse.
-type ModelsClientWithElseResponse struct {
+// SpecialWordsModelsClientWithElseResponse contains the response from method SpecialWordsModelsClient.WithElse.
+type SpecialWordsModelsClientWithElseResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithExceptResponse contains the response from method ModelsClient.WithExcept.
-type ModelsClientWithExceptResponse struct {
+// SpecialWordsModelsClientWithExceptResponse contains the response from method SpecialWordsModelsClient.WithExcept.
+type SpecialWordsModelsClientWithExceptResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithExecResponse contains the response from method ModelsClient.WithExec.
-type ModelsClientWithExecResponse struct {
+// SpecialWordsModelsClientWithExecResponse contains the response from method SpecialWordsModelsClient.WithExec.
+type SpecialWordsModelsClientWithExecResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithFinallyResponse contains the response from method ModelsClient.WithFinally.
-type ModelsClientWithFinallyResponse struct {
+// SpecialWordsModelsClientWithFinallyResponse contains the response from method SpecialWordsModelsClient.WithFinally.
+type SpecialWordsModelsClientWithFinallyResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithForResponse contains the response from method ModelsClient.WithFor.
-type ModelsClientWithForResponse struct {
+// SpecialWordsModelsClientWithForResponse contains the response from method SpecialWordsModelsClient.WithFor.
+type SpecialWordsModelsClientWithForResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithFromResponse contains the response from method ModelsClient.WithFrom.
-type ModelsClientWithFromResponse struct {
+// SpecialWordsModelsClientWithFromResponse contains the response from method SpecialWordsModelsClient.WithFrom.
+type SpecialWordsModelsClientWithFromResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithGlobalResponse contains the response from method ModelsClient.WithGlobal.
-type ModelsClientWithGlobalResponse struct {
+// SpecialWordsModelsClientWithGlobalResponse contains the response from method SpecialWordsModelsClient.WithGlobal.
+type SpecialWordsModelsClientWithGlobalResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithIfResponse contains the response from method ModelsClient.WithIf.
-type ModelsClientWithIfResponse struct {
+// SpecialWordsModelsClientWithIfResponse contains the response from method SpecialWordsModelsClient.WithIf.
+type SpecialWordsModelsClientWithIfResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithImportResponse contains the response from method ModelsClient.WithImport.
-type ModelsClientWithImportResponse struct {
+// SpecialWordsModelsClientWithImportResponse contains the response from method SpecialWordsModelsClient.WithImport.
+type SpecialWordsModelsClientWithImportResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithInResponse contains the response from method ModelsClient.WithIn.
-type ModelsClientWithInResponse struct {
+// SpecialWordsModelsClientWithInResponse contains the response from method SpecialWordsModelsClient.WithIn.
+type SpecialWordsModelsClientWithInResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithIsResponse contains the response from method ModelsClient.WithIs.
-type ModelsClientWithIsResponse struct {
+// SpecialWordsModelsClientWithIsResponse contains the response from method SpecialWordsModelsClient.WithIs.
+type SpecialWordsModelsClientWithIsResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithLambdaResponse contains the response from method ModelsClient.WithLambda.
-type ModelsClientWithLambdaResponse struct {
+// SpecialWordsModelsClientWithLambdaResponse contains the response from method SpecialWordsModelsClient.WithLambda.
+type SpecialWordsModelsClientWithLambdaResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithNotResponse contains the response from method ModelsClient.WithNot.
-type ModelsClientWithNotResponse struct {
+// SpecialWordsModelsClientWithNotResponse contains the response from method SpecialWordsModelsClient.WithNot.
+type SpecialWordsModelsClientWithNotResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithOrResponse contains the response from method ModelsClient.WithOr.
-type ModelsClientWithOrResponse struct {
+// SpecialWordsModelsClientWithOrResponse contains the response from method SpecialWordsModelsClient.WithOr.
+type SpecialWordsModelsClientWithOrResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithPassResponse contains the response from method ModelsClient.WithPass.
-type ModelsClientWithPassResponse struct {
+// SpecialWordsModelsClientWithPassResponse contains the response from method SpecialWordsModelsClient.WithPass.
+type SpecialWordsModelsClientWithPassResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithRaiseResponse contains the response from method ModelsClient.WithRaise.
-type ModelsClientWithRaiseResponse struct {
+// SpecialWordsModelsClientWithRaiseResponse contains the response from method SpecialWordsModelsClient.WithRaise.
+type SpecialWordsModelsClientWithRaiseResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithReturnResponse contains the response from method ModelsClient.WithReturn.
-type ModelsClientWithReturnResponse struct {
+// SpecialWordsModelsClientWithReturnResponse contains the response from method SpecialWordsModelsClient.WithReturn.
+type SpecialWordsModelsClientWithReturnResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithTryResponse contains the response from method ModelsClient.WithTry.
-type ModelsClientWithTryResponse struct {
+// SpecialWordsModelsClientWithTryResponse contains the response from method SpecialWordsModelsClient.WithTry.
+type SpecialWordsModelsClientWithTryResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithWhileResponse contains the response from method ModelsClient.WithWhile.
-type ModelsClientWithWhileResponse struct {
+// SpecialWordsModelsClientWithWhileResponse contains the response from method SpecialWordsModelsClient.WithWhile.
+type SpecialWordsModelsClientWithWhileResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithWithResponse contains the response from method ModelsClient.WithWith.
-type ModelsClientWithWithResponse struct {
+// SpecialWordsModelsClientWithWithResponse contains the response from method SpecialWordsModelsClient.WithWith.
+type SpecialWordsModelsClientWithWithResponse struct {
 	// placeholder for future response values
 }
 
-// ModelsClientWithYieldResponse contains the response from method ModelsClient.WithYield.
-type ModelsClientWithYieldResponse struct {
+// SpecialWordsModelsClientWithYieldResponse contains the response from method SpecialWordsModelsClient.WithYield.
+type SpecialWordsModelsClientWithYieldResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientAndResponse contains the response from method OperationsClient.And.
-type OperationsClientAndResponse struct {
+// SpecialWordsOperationsClientAndResponse contains the response from method SpecialWordsOperationsClient.And.
+type SpecialWordsOperationsClientAndResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientAsResponse contains the response from method OperationsClient.As.
-type OperationsClientAsResponse struct {
+// SpecialWordsOperationsClientAsResponse contains the response from method SpecialWordsOperationsClient.As.
+type SpecialWordsOperationsClientAsResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientAssertResponse contains the response from method OperationsClient.Assert.
-type OperationsClientAssertResponse struct {
+// SpecialWordsOperationsClientAssertResponse contains the response from method SpecialWordsOperationsClient.Assert.
+type SpecialWordsOperationsClientAssertResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientAsyncResponse contains the response from method OperationsClient.Async.
-type OperationsClientAsyncResponse struct {
+// SpecialWordsOperationsClientAsyncResponse contains the response from method SpecialWordsOperationsClient.Async.
+type SpecialWordsOperationsClientAsyncResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientAwaitResponse contains the response from method OperationsClient.Await.
-type OperationsClientAwaitResponse struct {
+// SpecialWordsOperationsClientAwaitResponse contains the response from method SpecialWordsOperationsClient.Await.
+type SpecialWordsOperationsClientAwaitResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientBreakResponse contains the response from method OperationsClient.Break.
-type OperationsClientBreakResponse struct {
+// SpecialWordsOperationsClientBreakResponse contains the response from method SpecialWordsOperationsClient.Break.
+type SpecialWordsOperationsClientBreakResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientClassResponse contains the response from method OperationsClient.Class.
-type OperationsClientClassResponse struct {
+// SpecialWordsOperationsClientClassResponse contains the response from method SpecialWordsOperationsClient.Class.
+type SpecialWordsOperationsClientClassResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientConstructorResponse contains the response from method OperationsClient.Constructor.
-type OperationsClientConstructorResponse struct {
+// SpecialWordsOperationsClientConstructorResponse contains the response from method SpecialWordsOperationsClient.Constructor.
+type SpecialWordsOperationsClientConstructorResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientContinueResponse contains the response from method OperationsClient.Continue.
-type OperationsClientContinueResponse struct {
+// SpecialWordsOperationsClientContinueResponse contains the response from method SpecialWordsOperationsClient.Continue.
+type SpecialWordsOperationsClientContinueResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientDefResponse contains the response from method OperationsClient.Def.
-type OperationsClientDefResponse struct {
+// SpecialWordsOperationsClientDefResponse contains the response from method SpecialWordsOperationsClient.Def.
+type SpecialWordsOperationsClientDefResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientDelResponse contains the response from method OperationsClient.Del.
-type OperationsClientDelResponse struct {
+// SpecialWordsOperationsClientDelResponse contains the response from method SpecialWordsOperationsClient.Del.
+type SpecialWordsOperationsClientDelResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientElifResponse contains the response from method OperationsClient.Elif.
-type OperationsClientElifResponse struct {
+// SpecialWordsOperationsClientElifResponse contains the response from method SpecialWordsOperationsClient.Elif.
+type SpecialWordsOperationsClientElifResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientElseResponse contains the response from method OperationsClient.Else.
-type OperationsClientElseResponse struct {
+// SpecialWordsOperationsClientElseResponse contains the response from method SpecialWordsOperationsClient.Else.
+type SpecialWordsOperationsClientElseResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientExceptResponse contains the response from method OperationsClient.Except.
-type OperationsClientExceptResponse struct {
+// SpecialWordsOperationsClientExceptResponse contains the response from method SpecialWordsOperationsClient.Except.
+type SpecialWordsOperationsClientExceptResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientExecResponse contains the response from method OperationsClient.Exec.
-type OperationsClientExecResponse struct {
+// SpecialWordsOperationsClientExecResponse contains the response from method SpecialWordsOperationsClient.Exec.
+type SpecialWordsOperationsClientExecResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientFinallyResponse contains the response from method OperationsClient.Finally.
-type OperationsClientFinallyResponse struct {
+// SpecialWordsOperationsClientFinallyResponse contains the response from method SpecialWordsOperationsClient.Finally.
+type SpecialWordsOperationsClientFinallyResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientForResponse contains the response from method OperationsClient.For.
-type OperationsClientForResponse struct {
+// SpecialWordsOperationsClientForResponse contains the response from method SpecialWordsOperationsClient.For.
+type SpecialWordsOperationsClientForResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientFromResponse contains the response from method OperationsClient.From.
-type OperationsClientFromResponse struct {
+// SpecialWordsOperationsClientFromResponse contains the response from method SpecialWordsOperationsClient.From.
+type SpecialWordsOperationsClientFromResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientGlobalResponse contains the response from method OperationsClient.Global.
-type OperationsClientGlobalResponse struct {
+// SpecialWordsOperationsClientGlobalResponse contains the response from method SpecialWordsOperationsClient.Global.
+type SpecialWordsOperationsClientGlobalResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientIfResponse contains the response from method OperationsClient.If.
-type OperationsClientIfResponse struct {
+// SpecialWordsOperationsClientIfResponse contains the response from method SpecialWordsOperationsClient.If.
+type SpecialWordsOperationsClientIfResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientImportResponse contains the response from method OperationsClient.Import.
-type OperationsClientImportResponse struct {
+// SpecialWordsOperationsClientImportResponse contains the response from method SpecialWordsOperationsClient.Import.
+type SpecialWordsOperationsClientImportResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientInResponse contains the response from method OperationsClient.In.
-type OperationsClientInResponse struct {
+// SpecialWordsOperationsClientInResponse contains the response from method SpecialWordsOperationsClient.In.
+type SpecialWordsOperationsClientInResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientIsResponse contains the response from method OperationsClient.Is.
-type OperationsClientIsResponse struct {
+// SpecialWordsOperationsClientIsResponse contains the response from method SpecialWordsOperationsClient.Is.
+type SpecialWordsOperationsClientIsResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientLambdaResponse contains the response from method OperationsClient.Lambda.
-type OperationsClientLambdaResponse struct {
+// SpecialWordsOperationsClientLambdaResponse contains the response from method SpecialWordsOperationsClient.Lambda.
+type SpecialWordsOperationsClientLambdaResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientNotResponse contains the response from method OperationsClient.Not.
-type OperationsClientNotResponse struct {
+// SpecialWordsOperationsClientNotResponse contains the response from method SpecialWordsOperationsClient.Not.
+type SpecialWordsOperationsClientNotResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientOrResponse contains the response from method OperationsClient.Or.
-type OperationsClientOrResponse struct {
+// SpecialWordsOperationsClientOrResponse contains the response from method SpecialWordsOperationsClient.Or.
+type SpecialWordsOperationsClientOrResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientPassResponse contains the response from method OperationsClient.Pass.
-type OperationsClientPassResponse struct {
+// SpecialWordsOperationsClientPassResponse contains the response from method SpecialWordsOperationsClient.Pass.
+type SpecialWordsOperationsClientPassResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientRaiseResponse contains the response from method OperationsClient.Raise.
-type OperationsClientRaiseResponse struct {
+// SpecialWordsOperationsClientRaiseResponse contains the response from method SpecialWordsOperationsClient.Raise.
+type SpecialWordsOperationsClientRaiseResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientReturnResponse contains the response from method OperationsClient.Return.
-type OperationsClientReturnResponse struct {
+// SpecialWordsOperationsClientReturnResponse contains the response from method SpecialWordsOperationsClient.Return.
+type SpecialWordsOperationsClientReturnResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientTryResponse contains the response from method OperationsClient.Try.
-type OperationsClientTryResponse struct {
+// SpecialWordsOperationsClientTryResponse contains the response from method SpecialWordsOperationsClient.Try.
+type SpecialWordsOperationsClientTryResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientWhileResponse contains the response from method OperationsClient.While.
-type OperationsClientWhileResponse struct {
+// SpecialWordsOperationsClientWhileResponse contains the response from method SpecialWordsOperationsClient.While.
+type SpecialWordsOperationsClientWhileResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientWithResponse contains the response from method OperationsClient.With.
-type OperationsClientWithResponse struct {
+// SpecialWordsOperationsClientWithResponse contains the response from method SpecialWordsOperationsClient.With.
+type SpecialWordsOperationsClientWithResponse struct {
 	// placeholder for future response values
 }
 
-// OperationsClientYieldResponse contains the response from method OperationsClient.Yield.
-type OperationsClientYieldResponse struct {
+// SpecialWordsOperationsClientYieldResponse contains the response from method SpecialWordsOperationsClient.Yield.
+type SpecialWordsOperationsClientYieldResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithAndResponse contains the response from method ParametersClient.WithAnd.
-type ParametersClientWithAndResponse struct {
+// SpecialWordsParametersClientWithAndResponse contains the response from method SpecialWordsParametersClient.WithAnd.
+type SpecialWordsParametersClientWithAndResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithAsResponse contains the response from method ParametersClient.WithAs.
-type ParametersClientWithAsResponse struct {
+// SpecialWordsParametersClientWithAsResponse contains the response from method SpecialWordsParametersClient.WithAs.
+type SpecialWordsParametersClientWithAsResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithAssertResponse contains the response from method ParametersClient.WithAssert.
-type ParametersClientWithAssertResponse struct {
+// SpecialWordsParametersClientWithAssertResponse contains the response from method SpecialWordsParametersClient.WithAssert.
+type SpecialWordsParametersClientWithAssertResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithAsyncResponse contains the response from method ParametersClient.WithAsync.
-type ParametersClientWithAsyncResponse struct {
+// SpecialWordsParametersClientWithAsyncResponse contains the response from method SpecialWordsParametersClient.WithAsync.
+type SpecialWordsParametersClientWithAsyncResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithAwaitResponse contains the response from method ParametersClient.WithAwait.
-type ParametersClientWithAwaitResponse struct {
+// SpecialWordsParametersClientWithAwaitResponse contains the response from method SpecialWordsParametersClient.WithAwait.
+type SpecialWordsParametersClientWithAwaitResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithBreakResponse contains the response from method ParametersClient.WithBreak.
-type ParametersClientWithBreakResponse struct {
+// SpecialWordsParametersClientWithBreakResponse contains the response from method SpecialWordsParametersClient.WithBreak.
+type SpecialWordsParametersClientWithBreakResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithCancellationTokenResponse contains the response from method ParametersClient.WithCancellationToken.
-type ParametersClientWithCancellationTokenResponse struct {
+// SpecialWordsParametersClientWithCancellationTokenResponse contains the response from method SpecialWordsParametersClient.WithCancellationToken.
+type SpecialWordsParametersClientWithCancellationTokenResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithClassResponse contains the response from method ParametersClient.WithClass.
-type ParametersClientWithClassResponse struct {
+// SpecialWordsParametersClientWithClassResponse contains the response from method SpecialWordsParametersClient.WithClass.
+type SpecialWordsParametersClientWithClassResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithConstructorResponse contains the response from method ParametersClient.WithConstructor.
-type ParametersClientWithConstructorResponse struct {
+// SpecialWordsParametersClientWithConstructorResponse contains the response from method SpecialWordsParametersClient.WithConstructor.
+type SpecialWordsParametersClientWithConstructorResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithContinueResponse contains the response from method ParametersClient.WithContinue.
-type ParametersClientWithContinueResponse struct {
+// SpecialWordsParametersClientWithContinueResponse contains the response from method SpecialWordsParametersClient.WithContinue.
+type SpecialWordsParametersClientWithContinueResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithDefResponse contains the response from method ParametersClient.WithDef.
-type ParametersClientWithDefResponse struct {
+// SpecialWordsParametersClientWithDefResponse contains the response from method SpecialWordsParametersClient.WithDef.
+type SpecialWordsParametersClientWithDefResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithDelResponse contains the response from method ParametersClient.WithDel.
-type ParametersClientWithDelResponse struct {
+// SpecialWordsParametersClientWithDelResponse contains the response from method SpecialWordsParametersClient.WithDel.
+type SpecialWordsParametersClientWithDelResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithElifResponse contains the response from method ParametersClient.WithElif.
-type ParametersClientWithElifResponse struct {
+// SpecialWordsParametersClientWithElifResponse contains the response from method SpecialWordsParametersClient.WithElif.
+type SpecialWordsParametersClientWithElifResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithElseResponse contains the response from method ParametersClient.WithElse.
-type ParametersClientWithElseResponse struct {
+// SpecialWordsParametersClientWithElseResponse contains the response from method SpecialWordsParametersClient.WithElse.
+type SpecialWordsParametersClientWithElseResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithExceptResponse contains the response from method ParametersClient.WithExcept.
-type ParametersClientWithExceptResponse struct {
+// SpecialWordsParametersClientWithExceptResponse contains the response from method SpecialWordsParametersClient.WithExcept.
+type SpecialWordsParametersClientWithExceptResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithExecResponse contains the response from method ParametersClient.WithExec.
-type ParametersClientWithExecResponse struct {
+// SpecialWordsParametersClientWithExecResponse contains the response from method SpecialWordsParametersClient.WithExec.
+type SpecialWordsParametersClientWithExecResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithFinallyResponse contains the response from method ParametersClient.WithFinally.
-type ParametersClientWithFinallyResponse struct {
+// SpecialWordsParametersClientWithFinallyResponse contains the response from method SpecialWordsParametersClient.WithFinally.
+type SpecialWordsParametersClientWithFinallyResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithForResponse contains the response from method ParametersClient.WithFor.
-type ParametersClientWithForResponse struct {
+// SpecialWordsParametersClientWithForResponse contains the response from method SpecialWordsParametersClient.WithFor.
+type SpecialWordsParametersClientWithForResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithFromResponse contains the response from method ParametersClient.WithFrom.
-type ParametersClientWithFromResponse struct {
+// SpecialWordsParametersClientWithFromResponse contains the response from method SpecialWordsParametersClient.WithFrom.
+type SpecialWordsParametersClientWithFromResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithGlobalResponse contains the response from method ParametersClient.WithGlobal.
-type ParametersClientWithGlobalResponse struct {
+// SpecialWordsParametersClientWithGlobalResponse contains the response from method SpecialWordsParametersClient.WithGlobal.
+type SpecialWordsParametersClientWithGlobalResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithIfResponse contains the response from method ParametersClient.WithIf.
-type ParametersClientWithIfResponse struct {
+// SpecialWordsParametersClientWithIfResponse contains the response from method SpecialWordsParametersClient.WithIf.
+type SpecialWordsParametersClientWithIfResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithImportResponse contains the response from method ParametersClient.WithImport.
-type ParametersClientWithImportResponse struct {
+// SpecialWordsParametersClientWithImportResponse contains the response from method SpecialWordsParametersClient.WithImport.
+type SpecialWordsParametersClientWithImportResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithInResponse contains the response from method ParametersClient.WithIn.
-type ParametersClientWithInResponse struct {
+// SpecialWordsParametersClientWithInResponse contains the response from method SpecialWordsParametersClient.WithIn.
+type SpecialWordsParametersClientWithInResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithIsResponse contains the response from method ParametersClient.WithIs.
-type ParametersClientWithIsResponse struct {
+// SpecialWordsParametersClientWithIsResponse contains the response from method SpecialWordsParametersClient.WithIs.
+type SpecialWordsParametersClientWithIsResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithLambdaResponse contains the response from method ParametersClient.WithLambda.
-type ParametersClientWithLambdaResponse struct {
+// SpecialWordsParametersClientWithLambdaResponse contains the response from method SpecialWordsParametersClient.WithLambda.
+type SpecialWordsParametersClientWithLambdaResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithNotResponse contains the response from method ParametersClient.WithNot.
-type ParametersClientWithNotResponse struct {
+// SpecialWordsParametersClientWithNotResponse contains the response from method SpecialWordsParametersClient.WithNot.
+type SpecialWordsParametersClientWithNotResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithOrResponse contains the response from method ParametersClient.WithOr.
-type ParametersClientWithOrResponse struct {
+// SpecialWordsParametersClientWithOrResponse contains the response from method SpecialWordsParametersClient.WithOr.
+type SpecialWordsParametersClientWithOrResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithPassResponse contains the response from method ParametersClient.WithPass.
-type ParametersClientWithPassResponse struct {
+// SpecialWordsParametersClientWithPassResponse contains the response from method SpecialWordsParametersClient.WithPass.
+type SpecialWordsParametersClientWithPassResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithRaiseResponse contains the response from method ParametersClient.WithRaise.
-type ParametersClientWithRaiseResponse struct {
+// SpecialWordsParametersClientWithRaiseResponse contains the response from method SpecialWordsParametersClient.WithRaise.
+type SpecialWordsParametersClientWithRaiseResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithReturnResponse contains the response from method ParametersClient.WithReturn.
-type ParametersClientWithReturnResponse struct {
+// SpecialWordsParametersClientWithReturnResponse contains the response from method SpecialWordsParametersClient.WithReturn.
+type SpecialWordsParametersClientWithReturnResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithTryResponse contains the response from method ParametersClient.WithTry.
-type ParametersClientWithTryResponse struct {
+// SpecialWordsParametersClientWithTryResponse contains the response from method SpecialWordsParametersClient.WithTry.
+type SpecialWordsParametersClientWithTryResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithWhileResponse contains the response from method ParametersClient.WithWhile.
-type ParametersClientWithWhileResponse struct {
+// SpecialWordsParametersClientWithWhileResponse contains the response from method SpecialWordsParametersClient.WithWhile.
+type SpecialWordsParametersClientWithWhileResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithWithResponse contains the response from method ParametersClient.WithWith.
-type ParametersClientWithWithResponse struct {
+// SpecialWordsParametersClientWithWithResponse contains the response from method SpecialWordsParametersClient.WithWith.
+type SpecialWordsParametersClientWithWithResponse struct {
 	// placeholder for future response values
 }
 
-// ParametersClientWithYieldResponse contains the response from method ParametersClient.WithYield.
-type ParametersClientWithYieldResponse struct {
+// SpecialWordsParametersClientWithYieldResponse contains the response from method SpecialWordsParametersClient.WithYield.
+type SpecialWordsParametersClientWithYieldResponse struct {
 	// placeholder for future response values
 }

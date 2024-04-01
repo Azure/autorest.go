@@ -4,14 +4,14 @@
 
 package coreusagegroup
 
-// ModelInOperationClientInputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.InputToInputOutput
+// UsageModelInOperationClientInputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.InputToInputOutput
 // method.
-type ModelInOperationClientInputToInputOutputOptions struct {
+type UsageModelInOperationClientInputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the ModelInOperationClient.OutputToInputOutput
+// UsageModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.OutputToInputOutput
 // method.
-type ModelInOperationClientOutputToInputOutputOptions struct {
+type UsageModelInOperationClientOutputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }

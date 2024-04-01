@@ -15,11 +15,11 @@ import (
 
 // TwoOperationGroupServer is a fake server for instances of the twoopgroup.TwoOperationGroupClient type.
 type TwoOperationGroupServer struct {
-	// Group1Server contains the fakes for client Group1Client
-	Group1Server Group1Server
+	// TwoOperationGroupGroup1Server contains the fakes for client TwoOperationGroupGroup1Client
+	TwoOperationGroupGroup1Server TwoOperationGroupGroup1Server
 
-	// Group2Server contains the fakes for client Group2Client
-	Group2Server Group2Server
+	// TwoOperationGroupGroup2Server contains the fakes for client TwoOperationGroupGroup2Client
+	TwoOperationGroupGroup2Server TwoOperationGroupGroup2Server
 }
 
 // NewTwoOperationGroupServerTransport creates a new instance of TwoOperationGroupServerTransport with the provided implementation.
@@ -32,10 +32,10 @@ func NewTwoOperationGroupServerTransport(srv *TwoOperationGroupServer) *TwoOpera
 // TwoOperationGroupServerTransport connects instances of twoopgroup.TwoOperationGroupClient to instances of TwoOperationGroupServer.
 // Don't use this type directly, use NewTwoOperationGroupServerTransport instead.
 type TwoOperationGroupServerTransport struct {
-	srv            *TwoOperationGroupServer
-	trMu           sync.Mutex
-	trGroup1Server *Group1ServerTransport
-	trGroup2Server *Group2ServerTransport
+	srv                             *TwoOperationGroupServer
+	trMu                            sync.Mutex
+	trTwoOperationGroupGroup1Server *TwoOperationGroupGroup1ServerTransport
+	trTwoOperationGroupGroup2Server *TwoOperationGroupGroup2ServerTransport
 }
 
 // Do implements the policy.Transporter interface for TwoOperationGroupServerTransport.
@@ -54,16 +54,16 @@ func (t *TwoOperationGroupServerTransport) dispatchToClientFake(req *http.Reques
 	var err error
 
 	switch client {
-	case "Group1Client":
-		initServer(&t.trMu, &t.trGroup1Server, func() *Group1ServerTransport {
-			return NewGroup1ServerTransport(&t.srv.Group1Server)
+	case "TwoOperationGroupGroup1Client":
+		initServer(&t.trMu, &t.trTwoOperationGroupGroup1Server, func() *TwoOperationGroupGroup1ServerTransport {
+			return NewTwoOperationGroupGroup1ServerTransport(&t.srv.TwoOperationGroupGroup1Server)
 		})
-		resp, err = t.trGroup1Server.Do(req)
-	case "Group2Client":
-		initServer(&t.trMu, &t.trGroup2Server, func() *Group2ServerTransport {
-			return NewGroup2ServerTransport(&t.srv.Group2Server)
+		resp, err = t.trTwoOperationGroupGroup1Server.Do(req)
+	case "TwoOperationGroupGroup2Client":
+		initServer(&t.trMu, &t.trTwoOperationGroupGroup2Server, func() *TwoOperationGroupGroup2ServerTransport {
+			return NewTwoOperationGroupGroup2ServerTransport(&t.srv.TwoOperationGroupGroup2Server)
 		})
-		resp, err = t.trGroup2Server.Do(req)
+		resp, err = t.trTwoOperationGroupGroup2Server.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

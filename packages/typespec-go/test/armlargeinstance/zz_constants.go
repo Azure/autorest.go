@@ -26,299 +26,6 @@ func PossibleActionTypeValues() []ActionType {
 	}
 }
 
-// AzureLargeInstanceForcePowerState - Enum of two possible values to determine if the ALI instance restart operation should
-// forcefully terminate and halt any existing processes that may be running on the server or not.
-type AzureLargeInstanceForcePowerState string
-
-const (
-	// AzureLargeInstanceForcePowerStateActive - Active means that the restart operation will terminate and halt existing processes
-	// that may be running on the server
-	AzureLargeInstanceForcePowerStateActive AzureLargeInstanceForcePowerState = "active"
-	// AzureLargeInstanceForcePowerStateInactive - Inactive means that the restart operation will not terminate and halt existing
-	// processes that may be running on the server
-	AzureLargeInstanceForcePowerStateInactive AzureLargeInstanceForcePowerState = "inactive"
-)
-
-// PossibleAzureLargeInstanceForcePowerStateValues returns the possible values for the AzureLargeInstanceForcePowerState const type.
-func PossibleAzureLargeInstanceForcePowerStateValues() []AzureLargeInstanceForcePowerState {
-	return []AzureLargeInstanceForcePowerState{
-		AzureLargeInstanceForcePowerStateActive,
-		AzureLargeInstanceForcePowerStateInactive,
-	}
-}
-
-// AzureLargeInstanceHardwareTypeNamesEnum - Enum of the hardware options (vendor and/or their product name) for an Azure
-// Large Instance
-type AzureLargeInstanceHardwareTypeNamesEnum string
-
-const (
-	// AzureLargeInstanceHardwareTypeNamesEnumCiscoUCS - Hardware type of UCS from vendor Cisco
-	AzureLargeInstanceHardwareTypeNamesEnumCiscoUCS AzureLargeInstanceHardwareTypeNamesEnum = "Cisco_UCS"
-	// AzureLargeInstanceHardwareTypeNamesEnumHPE - Hardware type of HPE from vendor Hewlett Packard Enterprise
-	AzureLargeInstanceHardwareTypeNamesEnumHPE AzureLargeInstanceHardwareTypeNamesEnum = "HPE"
-	// AzureLargeInstanceHardwareTypeNamesEnumSDFLEX - Hardware type of SDFLEX
-	AzureLargeInstanceHardwareTypeNamesEnumSDFLEX AzureLargeInstanceHardwareTypeNamesEnum = "SDFLEX"
-)
-
-// PossibleAzureLargeInstanceHardwareTypeNamesEnumValues returns the possible values for the AzureLargeInstanceHardwareTypeNamesEnum const type.
-func PossibleAzureLargeInstanceHardwareTypeNamesEnumValues() []AzureLargeInstanceHardwareTypeNamesEnum {
-	return []AzureLargeInstanceHardwareTypeNamesEnum{
-		AzureLargeInstanceHardwareTypeNamesEnumCiscoUCS,
-		AzureLargeInstanceHardwareTypeNamesEnumHPE,
-		AzureLargeInstanceHardwareTypeNamesEnumSDFLEX,
-	}
-}
-
-// AzureLargeInstancePowerStateEnum - Power states that an Azure Large Instance can be in
-type AzureLargeInstancePowerStateEnum string
-
-const (
-	// AzureLargeInstancePowerStateEnumRestarting - Restarting means that the Azure Large Instance resource is restarting.
-	AzureLargeInstancePowerStateEnumRestarting AzureLargeInstancePowerStateEnum = "restarting"
-	// AzureLargeInstancePowerStateEnumStarted - Started means that the Azure Large Instance resource has been powered on.
-	AzureLargeInstancePowerStateEnumStarted AzureLargeInstancePowerStateEnum = "started"
-	// AzureLargeInstancePowerStateEnumStarting - Starting means that the Azure Large Instance resource is turning on.
-	AzureLargeInstancePowerStateEnumStarting AzureLargeInstancePowerStateEnum = "starting"
-	// AzureLargeInstancePowerStateEnumStopped - Stopped means that the Azure Large Instance resource has shut down.
-	AzureLargeInstancePowerStateEnumStopped AzureLargeInstancePowerStateEnum = "stopped"
-	// AzureLargeInstancePowerStateEnumStopping - Stopping means that the Azure Large Instance resource is shutting down.
-	AzureLargeInstancePowerStateEnumStopping AzureLargeInstancePowerStateEnum = "stopping"
-	// AzureLargeInstancePowerStateEnumUnknown - Unknown means that the state of the Azure Large Instance is unknown.
-	AzureLargeInstancePowerStateEnumUnknown AzureLargeInstancePowerStateEnum = "unknown"
-)
-
-// PossibleAzureLargeInstancePowerStateEnumValues returns the possible values for the AzureLargeInstancePowerStateEnum const type.
-func PossibleAzureLargeInstancePowerStateEnumValues() []AzureLargeInstancePowerStateEnum {
-	return []AzureLargeInstancePowerStateEnum{
-		AzureLargeInstancePowerStateEnumRestarting,
-		AzureLargeInstancePowerStateEnumStarted,
-		AzureLargeInstancePowerStateEnumStarting,
-		AzureLargeInstancePowerStateEnumStopped,
-		AzureLargeInstancePowerStateEnumStopping,
-		AzureLargeInstancePowerStateEnumUnknown,
-	}
-}
-
-// AzureLargeInstanceProvisioningStatesEnum - Provisioning states that an Azure Large Instance can be in
-type AzureLargeInstanceProvisioningStatesEnum string
-
-const (
-	// AzureLargeInstanceProvisioningStatesEnumAccepted - Accepted means Azure Large Instance resource provisioning has been accepted.
-	AzureLargeInstanceProvisioningStatesEnumAccepted AzureLargeInstanceProvisioningStatesEnum = "Accepted"
-	// AzureLargeInstanceProvisioningStatesEnumCanceled - Cancelled Azure Large Instance resource operation has been cancelled
-	AzureLargeInstanceProvisioningStatesEnumCanceled AzureLargeInstanceProvisioningStatesEnum = "Canceled"
-	// AzureLargeInstanceProvisioningStatesEnumCreating - Creating means Azure Large Instance resource is being created.
-	AzureLargeInstanceProvisioningStatesEnumCreating AzureLargeInstanceProvisioningStatesEnum = "Creating"
-	// AzureLargeInstanceProvisioningStatesEnumDeleting - Deleting means Azure Large Instance resource is in the process of being
-	// deleted
-	AzureLargeInstanceProvisioningStatesEnumDeleting AzureLargeInstanceProvisioningStatesEnum = "Deleting"
-	// AzureLargeInstanceProvisioningStatesEnumFailed - Failed means Azure Large Instance resource is in failed state
-	AzureLargeInstanceProvisioningStatesEnumFailed AzureLargeInstanceProvisioningStatesEnum = "Failed"
-	// AzureLargeInstanceProvisioningStatesEnumMigrating - Migrating means Azure Large Instance resource is being migrated from
-	// one subscription or resource group to another
-	AzureLargeInstanceProvisioningStatesEnumMigrating AzureLargeInstanceProvisioningStatesEnum = "Migrating"
-	// AzureLargeInstanceProvisioningStatesEnumSucceeded - Succeeded means Azure Large Instance resource creation succeeded during
-	// last create/update
-	AzureLargeInstanceProvisioningStatesEnumSucceeded AzureLargeInstanceProvisioningStatesEnum = "Succeeded"
-	// AzureLargeInstanceProvisioningStatesEnumUpdating - Updating means an existing Azure Large Instance resource is being updated
-	AzureLargeInstanceProvisioningStatesEnumUpdating AzureLargeInstanceProvisioningStatesEnum = "Updating"
-)
-
-// PossibleAzureLargeInstanceProvisioningStatesEnumValues returns the possible values for the AzureLargeInstanceProvisioningStatesEnum const type.
-func PossibleAzureLargeInstanceProvisioningStatesEnumValues() []AzureLargeInstanceProvisioningStatesEnum {
-	return []AzureLargeInstanceProvisioningStatesEnum{
-		AzureLargeInstanceProvisioningStatesEnumAccepted,
-		AzureLargeInstanceProvisioningStatesEnumCanceled,
-		AzureLargeInstanceProvisioningStatesEnumCreating,
-		AzureLargeInstanceProvisioningStatesEnumDeleting,
-		AzureLargeInstanceProvisioningStatesEnumFailed,
-		AzureLargeInstanceProvisioningStatesEnumMigrating,
-		AzureLargeInstanceProvisioningStatesEnumSucceeded,
-		AzureLargeInstanceProvisioningStatesEnumUpdating,
-	}
-}
-
-// AzureLargeInstanceSizeNamesEnum - Enum of available model types (each of which have their own storage / memory sizes) for
-// an Azure Large Instance type. See https://docs.microsoft.com/azure/sap/large-instances/hana-available-skus
-type AzureLargeInstanceSizeNamesEnum string
-
-const (
-	// AzureLargeInstanceSizeNamesEnumS112 - No longer offered or used.
-	AzureLargeInstanceSizeNamesEnumS112 AzureLargeInstanceSizeNamesEnum = "S112"
-	// AzureLargeInstanceSizeNamesEnumS144 - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS144 AzureLargeInstanceSizeNamesEnum = "S144"
-	// AzureLargeInstanceSizeNamesEnumS144M - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS144M AzureLargeInstanceSizeNamesEnum = "S144m"
-	// AzureLargeInstanceSizeNamesEnumS192 - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS192 AzureLargeInstanceSizeNamesEnum = "S192"
-	// AzureLargeInstanceSizeNamesEnumS192M - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS192M AzureLargeInstanceSizeNamesEnum = "S192m"
-	// AzureLargeInstanceSizeNamesEnumS192Xm - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS192Xm AzureLargeInstanceSizeNamesEnum = "S192xm"
-	// AzureLargeInstanceSizeNamesEnumS224 - 4 sockets, 224 CPU threads, 112 CPU cores, 3 TB total memory, 3 TB DRAM, 6.3 TB storage,
-	// Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224 AzureLargeInstanceSizeNamesEnum = "S224"
-	// AzureLargeInstanceSizeNamesEnumS224M - 4 sockets, 224 CPU threads, 112 CPU cores, 6 TB total memory, 6 TB DRAM, 10.5 TB
-	// storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224M AzureLargeInstanceSizeNamesEnum = "S224m"
-	// AzureLargeInstanceSizeNamesEnumS224Om - 4 sockets, 224 CPU threads, 112 CPU cores, 6 TB total memory, 3 TB DRAM, 3 TB memory
-	// optane, 10.5 TB storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224Om AzureLargeInstanceSizeNamesEnum = "S224om"
-	// AzureLargeInstanceSizeNamesEnumS224Oo - 4 sockets, 224 CPU threads, 112 CPU cores, 4.5 TB total memory, 1.5 TB DRAM, 3
-	// TB memory optane, 8.4 TB storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224Oo AzureLargeInstanceSizeNamesEnum = "S224oo"
-	// AzureLargeInstanceSizeNamesEnumS224Oom - 4 sockets, 224 CPU threads, 112 CPU cores, 9 TB total memory, 3 TB DRAM, 6 TB
-	// memory optane, 14.8 TB storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224Oom AzureLargeInstanceSizeNamesEnum = "S224oom"
-	// AzureLargeInstanceSizeNamesEnumS224Ooo - 4 sockets, 224 CPU threads, 112 CPU cores, 7.5TB total memory, 1.5 TB DRAM, 6
-	// TB memory optane, 12.7 TB storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS224Ooo AzureLargeInstanceSizeNamesEnum = "S224ooo"
-	// AzureLargeInstanceSizeNamesEnumS224Se - 4 sockets, 448 CPU threads, 6 TB total memory, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS224Se AzureLargeInstanceSizeNamesEnum = "S224se"
-	// AzureLargeInstanceSizeNamesEnumS384 - 8 sockets, 384 CPU threads, 192 CPU cores, 4 TB total memory, 4 TB DRAM, 16 TB storage,
-	// HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS384 AzureLargeInstanceSizeNamesEnum = "S384"
-	// AzureLargeInstanceSizeNamesEnumS384M - 8 sockets, 384 CPU threads, 192 CPU cores, 6 TB total memory, 6 TB DRAM, 18 TB storage,
-	// HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS384M AzureLargeInstanceSizeNamesEnum = "S384m"
-	// AzureLargeInstanceSizeNamesEnumS384Xm - 8 sockets, 384 CPU threads, 192 CPU cores, 8 TB total memory, 8 TB DRAM, 22 TB
-	// storage, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS384Xm AzureLargeInstanceSizeNamesEnum = "S384xm"
-	// AzureLargeInstanceSizeNamesEnumS384Xxm - 8 sockets, 384 CPU threads, 12 TB total memory, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS384Xxm AzureLargeInstanceSizeNamesEnum = "S384xxm"
-	// AzureLargeInstanceSizeNamesEnumS448 - 8 sockets, 448 CPU threads, 224 CPU cores, 6 TB total memory, 6 TB DRAM, 10.5 TB
-	// storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448 AzureLargeInstanceSizeNamesEnum = "S448"
-	// AzureLargeInstanceSizeNamesEnumS448M - 8 sockets, 448 CPU threads, 224 CPU cores, 12 TB total memory, 12 TB DRAM, 18.9
-	// TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448M AzureLargeInstanceSizeNamesEnum = "S448m"
-	// AzureLargeInstanceSizeNamesEnumS448Om - 8 sockets, 448 CPU threads, 224 CPU cores, 12 TB total memory, 6 TB DRAM, 6 TB
-	// memory optane, 18.9 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448Om AzureLargeInstanceSizeNamesEnum = "S448om"
-	// AzureLargeInstanceSizeNamesEnumS448Oo - 8 sockets, 448 CPU threads, 224 CPU cores, 9 TB total memory, 3 TB DRAM, 6 TB memory
-	// optane, 14.8 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448Oo AzureLargeInstanceSizeNamesEnum = "S448oo"
-	// AzureLargeInstanceSizeNamesEnumS448Oom - 8 sockets, 448 CPU threads, 224 CPU cores, 18 TB total memory, 6 TB DRAM, 12 memory
-	// optane, 27.4 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448Oom AzureLargeInstanceSizeNamesEnum = "S448oom"
-	// AzureLargeInstanceSizeNamesEnumS448Ooo - 8 sockets, 448 CPU threads, 224 CPU cores, 15 TB total memory, 3 TB DRAM, 12 memory
-	// optane, 23.2 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448Ooo AzureLargeInstanceSizeNamesEnum = "S448ooo"
-	// AzureLargeInstanceSizeNamesEnumS448Se - 8 sockets, 448 CPU threads, 12 TB total memory, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS448Se AzureLargeInstanceSizeNamesEnum = "S448se"
-	// AzureLargeInstanceSizeNamesEnumS576M - 12 sockets, 576 CPU threads, 288 CPU cores, 12 TB total memory, 12 TB DRAM, 28 TB
-	// storage, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS576M AzureLargeInstanceSizeNamesEnum = "S576m"
-	// AzureLargeInstanceSizeNamesEnumS576Xm - 12 sockets, 576 CPU threads, 288 CPU cores, 18 TB total memory, HPEMc990x hardware
-	// type
-	AzureLargeInstanceSizeNamesEnumS576Xm AzureLargeInstanceSizeNamesEnum = "S576xm"
-	// AzureLargeInstanceSizeNamesEnumS672 - 12 sockets, 672 CPU threads, 336 CPU cores, 9 TB total memory, 9 TB DRAM, 14.7 TB
-	// storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672 AzureLargeInstanceSizeNamesEnum = "S672"
-	// AzureLargeInstanceSizeNamesEnumS672M - 12 sockets, 672 CPU threads, 336 CPU cores, 18 TB total memory, 18 TB DRAM, 27.4
-	// TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672M AzureLargeInstanceSizeNamesEnum = "S672m"
-	// AzureLargeInstanceSizeNamesEnumS672Om - 12 sockets, 672 CPU threads, 336 CPU cores, 18 TB total memory, 9 TB DRAM, 9 TB
-	// memory optane, 27.4 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672Om AzureLargeInstanceSizeNamesEnum = "S672om"
-	// AzureLargeInstanceSizeNamesEnumS672Oo - 12 sockets, 672 CPU threads, 336 CPU cores, 13.5 TB total memory, 4.5 TB DRAM,
-	// 9 TB memory optane, 21.1 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672Oo AzureLargeInstanceSizeNamesEnum = "S672oo"
-	// AzureLargeInstanceSizeNamesEnumS672Oom - 12 sockets, 672 CPU threads, 336 CPU cores, 27 TB total memory, 9 TB DRAM, 18
-	// TB memory optane, 40 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672Oom AzureLargeInstanceSizeNamesEnum = "S672oom"
-	// AzureLargeInstanceSizeNamesEnumS672Ooo - 12 sockets, 672 CPU threads, 336 CPU cores, 22.5 TB total memory, 4.5 TB DRAM,
-	// 18 TB memory optane, 33.7 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS672Ooo AzureLargeInstanceSizeNamesEnum = "S672ooo"
-	// AzureLargeInstanceSizeNamesEnumS72 - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS72 AzureLargeInstanceSizeNamesEnum = "S72"
-	// AzureLargeInstanceSizeNamesEnumS72M - Type I class SKU that can't be purchased anymore
-	AzureLargeInstanceSizeNamesEnumS72M AzureLargeInstanceSizeNamesEnum = "S72m"
-	// AzureLargeInstanceSizeNamesEnumS768 - No longer offered or used.
-	AzureLargeInstanceSizeNamesEnumS768 AzureLargeInstanceSizeNamesEnum = "S768"
-	// AzureLargeInstanceSizeNamesEnumS768M - 16 sockets, 768 CPU threads, 384 CPU cores, 16 TB total memory, 16 TB DRAM, 36 TB
-	// storage, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS768M AzureLargeInstanceSizeNamesEnum = "S768m"
-	// AzureLargeInstanceSizeNamesEnumS768Xm - 16 sockets, 768 CPU threads, 384 CPU cores, 24 TB total memory, 24 TB DRAM, 56
-	// TB storage, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS768Xm AzureLargeInstanceSizeNamesEnum = "S768xm"
-	// AzureLargeInstanceSizeNamesEnumS896 - 16 sockets, 896 CPU threads, 448 CPU cores, 12 TB total memory, 12 TB DRAM, 18.9
-	// TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896 AzureLargeInstanceSizeNamesEnum = "S896"
-	// AzureLargeInstanceSizeNamesEnumS896M - 16 sockets, 896 CPU threads, 448 CPU cores, 24 TB total memory, 24 TB DRAM, 35.8
-	// TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896M AzureLargeInstanceSizeNamesEnum = "S896m"
-	// AzureLargeInstanceSizeNamesEnumS896Om - 16 sockets, 896 CPU threads, 448 CPU cores, 24 TB total memory, 12 TB DRAM, 12
-	// TB memory optane, 35.8 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896Om AzureLargeInstanceSizeNamesEnum = "S896om"
-	// AzureLargeInstanceSizeNamesEnumS896Oo - 16 sockets, 896 CPU threads, 448 CPU cores, 18 TB total memory, 6 TB DRAM, 12 TB
-	// memory optane, 27.4 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896Oo AzureLargeInstanceSizeNamesEnum = "S896oo"
-	// AzureLargeInstanceSizeNamesEnumS896Oom - 16 sockets, 896 CPU threads, 448 CPU cores, 36 TB total memory, 12 TB DRAM, 24
-	// TB memory optane, 52.7 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896Oom AzureLargeInstanceSizeNamesEnum = "S896oom"
-	// AzureLargeInstanceSizeNamesEnumS896Ooo - 16 sockets, 896 CPU threads, 448 CPU cores, 30 TB total memory, 6 TB DRAM, 24
-	// TB memory optane, 44.3 TB storage, SDFLEX hardware type
-	AzureLargeInstanceSizeNamesEnumS896Ooo AzureLargeInstanceSizeNamesEnum = "S896ooo"
-	// AzureLargeInstanceSizeNamesEnumS96 - 2 sockets, 96 CPU threads, 48 CPU cores, 768 GB total memory, 768 GB DRAM, 3.0 TB
-	// storage, Cisco_UCS hardware type
-	AzureLargeInstanceSizeNamesEnumS96 AzureLargeInstanceSizeNamesEnum = "S96"
-	// AzureLargeInstanceSizeNamesEnumS960M - 20 sockets, 960 CPU threads, 480 CPU cores, 20 TB total memory, 20 TB DRAM, 46 TB
-	// storage, HPEMc990x hardware type
-	AzureLargeInstanceSizeNamesEnumS960M AzureLargeInstanceSizeNamesEnum = "S960m"
-)
-
-// PossibleAzureLargeInstanceSizeNamesEnumValues returns the possible values for the AzureLargeInstanceSizeNamesEnum const type.
-func PossibleAzureLargeInstanceSizeNamesEnumValues() []AzureLargeInstanceSizeNamesEnum {
-	return []AzureLargeInstanceSizeNamesEnum{
-		AzureLargeInstanceSizeNamesEnumS112,
-		AzureLargeInstanceSizeNamesEnumS144,
-		AzureLargeInstanceSizeNamesEnumS144M,
-		AzureLargeInstanceSizeNamesEnumS192,
-		AzureLargeInstanceSizeNamesEnumS192M,
-		AzureLargeInstanceSizeNamesEnumS192Xm,
-		AzureLargeInstanceSizeNamesEnumS224,
-		AzureLargeInstanceSizeNamesEnumS224M,
-		AzureLargeInstanceSizeNamesEnumS224Om,
-		AzureLargeInstanceSizeNamesEnumS224Oo,
-		AzureLargeInstanceSizeNamesEnumS224Oom,
-		AzureLargeInstanceSizeNamesEnumS224Ooo,
-		AzureLargeInstanceSizeNamesEnumS224Se,
-		AzureLargeInstanceSizeNamesEnumS384,
-		AzureLargeInstanceSizeNamesEnumS384M,
-		AzureLargeInstanceSizeNamesEnumS384Xm,
-		AzureLargeInstanceSizeNamesEnumS384Xxm,
-		AzureLargeInstanceSizeNamesEnumS448,
-		AzureLargeInstanceSizeNamesEnumS448M,
-		AzureLargeInstanceSizeNamesEnumS448Om,
-		AzureLargeInstanceSizeNamesEnumS448Oo,
-		AzureLargeInstanceSizeNamesEnumS448Oom,
-		AzureLargeInstanceSizeNamesEnumS448Ooo,
-		AzureLargeInstanceSizeNamesEnumS448Se,
-		AzureLargeInstanceSizeNamesEnumS576M,
-		AzureLargeInstanceSizeNamesEnumS576Xm,
-		AzureLargeInstanceSizeNamesEnumS672,
-		AzureLargeInstanceSizeNamesEnumS672M,
-		AzureLargeInstanceSizeNamesEnumS672Om,
-		AzureLargeInstanceSizeNamesEnumS672Oo,
-		AzureLargeInstanceSizeNamesEnumS672Oom,
-		AzureLargeInstanceSizeNamesEnumS672Ooo,
-		AzureLargeInstanceSizeNamesEnumS72,
-		AzureLargeInstanceSizeNamesEnumS72M,
-		AzureLargeInstanceSizeNamesEnumS768,
-		AzureLargeInstanceSizeNamesEnumS768M,
-		AzureLargeInstanceSizeNamesEnumS768Xm,
-		AzureLargeInstanceSizeNamesEnumS896,
-		AzureLargeInstanceSizeNamesEnumS896M,
-		AzureLargeInstanceSizeNamesEnumS896Om,
-		AzureLargeInstanceSizeNamesEnumS896Oo,
-		AzureLargeInstanceSizeNamesEnumS896Oom,
-		AzureLargeInstanceSizeNamesEnumS896Ooo,
-		AzureLargeInstanceSizeNamesEnumS96,
-		AzureLargeInstanceSizeNamesEnumS960M,
-	}
-}
-
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 
@@ -343,6 +50,48 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 	}
 }
 
+// ForcePowerState - Enum of two possible values to determine if the ALI instance restart operation should forcefully terminate
+// and halt any existing processes that may be running on the server or not.
+type ForcePowerState string
+
+const (
+	// ForcePowerStateActive - Active means that the restart operation will terminate and halt existing processes that may be
+	// running on the server
+	ForcePowerStateActive ForcePowerState = "active"
+	// ForcePowerStateInactive - Inactive means that the restart operation will not terminate and halt existing processes that
+	// may be running on the server
+	ForcePowerStateInactive ForcePowerState = "inactive"
+)
+
+// PossibleForcePowerStateValues returns the possible values for the ForcePowerState const type.
+func PossibleForcePowerStateValues() []ForcePowerState {
+	return []ForcePowerState{
+		ForcePowerStateActive,
+		ForcePowerStateInactive,
+	}
+}
+
+// HardwareTypeNamesEnum - Enum of the hardware options (vendor and/or their product name) for an Azure Large Instance
+type HardwareTypeNamesEnum string
+
+const (
+	// HardwareTypeNamesEnumCiscoUCS - Hardware type of UCS from vendor Cisco
+	HardwareTypeNamesEnumCiscoUCS HardwareTypeNamesEnum = "Cisco_UCS"
+	// HardwareTypeNamesEnumHPE - Hardware type of HPE from vendor Hewlett Packard Enterprise
+	HardwareTypeNamesEnumHPE HardwareTypeNamesEnum = "HPE"
+	// HardwareTypeNamesEnumSDFLEX - Hardware type of SDFLEX
+	HardwareTypeNamesEnumSDFLEX HardwareTypeNamesEnum = "SDFLEX"
+)
+
+// PossibleHardwareTypeNamesEnumValues returns the possible values for the HardwareTypeNamesEnum const type.
+func PossibleHardwareTypeNamesEnumValues() []HardwareTypeNamesEnum {
+	return []HardwareTypeNamesEnum{
+		HardwareTypeNamesEnumCiscoUCS,
+		HardwareTypeNamesEnumHPE,
+		HardwareTypeNamesEnumSDFLEX,
+	}
+}
+
 // Origin - The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
 // value is "user,system"
 type Origin string
@@ -362,6 +111,36 @@ func PossibleOriginValues() []Origin {
 		OriginSystem,
 		OriginUser,
 		OriginUserSystem,
+	}
+}
+
+// PowerStateEnum - Power states that an Azure Large Instance can be in
+type PowerStateEnum string
+
+const (
+	// PowerStateEnumRestarting - Restarting means that the Azure Large Instance resource is restarting.
+	PowerStateEnumRestarting PowerStateEnum = "restarting"
+	// PowerStateEnumStarted - Started means that the Azure Large Instance resource has been powered on.
+	PowerStateEnumStarted PowerStateEnum = "started"
+	// PowerStateEnumStarting - Starting means that the Azure Large Instance resource is turning on.
+	PowerStateEnumStarting PowerStateEnum = "starting"
+	// PowerStateEnumStopped - Stopped means that the Azure Large Instance resource has shut down.
+	PowerStateEnumStopped PowerStateEnum = "stopped"
+	// PowerStateEnumStopping - Stopping means that the Azure Large Instance resource is shutting down.
+	PowerStateEnumStopping PowerStateEnum = "stopping"
+	// PowerStateEnumUnknown - Unknown means that the state of the Azure Large Instance is unknown.
+	PowerStateEnumUnknown PowerStateEnum = "unknown"
+)
+
+// PossiblePowerStateEnumValues returns the possible values for the PowerStateEnum const type.
+func PossiblePowerStateEnumValues() []PowerStateEnum {
+	return []PowerStateEnum{
+		PowerStateEnumRestarting,
+		PowerStateEnumStarted,
+		PowerStateEnumStarting,
+		PowerStateEnumStopped,
+		PowerStateEnumStopping,
+		PowerStateEnumUnknown,
 	}
 }
 
@@ -401,6 +180,43 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 	}
 }
 
+// ProvisioningStatesEnum - Provisioning states that an Azure Large Instance can be in
+type ProvisioningStatesEnum string
+
+const (
+	// ProvisioningStatesEnumAccepted - Accepted means Azure Large Instance resource provisioning has been accepted.
+	ProvisioningStatesEnumAccepted ProvisioningStatesEnum = "Accepted"
+	// ProvisioningStatesEnumCanceled - Cancelled Azure Large Instance resource operation has been cancelled
+	ProvisioningStatesEnumCanceled ProvisioningStatesEnum = "Canceled"
+	// ProvisioningStatesEnumCreating - Creating means Azure Large Instance resource is being created.
+	ProvisioningStatesEnumCreating ProvisioningStatesEnum = "Creating"
+	// ProvisioningStatesEnumDeleting - Deleting means Azure Large Instance resource is in the process of being deleted
+	ProvisioningStatesEnumDeleting ProvisioningStatesEnum = "Deleting"
+	// ProvisioningStatesEnumFailed - Failed means Azure Large Instance resource is in failed state
+	ProvisioningStatesEnumFailed ProvisioningStatesEnum = "Failed"
+	// ProvisioningStatesEnumMigrating - Migrating means Azure Large Instance resource is being migrated from one subscription
+	// or resource group to another
+	ProvisioningStatesEnumMigrating ProvisioningStatesEnum = "Migrating"
+	// ProvisioningStatesEnumSucceeded - Succeeded means Azure Large Instance resource creation succeeded during last create/update
+	ProvisioningStatesEnumSucceeded ProvisioningStatesEnum = "Succeeded"
+	// ProvisioningStatesEnumUpdating - Updating means an existing Azure Large Instance resource is being updated
+	ProvisioningStatesEnumUpdating ProvisioningStatesEnum = "Updating"
+)
+
+// PossibleProvisioningStatesEnumValues returns the possible values for the ProvisioningStatesEnum const type.
+func PossibleProvisioningStatesEnumValues() []ProvisioningStatesEnum {
+	return []ProvisioningStatesEnum{
+		ProvisioningStatesEnumAccepted,
+		ProvisioningStatesEnumCanceled,
+		ProvisioningStatesEnumCreating,
+		ProvisioningStatesEnumDeleting,
+		ProvisioningStatesEnumFailed,
+		ProvisioningStatesEnumMigrating,
+		ProvisioningStatesEnumSucceeded,
+		ProvisioningStatesEnumUpdating,
+	}
+}
+
 // ResourceProvisioningState - The provisioning state of a resource type.
 type ResourceProvisioningState string
 
@@ -419,5 +235,185 @@ func PossibleResourceProvisioningStateValues() []ResourceProvisioningState {
 		ResourceProvisioningStateCanceled,
 		ResourceProvisioningStateFailed,
 		ResourceProvisioningStateSucceeded,
+	}
+}
+
+// SizeNamesEnum - Enum of available model types (each of which have their own storage / memory sizes) for an Azure Large
+// Instance type. See https://docs.microsoft.com/azure/sap/large-instances/hana-available-skus
+type SizeNamesEnum string
+
+const (
+	// SizeNamesEnumS112 - No longer offered or used.
+	SizeNamesEnumS112 SizeNamesEnum = "S112"
+	// SizeNamesEnumS144 - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS144 SizeNamesEnum = "S144"
+	// SizeNamesEnumS144M - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS144M SizeNamesEnum = "S144m"
+	// SizeNamesEnumS192 - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS192 SizeNamesEnum = "S192"
+	// SizeNamesEnumS192M - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS192M SizeNamesEnum = "S192m"
+	// SizeNamesEnumS192Xm - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS192Xm SizeNamesEnum = "S192xm"
+	// SizeNamesEnumS224 - 4 sockets, 224 CPU threads, 112 CPU cores, 3 TB total memory, 3 TB DRAM, 6.3 TB storage, Cisco_UCS
+	// hardware type
+	SizeNamesEnumS224 SizeNamesEnum = "S224"
+	// SizeNamesEnumS224M - 4 sockets, 224 CPU threads, 112 CPU cores, 6 TB total memory, 6 TB DRAM, 10.5 TB storage, Cisco_UCS
+	// hardware type
+	SizeNamesEnumS224M SizeNamesEnum = "S224m"
+	// SizeNamesEnumS224Om - 4 sockets, 224 CPU threads, 112 CPU cores, 6 TB total memory, 3 TB DRAM, 3 TB memory optane, 10.5
+	// TB storage, Cisco_UCS hardware type
+	SizeNamesEnumS224Om SizeNamesEnum = "S224om"
+	// SizeNamesEnumS224Oo - 4 sockets, 224 CPU threads, 112 CPU cores, 4.5 TB total memory, 1.5 TB DRAM, 3 TB memory optane,
+	// 8.4 TB storage, Cisco_UCS hardware type
+	SizeNamesEnumS224Oo SizeNamesEnum = "S224oo"
+	// SizeNamesEnumS224Oom - 4 sockets, 224 CPU threads, 112 CPU cores, 9 TB total memory, 3 TB DRAM, 6 TB memory optane, 14.8
+	// TB storage, Cisco_UCS hardware type
+	SizeNamesEnumS224Oom SizeNamesEnum = "S224oom"
+	// SizeNamesEnumS224Ooo - 4 sockets, 224 CPU threads, 112 CPU cores, 7.5TB total memory, 1.5 TB DRAM, 6 TB memory optane,
+	// 12.7 TB storage, Cisco_UCS hardware type
+	SizeNamesEnumS224Ooo SizeNamesEnum = "S224ooo"
+	// SizeNamesEnumS224Se - 4 sockets, 448 CPU threads, 6 TB total memory, SDFLEX hardware type
+	SizeNamesEnumS224Se SizeNamesEnum = "S224se"
+	// SizeNamesEnumS384 - 8 sockets, 384 CPU threads, 192 CPU cores, 4 TB total memory, 4 TB DRAM, 16 TB storage, HPEMc990x hardware
+	// type
+	SizeNamesEnumS384 SizeNamesEnum = "S384"
+	// SizeNamesEnumS384M - 8 sockets, 384 CPU threads, 192 CPU cores, 6 TB total memory, 6 TB DRAM, 18 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS384M SizeNamesEnum = "S384m"
+	// SizeNamesEnumS384Xm - 8 sockets, 384 CPU threads, 192 CPU cores, 8 TB total memory, 8 TB DRAM, 22 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS384Xm SizeNamesEnum = "S384xm"
+	// SizeNamesEnumS384Xxm - 8 sockets, 384 CPU threads, 12 TB total memory, HPEMc990x hardware type
+	SizeNamesEnumS384Xxm SizeNamesEnum = "S384xxm"
+	// SizeNamesEnumS448 - 8 sockets, 448 CPU threads, 224 CPU cores, 6 TB total memory, 6 TB DRAM, 10.5 TB storage, SDFLEX hardware
+	// type
+	SizeNamesEnumS448 SizeNamesEnum = "S448"
+	// SizeNamesEnumS448M - 8 sockets, 448 CPU threads, 224 CPU cores, 12 TB total memory, 12 TB DRAM, 18.9 TB storage, SDFLEX
+	// hardware type
+	SizeNamesEnumS448M SizeNamesEnum = "S448m"
+	// SizeNamesEnumS448Om - 8 sockets, 448 CPU threads, 224 CPU cores, 12 TB total memory, 6 TB DRAM, 6 TB memory optane, 18.9
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS448Om SizeNamesEnum = "S448om"
+	// SizeNamesEnumS448Oo - 8 sockets, 448 CPU threads, 224 CPU cores, 9 TB total memory, 3 TB DRAM, 6 TB memory optane, 14.8
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS448Oo SizeNamesEnum = "S448oo"
+	// SizeNamesEnumS448Oom - 8 sockets, 448 CPU threads, 224 CPU cores, 18 TB total memory, 6 TB DRAM, 12 memory optane, 27.4
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS448Oom SizeNamesEnum = "S448oom"
+	// SizeNamesEnumS448Ooo - 8 sockets, 448 CPU threads, 224 CPU cores, 15 TB total memory, 3 TB DRAM, 12 memory optane, 23.2
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS448Ooo SizeNamesEnum = "S448ooo"
+	// SizeNamesEnumS448Se - 8 sockets, 448 CPU threads, 12 TB total memory, SDFLEX hardware type
+	SizeNamesEnumS448Se SizeNamesEnum = "S448se"
+	// SizeNamesEnumS576M - 12 sockets, 576 CPU threads, 288 CPU cores, 12 TB total memory, 12 TB DRAM, 28 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS576M SizeNamesEnum = "S576m"
+	// SizeNamesEnumS576Xm - 12 sockets, 576 CPU threads, 288 CPU cores, 18 TB total memory, HPEMc990x hardware type
+	SizeNamesEnumS576Xm SizeNamesEnum = "S576xm"
+	// SizeNamesEnumS672 - 12 sockets, 672 CPU threads, 336 CPU cores, 9 TB total memory, 9 TB DRAM, 14.7 TB storage, SDFLEX hardware
+	// type
+	SizeNamesEnumS672 SizeNamesEnum = "S672"
+	// SizeNamesEnumS672M - 12 sockets, 672 CPU threads, 336 CPU cores, 18 TB total memory, 18 TB DRAM, 27.4 TB storage, SDFLEX
+	// hardware type
+	SizeNamesEnumS672M SizeNamesEnum = "S672m"
+	// SizeNamesEnumS672Om - 12 sockets, 672 CPU threads, 336 CPU cores, 18 TB total memory, 9 TB DRAM, 9 TB memory optane, 27.4
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS672Om SizeNamesEnum = "S672om"
+	// SizeNamesEnumS672Oo - 12 sockets, 672 CPU threads, 336 CPU cores, 13.5 TB total memory, 4.5 TB DRAM, 9 TB memory optane,
+	// 21.1 TB storage, SDFLEX hardware type
+	SizeNamesEnumS672Oo SizeNamesEnum = "S672oo"
+	// SizeNamesEnumS672Oom - 12 sockets, 672 CPU threads, 336 CPU cores, 27 TB total memory, 9 TB DRAM, 18 TB memory optane,
+	// 40 TB storage, SDFLEX hardware type
+	SizeNamesEnumS672Oom SizeNamesEnum = "S672oom"
+	// SizeNamesEnumS672Ooo - 12 sockets, 672 CPU threads, 336 CPU cores, 22.5 TB total memory, 4.5 TB DRAM, 18 TB memory optane,
+	// 33.7 TB storage, SDFLEX hardware type
+	SizeNamesEnumS672Ooo SizeNamesEnum = "S672ooo"
+	// SizeNamesEnumS72 - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS72 SizeNamesEnum = "S72"
+	// SizeNamesEnumS72M - Type I class SKU that can't be purchased anymore
+	SizeNamesEnumS72M SizeNamesEnum = "S72m"
+	// SizeNamesEnumS768 - No longer offered or used.
+	SizeNamesEnumS768 SizeNamesEnum = "S768"
+	// SizeNamesEnumS768M - 16 sockets, 768 CPU threads, 384 CPU cores, 16 TB total memory, 16 TB DRAM, 36 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS768M SizeNamesEnum = "S768m"
+	// SizeNamesEnumS768Xm - 16 sockets, 768 CPU threads, 384 CPU cores, 24 TB total memory, 24 TB DRAM, 56 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS768Xm SizeNamesEnum = "S768xm"
+	// SizeNamesEnumS896 - 16 sockets, 896 CPU threads, 448 CPU cores, 12 TB total memory, 12 TB DRAM, 18.9 TB storage, SDFLEX
+	// hardware type
+	SizeNamesEnumS896 SizeNamesEnum = "S896"
+	// SizeNamesEnumS896M - 16 sockets, 896 CPU threads, 448 CPU cores, 24 TB total memory, 24 TB DRAM, 35.8 TB storage, SDFLEX
+	// hardware type
+	SizeNamesEnumS896M SizeNamesEnum = "S896m"
+	// SizeNamesEnumS896Om - 16 sockets, 896 CPU threads, 448 CPU cores, 24 TB total memory, 12 TB DRAM, 12 TB memory optane,
+	// 35.8 TB storage, SDFLEX hardware type
+	SizeNamesEnumS896Om SizeNamesEnum = "S896om"
+	// SizeNamesEnumS896Oo - 16 sockets, 896 CPU threads, 448 CPU cores, 18 TB total memory, 6 TB DRAM, 12 TB memory optane, 27.4
+	// TB storage, SDFLEX hardware type
+	SizeNamesEnumS896Oo SizeNamesEnum = "S896oo"
+	// SizeNamesEnumS896Oom - 16 sockets, 896 CPU threads, 448 CPU cores, 36 TB total memory, 12 TB DRAM, 24 TB memory optane,
+	// 52.7 TB storage, SDFLEX hardware type
+	SizeNamesEnumS896Oom SizeNamesEnum = "S896oom"
+	// SizeNamesEnumS896Ooo - 16 sockets, 896 CPU threads, 448 CPU cores, 30 TB total memory, 6 TB DRAM, 24 TB memory optane,
+	// 44.3 TB storage, SDFLEX hardware type
+	SizeNamesEnumS896Ooo SizeNamesEnum = "S896ooo"
+	// SizeNamesEnumS96 - 2 sockets, 96 CPU threads, 48 CPU cores, 768 GB total memory, 768 GB DRAM, 3.0 TB storage, Cisco_UCS
+	// hardware type
+	SizeNamesEnumS96 SizeNamesEnum = "S96"
+	// SizeNamesEnumS960M - 20 sockets, 960 CPU threads, 480 CPU cores, 20 TB total memory, 20 TB DRAM, 46 TB storage, HPEMc990x
+	// hardware type
+	SizeNamesEnumS960M SizeNamesEnum = "S960m"
+)
+
+// PossibleSizeNamesEnumValues returns the possible values for the SizeNamesEnum const type.
+func PossibleSizeNamesEnumValues() []SizeNamesEnum {
+	return []SizeNamesEnum{
+		SizeNamesEnumS112,
+		SizeNamesEnumS144,
+		SizeNamesEnumS144M,
+		SizeNamesEnumS192,
+		SizeNamesEnumS192M,
+		SizeNamesEnumS192Xm,
+		SizeNamesEnumS224,
+		SizeNamesEnumS224M,
+		SizeNamesEnumS224Om,
+		SizeNamesEnumS224Oo,
+		SizeNamesEnumS224Oom,
+		SizeNamesEnumS224Ooo,
+		SizeNamesEnumS224Se,
+		SizeNamesEnumS384,
+		SizeNamesEnumS384M,
+		SizeNamesEnumS384Xm,
+		SizeNamesEnumS384Xxm,
+		SizeNamesEnumS448,
+		SizeNamesEnumS448M,
+		SizeNamesEnumS448Om,
+		SizeNamesEnumS448Oo,
+		SizeNamesEnumS448Oom,
+		SizeNamesEnumS448Ooo,
+		SizeNamesEnumS448Se,
+		SizeNamesEnumS576M,
+		SizeNamesEnumS576Xm,
+		SizeNamesEnumS672,
+		SizeNamesEnumS672M,
+		SizeNamesEnumS672Om,
+		SizeNamesEnumS672Oo,
+		SizeNamesEnumS672Oom,
+		SizeNamesEnumS672Ooo,
+		SizeNamesEnumS72,
+		SizeNamesEnumS72M,
+		SizeNamesEnumS768,
+		SizeNamesEnumS768M,
+		SizeNamesEnumS768Xm,
+		SizeNamesEnumS896,
+		SizeNamesEnumS896M,
+		SizeNamesEnumS896Om,
+		SizeNamesEnumS896Oo,
+		SizeNamesEnumS896Oom,
+		SizeNamesEnumS896Ooo,
+		SizeNamesEnumS96,
+		SizeNamesEnumS960M,
 	}
 }

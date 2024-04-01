@@ -4,21 +4,6 @@
 
 package renamedopgroup
 
-// GroupClientRenamedFourResponse contains the response from method GroupClient.RenamedFour.
-type GroupClientRenamedFourResponse struct {
-	// placeholder for future response values
-}
-
-// GroupClientRenamedSixResponse contains the response from method GroupClient.RenamedSix.
-type GroupClientRenamedSixResponse struct {
-	// placeholder for future response values
-}
-
-// GroupClientRenamedTwoResponse contains the response from method GroupClient.RenamedTwo.
-type GroupClientRenamedTwoResponse struct {
-	// placeholder for future response values
-}
-
 // RenamedOperationClientRenamedFiveResponse contains the response from method RenamedOperationClient.RenamedFive.
 type RenamedOperationClientRenamedFiveResponse struct {
 	// placeholder for future response values
@@ -31,5 +16,20 @@ type RenamedOperationClientRenamedOneResponse struct {
 
 // RenamedOperationClientRenamedThreeResponse contains the response from method RenamedOperationClient.RenamedThree.
 type RenamedOperationClientRenamedThreeResponse struct {
+	// placeholder for future response values
+}
+
+// RenamedOperationGroupClientRenamedFourResponse contains the response from method RenamedOperationGroupClient.RenamedFour.
+type RenamedOperationGroupClientRenamedFourResponse struct {
+	// placeholder for future response values
+}
+
+// RenamedOperationGroupClientRenamedSixResponse contains the response from method RenamedOperationGroupClient.RenamedSix.
+type RenamedOperationGroupClientRenamedSixResponse struct {
+	// placeholder for future response values
+}
+
+// RenamedOperationGroupClientRenamedTwoResponse contains the response from method RenamedOperationGroupClient.RenamedTwo.
+type RenamedOperationGroupClientRenamedTwoResponse struct {
 	// placeholder for future response values
 }

@@ -4,38 +4,41 @@
 
 package multipartgroup
 
-// FormDataClientBasicOptions contains the optional parameters for the FormDataClient.Basic method.
-type FormDataClientBasicOptions struct {
+// MultiPartFormDataClientBasicOptions contains the optional parameters for the MultiPartFormDataClient.Basic method.
+type MultiPartFormDataClientBasicOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormDataClientBinaryArrayPartsOptions contains the optional parameters for the FormDataClient.BinaryArrayParts method.
-type FormDataClientBinaryArrayPartsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// FormDataClientCheckFileNameAndContentTypeOptions contains the optional parameters for the FormDataClient.CheckFileNameAndContentType
+// MultiPartFormDataClientBinaryArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.BinaryArrayParts
 // method.
-type FormDataClientCheckFileNameAndContentTypeOptions struct {
+type MultiPartFormDataClientBinaryArrayPartsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormDataClientComplexOptions contains the optional parameters for the FormDataClient.Complex method.
-type FormDataClientComplexOptions struct {
+// MultiPartFormDataClientCheckFileNameAndContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.CheckFileNameAndContentType
+// method.
+type MultiPartFormDataClientCheckFileNameAndContentTypeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormDataClientJSONArrayPartsOptions contains the optional parameters for the FormDataClient.JSONArrayParts method.
-type FormDataClientJSONArrayPartsOptions struct {
+// MultiPartFormDataClientComplexOptions contains the optional parameters for the MultiPartFormDataClient.Complex method.
+type MultiPartFormDataClientComplexOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormDataClientJSONPartOptions contains the optional parameters for the FormDataClient.JSONPart method.
-type FormDataClientJSONPartOptions struct {
+// MultiPartFormDataClientJSONArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.JSONArrayParts
+// method.
+type MultiPartFormDataClientJSONArrayPartsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormDataClientMultiBinaryPartsOptions contains the optional parameters for the FormDataClient.MultiBinaryParts method.
-type FormDataClientMultiBinaryPartsOptions struct {
+// MultiPartFormDataClientJSONPartOptions contains the optional parameters for the MultiPartFormDataClient.JSONPart method.
+type MultiPartFormDataClientJSONPartOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MultiPartFormDataClientMultiBinaryPartsOptions contains the optional parameters for the MultiPartFormDataClient.MultiBinaryParts
+// method.
+type MultiPartFormDataClientMultiBinaryPartsOptions struct {
 	// placeholder for future optional parameters
 }

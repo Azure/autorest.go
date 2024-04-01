@@ -14,13 +14,13 @@ type AzureLargeInstancesClientGetResponse struct {
 // AzureLargeInstancesClientListByResourceGroupResponse contains the response from method AzureLargeInstancesClient.NewListByResourceGroupPager.
 type AzureLargeInstancesClientListByResourceGroupResponse struct {
 	// The response of a AzureLargeInstance list operation.
-	AzureLargeInstanceListResult
+	ListResult
 }
 
 // AzureLargeInstancesClientListBySubscriptionResponse contains the response from method AzureLargeInstancesClient.NewListBySubscriptionPager.
 type AzureLargeInstancesClientListBySubscriptionResponse struct {
 	// The response of a AzureLargeInstance list operation.
-	AzureLargeInstanceListResult
+	ListResult
 }
 
 // AzureLargeInstancesClientRestartResponse contains the response from method AzureLargeInstancesClient.Restart.

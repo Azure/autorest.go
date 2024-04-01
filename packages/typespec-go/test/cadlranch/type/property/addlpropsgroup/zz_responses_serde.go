@@ -4,22 +4,22 @@
 
 package addlpropsgroup
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ExtendsUnknownDiscriminatedClientGetResponse.
-func (e *ExtendsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AdditionalPropertiesExtendsUnknownDiscriminatedClientGetResponse.
+func (a *AdditionalPropertiesExtendsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalExtendsUnknownAdditionalPropertiesDiscriminatedClassification(data)
 	if err != nil {
 		return err
 	}
-	e.ExtendsUnknownAdditionalPropertiesDiscriminatedClassification = res
+	a.ExtendsUnknownAdditionalPropertiesDiscriminatedClassification = res
 	return nil
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type IsUnknownDiscriminatedClientGetResponse.
-func (i *IsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AdditionalPropertiesIsUnknownDiscriminatedClientGetResponse.
+func (a *AdditionalPropertiesIsUnknownDiscriminatedClientGetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalIsUnknownAdditionalPropertiesDiscriminatedClassification(data)
 	if err != nil {
 		return err
 	}
-	i.IsUnknownAdditionalPropertiesDiscriminatedClassification = res
+	a.IsUnknownAdditionalPropertiesDiscriminatedClassification = res
 	return nil
 }

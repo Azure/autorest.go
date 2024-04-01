@@ -20,11 +20,11 @@ import (
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.
 type NamingServer struct {
-	// ModelServer contains the fakes for client ModelClient
-	ModelServer ModelServer
+	// NamingModelServer contains the fakes for client NamingModelClient
+	NamingModelServer NamingModelServer
 
-	// UnionEnumServer contains the fakes for client UnionEnumClient
-	UnionEnumServer UnionEnumServer
+	// NamingUnionEnumServer contains the fakes for client NamingUnionEnumClient
+	NamingUnionEnumServer NamingUnionEnumServer
 
 	// Client is the fake for method NamingClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -65,10 +65,10 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 // NamingServerTransport connects instances of naminggroup.NamingClient to instances of NamingServer.
 // Don't use this type directly, use NewNamingServerTransport instead.
 type NamingServerTransport struct {
-	srv               *NamingServer
-	trMu              sync.Mutex
-	trModelServer     *ModelServerTransport
-	trUnionEnumServer *UnionEnumServerTransport
+	srv                     *NamingServer
+	trMu                    sync.Mutex
+	trNamingModelServer     *NamingModelServerTransport
+	trNamingUnionEnumServer *NamingUnionEnumServerTransport
 }
 
 // Do implements the policy.Transporter interface for NamingServerTransport.
@@ -90,16 +90,16 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "ModelClient":
-		initServer(&n.trMu, &n.trModelServer, func() *ModelServerTransport {
-			return NewModelServerTransport(&n.srv.ModelServer)
+	case "NamingModelClient":
+		initServer(&n.trMu, &n.trNamingModelServer, func() *NamingModelServerTransport {
+			return NewNamingModelServerTransport(&n.srv.NamingModelServer)
 		})
-		resp, err = n.trModelServer.Do(req)
-	case "UnionEnumClient":
-		initServer(&n.trMu, &n.trUnionEnumServer, func() *UnionEnumServerTransport {
-			return NewUnionEnumServerTransport(&n.srv.UnionEnumServer)
+		resp, err = n.trNamingModelServer.Do(req)
+	case "NamingUnionEnumClient":
+		initServer(&n.trMu, &n.trNamingUnionEnumServer, func() *NamingUnionEnumServerTransport {
+			return NewNamingUnionEnumServerTransport(&n.srv.NamingUnionEnumServer)
 		})
-		resp, err = n.trUnionEnumServer.Do(req)
+		resp, err = n.trNamingUnionEnumServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

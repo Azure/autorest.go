@@ -21,9 +21,9 @@ type RenamedOperationClient struct {
 	client   ClientType
 }
 
-// NewGroupClient creates a new instance of [GroupClient].
-func (client *RenamedOperationClient) NewGroupClient() *GroupClient {
-	return &GroupClient{
+// NewRenamedOperationGroupClient creates a new instance of [RenamedOperationGroupClient].
+func (client *RenamedOperationClient) NewRenamedOperationGroupClient() *RenamedOperationGroupClient {
+	return &RenamedOperationGroupClient{
 		internal: client.internal,
 		endpoint: client.endpoint,
 		client:   client.client,

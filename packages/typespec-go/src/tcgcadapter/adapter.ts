@@ -10,7 +10,6 @@ import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import { packageNameFromOutputFolder, trimPackagePrefix } from '../../../naming.go/src/naming.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import { EmitContext } from '@typespec/compiler';
-import { values } from '@azure-tools/linq';
 
 const headerText = `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
@@ -25,10 +24,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
 
   const sdkContext = tcgc.createSdkContext(context);
   let codeModelType: go.CodeModelType = 'data-plane';
-  if (values(sdkContext.experimental_sdkPackage.clients).any(client => { return client.arm; })) {
-    // if one client is ARM then mark the code model as ARM.
-    // we should never have an SDK that mixes ARM and data-plane.
-    // TODO: tcgc to move arm property to sdkPackage
+  if (sdkContext.arm === true) {
     codeModelType = 'azure-arm';
   }
 
@@ -45,7 +41,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     codeModel.options.sliceElementsByval = true;
   }
 
-  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel);
+  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options.stutter);
 
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext);
@@ -56,14 +52,18 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   return codeModel;
 }
 
-function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel): void {
+function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, customPrefix?: string): void {
   let stutteringPrefix = codeModel.packageName;
 
-  // if there's a well-known prefix, remove it
-  if (stutteringPrefix.startsWith('arm')) {
-    stutteringPrefix = stutteringPrefix.substring(3);
-  } else if (stutteringPrefix.startsWith('az')) {
-    stutteringPrefix = stutteringPrefix.substring(2);
+  if (customPrefix) {
+    stutteringPrefix = customPrefix;
+  } else {
+    // if there's a well-known prefix, remove it
+    if (stutteringPrefix.startsWith('arm')) {
+      stutteringPrefix = stutteringPrefix.substring(3);
+    } else if (stutteringPrefix.startsWith('az')) {
+      stutteringPrefix = stutteringPrefix.substring(2);
+    }
   }
   stutteringPrefix = stutteringPrefix.toUpperCase();
 

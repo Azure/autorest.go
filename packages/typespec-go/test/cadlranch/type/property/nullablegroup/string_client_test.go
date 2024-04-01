@@ -19,7 +19,7 @@ import (
 func TestStringClientGetNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().GetNonNull(context.Background(), nil)
+	resp, err := client.NewNullableStringClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.StringProperty{
 		NullableProperty: to.Ptr("hello"),
@@ -30,7 +30,7 @@ func TestStringClientGetNonNull(t *testing.T) {
 func TestStringClientGetNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().GetNull(context.Background(), nil)
+	resp, err := client.NewNullableStringClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.StringProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -40,7 +40,7 @@ func TestStringClientGetNull(t *testing.T) {
 func TestStringClientPatchNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().PatchNonNull(context.Background(), nullablegroup.StringProperty{
+	resp, err := client.NewNullableStringClient().PatchNonNull(context.Background(), nullablegroup.StringProperty{
 		NullableProperty: to.Ptr("hello"),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)
@@ -51,7 +51,7 @@ func TestStringClientPatchNonNull(t *testing.T) {
 func TestStringClientPatchNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().PatchNull(context.Background(), nullablegroup.StringProperty{
+	resp, err := client.NewNullableStringClient().PatchNull(context.Background(), nullablegroup.StringProperty{
 		NullableProperty: azcore.NullValue[*string](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

@@ -4,16 +4,6 @@
 
 package naminggroup
 
-// ModelClientClientOptions contains the optional parameters for the ModelClient.Client method.
-type ModelClientClientOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ModelClientLanguageOptions contains the optional parameters for the ModelClient.Language method.
-type ModelClientLanguageOptions struct {
-	// placeholder for future optional parameters
-}
-
 // NamingClientClientNameOptions contains the optional parameters for the NamingClient.ClientName method.
 type NamingClientClientNameOptions struct {
 	// placeholder for future optional parameters
@@ -50,13 +40,24 @@ type NamingClientResponseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnionEnumClientUnionEnumMemberNameOptions contains the optional parameters for the UnionEnumClient.UnionEnumMemberName
-// method.
-type UnionEnumClientUnionEnumMemberNameOptions struct {
+// NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
+type NamingModelClientClientOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnionEnumClientUnionEnumNameOptions contains the optional parameters for the UnionEnumClient.UnionEnumName method.
-type UnionEnumClientUnionEnumNameOptions struct {
+// NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
+type NamingModelClientLanguageOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingUnionEnumClientUnionEnumMemberNameOptions contains the optional parameters for the NamingUnionEnumClient.UnionEnumMemberName
+// method.
+type NamingUnionEnumClientUnionEnumMemberNameOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingUnionEnumClientUnionEnumNameOptions contains the optional parameters for the NamingUnionEnumClient.UnionEnumName
+// method.
+type NamingUnionEnumClientUnionEnumNameOptions struct {
 	// placeholder for future optional parameters
 }

@@ -12,44 +12,44 @@ type NullableClient struct {
 	internal *azcore.Client
 }
 
-// NewBytesClient creates a new instance of [BytesClient].
-func (client *NullableClient) NewBytesClient() *BytesClient {
-	return &BytesClient{
+// NewNullableBytesClient creates a new instance of [NullableBytesClient].
+func (client *NullableClient) NewNullableBytesClient() *NullableBytesClient {
+	return &NullableBytesClient{
 		internal: client.internal,
 	}
 }
 
-// NewCollectionsByteClient creates a new instance of [CollectionsByteClient].
-func (client *NullableClient) NewCollectionsByteClient() *CollectionsByteClient {
-	return &CollectionsByteClient{
+// NewNullableCollectionsByteClient creates a new instance of [NullableCollectionsByteClient].
+func (client *NullableClient) NewNullableCollectionsByteClient() *NullableCollectionsByteClient {
+	return &NullableCollectionsByteClient{
 		internal: client.internal,
 	}
 }
 
-// NewCollectionsModelClient creates a new instance of [CollectionsModelClient].
-func (client *NullableClient) NewCollectionsModelClient() *CollectionsModelClient {
-	return &CollectionsModelClient{
+// NewNullableCollectionsModelClient creates a new instance of [NullableCollectionsModelClient].
+func (client *NullableClient) NewNullableCollectionsModelClient() *NullableCollectionsModelClient {
+	return &NullableCollectionsModelClient{
 		internal: client.internal,
 	}
 }
 
-// NewDatetimeClient creates a new instance of [DatetimeClient].
-func (client *NullableClient) NewDatetimeClient() *DatetimeClient {
-	return &DatetimeClient{
+// NewNullableDatetimeClient creates a new instance of [NullableDatetimeClient].
+func (client *NullableClient) NewNullableDatetimeClient() *NullableDatetimeClient {
+	return &NullableDatetimeClient{
 		internal: client.internal,
 	}
 }
 
-// NewDurationClient creates a new instance of [DurationClient].
-func (client *NullableClient) NewDurationClient() *DurationClient {
-	return &DurationClient{
+// NewNullableDurationClient creates a new instance of [NullableDurationClient].
+func (client *NullableClient) NewNullableDurationClient() *NullableDurationClient {
+	return &NullableDurationClient{
 		internal: client.internal,
 	}
 }
 
-// NewStringClient creates a new instance of [StringClient].
-func (client *NullableClient) NewStringClient() *StringClient {
-	return &StringClient{
+// NewNullableStringClient creates a new instance of [NullableStringClient].
+func (client *NullableClient) NewNullableStringClient() *NullableStringClient {
+	return &NullableStringClient{
 		internal: client.internal,
 	}
 }

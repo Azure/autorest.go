@@ -15,8 +15,8 @@ import (
 
 // LegacyServer is a fake server for instances of the lrolegacygroup.LegacyClient type.
 type LegacyServer struct {
-	// CreateResourcePollViaOperationLocationServer contains the fakes for client CreateResourcePollViaOperationLocationClient
-	CreateResourcePollViaOperationLocationServer CreateResourcePollViaOperationLocationServer
+	// LegacyCreateResourcePollViaOperationLocationServer contains the fakes for client LegacyCreateResourcePollViaOperationLocationClient
+	LegacyCreateResourcePollViaOperationLocationServer LegacyCreateResourcePollViaOperationLocationServer
 }
 
 // NewLegacyServerTransport creates a new instance of LegacyServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewLegacyServerTransport(srv *LegacyServer) *LegacyServerTransport {
 // LegacyServerTransport connects instances of lrolegacygroup.LegacyClient to instances of LegacyServer.
 // Don't use this type directly, use NewLegacyServerTransport instead.
 type LegacyServerTransport struct {
-	srv                                            *LegacyServer
-	trMu                                           sync.Mutex
-	trCreateResourcePollViaOperationLocationServer *CreateResourcePollViaOperationLocationServerTransport
+	srv                                                  *LegacyServer
+	trMu                                                 sync.Mutex
+	trLegacyCreateResourcePollViaOperationLocationServer *LegacyCreateResourcePollViaOperationLocationServerTransport
 }
 
 // Do implements the policy.Transporter interface for LegacyServerTransport.
@@ -50,11 +50,11 @@ func (l *LegacyServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "CreateResourcePollViaOperationLocationClient":
-		initServer(&l.trMu, &l.trCreateResourcePollViaOperationLocationServer, func() *CreateResourcePollViaOperationLocationServerTransport {
-			return NewCreateResourcePollViaOperationLocationServerTransport(&l.srv.CreateResourcePollViaOperationLocationServer)
+	case "LegacyCreateResourcePollViaOperationLocationClient":
+		initServer(&l.trMu, &l.trLegacyCreateResourcePollViaOperationLocationServer, func() *LegacyCreateResourcePollViaOperationLocationServerTransport {
+			return NewLegacyCreateResourcePollViaOperationLocationServerTransport(&l.srv.LegacyCreateResourcePollViaOperationLocationServer)
 		})
-		resp, err = l.trCreateResourcePollViaOperationLocationServer.Do(req)
+		resp, err = l.trLegacyCreateResourcePollViaOperationLocationServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

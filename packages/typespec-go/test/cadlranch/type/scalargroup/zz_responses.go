@@ -4,82 +4,82 @@
 
 package scalargroup
 
-// BooleanClientGetResponse contains the response from method BooleanClient.Get.
-type BooleanClientGetResponse struct {
+// ScalarBooleanClientGetResponse contains the response from method ScalarBooleanClient.Get.
+type ScalarBooleanClientGetResponse struct {
 	Value *bool
 }
 
-// BooleanClientPutResponse contains the response from method BooleanClient.Put.
-type BooleanClientPutResponse struct {
+// ScalarBooleanClientPutResponse contains the response from method ScalarBooleanClient.Put.
+type ScalarBooleanClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Decimal128TypeClientRequestBodyResponse contains the response from method Decimal128TypeClient.RequestBody.
-type Decimal128TypeClientRequestBodyResponse struct {
+// ScalarDecimal128TypeClientRequestBodyResponse contains the response from method ScalarDecimal128TypeClient.RequestBody.
+type ScalarDecimal128TypeClientRequestBodyResponse struct {
 	// placeholder for future response values
 }
 
-// Decimal128TypeClientRequestParameterResponse contains the response from method Decimal128TypeClient.RequestParameter.
-type Decimal128TypeClientRequestParameterResponse struct {
+// ScalarDecimal128TypeClientRequestParameterResponse contains the response from method ScalarDecimal128TypeClient.RequestParameter.
+type ScalarDecimal128TypeClientRequestParameterResponse struct {
 	// placeholder for future response values
 }
 
-// Decimal128TypeClientResponseBodyResponse contains the response from method Decimal128TypeClient.ResponseBody.
-type Decimal128TypeClientResponseBodyResponse struct {
+// ScalarDecimal128TypeClientResponseBodyResponse contains the response from method ScalarDecimal128TypeClient.ResponseBody.
+type ScalarDecimal128TypeClientResponseBodyResponse struct {
 	Value *float64
 }
 
-// Decimal128VerifyClientPrepareVerifyResponse contains the response from method Decimal128VerifyClient.PrepareVerify.
-type Decimal128VerifyClientPrepareVerifyResponse struct {
+// ScalarDecimal128VerifyClientPrepareVerifyResponse contains the response from method ScalarDecimal128VerifyClient.PrepareVerify.
+type ScalarDecimal128VerifyClientPrepareVerifyResponse struct {
 	Value []float64
 }
 
-// Decimal128VerifyClientVerifyResponse contains the response from method Decimal128VerifyClient.Verify.
-type Decimal128VerifyClientVerifyResponse struct {
+// ScalarDecimal128VerifyClientVerifyResponse contains the response from method ScalarDecimal128VerifyClient.Verify.
+type ScalarDecimal128VerifyClientVerifyResponse struct {
 	// placeholder for future response values
 }
 
-// DecimalTypeClientRequestBodyResponse contains the response from method DecimalTypeClient.RequestBody.
-type DecimalTypeClientRequestBodyResponse struct {
+// ScalarDecimalTypeClientRequestBodyResponse contains the response from method ScalarDecimalTypeClient.RequestBody.
+type ScalarDecimalTypeClientRequestBodyResponse struct {
 	// placeholder for future response values
 }
 
-// DecimalTypeClientRequestParameterResponse contains the response from method DecimalTypeClient.RequestParameter.
-type DecimalTypeClientRequestParameterResponse struct {
+// ScalarDecimalTypeClientRequestParameterResponse contains the response from method ScalarDecimalTypeClient.RequestParameter.
+type ScalarDecimalTypeClientRequestParameterResponse struct {
 	// placeholder for future response values
 }
 
-// DecimalTypeClientResponseBodyResponse contains the response from method DecimalTypeClient.ResponseBody.
-type DecimalTypeClientResponseBodyResponse struct {
+// ScalarDecimalTypeClientResponseBodyResponse contains the response from method ScalarDecimalTypeClient.ResponseBody.
+type ScalarDecimalTypeClientResponseBodyResponse struct {
 	Value *float64
 }
 
-// DecimalVerifyClientPrepareVerifyResponse contains the response from method DecimalVerifyClient.PrepareVerify.
-type DecimalVerifyClientPrepareVerifyResponse struct {
+// ScalarDecimalVerifyClientPrepareVerifyResponse contains the response from method ScalarDecimalVerifyClient.PrepareVerify.
+type ScalarDecimalVerifyClientPrepareVerifyResponse struct {
 	Value []float64
 }
 
-// DecimalVerifyClientVerifyResponse contains the response from method DecimalVerifyClient.Verify.
-type DecimalVerifyClientVerifyResponse struct {
+// ScalarDecimalVerifyClientVerifyResponse contains the response from method ScalarDecimalVerifyClient.Verify.
+type ScalarDecimalVerifyClientVerifyResponse struct {
 	// placeholder for future response values
 }
 
-// StringClientGetResponse contains the response from method StringClient.Get.
-type StringClientGetResponse struct {
+// ScalarStringClientGetResponse contains the response from method ScalarStringClient.Get.
+type ScalarStringClientGetResponse struct {
 	Value *string
 }
 
-// StringClientPutResponse contains the response from method StringClient.Put.
-type StringClientPutResponse struct {
+// ScalarStringClientPutResponse contains the response from method ScalarStringClient.Put.
+type ScalarStringClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// UnknownClientGetResponse contains the response from method UnknownClient.Get.
-type UnknownClientGetResponse struct {
+// ScalarUnknownClientGetResponse contains the response from method ScalarUnknownClient.Get.
+type ScalarUnknownClientGetResponse struct {
 	Value any
 }
 
-// UnknownClientPutResponse contains the response from method UnknownClient.Put.
-type UnknownClientPutResponse struct {
+// ScalarUnknownClientPutResponse contains the response from method ScalarUnknownClient.Put.
+type ScalarUnknownClientPutResponse struct {
 	// placeholder for future response values
 }

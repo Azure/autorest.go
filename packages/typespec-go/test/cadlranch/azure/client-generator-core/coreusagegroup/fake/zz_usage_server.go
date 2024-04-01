@@ -15,8 +15,8 @@ import (
 
 // UsageServer is a fake server for instances of the coreusagegroup.UsageClient type.
 type UsageServer struct {
-	// ModelInOperationServer contains the fakes for client ModelInOperationClient
-	ModelInOperationServer ModelInOperationServer
+	// UsageModelInOperationServer contains the fakes for client UsageModelInOperationClient
+	UsageModelInOperationServer UsageModelInOperationServer
 }
 
 // NewUsageServerTransport creates a new instance of UsageServerTransport with the provided implementation.
@@ -29,9 +29,9 @@ func NewUsageServerTransport(srv *UsageServer) *UsageServerTransport {
 // UsageServerTransport connects instances of coreusagegroup.UsageClient to instances of UsageServer.
 // Don't use this type directly, use NewUsageServerTransport instead.
 type UsageServerTransport struct {
-	srv                      *UsageServer
-	trMu                     sync.Mutex
-	trModelInOperationServer *ModelInOperationServerTransport
+	srv                           *UsageServer
+	trMu                          sync.Mutex
+	trUsageModelInOperationServer *UsageModelInOperationServerTransport
 }
 
 // Do implements the policy.Transporter interface for UsageServerTransport.
@@ -50,11 +50,11 @@ func (u *UsageServerTransport) dispatchToClientFake(req *http.Request, client st
 	var err error
 
 	switch client {
-	case "ModelInOperationClient":
-		initServer(&u.trMu, &u.trModelInOperationServer, func() *ModelInOperationServerTransport {
-			return NewModelInOperationServerTransport(&u.srv.ModelInOperationServer)
+	case "UsageModelInOperationClient":
+		initServer(&u.trMu, &u.trUsageModelInOperationServer, func() *UsageModelInOperationServerTransport {
+			return NewUsageModelInOperationServerTransport(&u.srv.UsageModelInOperationServer)
 		})
-		resp, err = u.trModelInOperationServer.Do(req)
+		resp, err = u.trUsageModelInOperationServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

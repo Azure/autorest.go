@@ -18,7 +18,7 @@ import (
 func TestHeaderClientDefault(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewHeaderClient().Default(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationHeaderClient().Default(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -26,7 +26,7 @@ func TestHeaderClientDefault(t *testing.T) {
 func TestHeaderClientFloatSeconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewHeaderClient().FloatSeconds(context.Background(), 35.621, nil)
+	resp, err := client.NewDurationHeaderClient().FloatSeconds(context.Background(), 35.621, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -34,7 +34,7 @@ func TestHeaderClientFloatSeconds(t *testing.T) {
 func TestHeaderClientInt32Seconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewHeaderClient().Int32Seconds(context.Background(), 36, nil)
+	resp, err := client.NewDurationHeaderClient().Int32Seconds(context.Background(), 36, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -42,7 +42,7 @@ func TestHeaderClientInt32Seconds(t *testing.T) {
 func TestHeaderClientISO8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewHeaderClient().ISO8601(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationHeaderClient().ISO8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -50,7 +50,7 @@ func TestHeaderClientISO8601(t *testing.T) {
 func TestHeaderClientISO8601Array(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewHeaderClient().ISO8601Array(context.Background(), []string{"P40D", "P50D"}, nil)
+	resp, err := client.NewDurationHeaderClient().ISO8601Array(context.Background(), []string{"P40D", "P50D"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -58,7 +58,7 @@ func TestHeaderClientISO8601Array(t *testing.T) {
 func TestPropertyClientDefault(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().Default(context.Background(), durationgroup.DefaultDurationProperty{
+	resp, err := client.NewDurationPropertyClient().Default(context.Background(), durationgroup.DefaultDurationProperty{
 		Value: to.Ptr("P40D"),
 	}, nil)
 	require.NoError(t, err)
@@ -69,7 +69,7 @@ func TestPropertyClientDefault(t *testing.T) {
 func TestPropertyClientFloatSeconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().FloatSeconds(context.Background(), durationgroup.FloatSecondsDurationProperty{
+	resp, err := client.NewDurationPropertyClient().FloatSeconds(context.Background(), durationgroup.FloatSecondsDurationProperty{
 		Value: to.Ptr[float32](35.621),
 	}, nil)
 	require.NoError(t, err)
@@ -80,7 +80,7 @@ func TestPropertyClientFloatSeconds(t *testing.T) {
 func TestPropertyClientFloatSecondsArray(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().FloatSecondsArray(context.Background(), durationgroup.FloatSecondsDurationArrayProperty{
+	resp, err := client.NewDurationPropertyClient().FloatSecondsArray(context.Background(), durationgroup.FloatSecondsDurationArrayProperty{
 		Value: []*float32{
 			to.Ptr[float32](35.621),
 			to.Ptr[float32](46.781),
@@ -97,7 +97,7 @@ func TestPropertyClientFloatSecondsArray(t *testing.T) {
 func TestPropertyClientInt32Seconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().Int32Seconds(context.Background(), durationgroup.Int32SecondsDurationProperty{
+	resp, err := client.NewDurationPropertyClient().Int32Seconds(context.Background(), durationgroup.Int32SecondsDurationProperty{
 		Value: to.Ptr[int32](36),
 	}, nil)
 	require.NoError(t, err)
@@ -108,7 +108,7 @@ func TestPropertyClientInt32Seconds(t *testing.T) {
 func TestPropertyClientISO8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().ISO8601(context.Background(), durationgroup.ISO8601DurationProperty{
+	resp, err := client.NewDurationPropertyClient().ISO8601(context.Background(), durationgroup.ISO8601DurationProperty{
 		Value: to.Ptr("P40D"),
 	}, nil)
 	require.NoError(t, err)
@@ -119,7 +119,7 @@ func TestPropertyClientISO8601(t *testing.T) {
 func TestQueryClientDefault(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Default(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationQueryClient().Default(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -127,7 +127,7 @@ func TestQueryClientDefault(t *testing.T) {
 func TestQueryClientFloatSeconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().FloatSeconds(context.Background(), 35.621, nil)
+	resp, err := client.NewDurationQueryClient().FloatSeconds(context.Background(), 35.621, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -135,7 +135,7 @@ func TestQueryClientFloatSeconds(t *testing.T) {
 func TestQueryClientInt32Seconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Int32Seconds(context.Background(), 36, nil)
+	resp, err := client.NewDurationQueryClient().Int32Seconds(context.Background(), 36, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -143,7 +143,7 @@ func TestQueryClientInt32Seconds(t *testing.T) {
 func TestQueryClientInt32SecondsArray(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().Int32SecondsArray(context.Background(), []int32{36, 47}, nil)
+	resp, err := client.NewDurationQueryClient().Int32SecondsArray(context.Background(), []int32{36, 47}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -151,7 +151,7 @@ func TestQueryClientInt32SecondsArray(t *testing.T) {
 func TestQueryClientISO8601(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewQueryClient().ISO8601(context.Background(), "P40D", nil)
+	resp, err := client.NewDurationQueryClient().ISO8601(context.Background(), "P40D", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

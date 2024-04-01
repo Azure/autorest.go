@@ -17,7 +17,7 @@ import (
 func TestDecimal128TypeClient_RequestBody(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimal128TypeClient().RequestBody(context.Background(), 0.33333, nil)
+	resp, err := client.NewScalarDecimal128TypeClient().RequestBody(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -25,7 +25,7 @@ func TestDecimal128TypeClient_RequestBody(t *testing.T) {
 func TestDecimal128TypeClient_RequestParameter(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimal128TypeClient().RequestParameter(context.Background(), 0.33333, nil)
+	resp, err := client.NewScalarDecimal128TypeClient().RequestParameter(context.Background(), 0.33333, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -33,7 +33,7 @@ func TestDecimal128TypeClient_RequestParameter(t *testing.T) {
 func TestDecimal128TypeClient_ResponseBody(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDecimal128TypeClient().ResponseBody(context.Background(), nil)
+	resp, err := client.NewScalarDecimal128TypeClient().ResponseBody(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, 0.33333, *resp.Value)

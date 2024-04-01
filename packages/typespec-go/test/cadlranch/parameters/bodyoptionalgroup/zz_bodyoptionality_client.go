@@ -18,9 +18,9 @@ type BodyOptionalityClient struct {
 	internal *azcore.Client
 }
 
-// NewOptionalExplicitClient creates a new instance of [OptionalExplicitClient].
-func (client *BodyOptionalityClient) NewOptionalExplicitClient() *OptionalExplicitClient {
-	return &OptionalExplicitClient{
+// NewBodyOptionalityOptionalExplicitClient creates a new instance of [BodyOptionalityOptionalExplicitClient].
+func (client *BodyOptionalityClient) NewBodyOptionalityOptionalExplicitClient() *BodyOptionalityOptionalExplicitClient {
+	return &BodyOptionalityOptionalExplicitClient{
 		internal: client.internal,
 	}
 }

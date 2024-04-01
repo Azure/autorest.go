@@ -15,7 +15,7 @@ import (
 func TestPropertyClient_Get(t *testing.T) {
 	client, err := jsongroup.NewJsonClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().Get(context.Background(), nil)
+	resp, err := client.NewJsonPropertyClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.Equal(t, jsongroup.JSONEncodedNameModel{
 		DefaultName: to.Ptr(true),
@@ -25,7 +25,7 @@ func TestPropertyClient_Get(t *testing.T) {
 func TestPropertyClient_Send(t *testing.T) {
 	client, err := jsongroup.NewJsonClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewPropertyClient().Send(context.Background(), jsongroup.JSONEncodedNameModel{
+	resp, err := client.NewJsonPropertyClient().Send(context.Background(), jsongroup.JSONEncodedNameModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)

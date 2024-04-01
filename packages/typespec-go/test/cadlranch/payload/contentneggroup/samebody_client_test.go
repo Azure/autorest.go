@@ -16,7 +16,7 @@ import (
 func TestSameBodyClient_GetAvatarAsJPEG(t *testing.T) {
 	client, err := contentneggroup.NewContentNegotiationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSameBodyClient().GetAvatarAsJPEG(context.Background(), nil)
+	resp, err := client.NewContentNegotiationSameBodyClient().GetAvatarAsJPEG(context.Background(), nil)
 	require.NoError(t, err)
 	jpgResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestSameBodyClient_GetAvatarAsJPEG(t *testing.T) {
 func TestSameBodyClient_GetAvatarAsPNG(t *testing.T) {
 	client, err := contentneggroup.NewContentNegotiationClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSameBodyClient().GetAvatarAsPNG(context.Background(), nil)
+	resp, err := client.NewContentNegotiationSameBodyClient().GetAvatarAsPNG(context.Background(), nil)
 	require.NoError(t, err)
 	pngResp, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)

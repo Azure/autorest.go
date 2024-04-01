@@ -153,7 +153,7 @@ func (client *AzureLargeInstancesClient) listByResourceGroupCreateRequest(ctx co
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *AzureLargeInstancesClient) listByResourceGroupHandleResponse(resp *http.Response) (AzureLargeInstancesClientListByResourceGroupResponse, error) {
 	result := AzureLargeInstancesClientListByResourceGroupResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeInstanceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListResult); err != nil {
 		return AzureLargeInstancesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
@@ -208,7 +208,7 @@ func (client *AzureLargeInstancesClient) listBySubscriptionCreateRequest(ctx con
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *http.Response) (AzureLargeInstancesClientListBySubscriptionResponse, error) {
 	result := AzureLargeInstancesClientListBySubscriptionResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeInstanceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListResult); err != nil {
 		return AzureLargeInstancesClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
@@ -442,7 +442,7 @@ func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context,
 //   - properties - The resource properties to be updated.
 //   - options - AzureLargeInstancesClientUpdateOptions contains the optional parameters for the AzureLargeInstancesClient.Update
 //     method.
-func (client *AzureLargeInstancesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties AzureLargeInstanceTagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (AzureLargeInstancesClientUpdateResponse, error) {
+func (client *AzureLargeInstancesClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (AzureLargeInstancesClientUpdateResponse, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -465,7 +465,7 @@ func (client *AzureLargeInstancesClient) Update(ctx context.Context, subscriptio
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties AzureLargeInstanceTagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

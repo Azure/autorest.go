@@ -18,7 +18,7 @@ import (
 func TestModelClient_Client(t *testing.T) {
 	client, err := projectednamegroup.NewProjectedNameClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelClient().Client(context.Background(), projectednamegroup.ClientModel{
+	resp, err := client.NewProjectedNameModelClient().Client(context.Background(), projectednamegroup.ClientModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
@@ -28,7 +28,7 @@ func TestModelClient_Client(t *testing.T) {
 func TestModelClient_Language(t *testing.T) {
 	client, err := projectednamegroup.NewProjectedNameClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewModelClient().Language(context.Background(), projectednamegroup.GoModel{
+	resp, err := client.NewProjectedNameModelClient().Language(context.Background(), projectednamegroup.GoModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)

@@ -12,72 +12,72 @@ type ArrayClient struct {
 	internal *azcore.Client
 }
 
-// NewBooleanValueClient creates a new instance of [BooleanValueClient].
-func (client *ArrayClient) NewBooleanValueClient() *BooleanValueClient {
-	return &BooleanValueClient{
+// NewArrayBooleanValueClient creates a new instance of [ArrayBooleanValueClient].
+func (client *ArrayClient) NewArrayBooleanValueClient() *ArrayBooleanValueClient {
+	return &ArrayBooleanValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewDatetimeValueClient creates a new instance of [DatetimeValueClient].
-func (client *ArrayClient) NewDatetimeValueClient() *DatetimeValueClient {
-	return &DatetimeValueClient{
+// NewArrayDatetimeValueClient creates a new instance of [ArrayDatetimeValueClient].
+func (client *ArrayClient) NewArrayDatetimeValueClient() *ArrayDatetimeValueClient {
+	return &ArrayDatetimeValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewDurationValueClient creates a new instance of [DurationValueClient].
-func (client *ArrayClient) NewDurationValueClient() *DurationValueClient {
-	return &DurationValueClient{
+// NewArrayDurationValueClient creates a new instance of [ArrayDurationValueClient].
+func (client *ArrayClient) NewArrayDurationValueClient() *ArrayDurationValueClient {
+	return &ArrayDurationValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewFloat32ValueClient creates a new instance of [Float32ValueClient].
-func (client *ArrayClient) NewFloat32ValueClient() *Float32ValueClient {
-	return &Float32ValueClient{
+// NewArrayFloat32ValueClient creates a new instance of [ArrayFloat32ValueClient].
+func (client *ArrayClient) NewArrayFloat32ValueClient() *ArrayFloat32ValueClient {
+	return &ArrayFloat32ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewInt32ValueClient creates a new instance of [Int32ValueClient].
-func (client *ArrayClient) NewInt32ValueClient() *Int32ValueClient {
-	return &Int32ValueClient{
+// NewArrayInt32ValueClient creates a new instance of [ArrayInt32ValueClient].
+func (client *ArrayClient) NewArrayInt32ValueClient() *ArrayInt32ValueClient {
+	return &ArrayInt32ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewInt64ValueClient creates a new instance of [Int64ValueClient].
-func (client *ArrayClient) NewInt64ValueClient() *Int64ValueClient {
-	return &Int64ValueClient{
+// NewArrayInt64ValueClient creates a new instance of [ArrayInt64ValueClient].
+func (client *ArrayClient) NewArrayInt64ValueClient() *ArrayInt64ValueClient {
+	return &ArrayInt64ValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewModelValueClient creates a new instance of [ModelValueClient].
-func (client *ArrayClient) NewModelValueClient() *ModelValueClient {
-	return &ModelValueClient{
+// NewArrayModelValueClient creates a new instance of [ArrayModelValueClient].
+func (client *ArrayClient) NewArrayModelValueClient() *ArrayModelValueClient {
+	return &ArrayModelValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewNullableFloatValueClient creates a new instance of [NullableFloatValueClient].
-func (client *ArrayClient) NewNullableFloatValueClient() *NullableFloatValueClient {
-	return &NullableFloatValueClient{
+// NewArrayNullableFloatValueClient creates a new instance of [ArrayNullableFloatValueClient].
+func (client *ArrayClient) NewArrayNullableFloatValueClient() *ArrayNullableFloatValueClient {
+	return &ArrayNullableFloatValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewStringValueClient creates a new instance of [StringValueClient].
-func (client *ArrayClient) NewStringValueClient() *StringValueClient {
-	return &StringValueClient{
+// NewArrayStringValueClient creates a new instance of [ArrayStringValueClient].
+func (client *ArrayClient) NewArrayStringValueClient() *ArrayStringValueClient {
+	return &ArrayStringValueClient{
 		internal: client.internal,
 	}
 }
 
-// NewUnknownValueClient creates a new instance of [UnknownValueClient].
-func (client *ArrayClient) NewUnknownValueClient() *UnknownValueClient {
-	return &UnknownValueClient{
+// NewArrayUnknownValueClient creates a new instance of [ArrayUnknownValueClient].
+func (client *ArrayClient) NewArrayUnknownValueClient() *ArrayUnknownValueClient {
+	return &ArrayUnknownValueClient{
 		internal: client.internal,
 	}
 }

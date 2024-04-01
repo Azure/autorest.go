@@ -12,51 +12,51 @@ type ScalarClient struct {
 	internal *azcore.Client
 }
 
-// NewBooleanClient creates a new instance of [BooleanClient].
-func (client *ScalarClient) NewBooleanClient() *BooleanClient {
-	return &BooleanClient{
+// NewScalarBooleanClient creates a new instance of [ScalarBooleanClient].
+func (client *ScalarClient) NewScalarBooleanClient() *ScalarBooleanClient {
+	return &ScalarBooleanClient{
 		internal: client.internal,
 	}
 }
 
-// NewDecimal128TypeClient creates a new instance of [Decimal128TypeClient].
-func (client *ScalarClient) NewDecimal128TypeClient() *Decimal128TypeClient {
-	return &Decimal128TypeClient{
+// NewScalarDecimal128TypeClient creates a new instance of [ScalarDecimal128TypeClient].
+func (client *ScalarClient) NewScalarDecimal128TypeClient() *ScalarDecimal128TypeClient {
+	return &ScalarDecimal128TypeClient{
 		internal: client.internal,
 	}
 }
 
-// NewDecimal128VerifyClient creates a new instance of [Decimal128VerifyClient].
-func (client *ScalarClient) NewDecimal128VerifyClient() *Decimal128VerifyClient {
-	return &Decimal128VerifyClient{
+// NewScalarDecimal128VerifyClient creates a new instance of [ScalarDecimal128VerifyClient].
+func (client *ScalarClient) NewScalarDecimal128VerifyClient() *ScalarDecimal128VerifyClient {
+	return &ScalarDecimal128VerifyClient{
 		internal: client.internal,
 	}
 }
 
-// NewDecimalTypeClient creates a new instance of [DecimalTypeClient].
-func (client *ScalarClient) NewDecimalTypeClient() *DecimalTypeClient {
-	return &DecimalTypeClient{
+// NewScalarDecimalTypeClient creates a new instance of [ScalarDecimalTypeClient].
+func (client *ScalarClient) NewScalarDecimalTypeClient() *ScalarDecimalTypeClient {
+	return &ScalarDecimalTypeClient{
 		internal: client.internal,
 	}
 }
 
-// NewDecimalVerifyClient creates a new instance of [DecimalVerifyClient].
-func (client *ScalarClient) NewDecimalVerifyClient() *DecimalVerifyClient {
-	return &DecimalVerifyClient{
+// NewScalarDecimalVerifyClient creates a new instance of [ScalarDecimalVerifyClient].
+func (client *ScalarClient) NewScalarDecimalVerifyClient() *ScalarDecimalVerifyClient {
+	return &ScalarDecimalVerifyClient{
 		internal: client.internal,
 	}
 }
 
-// NewStringClient creates a new instance of [StringClient].
-func (client *ScalarClient) NewStringClient() *StringClient {
-	return &StringClient{
+// NewScalarStringClient creates a new instance of [ScalarStringClient].
+func (client *ScalarClient) NewScalarStringClient() *ScalarStringClient {
+	return &ScalarStringClient{
 		internal: client.internal,
 	}
 }
 
-// NewUnknownClient creates a new instance of [UnknownClient].
-func (client *ScalarClient) NewUnknownClient() *UnknownClient {
-	return &UnknownClient{
+// NewScalarUnknownClient creates a new instance of [ScalarUnknownClient].
+func (client *ScalarClient) NewScalarUnknownClient() *ScalarUnknownClient {
+	return &ScalarUnknownClient{
 		internal: client.internal,
 	}
 }

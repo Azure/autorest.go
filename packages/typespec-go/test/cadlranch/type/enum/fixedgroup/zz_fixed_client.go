@@ -12,9 +12,9 @@ type FixedClient struct {
 	internal *azcore.Client
 }
 
-// NewStringClient creates a new instance of [StringClient].
-func (client *FixedClient) NewStringClient() *StringClient {
-	return &StringClient{
+// NewFixedStringClient creates a new instance of [FixedStringClient].
+func (client *FixedClient) NewFixedStringClient() *FixedStringClient {
+	return &FixedStringClient{
 		internal: client.internal,
 	}
 }

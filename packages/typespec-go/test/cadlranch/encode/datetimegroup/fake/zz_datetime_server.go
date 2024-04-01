@@ -15,17 +15,17 @@ import (
 
 // DatetimeServer is a fake server for instances of the datetimegroup.DatetimeClient type.
 type DatetimeServer struct {
-	// HeaderServer contains the fakes for client HeaderClient
-	HeaderServer HeaderServer
+	// DatetimeHeaderServer contains the fakes for client DatetimeHeaderClient
+	DatetimeHeaderServer DatetimeHeaderServer
 
-	// PropertyServer contains the fakes for client PropertyClient
-	PropertyServer PropertyServer
+	// DatetimePropertyServer contains the fakes for client DatetimePropertyClient
+	DatetimePropertyServer DatetimePropertyServer
 
-	// QueryServer contains the fakes for client QueryClient
-	QueryServer QueryServer
+	// DatetimeQueryServer contains the fakes for client DatetimeQueryClient
+	DatetimeQueryServer DatetimeQueryServer
 
-	// ResponseHeaderServer contains the fakes for client ResponseHeaderClient
-	ResponseHeaderServer ResponseHeaderServer
+	// DatetimeResponseHeaderServer contains the fakes for client DatetimeResponseHeaderClient
+	DatetimeResponseHeaderServer DatetimeResponseHeaderServer
 }
 
 // NewDatetimeServerTransport creates a new instance of DatetimeServerTransport with the provided implementation.
@@ -38,12 +38,12 @@ func NewDatetimeServerTransport(srv *DatetimeServer) *DatetimeServerTransport {
 // DatetimeServerTransport connects instances of datetimegroup.DatetimeClient to instances of DatetimeServer.
 // Don't use this type directly, use NewDatetimeServerTransport instead.
 type DatetimeServerTransport struct {
-	srv                    *DatetimeServer
-	trMu                   sync.Mutex
-	trHeaderServer         *HeaderServerTransport
-	trPropertyServer       *PropertyServerTransport
-	trQueryServer          *QueryServerTransport
-	trResponseHeaderServer *ResponseHeaderServerTransport
+	srv                            *DatetimeServer
+	trMu                           sync.Mutex
+	trDatetimeHeaderServer         *DatetimeHeaderServerTransport
+	trDatetimePropertyServer       *DatetimePropertyServerTransport
+	trDatetimeQueryServer          *DatetimeQueryServerTransport
+	trDatetimeResponseHeaderServer *DatetimeResponseHeaderServerTransport
 }
 
 // Do implements the policy.Transporter interface for DatetimeServerTransport.
@@ -62,26 +62,26 @@ func (d *DatetimeServerTransport) dispatchToClientFake(req *http.Request, client
 	var err error
 
 	switch client {
-	case "HeaderClient":
-		initServer(&d.trMu, &d.trHeaderServer, func() *HeaderServerTransport {
-			return NewHeaderServerTransport(&d.srv.HeaderServer)
+	case "DatetimeHeaderClient":
+		initServer(&d.trMu, &d.trDatetimeHeaderServer, func() *DatetimeHeaderServerTransport {
+			return NewDatetimeHeaderServerTransport(&d.srv.DatetimeHeaderServer)
 		})
-		resp, err = d.trHeaderServer.Do(req)
-	case "PropertyClient":
-		initServer(&d.trMu, &d.trPropertyServer, func() *PropertyServerTransport {
-			return NewPropertyServerTransport(&d.srv.PropertyServer)
+		resp, err = d.trDatetimeHeaderServer.Do(req)
+	case "DatetimePropertyClient":
+		initServer(&d.trMu, &d.trDatetimePropertyServer, func() *DatetimePropertyServerTransport {
+			return NewDatetimePropertyServerTransport(&d.srv.DatetimePropertyServer)
 		})
-		resp, err = d.trPropertyServer.Do(req)
-	case "QueryClient":
-		initServer(&d.trMu, &d.trQueryServer, func() *QueryServerTransport {
-			return NewQueryServerTransport(&d.srv.QueryServer)
+		resp, err = d.trDatetimePropertyServer.Do(req)
+	case "DatetimeQueryClient":
+		initServer(&d.trMu, &d.trDatetimeQueryServer, func() *DatetimeQueryServerTransport {
+			return NewDatetimeQueryServerTransport(&d.srv.DatetimeQueryServer)
 		})
-		resp, err = d.trQueryServer.Do(req)
-	case "ResponseHeaderClient":
-		initServer(&d.trMu, &d.trResponseHeaderServer, func() *ResponseHeaderServerTransport {
-			return NewResponseHeaderServerTransport(&d.srv.ResponseHeaderServer)
+		resp, err = d.trDatetimeQueryServer.Do(req)
+	case "DatetimeResponseHeaderClient":
+		initServer(&d.trMu, &d.trDatetimeResponseHeaderServer, func() *DatetimeResponseHeaderServerTransport {
+			return NewDatetimeResponseHeaderServerTransport(&d.srv.DatetimeResponseHeaderServer)
 		})
-		resp, err = d.trResponseHeaderServer.Do(req)
+		resp, err = d.trDatetimeResponseHeaderServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

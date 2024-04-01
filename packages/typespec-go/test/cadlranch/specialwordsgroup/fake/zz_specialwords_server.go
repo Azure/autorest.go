@@ -15,17 +15,17 @@ import (
 
 // SpecialWordsServer is a fake server for instances of the specialwordsgroup.SpecialWordsClient type.
 type SpecialWordsServer struct {
-	// ModelPropertiesServer contains the fakes for client ModelPropertiesClient
-	ModelPropertiesServer ModelPropertiesServer
+	// SpecialWordsModelPropertiesServer contains the fakes for client SpecialWordsModelPropertiesClient
+	SpecialWordsModelPropertiesServer SpecialWordsModelPropertiesServer
 
-	// ModelsServer contains the fakes for client ModelsClient
-	ModelsServer ModelsServer
+	// SpecialWordsModelsServer contains the fakes for client SpecialWordsModelsClient
+	SpecialWordsModelsServer SpecialWordsModelsServer
 
-	// OperationsServer contains the fakes for client OperationsClient
-	OperationsServer OperationsServer
+	// SpecialWordsOperationsServer contains the fakes for client SpecialWordsOperationsClient
+	SpecialWordsOperationsServer SpecialWordsOperationsServer
 
-	// ParametersServer contains the fakes for client ParametersClient
-	ParametersServer ParametersServer
+	// SpecialWordsParametersServer contains the fakes for client SpecialWordsParametersClient
+	SpecialWordsParametersServer SpecialWordsParametersServer
 }
 
 // NewSpecialWordsServerTransport creates a new instance of SpecialWordsServerTransport with the provided implementation.
@@ -38,12 +38,12 @@ func NewSpecialWordsServerTransport(srv *SpecialWordsServer) *SpecialWordsServer
 // SpecialWordsServerTransport connects instances of specialwordsgroup.SpecialWordsClient to instances of SpecialWordsServer.
 // Don't use this type directly, use NewSpecialWordsServerTransport instead.
 type SpecialWordsServerTransport struct {
-	srv                     *SpecialWordsServer
-	trMu                    sync.Mutex
-	trModelPropertiesServer *ModelPropertiesServerTransport
-	trModelsServer          *ModelsServerTransport
-	trOperationsServer      *OperationsServerTransport
-	trParametersServer      *ParametersServerTransport
+	srv                                 *SpecialWordsServer
+	trMu                                sync.Mutex
+	trSpecialWordsModelPropertiesServer *SpecialWordsModelPropertiesServerTransport
+	trSpecialWordsModelsServer          *SpecialWordsModelsServerTransport
+	trSpecialWordsOperationsServer      *SpecialWordsOperationsServerTransport
+	trSpecialWordsParametersServer      *SpecialWordsParametersServerTransport
 }
 
 // Do implements the policy.Transporter interface for SpecialWordsServerTransport.
@@ -62,26 +62,26 @@ func (s *SpecialWordsServerTransport) dispatchToClientFake(req *http.Request, cl
 	var err error
 
 	switch client {
-	case "ModelPropertiesClient":
-		initServer(&s.trMu, &s.trModelPropertiesServer, func() *ModelPropertiesServerTransport {
-			return NewModelPropertiesServerTransport(&s.srv.ModelPropertiesServer)
+	case "SpecialWordsModelPropertiesClient":
+		initServer(&s.trMu, &s.trSpecialWordsModelPropertiesServer, func() *SpecialWordsModelPropertiesServerTransport {
+			return NewSpecialWordsModelPropertiesServerTransport(&s.srv.SpecialWordsModelPropertiesServer)
 		})
-		resp, err = s.trModelPropertiesServer.Do(req)
-	case "ModelsClient":
-		initServer(&s.trMu, &s.trModelsServer, func() *ModelsServerTransport {
-			return NewModelsServerTransport(&s.srv.ModelsServer)
+		resp, err = s.trSpecialWordsModelPropertiesServer.Do(req)
+	case "SpecialWordsModelsClient":
+		initServer(&s.trMu, &s.trSpecialWordsModelsServer, func() *SpecialWordsModelsServerTransport {
+			return NewSpecialWordsModelsServerTransport(&s.srv.SpecialWordsModelsServer)
 		})
-		resp, err = s.trModelsServer.Do(req)
-	case "OperationsClient":
-		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport {
-			return NewOperationsServerTransport(&s.srv.OperationsServer)
+		resp, err = s.trSpecialWordsModelsServer.Do(req)
+	case "SpecialWordsOperationsClient":
+		initServer(&s.trMu, &s.trSpecialWordsOperationsServer, func() *SpecialWordsOperationsServerTransport {
+			return NewSpecialWordsOperationsServerTransport(&s.srv.SpecialWordsOperationsServer)
 		})
-		resp, err = s.trOperationsServer.Do(req)
-	case "ParametersClient":
-		initServer(&s.trMu, &s.trParametersServer, func() *ParametersServerTransport {
-			return NewParametersServerTransport(&s.srv.ParametersServer)
+		resp, err = s.trSpecialWordsOperationsServer.Do(req)
+	case "SpecialWordsParametersClient":
+		initServer(&s.trMu, &s.trSpecialWordsParametersServer, func() *SpecialWordsParametersServerTransport {
+			return NewSpecialWordsParametersServerTransport(&s.srv.SpecialWordsParametersServer)
 		})
-		resp, err = s.trParametersServer.Do(req)
+		resp, err = s.trSpecialWordsParametersServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

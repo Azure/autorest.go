@@ -6,97 +6,97 @@ package datetimegroup
 
 import "time"
 
-// HeaderClientDefaultResponse contains the response from method HeaderClient.Default.
-type HeaderClientDefaultResponse struct {
+// DatetimeHeaderClientDefaultResponse contains the response from method DatetimeHeaderClient.Default.
+type DatetimeHeaderClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
-// HeaderClientRFC3339Response contains the response from method HeaderClient.RFC3339.
-type HeaderClientRFC3339Response struct {
+// DatetimeHeaderClientRFC3339Response contains the response from method DatetimeHeaderClient.RFC3339.
+type DatetimeHeaderClientRFC3339Response struct {
 	// placeholder for future response values
 }
 
-// HeaderClientRFC7231Response contains the response from method HeaderClient.RFC7231.
-type HeaderClientRFC7231Response struct {
+// DatetimeHeaderClientRFC7231Response contains the response from method DatetimeHeaderClient.RFC7231.
+type DatetimeHeaderClientRFC7231Response struct {
 	// placeholder for future response values
 }
 
-// HeaderClientUnixTimestampArrayResponse contains the response from method HeaderClient.UnixTimestampArray.
-type HeaderClientUnixTimestampArrayResponse struct {
+// DatetimeHeaderClientUnixTimestampArrayResponse contains the response from method DatetimeHeaderClient.UnixTimestampArray.
+type DatetimeHeaderClientUnixTimestampArrayResponse struct {
 	// placeholder for future response values
 }
 
-// HeaderClientUnixTimestampResponse contains the response from method HeaderClient.UnixTimestamp.
-type HeaderClientUnixTimestampResponse struct {
+// DatetimeHeaderClientUnixTimestampResponse contains the response from method DatetimeHeaderClient.UnixTimestamp.
+type DatetimeHeaderClientUnixTimestampResponse struct {
 	// placeholder for future response values
 }
 
-// PropertyClientDefaultResponse contains the response from method PropertyClient.Default.
-type PropertyClientDefaultResponse struct {
+// DatetimePropertyClientDefaultResponse contains the response from method DatetimePropertyClient.Default.
+type DatetimePropertyClientDefaultResponse struct {
 	DefaultDatetimeProperty
 }
 
-// PropertyClientRFC3339Response contains the response from method PropertyClient.RFC3339.
-type PropertyClientRFC3339Response struct {
+// DatetimePropertyClientRFC3339Response contains the response from method DatetimePropertyClient.RFC3339.
+type DatetimePropertyClientRFC3339Response struct {
 	RFC3339DatetimeProperty
 }
 
-// PropertyClientRFC7231Response contains the response from method PropertyClient.RFC7231.
-type PropertyClientRFC7231Response struct {
+// DatetimePropertyClientRFC7231Response contains the response from method DatetimePropertyClient.RFC7231.
+type DatetimePropertyClientRFC7231Response struct {
 	RFC7231DatetimeProperty
 }
 
-// PropertyClientUnixTimestampArrayResponse contains the response from method PropertyClient.UnixTimestampArray.
-type PropertyClientUnixTimestampArrayResponse struct {
+// DatetimePropertyClientUnixTimestampArrayResponse contains the response from method DatetimePropertyClient.UnixTimestampArray.
+type DatetimePropertyClientUnixTimestampArrayResponse struct {
 	UnixTimestampArrayDatetimeProperty
 }
 
-// PropertyClientUnixTimestampResponse contains the response from method PropertyClient.UnixTimestamp.
-type PropertyClientUnixTimestampResponse struct {
+// DatetimePropertyClientUnixTimestampResponse contains the response from method DatetimePropertyClient.UnixTimestamp.
+type DatetimePropertyClientUnixTimestampResponse struct {
 	UnixTimestampDatetimeProperty
 }
 
-// QueryClientDefaultResponse contains the response from method QueryClient.Default.
-type QueryClientDefaultResponse struct {
+// DatetimeQueryClientDefaultResponse contains the response from method DatetimeQueryClient.Default.
+type DatetimeQueryClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientRFC3339Response contains the response from method QueryClient.RFC3339.
-type QueryClientRFC3339Response struct {
+// DatetimeQueryClientRFC3339Response contains the response from method DatetimeQueryClient.RFC3339.
+type DatetimeQueryClientRFC3339Response struct {
 	// placeholder for future response values
 }
 
-// QueryClientRFC7231Response contains the response from method QueryClient.RFC7231.
-type QueryClientRFC7231Response struct {
+// DatetimeQueryClientRFC7231Response contains the response from method DatetimeQueryClient.RFC7231.
+type DatetimeQueryClientRFC7231Response struct {
 	// placeholder for future response values
 }
 
-// QueryClientUnixTimestampArrayResponse contains the response from method QueryClient.UnixTimestampArray.
-type QueryClientUnixTimestampArrayResponse struct {
+// DatetimeQueryClientUnixTimestampArrayResponse contains the response from method DatetimeQueryClient.UnixTimestampArray.
+type DatetimeQueryClientUnixTimestampArrayResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientUnixTimestampResponse contains the response from method QueryClient.UnixTimestamp.
-type QueryClientUnixTimestampResponse struct {
+// DatetimeQueryClientUnixTimestampResponse contains the response from method DatetimeQueryClient.UnixTimestamp.
+type DatetimeQueryClientUnixTimestampResponse struct {
 	// placeholder for future response values
 }
 
-// ResponseHeaderClientDefaultResponse contains the response from method ResponseHeaderClient.Default.
-type ResponseHeaderClientDefaultResponse struct {
+// DatetimeResponseHeaderClientDefaultResponse contains the response from method DatetimeResponseHeaderClient.Default.
+type DatetimeResponseHeaderClientDefaultResponse struct {
 	Value *time.Time
 }
 
-// ResponseHeaderClientRFC3339Response contains the response from method ResponseHeaderClient.RFC3339.
-type ResponseHeaderClientRFC3339Response struct {
+// DatetimeResponseHeaderClientRFC3339Response contains the response from method DatetimeResponseHeaderClient.RFC3339.
+type DatetimeResponseHeaderClientRFC3339Response struct {
 	Value *time.Time
 }
 
-// ResponseHeaderClientRFC7231Response contains the response from method ResponseHeaderClient.RFC7231.
-type ResponseHeaderClientRFC7231Response struct {
+// DatetimeResponseHeaderClientRFC7231Response contains the response from method DatetimeResponseHeaderClient.RFC7231.
+type DatetimeResponseHeaderClientRFC7231Response struct {
 	Value *time.Time
 }
 
-// ResponseHeaderClientUnixTimestampResponse contains the response from method ResponseHeaderClient.UnixTimestamp.
-type ResponseHeaderClientUnixTimestampResponse struct {
+// DatetimeResponseHeaderClientUnixTimestampResponse contains the response from method DatetimeResponseHeaderClient.UnixTimestamp.
+type DatetimeResponseHeaderClientUnixTimestampResponse struct {
 	Value *time.Time
 }

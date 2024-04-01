@@ -18,7 +18,7 @@ import (
 func TestIsModelClient_Get(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsModelClient().Get(context.Background(), nil)
+	resp, err := client.NewAdditionalPropertiesIsModelClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.IsModelAdditionalProperties{
 		AdditionalProperties: map[string]*addlpropsgroup.ModelForRecord{
@@ -32,7 +32,7 @@ func TestIsModelClient_Get(t *testing.T) {
 func TestIsModelClient_Put(t *testing.T) {
 	client, err := addlpropsgroup.NewAdditionalPropertiesClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewIsModelClient().Put(context.Background(), addlpropsgroup.IsModelAdditionalProperties{
+	resp, err := client.NewAdditionalPropertiesIsModelClient().Put(context.Background(), addlpropsgroup.IsModelAdditionalProperties{
 		AdditionalProperties: map[string]*addlpropsgroup.ModelForRecord{
 			"prop": {
 				State: to.Ptr("ok"),

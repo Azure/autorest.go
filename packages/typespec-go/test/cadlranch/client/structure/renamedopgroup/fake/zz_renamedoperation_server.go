@@ -19,8 +19,8 @@ import (
 
 // RenamedOperationServer is a fake server for instances of the renamedopgroup.RenamedOperationClient type.
 type RenamedOperationServer struct {
-	// GroupServer contains the fakes for client GroupClient
-	GroupServer GroupServer
+	// RenamedOperationGroupServer contains the fakes for client RenamedOperationGroupClient
+	RenamedOperationGroupServer RenamedOperationGroupServer
 
 	// RenamedFive is the fake for method RenamedOperationClient.RenamedFive
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -45,9 +45,9 @@ func NewRenamedOperationServerTransport(srv *RenamedOperationServer) *RenamedOpe
 // RenamedOperationServerTransport connects instances of renamedopgroup.RenamedOperationClient to instances of RenamedOperationServer.
 // Don't use this type directly, use NewRenamedOperationServerTransport instead.
 type RenamedOperationServerTransport struct {
-	srv           *RenamedOperationServer
-	trMu          sync.Mutex
-	trGroupServer *GroupServerTransport
+	srv                           *RenamedOperationServer
+	trMu                          sync.Mutex
+	trRenamedOperationGroupServer *RenamedOperationGroupServerTransport
 }
 
 // Do implements the policy.Transporter interface for RenamedOperationServerTransport.
@@ -69,11 +69,11 @@ func (r *RenamedOperationServerTransport) dispatchToClientFake(req *http.Request
 	var err error
 
 	switch client {
-	case "GroupClient":
-		initServer(&r.trMu, &r.trGroupServer, func() *GroupServerTransport {
-			return NewGroupServerTransport(&r.srv.GroupServer)
+	case "RenamedOperationGroupClient":
+		initServer(&r.trMu, &r.trRenamedOperationGroupServer, func() *RenamedOperationGroupServerTransport {
+			return NewRenamedOperationGroupServerTransport(&r.srv.RenamedOperationGroupServer)
 		})
-		resp, err = r.trGroupServer.Do(req)
+		resp, err = r.trRenamedOperationGroupServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

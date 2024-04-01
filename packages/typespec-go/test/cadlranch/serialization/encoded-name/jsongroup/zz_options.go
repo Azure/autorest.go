@@ -4,12 +4,12 @@
 
 package jsongroup
 
-// PropertyClientGetOptions contains the optional parameters for the PropertyClient.Get method.
-type PropertyClientGetOptions struct {
+// JsonPropertyClientGetOptions contains the optional parameters for the JsonPropertyClient.Get method.
+type JsonPropertyClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PropertyClientSendOptions contains the optional parameters for the PropertyClient.Send method.
-type PropertyClientSendOptions struct {
+// JsonPropertyClientSendOptions contains the optional parameters for the JsonPropertyClient.Send method.
+type JsonPropertyClientSendOptions struct {
 	// placeholder for future optional parameters
 }

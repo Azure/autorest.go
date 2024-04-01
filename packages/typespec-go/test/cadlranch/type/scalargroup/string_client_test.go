@@ -17,7 +17,7 @@ import (
 func TestStringClient_Get(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().Get(context.Background(), nil)
+	resp, err := client.NewScalarStringClient().Get(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, "test", *resp.Value)
@@ -26,7 +26,7 @@ func TestStringClient_Get(t *testing.T) {
 func TestStringClient_Put(t *testing.T) {
 	client, err := scalargroup.NewScalarClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewStringClient().Put(context.Background(), "test", nil)
+	resp, err := client.NewScalarStringClient().Put(context.Background(), "test", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

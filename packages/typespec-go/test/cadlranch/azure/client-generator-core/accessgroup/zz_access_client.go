@@ -12,30 +12,30 @@ type AccessClient struct {
 	internal *azcore.Client
 }
 
-// NewInternalOperationClient creates a new instance of [InternalOperationClient].
-func (client *AccessClient) NewInternalOperationClient() *InternalOperationClient {
-	return &InternalOperationClient{
+// NewAccessInternalOperationClient creates a new instance of [AccessInternalOperationClient].
+func (client *AccessClient) NewAccessInternalOperationClient() *AccessInternalOperationClient {
+	return &AccessInternalOperationClient{
 		internal: client.internal,
 	}
 }
 
-// NewPublicOperationClient creates a new instance of [PublicOperationClient].
-func (client *AccessClient) NewPublicOperationClient() *PublicOperationClient {
-	return &PublicOperationClient{
+// NewAccessPublicOperationClient creates a new instance of [AccessPublicOperationClient].
+func (client *AccessClient) NewAccessPublicOperationClient() *AccessPublicOperationClient {
+	return &AccessPublicOperationClient{
 		internal: client.internal,
 	}
 }
 
-// NewRelativeModelInOperationClient creates a new instance of [RelativeModelInOperationClient].
-func (client *AccessClient) NewRelativeModelInOperationClient() *RelativeModelInOperationClient {
-	return &RelativeModelInOperationClient{
+// NewAccessRelativeModelInOperationClient creates a new instance of [AccessRelativeModelInOperationClient].
+func (client *AccessClient) NewAccessRelativeModelInOperationClient() *AccessRelativeModelInOperationClient {
+	return &AccessRelativeModelInOperationClient{
 		internal: client.internal,
 	}
 }
 
-// NewSharedModelInOperationClient creates a new instance of [SharedModelInOperationClient].
-func (client *AccessClient) NewSharedModelInOperationClient() *SharedModelInOperationClient {
-	return &SharedModelInOperationClient{
+// NewAccessSharedModelInOperationClient creates a new instance of [AccessSharedModelInOperationClient].
+func (client *AccessClient) NewAccessSharedModelInOperationClient() *AccessSharedModelInOperationClient {
+	return &AccessSharedModelInOperationClient{
 		internal: client.internal,
 	}
 }

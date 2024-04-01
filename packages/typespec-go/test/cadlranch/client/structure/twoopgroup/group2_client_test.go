@@ -17,7 +17,7 @@ import (
 func TestGroup2Client_Five(t *testing.T) {
 	client, err := twoopgroup.NewTwoOperationGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroup2Client().Five(context.Background(), nil)
+	resp, err := client.NewTwoOperationGroupGroup2Client().Five(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -25,7 +25,7 @@ func TestGroup2Client_Five(t *testing.T) {
 func TestGroup2Client_Six(t *testing.T) {
 	client, err := twoopgroup.NewTwoOperationGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroup2Client().Six(context.Background(), nil)
+	resp, err := client.NewTwoOperationGroupGroup2Client().Six(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -33,7 +33,7 @@ func TestGroup2Client_Six(t *testing.T) {
 func TestGroup2Client_Two(t *testing.T) {
 	client, err := twoopgroup.NewTwoOperationGroupClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewGroup2Client().Two(context.Background(), nil)
+	resp, err := client.NewTwoOperationGroupGroup2Client().Two(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

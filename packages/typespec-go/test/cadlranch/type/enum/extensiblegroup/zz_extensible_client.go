@@ -12,9 +12,9 @@ type ExtensibleClient struct {
 	internal *azcore.Client
 }
 
-// NewStringClient creates a new instance of [StringClient].
-func (client *ExtensibleClient) NewStringClient() *StringClient {
-	return &StringClient{
+// NewExtensibleStringClient creates a new instance of [ExtensibleStringClient].
+func (client *ExtensibleClient) NewExtensibleStringClient() *ExtensibleStringClient {
+	return &ExtensibleStringClient{
 		internal: client.internal,
 	}
 }

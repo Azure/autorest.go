@@ -6,102 +6,102 @@ package arraygroup
 
 import "time"
 
-// BooleanValueClientGetResponse contains the response from method BooleanValueClient.Get.
-type BooleanValueClientGetResponse struct {
+// ArrayBooleanValueClientGetResponse contains the response from method ArrayBooleanValueClient.Get.
+type ArrayBooleanValueClientGetResponse struct {
 	Value []bool
 }
 
-// BooleanValueClientPutResponse contains the response from method BooleanValueClient.Put.
-type BooleanValueClientPutResponse struct {
+// ArrayBooleanValueClientPutResponse contains the response from method ArrayBooleanValueClient.Put.
+type ArrayBooleanValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// DatetimeValueClientGetResponse contains the response from method DatetimeValueClient.Get.
-type DatetimeValueClientGetResponse struct {
+// ArrayDatetimeValueClientGetResponse contains the response from method ArrayDatetimeValueClient.Get.
+type ArrayDatetimeValueClientGetResponse struct {
 	Value []time.Time
 }
 
-// DatetimeValueClientPutResponse contains the response from method DatetimeValueClient.Put.
-type DatetimeValueClientPutResponse struct {
+// ArrayDatetimeValueClientPutResponse contains the response from method ArrayDatetimeValueClient.Put.
+type ArrayDatetimeValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// DurationValueClientGetResponse contains the response from method DurationValueClient.Get.
-type DurationValueClientGetResponse struct {
+// ArrayDurationValueClientGetResponse contains the response from method ArrayDurationValueClient.Get.
+type ArrayDurationValueClientGetResponse struct {
 	Value []string
 }
 
-// DurationValueClientPutResponse contains the response from method DurationValueClient.Put.
-type DurationValueClientPutResponse struct {
+// ArrayDurationValueClientPutResponse contains the response from method ArrayDurationValueClient.Put.
+type ArrayDurationValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Float32ValueClientGetResponse contains the response from method Float32ValueClient.Get.
-type Float32ValueClientGetResponse struct {
+// ArrayFloat32ValueClientGetResponse contains the response from method ArrayFloat32ValueClient.Get.
+type ArrayFloat32ValueClientGetResponse struct {
 	Value []float32
 }
 
-// Float32ValueClientPutResponse contains the response from method Float32ValueClient.Put.
-type Float32ValueClientPutResponse struct {
+// ArrayFloat32ValueClientPutResponse contains the response from method ArrayFloat32ValueClient.Put.
+type ArrayFloat32ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Int32ValueClientGetResponse contains the response from method Int32ValueClient.Get.
-type Int32ValueClientGetResponse struct {
+// ArrayInt32ValueClientGetResponse contains the response from method ArrayInt32ValueClient.Get.
+type ArrayInt32ValueClientGetResponse struct {
 	Value []int32
 }
 
-// Int32ValueClientPutResponse contains the response from method Int32ValueClient.Put.
-type Int32ValueClientPutResponse struct {
+// ArrayInt32ValueClientPutResponse contains the response from method ArrayInt32ValueClient.Put.
+type ArrayInt32ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// Int64ValueClientGetResponse contains the response from method Int64ValueClient.Get.
-type Int64ValueClientGetResponse struct {
+// ArrayInt64ValueClientGetResponse contains the response from method ArrayInt64ValueClient.Get.
+type ArrayInt64ValueClientGetResponse struct {
 	Value []int64
 }
 
-// Int64ValueClientPutResponse contains the response from method Int64ValueClient.Put.
-type Int64ValueClientPutResponse struct {
+// ArrayInt64ValueClientPutResponse contains the response from method ArrayInt64ValueClient.Put.
+type ArrayInt64ValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// ModelValueClientGetResponse contains the response from method ModelValueClient.Get.
-type ModelValueClientGetResponse struct {
+// ArrayModelValueClientGetResponse contains the response from method ArrayModelValueClient.Get.
+type ArrayModelValueClientGetResponse struct {
 	Value []InnerModel
 }
 
-// ModelValueClientPutResponse contains the response from method ModelValueClient.Put.
-type ModelValueClientPutResponse struct {
+// ArrayModelValueClientPutResponse contains the response from method ArrayModelValueClient.Put.
+type ArrayModelValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// NullableFloatValueClientGetResponse contains the response from method NullableFloatValueClient.Get.
-type NullableFloatValueClientGetResponse struct {
+// ArrayNullableFloatValueClientGetResponse contains the response from method ArrayNullableFloatValueClient.Get.
+type ArrayNullableFloatValueClientGetResponse struct {
 	Value []*float32
 }
 
-// NullableFloatValueClientPutResponse contains the response from method NullableFloatValueClient.Put.
-type NullableFloatValueClientPutResponse struct {
+// ArrayNullableFloatValueClientPutResponse contains the response from method ArrayNullableFloatValueClient.Put.
+type ArrayNullableFloatValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// StringValueClientGetResponse contains the response from method StringValueClient.Get.
-type StringValueClientGetResponse struct {
+// ArrayStringValueClientGetResponse contains the response from method ArrayStringValueClient.Get.
+type ArrayStringValueClientGetResponse struct {
 	Value []string
 }
 
-// StringValueClientPutResponse contains the response from method StringValueClient.Put.
-type StringValueClientPutResponse struct {
+// ArrayStringValueClientPutResponse contains the response from method ArrayStringValueClient.Put.
+type ArrayStringValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
-// UnknownValueClientGetResponse contains the response from method UnknownValueClient.Get.
-type UnknownValueClientGetResponse struct {
+// ArrayUnknownValueClientGetResponse contains the response from method ArrayUnknownValueClient.Get.
+type ArrayUnknownValueClientGetResponse struct {
 	Value []any
 }
 
-// UnknownValueClientPutResponse contains the response from method UnknownValueClient.Put.
-type UnknownValueClientPutResponse struct {
+// ArrayUnknownValueClientPutResponse contains the response from method ArrayUnknownValueClient.Put.
+type ArrayUnknownValueClientPutResponse struct {
 	// placeholder for future response values
 }

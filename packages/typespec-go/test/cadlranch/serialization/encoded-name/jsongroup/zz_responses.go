@@ -4,12 +4,12 @@
 
 package jsongroup
 
-// PropertyClientGetResponse contains the response from method PropertyClient.Get.
-type PropertyClientGetResponse struct {
+// JsonPropertyClientGetResponse contains the response from method JsonPropertyClient.Get.
+type JsonPropertyClientGetResponse struct {
 	JSONEncodedNameModel
 }
 
-// PropertyClientSendResponse contains the response from method PropertyClient.Send.
-type PropertyClientSendResponse struct {
+// JsonPropertyClientSendResponse contains the response from method JsonPropertyClient.Send.
+type JsonPropertyClientSendResponse struct {
 	// placeholder for future response values
 }

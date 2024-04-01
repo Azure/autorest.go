@@ -47,7 +47,7 @@ type AzureLargeInstancesServer struct {
 
 	// Update is the fake for method AzureLargeInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.AzureLargeInstanceTagsUpdate, options *armlargeinstance.AzureLargeInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.TagsUpdate, options *armlargeinstance.AzureLargeInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewAzureLargeInstancesServerTransport creates a new instance of AzureLargeInstancesServerTransport with the provided implementation.
@@ -391,7 +391,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchUpdate(req *http.Request) (
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armlargeinstance.AzureLargeInstanceTagsUpdate](req)
+	body, err := server.UnmarshalRequestAsJSON[armlargeinstance.TagsUpdate](req)
 	if err != nil {
 		return nil, err
 	}

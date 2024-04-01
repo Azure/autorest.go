@@ -18,16 +18,16 @@ type NamingClient struct {
 	internal *azcore.Client
 }
 
-// NewModelClient creates a new instance of [ModelClient].
-func (client *NamingClient) NewModelClient() *ModelClient {
-	return &ModelClient{
+// NewNamingModelClient creates a new instance of [NamingModelClient].
+func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
+	return &NamingModelClient{
 		internal: client.internal,
 	}
 }
 
-// NewUnionEnumClient creates a new instance of [UnionEnumClient].
-func (client *NamingClient) NewUnionEnumClient() *UnionEnumClient {
-	return &UnionEnumClient{
+// NewNamingUnionEnumClient creates a new instance of [NamingUnionEnumClient].
+func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
+	return &NamingUnionEnumClient{
 		internal: client.internal,
 	}
 }

@@ -4,32 +4,32 @@
 
 package collectionfmtgroup
 
-// HeaderClientCSVResponse contains the response from method HeaderClient.CSV.
-type HeaderClientCSVResponse struct {
+// CollectionFormatHeaderClientCSVResponse contains the response from method CollectionFormatHeaderClient.CSV.
+type CollectionFormatHeaderClientCSVResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientCSVResponse contains the response from method QueryClient.CSV.
-type QueryClientCSVResponse struct {
+// CollectionFormatQueryClientCSVResponse contains the response from method CollectionFormatQueryClient.CSV.
+type CollectionFormatQueryClientCSVResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientMultiResponse contains the response from method QueryClient.Multi.
-type QueryClientMultiResponse struct {
+// CollectionFormatQueryClientMultiResponse contains the response from method CollectionFormatQueryClient.Multi.
+type CollectionFormatQueryClientMultiResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientPipesResponse contains the response from method QueryClient.Pipes.
-type QueryClientPipesResponse struct {
+// CollectionFormatQueryClientPipesResponse contains the response from method CollectionFormatQueryClient.Pipes.
+type CollectionFormatQueryClientPipesResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientSsvResponse contains the response from method QueryClient.Ssv.
-type QueryClientSsvResponse struct {
+// CollectionFormatQueryClientSsvResponse contains the response from method CollectionFormatQueryClient.Ssv.
+type CollectionFormatQueryClientSsvResponse struct {
 	// placeholder for future response values
 }
 
-// QueryClientTsvResponse contains the response from method QueryClient.Tsv.
-type QueryClientTsvResponse struct {
+// CollectionFormatQueryClientTsvResponse contains the response from method CollectionFormatQueryClient.Tsv.
+type CollectionFormatQueryClientTsvResponse struct {
 	// placeholder for future response values
 }

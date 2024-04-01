@@ -19,7 +19,7 @@ import (
 func TestDurationClientGetNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationClient().GetNonNull(context.Background(), nil)
+	resp, err := client.NewNullableDurationClient().GetNonNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.DurationProperty{
 		NullableProperty: to.Ptr("P123DT22H14M12.011S"),
@@ -30,7 +30,7 @@ func TestDurationClientGetNonNull(t *testing.T) {
 func TestDurationClientGetNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationClient().GetNull(context.Background(), nil)
+	resp, err := client.NewNullableDurationClient().GetNull(context.Background(), nil)
 	require.NoError(t, err)
 	require.EqualValues(t, nullablegroup.DurationProperty{
 		RequiredProperty: to.Ptr("foo"),
@@ -40,7 +40,7 @@ func TestDurationClientGetNull(t *testing.T) {
 func TestDurationClientPatchNonNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationClient().PatchNonNull(context.Background(), nullablegroup.DurationProperty{
+	resp, err := client.NewNullableDurationClient().PatchNonNull(context.Background(), nullablegroup.DurationProperty{
 		NullableProperty: to.Ptr("P123DT22H14M12.011S"),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)
@@ -51,7 +51,7 @@ func TestDurationClientPatchNonNull(t *testing.T) {
 func TestDurationClientPatchNull(t *testing.T) {
 	client, err := nullablegroup.NewNullableClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewDurationClient().PatchNull(context.Background(), nullablegroup.DurationProperty{
+	resp, err := client.NewNullableDurationClient().PatchNull(context.Background(), nullablegroup.DurationProperty{
 		NullableProperty: azcore.NullValue[*string](),
 		RequiredProperty: to.Ptr("foo"),
 	}, nil)

@@ -78,7 +78,7 @@ func TestNamingClient_Response(t *testing.T) {
 func TestUnionEnumClient_UnionEnumMemberName(t *testing.T) {
 	client, err := naminggroup.NewNamingClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewUnionEnumClient().UnionEnumMemberName(context.Background(), naminggroup.ExtensibleEnumClientEnumValue1, nil)
+	resp, err := client.NewNamingUnionEnumClient().UnionEnumMemberName(context.Background(), naminggroup.ExtensibleEnumClientEnumValue1, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -86,7 +86,7 @@ func TestUnionEnumClient_UnionEnumMemberName(t *testing.T) {
 func TestUnionEnumClient_UnionEnumName(t *testing.T) {
 	client, err := naminggroup.NewNamingClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewUnionEnumClient().UnionEnumName(context.Background(), naminggroup.ClientExtensibleEnumEnumValue1, nil)
+	resp, err := client.NewNamingUnionEnumClient().UnionEnumName(context.Background(), naminggroup.ClientExtensibleEnumEnumValue1, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

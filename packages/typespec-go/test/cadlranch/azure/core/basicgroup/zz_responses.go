@@ -56,14 +56,14 @@ type BasicClientListWithParametersResponse struct {
 	PagedUser
 }
 
-// TwoModelsAsPageItemClientListFirstItemResponse contains the response from method TwoModelsAsPageItemClient.NewListFirstItemPager.
-type TwoModelsAsPageItemClientListFirstItemResponse struct {
+// BasicTwoModelsAsPageItemClientListFirstItemResponse contains the response from method BasicTwoModelsAsPageItemClient.NewListFirstItemPager.
+type BasicTwoModelsAsPageItemClientListFirstItemResponse struct {
 	// Paged collection of FirstItem items
 	PagedFirstItem
 }
 
-// TwoModelsAsPageItemClientListSecondItemResponse contains the response from method TwoModelsAsPageItemClient.NewListSecondItemPager.
-type TwoModelsAsPageItemClientListSecondItemResponse struct {
+// BasicTwoModelsAsPageItemClientListSecondItemResponse contains the response from method BasicTwoModelsAsPageItemClient.NewListSecondItemPager.
+type BasicTwoModelsAsPageItemClientListSecondItemResponse struct {
 	// Paged collection of SecondItem items
 	PagedSecondItem
 }

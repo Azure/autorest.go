@@ -12,37 +12,37 @@ type BytesClient struct {
 	internal *azcore.Client
 }
 
-// NewHeaderClient creates a new instance of [HeaderClient].
-func (client *BytesClient) NewHeaderClient() *HeaderClient {
-	return &HeaderClient{
+// NewBytesHeaderClient creates a new instance of [BytesHeaderClient].
+func (client *BytesClient) NewBytesHeaderClient() *BytesHeaderClient {
+	return &BytesHeaderClient{
 		internal: client.internal,
 	}
 }
 
-// NewPropertyClient creates a new instance of [PropertyClient].
-func (client *BytesClient) NewPropertyClient() *PropertyClient {
-	return &PropertyClient{
+// NewBytesPropertyClient creates a new instance of [BytesPropertyClient].
+func (client *BytesClient) NewBytesPropertyClient() *BytesPropertyClient {
+	return &BytesPropertyClient{
 		internal: client.internal,
 	}
 }
 
-// NewQueryClient creates a new instance of [QueryClient].
-func (client *BytesClient) NewQueryClient() *QueryClient {
-	return &QueryClient{
+// NewBytesQueryClient creates a new instance of [BytesQueryClient].
+func (client *BytesClient) NewBytesQueryClient() *BytesQueryClient {
+	return &BytesQueryClient{
 		internal: client.internal,
 	}
 }
 
-// NewRequestBodyClient creates a new instance of [RequestBodyClient].
-func (client *BytesClient) NewRequestBodyClient() *RequestBodyClient {
-	return &RequestBodyClient{
+// NewBytesRequestBodyClient creates a new instance of [BytesRequestBodyClient].
+func (client *BytesClient) NewBytesRequestBodyClient() *BytesRequestBodyClient {
+	return &BytesRequestBodyClient{
 		internal: client.internal,
 	}
 }
 
-// NewResponseBodyClient creates a new instance of [ResponseBodyClient].
-func (client *BytesClient) NewResponseBodyClient() *ResponseBodyClient {
-	return &ResponseBodyClient{
+// NewBytesResponseBodyClient creates a new instance of [BytesResponseBodyClient].
+func (client *BytesClient) NewBytesResponseBodyClient() *BytesResponseBodyClient {
+	return &BytesResponseBodyClient{
 		internal: client.internal,
 	}
 }

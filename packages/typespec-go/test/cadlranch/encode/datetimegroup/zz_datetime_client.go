@@ -12,30 +12,30 @@ type DatetimeClient struct {
 	internal *azcore.Client
 }
 
-// NewHeaderClient creates a new instance of [HeaderClient].
-func (client *DatetimeClient) NewHeaderClient() *HeaderClient {
-	return &HeaderClient{
+// NewDatetimeHeaderClient creates a new instance of [DatetimeHeaderClient].
+func (client *DatetimeClient) NewDatetimeHeaderClient() *DatetimeHeaderClient {
+	return &DatetimeHeaderClient{
 		internal: client.internal,
 	}
 }
 
-// NewPropertyClient creates a new instance of [PropertyClient].
-func (client *DatetimeClient) NewPropertyClient() *PropertyClient {
-	return &PropertyClient{
+// NewDatetimePropertyClient creates a new instance of [DatetimePropertyClient].
+func (client *DatetimeClient) NewDatetimePropertyClient() *DatetimePropertyClient {
+	return &DatetimePropertyClient{
 		internal: client.internal,
 	}
 }
 
-// NewQueryClient creates a new instance of [QueryClient].
-func (client *DatetimeClient) NewQueryClient() *QueryClient {
-	return &QueryClient{
+// NewDatetimeQueryClient creates a new instance of [DatetimeQueryClient].
+func (client *DatetimeClient) NewDatetimeQueryClient() *DatetimeQueryClient {
+	return &DatetimeQueryClient{
 		internal: client.internal,
 	}
 }
 
-// NewResponseHeaderClient creates a new instance of [ResponseHeaderClient].
-func (client *DatetimeClient) NewResponseHeaderClient() *ResponseHeaderClient {
-	return &ResponseHeaderClient{
+// NewDatetimeResponseHeaderClient creates a new instance of [DatetimeResponseHeaderClient].
+func (client *DatetimeClient) NewDatetimeResponseHeaderClient() *DatetimeResponseHeaderClient {
+	return &DatetimeResponseHeaderClient{
 		internal: client.internal,
 	}
 }

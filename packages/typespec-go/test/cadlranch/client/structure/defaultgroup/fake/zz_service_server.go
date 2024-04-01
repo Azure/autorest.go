@@ -19,14 +19,14 @@ import (
 
 // ServiceServer is a fake server for instances of the defaultgroup.ServiceClient type.
 type ServiceServer struct {
-	// BarServer contains the fakes for client BarClient
-	BarServer BarServer
+	// ServiceBarServer contains the fakes for client ServiceBarClient
+	ServiceBarServer ServiceBarServer
 
-	// FooServer contains the fakes for client FooClient
-	FooServer FooServer
+	// ServiceFooServer contains the fakes for client ServiceFooClient
+	ServiceFooServer ServiceFooServer
 
-	// QuxServer contains the fakes for client QuxClient
-	QuxServer QuxServer
+	// ServiceQuxServer contains the fakes for client ServiceQuxClient
+	ServiceQuxServer ServiceQuxServer
 
 	// One is the fake for method ServiceClient.One
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -47,11 +47,11 @@ func NewServiceServerTransport(srv *ServiceServer) *ServiceServerTransport {
 // ServiceServerTransport connects instances of defaultgroup.ServiceClient to instances of ServiceServer.
 // Don't use this type directly, use NewServiceServerTransport instead.
 type ServiceServerTransport struct {
-	srv         *ServiceServer
-	trMu        sync.Mutex
-	trBarServer *BarServerTransport
-	trFooServer *FooServerTransport
-	trQuxServer *QuxServerTransport
+	srv                *ServiceServer
+	trMu               sync.Mutex
+	trServiceBarServer *ServiceBarServerTransport
+	trServiceFooServer *ServiceFooServerTransport
+	trServiceQuxServer *ServiceQuxServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServiceServerTransport.
@@ -73,21 +73,21 @@ func (s *ServiceServerTransport) dispatchToClientFake(req *http.Request, client 
 	var err error
 
 	switch client {
-	case "BarClient":
-		initServer(&s.trMu, &s.trBarServer, func() *BarServerTransport {
-			return NewBarServerTransport(&s.srv.BarServer)
+	case "ServiceBarClient":
+		initServer(&s.trMu, &s.trServiceBarServer, func() *ServiceBarServerTransport {
+			return NewServiceBarServerTransport(&s.srv.ServiceBarServer)
 		})
-		resp, err = s.trBarServer.Do(req)
-	case "FooClient":
-		initServer(&s.trMu, &s.trFooServer, func() *FooServerTransport {
-			return NewFooServerTransport(&s.srv.FooServer)
+		resp, err = s.trServiceBarServer.Do(req)
+	case "ServiceFooClient":
+		initServer(&s.trMu, &s.trServiceFooServer, func() *ServiceFooServerTransport {
+			return NewServiceFooServerTransport(&s.srv.ServiceFooServer)
 		})
-		resp, err = s.trFooServer.Do(req)
-	case "QuxClient":
-		initServer(&s.trMu, &s.trQuxServer, func() *QuxServerTransport {
-			return NewQuxServerTransport(&s.srv.QuxServer)
+		resp, err = s.trServiceFooServer.Do(req)
+	case "ServiceQuxClient":
+		initServer(&s.trMu, &s.trServiceQuxServer, func() *ServiceQuxServerTransport {
+			return NewServiceQuxServerTransport(&s.srv.ServiceQuxServer)
 		})
-		resp, err = s.trQuxServer.Do(req)
+		resp, err = s.trServiceQuxServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

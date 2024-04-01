@@ -17,26 +17,26 @@ import (
 )
 
 func TestFixedClientGetKnownValue(t *testing.T) {
-	client, err := fixedgroup.NewStringClient(nil)
+	client, err := fixedgroup.NewFixedClient(nil)
 	require.NoError(t, err)
-	resp, err := client.GetKnownValue(context.Background(), nil)
+	resp, err := client.NewFixedStringClient().GetKnownValue(context.Background(), nil)
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, fixedgroup.DaysOfWeekEnumMonday, *resp.Value)
 }
 
 func TestFixedClientPutKnownValue(t *testing.T) {
-	client, err := fixedgroup.NewStringClient(nil)
+	client, err := fixedgroup.NewFixedClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PutKnownValue(context.Background(), fixedgroup.DaysOfWeekEnumMonday, nil)
+	resp, err := client.NewFixedStringClient().PutKnownValue(context.Background(), fixedgroup.DaysOfWeekEnumMonday, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
 func TestFixedClientPutUnknownValue(t *testing.T) {
-	client, err := fixedgroup.NewStringClient(nil)
+	client, err := fixedgroup.NewFixedClient(nil)
 	require.NoError(t, err)
-	resp, err := client.PutUnknownValue(context.Background(), fixedgroup.DaysOfWeekEnum("Weekend"), nil)
+	resp, err := client.NewFixedStringClient().PutUnknownValue(context.Background(), fixedgroup.DaysOfWeekEnum("Weekend"), nil)
 	var respErr *azcore.ResponseError
 	require.ErrorAs(t, err, &respErr)
 	require.EqualValues(t, http.StatusInternalServerError, respErr.StatusCode)

@@ -4,84 +4,91 @@
 
 package scalargroup
 
-// BooleanClientGetOptions contains the optional parameters for the BooleanClient.Get method.
-type BooleanClientGetOptions struct {
+// ScalarBooleanClientGetOptions contains the optional parameters for the ScalarBooleanClient.Get method.
+type ScalarBooleanClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BooleanClientPutOptions contains the optional parameters for the BooleanClient.Put method.
-type BooleanClientPutOptions struct {
+// ScalarBooleanClientPutOptions contains the optional parameters for the ScalarBooleanClient.Put method.
+type ScalarBooleanClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Decimal128TypeClientRequestBodyOptions contains the optional parameters for the Decimal128TypeClient.RequestBody method.
-type Decimal128TypeClientRequestBodyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// Decimal128TypeClientRequestParameterOptions contains the optional parameters for the Decimal128TypeClient.RequestParameter
+// ScalarDecimal128TypeClientRequestBodyOptions contains the optional parameters for the ScalarDecimal128TypeClient.RequestBody
 // method.
-type Decimal128TypeClientRequestParameterOptions struct {
+type ScalarDecimal128TypeClientRequestBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Decimal128TypeClientResponseBodyOptions contains the optional parameters for the Decimal128TypeClient.ResponseBody method.
-type Decimal128TypeClientResponseBodyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// Decimal128VerifyClientPrepareVerifyOptions contains the optional parameters for the Decimal128VerifyClient.PrepareVerify
+// ScalarDecimal128TypeClientRequestParameterOptions contains the optional parameters for the ScalarDecimal128TypeClient.RequestParameter
 // method.
-type Decimal128VerifyClientPrepareVerifyOptions struct {
+type ScalarDecimal128TypeClientRequestParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Decimal128VerifyClientVerifyOptions contains the optional parameters for the Decimal128VerifyClient.Verify method.
-type Decimal128VerifyClientVerifyOptions struct {
+// ScalarDecimal128TypeClientResponseBodyOptions contains the optional parameters for the ScalarDecimal128TypeClient.ResponseBody
+// method.
+type ScalarDecimal128TypeClientResponseBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DecimalTypeClientRequestBodyOptions contains the optional parameters for the DecimalTypeClient.RequestBody method.
-type DecimalTypeClientRequestBodyOptions struct {
+// ScalarDecimal128VerifyClientPrepareVerifyOptions contains the optional parameters for the ScalarDecimal128VerifyClient.PrepareVerify
+// method.
+type ScalarDecimal128VerifyClientPrepareVerifyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DecimalTypeClientRequestParameterOptions contains the optional parameters for the DecimalTypeClient.RequestParameter method.
-type DecimalTypeClientRequestParameterOptions struct {
+// ScalarDecimal128VerifyClientVerifyOptions contains the optional parameters for the ScalarDecimal128VerifyClient.Verify
+// method.
+type ScalarDecimal128VerifyClientVerifyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DecimalTypeClientResponseBodyOptions contains the optional parameters for the DecimalTypeClient.ResponseBody method.
-type DecimalTypeClientResponseBodyOptions struct {
+// ScalarDecimalTypeClientRequestBodyOptions contains the optional parameters for the ScalarDecimalTypeClient.RequestBody
+// method.
+type ScalarDecimalTypeClientRequestBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DecimalVerifyClientPrepareVerifyOptions contains the optional parameters for the DecimalVerifyClient.PrepareVerify method.
-type DecimalVerifyClientPrepareVerifyOptions struct {
+// ScalarDecimalTypeClientRequestParameterOptions contains the optional parameters for the ScalarDecimalTypeClient.RequestParameter
+// method.
+type ScalarDecimalTypeClientRequestParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DecimalVerifyClientVerifyOptions contains the optional parameters for the DecimalVerifyClient.Verify method.
-type DecimalVerifyClientVerifyOptions struct {
+// ScalarDecimalTypeClientResponseBodyOptions contains the optional parameters for the ScalarDecimalTypeClient.ResponseBody
+// method.
+type ScalarDecimalTypeClientResponseBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientGetOptions contains the optional parameters for the StringClient.Get method.
-type StringClientGetOptions struct {
+// ScalarDecimalVerifyClientPrepareVerifyOptions contains the optional parameters for the ScalarDecimalVerifyClient.PrepareVerify
+// method.
+type ScalarDecimalVerifyClientPrepareVerifyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPutOptions contains the optional parameters for the StringClient.Put method.
-type StringClientPutOptions struct {
+// ScalarDecimalVerifyClientVerifyOptions contains the optional parameters for the ScalarDecimalVerifyClient.Verify method.
+type ScalarDecimalVerifyClientVerifyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownClientGetOptions contains the optional parameters for the UnknownClient.Get method.
-type UnknownClientGetOptions struct {
+// ScalarStringClientGetOptions contains the optional parameters for the ScalarStringClient.Get method.
+type ScalarStringClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UnknownClientPutOptions contains the optional parameters for the UnknownClient.Put method.
-type UnknownClientPutOptions struct {
+// ScalarStringClientPutOptions contains the optional parameters for the ScalarStringClient.Put method.
+type ScalarStringClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ScalarUnknownClientGetOptions contains the optional parameters for the ScalarUnknownClient.Get method.
+type ScalarUnknownClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ScalarUnknownClientPutOptions contains the optional parameters for the ScalarUnknownClient.Put method.
+type ScalarUnknownClientPutOptions struct {
 	// placeholder for future optional parameters
 }

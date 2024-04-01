@@ -4,144 +4,170 @@
 
 package addlpropsgroup
 
-// ExtendsFloatClientGetOptions contains the optional parameters for the ExtendsFloatClient.Get method.
-type ExtendsFloatClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsFloatClientPutOptions contains the optional parameters for the ExtendsFloatClient.Put method.
-type ExtendsFloatClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsModelArrayClientGetOptions contains the optional parameters for the ExtendsModelArrayClient.Get method.
-type ExtendsModelArrayClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsModelArrayClientPutOptions contains the optional parameters for the ExtendsModelArrayClient.Put method.
-type ExtendsModelArrayClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsModelClientGetOptions contains the optional parameters for the ExtendsModelClient.Get method.
-type ExtendsModelClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsModelClientPutOptions contains the optional parameters for the ExtendsModelClient.Put method.
-type ExtendsModelClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsStringClientGetOptions contains the optional parameters for the ExtendsStringClient.Get method.
-type ExtendsStringClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsStringClientPutOptions contains the optional parameters for the ExtendsStringClient.Put method.
-type ExtendsStringClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsUnknownClientGetOptions contains the optional parameters for the ExtendsUnknownClient.Get method.
-type ExtendsUnknownClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsUnknownClientPutOptions contains the optional parameters for the ExtendsUnknownClient.Put method.
-type ExtendsUnknownClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsUnknownDerivedClientGetOptions contains the optional parameters for the ExtendsUnknownDerivedClient.Get method.
-type ExtendsUnknownDerivedClientGetOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsUnknownDerivedClientPutOptions contains the optional parameters for the ExtendsUnknownDerivedClient.Put method.
-type ExtendsUnknownDerivedClientPutOptions struct {
-	// placeholder for future optional parameters
-}
-
-// ExtendsUnknownDiscriminatedClientGetOptions contains the optional parameters for the ExtendsUnknownDiscriminatedClient.Get
+// AdditionalPropertiesExtendsFloatClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsFloatClient.Get
 // method.
-type ExtendsUnknownDiscriminatedClientGetOptions struct {
+type AdditionalPropertiesExtendsFloatClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExtendsUnknownDiscriminatedClientPutOptions contains the optional parameters for the ExtendsUnknownDiscriminatedClient.Put
+// AdditionalPropertiesExtendsFloatClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsFloatClient.Put
 // method.
-type ExtendsUnknownDiscriminatedClientPutOptions struct {
+type AdditionalPropertiesExtendsFloatClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsFloatClientGetOptions contains the optional parameters for the IsFloatClient.Get method.
-type IsFloatClientGetOptions struct {
+// AdditionalPropertiesExtendsModelArrayClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsModelArrayClient.Get
+// method.
+type AdditionalPropertiesExtendsModelArrayClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsFloatClientPutOptions contains the optional parameters for the IsFloatClient.Put method.
-type IsFloatClientPutOptions struct {
+// AdditionalPropertiesExtendsModelArrayClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsModelArrayClient.Put
+// method.
+type AdditionalPropertiesExtendsModelArrayClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsModelArrayClientGetOptions contains the optional parameters for the IsModelArrayClient.Get method.
-type IsModelArrayClientGetOptions struct {
+// AdditionalPropertiesExtendsModelClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsModelClient.Get
+// method.
+type AdditionalPropertiesExtendsModelClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsModelArrayClientPutOptions contains the optional parameters for the IsModelArrayClient.Put method.
-type IsModelArrayClientPutOptions struct {
+// AdditionalPropertiesExtendsModelClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsModelClient.Put
+// method.
+type AdditionalPropertiesExtendsModelClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsModelClientGetOptions contains the optional parameters for the IsModelClient.Get method.
-type IsModelClientGetOptions struct {
+// AdditionalPropertiesExtendsStringClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsStringClient.Get
+// method.
+type AdditionalPropertiesExtendsStringClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsModelClientPutOptions contains the optional parameters for the IsModelClient.Put method.
-type IsModelClientPutOptions struct {
+// AdditionalPropertiesExtendsStringClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsStringClient.Put
+// method.
+type AdditionalPropertiesExtendsStringClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsStringClientGetOptions contains the optional parameters for the IsStringClient.Get method.
-type IsStringClientGetOptions struct {
+// AdditionalPropertiesExtendsUnknownClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownClient.Get
+// method.
+type AdditionalPropertiesExtendsUnknownClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsStringClientPutOptions contains the optional parameters for the IsStringClient.Put method.
-type IsStringClientPutOptions struct {
+// AdditionalPropertiesExtendsUnknownClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownClient.Put
+// method.
+type AdditionalPropertiesExtendsUnknownClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownClientGetOptions contains the optional parameters for the IsUnknownClient.Get method.
-type IsUnknownClientGetOptions struct {
+// AdditionalPropertiesExtendsUnknownDerivedClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownDerivedClient.Get
+// method.
+type AdditionalPropertiesExtendsUnknownDerivedClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownClientPutOptions contains the optional parameters for the IsUnknownClient.Put method.
-type IsUnknownClientPutOptions struct {
+// AdditionalPropertiesExtendsUnknownDerivedClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownDerivedClient.Put
+// method.
+type AdditionalPropertiesExtendsUnknownDerivedClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownDerivedClientGetOptions contains the optional parameters for the IsUnknownDerivedClient.Get method.
-type IsUnknownDerivedClientGetOptions struct {
+// AdditionalPropertiesExtendsUnknownDiscriminatedClientGetOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownDiscriminatedClient.Get
+// method.
+type AdditionalPropertiesExtendsUnknownDiscriminatedClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownDerivedClientPutOptions contains the optional parameters for the IsUnknownDerivedClient.Put method.
-type IsUnknownDerivedClientPutOptions struct {
+// AdditionalPropertiesExtendsUnknownDiscriminatedClientPutOptions contains the optional parameters for the AdditionalPropertiesExtendsUnknownDiscriminatedClient.Put
+// method.
+type AdditionalPropertiesExtendsUnknownDiscriminatedClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownDiscriminatedClientGetOptions contains the optional parameters for the IsUnknownDiscriminatedClient.Get method.
-type IsUnknownDiscriminatedClientGetOptions struct {
+// AdditionalPropertiesIsFloatClientGetOptions contains the optional parameters for the AdditionalPropertiesIsFloatClient.Get
+// method.
+type AdditionalPropertiesIsFloatClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IsUnknownDiscriminatedClientPutOptions contains the optional parameters for the IsUnknownDiscriminatedClient.Put method.
-type IsUnknownDiscriminatedClientPutOptions struct {
+// AdditionalPropertiesIsFloatClientPutOptions contains the optional parameters for the AdditionalPropertiesIsFloatClient.Put
+// method.
+type AdditionalPropertiesIsFloatClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsModelArrayClientGetOptions contains the optional parameters for the AdditionalPropertiesIsModelArrayClient.Get
+// method.
+type AdditionalPropertiesIsModelArrayClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsModelArrayClientPutOptions contains the optional parameters for the AdditionalPropertiesIsModelArrayClient.Put
+// method.
+type AdditionalPropertiesIsModelArrayClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsModelClientGetOptions contains the optional parameters for the AdditionalPropertiesIsModelClient.Get
+// method.
+type AdditionalPropertiesIsModelClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsModelClientPutOptions contains the optional parameters for the AdditionalPropertiesIsModelClient.Put
+// method.
+type AdditionalPropertiesIsModelClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsStringClientGetOptions contains the optional parameters for the AdditionalPropertiesIsStringClient.Get
+// method.
+type AdditionalPropertiesIsStringClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsStringClientPutOptions contains the optional parameters for the AdditionalPropertiesIsStringClient.Put
+// method.
+type AdditionalPropertiesIsStringClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownClientGetOptions contains the optional parameters for the AdditionalPropertiesIsUnknownClient.Get
+// method.
+type AdditionalPropertiesIsUnknownClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownClientPutOptions contains the optional parameters for the AdditionalPropertiesIsUnknownClient.Put
+// method.
+type AdditionalPropertiesIsUnknownClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownDerivedClientGetOptions contains the optional parameters for the AdditionalPropertiesIsUnknownDerivedClient.Get
+// method.
+type AdditionalPropertiesIsUnknownDerivedClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownDerivedClientPutOptions contains the optional parameters for the AdditionalPropertiesIsUnknownDerivedClient.Put
+// method.
+type AdditionalPropertiesIsUnknownDerivedClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownDiscriminatedClientGetOptions contains the optional parameters for the AdditionalPropertiesIsUnknownDiscriminatedClient.Get
+// method.
+type AdditionalPropertiesIsUnknownDiscriminatedClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AdditionalPropertiesIsUnknownDiscriminatedClientPutOptions contains the optional parameters for the AdditionalPropertiesIsUnknownDiscriminatedClient.Put
+// method.
+type AdditionalPropertiesIsUnknownDiscriminatedClientPutOptions struct {
 	// placeholder for future optional parameters
 }

@@ -15,35 +15,35 @@ import (
 
 // ArrayServer is a fake server for instances of the arraygroup.ArrayClient type.
 type ArrayServer struct {
-	// BooleanValueServer contains the fakes for client BooleanValueClient
-	BooleanValueServer BooleanValueServer
+	// ArrayBooleanValueServer contains the fakes for client ArrayBooleanValueClient
+	ArrayBooleanValueServer ArrayBooleanValueServer
 
-	// DatetimeValueServer contains the fakes for client DatetimeValueClient
-	DatetimeValueServer DatetimeValueServer
+	// ArrayDatetimeValueServer contains the fakes for client ArrayDatetimeValueClient
+	ArrayDatetimeValueServer ArrayDatetimeValueServer
 
-	// DurationValueServer contains the fakes for client DurationValueClient
-	DurationValueServer DurationValueServer
+	// ArrayDurationValueServer contains the fakes for client ArrayDurationValueClient
+	ArrayDurationValueServer ArrayDurationValueServer
 
-	// Float32ValueServer contains the fakes for client Float32ValueClient
-	Float32ValueServer Float32ValueServer
+	// ArrayFloat32ValueServer contains the fakes for client ArrayFloat32ValueClient
+	ArrayFloat32ValueServer ArrayFloat32ValueServer
 
-	// Int32ValueServer contains the fakes for client Int32ValueClient
-	Int32ValueServer Int32ValueServer
+	// ArrayInt32ValueServer contains the fakes for client ArrayInt32ValueClient
+	ArrayInt32ValueServer ArrayInt32ValueServer
 
-	// Int64ValueServer contains the fakes for client Int64ValueClient
-	Int64ValueServer Int64ValueServer
+	// ArrayInt64ValueServer contains the fakes for client ArrayInt64ValueClient
+	ArrayInt64ValueServer ArrayInt64ValueServer
 
-	// ModelValueServer contains the fakes for client ModelValueClient
-	ModelValueServer ModelValueServer
+	// ArrayModelValueServer contains the fakes for client ArrayModelValueClient
+	ArrayModelValueServer ArrayModelValueServer
 
-	// NullableFloatValueServer contains the fakes for client NullableFloatValueClient
-	NullableFloatValueServer NullableFloatValueServer
+	// ArrayNullableFloatValueServer contains the fakes for client ArrayNullableFloatValueClient
+	ArrayNullableFloatValueServer ArrayNullableFloatValueServer
 
-	// StringValueServer contains the fakes for client StringValueClient
-	StringValueServer StringValueServer
+	// ArrayStringValueServer contains the fakes for client ArrayStringValueClient
+	ArrayStringValueServer ArrayStringValueServer
 
-	// UnknownValueServer contains the fakes for client UnknownValueClient
-	UnknownValueServer UnknownValueServer
+	// ArrayUnknownValueServer contains the fakes for client ArrayUnknownValueClient
+	ArrayUnknownValueServer ArrayUnknownValueServer
 }
 
 // NewArrayServerTransport creates a new instance of ArrayServerTransport with the provided implementation.
@@ -56,18 +56,18 @@ func NewArrayServerTransport(srv *ArrayServer) *ArrayServerTransport {
 // ArrayServerTransport connects instances of arraygroup.ArrayClient to instances of ArrayServer.
 // Don't use this type directly, use NewArrayServerTransport instead.
 type ArrayServerTransport struct {
-	srv                        *ArrayServer
-	trMu                       sync.Mutex
-	trBooleanValueServer       *BooleanValueServerTransport
-	trDatetimeValueServer      *DatetimeValueServerTransport
-	trDurationValueServer      *DurationValueServerTransport
-	trFloat32ValueServer       *Float32ValueServerTransport
-	trInt32ValueServer         *Int32ValueServerTransport
-	trInt64ValueServer         *Int64ValueServerTransport
-	trModelValueServer         *ModelValueServerTransport
-	trNullableFloatValueServer *NullableFloatValueServerTransport
-	trStringValueServer        *StringValueServerTransport
-	trUnknownValueServer       *UnknownValueServerTransport
+	srv                             *ArrayServer
+	trMu                            sync.Mutex
+	trArrayBooleanValueServer       *ArrayBooleanValueServerTransport
+	trArrayDatetimeValueServer      *ArrayDatetimeValueServerTransport
+	trArrayDurationValueServer      *ArrayDurationValueServerTransport
+	trArrayFloat32ValueServer       *ArrayFloat32ValueServerTransport
+	trArrayInt32ValueServer         *ArrayInt32ValueServerTransport
+	trArrayInt64ValueServer         *ArrayInt64ValueServerTransport
+	trArrayModelValueServer         *ArrayModelValueServerTransport
+	trArrayNullableFloatValueServer *ArrayNullableFloatValueServerTransport
+	trArrayStringValueServer        *ArrayStringValueServerTransport
+	trArrayUnknownValueServer       *ArrayUnknownValueServerTransport
 }
 
 // Do implements the policy.Transporter interface for ArrayServerTransport.
@@ -86,56 +86,56 @@ func (a *ArrayServerTransport) dispatchToClientFake(req *http.Request, client st
 	var err error
 
 	switch client {
-	case "BooleanValueClient":
-		initServer(&a.trMu, &a.trBooleanValueServer, func() *BooleanValueServerTransport {
-			return NewBooleanValueServerTransport(&a.srv.BooleanValueServer)
+	case "ArrayBooleanValueClient":
+		initServer(&a.trMu, &a.trArrayBooleanValueServer, func() *ArrayBooleanValueServerTransport {
+			return NewArrayBooleanValueServerTransport(&a.srv.ArrayBooleanValueServer)
 		})
-		resp, err = a.trBooleanValueServer.Do(req)
-	case "DatetimeValueClient":
-		initServer(&a.trMu, &a.trDatetimeValueServer, func() *DatetimeValueServerTransport {
-			return NewDatetimeValueServerTransport(&a.srv.DatetimeValueServer)
+		resp, err = a.trArrayBooleanValueServer.Do(req)
+	case "ArrayDatetimeValueClient":
+		initServer(&a.trMu, &a.trArrayDatetimeValueServer, func() *ArrayDatetimeValueServerTransport {
+			return NewArrayDatetimeValueServerTransport(&a.srv.ArrayDatetimeValueServer)
 		})
-		resp, err = a.trDatetimeValueServer.Do(req)
-	case "DurationValueClient":
-		initServer(&a.trMu, &a.trDurationValueServer, func() *DurationValueServerTransport {
-			return NewDurationValueServerTransport(&a.srv.DurationValueServer)
+		resp, err = a.trArrayDatetimeValueServer.Do(req)
+	case "ArrayDurationValueClient":
+		initServer(&a.trMu, &a.trArrayDurationValueServer, func() *ArrayDurationValueServerTransport {
+			return NewArrayDurationValueServerTransport(&a.srv.ArrayDurationValueServer)
 		})
-		resp, err = a.trDurationValueServer.Do(req)
-	case "Float32ValueClient":
-		initServer(&a.trMu, &a.trFloat32ValueServer, func() *Float32ValueServerTransport {
-			return NewFloat32ValueServerTransport(&a.srv.Float32ValueServer)
+		resp, err = a.trArrayDurationValueServer.Do(req)
+	case "ArrayFloat32ValueClient":
+		initServer(&a.trMu, &a.trArrayFloat32ValueServer, func() *ArrayFloat32ValueServerTransport {
+			return NewArrayFloat32ValueServerTransport(&a.srv.ArrayFloat32ValueServer)
 		})
-		resp, err = a.trFloat32ValueServer.Do(req)
-	case "Int32ValueClient":
-		initServer(&a.trMu, &a.trInt32ValueServer, func() *Int32ValueServerTransport {
-			return NewInt32ValueServerTransport(&a.srv.Int32ValueServer)
+		resp, err = a.trArrayFloat32ValueServer.Do(req)
+	case "ArrayInt32ValueClient":
+		initServer(&a.trMu, &a.trArrayInt32ValueServer, func() *ArrayInt32ValueServerTransport {
+			return NewArrayInt32ValueServerTransport(&a.srv.ArrayInt32ValueServer)
 		})
-		resp, err = a.trInt32ValueServer.Do(req)
-	case "Int64ValueClient":
-		initServer(&a.trMu, &a.trInt64ValueServer, func() *Int64ValueServerTransport {
-			return NewInt64ValueServerTransport(&a.srv.Int64ValueServer)
+		resp, err = a.trArrayInt32ValueServer.Do(req)
+	case "ArrayInt64ValueClient":
+		initServer(&a.trMu, &a.trArrayInt64ValueServer, func() *ArrayInt64ValueServerTransport {
+			return NewArrayInt64ValueServerTransport(&a.srv.ArrayInt64ValueServer)
 		})
-		resp, err = a.trInt64ValueServer.Do(req)
-	case "ModelValueClient":
-		initServer(&a.trMu, &a.trModelValueServer, func() *ModelValueServerTransport {
-			return NewModelValueServerTransport(&a.srv.ModelValueServer)
+		resp, err = a.trArrayInt64ValueServer.Do(req)
+	case "ArrayModelValueClient":
+		initServer(&a.trMu, &a.trArrayModelValueServer, func() *ArrayModelValueServerTransport {
+			return NewArrayModelValueServerTransport(&a.srv.ArrayModelValueServer)
 		})
-		resp, err = a.trModelValueServer.Do(req)
-	case "NullableFloatValueClient":
-		initServer(&a.trMu, &a.trNullableFloatValueServer, func() *NullableFloatValueServerTransport {
-			return NewNullableFloatValueServerTransport(&a.srv.NullableFloatValueServer)
+		resp, err = a.trArrayModelValueServer.Do(req)
+	case "ArrayNullableFloatValueClient":
+		initServer(&a.trMu, &a.trArrayNullableFloatValueServer, func() *ArrayNullableFloatValueServerTransport {
+			return NewArrayNullableFloatValueServerTransport(&a.srv.ArrayNullableFloatValueServer)
 		})
-		resp, err = a.trNullableFloatValueServer.Do(req)
-	case "StringValueClient":
-		initServer(&a.trMu, &a.trStringValueServer, func() *StringValueServerTransport {
-			return NewStringValueServerTransport(&a.srv.StringValueServer)
+		resp, err = a.trArrayNullableFloatValueServer.Do(req)
+	case "ArrayStringValueClient":
+		initServer(&a.trMu, &a.trArrayStringValueServer, func() *ArrayStringValueServerTransport {
+			return NewArrayStringValueServerTransport(&a.srv.ArrayStringValueServer)
 		})
-		resp, err = a.trStringValueServer.Do(req)
-	case "UnknownValueClient":
-		initServer(&a.trMu, &a.trUnknownValueServer, func() *UnknownValueServerTransport {
-			return NewUnknownValueServerTransport(&a.srv.UnknownValueServer)
+		resp, err = a.trArrayStringValueServer.Do(req)
+	case "ArrayUnknownValueClient":
+		initServer(&a.trMu, &a.trArrayUnknownValueServer, func() *ArrayUnknownValueServerTransport {
+			return NewArrayUnknownValueServerTransport(&a.srv.ArrayUnknownValueServer)
 		})
-		resp, err = a.trUnknownValueServer.Do(req)
+		resp, err = a.trArrayUnknownValueServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
