@@ -6,7 +6,6 @@ package multipartgroup_test
 import (
 	"bytes"
 	"context"
-	"io"
 	"multipartgroup"
 	"os"
 	"testing"
@@ -35,19 +34,16 @@ func TestFormDataClient_Basic(t *testing.T) {
 func TestFormDataClient_BinaryArrayParts(t *testing.T) {
 	client, err := multipartgroup.NewMultiPartClient(nil)
 	require.NoError(t, err)
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
 	require.NoError(t, err)
-	data, err := io.ReadAll(pngFile)
-	require.NoError(t, err)
-	require.NoError(t, pngFile.Close())
 	resp, err := client.NewMultiPartFormDataClient().BinaryArrayParts(context.Background(), multipartgroup.BinaryArrayPartsRequest{
 		ID: "123",
 		Pictures: []streaming.MultipartContent{
 			{
-				Body: streaming.NopCloser(bytes.NewReader(data)),
+				Body: streaming.NopCloser(bytes.NewReader(pngFile)),
 			},
 			{
-				Body: streaming.NopCloser(bytes.NewReader(data)),
+				Body: streaming.NopCloser(bytes.NewReader(pngFile)),
 			},
 		},
 	}, nil)
@@ -79,11 +75,8 @@ func TestFormDataClient_Complex(t *testing.T) {
 	jpgFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer jpgFile.Close()
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	pngFile, err := os.ReadFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png")
 	require.NoError(t, err)
-	data, err := io.ReadAll(pngFile)
-	require.NoError(t, err)
-	require.NoError(t, pngFile.Close())
 	resp, err := client.NewMultiPartFormDataClient().Complex(context.Background(), multipartgroup.ComplexPartsRequest{
 		Address: multipartgroup.Address{
 			City: to.Ptr("X"),
@@ -91,10 +84,10 @@ func TestFormDataClient_Complex(t *testing.T) {
 		ID: "123",
 		Pictures: []streaming.MultipartContent{
 			{
-				Body: streaming.NopCloser(bytes.NewReader(data)),
+				Body: streaming.NopCloser(bytes.NewReader(pngFile)),
 			},
 			{
-				Body: streaming.NopCloser(bytes.NewReader(data)),
+				Body: streaming.NopCloser(bytes.NewReader(pngFile)),
 			},
 		},
 		PreviousAddresses: []multipartgroup.Address{
