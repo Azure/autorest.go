@@ -62,13 +62,13 @@ func (client *JsonPropertyClient) getHandleResponse(resp *http.Response) (JsonPr
 }
 
 // - options - JsonPropertyClientSendOptions contains the optional parameters for the JsonPropertyClient.Send method.
-func (client *JsonPropertyClient) Send(ctx context.Context, body JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (JsonPropertyClientSendResponse, error) {
+func (client *JsonPropertyClient) Send(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (JsonPropertyClientSendResponse, error) {
 	var err error
 	const operationName = "JsonPropertyClient.Send"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.sendCreateRequest(ctx, body, options)
+	req, err := client.sendCreateRequest(ctx, jsonEncodedNameModel, options)
 	if err != nil {
 		return JsonPropertyClientSendResponse{}, err
 	}
@@ -84,14 +84,14 @@ func (client *JsonPropertyClient) Send(ctx context.Context, body JSONEncodedName
 }
 
 // sendCreateRequest creates the Send request.
-func (client *JsonPropertyClient) sendCreateRequest(ctx context.Context, body JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (*policy.Request, error) {
+func (client *JsonPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, jsonEncodedNameModel); err != nil {
 		return nil, err
 	}
 	return req, nil

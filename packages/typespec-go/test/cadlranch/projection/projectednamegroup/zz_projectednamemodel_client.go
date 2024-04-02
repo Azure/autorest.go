@@ -20,13 +20,13 @@ type ProjectedNameModelClient struct {
 
 //   - options - ProjectedNameModelClientClientOptions contains the optional parameters for the ProjectedNameModelClient.Client
 //     method.
-func (client *ProjectedNameModelClient) Client(ctx context.Context, body ClientModel, options *ProjectedNameModelClientClientOptions) (ProjectedNameModelClientClientResponse, error) {
+func (client *ProjectedNameModelClient) Client(ctx context.Context, clientModel ClientModel, options *ProjectedNameModelClientClientOptions) (ProjectedNameModelClientClientResponse, error) {
 	var err error
 	const operationName = "ProjectedNameModelClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, body, options)
+	req, err := client.clientCreateRequest(ctx, clientModel, options)
 	if err != nil {
 		return ProjectedNameModelClientClientResponse{}, err
 	}
@@ -42,14 +42,14 @@ func (client *ProjectedNameModelClient) Client(ctx context.Context, body ClientM
 }
 
 // clientCreateRequest creates the Client request.
-func (client *ProjectedNameModelClient) clientCreateRequest(ctx context.Context, body ClientModel, options *ProjectedNameModelClientClientOptions) (*policy.Request, error) {
+func (client *ProjectedNameModelClient) clientCreateRequest(ctx context.Context, clientModel ClientModel, options *ProjectedNameModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/projection/projected-name/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, clientModel); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -57,13 +57,13 @@ func (client *ProjectedNameModelClient) clientCreateRequest(ctx context.Context,
 
 //   - options - ProjectedNameModelClientLanguageOptions contains the optional parameters for the ProjectedNameModelClient.Language
 //     method.
-func (client *ProjectedNameModelClient) Language(ctx context.Context, body GoModel, options *ProjectedNameModelClientLanguageOptions) (ProjectedNameModelClientLanguageResponse, error) {
+func (client *ProjectedNameModelClient) Language(ctx context.Context, goModel GoModel, options *ProjectedNameModelClientLanguageOptions) (ProjectedNameModelClientLanguageResponse, error) {
 	var err error
 	const operationName = "ProjectedNameModelClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, body, options)
+	req, err := client.languageCreateRequest(ctx, goModel, options)
 	if err != nil {
 		return ProjectedNameModelClientLanguageResponse{}, err
 	}
@@ -79,14 +79,14 @@ func (client *ProjectedNameModelClient) Language(ctx context.Context, body GoMod
 }
 
 // languageCreateRequest creates the Language request.
-func (client *ProjectedNameModelClient) languageCreateRequest(ctx context.Context, body GoModel, options *ProjectedNameModelClientLanguageOptions) (*policy.Request, error) {
+func (client *ProjectedNameModelClient) languageCreateRequest(ctx context.Context, goModel GoModel, options *ProjectedNameModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/projection/projected-name/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, goModel); err != nil {
 		return nil, err
 	}
 	return req, nil

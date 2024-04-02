@@ -71,6 +71,21 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   for (const sdkClient of sdkPackage.clients) {
     sdkClient.name = trimPackagePrefix(stutteringPrefix, sdkClient.name);
+
+    // fix up the synthesized type names for page responses
+    for (const sdkMethod of sdkClient.methods) {
+      if (sdkMethod.kind !== 'paging') {
+        continue;
+      }
+
+      for (const httpResp of sdkMethod.operation.responses.values()) {
+        if (!httpResp.type || httpResp.type.kind !== 'model') {
+          continue;
+        }
+
+        httpResp.type.name = trimPackagePrefix(stutteringPrefix, httpResp.type.name);
+      }
+    }
   }
 
   // check if the name collides with an existing name. we only do
