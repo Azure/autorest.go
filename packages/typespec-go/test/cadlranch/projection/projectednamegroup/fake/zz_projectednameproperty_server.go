@@ -19,19 +19,19 @@ import (
 type ProjectedNamePropertyServer struct {
 	// Client is the fake for method ProjectedNamePropertyClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, body projectednamegroup.ClientProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, clientProjectedNameModel projectednamegroup.ClientProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientClientResponse], errResp azfake.ErrorResponder)
 
 	// JSON is the fake for method ProjectedNamePropertyClient.JSON
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSON func(ctx context.Context, body projectednamegroup.JSONProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientJSONOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientJSONResponse], errResp azfake.ErrorResponder)
+	JSON func(ctx context.Context, jsonProjectedNameModel projectednamegroup.JSONProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientJSONOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientJSONResponse], errResp azfake.ErrorResponder)
 
 	// JSONAndClient is the fake for method ProjectedNamePropertyClient.JSONAndClient
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONAndClient func(ctx context.Context, body projectednamegroup.JSONAndClientProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientJSONAndClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientJSONAndClientResponse], errResp azfake.ErrorResponder)
+	JSONAndClient func(ctx context.Context, jsonAndClientProjectedNameModel projectednamegroup.JSONAndClientProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientJSONAndClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientJSONAndClientResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method ProjectedNamePropertyClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, body projectednamegroup.LanguageProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientLanguageOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, languageProjectedNameModel projectednamegroup.LanguageProjectedNameModel, options *projectednamegroup.ProjectedNamePropertyClientLanguageOptions) (resp azfake.Responder[projectednamegroup.ProjectedNamePropertyClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
 // NewProjectedNamePropertyServerTransport creates a new instance of ProjectedNamePropertyServerTransport with the provided implementation.

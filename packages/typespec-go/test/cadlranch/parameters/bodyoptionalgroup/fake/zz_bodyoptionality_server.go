@@ -28,7 +28,7 @@ type BodyOptionalityServer struct {
 
 	// RequiredImplicit is the fake for method BodyOptionalityClient.RequiredImplicit
 	// HTTP status codes to indicate success: http.StatusNoContent
-	RequiredImplicit func(ctx context.Context, body bodyoptionalgroup.BodyModel, options *bodyoptionalgroup.BodyOptionalityClientRequiredImplicitOptions) (resp azfake.Responder[bodyoptionalgroup.BodyOptionalityClientRequiredImplicitResponse], errResp azfake.ErrorResponder)
+	RequiredImplicit func(ctx context.Context, bodyModel bodyoptionalgroup.BodyModel, options *bodyoptionalgroup.BodyOptionalityClientRequiredImplicitOptions) (resp azfake.Responder[bodyoptionalgroup.BodyOptionalityClientRequiredImplicitResponse], errResp azfake.ErrorResponder)
 }
 
 // NewBodyOptionalityServerTransport creates a new instance of BodyOptionalityServerTransport with the provided implementation.

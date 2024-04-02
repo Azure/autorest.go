@@ -33,13 +33,13 @@ func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 }
 
 // - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
-func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
+func (client *NamingClient) Client(ctx context.Context, clientNameModel ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
 	const operationName = "NamingClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, body, options)
+	req, err := client.clientCreateRequest(ctx, clientNameModel, options)
 	if err != nil {
 		return NamingClientClientResponse{}, err
 	}
@@ -55,14 +55,14 @@ func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, op
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingClient) clientCreateRequest(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (*policy.Request, error) {
+func (client *NamingClient) clientCreateRequest(ctx context.Context, clientNameModel ClientNameModel, options *NamingClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, clientNameModel); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -102,13 +102,13 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, options
 
 //   - options - NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
 //     method.
-func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
+func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
 	var err error
 	const operationName = "NamingClient.CompatibleWithEncodedName"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, body, options)
+	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, clientNameAndJSONEncodedNameModel, options)
 	if err != nil {
 		return NamingClientCompatibleWithEncodedNameResponse{}, err
 	}
@@ -124,27 +124,27 @@ func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body 
 }
 
 // compatibleWithEncodedNameCreateRequest creates the CompatibleWithEncodedName request.
-func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, body ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
+func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/compatible-with-encoded-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, clientNameAndJSONEncodedNameModel); err != nil {
 		return nil, err
 	}
 	return req, nil
 }
 
 // - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
-func (client *NamingClient) Language(ctx context.Context, body LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
+func (client *NamingClient) Language(ctx context.Context, languageClientNameModel LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, body, options)
+	req, err := client.languageCreateRequest(ctx, languageClientNameModel, options)
 	if err != nil {
 		return NamingClientLanguageResponse{}, err
 	}
@@ -160,14 +160,14 @@ func (client *NamingClient) Language(ctx context.Context, body LanguageClientNam
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingClient) languageCreateRequest(ctx context.Context, body LanguageClientNameModel, options *NamingClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingClient) languageCreateRequest(ctx context.Context, languageClientNameModel LanguageClientNameModel, options *NamingClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, languageClientNameModel); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -19,13 +19,13 @@ type NamingModelClient struct {
 }
 
 // - options - NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
-func (client *NamingModelClient) Client(ctx context.Context, body ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
+func (client *NamingModelClient) Client(ctx context.Context, clientModel ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, body, options)
+	req, err := client.clientCreateRequest(ctx, clientModel, options)
 	if err != nil {
 		return NamingModelClientClientResponse{}, err
 	}
@@ -41,27 +41,27 @@ func (client *NamingModelClient) Client(ctx context.Context, body ClientModel, o
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingModelClient) clientCreateRequest(ctx context.Context, body ClientModel, options *NamingModelClientClientOptions) (*policy.Request, error) {
+func (client *NamingModelClient) clientCreateRequest(ctx context.Context, clientModel ClientModel, options *NamingModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, clientModel); err != nil {
 		return nil, err
 	}
 	return req, nil
 }
 
 // - options - NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
-func (client *NamingModelClient) Language(ctx context.Context, body GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
+func (client *NamingModelClient) Language(ctx context.Context, goModel GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, body, options)
+	req, err := client.languageCreateRequest(ctx, goModel, options)
 	if err != nil {
 		return NamingModelClientLanguageResponse{}, err
 	}
@@ -77,14 +77,14 @@ func (client *NamingModelClient) Language(ctx context.Context, body GoModel, opt
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingModelClient) languageCreateRequest(ctx context.Context, body GoModel, options *NamingModelClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingModelClient) languageCreateRequest(ctx context.Context, goModel GoModel, options *NamingModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, goModel); err != nil {
 		return nil, err
 	}
 	return req, nil

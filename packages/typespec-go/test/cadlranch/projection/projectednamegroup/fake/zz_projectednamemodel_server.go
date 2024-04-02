@@ -19,11 +19,11 @@ import (
 type ProjectedNameModelServer struct {
 	// Client is the fake for method ProjectedNameModelClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, body projectednamegroup.ClientModel, options *projectednamegroup.ProjectedNameModelClientClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNameModelClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, clientModel projectednamegroup.ClientModel, options *projectednamegroup.ProjectedNameModelClientClientOptions) (resp azfake.Responder[projectednamegroup.ProjectedNameModelClientClientResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method ProjectedNameModelClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, body projectednamegroup.GoModel, options *projectednamegroup.ProjectedNameModelClientLanguageOptions) (resp azfake.Responder[projectednamegroup.ProjectedNameModelClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, goModel projectednamegroup.GoModel, options *projectednamegroup.ProjectedNameModelClientLanguageOptions) (resp azfake.Responder[projectednamegroup.ProjectedNameModelClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
 // NewProjectedNameModelServerTransport creates a new instance of ProjectedNameModelServerTransport with the provided implementation.

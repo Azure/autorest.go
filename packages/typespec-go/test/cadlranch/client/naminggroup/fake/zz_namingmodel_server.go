@@ -19,11 +19,11 @@ import (
 type NamingModelServer struct {
 	// Client is the fake for method NamingModelClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, clientModel naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method NamingModelClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, body naminggroup.GoModel, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, goModel naminggroup.GoModel, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
 // NewNamingModelServerTransport creates a new instance of NamingModelServerTransport with the provided implementation.
