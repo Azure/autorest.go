@@ -330,6 +330,9 @@ type EnvironmentServer struct {
 	Type *EnvironmentServerType
 }
 
+type ErrorAdditionalInfoInfo struct {
+}
+
 // Additional, external documentation for the API.
 type ExternalDocumentation struct {
 	// REQUIRED; URL pointing to the documentation.

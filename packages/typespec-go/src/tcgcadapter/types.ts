@@ -31,6 +31,9 @@ export class typeAdapter {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
+      } else if (enumType.crossLanguageDefinitionId.match(/(?:Foundations|ResourceManager)\.(?:Resource)?ProvisioningState/)) {
+        // don't create constants for the LRO provisioning state as they aren't used
+        continue;
       }
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
@@ -288,7 +291,7 @@ export class typeAdapter {
   }
 
   private isFoundationsError(sdkModel: tcgc.SdkModelType): boolean {
-    return !!sdkModel.crossLanguageDefinitionId.match(/Foundations\.ErrorResponse$/i);
+    return !!sdkModel.crossLanguageDefinitionId.match(/(?:Foundations|ResourceManager)\.Error[a-zA-Z]+$/i);
   }
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
