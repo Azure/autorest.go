@@ -21,7 +21,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type Client struct {
 	internal            *azcore.Client
-	endpoint            string
+	geography           Geography
 	clientGroup         ClientGroup
 	clientOptionalGroup *ClientOptionalGroup
 	optionalString      *string
@@ -72,8 +72,10 @@ func (client *Client) Create(ctx context.Context, headerBools []bool, stringQuer
 
 // createCreateRequest creates the Create request.
 func (client *Client) createCreateRequest(ctx context.Context, headerBools []bool, stringQuery string, boolHeaderEnum BooleanEnum, unixTimeQuery time.Time, headerEnum SomeEnum, queryEnum SomeEnum, options *CreateOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/aliases"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,8 +157,10 @@ func (client *Client) GetScript(ctx context.Context, headerCounts []int32, query
 
 // getScriptCreateRequest creates the GetScript request.
 func (client *Client) getScriptCreateRequest(ctx context.Context, headerCounts []int32, queryCounts []int64, explodedStringStuff []string, numericHeader int32, headerTime time.Time, props GeoJSONObjectNamedCollection, someGroup SomeGroup, explodedGroup ExplodedGroup, options *GetScriptOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/scripts"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -243,8 +247,10 @@ func (client *Client) NewListPager(headerEnums []IntEnum, queryEnum IntEnum, opt
 
 // listCreateRequest creates the List request.
 func (client *Client) listCreateRequest(ctx context.Context, headerEnums []IntEnum, queryEnum IntEnum, options *ListOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/aliases"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -348,8 +354,10 @@ func (client *Client) listLRO(ctx context.Context, options *BeginListLROOptions)
 
 // listLROCreateRequest creates the ListLRO request.
 func (client *Client) listLROCreateRequest(ctx context.Context, options *BeginListLROOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/paged"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -396,8 +404,10 @@ func (client *Client) NewListWithSharedNextOnePager(options *ListWithSharedNextO
 
 // listWithSharedNextOneCreateRequest creates the ListWithSharedNextOne request.
 func (client *Client) listWithSharedNextOneCreateRequest(ctx context.Context, options *ListWithSharedNextOneOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNextOne"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -444,8 +454,10 @@ func (client *Client) NewListWithSharedNextTwoPager(options *ListWithSharedNextT
 
 // listWithSharedNextTwoCreateRequest creates the ListWithSharedNextTwo request.
 func (client *Client) listWithSharedNextTwoCreateRequest(ctx context.Context, options *ListWithSharedNextTwoOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNextTwo"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -491,8 +503,10 @@ func (client *Client) PolicyAssignment(ctx context.Context, things []Things, pol
 
 // policyAssignmentCreateRequest creates the PolicyAssignment request.
 func (client *Client) policyAssignmentCreateRequest(ctx context.Context, things []Things, polymorphicParam GeoJSONObjectClassification, options *PolicyAssignmentOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/policy"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -558,8 +572,10 @@ func (client *Client) UploadForm(ctx context.Context, requiredString string, req
 
 // uploadFormCreateRequest creates the UploadForm request.
 func (client *Client) uploadFormCreateRequest(ctx context.Context, requiredString string, requiredEnum DataSetting, requiredInt int32, options *UploadFormOptions) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/formdata"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -584,9 +600,11 @@ func (client *Client) uploadFormCreateRequest(ctx context.Context, requiredStrin
 
 // listLRONextCreateRequest creates the listLRONextCreateRequest request.
 func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/paged"
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -596,8 +614,10 @@ func (client *Client) listLRONextCreateRequest(ctx context.Context, nextLink str
 
 // listWithSharedNextCreateRequest creates the listWithSharedNextCreateRequest request.
 func (client *Client) listWithSharedNextCreateRequest(ctx context.Context, nextLink string) (*policy.Request, error) {
+	host := "https://{geography}.atlas.microsoft.com"
+	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNext"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

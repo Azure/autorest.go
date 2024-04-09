@@ -8,13 +8,25 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewClient(endpoint string, options *azcore.ClientOptions) (*Client, error) {
-	client, err := azcore.NewClient("azalias.Client", "v0.0.1", runtime.PipelineOptions{}, options)
+type ClientOptions struct {
+	azcore.ClientOptions
+	Geography *Geography
+}
+
+func NewClient(options *ClientOptions) (*Client, error) {
+	if options == nil {
+		options = &ClientOptions{}
+	}
+	client, err := azcore.NewClient("Client", "v0.0.1", runtime.PipelineOptions{}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}
+	geography := GeographyUs
+	if options.Geography != nil {
+		geography = *options.Geography
+	}
 	return &Client{
-		internal: client,
-		endpoint: endpoint,
+		internal:  client,
+		geography: geography,
 	}, nil
 }

@@ -157,7 +157,7 @@ function adaptClient(group: m4.OperationGroup): go.Client {
 
   client.host = group.language.go!.host;
   if (group.language.go!.complexHostParams) {
-    client.complexHostParams = true;
+    client.templatedHost = true;
   }
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
