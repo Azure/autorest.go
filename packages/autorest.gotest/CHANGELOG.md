@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Tue, 20 Feb 2024 09:23:59 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Apr 2024 06:34:25 GMT and should not be manually modified.
+
+## 4.7.2
+Mon, 08 Apr 2024 06:34:25 GMT
+
+### Patches
+
+- Rearrange autorest pipeline to add go transform info for example model
 
 ## 4.7.1
 Tue, 20 Feb 2024 09:23:59 GMT

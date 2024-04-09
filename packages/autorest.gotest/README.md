@@ -66,19 +66,19 @@ use-extension:
   '@autorest/testmodeler': '2.5.2'
 
 pipeline:
-  test-modeler:
+  go-transform-m4:
     input:
       - go
+  test-modeler:
+    input:
+      - go-transform-m4
     output-artifact: source-file-test-modeler
   testmodeler/emitter:
     input:
       - test-modeler
     scope: scope-testmodeler/emitter
-  go-transform-m4:
-    input:
-      - test-modeler
   go-tester:
-    input: go-transform-m4
+    input: test-modeler
     output-artifact: source-file-go-tester
   gotest/emitter:
     input:
