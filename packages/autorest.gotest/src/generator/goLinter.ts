@@ -11,7 +11,7 @@ import { Config, configDefaults } from '../common/constant';
 
 export async function processRequest(host: AutorestExtensionHost): Promise<void> {
   const testConfig = new TestConfig(await host.GetValue(''), configDefaults);
-  if (testConfig.getValue(Config.doLint)) {
+  if (!testConfig.getValue(Config.skipLint)) {
     const files = await host.listInputs();
     Helper.execSync('go install golang.org/x/tools/cmd/goimports@latest');
     for (const outputFile of files) {

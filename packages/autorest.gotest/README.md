@@ -46,9 +46,9 @@ File prefix for auto-generated examples.
 
 File prefix for auto-generated tests.
 
-### --gotest.do-lint
+### --gotest.skip-lint
 
-Whether lint go file after generation.
+Whether skip lint go file after generation.
 
 ## Autorest Pipeline Configurations
 

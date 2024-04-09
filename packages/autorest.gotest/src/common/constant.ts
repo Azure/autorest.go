@@ -21,7 +21,7 @@ export enum Config {
     testFilePrefix = 'test-file-prefix',
     sendExampleId = 'testmodeler.mock.send-example-id',
     verifyResponse = 'testmodeler.mock.verify-response',
-    doLint = 'gotest.do-lint'
+    skipLint = 'gotest.skip-lint'
 }
 
 export const configDefaults = {
@@ -35,5 +35,5 @@ export const configDefaults = {
   [Config.filePrefix]: '',
   [Config.exampleFilePrefix]: '',
   [Config.testFilePrefix]: '',
-  [Config.doLint]: true,
+  [Config.skipLint]: false,
 };
