@@ -245,15 +245,16 @@ export interface Client {
   // contains any client accessor methods. can be empty
   clientAccessors: Array<ClientAccessor>;
 
-  // client has a statically defined host
+  // client has a statically defined or templated host
   host?: string;
 
   // can be empty if there are no host params
   hostParams: Array<URIParameter>;
 
-  // complexHostParams indicates that the parameters to construct the full host name
-  // span the client and the method. see custombaseurlgroup for an example of this.
-  complexHostParams: boolean;
+  // templatedHost indicates that there's one or more URIParameters
+  // required to construct the complete host. the parameters can
+  // be solely on the client or span client and method params.
+  templatedHost: boolean;
 
   // the parent client in a hierarchical client
   parent?: Client;
@@ -1059,7 +1060,7 @@ export class CodeModel implements CodeModel {
 export class Client implements Client {
   constructor(name: string, description: string, ctorName: string) {
     this.name = name;
-    this.complexHostParams = false;
+    this.templatedHost = false;
     this.ctorName = ctorName;
     this.description = description;
     this.hostParams = new Array<URIParameter>();

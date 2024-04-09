@@ -564,6 +564,12 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
             if (!values(hostParams).where(p => p.language.go!.name === param.language.go!.name).any()) {
               hostParams.push(param);
             }
+            // we special-case fully templated host param, e.g. {endpoint}
+            // as there's no need to do a find/replace in this case, we'd
+            // just directly use the endpoint param value.
+            if (!(<string>group.language.go!.host).match(/^\{\w+\}$/)) {
+              group.language.go!.complexHostParams = true;
+            }
             continue;
           }
           // add global param info to the operation group

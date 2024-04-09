@@ -75,15 +75,15 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     clientText += `\tinternal *${clientPkg}.Client\n`;
     if (azureARM) {
       hostParamName = 'internal.Endpoint()';
-    } else if (client.complexHostParams) {
-      // for the complex case, all the host params must be stashed on
-      // the client as the full URL is constructed in the operations.
-      // MUST check before non-complex host params case.
+    } else if (client.templatedHost) {
+      // for the templated case, all the host params must be stashed on
+      // the client as the full host URL is constructed in the operations.
+      // MUST check before non-template host params case.
       for (const param of values(client.hostParams)) {
         clientText += `\t${param.name} ${go.getTypeDeclaration(param.type)}\n`;
       }
     } else if (client.hostParams.length > 0) {
-      // non-complex case.  the final endpoint URL will be constructed
+      // non-template case.  the final endpoint URL will be constructed
       // from the host param(s) in the client constructor and placed here.
       hostParamName = 'endpoint';
       clientText += `\t${hostParamName} string\n`;
@@ -514,9 +514,9 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
   let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
   text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
   let hostParam: string;
-  if (client.complexHostParams) {
+  if (client.templatedHost) {
     imports.add('strings');
-    // we have a complex parameterized host
+    // we have a templated host
     text += `\thost := "${client.host!}"\n`;
     // get all the host params on the client
     for (const hostParam of values(client.hostParams)) {

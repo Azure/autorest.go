@@ -40,8 +40,10 @@ func TestFakeCreate(t *testing.T) {
 			return
 		},
 	}
-	client, err := azalias.NewClient("https://contoso.com", &azcore.ClientOptions{
-		Transport: fake.NewServerTransport(&server),
+	client, err := azalias.NewClient(&azalias.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerTransport(&server),
+		},
 	})
 	require.NoError(t, err)
 	_, err = client.Create(context.Background(), headerBoolsContent, stringQueryContent, boolHeaderEnumContent, unixTimeQueryContent, headerEnumContent, queryEnumContent, &azalias.CreateOptions{
@@ -72,8 +74,10 @@ func TestFakeGetScript(t *testing.T) {
 			return
 		},
 	}
-	client, err := azalias.NewClient("https://contoso.com", &azcore.ClientOptions{
-		Transport: fake.NewServerTransport(&server),
+	client, err := azalias.NewClient(&azalias.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerTransport(&server),
+		},
 	})
 	require.NoError(t, err)
 	_, err = client.GetScript(context.Background(), headerContent, queryContent, explodedStrings, headerValue, timeContent, azalias.GeoJSONObjectNamedCollection{}, azalias.SomeGroup{

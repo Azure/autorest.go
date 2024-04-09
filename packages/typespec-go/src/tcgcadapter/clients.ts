@@ -92,7 +92,7 @@ export class clientAdapter {
               throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
             }
           } else {
-            goClient.complexHostParams = true;
+            goClient.templatedHost = true;
             for (const templateArg of param.type.templateArguments) {
               goClient.hostParams.push(this.adaptURIParam(templateArg));
             }
@@ -113,7 +113,7 @@ export class clientAdapter {
       // this is a sub-client. it will share the client/host params of the parent.
       // NOTE: we must propagate parant params before a potential recursive call
       // to create a child client that will need to inherit our client params.
-      goClient.complexHostParams = parent.complexHostParams;
+      goClient.templatedHost = parent.templatedHost;
       goClient.host = parent.host;
       goClient.hostParams = parent.hostParams;
       goClient.parameters = parent.parameters;
