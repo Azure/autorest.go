@@ -1,4 +1,4 @@
-module srvdrivengroup
+module srvdrivenoldgroup
 
 go 1.18
 
