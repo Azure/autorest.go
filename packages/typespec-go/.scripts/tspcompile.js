@@ -46,7 +46,6 @@ const cadlRanch = {
   'mediatypegroup': ['payload/media-type'],
   'multipartgroup': ['payload/multipart'],
   'pageablegroup': ['payload/pageable'],
-  'projectednamegroup': ['projection/projected-name'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],
