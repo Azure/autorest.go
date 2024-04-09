@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package srvdrivengroup
+package srvdrivenoldgroup
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -17,6 +17,6 @@ func NewResiliencyServiceDrivenClient(options *azcore.ClientOptions) (*Resilienc
 		internal:                 internal,
 		endpoint:                 "http://localhost:3000",
 		serviceDeploymentVersion: "v2",
-		apiVersion:               "v2",
+		apiVersion:               "v1",
 	}, nil
 }

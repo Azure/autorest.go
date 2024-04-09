@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package srvdrivengroup_test
+package srvdrivennewgroup_test
 
 import (
 	"context"
-	"srvdrivengroup"
+	"srvdrivennewgroup"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -13,7 +13,7 @@ import (
 )
 
 func TestResiliencyServiceDrivenClient_AddOperation(t *testing.T) {
-	client, err := srvdrivengroup.NewResiliencyServiceDrivenClient(nil)
+	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClient(nil)
 	require.NoError(t, err)
 	resp, err := client.AddOperation(context.Background(), nil)
 	require.NoError(t, err)
@@ -21,9 +21,9 @@ func TestResiliencyServiceDrivenClient_AddOperation(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClient_FromNone(t *testing.T) {
-	client, err := srvdrivengroup.NewResiliencyServiceDrivenClient(nil)
+	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClient(nil)
 	require.NoError(t, err)
-	resp, err := client.FromNone(context.Background(), &srvdrivengroup.ResiliencyServiceDrivenClientFromNoneOptions{
+	resp, err := client.FromNone(context.Background(), &srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneOptions{
 		NewParameter: to.Ptr("new"),
 	})
 	require.NoError(t, err)
@@ -31,9 +31,9 @@ func TestResiliencyServiceDrivenClient_FromNone(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClient_FromOneOptional(t *testing.T) {
-	client, err := srvdrivengroup.NewResiliencyServiceDrivenClient(nil)
+	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClient(nil)
 	require.NoError(t, err)
-	resp, err := client.FromOneOptional(context.Background(), &srvdrivengroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
+	resp, err := client.FromOneOptional(context.Background(), &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
 		NewParameter: to.Ptr("new"),
 		Parameter:    to.Ptr("optional"),
 	})
@@ -42,9 +42,9 @@ func TestResiliencyServiceDrivenClient_FromOneOptional(t *testing.T) {
 }
 
 func TestResiliencyServiceDrivenClient_FromOneRequired(t *testing.T) {
-	client, err := srvdrivengroup.NewResiliencyServiceDrivenClient(nil)
+	client, err := srvdrivennewgroup.NewResiliencyServiceDrivenClient(nil)
 	require.NoError(t, err)
-	resp, err := client.FromOneRequired(context.Background(), "required", &srvdrivengroup.ResiliencyServiceDrivenClientFromOneRequiredOptions{
+	resp, err := client.FromOneRequired(context.Background(), "required", &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredOptions{
 		NewParameter: to.Ptr("new"),
 	})
 	require.NoError(t, err)

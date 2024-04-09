@@ -13,36 +13,36 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
-	"srvdrivengroup"
+	"srvdrivennewgroup"
 )
 
-// ResiliencyServiceDrivenServer is a fake server for instances of the srvdrivengroup.ResiliencyServiceDrivenClient type.
+// ResiliencyServiceDrivenServer is a fake server for instances of the srvdrivennewgroup.ResiliencyServiceDrivenClient type.
 type ResiliencyServiceDrivenServer struct {
 	// AddOperation is the fake for method ResiliencyServiceDrivenClient.AddOperation
 	// HTTP status codes to indicate success: http.StatusNoContent
-	AddOperation func(ctx context.Context, options *srvdrivengroup.ResiliencyServiceDrivenClientAddOperationOptions) (resp azfake.Responder[srvdrivengroup.ResiliencyServiceDrivenClientAddOperationResponse], errResp azfake.ErrorResponder)
+	AddOperation func(ctx context.Context, options *srvdrivennewgroup.ResiliencyServiceDrivenClientAddOperationOptions) (resp azfake.Responder[srvdrivennewgroup.ResiliencyServiceDrivenClientAddOperationResponse], errResp azfake.ErrorResponder)
 
 	// FromNone is the fake for method ResiliencyServiceDrivenClient.FromNone
 	// HTTP status codes to indicate success: http.StatusNoContent
-	FromNone func(ctx context.Context, options *srvdrivengroup.ResiliencyServiceDrivenClientFromNoneOptions) (resp azfake.Responder[srvdrivengroup.ResiliencyServiceDrivenClientFromNoneResponse], errResp azfake.ErrorResponder)
+	FromNone func(ctx context.Context, options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneOptions) (resp azfake.Responder[srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneResponse], errResp azfake.ErrorResponder)
 
 	// FromOneOptional is the fake for method ResiliencyServiceDrivenClient.FromOneOptional
 	// HTTP status codes to indicate success: http.StatusNoContent
-	FromOneOptional func(ctx context.Context, options *srvdrivengroup.ResiliencyServiceDrivenClientFromOneOptionalOptions) (resp azfake.Responder[srvdrivengroup.ResiliencyServiceDrivenClientFromOneOptionalResponse], errResp azfake.ErrorResponder)
+	FromOneOptional func(ctx context.Context, options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions) (resp azfake.Responder[srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalResponse], errResp azfake.ErrorResponder)
 
 	// FromOneRequired is the fake for method ResiliencyServiceDrivenClient.FromOneRequired
 	// HTTP status codes to indicate success: http.StatusNoContent
-	FromOneRequired func(ctx context.Context, parameter string, options *srvdrivengroup.ResiliencyServiceDrivenClientFromOneRequiredOptions) (resp azfake.Responder[srvdrivengroup.ResiliencyServiceDrivenClientFromOneRequiredResponse], errResp azfake.ErrorResponder)
+	FromOneRequired func(ctx context.Context, parameter string, options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredOptions) (resp azfake.Responder[srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredResponse], errResp azfake.ErrorResponder)
 }
 
 // NewResiliencyServiceDrivenServerTransport creates a new instance of ResiliencyServiceDrivenServerTransport with the provided implementation.
-// The returned ResiliencyServiceDrivenServerTransport instance is connected to an instance of srvdrivengroup.ResiliencyServiceDrivenClient via the
+// The returned ResiliencyServiceDrivenServerTransport instance is connected to an instance of srvdrivennewgroup.ResiliencyServiceDrivenClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewResiliencyServiceDrivenServerTransport(srv *ResiliencyServiceDrivenServer) *ResiliencyServiceDrivenServerTransport {
 	return &ResiliencyServiceDrivenServerTransport{srv: srv}
 }
 
-// ResiliencyServiceDrivenServerTransport connects instances of srvdrivengroup.ResiliencyServiceDrivenClient to instances of ResiliencyServiceDrivenServer.
+// ResiliencyServiceDrivenServerTransport connects instances of srvdrivennewgroup.ResiliencyServiceDrivenClient to instances of ResiliencyServiceDrivenServer.
 // Don't use this type directly, use NewResiliencyServiceDrivenServerTransport instead.
 type ResiliencyServiceDrivenServerTransport struct {
 	srv *ResiliencyServiceDrivenServer
@@ -108,9 +108,9 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromNone(req *http.Requ
 		return nil, err
 	}
 	newParameterParam := getOptional(newParameterUnescaped)
-	var options *srvdrivengroup.ResiliencyServiceDrivenClientFromNoneOptions
+	var options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneOptions
 	if newParameterParam != nil {
-		options = &srvdrivengroup.ResiliencyServiceDrivenClientFromNoneOptions{
+		options = &srvdrivennewgroup.ResiliencyServiceDrivenClientFromNoneOptions{
 			NewParameter: newParameterParam,
 		}
 	}
@@ -144,9 +144,9 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneOptional(req *ht
 		return nil, err
 	}
 	newParameterParam := getOptional(newParameterUnescaped)
-	var options *srvdrivengroup.ResiliencyServiceDrivenClientFromOneOptionalOptions
+	var options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions
 	if parameterParam != nil || newParameterParam != nil {
-		options = &srvdrivengroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
+		options = &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
 			Parameter:    parameterParam,
 			NewParameter: newParameterParam,
 		}
@@ -180,9 +180,9 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneRequired(req *ht
 		return nil, err
 	}
 	newParameterParam := getOptional(newParameterUnescaped)
-	var options *srvdrivengroup.ResiliencyServiceDrivenClientFromOneRequiredOptions
+	var options *srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredOptions
 	if newParameterParam != nil {
-		options = &srvdrivengroup.ResiliencyServiceDrivenClientFromOneRequiredOptions{
+		options = &srvdrivennewgroup.ResiliencyServiceDrivenClientFromOneRequiredOptions{
 			NewParameter: newParameterParam,
 		}
 	}
