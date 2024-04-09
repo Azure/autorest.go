@@ -8,7 +8,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewResiliencyServiceDrivenClient(options *azcore.ClientOptions) (*ResiliencyServiceDrivenClient, error) {
+func NewResiliencyServiceDrivenClient(serviceVersion string, options *azcore.ClientOptions) (*ResiliencyServiceDrivenClient, error) {
 	internal, err := azcore.NewClient("srvdrivengroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
@@ -16,7 +16,7 @@ func NewResiliencyServiceDrivenClient(options *azcore.ClientOptions) (*Resilienc
 	return &ResiliencyServiceDrivenClient{
 		internal:                 internal,
 		endpoint:                 "http://localhost:3000",
-		serviceDeploymentVersion: "v2",
+		serviceDeploymentVersion: serviceVersion,
 		apiVersion:               "v1",
 	}, nil
 }
