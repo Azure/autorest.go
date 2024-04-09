@@ -47,7 +47,7 @@ const cadlRanch = {
   'multipartgroup': ['payload/multipart'],
   'pageablegroup': ['payload/pageable'],
   'projectednamegroup': ['projection/projected-name'],
-  'srvdrivengroup': ['resiliency/srv-driven'], // missing tests
+  'srvdrivengroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],
   'multiplegroup': ['server/path/multiple'],
   'singlegroup': ['server/path/single'],
