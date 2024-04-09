@@ -12,16 +12,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestResiliencyServiceDrivenClient_FromNone(t *testing.T) {
-	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient(nil)
+func TestResiliencyServiceDrivenClientv1_FromNone(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v1", nil)
 	require.NoError(t, err)
 	resp, err := client.FromNone(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
 
-func TestResiliencyServiceDrivenClient_FromOneOptional(t *testing.T) {
-	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient(nil)
+func TestResiliencyServiceDrivenClientv1_FromOneOptional(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v1", nil)
 	require.NoError(t, err)
 	resp, err := client.FromOneOptional(context.Background(), &srvdrivenoldgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
 		Parameter: to.Ptr("optional"),
@@ -30,8 +30,34 @@ func TestResiliencyServiceDrivenClient_FromOneOptional(t *testing.T) {
 	require.Zero(t, resp)
 }
 
-func TestResiliencyServiceDrivenClient_FromOneRequired(t *testing.T) {
-	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient(nil)
+func TestResiliencyServiceDrivenClientv1_FromOneRequired(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v1", nil)
+	require.NoError(t, err)
+	resp, err := client.FromOneRequired(context.Background(), "required", nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestResiliencyServiceDrivenClientv2_FromNone(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v2", nil)
+	require.NoError(t, err)
+	resp, err := client.FromNone(context.Background(), nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestResiliencyServiceDrivenClientv2_FromOneOptional(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v2", nil)
+	require.NoError(t, err)
+	resp, err := client.FromOneOptional(context.Background(), &srvdrivenoldgroup.ResiliencyServiceDrivenClientFromOneOptionalOptions{
+		Parameter: to.Ptr("optional"),
+	})
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestResiliencyServiceDrivenClientv2_FromOneRequired(t *testing.T) {
+	client, err := srvdrivenoldgroup.NewResiliencyServiceDrivenClient("v2", nil)
 	require.NoError(t, err)
 	resp, err := client.FromOneRequired(context.Background(), "required", nil)
 	require.NoError(t, err)
