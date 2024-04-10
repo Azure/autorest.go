@@ -5,7 +5,7 @@
   "responses": {
     "200": {
       "body": {
-        "value": [
+        "amlOperations": [
           {
             "name": "Microsoft.MachineLearningServices/workspaces/write",
             "display": {

@@ -55,7 +55,7 @@
           "200": {
             "description": "The request was successful; the request was well-formed and received properly.",
             "schema": {
-              "$ref": "#/definitions/AmlOperationListResult"
+              "$ref": "#/definitions/AmlOperations"
             }
           },
           "default": {
@@ -66,7 +66,8 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": null,
+          "itemName": "amlOperations"
         }
       }
     },
@@ -2012,11 +2013,11 @@
         }
       }
     },
-    "AmlOperationListResult": {
+    "AmlOperations": {
       "type": "object",
       "description": "An array of operations supported by the resource provider.",
       "properties": {
-        "value": {
+        "amlOperations": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AmlOperation"

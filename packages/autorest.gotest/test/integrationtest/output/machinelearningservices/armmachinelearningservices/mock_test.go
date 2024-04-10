@@ -82,8 +82,8 @@ func (testsuite *MockTestSuite) TestOperations_List() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json")
 		// Response check
-		pagerExampleRes := armmachinelearningservices.AmlOperationListResult{
-			Value: []*armmachinelearningservices.AmlOperation{
+		pagerExampleRes := armmachinelearningservices.AmlOperations{
+			AmlOperations: []*armmachinelearningservices.AmlOperation{
 				{
 					Name: to.Ptr("Microsoft.MachineLearningServices/workspaces/write"),
 					Display: &armmachinelearningservices.AmlOperationDisplay{
@@ -109,9 +109,9 @@ func (testsuite *MockTestSuite) TestOperations_List() {
 					},
 				}},
 		}
-		if !reflect.DeepEqual(pagerExampleRes, nextResult.AmlOperationListResult) {
+		if !reflect.DeepEqual(pagerExampleRes, nextResult.AmlOperations) {
 			exampleResJson, _ := json.Marshal(pagerExampleRes)
-			mockResJson, _ := json.Marshal(nextResult.AmlOperationListResult)
+			mockResJson, _ := json.Marshal(nextResult.AmlOperations)
 			testsuite.Failf("Failed to validate response", "Mock response is not equal to example response for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json:\nmock response: %s\nexample response: %s", mockResJson, exampleResJson)
 		}
 	}
