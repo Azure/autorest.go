@@ -951,8 +951,10 @@ function isArrayOfDateTimeForMarshalling(paramType: go.PossibleType): { format: 
   }
 }
 
+// returns true if the method requires a response handler.
+// this is used to unmarshal the response body, parse response headers, or both.
 function needsResponseHandler(method: go.Method): boolean {
-  return helpers.hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0 || (go.isLROMethod(method) && !!method.responseEnvelope.result) || go.isPageableMethod(method);
+  return helpers.hasSchemaResponse(method) || method.responseEnvelope.headers.length > 0;
 }
 
 function generateResponseUnmarshaller(method: go.Method, type: go.PossibleType, format: go.ResultFormat, unmarshalTarget: string): string {
