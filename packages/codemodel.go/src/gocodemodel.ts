@@ -234,12 +234,13 @@ export interface Client {
 
   description: string;
 
-  // the name of the client's constructor func
-  ctorName: string;
-
-  // contains only modeled client parameters and it's legal for an operation to not have any modeled client parameters
+  // constructor params that are persisted as fields on the client, can be empty
   parameters: Array<Parameter>;
 
+  // all the constructors for this client, can be empty
+  constructors: Array<Constructor>;
+
+  // contains client methods. can be empty
   methods: Array<Method | LROMethod | PageableMethod | LROPageableMethod>;
 
   // contains any client accessor methods. can be empty
@@ -248,9 +249,6 @@ export interface Client {
   // client has a statically defined or templated host
   host?: string;
 
-  // can be empty if there are no host params
-  hostParams: Array<URIParameter>;
-
   // templatedHost indicates that there's one or more URIParameters
   // required to construct the complete host. the parameters can
   // be solely on the client or span client and method params.
@@ -258,6 +256,17 @@ export interface Client {
 
   // the parent client in a hierarchical client
   parent?: Client;
+}
+
+// represents a client constructor function
+export interface Constructor {
+  name: string;
+
+  // the modeled parameters. can be empty
+  parameters: Array<Parameter>;
+
+  // the client options type. for ARM, this will be a QualifiedType (arm.ClientOptions)
+  clientOptions: ParameterGroup | Parameter;
 }
 
 // ClientAccessor is a client method that returns a sub-client instance.
@@ -1058,14 +1067,21 @@ export class CodeModel implements CodeModel {
 }
 
 export class Client implements Client {
-  constructor(name: string, description: string, ctorName: string) {
+  constructor(name: string, description: string) {
     this.name = name;
     this.templatedHost = false;
-    this.ctorName = ctorName;
+    this.constructors = new Array<Constructor>();
     this.description = description;
-    this.hostParams = new Array<URIParameter>();
     this.methods = new Array<Method>();
     this.clientAccessors = new Array<ClientAccessor>();
+    this.parameters = new Array<Parameter>();
+  }
+}
+
+export class Constructor implements Constructor {
+  constructor(name: string, options: ParameterGroup | Parameter) {
+    this.name = name;
+    this.clientOptions = options;
     this.parameters = new Array<Parameter>();
   }
 }
