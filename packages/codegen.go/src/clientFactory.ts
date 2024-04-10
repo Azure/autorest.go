@@ -20,7 +20,6 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   // the list of packages to import
   const imports = new ImportManager();
   
-  // there should be at most one client level param: subscriptionID for ARM, any exception is always a wrong swagger definition that we should fix
   const allClientParams = new Array<go.Parameter>();
   for (const clients of codeModel.clients) {
     for (const clientParam of values(clients.parameters)) {
