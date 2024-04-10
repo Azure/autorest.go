@@ -234,6 +234,9 @@ export interface Client {
 
   description: string;
 
+  // the client options type. for ARM, this will be a QualifiedType (arm.ClientOptions)
+  options: ClientOptions;
+
   // constructor params that are persisted as fields on the client, can be empty
   parameters: Array<Parameter>;
 
@@ -258,15 +261,14 @@ export interface Client {
   parent?: Client;
 }
 
+export type ClientOptions = ParameterGroup | Parameter;
+
 // represents a client constructor function
 export interface Constructor {
   name: string;
 
   // the modeled parameters. can be empty
   parameters: Array<Parameter>;
-
-  // the client options type. for ARM, this will be a QualifiedType (arm.ClientOptions)
-  clientOptions: ParameterGroup | Parameter;
 }
 
 // ClientAccessor is a client method that returns a sub-client instance.
@@ -961,6 +963,19 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
   }
 }
 
+export function newClientOptions(type: CodeModelType, clientName: string): ClientOptions {
+  let options: ClientOptions;
+  if (type === 'azure-arm') {
+    options = new Parameter('options', new QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
+    options.description = 'pass nil to accept the default values.';
+  } else {
+    const optionsTypeName = `${clientName}Options`;
+    options = new ParameterGroup('options', optionsTypeName, false, 'client');
+    options.description = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
+  }
+  return options;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1067,7 +1082,7 @@ export class CodeModel implements CodeModel {
 }
 
 export class Client implements Client {
-  constructor(name: string, description: string) {
+  constructor(name: string, description: string, options: ClientOptions) {
     this.name = name;
     this.templatedHost = false;
     this.constructors = new Array<Constructor>();
@@ -1075,13 +1090,13 @@ export class Client implements Client {
     this.methods = new Array<Method>();
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<Parameter>();
+    this.options = options;
   }
 }
 
 export class Constructor implements Constructor {
-  constructor(name: string, options: ParameterGroup | Parameter) {
+  constructor(name: string) {
     this.name = name;
-    this.clientOptions = options;
     this.parameters = new Array<Parameter>();
   }
 }

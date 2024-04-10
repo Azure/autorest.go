@@ -187,8 +187,8 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
     }
 
     // add client options last
-    ctorParams.push(`${constructor.clientOptions.name} ${helpers.formatParameterTypeName(constructor.clientOptions)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem(`${constructor.clientOptions.name} - ${constructor.clientOptions.description}`));
+    ctorParams.push(`${client.options.name} ${helpers.formatParameterTypeName(client.options)}`);
+    paramDocs.push(helpers.formatCommentAsBulletItem(`${client.options.name} - ${client.options.description}`));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {
@@ -224,9 +224,7 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
 // creates a modeled constructor for an ARM client
 function createARMClientConstructor(client: go.Client, imports: ImportManager): go.Constructor {
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
-  const options = new go.Parameter('options', new go.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
-  options.description = 'pass nil to accept the default values.';
-  const ctor = new go.Constructor(`New${client.name}`, options);
+  const ctor = new go.Constructor(`New${client.name}`);
   // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
   for (const param of client.parameters) {
     ctor.parameters.push(param);

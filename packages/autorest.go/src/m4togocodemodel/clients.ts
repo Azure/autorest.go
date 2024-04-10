@@ -20,7 +20,7 @@ const paramGroups = new Map<string, go.ParameterGroup>();
 
 export function adaptClients(m4CodeModel: m4.CodeModel, codeModel: go.CodeModel) {
   for (const group of values(m4CodeModel.operationGroups)) {
-    const client = adaptClient(group);
+    const client = adaptClient(codeModel.type, group);
 
     for (const op of values(group.operations)) {
       const httpPath = <string>op.requests![0].protocol.http!.path;
@@ -151,9 +151,9 @@ function adaptURIPrameterType(schema: m4.Schema): go.URIParameterType {
   return type;
 }
 
-function adaptClient(group: m4.OperationGroup): go.Client {
+function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Client {
   const description = `${group.language.go!.clientName} contains the methods for the ${group.language.go!.name} group.`;
-  const client = new go.Client(group.language.go!.clientName, description);
+  const client = new go.Client(group.language.go!.clientName, description, go.newClientOptions(type, group.language.go!.clientName));
 
   client.host = group.language.go!.host;
   if (group.language.go!.complexHostParams) {
