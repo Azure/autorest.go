@@ -14,8 +14,8 @@ import (
     "github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 {{imports}}
-{%- set allExamples = [] %}
 {%- for exampleGroup in exampleGroups %}
+{%- set allExamples = [] %}
 {%- for example in exampleGroup.examples %}
 {%- if allExamples.indexOf(example.name)<0 %}
 {%- set _ = allExamples.push(example.name) %}
