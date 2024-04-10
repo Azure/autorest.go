@@ -337,10 +337,10 @@ type AmlOperationDisplay struct {
 	Resource *string
 }
 
-// AmlOperationListResult - An array of operations supported by the resource provider.
-type AmlOperationListResult struct {
+// AmlOperations - An array of operations supported by the resource provider.
+type AmlOperations struct {
 	// List of AML workspace operations supported by the AML workspace resource provider.
-	Value []*AmlOperation
+	AmlOperations []*AmlOperation
 }
 
 // AmlToken - AML Token identity configuration.

@@ -489,7 +489,7 @@ type OnlineEndpointsClientUpdateResponse struct {
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
 type OperationsClientListResponse struct {
 	// An array of operations supported by the resource provider.
-	AmlOperationListResult
+	AmlOperations
 }
 
 // PrivateEndpointConnectionsClientCreateOrUpdateResponse contains the response from method PrivateEndpointConnectionsClient.CreateOrUpdate.
