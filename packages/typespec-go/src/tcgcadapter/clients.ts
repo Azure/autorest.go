@@ -72,7 +72,7 @@ export class clientAdapter {
       description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
     }
 
-    const goClient = new go.Client(clientName, description);
+    const goClient = new go.Client(clientName, description, go.newClientOptions(this.ta.codeModel.type, clientName));
     goClient.parent = parent;
 
     // anything other than public means non-instantiable client
