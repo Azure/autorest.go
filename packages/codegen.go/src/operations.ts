@@ -43,6 +43,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (azureARM) {
       clientPkg = 'arm';
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
+      client.constructors.push(createARMClientConstructor(client, imports))
     } else {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     }
@@ -50,11 +51,10 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     // generate client type
 
     let clientText = '';
-    let hostParamName: string | undefined;
     clientText += `${comment(`${client.description}`, '//', undefined, helpers.commentLength)}\n`;
     clientText += '// Don\'t use this type directly, use ';
-    if (azureARM) {
-      clientText += `${client.ctorName}() instead.\n`;
+    if (client.constructors.length === 1) {
+      clientText += `${client.constructors[0].name}() instead.\n`;
     } else if (client.parent) {
       // find the accessor method
       let accessorMethod: string | undefined;
@@ -73,32 +73,9 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     }
     clientText += `type ${client.name} struct {\n`;
     clientText += `\tinternal *${clientPkg}.Client\n`;
-    if (azureARM) {
-      hostParamName = 'internal.Endpoint()';
-    } else if (client.templatedHost) {
-      // for the templated case, all the host params must be stashed on
-      // the client as the full host URL is constructed in the operations.
-      // MUST check before non-template host params case.
-      for (const param of values(client.hostParams)) {
-        clientText += `\t${param.name} ${go.getTypeDeclaration(param.type)}\n`;
-      }
-    } else if (client.hostParams.length > 0) {
-      // non-template case.  the final endpoint URL will be constructed
-      // from the host param(s) in the client constructor and placed here.
-      hostParamName = 'endpoint';
-      clientText += `\t${hostParamName} string\n`;
-    }
 
     // check for any optional host params
     const optionalParams = new Array<go.Parameter>();
-    if (client.hostParams.length > 0) {
-      // client parameterized host
-      for (const param of values(client.hostParams)) {
-        if (!helpers.isRequiredParameter(param) && !helpers.isLiteralParameter(param)) {
-          optionalParams.push(param);
-        }
-      }
-    }
 
     const isParamPointer = function(param: go.Parameter): boolean {
       // for client params, only optional and flag types are passed by pointer
@@ -138,11 +115,8 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       throw new Error('optional client parameters for ARM is not supported');
     }
 
-    // generate client constructor (we do this only for ARM)
-
-    if (azureARM) {
-      clientText += generateARMClientConstructor(client, imports);
-    }
+    // generate client constructors
+    clientText += generateConstructors(azureARM, client, imports);
 
     // generate client accessors and operations
     let opText = '';
@@ -152,9 +126,6 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
       opText += `\treturn &${clientAccessor.subClient.name}{\n`;
       opText += '\t\tinternal: client.internal,\n';
       // propagate all client params
-      for (const hostParam of client.hostParams) {
-        opText += `\t\t${hostParam.name}: client.${hostParam.name},\n`;
-      }
       for (const param of client.parameters) {
         opText += `\t\t${param.name}: client.${param.name},\n`;
       }
@@ -170,7 +141,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         opText += generateLROBeginMethod(client, method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
       }
       opText += generateOperation(client, method, imports, codeModel.options.injectSpans, codeModel.options.generateFakes);
-      opText += createProtocolRequest(client, method, imports, hostParamName);
+      opText += createProtocolRequest(azureARM, client, method, imports);
       if (!go.isLROMethod(method) || go.isPageableMethod(method)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(client, method, imports);
@@ -182,7 +153,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     }
 
     for (const method of nextPageMethods) {
-      opText += createProtocolRequest(client, method, imports, hostParamName);
+      opText += createProtocolRequest(azureARM, client, method, imports);
     }
 
     // stitch it all together
@@ -195,48 +166,75 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
   return operations;
 }
 
-function generateARMClientConstructor(client: go.Client, imports: ImportManager): string {
-  // build constructor params
-  const methodParams = new Array<string>();
-  const paramDocs = new Array<string>();
-  // AzureARM is the simplest case, no parametertized host etc
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  if (client.parameters.length > 0) {
-    client.parameters.sort(helpers.sortParametersByRequired);
-    for (const clientParam of values(client.parameters)) {
-      methodParams.push(`${clientParam.name} ${helpers.formatParameterTypeName(clientParam)}`);
-      if (clientParam.description) {
-        paramDocs.push(helpers.formatCommentAsBulletItem(`${clientParam.name} - ${clientParam.description}`));
+// generates all modeled client constructors
+function generateConstructors(azureARM: boolean, client: go.Client, imports: ImportManager): string {
+  if (client.constructors.length === 0) {
+    return '';
+  }
+
+  let ctorText = '';
+  for (const constructor of client.constructors) {
+    const ctorParams = new Array<string>();
+    const paramDocs = new Array<string>();
+
+    constructor.parameters.sort(helpers.sortParametersByRequired);
+    for (const ctorParam of constructor.parameters) {
+      imports.addImportForType(ctorParam.type);
+      ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
+      if (ctorParam.description) {
+        paramDocs.push(helpers.formatCommentAsBulletItem(`${ctorParam.name} - ${ctorParam.description}`));
       }
     }
-  }
-  methodParams.push('credential azcore.TokenCredential');
-  paramDocs.push(helpers.formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
-  methodParams.push('options *arm.ClientOptions');
-  paramDocs.push(helpers.formatCommentAsBulletItem('options - pass nil to accept the default values.'));
 
-  // now build constructor
-  let ctorText = `// ${client.ctorName} creates a new instance of ${client.name} with the specified values.\n`;
-  for (const doc of values(paramDocs)) {
-    ctorText += `${doc}\n`;
+    // add client options last
+    ctorParams.push(`${constructor.clientOptions.name} ${helpers.formatParameterTypeName(constructor.clientOptions)}`);
+    paramDocs.push(helpers.formatCommentAsBulletItem(`${constructor.clientOptions.name} - ${constructor.clientOptions.description}`));
+
+    ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
+    for (const doc of paramDocs) {
+      ctorText += `${doc}\n`;
+    }
+
+    ctorText += `func ${constructor.name}(${ctorParams.join(', ')}) (*${client.name}, error) {\n`;
+    let clientType = 'azcore';
+    if (azureARM) {
+      clientType = 'arm';
+    }
+
+    ctorText += `\tcl, err := ${clientType}.NewClient(moduleName, moduleVersion, credential, options)\n`;
+    ctorText += '\tif err != nil {\n';
+    ctorText += '\t\treturn nil, err\n';
+    ctorText += '\t}\n';
+
+    // construct client literal
+    ctorText += `\tclient := &${client.name}{\n`;
+    for (const parameter of values(client.parameters)) {
+      // each client field will have a matching parameter with the same name
+      ctorText += `\t\t${parameter.name}: ${parameter.name},\n`;
+    }
+    ctorText += '\tinternal: cl,\n';
+    ctorText += '\t}\n';
+    ctorText += '\treturn client, nil\n';
+    ctorText += '}\n\n';
   }
 
-  ctorText += `func ${client.ctorName}(${methodParams.join(', ')}) (*${client.name}, error) {\n`;
-  ctorText += '\tcl, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
-  ctorText += '\tif err != nil {\n';
-  ctorText += '\t\treturn nil, err\n';
-  ctorText += '\t}\n';
-
-  // construct client literal
-  ctorText += `\tclient := &${client.name}{\n`;
-  for (const clientParam of values(client.parameters)) {
-    ctorText += `\t\t${clientParam.name}: ${clientParam.name},\n`;
-  }
-  ctorText += '\tinternal: cl,\n';
-  ctorText += '\t}\n';
-  ctorText += '\treturn client, nil\n';
-  ctorText += '}\n\n';
   return ctorText;
+}
+
+// creates a modeled constructor for an ARM client
+function createARMClientConstructor(client: go.Client, imports: ImportManager): go.Constructor {
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
+  const options = new go.Parameter('options', new go.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
+  options.description = 'pass nil to accept the default values.';
+  const ctor = new go.Constructor(`New${client.name}`, options);
+  // add any modeled parameter first, which should only be the subscriptionID, then add TokenCredential
+  for (const param of client.parameters) {
+    ctor.parameters.push(param);
+  }
+  const tokenCredParam = new go.Parameter('credential', new go.QualifiedType('TokenCredential', 'github.com/Azure/azure-sdk-for-go/sdk/azcore'), 'required', true, 'client');
+  tokenCredParam.description = 'used to authorize requests. Usually a credential from azidentity.';
+  ctor.parameters.push(tokenCredParam);
+  return ctor;
 }
 
 // use this to generate the code that will help process values returned in response headers
@@ -497,7 +495,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   return text;
 }
 
-function createProtocolRequest(client: go.Client, method: go.Method | go.NextPageMethod, imports: ImportManager, hostParamName?: string): string {
+function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.Method | go.NextPageMethod, imports: ImportManager): string {
   let name = method.name;
   if (go.isMethod(method)) {
     name = method.naming.requestMethod;
@@ -513,13 +511,23 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
   const returns = ['*policy.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
   text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
+
+  const hostParams = new Array<go.URIParameter>();
+  for (const parameter of client.parameters) {
+    if (go.isURIParameter(parameter)) {
+      hostParams.push(parameter);
+    }
+  }
+
   let hostParam: string;
-  if (client.templatedHost) {
+  if (azureARM) {
+    hostParam = 'client.internal.Endpoint()';
+  } else if (client.templatedHost) {
     imports.add('strings');
     // we have a templated host
     text += `\thost := "${client.host!}"\n`;
     // get all the host params on the client
-    for (const hostParam of values(client.hostParams)) {
+    for (const hostParam of hostParams) {
       text += `\thost = strings.ReplaceAll(host, "{${hostParam.uriPathSegment}}", ${helpers.formatValue(`client.${(<string>hostParam.name)}`, hostParam.type, imports)})\n`;
     }
     // check for any method local host params
@@ -529,9 +537,9 @@ function createProtocolRequest(client: go.Client, method: go.Method | go.NextPag
       }
     }
     hostParam = 'host';
-  } else if (hostParamName) {
-    // simple parameterized host case or Azure ARM
-    hostParam = 'client.' + hostParamName;
+  } else if (hostParams.length === 1) {
+    // simple parameterized host case
+    hostParam = 'client.' + hostParams[0].name;
   } else if (client.host) {
     // swagger defines a host, use its const
     hostParam = '\thost';

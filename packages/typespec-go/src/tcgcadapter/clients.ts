@@ -72,7 +72,7 @@ export class clientAdapter {
       description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
     }
 
-    const goClient = new go.Client(clientName, description, `New${clientName}`);
+    const goClient = new go.Client(clientName, description);
     goClient.parent = parent;
 
     // anything other than public means non-instantiable client
@@ -94,7 +94,7 @@ export class clientAdapter {
           } else {
             goClient.templatedHost = true;
             for (const templateArg of param.type.templateArguments) {
-              goClient.hostParams.push(this.adaptURIParam(templateArg));
+              goClient.parameters.push(this.adaptURIParam(templateArg));
             }
           }
           continue;
@@ -107,7 +107,7 @@ export class clientAdapter {
           continue;
         }
 
-        goClient.hostParams.push(this.adaptURIParam(param));
+        goClient.parameters.push(this.adaptURIParam(param));
       }
     } else if (parent) {
       // this is a sub-client. it will share the client/host params of the parent.
@@ -115,7 +115,6 @@ export class clientAdapter {
       // to create a child client that will need to inherit our client params.
       goClient.templatedHost = parent.templatedHost;
       goClient.host = parent.host;
-      goClient.hostParams = parent.hostParams;
       goClient.parameters = parent.parameters;
     } else {
       throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
