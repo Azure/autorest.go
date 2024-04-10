@@ -14,11 +14,11 @@ import (
     "github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 {{imports}}
-{%- set allExamples = [] %}
 {%- for exampleGroup in exampleGroups %}
+{%- set allExamples = [] %}
 {%- for example in exampleGroup.examples %}
-{%- if allExamples.indexOf(example.originalFile)<0 %}
-{%- set _ = allExamples.push(example.originalFile) %}
+{%- if allExamples.indexOf(example.name)<0 %}
+{%- set _ = allExamples.push(example.name) %}
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/blob/{{swaggerCommit}}/{{example.originalFile}}
 func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}{% if exampleGroup.examples.length>1 %}_{{jsFunc.getExampleSuffix(example.name)}}{% endif %}() {
     cred, err := azidentity.NewDefaultAzureCredential(nil)

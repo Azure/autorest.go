@@ -588,15 +588,15 @@ func (a *AmlOperationDisplay) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type AmlOperationListResult.
-func (a AmlOperationListResult) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type AmlOperations.
+func (a AmlOperations) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "value", a.Value)
+	populate(objectMap, "amlOperations", a.AmlOperations)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type AmlOperationListResult.
-func (a *AmlOperationListResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AmlOperations.
+func (a *AmlOperations) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)
@@ -604,8 +604,8 @@ func (a *AmlOperationListResult) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "value":
-			err = unpopulate(val, "Value", &a.Value)
+		case "amlOperations":
+			err = unpopulate(val, "AmlOperations", &a.AmlOperations)
 			delete(rawMsg, key)
 		}
 		if err != nil {

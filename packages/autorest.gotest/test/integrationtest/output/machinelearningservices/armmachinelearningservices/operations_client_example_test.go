@@ -34,13 +34,13 @@ func ExampleOperationsClient_NewListPager() {
 		if err != nil {
 			log.Fatalf("failed to advance page: %v", err)
 		}
-		for _, v := range page.Value {
+		for _, v := range page.AmlOperations.AmlOperations {
 			// You could use page here. We use blank identifier for just demo purposes.
 			_ = v
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
-		// page.AmlOperationListResult = armmachinelearningservices.AmlOperationListResult{
-		// 	Value: []*armmachinelearningservices.AmlOperation{
+		// page.AmlOperations = armmachinelearningservices.AmlOperations{
+		// 	AmlOperations: []*armmachinelearningservices.AmlOperation{
 		// 		{
 		// 			Name: to.Ptr("Microsoft.MachineLearningServices/workspaces/write"),
 		// 			Display: &armmachinelearningservices.AmlOperationDisplay{

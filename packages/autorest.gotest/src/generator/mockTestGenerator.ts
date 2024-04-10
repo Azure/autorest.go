@@ -81,6 +81,9 @@ export class MockTestDataRender extends BaseDataRender {
       for (const property of schemaResponse.schema['properties']) {
         if (property.serializedName === valueName) {
           example.pageableItemName = property.language.go.name;
+          if (schemaResponse.schema.language.go.name === property.language.go.name) {
+            example.pageableItemName = `${property.language.go.name}.${example.pageableItemName}`;
+          }
           break;
         }
       }

@@ -46,6 +46,10 @@ File prefix for auto-generated examples.
 
 File prefix for auto-generated tests.
 
+### --gotest.skip-lint
+
+Whether skip lint go file after generation.
+
 ## Autorest Pipeline Configurations
 
 ```yaml $(go)

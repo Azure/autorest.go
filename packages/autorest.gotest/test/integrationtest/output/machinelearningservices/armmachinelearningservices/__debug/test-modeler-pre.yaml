@@ -15653,7 +15653,7 @@ schemas:
                 - name
             language:
               default:
-                name: AmlOperationListResultValue
+                name: AmlOperations
                 description: List of AML workspace operations supported by the AML workspace resource provider.
               go:
                 name: '[]*AmlOperation'
@@ -15661,16 +15661,16 @@ schemas:
                 elementIsPtr: true
                 marshallingFormat: json
             protocol: {}
-          serializedName: value
+          serializedName: amlOperations
           extensions:
             x-ms-identifiers:
               - name
           language:
             default:
-              name: value
+              name: amlOperations
               description: List of AML workspace operations supported by the AML workspace resource provider.
             go:
-              name: Value
+              name: AmlOperations
               description: List of AML workspace operations supported by the AML workspace resource provider.
               byValue: true
           protocol: {}
@@ -15680,12 +15680,12 @@ schemas:
         - output
       language:
         default:
-          name: AmlOperationListResult
+          name: AmlOperations
           description: An array of operations supported by the resource provider.
           namespace: ''
         go:
-          name: AmlOperationListResult
-          description: AmlOperationListResult - An array of operations supported by the resource provider.
+          name: AmlOperations
+          description: AmlOperations - An array of operations supported by the resource provider.
           hasArrayMap: true
           marshallingFormat: json
           namespace: ''
@@ -38671,7 +38671,7 @@ operationGroups:
               responses:
                 '200':
                   body:
-                    value:
+                    amlOperations:
                       - name: Microsoft.MachineLearningServices/workspaces/write
                         display:
                           operation: Create/Update Machine Learning workspaces
@@ -38688,12 +38688,14 @@ operationGroups:
                           provider: Microsoft MachineLearningServices
                           resource: workspaces
           x-ms-pageable:
+            itemName: amlOperations
             nextLinkName: null
         language:
           default:
             name: List
             description: Lists all of the available Azure Machine Learning Workspaces REST API operations.
             paging:
+              itemName: amlOperations
               nextLinkName: null
           go:
             name: List
@@ -38720,6 +38722,7 @@ operationGroups:
                 go: *ref_1287
               protocol: {}
             paging:
+              itemName: amlOperations
               nextLinkName: null
             protocolNaming:
               internalMethod: listOperation
@@ -38730,10 +38733,10 @@ operationGroups:
               properties:
                 - &ref_1289
                   schema: *ref_1285
-                  serializedName: AmlOperationListResult
+                  serializedName: AmlOperations
                   language:
                     default: &ref_1288
-                      name: AmlOperationListResult
+                      name: AmlOperations
                       description: An array of operations supported by the resource provider.
                       byValue: true
                       embeddedType: true
