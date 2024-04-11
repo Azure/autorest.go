@@ -4,7 +4,7 @@
  *  --------------------------------------------------------------------------------------------  */
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
+import { ChoiceSchema, CodeModel, HttpHeader, HttpMethod, Language, SealedChoiceSchema } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { createPolymorphicInterfaceName, ensureNameCase, getEscapedReservedName, packageNameFromOutputFolder, trimPackagePrefix, uncapitalize } from '../../../naming.go/src/naming.js';
 import { aggregateParameters, hasAdditionalProperties } from './helpers.js';
@@ -108,32 +108,30 @@ export async function namer(session: Session<CodeModel>) {
   }
 
   // fix up enum type and value names and capitzalize acronyms
-  for (const enm of values(session.model.schemas.choices)) {
-    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
-    typeNames.add(enm.language.go!.name);
-    // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
-    for (const choice of values(enm.choices)) {
-      const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
+  const renameChoicesAndValues = function(choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
+    if (!choices) {
+      return;
     }
-  }
+    for (const choice of choices) {
+      choice.language.go!.name = ensureNameCase(choice.language.go!.name);
+      typeNames.add(choice.language.go!.name);
+      // add PossibleValues func name
+      choice.language.go!.possibleValuesFunc = `Possible${choice.language.go!.name}Values`;
+      for (const choiceValue of choice.choices) {
+        const details = <Language>choiceValue.language.go;
+        details.name = `${choice.language.go?.name}${ensureNameCase(details.name)}`;
+        typeNames.add(details.name);
+      }
+    }
+  };
 
-  for (const enm of values(session.model.schemas.sealedChoices)) {
-    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
-    typeNames.add(enm.language.go!.name);
-    // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
-    for (const choice of values(enm.choices)) {
-      const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
-    }
-  }
+  renameChoicesAndValues(model.schemas.choices);
+  renameChoicesAndValues(model.schemas.sealedChoices);
 
   // fix stuttering type names
   const collisions = new Array<string>();
 
-  const fixStutteringTypeName = function(details: Language) {
+  const fixStutteringTypeName = function(details: Language): void {
     const originalName = details.name;
     details.name = trimPackagePrefix(stutteringPrefix, originalName);
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
@@ -148,13 +146,21 @@ export async function namer(session: Session<CodeModel>) {
 
   // to avoid breaking changes, this is opt-in
   if (await session.getValue('fix-const-stuttering', false)) {
-    for (const choice of values(model.schemas.choices)) {
-      fixStutteringTypeName(choice.language.go!);
-    }
+    const fixStutteringForChoicesAndValues = function(choices?: Array<ChoiceSchema> | Array<SealedChoiceSchema>): void {
+      if (!choices) {
+        return;
+      }
+      for (const choice of choices) {
+        fixStutteringTypeName(choice.language.go!);
+        for (const choiceValue of values(choice.choices)) {
+          const details = <Language>choiceValue.language.go;
+          fixStutteringTypeName(details);
+        }
+      }
+    };
 
-    for (const choice of values(model.schemas.sealedChoices)) {
-      fixStutteringTypeName(choice.language.go!);
-    }
+    fixStutteringForChoicesAndValues(model.schemas.choices);
+    fixStutteringForChoicesAndValues(model.schemas.sealedChoices);
   }
 
   if (collisions.length > 0) {

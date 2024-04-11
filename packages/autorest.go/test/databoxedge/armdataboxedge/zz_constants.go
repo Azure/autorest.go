@@ -261,19 +261,19 @@ func PossibleDayOfWeekValues() []DayOfWeek {
 type DeviceKind string
 
 const (
-	DataBoxEdgeDeviceKindAzureDataBoxGateway    DeviceKind = "AzureDataBoxGateway"
-	DataBoxEdgeDeviceKindAzureModularDataCentre DeviceKind = "AzureModularDataCentre"
-	DataBoxEdgeDeviceKindAzureStackEdge         DeviceKind = "AzureStackEdge"
-	DataBoxEdgeDeviceKindAzureStackHub          DeviceKind = "AzureStackHub"
+	DeviceKindAzureDataBoxGateway    DeviceKind = "AzureDataBoxGateway"
+	DeviceKindAzureModularDataCentre DeviceKind = "AzureModularDataCentre"
+	DeviceKindAzureStackEdge         DeviceKind = "AzureStackEdge"
+	DeviceKindAzureStackHub          DeviceKind = "AzureStackHub"
 )
 
 // PossibleDataBoxEdgeDeviceKindValues returns the possible values for the DeviceKind const type.
 func PossibleDataBoxEdgeDeviceKindValues() []DeviceKind {
 	return []DeviceKind{
-		DataBoxEdgeDeviceKindAzureDataBoxGateway,
-		DataBoxEdgeDeviceKindAzureModularDataCentre,
-		DataBoxEdgeDeviceKindAzureStackEdge,
-		DataBoxEdgeDeviceKindAzureStackHub,
+		DeviceKindAzureDataBoxGateway,
+		DeviceKindAzureModularDataCentre,
+		DeviceKindAzureStackEdge,
+		DeviceKindAzureStackHub,
 	}
 }
 
@@ -281,25 +281,25 @@ func PossibleDataBoxEdgeDeviceKindValues() []DeviceKind {
 type DeviceStatus string
 
 const (
-	DataBoxEdgeDeviceStatusDisconnected          DeviceStatus = "Disconnected"
-	DataBoxEdgeDeviceStatusMaintenance           DeviceStatus = "Maintenance"
-	DataBoxEdgeDeviceStatusNeedsAttention        DeviceStatus = "NeedsAttention"
-	DataBoxEdgeDeviceStatusOffline               DeviceStatus = "Offline"
-	DataBoxEdgeDeviceStatusOnline                DeviceStatus = "Online"
-	DataBoxEdgeDeviceStatusPartiallyDisconnected DeviceStatus = "PartiallyDisconnected"
-	DataBoxEdgeDeviceStatusReadyToSetup          DeviceStatus = "ReadyToSetup"
+	DeviceStatusDisconnected          DeviceStatus = "Disconnected"
+	DeviceStatusMaintenance           DeviceStatus = "Maintenance"
+	DeviceStatusNeedsAttention        DeviceStatus = "NeedsAttention"
+	DeviceStatusOffline               DeviceStatus = "Offline"
+	DeviceStatusOnline                DeviceStatus = "Online"
+	DeviceStatusPartiallyDisconnected DeviceStatus = "PartiallyDisconnected"
+	DeviceStatusReadyToSetup          DeviceStatus = "ReadyToSetup"
 )
 
 // PossibleDataBoxEdgeDeviceStatusValues returns the possible values for the DeviceStatus const type.
 func PossibleDataBoxEdgeDeviceStatusValues() []DeviceStatus {
 	return []DeviceStatus{
-		DataBoxEdgeDeviceStatusDisconnected,
-		DataBoxEdgeDeviceStatusMaintenance,
-		DataBoxEdgeDeviceStatusNeedsAttention,
-		DataBoxEdgeDeviceStatusOffline,
-		DataBoxEdgeDeviceStatusOnline,
-		DataBoxEdgeDeviceStatusPartiallyDisconnected,
-		DataBoxEdgeDeviceStatusReadyToSetup,
+		DeviceStatusDisconnected,
+		DeviceStatusMaintenance,
+		DeviceStatusNeedsAttention,
+		DeviceStatusOffline,
+		DeviceStatusOnline,
+		DeviceStatusPartiallyDisconnected,
+		DeviceStatusReadyToSetup,
 	}
 }
 
