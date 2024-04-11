@@ -18,7 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/compute/armcompute"
 	"github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 	"github.com/stretchr/testify/suite"
 )
@@ -29,6 +29,7 @@ type SampleTestSuite struct {
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	options           *arm.ClientOptions
+	clientFactory     *armcompute.ClientFactory
 	armEndpoint       string
 	fakeStepVar       string
 	resourceName      string
@@ -41,8 +42,11 @@ type SampleTestSuite struct {
 func (testsuite *SampleTestSuite) SetupSuite() {
 	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/compute/armcompute/testdata")
 
+	var err error
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.clientFactory, err = armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, testsuite.options)
+	testsuite.Require().NoError(err)
 	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.fakeStepVar = "signalrswaggertest4"
 	testsuite.resourceName = "signalrswaggertest4"
@@ -70,8 +74,7 @@ func (testsuite *SampleTestSuite) Prepare() {
 	var err error
 	// From step Delete-proximity-placement-group
 	fmt.Println("Call operation: ProximityPlacementGroups_Delete")
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	proximityPlacementGroupsClient := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 }
@@ -119,8 +122,7 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 
 	// From step Create-or-Update-a-proximity-placement-group
 	fmt.Println("Call operation: ProximityPlacementGroups_CreateOrUpdate")
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	proximityPlacementGroupsClient := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, armcompute.ProximityPlacementGroup{
 		Location: to.Ptr(testsuite.location),
 		Properties: &armcompute.ProximityPlacementGroupProperties{
@@ -137,8 +139,7 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 
 	// From step Create_a_vm_with_Host_Encryption_using_encryptionAtHost_property
 	fmt.Println("Call operation: VirtualMachines_CreateOrUpdate")
-	virtualMachinesClient, err := armcompute.NewVirtualMachinesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	virtualMachinesClient := testsuite.clientFactory.NewVirtualMachinesClient()
 	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, "myVM", armcompute.VirtualMachine{
 		Location: to.Ptr(testsuite.location),
 		Plan: &armcompute.Plan{
@@ -195,8 +196,7 @@ func (testsuite *SampleTestSuite) TestScenario1() {
 	var err error
 	// From step Delete_proximity_placement_group
 	fmt.Println("Call operation: ProximityPlacementGroups_Delete")
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	proximityPlacementGroupsClient := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 }

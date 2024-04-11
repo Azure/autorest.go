@@ -17,7 +17,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/signalr/armsignalr"
 	"github.com/stretchr/testify/suite"
@@ -29,6 +29,7 @@ type SignalRTestSuite struct {
 	ctx               context.Context
 	cred              azcore.TokenCredential
 	options           *arm.ClientOptions
+	clientFactory     *armsignalr.ClientFactory
 	armEndpoint       string
 	globalLocation    string
 	publicPort        int
@@ -40,8 +41,11 @@ type SignalRTestSuite struct {
 func (testsuite *SignalRTestSuite) SetupSuite() {
 	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/signalr/armsignalr/testdata")
 
+	var err error
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.clientFactory, err = armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, testsuite.options)
+	testsuite.Require().NoError(err)
 	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.globalLocation = "Global"
 	testsuite.publicPort = 6910
@@ -100,8 +104,7 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
 
 	// From step SignalR_CheckNameAvailability
 	fmt.Println("Call operation: SignalR_CheckNameAvailability")
-	client, err := armsignalr.NewClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	client := testsuite.clientFactory.NewClient()
 	_, err = client.CheckNameAvailability(testsuite.ctx, testsuite.location, armsignalr.NameAvailabilityParameters{
 		Name: to.Ptr(resourceName),
 		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
@@ -306,8 +309,7 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
 
 	// From step Usages_List
 	fmt.Println("Call operation: Usages_List")
-	usagesClient, err := armsignalr.NewUsagesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	usagesClient := testsuite.clientFactory.NewUsagesClient()
 	usagesClientNewListPager := usagesClient.NewListPager(testsuite.location, nil)
 	for usagesClientNewListPager.More() {
 		_, err := usagesClientNewListPager.NextPage(testsuite.ctx)
@@ -335,8 +337,7 @@ func (testsuite *SignalRTestSuite) TestSignalR() {
 
 	// From step Operations_List
 	fmt.Println("Call operation: Operations_List")
-	operationsClient, err := armsignalr.NewOperationsClient(testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	operationsClient := testsuite.clientFactory.NewOperationsClient()
 	operationsClientNewListPager := operationsClient.NewListPager(nil)
 	for operationsClientNewListPager.More() {
 		_, err := operationsClientNewListPager.NextPage(testsuite.ctx)
