@@ -425,7 +425,7 @@ type Device struct {
 	Identity *ResourceIdentity
 
 	// The kind of the device.
-	Kind *DataBoxEdgeDeviceKind
+	Kind *DeviceKind
 
 	// The properties of the Data Box Edge/Gateway device.
 	Properties *DeviceProperties
@@ -537,7 +537,7 @@ type DevicePatch struct {
 // DeviceProperties - The properties of the Data Box Edge/Gateway device.
 type DeviceProperties struct {
 	// The status of the Data Box Edge/Gateway device.
-	DataBoxEdgeDeviceStatus *DataBoxEdgeDeviceStatus
+	DataBoxEdgeDeviceStatus *DeviceStatus
 
 	// The details of data-residency related properties for this resource
 	DataResidency *DataResidency

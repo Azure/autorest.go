@@ -126,4 +126,7 @@ help-content:
       - key: disallow-unknown-fields
         type: boolean
         description: When true, unmarshalers will return an error when an unknown field is encountered in the payload.
+      - key: fix-const-stuttering
+        type: boolean
+        description: When true, fix stuttering for const types and their values.
 ```

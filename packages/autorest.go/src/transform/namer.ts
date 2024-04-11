@@ -100,23 +100,60 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.singleClient = singleClient;
 
   // fix up type names
-  const structNames = new Set<string>();
+  const typeNames = new Set<string>();
   for (const obj of values(model.schemas.objects)) {
     obj.language.go!.name = ensureNameCase(obj.language.go!.name);
-    structNames.add(obj.language.go!.name);
+    typeNames.add(obj.language.go!.name);
+  }
+
+  // fix up enum type and value names and capitzalize acronyms
+  for (const enm of values(session.model.schemas.choices)) {
+    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
+    // add PossibleValues func name
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
+    for (const choice of values(enm.choices)) {
+      const details = <Language>choice.language.go;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
+    }
+  }
+
+  for (const enm of values(session.model.schemas.sealedChoices)) {
+    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
+    // add PossibleValues func name
+    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
+    for (const choice of values(enm.choices)) {
+      const details = <Language>choice.language.go;
+      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
+    }
   }
 
   // fix stuttering type names
   const collisions = new Array<string>();
-  for (const obj of values(model.schemas.objects)) {
-    const details = <Language>obj.language.go;
+
+  const fixStutteringTypeName = function(details: Language) {
     const originalName = details.name;
     details.name = trimPackagePrefix(stutteringPrefix, originalName);
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
-    if (details.name !== originalName && structNames.has(details.name)) {
+    if (details.name !== originalName && typeNames.has(details.name)) {
       collisions.push(`type ${originalName} was renamed to ${details.name} which collides with an existing type name`);
     }
+  };
+
+  for (const obj of values(model.schemas.objects)) {
+    fixStutteringTypeName(obj.language.go!);
   }
+
+  // to avoid breaking changes, this is opt-in
+  if (await session.getValue('fix-const-stuttering', false)) {
+    for (const choice of values(model.schemas.choices)) {
+      fixStutteringTypeName(choice.language.go!);
+    }
+
+    for (const choice of values(model.schemas.sealedChoices)) {
+      fixStutteringTypeName(choice.language.go!);
+    }
+  }
+
   if (collisions.length > 0) {
     throw new Error(collisions.join('\n'));
   }
@@ -243,26 +280,6 @@ export async function namer(session: Session<CodeModel>) {
           head.language.go!.name = ensureNameCase(head.language.go!.name);
         }
       }
-    }
-  }
-
-  // fix up enum type and value names and capitzalize acronyms
-  for (const enm of values(session.model.schemas.choices)) {
-    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
-    // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
-    for (const choice of values(enm.choices)) {
-      const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
-    }
-  }
-  for (const enm of values(session.model.schemas.sealedChoices)) {
-    enm.language.go!.name = ensureNameCase(enm.language.go!.name);
-    // add PossibleValues func name
-    enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
-    for (const choice of values(enm.choices)) {
-      const details = <Language>choice.language.go;
-      details.name = `${enm.language.go?.name}${ensureNameCase(details.name)}`;
     }
   }
 

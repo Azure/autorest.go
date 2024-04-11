@@ -200,52 +200,6 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 	}
 }
 
-// DataBoxEdgeDeviceKind - The kind of the device.
-type DataBoxEdgeDeviceKind string
-
-const (
-	DataBoxEdgeDeviceKindAzureDataBoxGateway    DataBoxEdgeDeviceKind = "AzureDataBoxGateway"
-	DataBoxEdgeDeviceKindAzureModularDataCentre DataBoxEdgeDeviceKind = "AzureModularDataCentre"
-	DataBoxEdgeDeviceKindAzureStackEdge         DataBoxEdgeDeviceKind = "AzureStackEdge"
-	DataBoxEdgeDeviceKindAzureStackHub          DataBoxEdgeDeviceKind = "AzureStackHub"
-)
-
-// PossibleDataBoxEdgeDeviceKindValues returns the possible values for the DataBoxEdgeDeviceKind const type.
-func PossibleDataBoxEdgeDeviceKindValues() []DataBoxEdgeDeviceKind {
-	return []DataBoxEdgeDeviceKind{
-		DataBoxEdgeDeviceKindAzureDataBoxGateway,
-		DataBoxEdgeDeviceKindAzureModularDataCentre,
-		DataBoxEdgeDeviceKindAzureStackEdge,
-		DataBoxEdgeDeviceKindAzureStackHub,
-	}
-}
-
-// DataBoxEdgeDeviceStatus - The status of the Data Box Edge/Gateway device.
-type DataBoxEdgeDeviceStatus string
-
-const (
-	DataBoxEdgeDeviceStatusDisconnected          DataBoxEdgeDeviceStatus = "Disconnected"
-	DataBoxEdgeDeviceStatusMaintenance           DataBoxEdgeDeviceStatus = "Maintenance"
-	DataBoxEdgeDeviceStatusNeedsAttention        DataBoxEdgeDeviceStatus = "NeedsAttention"
-	DataBoxEdgeDeviceStatusOffline               DataBoxEdgeDeviceStatus = "Offline"
-	DataBoxEdgeDeviceStatusOnline                DataBoxEdgeDeviceStatus = "Online"
-	DataBoxEdgeDeviceStatusPartiallyDisconnected DataBoxEdgeDeviceStatus = "PartiallyDisconnected"
-	DataBoxEdgeDeviceStatusReadyToSetup          DataBoxEdgeDeviceStatus = "ReadyToSetup"
-)
-
-// PossibleDataBoxEdgeDeviceStatusValues returns the possible values for the DataBoxEdgeDeviceStatus const type.
-func PossibleDataBoxEdgeDeviceStatusValues() []DataBoxEdgeDeviceStatus {
-	return []DataBoxEdgeDeviceStatus{
-		DataBoxEdgeDeviceStatusDisconnected,
-		DataBoxEdgeDeviceStatusMaintenance,
-		DataBoxEdgeDeviceStatusNeedsAttention,
-		DataBoxEdgeDeviceStatusOffline,
-		DataBoxEdgeDeviceStatusOnline,
-		DataBoxEdgeDeviceStatusPartiallyDisconnected,
-		DataBoxEdgeDeviceStatusReadyToSetup,
-	}
-}
-
 // DataPolicy - Data policy of the share.
 type DataPolicy string
 
@@ -300,6 +254,52 @@ func PossibleDayOfWeekValues() []DayOfWeek {
 		DayOfWeekThursday,
 		DayOfWeekTuesday,
 		DayOfWeekWednesday,
+	}
+}
+
+// DeviceKind - The kind of the device.
+type DeviceKind string
+
+const (
+	DataBoxEdgeDeviceKindAzureDataBoxGateway    DeviceKind = "AzureDataBoxGateway"
+	DataBoxEdgeDeviceKindAzureModularDataCentre DeviceKind = "AzureModularDataCentre"
+	DataBoxEdgeDeviceKindAzureStackEdge         DeviceKind = "AzureStackEdge"
+	DataBoxEdgeDeviceKindAzureStackHub          DeviceKind = "AzureStackHub"
+)
+
+// PossibleDataBoxEdgeDeviceKindValues returns the possible values for the DeviceKind const type.
+func PossibleDataBoxEdgeDeviceKindValues() []DeviceKind {
+	return []DeviceKind{
+		DataBoxEdgeDeviceKindAzureDataBoxGateway,
+		DataBoxEdgeDeviceKindAzureModularDataCentre,
+		DataBoxEdgeDeviceKindAzureStackEdge,
+		DataBoxEdgeDeviceKindAzureStackHub,
+	}
+}
+
+// DeviceStatus - The status of the Data Box Edge/Gateway device.
+type DeviceStatus string
+
+const (
+	DataBoxEdgeDeviceStatusDisconnected          DeviceStatus = "Disconnected"
+	DataBoxEdgeDeviceStatusMaintenance           DeviceStatus = "Maintenance"
+	DataBoxEdgeDeviceStatusNeedsAttention        DeviceStatus = "NeedsAttention"
+	DataBoxEdgeDeviceStatusOffline               DeviceStatus = "Offline"
+	DataBoxEdgeDeviceStatusOnline                DeviceStatus = "Online"
+	DataBoxEdgeDeviceStatusPartiallyDisconnected DeviceStatus = "PartiallyDisconnected"
+	DataBoxEdgeDeviceStatusReadyToSetup          DeviceStatus = "ReadyToSetup"
+)
+
+// PossibleDataBoxEdgeDeviceStatusValues returns the possible values for the DeviceStatus const type.
+func PossibleDataBoxEdgeDeviceStatusValues() []DeviceStatus {
+	return []DeviceStatus{
+		DataBoxEdgeDeviceStatusDisconnected,
+		DataBoxEdgeDeviceStatusMaintenance,
+		DataBoxEdgeDeviceStatusNeedsAttention,
+		DataBoxEdgeDeviceStatusOffline,
+		DataBoxEdgeDeviceStatusOnline,
+		DataBoxEdgeDeviceStatusPartiallyDisconnected,
+		DataBoxEdgeDeviceStatusReadyToSetup,
 	}
 }
 
