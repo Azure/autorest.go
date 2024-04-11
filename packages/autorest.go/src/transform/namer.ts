@@ -100,6 +100,7 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.singleClient = singleClient;
 
   // fix up type names
+  // final names are added to typeNames which is used to detect collisions
   const typeNames = new Set<string>();
   for (const obj of values(model.schemas.objects)) {
     obj.language.go!.name = ensureNameCase(obj.language.go!.name);
@@ -109,6 +110,7 @@ export async function namer(session: Session<CodeModel>) {
   // fix up enum type and value names and capitzalize acronyms
   for (const enm of values(session.model.schemas.choices)) {
     enm.language.go!.name = ensureNameCase(enm.language.go!.name);
+    typeNames.add(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
@@ -119,6 +121,7 @@ export async function namer(session: Session<CodeModel>) {
 
   for (const enm of values(session.model.schemas.sealedChoices)) {
     enm.language.go!.name = ensureNameCase(enm.language.go!.name);
+    typeNames.add(enm.language.go!.name);
     // add PossibleValues func name
     enm.language.go!.possibleValuesFunc = `Possible${enm.language.go!.name}Values`;
     for (const choice of values(enm.choices)) {
