@@ -86,7 +86,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
     if (client.parameters.length > 0) {
       const addedGroups = new Set<string>();
       for (const clientParam of values(client.parameters)) {
-        if (helpers.isLiteralParameter(clientParam)) {
+        if (go.isLiteralParameter(clientParam)) {
           continue;
         }
         if (clientParam.group) {
@@ -102,7 +102,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
         } else {
           clientText += `${helpers.formatParameterTypeName(clientParam)}\n`;
         }
-        if (!helpers.isRequiredParameter(clientParam)) {
+        if (!go.isRequiredParameter(clientParam)) {
           optionalParams.push(clientParam);
         }
       }
@@ -500,7 +500,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   }
 
   for (const param of values(method.parameters)) {
-    if (param.location !== 'method' || !helpers.isRequiredParameter(param)) {
+    if (param.location !== 'method' || !go.isRequiredParameter(param)) {
       continue;
     }
     imports.addImportForType(param.type);
@@ -625,7 +625,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     let qpText = '';
     if (qp.location === 'method' && go.isClientSideDefault(qp.paramType)) {
       qpText = emitClientSideDefault(qp, qp.paramType, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
-    } else if (helpers.isRequiredParameter(qp) || helpers.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.paramType))) {
+    } else if (go.isRequiredParameter(qp) || go.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.paramType))) {
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
@@ -727,7 +727,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
     }
-    if (helpers.isRequiredParameter(param) || helpers.isLiteralParameter(param) || go.isClientSideDefault(param.paramType)) {
+    if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.paramType)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
@@ -771,7 +771,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       text += `\t\t${fieldName} *${go.getTypeDeclaration(bodyParam.type)} \`xml:"${tag}"\`\n`;
       text += '\t}\n';
       let addr = '&';
-      if (!helpers.isRequiredParameter(bodyParam) && !bodyParam.byValue) {
+      if (!go.isRequiredParameter(bodyParam) && !bodyParam.byValue) {
         addr = '';
       }
       body = `wrapper{${fieldName}: ${addr}${body}}`;
@@ -810,7 +810,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
     }
-    if (helpers.isRequiredParameter(bodyParam) || helpers.isLiteralParameter(bodyParam)) {
+    if (go.isRequiredParameter(bodyParam) || go.isLiteralParameter(bodyParam)) {
       text += `\t${emitSetBodyWithErrCheck(setBody)}`;
       text += '\treturn req, nil\n';
     } else {
@@ -821,7 +821,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       text += '\treturn req, nil\n';
     }
   } else if (bodyParam.bodyFormat === 'binary') {
-    if (helpers.isRequiredParameter(bodyParam)) {
+    if (go.isRequiredParameter(bodyParam)) {
       text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`)}`;
       text += '\treturn req, nil\n';
     } else {
@@ -835,7 +835,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = <go.BodyParameter>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each); }).first();
-    if (helpers.isRequiredParameter(bodyParam)) {
+    if (go.isRequiredParameter(bodyParam)) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
       text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
       text += '\treturn req, nil\n';
@@ -858,7 +858,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
           continue;
         }
         const setter = `formData["${param.name}"] = ${helpers.getParamName(param)}`;
-        if (helpers.isRequiredParameter(param)) {
+        if (go.isRequiredParameter(param)) {
           text += `\t${setter}\n`;
         } else {
           text += emitParamGroupCheck(param);
@@ -871,7 +871,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   } else if (go.isFormBodyParameter(bodyParam)) {
     const emitFormData = function (param: go.Parameter, setter: string): string {
       let formDataText = '';
-      if (helpers.isRequiredParameter(param)) {
+      if (go.isRequiredParameter(param)) {
         formDataText = `\t${setter}\n`;
       } else {
         formDataText = emitParamGroupCheck(param);

@@ -45,21 +45,6 @@ export function isParameterGroup(param: go.Parameter | go.ParameterGroup): param
   return (<go.ParameterGroup>param).groupName !== undefined;
 }
 
-export function isRequiredParameter(param: go.Parameter): boolean {
-  // parameters with a client-side default value are always optional
-  if (go.isClientSideDefault(param.paramType)) {
-    return false;
-  }
-  return param.paramType === 'required';
-}
-
-export function isLiteralParameter(param: go.Parameter): boolean {
-  if (go.isClientSideDefault(param.paramType)) {
-    return false;
-  }
-  return param.paramType === 'literal';
-}
-
 // returns the type name with possible * prefix
 export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup, pkgName?: string): string {
   let typeName: string;
@@ -73,7 +58,7 @@ export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup,
     }
   } else {
     typeName = go.getTypeDeclaration(param.type, pkgName);
-    if (isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.paramType))) {
+    if (go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.paramType))) {
       // client parameters with default values aren't emitted as pointer-to-type
       return typeName;
     }
@@ -87,13 +72,13 @@ export function sortParametersByRequired(a: go.Parameter | go.ParameterGroup, b:
   let bRequired = false;
 
   if (isParameter(a)) {
-    aRequired = isRequiredParameter(a);
+    aRequired = go.isRequiredParameter(a);
   } else {
     aRequired = a.required;
   }
 
   if (isParameter(b)) {
-    bRequired = isRequiredParameter(b);
+    bRequired = go.isRequiredParameter(b);
   } else {
     bRequired = b.required;
   }
@@ -197,7 +182,7 @@ export function getParamName(param: go.Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.paramType)) && !(isParameter(param) && param.byValue)) {
+  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.paramType)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -246,7 +231,7 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
   } else if (go.isTimeType(param.type) && param.type.dateTimeFormat !== 'timeUnix') {
     // for most time types we call methods on time.Time which is why we remove the dereference.
     // however, for unix time, we cast to our unixTime helper first so we must keep the dereference.
-    if (!isRequiredParameter(param) && paramName[0] === '*') {
+    if (!go.isRequiredParameter(param) && paramName[0] === '*') {
       // remove the dereference
       paramName = paramName.substring(1);
     }

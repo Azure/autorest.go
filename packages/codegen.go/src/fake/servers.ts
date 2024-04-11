@@ -380,7 +380,7 @@ function generateServerTransportMethods(codeModel: go.CodeModel, serverTransport
 }
 
 function dispatchForOperationBody(clientPkg: string, receiverName: string, method: go.Method, imports: ImportManager): string {
-  const numPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each) && !helpers.isLiteralParameter(each); }).count();
+  const numPathParams = values(method.parameters).where((each: go.Parameter) => { return go.isPathParameter(each) && !go.isLiteralParameter(each); }).count();
   let content = '';
   if (numPathParams > 0) {
     imports.add('regexp');
@@ -390,7 +390,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += `\tif matches == nil || len(matches) < ${numPathParams} {\n`;
     content += '\t\treturn nil, fmt.Errorf("failed to parse path %s", req.URL.Path)\n\t}\n';
   }
-  if (values(method.parameters).where((each: go.Parameter) => { return go.isQueryParameter(each) && each.location === 'method' && !helpers.isLiteralParameter(each); }).any()) {
+  if (values(method.parameters).where((each: go.Parameter) => { return go.isQueryParameter(each) && each.location === 'method' && !go.isLiteralParameter(each); }).any()) {
     content += '\tqp := req.URL.Query()\n';
   }
   const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each); }).first();
@@ -591,13 +591,13 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   } else if (bodyParam.bodyFormat === 'binary') {
     // nothing to do for binary media type
   } else if (bodyParam.bodyFormat === 'Text') {
-    if (bodyParam && !helpers.isLiteralParameter(bodyParam)) {
+    if (bodyParam && !go.isLiteralParameter(bodyParam)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
       content += '\tbody, err := server.UnmarshalRequestAsText(req)\n';
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
     }
   } else if (bodyParam.bodyFormat === 'JSON' || bodyParam.bodyFormat === 'XML') {
-    if (bodyParam && !helpers.isLiteralParameter(bodyParam)) {
+    if (bodyParam && !go.isLiteralParameter(bodyParam)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/fake', 'azfake');
       if (go.isBytesType(bodyParam.type)) {
         content += `\tbody, err := server.UnmarshalRequestAsByteArray(req, runtime.Base64${bodyParam.type.encoding}Format)\n`;
@@ -761,7 +761,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
   const paramGroups = new Map<go.ParameterGroup, Array<go.Parameter>>();
 
   for (const param of values(consolidateHostParams(method.parameters))) {
-    if (param.location === 'client' || helpers.isLiteralParameter(param)) {
+    if (param.location === 'client' || go.isLiteralParameter(param)) {
       // client params and parameter literals aren't passed to APIs
       continue;
     }
@@ -820,7 +820,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         where = 'Query';
       }
       let paramVar = createLocalVariableName(param, 'Unescaped');
-      if (helpers.isRequiredParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {
+      if (go.isRequiredParameter(param) && go.isConstantType(param.type) && param.type.type === 'string') {
         // for string-based enums, we perform the conversion as part of unescaping
         requiredHelpers.parseWithCast = true;
         paramVar = createLocalVariableName(param, 'Param');
@@ -829,7 +829,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         content += '\t\tif unescapeErr != nil {\n\t\t\treturn "", unescapeErr\n\t\t}\n';
         content += `\t\treturn ${go.getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
       } else {
-        if (helpers.isRequiredParameter(param) &&
+        if (go.isRequiredParameter(param) &&
         ((go.isPrimitiveType(param.type) && param.type.typeName === 'string') ||
           (go.isSliceType(param.type) && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
@@ -916,7 +916,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         }
         // TODO: remove cast in some cases
         content += `\t\t${paramVar}[i] = ${toType}(${fromVar})\n\t}\n`;
-      } else if (!helpers.isRequiredParameter(param) && param.collectionFormat !== 'multi') {
+      } else if (!go.isRequiredParameter(param) && param.collectionFormat !== 'multi') {
         // for slices of strings that are required, the call to splitHelper(...) is inlined into
         // the invocation of the fake e.g. srv.FakeFunc(splitHelper...). but if it's optional, we
         // need to create a local first which will later be copied into the optional param group.
@@ -926,7 +926,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
     } else if (go.isPrimitiveType(param.type) && param.type.typeName === 'bool') {
       imports.add('strconv');
       let from = `strconv.ParseBool(${paramValue})`;
-      if (!helpers.isRequiredParameter(param)) {
+      if (!go.isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
         from = `parseOptional(${paramValue}, strconv.ParseBool)`;
       }
@@ -944,7 +944,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
           format = helpers.timeRFC3339Format;
         }
         let from = `time.Parse("${format}", ${paramValue})`;
-        if (!helpers.isRequiredParameter(param)) {
+        if (!go.isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse("${format}", v) })`;
         }
@@ -957,7 +957,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
           format = 'time.RFC1123';
         }
         let from = `time.Parse(${format}, ${paramValue})`;
-        if (!helpers.isRequiredParameter(param)) {
+        if (!go.isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
           from = `parseOptional(${paramValue}, func(v string) (time.Time, error) { return time.Parse(${format}, v) })`;
         }
@@ -966,7 +966,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       } else {
         imports.add('strconv');
         let parser: string;
-        if (!helpers.isRequiredParameter(param)) {
+        if (!go.isRequiredParameter(param)) {
           requiredHelpers.parseOptional = true;
           parser = 'parseOptional';
         } else {
@@ -981,14 +981,14 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       }
     } else if (go.isPrimitiveType(param.type) && (param.type.typeName === 'float32' || param.type.typeName === 'float64' || param.type.typeName === 'int32' || param.type.typeName === 'int64')) {
       let parser: string;
-      if (!helpers.isRequiredParameter(param)) {
+      if (!go.isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
         parser = 'parseOptional';
       } else {
         requiredHelpers.parseWithCast = true;
         parser = 'parseWithCast';
       }
-      if ((param.type.typeName === 'float32' || param.type.typeName === 'int32') || !helpers.isRequiredParameter(param)) {
+      if ((param.type.typeName === 'float32' || param.type.typeName === 'int32') || !go.isRequiredParameter(param)) {
         content += `\t${createLocalVariableName(param, 'Param')}, err := ${parser}(${paramValue}, func(v string) (${param.type.typeName}, error) {\n`;
         content += `\t\tp, parseErr := ${emitNumericConversion('v', param.type.typeName)}\n`;
         content += '\t\tif parseErr != nil {\n\t\t\treturn 0, parseErr\n\t\t}\n';
@@ -1015,7 +1015,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       content += '\t\t}\n\t}\n';
     } else if (go.isConstantType(param.type) && param.type.type !== 'string') {
       let parseHelper: string;
-      if (!helpers.isRequiredParameter(param)) {
+      if (!go.isRequiredParameter(param)) {
         requiredHelpers.parseOptional = true;
         parseHelper = 'parseOptional';
       } else {
@@ -1039,7 +1039,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       content += `\t\tif parseErr != nil {\n\t\t\treturn ${zeroValue}, parseErr\n\t\t}\n`;
       content += `\t\treturn ${toConstType}(p), nil\n\t})\n`;
       content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
-    } else if (!helpers.isRequiredParameter(param)) {
+    } else if (!go.isRequiredParameter(param)) {
       // we check this last as it's a superset of the previous conditions
       requiredHelpers.getOptional = true;
       if (go.isConstantType(param.type)) {
@@ -1084,7 +1084,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       content += `\t\t${uncapitalize(paramGroup.name)} = &${clientPkg}.${paramGroup.groupName}{\n`;
       for (const param of values(params)) {
         let byRef = '&';
-        if (param.byValue || (!helpers.isRequiredParameter(param) && !go.isBodyParameter(param) && !go.isFormBodyParameter(param) && !go.isMultipartFormBodyParameter(param))) {
+        if (param.byValue || (!go.isRequiredParameter(param) && !go.isBodyParameter(param) && !go.isFormBodyParameter(param) && !go.isMultipartFormBodyParameter(param))) {
           byRef = '';
         }
         content += `\t\t\t${capitalize(param.name)}: ${byRef}${getFinalParamValue(clientPkg, param, paramValues)},\n`;
@@ -1186,7 +1186,7 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
   if ((go.isBodyParameter(param) || go.isFormBodyParameter(param) || go.isFormBodyCollectionParameter(param) || go.isMultipartFormBodyParameter(param)) && go.isTimeType(param.type)) {
     // time types in the body have been unmarshalled into our time helpers thus require a cast to time.Time
     return `time.Time(${paramValue})`;
-  } else if (helpers.isRequiredParameter(param)) {
+  } else if (go.isRequiredParameter(param)) {
     // optional params are always in their "final" form
     if (go.isHeaderCollectionParameter(param) || go.isPathCollectionParameter(param) || go.isQueryCollectionParameter(param)) {
       // for required params that are collections of strings, we split them inline.

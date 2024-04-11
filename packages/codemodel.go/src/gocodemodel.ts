@@ -603,6 +603,21 @@ export function isResumeTokenParameter(param: Parameter): param is ResumeTokenPa
   return (<ResumeTokenParameter>param).isResumeToken !== undefined;
 }
 
+export function isRequiredParameter(param: Parameter): boolean {
+  // parameters with a client-side default value are always optional
+  if (isClientSideDefault(param.paramType)) {
+    return false;
+  }
+  return param.paramType === 'required';
+}
+
+export function isLiteralParameter(param: Parameter): boolean {
+  if (isClientSideDefault(param.paramType)) {
+    return false;
+  }
+  return param.paramType === 'literal';
+}
+
 export type ResultType = AnyResult | BinaryResult | HeadAsBooleanResult | MonomorphicResult | PolymorphicResult | ModelResult;
 
 // ResponseEnvelope is the type returned from a client method
