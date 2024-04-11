@@ -10,10 +10,7 @@
         {%- set example = step.exampleModel %}
         {%- set clientVariable = jsFunc.lowerFirst(example.operationGroup.language.go.clientName) %}
         {%- if allVariables.indexOf(clientVariable)<0 %}
-    {{clientVariable}}, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}cred, nil)
-    if err != nil {
-        panic(err)
-    }
+    {{clientVariable}} := clientFactory.{{example.operationGroup.language.go.clientCtorName}}()
         {%- set _ = allVariables.push(clientVariable) %}
         {%- endif %}
     {%- endif %}

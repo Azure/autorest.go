@@ -15,7 +15,7 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
 	"github.com/stretchr/testify/suite"
 )
 {{imports}}
@@ -23,12 +23,13 @@ import (
 type FakeTestSuite struct {
     suite.Suite
 
-    cred              azcore.TokenCredential
-    options           arm.ClientOptions
+    cred           azcore.TokenCredential
+    subscriptionId string
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
     testsuite.cred = &testutil.FakeCredential{}
+    testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
 }
 
 func TestFakeTest(t *testing.T) {
@@ -47,12 +48,13 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
 {%- for example in exampleGroup.examples %}
     {%- if loop.first %}
     fakeServer := fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientName)}}Server{}
-    client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &arm.ClientOptions{
+    clientFactory, err := {{packageName}}.NewClientFactory({{jsFunc.getParamsValue(clientFactoryParametersOutput) + ", " if clientFactoryParametersOutput.length>0 else ""}}testsuite.cred, &arm.ClientOptions{
         ClientOptions: azcore.ClientOptions{
             Transport: fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientCtorName)}}ServerTransport(&fakeServer),
         },
     })
-    testsuite.Require().NoError(err, "Failed to create client")
+    testsuite.Require().NoError(err, "Failed to create client factory")
+    client := clientFactory.{{example.operationGroup.language.go.clientCtorName}}()
     {%- endif %}
 
     // From example {{example.originalFile}}

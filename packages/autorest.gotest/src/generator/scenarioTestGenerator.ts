@@ -12,11 +12,11 @@ import { GoExampleModel, ParameterOutput, VariableOutput } from '../common/model
 import { camelCase, snakeCase, upperFirst, lowerFirst } from 'lodash';
 import { GroupProperty, Parameter } from '@autorest/codemodel';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
-import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
 import { Step, Variable } from 'oav/dist/lib/apiScenario/apiScenarioTypes';
+import { ExampleDataRender } from './exampleGenerator';
 
-export class ScenarioTestDataRender extends MockTestDataRender {
+export class ScenarioTestDataRender extends ExampleDataRender {
   packagePrefixForGlobalVariables = 'testsuite.';
   globalVariables: Record<string, string | Variable> = {};
   parentVariables: Record<string, string | Variable> = {};
@@ -24,6 +24,7 @@ export class ScenarioTestDataRender extends MockTestDataRender {
   scenarioReferencedVariables: Set<string> = new Set<string>();
 
   public renderData(): void {
+    super.renderData();
     for (const testDef of this.context.codeModel.testModel.scenarioTests) {
       this.generateScenarioTestData(testDef);
     }
@@ -315,7 +316,11 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
           ...testDef.variables,
         });
         this.renderAndWrite(
-          { ...testDef, testCaseName: upperFirst(camelCase(filename)) },
+          { 
+            ...testDef, 
+            testCaseName: upperFirst(camelCase(filename)),
+            clientFactoryParametersOutput: this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'],
+          },
           'scenarioTest.go.njk',
           `${this.getFilePrefix(Config.testFilePrefix)}${filename.toLowerCase()}_live_test.go`,
           extraParam,

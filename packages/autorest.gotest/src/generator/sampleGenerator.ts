@@ -18,6 +18,7 @@ export class SampleDataRender extends ScenarioTestDataRender {
   packagePrefixForGlobalVariables = '';
 
   public renderData(): void {
+    super.renderData();
     for (const testDef of this.context.codeModel.testModel.scenarioTests) {
       this.generateSampleData(testDef);
     }
@@ -46,7 +47,15 @@ export class SampleCodeGenerator extends BaseCodeGenerator {
         }
         this.renderAndWrite({ ...testDef }, 'sampleGo.mod.njk', `${extraParam['testPackageName']}/go.mod`, extraParam);
 
-        this.renderAndWrite({ ...testDef, testCaseName: upperFirst(camelCase(filename)) }, 'sampleMain.go.njk', `${extraParam['testPackageName']}/main.go`, extraParam, {
+        this.renderAndWrite({ 
+          ...testDef, 
+          testCaseName: upperFirst(camelCase(filename)), 
+          clientFactoryParametersOutput: this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'],
+        }, 
+        'sampleMain.go.njk', 
+        `${extraParam['testPackageName']}/main.go`, 
+        extraParam, 
+        {
           snakeCase: snakeCase,
           lowerFirst: lowerFirst,
           camelCase: camelCase,
