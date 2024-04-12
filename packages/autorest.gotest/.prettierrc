@@ -1,15 +1,8 @@
 {
-    "overrides": [
-        {
-          "files": "*.ts",
-          "options": {
-            "semi": true,
-            "trailingComma": "all",
-            "singleQuote": true,
-            "tabWidth": 2,
-            "printWidth": 180,
-            "endOfLine": "auto"
-          }
-        }
-    ]
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "printWidth": 180,
+    "endOfLine": "auto"
 }
