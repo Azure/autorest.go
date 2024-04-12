@@ -6,8 +6,8 @@
     "scripts": {
         "start": "node --max_old_space_size=4096 dist/src/index.js",
         "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
-        "format": "npx prettier ./src --write",
-        "format:check": "npx prettier ./src --check",
+        "format": "npx prettier --write \"src/**/*.ts\"",
+        "format:check": "npx prettier --check \"src/**/*.ts\"",
         "eslint-fix": "eslint  . --fix --ext .ts",
         "eslint": "eslint  . --ext .ts",
         "build": "tsc -p . && cpy template ../dist/src --cwd=src/ --parents",
