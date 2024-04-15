@@ -1,6 +1,7 @@
 {
     "parser": "@typescript-eslint/parser",
     "extends": [
-        "../../.default-eslintrc.yaml"
+        "../../.default-eslintrc.yaml",
+        "plugin:prettier/recommended"
     ]
 }

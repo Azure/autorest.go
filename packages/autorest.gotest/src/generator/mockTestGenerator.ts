@@ -531,7 +531,7 @@ export function elementByValueForParam(param: Parameter): boolean {
 
 function formatRFC3339Nano(t: string): string {
   const date = new Date(t);
-  
+
   function pad(n: number): string {
     return n < 10 ? '0' + n : String(n);
   }
@@ -547,11 +547,19 @@ function formatRFC3339Nano(t: string): string {
   }
 
   return Helper.quotedEscapeString(
-    date.getUTCFullYear() + '-' +
-      pad(date.getUTCMonth() + 1) + '-' +
-      pad(date.getUTCDate()) + 'T' +
-      pad(date.getUTCHours()) + ':' +
-      pad(date.getUTCMinutes()) + ':' +
-      pad(date.getUTCSeconds()) + '.' +
-      pad3(date.getUTCMilliseconds()) + 'Z');
+    date.getUTCFullYear() +
+      '-' +
+      pad(date.getUTCMonth() + 1) +
+      '-' +
+      pad(date.getUTCDate()) +
+      'T' +
+      pad(date.getUTCHours()) +
+      ':' +
+      pad(date.getUTCMinutes()) +
+      ':' +
+      pad(date.getUTCSeconds()) +
+      '.' +
+      pad3(date.getUTCMilliseconds()) +
+      'Z',
+  );
 }
