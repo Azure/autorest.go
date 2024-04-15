@@ -34,9 +34,9 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
             if (p.paramName === 'ctx' || p.paramName === 'options') {
               return p.paramOutput;
             }
-            return 'example'+ capitalize(p.paramName);
+            return 'example' + capitalize(p.paramName);
           })
-          .join(', '); 
+          .join(', ');
       },
       getHttpCode: (op: Operation) => {
         const successCodes = new Array<string>();
@@ -90,7 +90,7 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
       capitalize: capitalize,
       uncapitalize: uncapitalize,
       cutClientSuffix: (client: string): string => {
-        return client.substring(0,client.lastIndexOf('Client'));
+        return client.substring(0, client.lastIndexOf('Client'));
       },
     });
   }

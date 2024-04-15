@@ -102,7 +102,7 @@ describe('processRequest of go-tester', () => {
     expect(Helper.dump).toHaveBeenCalledTimes(1);
   });
 
-  it('don\'t generate mock test if generate-mock-test is true', async () => {
+  it("don't generate mock test if generate-mock-test is true", async () => {
     TestCodeModeler.getSessionFromHost = jest.fn().mockResolvedValue({
       getValue: jest.fn().mockImplementation((key: string) => {
         if (key === '') {
@@ -208,15 +208,15 @@ describe('GoTestGenerator from RP agrifood', () => {
   beforeAll(async () => {
     const codeModel = MockTool.createCodeModel();
     testCodeModel = TestCodeModeler.createInstance(
-            <TestCodeModel>codeModel,
-            new TestConfig(
-              {
-                testmodeler: {
-                  'split-parents-value': true,
-                },
-              },
-              configDefaults,
-            ),
+      <TestCodeModel>codeModel,
+      new TestConfig(
+        {
+          testmodeler: {
+            'split-parents-value': true,
+          },
+        },
+        configDefaults,
+      ),
     );
     testCodeModel.genMockTests(undefined);
   });
@@ -266,26 +266,26 @@ describe('GoTestGenerator from RP signalR', () => {
     const codeModel = MockTool.loadCodeModel('signalR/test-modeler.yaml');
     const swaggerFolder = path.join(__dirname, '..', '..', '..', '..', '..', 'swagger/specification/signalr/resource-manager/');
     testCodeModel = TestCodeModeler.createInstance(
-            <any>codeModel,
-            new TestConfig(
-              {
-                __parents: {
-                  'Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json': process.platform.toLowerCase().startsWith('win')
-                    ? `file:///${swaggerFolder}`
-                    : `file://${swaggerFolder}`,
-                },
-                'input-file': ['Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json'],
-                'test-resources': [
-                  {
-                    test: 'Microsoft.SignalRService/preview/2021-06-01-preview/scenarios/signalR.yaml',
-                  },
-                ],
-                testmodeler: {
-                  'split-parents-value': true,
-                },
-              },
-              configDefaults,
-            ),
+      <any>codeModel,
+      new TestConfig(
+        {
+          __parents: {
+            'Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json': process.platform.toLowerCase().startsWith('win')
+              ? `file:///${swaggerFolder}`
+              : `file://${swaggerFolder}`,
+          },
+          'input-file': ['Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json'],
+          'test-resources': [
+            {
+              test: 'Microsoft.SignalRService/preview/2021-06-01-preview/scenarios/signalR.yaml',
+            },
+          ],
+          testmodeler: {
+            'split-parents-value': true,
+          },
+        },
+        configDefaults,
+      ),
     );
     if (!process.platform.toLowerCase().startsWith('win')) {
       for (const scenarios of testCodeModel.codeModel.testModel.scenarioTests || []) {

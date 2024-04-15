@@ -22,16 +22,16 @@ async function compare(dir1: string, dir2: string) {
 
 async function runAutorest(readmePath: string, extraOption: Array<string>) {
   const cmd =
-        path.join(`${__dirname}`, '..', '..' + '/node_modules', '.bin', 'autorest') +
-        ' --version=3.9.6 --generate-sdk=false --testmodeler.generate-mock-test --testmodeler.generate-sdk-example --testmodeler.generate-scenario-test --testmodeler.generate-sdk-sample' +
-        ' --use=' +
-        path.join(`${__dirname}`, '..', '..', '..', 'autorest.go') +
-        ' --use=' +
-        path.join(`${__dirname}`, '..', '..') +
-        ' ' +
-        readmePath +
-        ' ' +
-        extraOption.join(' ');
+    path.join(`${__dirname}`, '..', '..' + '/node_modules', '.bin', 'autorest') +
+    ' --version=3.9.6 --generate-sdk=false --testmodeler.generate-mock-test --testmodeler.generate-sdk-example --testmodeler.generate-scenario-test --testmodeler.generate-sdk-sample' +
+    ' --use=' +
+    path.join(`${__dirname}`, '..', '..', '..', 'autorest.go') +
+    ' --use=' +
+    path.join(`${__dirname}`, '..', '..') +
+    ' ' +
+    readmePath +
+    ' ' +
+    extraOption.join(' ');
   console.log(cmd);
   return await new Promise<boolean>((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {

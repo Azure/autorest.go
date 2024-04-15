@@ -65,7 +65,12 @@ export function isMultiRespOperation(op: Operation): boolean {
   const schemaResponses = new Array<SchemaResponse>();
   for (const response of values(op.responses)) {
     // perform the comparison by name as some responses have different objects for the same underlying response type
-    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+    if (
+      isSchemaResponse(response) &&
+      !values(schemaResponses)
+        .where((sr) => sr.schema.language.go!.name === response.schema.language.go!.name)
+        .any()
+    ) {
       schemaResponses.push(response);
     }
   }
