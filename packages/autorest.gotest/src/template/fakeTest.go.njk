@@ -152,6 +152,9 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             {%- if example.checkResponse and verifyResponse%}
             testsuite.Require().True(reflect.DeepEqual(exampleRes, {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %}))
             {%- endif %}
+            if err == nil {
+                break
+            }
         }
     {%- else %}
         client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
