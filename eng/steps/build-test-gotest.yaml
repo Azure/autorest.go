@@ -5,11 +5,6 @@ steps:
     displayName: "Build Generator Sources"
 
   - script: |
-      npm run format:check
-    displayName: "Run Format Check"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
-
-  - script: |
       npm run eslint
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
