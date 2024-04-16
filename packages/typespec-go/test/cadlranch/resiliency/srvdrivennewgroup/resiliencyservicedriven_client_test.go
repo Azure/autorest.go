@@ -27,7 +27,7 @@ func TestResiliencyServiceDrivenClientv1_FromNone(t *testing.T) {
 		NewParameter: to.Ptr("new"),
 	})
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }
 
 func TestResiliencyServiceDrivenClientv1_FromOneOptional(t *testing.T) {
@@ -58,7 +58,7 @@ func TestResiliencyServiceDrivenClientv2_FromNone(t *testing.T) {
 		NewParameter: to.Ptr("new"),
 	})
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }
 
 func TestResiliencyServiceDrivenClientv2_FromOneOptional(t *testing.T) {

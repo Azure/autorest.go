@@ -263,7 +263,7 @@ func (client *MetadataSchemasClient) Head(ctx context.Context, subscriptionID st
 		err = runtime.NewResponseError(httpResp)
 		return MetadataSchemasClientHeadResponse{}, err
 	}
-	return MetadataSchemasClientHeadResponse{}, nil
+	return MetadataSchemasClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.

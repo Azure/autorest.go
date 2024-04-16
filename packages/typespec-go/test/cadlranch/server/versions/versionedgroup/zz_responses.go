@@ -6,15 +6,18 @@ package versionedgroup
 
 // VersionedClientWithPathAPIVersionResponse contains the response from method VersionedClient.WithPathAPIVersion.
 type VersionedClientWithPathAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // VersionedClientWithQueryAPIVersionResponse contains the response from method VersionedClient.WithQueryAPIVersion.
 type VersionedClientWithQueryAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // VersionedClientWithoutAPIVersionResponse contains the response from method VersionedClient.WithoutAPIVersion.
 type VersionedClientWithoutAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }

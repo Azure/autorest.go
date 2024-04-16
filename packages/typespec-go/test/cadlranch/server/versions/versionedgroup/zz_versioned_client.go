@@ -41,7 +41,7 @@ func (client *VersionedClient) WithPathAPIVersion(ctx context.Context, options *
 		err = runtime.NewResponseError(httpResp)
 		return VersionedClientWithPathAPIVersionResponse{}, err
 	}
-	return VersionedClientWithPathAPIVersionResponse{}, nil
+	return VersionedClientWithPathAPIVersionResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
@@ -77,7 +77,7 @@ func (client *VersionedClient) WithQueryAPIVersion(ctx context.Context, options 
 		err = runtime.NewResponseError(httpResp)
 		return VersionedClientWithQueryAPIVersionResponse{}, err
 	}
-	return VersionedClientWithQueryAPIVersionResponse{}, nil
+	return VersionedClientWithQueryAPIVersionResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // withQueryAPIVersionCreateRequest creates the WithQueryAPIVersion request.
@@ -115,7 +115,7 @@ func (client *VersionedClient) WithoutAPIVersion(ctx context.Context, options *V
 		err = runtime.NewResponseError(httpResp)
 		return VersionedClientWithoutAPIVersionResponse{}, err
 	}
-	return VersionedClientWithoutAPIVersionResponse{}, nil
+	return VersionedClientWithoutAPIVersionResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // withoutAPIVersionCreateRequest creates the WithoutAPIVersion request.

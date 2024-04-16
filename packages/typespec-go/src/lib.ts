@@ -10,6 +10,7 @@ export interface GoEmitterOptions {
   'disallow-unknown-fields'?: boolean;
   'file-prefix'?: string;
   'generate-fakes'?: boolean;
+  'head-as-boolean'?: boolean;
   'inject-spans'?: boolean;
   'module'?: string;
   'module-version'?: string;
@@ -27,6 +28,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'disallow-unknown-fields': { type: 'boolean', nullable: true },
     'file-prefix': { type: 'string', nullable: true },
     'generate-fakes': { type: 'boolean', nullable: true },
+    'head-as-boolean': { type: 'boolean', nullable: true },
     'inject-spans': { type: 'boolean', nullable: true },
     'module': { type: 'string', nullable: true },
     'module-version': { type: 'string', nullable: true },

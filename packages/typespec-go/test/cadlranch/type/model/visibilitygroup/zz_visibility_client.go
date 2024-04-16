@@ -120,7 +120,7 @@ func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityM
 		err = runtime.NewResponseError(httpResp)
 		return VisibilityClientHeadModelResponse{}, err
 	}
-	return VisibilityClientHeadModelResponse{}, nil
+	return VisibilityClientHeadModelResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headModelCreateRequest creates the HeadModel request.

@@ -17,7 +17,8 @@ type VisibilityClientGetModelResponse struct {
 
 // VisibilityClientHeadModelResponse contains the response from method VisibilityClient.HeadModel.
 type VisibilityClientHeadModelResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // VisibilityClientPatchModelResponse contains the response from method VisibilityClient.PatchModel.

@@ -35,7 +35,8 @@ type ApiDefinitionsClientGetResponse struct {
 
 // ApiDefinitionsClientHeadResponse contains the response from method ApiDefinitionsClient.Head.
 type ApiDefinitionsClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // ApiDefinitionsClientImportSpecificationResponse contains the response from method ApiDefinitionsClient.ImportSpecification.
@@ -75,7 +76,8 @@ type ApiVersionsClientGetResponse struct {
 
 // ApiVersionsClientHeadResponse contains the response from method ApiVersionsClient.Head.
 type ApiVersionsClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // ApiVersionsClientListResponse contains the response from method ApiVersionsClient.NewListPager.
@@ -109,7 +111,8 @@ type ApisClientGetResponse struct {
 
 // ApisClientHeadResponse contains the response from method ApisClient.Head.
 type ApisClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // ApisClientListResponse contains the response from method ApisClient.NewListPager.
@@ -143,7 +146,8 @@ type DeploymentsClientGetResponse struct {
 
 // DeploymentsClientHeadResponse contains the response from method DeploymentsClient.Head.
 type DeploymentsClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // DeploymentsClientListResponse contains the response from method DeploymentsClient.NewListPager.
@@ -177,7 +181,8 @@ type EnvironmentsClientGetResponse struct {
 
 // EnvironmentsClientHeadResponse contains the response from method EnvironmentsClient.Head.
 type EnvironmentsClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // EnvironmentsClientListResponse contains the response from method EnvironmentsClient.NewListPager.
@@ -211,7 +216,8 @@ type MetadataSchemasClientGetResponse struct {
 
 // MetadataSchemasClientHeadResponse contains the response from method MetadataSchemasClient.Head.
 type MetadataSchemasClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // MetadataSchemasClientListResponse contains the response from method MetadataSchemasClient.NewListPager.
@@ -292,7 +298,8 @@ type WorkspacesClientGetResponse struct {
 
 // WorkspacesClientHeadResponse contains the response from method WorkspacesClient.Head.
 type WorkspacesClientHeadResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // WorkspacesClientListResponse contains the response from method WorkspacesClient.NewListPager.

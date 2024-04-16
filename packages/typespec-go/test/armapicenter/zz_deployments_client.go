@@ -295,7 +295,7 @@ func (client *DeploymentsClient) Head(ctx context.Context, subscriptionID string
 		err = runtime.NewResponseError(httpResp)
 		return DeploymentsClientHeadResponse{}, err
 	}
-	return DeploymentsClientHeadResponse{}, nil
+	return DeploymentsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.

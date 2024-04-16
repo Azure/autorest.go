@@ -44,7 +44,7 @@ func TestVisibilityClientHeadModel(t *testing.T) {
 		QueryProp: to.Ptr[int32](123),
 	}, nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }
 
 func TestVisibilityClientPatchModel(t *testing.T) {

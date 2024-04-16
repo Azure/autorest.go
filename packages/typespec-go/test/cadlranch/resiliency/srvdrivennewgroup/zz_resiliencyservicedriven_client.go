@@ -92,7 +92,7 @@ func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, optio
 		err = runtime.NewResponseError(httpResp)
 		return ResiliencyServiceDrivenClientFromNoneResponse{}, err
 	}
-	return ResiliencyServiceDrivenClientFromNoneResponse{}, nil
+	return ResiliencyServiceDrivenClientFromNoneResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // fromNoneCreateRequest creates the FromNone request.

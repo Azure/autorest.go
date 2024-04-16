@@ -39,7 +39,7 @@ func (client *SingleClient) MyOp(ctx context.Context, options *SingleClientMyOpO
 		err = runtime.NewResponseError(httpResp)
 		return SingleClientMyOpResponse{}, err
 	}
-	return SingleClientMyOpResponse{}, nil
+	return SingleClientMyOpResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // myOpCreateRequest creates the MyOp request.

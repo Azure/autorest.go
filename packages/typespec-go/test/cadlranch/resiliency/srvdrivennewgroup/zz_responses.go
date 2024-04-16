@@ -11,7 +11,8 @@ type ResiliencyServiceDrivenClientAddOperationResponse struct {
 
 // ResiliencyServiceDrivenClientFromNoneResponse contains the response from method ResiliencyServiceDrivenClient.FromNone.
 type ResiliencyServiceDrivenClientFromNoneResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // ResiliencyServiceDrivenClientFromOneOptionalResponse contains the response from method ResiliencyServiceDrivenClient.FromOneOptional.
