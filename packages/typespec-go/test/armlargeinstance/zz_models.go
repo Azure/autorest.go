@@ -110,9 +110,6 @@ type Disk struct {
 	Name *string
 }
 
-type ErrorAdditionalInfoInfo struct {
-}
-
 // ForceState - The active state empowers the server with the ability to forcefully terminate
 // and halt any existing processes that may be running on the server
 type ForceState struct {
