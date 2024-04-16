@@ -316,8 +316,8 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
           ...testDef.variables,
         });
         this.renderAndWrite(
-          { 
-            ...testDef, 
+          {
+            ...testDef,
             testCaseName: upperFirst(camelCase(filename)),
             clientFactoryParametersOutput: this.context.codeModel.testModel.mockTest['clientFactoryParametersOutput'],
           },
