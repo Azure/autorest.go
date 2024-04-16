@@ -22,7 +22,7 @@ func (c *Cobra) GetSnake() *Snake {
 	}
 }
 
-// Test extensible enum type for discriminator
+// Dog - Test extensible enum type for discriminator
 type Dog struct {
 	// REQUIRED; discriminator property
 	Kind *DogKind
@@ -52,7 +52,7 @@ func (g *Golden) GetDog() *Dog {
 	}
 }
 
-// Test fixed enum type for discriminator
+// Snake - Test fixed enum type for discriminator
 type Snake struct {
 	// REQUIRED; discriminator property
 	Kind *SnakeKind

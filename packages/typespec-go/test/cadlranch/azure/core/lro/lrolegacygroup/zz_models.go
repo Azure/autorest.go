@@ -6,7 +6,7 @@ package lrolegacygroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// The error object.
+// Error - The error object.
 type Error struct {
 	// REQUIRED; One of a server-defined set of error codes.
 	Code *string
@@ -24,7 +24,7 @@ type Error struct {
 	Target *string
 }
 
-// An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
+// InnerError - An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
 type InnerError struct {
 	// One of a server-defined set of error codes.
 	Code *string
@@ -33,13 +33,13 @@ type InnerError struct {
 	Innererror *InnerError
 }
 
-// Data of the job
+// JobData - Data of the job
 type JobData struct {
 	// REQUIRED; Comment.
 	Comment *string
 }
 
-// Result of the job
+// JobResult - Result of the job
 type JobResult struct {
 	// REQUIRED; Comment.
 	Comment *string

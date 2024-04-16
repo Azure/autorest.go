@@ -6,19 +6,19 @@ package basicgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// First item.
+// FirstItem - First item.
 type FirstItem struct {
 	// REQUIRED; The id of the item.
 	ID *int32
 }
 
-// The body of the input.
+// ListItemInputBody - The body of the input.
 type ListItemInputBody struct {
 	// REQUIRED; The name of the input.
 	InputName *string
 }
 
-// Paged collection of FirstItem items
+// PagedFirstItem - Paged collection of FirstItem items
 type PagedFirstItem struct {
 	// REQUIRED; The FirstItem items on this page
 	Value []*FirstItem
@@ -27,7 +27,7 @@ type PagedFirstItem struct {
 	NextLink *string
 }
 
-// Paged collection of SecondItem items
+// PagedSecondItem - Paged collection of SecondItem items
 type PagedSecondItem struct {
 	// REQUIRED; The SecondItem items on this page
 	Value []*SecondItem
@@ -36,7 +36,7 @@ type PagedSecondItem struct {
 	NextLink *string
 }
 
-// Paged collection of User items
+// PagedUser - Paged collection of User items
 type PagedUser struct {
 	// REQUIRED; The User items on this page
 	Value []*User
@@ -45,13 +45,13 @@ type PagedUser struct {
 	NextLink *string
 }
 
-// Second item.
+// SecondItem - Second item.
 type SecondItem struct {
 	// REQUIRED; The name of the item.
 	Name *string
 }
 
-// Details about a user.
+// User - Details about a user.
 type User struct {
 	// REQUIRED; The entity tag for this resource.
 	Etag *azcore.ETag

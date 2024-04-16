@@ -4,38 +4,38 @@
 
 package addlpropsgroup
 
-// The model extends from Record<float32> type.
+// ExtendsFloatAdditionalProperties - The model extends from Record<float32> type.
 type ExtendsFloatAdditionalProperties struct {
 	// REQUIRED; The id property
 	ID                   *float32
 	AdditionalProperties map[string]*float32
 }
 
-// The model extends from Record<ModelForRecord> type.
+// ExtendsModelAdditionalProperties - The model extends from Record<ModelForRecord> type.
 type ExtendsModelAdditionalProperties struct {
 	AdditionalProperties map[string]*ModelForRecord
 }
 
-// The model extends from Record<ModelForRecord[]> type.
+// ExtendsModelArrayAdditionalProperties - The model extends from Record<ModelForRecord[]> type.
 type ExtendsModelArrayAdditionalProperties struct {
 	AdditionalProperties map[string][]*ModelForRecord
 }
 
-// The model extends from Record<string> type.
+// ExtendsStringAdditionalProperties - The model extends from Record<string> type.
 type ExtendsStringAdditionalProperties struct {
 	// REQUIRED; The name property
 	Name                 *string
 	AdditionalProperties map[string]*string
 }
 
-// The model extends from Record<unknown> type.
+// ExtendsUnknownAdditionalProperties - The model extends from Record<unknown> type.
 type ExtendsUnknownAdditionalProperties struct {
 	// REQUIRED; The name property
 	Name                 *string
 	AdditionalProperties map[string]any
 }
 
-// The model extends from a type that extends from Record<unknown>.
+// ExtendsUnknownAdditionalPropertiesDerived - The model extends from a type that extends from Record<unknown>.
 type ExtendsUnknownAdditionalPropertiesDerived struct {
 	// REQUIRED; The index property
 	Index *int32
@@ -48,7 +48,7 @@ type ExtendsUnknownAdditionalPropertiesDerived struct {
 	Age *float32
 }
 
-// The model extends from Record<unknown> with a discriminator.
+// ExtendsUnknownAdditionalPropertiesDiscriminated - The model extends from Record<unknown> with a discriminator.
 type ExtendsUnknownAdditionalPropertiesDiscriminated struct {
 	// REQUIRED; The discriminator
 	Kind *string
@@ -64,7 +64,7 @@ func (e *ExtendsUnknownAdditionalPropertiesDiscriminated) GetExtendsUnknownAddit
 	return e
 }
 
-// The derived discriminated type
+// ExtendsUnknownAdditionalPropertiesDiscriminatedDerived - The derived discriminated type
 type ExtendsUnknownAdditionalPropertiesDiscriminatedDerived struct {
 	// REQUIRED; The index property
 	Index *int32
@@ -90,38 +90,38 @@ func (e *ExtendsUnknownAdditionalPropertiesDiscriminatedDerived) GetExtendsUnkno
 	}
 }
 
-// The model is from Record<float32> type.
+// IsFloatAdditionalProperties - The model is from Record<float32> type.
 type IsFloatAdditionalProperties struct {
 	// REQUIRED; The id property
 	ID                   *float32
 	AdditionalProperties map[string]*float32
 }
 
-// The model is from Record<ModelForRecord> type.
+// IsModelAdditionalProperties - The model is from Record<ModelForRecord> type.
 type IsModelAdditionalProperties struct {
 	AdditionalProperties map[string]*ModelForRecord
 }
 
-// The model is from Record<ModelForRecord[]> type.
+// IsModelArrayAdditionalProperties - The model is from Record<ModelForRecord[]> type.
 type IsModelArrayAdditionalProperties struct {
 	AdditionalProperties map[string][]*ModelForRecord
 }
 
-// The model is from Record<string> type.
+// IsStringAdditionalProperties - The model is from Record<string> type.
 type IsStringAdditionalProperties struct {
 	// REQUIRED; The name property
 	Name                 *string
 	AdditionalProperties map[string]*string
 }
 
-// The model is from Record<unknown> type.
+// IsUnknownAdditionalProperties - The model is from Record<unknown> type.
 type IsUnknownAdditionalProperties struct {
 	// REQUIRED; The name property
 	Name                 *string
 	AdditionalProperties map[string]any
 }
 
-// The model extends from a type that is Record<unknown> type
+// IsUnknownAdditionalPropertiesDerived - The model extends from a type that is Record<unknown> type
 type IsUnknownAdditionalPropertiesDerived struct {
 	// REQUIRED; The index property
 	Index *int32
@@ -134,7 +134,7 @@ type IsUnknownAdditionalPropertiesDerived struct {
 	Age *float32
 }
 
-// The model is Record<unknown> with a discriminator.
+// IsUnknownAdditionalPropertiesDiscriminated - The model is Record<unknown> with a discriminator.
 type IsUnknownAdditionalPropertiesDiscriminated struct {
 	// REQUIRED; The discriminator
 	Kind *string
@@ -150,7 +150,7 @@ func (i *IsUnknownAdditionalPropertiesDiscriminated) GetIsUnknownAdditionalPrope
 	return i
 }
 
-// The derived discriminated type
+// IsUnknownAdditionalPropertiesDiscriminatedDerived - The derived discriminated type
 type IsUnknownAdditionalPropertiesDiscriminatedDerived struct {
 	// REQUIRED; The index property
 	Index *int32
@@ -176,7 +176,7 @@ func (i *IsUnknownAdditionalPropertiesDiscriminatedDerived) GetIsUnknownAddition
 	}
 }
 
-// model for record
+// ModelForRecord - model for record
 type ModelForRecord struct {
 	// REQUIRED; The state property
 	State *string

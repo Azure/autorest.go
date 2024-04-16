@@ -4,7 +4,7 @@
 
 package visibilitygroup
 
-// Output model with visibility properties.
+// VisibilityModel - Output model with visibility properties.
 type VisibilityModel struct {
 	// REQUIRED; Required string[], illustrating a create property.
 	CreateProp []*string

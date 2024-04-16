@@ -4,7 +4,7 @@
 
 package singlediscgroup
 
-// This is base model for polymorphic single level inheritance with a discriminator.
+// Bird - This is base model for polymorphic single level inheritance with a discriminator.
 type Bird struct {
 	// REQUIRED
 	Kind *string
@@ -16,7 +16,7 @@ type Bird struct {
 // GetBird implements the BirdClassification interface for type Bird.
 func (b *Bird) GetBird() *Bird { return b }
 
-// Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
+// Dinosaur - Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
 type Dinosaur struct {
 	// REQUIRED
 	Kind *string
@@ -28,7 +28,8 @@ type Dinosaur struct {
 // GetDinosaur implements the DinosaurClassification interface for type Dinosaur.
 func (d *Dinosaur) GetDinosaur() *Dinosaur { return d }
 
-// The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances.
+// Eagle - The second level model in polymorphic single levels inheritance which contains references to other polymorphic
+// instances.
 type Eagle struct {
 	// CONSTANT; undefinedField has constant value "eagle", any specified value is ignored.
 	Kind *string
@@ -48,7 +49,7 @@ func (e *Eagle) GetBird() *Bird {
 	}
 }
 
-// The second level model in polymorphic single level inheritance.
+// Goose - The second level model in polymorphic single level inheritance.
 type Goose struct {
 	// CONSTANT; undefinedField has constant value "goose", any specified value is ignored.
 	Kind *string
@@ -65,7 +66,7 @@ func (g *Goose) GetBird() *Bird {
 	}
 }
 
-// The second level model in polymorphic single level inheritance.
+// SeaGull - The second level model in polymorphic single level inheritance.
 type SeaGull struct {
 	// CONSTANT; undefinedField has constant value "seagull", any specified value is ignored.
 	Kind *string
@@ -82,7 +83,7 @@ func (s *SeaGull) GetBird() *Bird {
 	}
 }
 
-// The second level model in polymorphic single level inheritance.
+// Sparrow - The second level model in polymorphic single level inheritance.
 type Sparrow struct {
 	// CONSTANT; undefinedField has constant value "sparrow", any specified value is ignored.
 	Kind *string
@@ -99,7 +100,7 @@ func (s *Sparrow) GetBird() *Bird {
 	}
 }
 
-// The second level legacy model in polymorphic single level inheritance.
+// TRex - The second level legacy model in polymorphic single level inheritance.
 type TRex struct {
 	// REQUIRED
 	Kind *string

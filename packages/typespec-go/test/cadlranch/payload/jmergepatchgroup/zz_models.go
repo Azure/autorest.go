@@ -4,13 +4,13 @@
 
 package jmergepatchgroup
 
-// It is the model used by Resource model
+// InnerModel - It is the model used by Resource model
 type InnerModel struct {
 	Description *string
 	Name        *string
 }
 
-// Details about a resource.
+// Resource - Details about a resource.
 type Resource struct {
 	// REQUIRED
 	Name        *string
@@ -23,7 +23,7 @@ type Resource struct {
 	Map         map[string]*InnerModel
 }
 
-// Details about a resource for patch operation.
+// ResourcePatch - Details about a resource for patch operation.
 type ResourcePatch struct {
 	Array       []*InnerModel
 	Description *string

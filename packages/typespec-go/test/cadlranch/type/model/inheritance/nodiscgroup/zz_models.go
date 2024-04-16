@@ -4,7 +4,7 @@
 
 package nodiscgroup
 
-// The second level model in the normal multiple levels inheritance.
+// Cat - The second level model in the normal multiple levels inheritance.
 type Cat struct {
 	// REQUIRED
 	Age *int32
@@ -13,13 +13,13 @@ type Cat struct {
 	Name *string
 }
 
-// This is base model for not-discriminated normal multiple levels inheritance.
+// Pet - This is base model for not-discriminated normal multiple levels inheritance.
 type Pet struct {
 	// REQUIRED
 	Name *string
 }
 
-// The third level model in the normal multiple levels inheritance.
+// Siamese - The third level model in the normal multiple levels inheritance.
 type Siamese struct {
 	// REQUIRED
 	Age *int32

@@ -4,31 +4,31 @@
 
 package accessgroup
 
-// Used in a public operation, should be generated and exported.
+// NoDecoratorModelInPublic - Used in a public operation, should be generated and exported.
 type NoDecoratorModelInPublic struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in an internal operation but with public decorator, should be generated and exported.
+// PublicDecoratorModelInInternal - Used in an internal operation but with public decorator, should be generated and exported.
 type PublicDecoratorModelInInternal struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in a public operation, should be generated and exported.
+// PublicDecoratorModelInPublic - Used in a public operation, should be generated and exported.
 type PublicDecoratorModelInPublic struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used by both public and internal operation. It should be generated and exported.
+// SharedModel - Used by both public and internal operation. It should be generated and exported.
 type SharedModel struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in internal operations, should be generated but not exported.
+// abstractModel - Used in internal operations, should be generated but not exported.
 type abstractModel struct {
 	// REQUIRED
 	Kind *string
@@ -40,31 +40,31 @@ type abstractModel struct {
 // GetabstractModel implements the abstractModelClassification interface for type abstractModel.
 func (a *abstractModel) GetabstractModel() *abstractModel { return a }
 
-// Used in internal operations, should be generated but not exported.
+// baseModel - Used in internal operations, should be generated but not exported.
 type baseModel struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in internal operations, should be generated but not exported.
+// innerModel - Used in internal operations, should be generated but not exported.
 type innerModel struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in an internal operation, should be generated but not exported.
+// internalDecoratorModelInInternal - Used in an internal operation, should be generated but not exported.
 type internalDecoratorModelInInternal struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in an internal operation, should be generated but not exported.
+// noDecoratorModelInInternal - Used in an internal operation, should be generated but not exported.
 type noDecoratorModelInInternal struct {
 	// REQUIRED
 	Name *string
 }
 
-// Used in internal operations, should be generated but not exported.
+// outerModel - Used in internal operations, should be generated but not exported.
 type outerModel struct {
 	// REQUIRED
 	Inner *innerModel
@@ -73,7 +73,7 @@ type outerModel struct {
 	Name *string
 }
 
-// Used in internal operations, should be generated but not exported.
+// realModel - Used in internal operations, should be generated but not exported.
 type realModel struct {
 	// REQUIRED
 	Kind *string

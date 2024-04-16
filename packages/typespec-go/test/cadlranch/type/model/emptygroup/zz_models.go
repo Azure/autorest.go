@@ -4,14 +4,14 @@
 
 package emptygroup
 
-// Empty model used in operation parameters
+// EmptyInput - Empty model used in operation parameters
 type EmptyInput struct {
 }
 
-// Empty model used in both parameter and return type
+// EmptyInputOutput - Empty model used in both parameter and return type
 type EmptyInputOutput struct {
 }
 
-// Empty model used in operation return type
+// EmptyOutput - Empty model used in operation return type
 type EmptyOutput struct {
 }

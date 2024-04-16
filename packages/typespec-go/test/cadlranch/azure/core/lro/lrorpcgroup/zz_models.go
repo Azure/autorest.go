@@ -4,7 +4,7 @@
 
 package lrorpcgroup
 
-// The error object.
+// Error - The error object.
 type Error struct {
 	// REQUIRED; One of a server-defined set of error codes.
 	Code *string
@@ -22,13 +22,13 @@ type Error struct {
 	Target *string
 }
 
-// Options for the generation.
+// GenerationOptions - Options for the generation.
 type GenerationOptions struct {
 	// REQUIRED; Prompt.
 	Prompt *string
 }
 
-// Provides status details for long running operations.
+// GenerationResponse - Provides status details for long running operations.
 type GenerationResponse struct {
 	// REQUIRED; The unique ID of the operation.
 	ID *string
@@ -43,13 +43,13 @@ type GenerationResponse struct {
 	Result *GenerationResult
 }
 
-// Result of the generation.
+// GenerationResult - Result of the generation.
 type GenerationResult struct {
 	// REQUIRED; The data.
 	Data *string
 }
 
-// An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
+// InnerError - An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
 type InnerError struct {
 	// One of a server-defined set of error codes.
 	Code *string
