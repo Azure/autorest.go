@@ -219,9 +219,6 @@ type CheckNameAvailabilityResult struct {
 	Reason *NameUnavailabilityReason
 }
 
-type ErrorAdditionalInfoInfo struct {
-}
-
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
 	// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
