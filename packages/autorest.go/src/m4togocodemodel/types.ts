@@ -388,7 +388,7 @@ export function adaptPossibleType(schema: m4.Schema, elementTypeByValue?: boolea
       if (time) {
         return time;
       }
-      time = new go.TimeType(schema.language.go!.internalTimeType);
+      time = new go.TimeType(schema.language.go!.internalTimeType, false);
       types.set(schema.language.go!.internalTimeType, time);
       return time;
     }
@@ -538,7 +538,7 @@ function adaptLiteralValue(constSchema: m4.ConstantSchema): go.LiteralValue {
       if (literalTime) {
         return <go.LiteralValue>literalTime;
       }
-      literalTime = new go.LiteralValue(new go.TimeType(constSchema.valueType.language.go!.internalTimeType), constSchema.value.value);
+      literalTime = new go.LiteralValue(new go.TimeType(constSchema.valueType.language.go!.internalTimeType, false), constSchema.value.value);
       types.set(keyName, literalTime);
       return literalTime;
     }
