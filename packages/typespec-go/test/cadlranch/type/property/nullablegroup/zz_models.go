@@ -6,7 +6,8 @@ package nullablegroup
 
 import "time"
 
-// Template type for testing models with nullable property. Pass in the type of the property you are looking for
+// BytesProperty - Template type for testing models with nullable property. Pass in the type of the property you are looking
+// for
 type BytesProperty struct {
 	// REQUIRED; Property
 	NullableProperty []byte
@@ -15,7 +16,7 @@ type BytesProperty struct {
 	RequiredProperty *string
 }
 
-// Model with collection bytes properties
+// CollectionsByteProperty - Model with collection bytes properties
 type CollectionsByteProperty struct {
 	// REQUIRED; Property
 	NullableProperty [][]byte
@@ -24,7 +25,7 @@ type CollectionsByteProperty struct {
 	RequiredProperty *string
 }
 
-// Model with collection models properties
+// CollectionsModelProperty - Model with collection models properties
 type CollectionsModelProperty struct {
 	// REQUIRED; Property
 	NullableProperty []*InnerModel
@@ -33,7 +34,7 @@ type CollectionsModelProperty struct {
 	RequiredProperty *string
 }
 
-// Model with a datetime property
+// DatetimeProperty - Model with a datetime property
 type DatetimeProperty struct {
 	// REQUIRED; Property
 	NullableProperty *time.Time
@@ -42,7 +43,7 @@ type DatetimeProperty struct {
 	RequiredProperty *string
 }
 
-// Model with a duration property
+// DurationProperty - Model with a duration property
 type DurationProperty struct {
 	// REQUIRED; Property
 	NullableProperty *string
@@ -51,13 +52,14 @@ type DurationProperty struct {
 	RequiredProperty *string
 }
 
-// Inner model used in collections model property
+// InnerModel - Inner model used in collections model property
 type InnerModel struct {
 	// REQUIRED; Inner model property
 	Property *string
 }
 
-// Template type for testing models with nullable property. Pass in the type of the property you are looking for
+// StringProperty - Template type for testing models with nullable property. Pass in the type of the property you are looking
+// for
 type StringProperty struct {
 	// REQUIRED; Property
 	NullableProperty *string

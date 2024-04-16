@@ -4,7 +4,7 @@
 
 package lrostdgroup
 
-// The exported user data.
+// ExportedUser - The exported user data.
 type ExportedUser struct {
 	// REQUIRED; The name of user.
 	Name *string
@@ -13,7 +13,7 @@ type ExportedUser struct {
 	ResourceURI *string
 }
 
-// Details about a user.
+// User - Details about a user.
 type User struct {
 	// REQUIRED; The name of user.
 	Name *string

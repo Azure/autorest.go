@@ -4,7 +4,7 @@
 
 package pageablegroup
 
-// Paged collection of User items
+// PagedUser - Paged collection of User items
 type PagedUser struct {
 	// REQUIRED; The User items on this page
 	Value []*User

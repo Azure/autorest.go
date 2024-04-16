@@ -4,7 +4,7 @@
 
 package dictionarygroup
 
-// Dictionary inner model
+// InnerModel - Dictionary inner model
 type InnerModel struct {
 	// REQUIRED; Required string property
 	Property *string

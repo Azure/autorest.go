@@ -4,7 +4,7 @@
 
 package arraygroup
 
-// Array inner model
+// InnerModel - Array inner model
 type InnerModel struct {
 	// REQUIRED; Required string property
 	Property *string

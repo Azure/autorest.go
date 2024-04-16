@@ -4,12 +4,12 @@
 
 package recursivegroup
 
-// element
+// Element - element
 type Element struct {
 	Extension []Extension
 }
 
-// extension
+// Extension - extension
 type Extension struct {
 	// REQUIRED
 	Level     *int8

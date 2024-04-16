@@ -544,7 +544,12 @@ export class typeAdapter {
       // polymorphic types don't have XMLInfo
       // TODO: XMLInfo
     }
-    modelType.description = model.description;
+    if (model.description) {
+      modelType.description = model.description;
+      if (!modelType.description.startsWith(modelName)) {
+        modelType.description = `${modelName} - ${modelType.description}`;
+      }
+    }
     this.types.set(modelName, modelType);
     return modelType;
   }

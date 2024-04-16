@@ -6,7 +6,7 @@ package armlargeinstance
 
 import "time"
 
-// Common properties for all Azure Resource Manager resources.
+// ArmResource - Common properties for all Azure Resource Manager resources.
 type ArmResource struct {
 	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
@@ -18,11 +18,11 @@ type ArmResource struct {
 	SystemData *SystemData
 }
 
-// Base class used for type definitions
+// ArmResourceBase - Base class used for type definitions
 type ArmResourceBase struct {
 }
 
-// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+// AzureLargeInstance - Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 // properties)
 type AzureLargeInstance struct {
 	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
@@ -72,7 +72,7 @@ type AzureLargeStorageInstance struct {
 	Name *string
 }
 
-// The response of a AzureLargeStorageInstance list operation.
+// AzureLargeStorageInstanceListResult - The response of a AzureLargeStorageInstance list operation.
 type AzureLargeStorageInstanceListResult struct {
 	// REQUIRED; The AzureLargeStorageInstance items on this page
 	Value []*AzureLargeStorageInstance
@@ -81,7 +81,7 @@ type AzureLargeStorageInstanceListResult struct {
 	NextLink *string
 }
 
-// Describes the properties of an AzureLargeStorageInstance.
+// AzureLargeStorageInstanceProperties - Describes the properties of an AzureLargeStorageInstance.
 type AzureLargeStorageInstanceProperties struct {
 	// Specifies the AzureLargeStorageInstance unique ID.
 	AzureLargeStorageInstanceUniqueIdentifier *string
@@ -90,13 +90,13 @@ type AzureLargeStorageInstanceProperties struct {
 	StorageProperties *StorageProperties
 }
 
-// The type used for updating tags in AzureLargeStorageInstance resources.
+// AzureLargeStorageInstanceTagsUpdate - The type used for updating tags in AzureLargeStorageInstance resources.
 type AzureLargeStorageInstanceTagsUpdate struct {
 	// Resource tags.
 	Tags map[string]*string
 }
 
-// Specifies the disk information fo the Azure Large Instance
+// Disk - Specifies the disk information fo the Azure Large Instance
 type Disk struct {
 	// Specifies the size of an empty data disk in gigabytes.
 	DiskSizeGB *int32
@@ -113,14 +113,14 @@ type Disk struct {
 type ErrorAdditionalInfoInfo struct {
 }
 
-// The active state empowers the server with the ability to forcefully terminate
+// ForceState - The active state empowers the server with the ability to forcefully terminate
 // and halt any existing processes that may be running on the server
 type ForceState struct {
 	// Whether to force restart by shutting all processes.
 	ForceState *ForcePowerState
 }
 
-// Specifies the hardware settings for the Azure Large Instance.
+// HardwareProfile - Specifies the hardware settings for the Azure Large Instance.
 type HardwareProfile struct {
 	// Specifies the Azure Large Instance SKU.
 	AzureLargeInstanceSize *SizeNamesEnum
@@ -129,13 +129,13 @@ type HardwareProfile struct {
 	HardwareType *HardwareTypeNamesEnum
 }
 
-// Specifies the IP address of the network interface.
+// IPAddress - Specifies the IP address of the network interface.
 type IPAddress struct {
 	// Specifies the IP address of the network interface.
 	IPAddress *string
 }
 
-// The response of a AzureLargeInstance list operation.
+// ListResult - The response of a AzureLargeInstance list operation.
 type ListResult struct {
 	// REQUIRED; The AzureLargeInstance items on this page
 	Value []*AzureLargeInstance
@@ -144,7 +144,7 @@ type ListResult struct {
 	NextLink *string
 }
 
-// Specifies the network settings for the Azure Large Instance disks.
+// NetworkProfile - Specifies the network settings for the Azure Large Instance disks.
 type NetworkProfile struct {
 	// Specifies the circuit id for connecting to express route.
 	CircuitID *string
@@ -153,7 +153,7 @@ type NetworkProfile struct {
 	NetworkInterfaces []*IPAddress
 }
 
-// Details of a REST API operation, returned from the Resource Provider Operations API
+// Operation - Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
 	// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
@@ -174,7 +174,7 @@ type Operation struct {
 	Origin *Origin
 }
 
-// Localized display information for and operation.
+// OperationDisplay - Localized display information for and operation.
 type OperationDisplay struct {
 	// The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string
@@ -190,7 +190,7 @@ type OperationDisplay struct {
 	Resource *string
 }
 
-// Specifies the operating system settings for the Azure Large Instance.
+// OsProfile - Specifies the operating system settings for the Azure Large Instance.
 type OsProfile struct {
 	// Specifies the host OS name of the Azure Large Instance.
 	ComputerName *string
@@ -205,7 +205,8 @@ type OsProfile struct {
 	Version *string
 }
 
-// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
+// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
+// the next set of results.
 type PagedOperation struct {
 	// REQUIRED; The Operation items on this page
 	Value []*Operation
@@ -214,7 +215,7 @@ type PagedOperation struct {
 	NextLink *string
 }
 
-// Describes the properties of an Azure Large Instance.
+// Properties - Describes the properties of an Azure Large Instance.
 type Properties struct {
 	// Specifies the Azure Large Instance unique ID.
 	AzureLargeInstanceID *string
@@ -248,7 +249,7 @@ type Properties struct {
 	StorageProfile *StorageProfile
 }
 
-// Describes the billing related details of the AzureLargeStorageInstance.
+// StorageBillingProperties - Describes the billing related details of the AzureLargeStorageInstance.
 type StorageBillingProperties struct {
 	// the billing mode for the storage instance
 	BillingMode *string
@@ -257,7 +258,7 @@ type StorageBillingProperties struct {
 	SKU *string
 }
 
-// Specifies the storage settings for the Azure Large Instance disks.
+// StorageProfile - Specifies the storage settings for the Azure Large Instance disks.
 type StorageProfile struct {
 	// IP Address to connect to storage.
 	NfsIPAddress *string
@@ -267,7 +268,7 @@ type StorageProfile struct {
 	OSDisks []*Disk
 }
 
-// described the storage properties of the azure large storage instance
+// StorageProperties - described the storage properties of the azure large storage instance
 type StorageProperties struct {
 	// the kind of storage instance
 	Generation *string
@@ -291,7 +292,7 @@ type StorageProperties struct {
 	WorkloadType *string
 }
 
-// Metadata pertaining to creation and last modification of the resource.
+// SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
 	// The type of identity that created the resource.
 	CreatedAt *time.Time
@@ -312,13 +313,13 @@ type SystemData struct {
 	LastModifiedByType *CreatedByType
 }
 
-// The type used for updating tags in AzureLargeInstance resources.
+// TagsUpdate - The type used for updating tags in AzureLargeInstance resources.
 type TagsUpdate struct {
 	// Resource tags.
 	Tags map[string]*string
 }
 
-// The resource model definition for an Azure Resource Manager tracked top level resource
+// TrackedResourceBase - The resource model definition for an Azure Resource Manager tracked top level resource
 type TrackedResourceBase struct {
 	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string

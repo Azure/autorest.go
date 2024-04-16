@@ -4,19 +4,19 @@
 
 package coreusagegroup
 
-// Usage override to roundtrip.
+// InputModel - Usage override to roundtrip.
 type InputModel struct {
 	// REQUIRED
 	Name *string
 }
 
-// Not used anywhere, but access is override to public so still need to be generated and exported with serialization.
+// OrphanModel - Not used anywhere, but access is override to public so still need to be generated and exported with serialization.
 type OrphanModel struct {
 	// REQUIRED
 	Name *string
 }
 
-// Usage override to roundtrip.
+// OutputModel - Usage override to roundtrip.
 type OutputModel struct {
 	// REQUIRED
 	Name *string
