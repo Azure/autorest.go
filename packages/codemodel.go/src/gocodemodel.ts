@@ -837,6 +837,8 @@ export interface TimeType extends QualifiedType {
   packageName: 'time';
 
   dateTimeFormat: DateTimeFormat;
+
+  utc: boolean;
 }
 
 export type MapValueType = PossibleType;
@@ -1339,8 +1341,9 @@ export class SliceType implements SliceType {
 }
 
 export class TimeType implements TimeType {
-  constructor(format: DateTimeFormat) {
+  constructor(format: DateTimeFormat, utc: boolean) {
     this.dateTimeFormat = format;
+    this.utc = utc;
   }
 }
 

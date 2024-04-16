@@ -46,7 +46,7 @@ export class typeAdapter {
       if (this.isFoundationsError(modelType)) {
         // don't create a model as we use azcore.ResponseError instead
         continue;
-      } else if (modelType.name.match(/OperationStatus/)) {
+      } else if (modelType.name.match(/^(?:Arm)?OperationStatus/)) {
         // don't create a model for the LRO polling status as they aren't used
         continue;
       }
@@ -158,15 +158,6 @@ export class typeAdapter {
         this.types.set(keyName, arrayType);
         return arrayType;
       }
-      /*case m4.SchemaType.Binary: {
-        let binaryType = types.get(m4.SchemaType.Binary);
-        if (binaryType) {
-          return binaryType;
-        }
-        binaryType = new go.StandardType('io.ReadSeekCloser', 'io');
-        types.set(m4.SchemaType.Binary, binaryType);
-        return binaryType;
-      }*/
       case 'endpoint': {
         const stringKey = 'string';
         let stringType = this.types.get(stringKey);
@@ -182,38 +173,10 @@ export class typeAdapter {
       case 'constant':
       case 'enumvalue':
         return this.getLiteralValue(type);
-      /*case m4.SchemaType.Credential: {
-        let credType = types.get(m4.SchemaType.Credential);
-        if (credType) {
-          return credType;
-        }
-        credType = new go.PrimitiveType('string');
-        types.set(m4.SchemaType.Credential, credType);
-        return credType;
-      }*/
-      case 'utcDateTime': {
-        const encoding = getDateTimeEncoding(type.encode);
-        let datetime = this.types.get(encoding);
-        if (datetime) {
-          return datetime;
-        }
-        datetime = new go.TimeType(encoding);
-        this.types.set(encoding, datetime);
-        switch (encoding) {
-          case 'dateTimeRFC1123':
-            this.codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
-            break;
-          case 'dateTimeRFC3339':
-            this.codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
-            break;
-          case 'timeUnix':
-            this.codeModel.marshallingRequirements.generateUnixTimeHelper = true;
-            break;
-          default:
-            throw new Error(`unhandled datetime encoding ${encoding}`);
-        }
-        return datetime;
-      }
+      case 'offsetDateTime':
+        return this.getTimeType(type.encode, false);
+      case 'utcDateTime':
+        return this.getTimeType(type.encode, true);
       case 'dict': {
         const valueTypeByValue = isTypePassedByValue(type.valueType);
         const keyName = recursiveKeyName(`dict-${valueTypeByValue}`, type.valueType, substituteDiscriminator);
@@ -254,6 +217,30 @@ export class typeAdapter {
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
+  }
+
+  private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.TimeType {
+    const encoding = getDateTimeEncoding(encode);
+    let datetime = this.types.get(encoding);
+    if (datetime) {
+      return <go.TimeType>datetime;
+    }
+    datetime = new go.TimeType(encoding, utc);
+    this.types.set(encoding, datetime);
+    switch (encoding) {
+      case 'dateTimeRFC1123':
+        this.codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
+        break;
+      case 'dateTimeRFC3339':
+        this.codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
+        break;
+      case 'timeUnix':
+        this.codeModel.marshallingRequirements.generateUnixTimeHelper = true;
+        break;
+      default:
+        throw new Error(`unhandled datetime encoding ${encoding}`);
+    }
+    return <go.TimeType>datetime;
   }
 
   // returns the Go code model type for an io.ReadSeekCloser
@@ -334,7 +321,7 @@ export class typeAdapter {
         if (date) {
           return date;
         }
-        date = new go.TimeType('dateType');
+        date = new go.TimeType('dateType', false);
         this.types.set(dateKey, date);
         this.codeModel.marshallingRequirements.generateDateHelper = true;
         return date;
@@ -423,7 +410,7 @@ export class typeAdapter {
         if (time) {
           return time;
         }
-        time = new go.TimeType(encoding);
+        time = new go.TimeType(encoding, false);
         this.types.set(encoding, time);
         this.codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
         return time;
