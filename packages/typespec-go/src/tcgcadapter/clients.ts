@@ -399,6 +399,12 @@ export class clientAdapter {
 
     let sdkResponseType = sdkMethod.response.type;
 
+    // since HEAD requests don't return a type, we must check this before checking sdkResponseType
+    if (method.httpMethod === 'head' && this.opts['head-as-boolean'] === true) {
+      respEnv.result = new go.HeadAsBooleanResult('Success');
+      respEnv.result.description = 'Success indicates if the operation succeeded or failed.';
+    }
+
     if (!sdkResponseType) {
       // method doesn't return a type, so we're done
       return respEnv;

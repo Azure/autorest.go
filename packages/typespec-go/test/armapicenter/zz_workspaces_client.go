@@ -263,7 +263,7 @@ func (client *WorkspacesClient) Head(ctx context.Context, subscriptionID string,
 		err = runtime.NewResponseError(httpResp)
 		return WorkspacesClientHeadResponse{}, err
 	}
-	return WorkspacesClientHeadResponse{}, nil
+	return WorkspacesClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.

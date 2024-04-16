@@ -16,7 +16,7 @@ func TestVersionedClient_WithPathAPIVersion(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.WithPathAPIVersion(context.Background(), nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }
 
 func TestVersionedClient_WithQueryAPIVersion(t *testing.T) {
@@ -24,7 +24,7 @@ func TestVersionedClient_WithQueryAPIVersion(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.WithQueryAPIVersion(context.Background(), nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }
 
 func TestVersionedClient_WithoutAPIVersion(t *testing.T) {
@@ -32,5 +32,5 @@ func TestVersionedClient_WithoutAPIVersion(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.WithoutAPIVersion(context.Background(), nil)
 	require.NoError(t, err)
-	require.Zero(t, resp)
+	require.True(t, resp.Success)
 }

@@ -295,7 +295,7 @@ func (client *ApiVersionsClient) Head(ctx context.Context, subscriptionID string
 		err = runtime.NewResponseError(httpResp)
 		return ApiVersionsClientHeadResponse{}, err
 	}
-	return ApiVersionsClientHeadResponse{}, nil
+	return ApiVersionsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.

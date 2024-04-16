@@ -407,7 +407,7 @@ func (client *ApiDefinitionsClient) Head(ctx context.Context, subscriptionID str
 		err = runtime.NewResponseError(httpResp)
 		return ApiDefinitionsClientHeadResponse{}, err
 	}
-	return ApiDefinitionsClientHeadResponse{}, nil
+	return ApiDefinitionsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.

@@ -6,5 +6,6 @@ package singlegroup
 
 // SingleClientMyOpResponse contains the response from method SingleClient.MyOp.
 type SingleClientMyOpResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }

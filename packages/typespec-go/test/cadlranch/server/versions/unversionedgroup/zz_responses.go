@@ -6,15 +6,18 @@ package unversionedgroup
 
 // NotVersionedClientWithPathAPIVersionResponse contains the response from method NotVersionedClient.WithPathAPIVersion.
 type NotVersionedClientWithPathAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // NotVersionedClientWithQueryAPIVersionResponse contains the response from method NotVersionedClient.WithQueryAPIVersion.
 type NotVersionedClientWithQueryAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }
 
 // NotVersionedClientWithoutAPIVersionResponse contains the response from method NotVersionedClient.WithoutAPIVersion.
 type NotVersionedClientWithoutAPIVersionResponse struct {
-	// placeholder for future response values
+	// Success indicates if the operation succeeded or failed.
+	Success bool
 }

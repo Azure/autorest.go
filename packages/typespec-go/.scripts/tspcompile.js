@@ -162,6 +162,7 @@ function generate(moduleName, input, outputDir, additionalArgs) {
       options.push(`--option="@azure-tools/typespec-go.file-prefix=zz_"`);
       options.push(`--option="@azure-tools/typespec-go.generate-fakes=true"`);
       options.push(`--option="@azure-tools/typespec-go.inject-spans=true"`);
+      options.push(`--option="@azure-tools/typespec-go.head-as-boolean=true"`);
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }

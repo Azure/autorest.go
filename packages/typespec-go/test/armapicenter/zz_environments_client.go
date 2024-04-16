@@ -279,7 +279,7 @@ func (client *EnvironmentsClient) Head(ctx context.Context, subscriptionID strin
 		err = runtime.NewResponseError(httpResp)
 		return EnvironmentsClientHeadResponse{}, err
 	}
-	return EnvironmentsClientHeadResponse{}, nil
+	return EnvironmentsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.
