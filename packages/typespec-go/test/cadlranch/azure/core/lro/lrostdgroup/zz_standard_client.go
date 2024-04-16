@@ -24,9 +24,9 @@ type StandardClient struct {
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.
 //   - name - The name of user.
 //   - resource - The resource instance.
-//   - options - StandardClientCreateOrReplaceOptions contains the optional parameters for the StandardClient.CreateOrReplace
+//   - options - StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.CreateOrReplace
 //     method.
-func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name string, resource User, options *StandardClientCreateOrReplaceOptions) (*runtime.Poller[StandardClientCreateOrReplaceResponse], error) {
+func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*runtime.Poller[StandardClientCreateOrReplaceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrReplace(ctx, name, resource, options)
 		if err != nil {
@@ -44,7 +44,7 @@ func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name str
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
-func (client *StandardClient) createOrReplace(ctx context.Context, name string, resource User, options *StandardClientCreateOrReplaceOptions) (*http.Response, error) {
+func (client *StandardClient) createOrReplace(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginCreateOrReplace"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -66,7 +66,7 @@ func (client *StandardClient) createOrReplace(ctx context.Context, name string, 
 }
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
-func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, name string, resource User, options *StandardClientCreateOrReplaceOptions) (*policy.Request, error) {
+func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/standard/users/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -89,8 +89,8 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 
 // BeginDelete - Deletes a user.
 //   - name - The name of user.
-//   - options - StandardClientDeleteOptions contains the optional parameters for the StandardClient.Delete method.
-func (client *StandardClient) BeginDelete(ctx context.Context, name string, options *StandardClientDeleteOptions) (*runtime.Poller[StandardClientDeleteResponse], error) {
+//   - options - StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.Delete method.
+func (client *StandardClient) BeginDelete(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*runtime.Poller[StandardClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, name, options)
 		if err != nil {
@@ -108,7 +108,7 @@ func (client *StandardClient) BeginDelete(ctx context.Context, name string, opti
 }
 
 // Delete - Deletes a user.
-func (client *StandardClient) deleteOperation(ctx context.Context, name string, options *StandardClientDeleteOptions) (*http.Response, error) {
+func (client *StandardClient) deleteOperation(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -130,7 +130,7 @@ func (client *StandardClient) deleteOperation(ctx context.Context, name string, 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *StandardClient) deleteCreateRequest(ctx context.Context, name string, options *StandardClientDeleteOptions) (*policy.Request, error) {
+func (client *StandardClient) deleteCreateRequest(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/standard/users/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -150,8 +150,8 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 // BeginExport - Exports a user.
 //   - name - The name of user.
 //   - formatParam - The format of the data.
-//   - options - StandardClientExportOptions contains the optional parameters for the StandardClient.Export method.
-func (client *StandardClient) BeginExport(ctx context.Context, name string, formatParam string, options *StandardClientExportOptions) (*runtime.Poller[StandardClientExportResponse], error) {
+//   - options - StandardClientBeginExportOptions contains the optional parameters for the StandardClient.Export method.
+func (client *StandardClient) BeginExport(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*runtime.Poller[StandardClientExportResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.export(ctx, name, formatParam, options)
 		if err != nil {
@@ -169,7 +169,7 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 }
 
 // Export - Exports a user.
-func (client *StandardClient) export(ctx context.Context, name string, formatParam string, options *StandardClientExportOptions) (*http.Response, error) {
+func (client *StandardClient) export(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginExport"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -191,7 +191,7 @@ func (client *StandardClient) export(ctx context.Context, name string, formatPar
 }
 
 // exportCreateRequest creates the Export request.
-func (client *StandardClient) exportCreateRequest(ctx context.Context, name string, formatParam string, options *StandardClientExportOptions) (*policy.Request, error) {
+func (client *StandardClient) exportCreateRequest(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/standard/users/{name}:export"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")

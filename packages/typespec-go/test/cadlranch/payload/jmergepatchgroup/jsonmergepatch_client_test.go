@@ -14,7 +14,7 @@ import (
 )
 
 func TestJsonMergePatchClient_CreateResource(t *testing.T) {
-	client, err := jmergepatchgroup.NewJsonMergePatchClient(nil)
+	client, err := jmergepatchgroup.NewJSONMergePatchClient(nil)
 	require.NoError(t, err)
 	resp, err := client.CreateResource(context.Background(), jmergepatchgroup.Resource{
 		Name:        to.Ptr("Madge"),
@@ -74,9 +74,9 @@ func TestJsonMergePatchClient_CreateResource(t *testing.T) {
 }
 
 func TestJsonMergePatchClient_UpdateOptionalResource(t *testing.T) {
-	client, err := jmergepatchgroup.NewJsonMergePatchClient(nil)
+	client, err := jmergepatchgroup.NewJSONMergePatchClient(nil)
 	require.NoError(t, err)
-	resp, err := client.UpdateOptionalResource(context.Background(), &jmergepatchgroup.JsonMergePatchClientUpdateOptionalResourceOptions{
+	resp, err := client.UpdateOptionalResource(context.Background(), &jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions{
 		Body: &jmergepatchgroup.ResourcePatch{
 			Description: azcore.NullValue[*string](),
 			Map: map[string]*jmergepatchgroup.InnerModel{
@@ -104,7 +104,7 @@ func TestJsonMergePatchClient_UpdateOptionalResource(t *testing.T) {
 }
 
 func TestJsonMergePatchClient_UpdateResource(t *testing.T) {
-	client, err := jmergepatchgroup.NewJsonMergePatchClient(nil)
+	client, err := jmergepatchgroup.NewJSONMergePatchClient(nil)
 	require.NoError(t, err)
 	resp, err := client.UpdateResource(context.Background(), jmergepatchgroup.ResourcePatch{
 		Description: azcore.NullValue[*string](),

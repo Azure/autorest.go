@@ -21,7 +21,7 @@ import (
 type LegacyCreateResourcePollViaOperationLocationServer struct {
 	// BeginCreateJob is the fake for method LegacyCreateResourcePollViaOperationLocationClient.BeginCreateJob
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginCreateJob func(ctx context.Context, jobData lrolegacygroup.JobData, options *lrolegacygroup.LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions) (resp azfake.PollerResponder[lrolegacygroup.LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse], errResp azfake.ErrorResponder)
+	BeginCreateJob func(ctx context.Context, jobData lrolegacygroup.JobData, options *lrolegacygroup.LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions) (resp azfake.PollerResponder[lrolegacygroup.LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse], errResp azfake.ErrorResponder)
 
 	// GetJob is the fake for method LegacyCreateResourcePollViaOperationLocationClient.GetJob
 	// HTTP status codes to indicate success: http.StatusOK

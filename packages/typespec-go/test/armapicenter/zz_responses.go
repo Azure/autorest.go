@@ -4,8 +4,8 @@
 
 package armapicenter
 
-// ApiDefinitionsClientCreateOrUpdateResponse contains the response from method ApiDefinitionsClient.CreateOrUpdate.
-type ApiDefinitionsClientCreateOrUpdateResponse struct {
+// APIDefinitionsClientCreateOrUpdateResponse contains the response from method APIDefinitionsClient.CreateOrUpdate.
+type APIDefinitionsClientCreateOrUpdateResponse struct {
 	// API definition entity.
 	APIDefinition
 
@@ -13,19 +13,19 @@ type ApiDefinitionsClientCreateOrUpdateResponse struct {
 	ETag *string
 }
 
-// ApiDefinitionsClientDeleteResponse contains the response from method ApiDefinitionsClient.Delete.
-type ApiDefinitionsClientDeleteResponse struct {
+// APIDefinitionsClientDeleteResponse contains the response from method APIDefinitionsClient.Delete.
+type APIDefinitionsClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
-// ApiDefinitionsClientExportSpecificationResponse contains the response from method ApiDefinitionsClient.ExportSpecification.
-type ApiDefinitionsClientExportSpecificationResponse struct {
+// APIDefinitionsClientExportSpecificationResponse contains the response from method APIDefinitionsClient.ExportSpecification.
+type APIDefinitionsClientExportSpecificationResponse struct {
 	// The API specification export result.
 	APISpecExportResult
 }
 
-// ApiDefinitionsClientGetResponse contains the response from method ApiDefinitionsClient.Get.
-type ApiDefinitionsClientGetResponse struct {
+// APIDefinitionsClientGetResponse contains the response from method APIDefinitionsClient.Get.
+type APIDefinitionsClientGetResponse struct {
 	// API definition entity.
 	APIDefinition
 
@@ -33,26 +33,26 @@ type ApiDefinitionsClientGetResponse struct {
 	ETag *string
 }
 
-// ApiDefinitionsClientHeadResponse contains the response from method ApiDefinitionsClient.Head.
-type ApiDefinitionsClientHeadResponse struct {
+// APIDefinitionsClientHeadResponse contains the response from method APIDefinitionsClient.Head.
+type APIDefinitionsClientHeadResponse struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
-// ApiDefinitionsClientImportSpecificationResponse contains the response from method ApiDefinitionsClient.ImportSpecification.
-type ApiDefinitionsClientImportSpecificationResponse struct {
+// APIDefinitionsClientImportSpecificationResponse contains the response from method APIDefinitionsClient.ImportSpecification.
+type APIDefinitionsClientImportSpecificationResponse struct {
 	// The API specification was successfully imported.
 	APIImportSuccess
 }
 
-// ApiDefinitionsClientListResponse contains the response from method ApiDefinitionsClient.NewListPager.
-type ApiDefinitionsClientListResponse struct {
+// APIDefinitionsClientListResponse contains the response from method APIDefinitionsClient.NewListPager.
+type APIDefinitionsClientListResponse struct {
 	// The response of a ApiDefinition list operation.
 	APIDefinitionListResult
 }
 
-// ApiVersionsClientCreateOrUpdateResponse contains the response from method ApiVersionsClient.CreateOrUpdate.
-type ApiVersionsClientCreateOrUpdateResponse struct {
+// APIVersionsClientCreateOrUpdateResponse contains the response from method APIVersionsClient.CreateOrUpdate.
+type APIVersionsClientCreateOrUpdateResponse struct {
 	// API version entity.
 	APIVersion
 
@@ -60,13 +60,13 @@ type ApiVersionsClientCreateOrUpdateResponse struct {
 	ETag *string
 }
 
-// ApiVersionsClientDeleteResponse contains the response from method ApiVersionsClient.Delete.
-type ApiVersionsClientDeleteResponse struct {
+// APIVersionsClientDeleteResponse contains the response from method APIVersionsClient.Delete.
+type APIVersionsClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
-// ApiVersionsClientGetResponse contains the response from method ApiVersionsClient.Get.
-type ApiVersionsClientGetResponse struct {
+// APIVersionsClientGetResponse contains the response from method APIVersionsClient.Get.
+type APIVersionsClientGetResponse struct {
 	// API version entity.
 	APIVersion
 
@@ -74,14 +74,14 @@ type ApiVersionsClientGetResponse struct {
 	ETag *string
 }
 
-// ApiVersionsClientHeadResponse contains the response from method ApiVersionsClient.Head.
-type ApiVersionsClientHeadResponse struct {
+// APIVersionsClientHeadResponse contains the response from method APIVersionsClient.Head.
+type APIVersionsClientHeadResponse struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
-// ApiVersionsClientListResponse contains the response from method ApiVersionsClient.NewListPager.
-type ApiVersionsClientListResponse struct {
+// APIVersionsClientListResponse contains the response from method APIVersionsClient.NewListPager.
+type APIVersionsClientListResponse struct {
 	// The response of a ApiVersion list operation.
 	APIVersionListResult
 }

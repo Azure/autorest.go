@@ -16,21 +16,21 @@ import (
 	"strings"
 )
 
-// ApiDefinitionsClient contains the methods for the Microsoft.ApiCenter namespace.
-// Don't use this type directly, use NewApiDefinitionsClient() instead.
-type ApiDefinitionsClient struct {
+// APIDefinitionsClient contains the methods for the Microsoft.ApiCenter namespace.
+// Don't use this type directly, use NewAPIDefinitionsClient() instead.
+type APIDefinitionsClient struct {
 	internal *arm.Client
 }
 
-// NewApiDefinitionsClient creates a new instance of ApiDefinitionsClient with the specified values.
+// NewAPIDefinitionsClient creates a new instance of APIDefinitionsClient with the specified values.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewApiDefinitionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ApiDefinitionsClient, error) {
+func NewAPIDefinitionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*APIDefinitionsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &ApiDefinitionsClient{
+	client := &APIDefinitionsClient{
 		internal: cl,
 	}
 	return client, nil
@@ -45,32 +45,32 @@ func NewApiDefinitionsClient(credential azcore.TokenCredential, options *arm.Cli
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
 //   - payload - Resource create parameters.
-//   - options - ApiDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the ApiDefinitionsClient.CreateOrUpdate
+//   - options - APIDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the APIDefinitionsClient.CreateOrUpdate
 //     method.
-func (client *ApiDefinitionsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APIDefinition, options *ApiDefinitionsClientCreateOrUpdateOptions) (ApiDefinitionsClientCreateOrUpdateResponse, error) {
+func (client *APIDefinitionsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APIDefinition, options *APIDefinitionsClientCreateOrUpdateOptions) (APIDefinitionsClientCreateOrUpdateResponse, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.CreateOrUpdate"
+	const operationName = "APIDefinitionsClient.CreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 	if err != nil {
-		return ApiDefinitionsClientCreateOrUpdateResponse{}, err
+		return APIDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiDefinitionsClientCreateOrUpdateResponse{}, err
+		return APIDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiDefinitionsClientCreateOrUpdateResponse{}, err
+		return APIDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.createOrUpdateHandleResponse(httpResp)
 	return resp, err
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ApiDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APIDefinition, options *ApiDefinitionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APIDefinition, options *APIDefinitionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -116,13 +116,13 @@ func (client *ApiDefinitionsClient) createOrUpdateCreateRequest(ctx context.Cont
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ApiDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (ApiDefinitionsClientCreateOrUpdateResponse, error) {
-	result := ApiDefinitionsClientCreateOrUpdateResponse{}
+func (client *APIDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (APIDefinitionsClientCreateOrUpdateResponse, error) {
+	result := APIDefinitionsClientCreateOrUpdateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIDefinition); err != nil {
-		return ApiDefinitionsClientCreateOrUpdateResponse{}, err
+		return APIDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -135,30 +135,30 @@ func (client *ApiDefinitionsClient) createOrUpdateHandleResponse(resp *http.Resp
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
-//   - options - ApiDefinitionsClientDeleteOptions contains the optional parameters for the ApiDefinitionsClient.Delete method.
-func (client *ApiDefinitionsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientDeleteOptions) (ApiDefinitionsClientDeleteResponse, error) {
+//   - options - APIDefinitionsClientDeleteOptions contains the optional parameters for the APIDefinitionsClient.Delete method.
+func (client *APIDefinitionsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientDeleteOptions) (APIDefinitionsClientDeleteResponse, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.Delete"
+	const operationName = "APIDefinitionsClient.Delete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
-		return ApiDefinitionsClientDeleteResponse{}, err
+		return APIDefinitionsClientDeleteResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiDefinitionsClientDeleteResponse{}, err
+		return APIDefinitionsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiDefinitionsClientDeleteResponse{}, err
+		return APIDefinitionsClientDeleteResponse{}, err
 	}
-	return ApiDefinitionsClientDeleteResponse{}, nil
+	return APIDefinitionsClientDeleteResponse{}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ApiDefinitionsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientDeleteOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -208,29 +208,29 @@ func (client *ApiDefinitionsClient) deleteCreateRequest(ctx context.Context, sub
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
 //   - payload - The content of the action request
-//   - options - ApiDefinitionsClientExportSpecificationOptions contains the optional parameters for the ApiDefinitionsClient.ExportSpecification
+//   - options - APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ExportSpecification
 //     method.
-func (client *ApiDefinitionsClient) BeginExportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *ApiDefinitionsClientExportSpecificationOptions) (*runtime.Poller[ApiDefinitionsClientExportSpecificationResponse], error) {
+func (client *APIDefinitionsClient) BeginExportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientExportSpecificationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.exportSpecification(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApiDefinitionsClientExportSpecificationResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[APIDefinitionsClientExportSpecificationResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApiDefinitionsClientExportSpecificationResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[APIDefinitionsClientExportSpecificationResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // ExportSpecification - Exports the API specification.
-func (client *ApiDefinitionsClient) exportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *ApiDefinitionsClientExportSpecificationOptions) (*http.Response, error) {
+func (client *APIDefinitionsClient) exportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*http.Response, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.BeginExportSpecification"
+	const operationName = "APIDefinitionsClient.BeginExportSpecification"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -250,7 +250,7 @@ func (client *ApiDefinitionsClient) exportSpecification(ctx context.Context, sub
 }
 
 // exportSpecificationCreateRequest creates the ExportSpecification request.
-func (client *ApiDefinitionsClient) exportSpecificationCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *ApiDefinitionsClientExportSpecificationOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) exportSpecificationCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}/exportSpecification"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -303,31 +303,31 @@ func (client *ApiDefinitionsClient) exportSpecificationCreateRequest(ctx context
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
-//   - options - ApiDefinitionsClientGetOptions contains the optional parameters for the ApiDefinitionsClient.Get method.
-func (client *ApiDefinitionsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientGetOptions) (ApiDefinitionsClientGetResponse, error) {
+//   - options - APIDefinitionsClientGetOptions contains the optional parameters for the APIDefinitionsClient.Get method.
+func (client *APIDefinitionsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientGetOptions) (APIDefinitionsClientGetResponse, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.Get"
+	const operationName = "APIDefinitionsClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
-		return ApiDefinitionsClientGetResponse{}, err
+		return APIDefinitionsClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiDefinitionsClientGetResponse{}, err
+		return APIDefinitionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiDefinitionsClientGetResponse{}, err
+		return APIDefinitionsClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *ApiDefinitionsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientGetOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -369,13 +369,13 @@ func (client *ApiDefinitionsClient) getCreateRequest(ctx context.Context, subscr
 }
 
 // getHandleResponse handles the Get response.
-func (client *ApiDefinitionsClient) getHandleResponse(resp *http.Response) (ApiDefinitionsClientGetResponse, error) {
-	result := ApiDefinitionsClientGetResponse{}
+func (client *APIDefinitionsClient) getHandleResponse(resp *http.Response) (APIDefinitionsClientGetResponse, error) {
+	result := APIDefinitionsClientGetResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIDefinition); err != nil {
-		return ApiDefinitionsClientGetResponse{}, err
+		return APIDefinitionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -388,30 +388,30 @@ func (client *ApiDefinitionsClient) getHandleResponse(resp *http.Response) (ApiD
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
-//   - options - ApiDefinitionsClientHeadOptions contains the optional parameters for the ApiDefinitionsClient.Head method.
-func (client *ApiDefinitionsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientHeadOptions) (ApiDefinitionsClientHeadResponse, error) {
+//   - options - APIDefinitionsClientHeadOptions contains the optional parameters for the APIDefinitionsClient.Head method.
+func (client *APIDefinitionsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientHeadOptions) (APIDefinitionsClientHeadResponse, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.Head"
+	const operationName = "APIDefinitionsClient.Head"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
-		return ApiDefinitionsClientHeadResponse{}, err
+		return APIDefinitionsClientHeadResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiDefinitionsClientHeadResponse{}, err
+		return APIDefinitionsClientHeadResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiDefinitionsClientHeadResponse{}, err
+		return APIDefinitionsClientHeadResponse{}, err
 	}
-	return ApiDefinitionsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
+	return APIDefinitionsClientHeadResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
 }
 
 // headCreateRequest creates the Head request.
-func (client *ApiDefinitionsClient) headCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *ApiDefinitionsClientHeadOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) headCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -461,29 +461,29 @@ func (client *ApiDefinitionsClient) headCreateRequest(ctx context.Context, subsc
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
 //   - payload - The content of the action request
-//   - options - ApiDefinitionsClientImportSpecificationOptions contains the optional parameters for the ApiDefinitionsClient.ImportSpecification
+//   - options - APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ImportSpecification
 //     method.
-func (client *ApiDefinitionsClient) BeginImportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *ApiDefinitionsClientImportSpecificationOptions) (*runtime.Poller[ApiDefinitionsClientImportSpecificationResponse], error) {
+func (client *APIDefinitionsClient) BeginImportSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *APIDefinitionsClientBeginImportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientImportSpecificationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.importSpecification(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[ApiDefinitionsClientImportSpecificationResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[APIDefinitionsClientImportSpecificationResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[ApiDefinitionsClientImportSpecificationResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[APIDefinitionsClientImportSpecificationResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // ImportSpecification - Imports the API specification.
-func (client *ApiDefinitionsClient) importSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *ApiDefinitionsClientImportSpecificationOptions) (*http.Response, error) {
+func (client *APIDefinitionsClient) importSpecification(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *APIDefinitionsClientBeginImportSpecificationOptions) (*http.Response, error) {
 	var err error
-	const operationName = "ApiDefinitionsClient.BeginImportSpecification"
+	const operationName = "APIDefinitionsClient.BeginImportSpecification"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -503,7 +503,7 @@ func (client *ApiDefinitionsClient) importSpecification(ctx context.Context, sub
 }
 
 // importSpecificationCreateRequest creates the ImportSpecification request.
-func (client *ApiDefinitionsClient) importSpecificationCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *ApiDefinitionsClientImportSpecificationOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) importSpecificationCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *APIDefinitionsClientBeginImportSpecificationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}/importSpecification"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -555,14 +555,14 @@ func (client *ApiDefinitionsClient) importSpecificationCreateRequest(ctx context
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
-//   - options - ApiDefinitionsClientListOptions contains the optional parameters for the ApiDefinitionsClient.NewListPager method.
-func (client *ApiDefinitionsClient) NewListPager(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *ApiDefinitionsClientListOptions) *runtime.Pager[ApiDefinitionsClientListResponse] {
-	return runtime.NewPager(runtime.PagingHandler[ApiDefinitionsClientListResponse]{
-		More: func(page ApiDefinitionsClientListResponse) bool {
+//   - options - APIDefinitionsClientListOptions contains the optional parameters for the APIDefinitionsClient.NewListPager method.
+func (client *APIDefinitionsClient) NewListPager(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIDefinitionsClientListOptions) *runtime.Pager[APIDefinitionsClientListResponse] {
+	return runtime.NewPager(runtime.PagingHandler[APIDefinitionsClientListResponse]{
+		More: func(page APIDefinitionsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *ApiDefinitionsClientListResponse) (ApiDefinitionsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "ApiDefinitionsClient.NewListPager")
+		Fetcher: func(ctx context.Context, page *APIDefinitionsClientListResponse) (APIDefinitionsClientListResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "APIDefinitionsClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -571,7 +571,7 @@ func (client *ApiDefinitionsClient) NewListPager(subscriptionID string, resource
 				return client.listCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 			}, nil)
 			if err != nil {
-				return ApiDefinitionsClientListResponse{}, err
+				return APIDefinitionsClientListResponse{}, err
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -580,7 +580,7 @@ func (client *ApiDefinitionsClient) NewListPager(subscriptionID string, resource
 }
 
 // listCreateRequest creates the List request.
-func (client *ApiDefinitionsClient) listCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *ApiDefinitionsClientListOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) listCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIDefinitionsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -621,10 +621,10 @@ func (client *ApiDefinitionsClient) listCreateRequest(ctx context.Context, subsc
 }
 
 // listHandleResponse handles the List response.
-func (client *ApiDefinitionsClient) listHandleResponse(resp *http.Response) (ApiDefinitionsClientListResponse, error) {
-	result := ApiDefinitionsClientListResponse{}
+func (client *APIDefinitionsClient) listHandleResponse(resp *http.Response) (APIDefinitionsClientListResponse, error) {
+	result := APIDefinitionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.APIDefinitionListResult); err != nil {
-		return ApiDefinitionsClientListResponse{}, err
+		return APIDefinitionsClientListResponse{}, err
 	}
 	return result, nil
 }

@@ -218,9 +218,9 @@ func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart
+//   - options - AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart
 //     method.
-func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientRestartOptions) (*runtime.Poller[AzureLargeInstancesClientRestartResponse], error) {
+func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*runtime.Poller[AzureLargeInstancesClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.restart(ctx, subscriptionID, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
@@ -238,7 +238,7 @@ func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, subsc
 }
 
 // Restart - The operation to restart an Azure Large Instance (only for compute instances)
-func (client *AzureLargeInstancesClient) restart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientRestartOptions) (*http.Response, error) {
+func (client *AzureLargeInstancesClient) restart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginRestart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -260,7 +260,7 @@ func (client *AzureLargeInstancesClient) restart(ctx context.Context, subscripti
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientRestartOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -296,9 +296,9 @@ func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Contex
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown
+//   - options - AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown
 //     method.
-func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientShutdownOptions) (*runtime.Poller[AzureLargeInstancesClientShutdownResponse], error) {
+func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*runtime.Poller[AzureLargeInstancesClientShutdownResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.shutdown(ctx, subscriptionID, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
@@ -316,7 +316,7 @@ func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, subs
 }
 
 // Shutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
-func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientShutdownOptions) (*http.Response, error) {
+func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginShutdown"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -338,7 +338,7 @@ func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, subscript
 }
 
 // shutdownCreateRequest creates the Shutdown request.
-func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientShutdownOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -367,9 +367,9 @@ func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Conte
 //   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start
+//   - options - AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start
 //     method.
-func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientStartOptions) (*runtime.Poller[AzureLargeInstancesClientStartResponse], error) {
+func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*runtime.Poller[AzureLargeInstancesClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.start(ctx, subscriptionID, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
@@ -387,7 +387,7 @@ func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, subscri
 }
 
 // Start - The operation to start an Azure Large Instance (only for compute instances)
-func (client *AzureLargeInstancesClient) start(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientStartOptions) (*http.Response, error) {
+func (client *AzureLargeInstancesClient) start(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginStart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -409,7 +409,7 @@ func (client *AzureLargeInstancesClient) start(ctx context.Context, subscription
 }
 
 // startCreateRequest creates the Start request.
-func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientStartOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

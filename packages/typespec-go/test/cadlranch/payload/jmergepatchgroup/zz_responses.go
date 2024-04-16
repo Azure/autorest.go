@@ -4,20 +4,20 @@
 
 package jmergepatchgroup
 
-// JsonMergePatchClientCreateResourceResponse contains the response from method JsonMergePatchClient.CreateResource.
-type JsonMergePatchClientCreateResourceResponse struct {
+// JSONMergePatchClientCreateResourceResponse contains the response from method JSONMergePatchClient.CreateResource.
+type JSONMergePatchClientCreateResourceResponse struct {
 	// Details about a resource.
 	Resource
 }
 
-// JsonMergePatchClientUpdateOptionalResourceResponse contains the response from method JsonMergePatchClient.UpdateOptionalResource.
-type JsonMergePatchClientUpdateOptionalResourceResponse struct {
+// JSONMergePatchClientUpdateOptionalResourceResponse contains the response from method JSONMergePatchClient.UpdateOptionalResource.
+type JSONMergePatchClientUpdateOptionalResourceResponse struct {
 	// Details about a resource.
 	Resource
 }
 
-// JsonMergePatchClientUpdateResourceResponse contains the response from method JsonMergePatchClient.UpdateResource.
-type JsonMergePatchClientUpdateResourceResponse struct {
+// JSONMergePatchClientUpdateResourceResponse contains the response from method JSONMergePatchClient.UpdateResource.
+type JSONMergePatchClientUpdateResourceResponse struct {
 	// Details about a resource.
 	Resource
 }

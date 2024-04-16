@@ -12,37 +12,37 @@ import (
 	"net/http"
 )
 
-// ApiKeyClient - Illustrates clients generated with ApiKey authentication.
+// APIKeyClient - Illustrates clients generated with ApiKey authentication.
 // Don't use this type directly, use a constructor function instead.
-type ApiKeyClient struct {
+type APIKeyClient struct {
 	internal *azcore.Client
 }
 
 // Invalid - Check whether client is authenticated.
-//   - options - ApiKeyClientInvalidOptions contains the optional parameters for the ApiKeyClient.Invalid method.
-func (client *ApiKeyClient) Invalid(ctx context.Context, options *ApiKeyClientInvalidOptions) (ApiKeyClientInvalidResponse, error) {
+//   - options - APIKeyClientInvalidOptions contains the optional parameters for the APIKeyClient.Invalid method.
+func (client *APIKeyClient) Invalid(ctx context.Context, options *APIKeyClientInvalidOptions) (APIKeyClientInvalidResponse, error) {
 	var err error
-	const operationName = "ApiKeyClient.Invalid"
+	const operationName = "APIKeyClient.Invalid"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.invalidCreateRequest(ctx, options)
 	if err != nil {
-		return ApiKeyClientInvalidResponse{}, err
+		return APIKeyClientInvalidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiKeyClientInvalidResponse{}, err
+		return APIKeyClientInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiKeyClientInvalidResponse{}, err
+		return APIKeyClientInvalidResponse{}, err
 	}
-	return ApiKeyClientInvalidResponse{}, nil
+	return APIKeyClientInvalidResponse{}, nil
 }
 
 // invalidCreateRequest creates the Invalid request.
-func (client *ApiKeyClient) invalidCreateRequest(ctx context.Context, options *ApiKeyClientInvalidOptions) (*policy.Request, error) {
+func (client *APIKeyClient) invalidCreateRequest(ctx context.Context, options *APIKeyClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/api-key/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -53,30 +53,30 @@ func (client *ApiKeyClient) invalidCreateRequest(ctx context.Context, options *A
 }
 
 // Valid - Check whether client is authenticated
-//   - options - ApiKeyClientValidOptions contains the optional parameters for the ApiKeyClient.Valid method.
-func (client *ApiKeyClient) Valid(ctx context.Context, options *ApiKeyClientValidOptions) (ApiKeyClientValidResponse, error) {
+//   - options - APIKeyClientValidOptions contains the optional parameters for the APIKeyClient.Valid method.
+func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientValidOptions) (APIKeyClientValidResponse, error) {
 	var err error
-	const operationName = "ApiKeyClient.Valid"
+	const operationName = "APIKeyClient.Valid"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.validCreateRequest(ctx, options)
 	if err != nil {
-		return ApiKeyClientValidResponse{}, err
+		return APIKeyClientValidResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ApiKeyClientValidResponse{}, err
+		return APIKeyClientValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return ApiKeyClientValidResponse{}, err
+		return APIKeyClientValidResponse{}, err
 	}
-	return ApiKeyClientValidResponse{}, nil
+	return APIKeyClientValidResponse{}, nil
 }
 
 // validCreateRequest creates the Valid request.
-func (client *ApiKeyClient) validCreateRequest(ctx context.Context, options *ApiKeyClientValidOptions) (*policy.Request, error) {
+func (client *APIKeyClient) validCreateRequest(ctx context.Context, options *APIKeyClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/api-key/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

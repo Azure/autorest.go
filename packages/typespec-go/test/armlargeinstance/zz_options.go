@@ -4,6 +4,27 @@
 
 package armlargeinstance
 
+// AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart
+// method.
+type AzureLargeInstancesClientBeginRestartOptions struct {
+	ResumeToken string
+
+	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
+	// processes that may be running on the server
+	ForceParameter *ForceState
+}
+
+// AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown
+// method.
+type AzureLargeInstancesClientBeginShutdownOptions struct {
+	ResumeToken string
+}
+
+// AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start method.
+type AzureLargeInstancesClientBeginStartOptions struct {
+	ResumeToken string
+}
+
 // AzureLargeInstancesClientGetOptions contains the optional parameters for the AzureLargeInstancesClient.Get method.
 type AzureLargeInstancesClientGetOptions struct {
 	// placeholder for future optional parameters
@@ -19,25 +40,6 @@ type AzureLargeInstancesClientListByResourceGroupOptions struct {
 // method.
 type AzureLargeInstancesClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
-}
-
-// AzureLargeInstancesClientRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart method.
-type AzureLargeInstancesClientRestartOptions struct {
-	ResumeToken string
-
-	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
-	// processes that may be running on the server
-	ForceParameter *ForceState
-}
-
-// AzureLargeInstancesClientShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown method.
-type AzureLargeInstancesClientShutdownOptions struct {
-	ResumeToken string
-}
-
-// AzureLargeInstancesClientStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start method.
-type AzureLargeInstancesClientStartOptions struct {
-	ResumeToken string
 }
 
 // AzureLargeInstancesClientUpdateOptions contains the optional parameters for the AzureLargeInstancesClient.Update method.

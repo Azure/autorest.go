@@ -12,37 +12,37 @@ import (
 	"net/http"
 )
 
-// ClientRequestIdClient - Azure client request id header configurations.
+// ClientRequestIDClient - Azure client request id header configurations.
 // Don't use this type directly, use a constructor function instead.
-type ClientRequestIdClient struct {
+type ClientRequestIDClient struct {
 	internal *azcore.Client
 }
 
 // Get - Get operation with azure client request id header.
-//   - options - ClientRequestIdClientGetOptions contains the optional parameters for the ClientRequestIdClient.Get method.
-func (client *ClientRequestIdClient) Get(ctx context.Context, options *ClientRequestIdClientGetOptions) (ClientRequestIdClientGetResponse, error) {
+//   - options - ClientRequestIDClientGetOptions contains the optional parameters for the ClientRequestIDClient.Get method.
+func (client *ClientRequestIDClient) Get(ctx context.Context, options *ClientRequestIDClientGetOptions) (ClientRequestIDClientGetResponse, error) {
 	var err error
-	const operationName = "ClientRequestIdClient.Get"
+	const operationName = "ClientRequestIDClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return ClientRequestIdClientGetResponse{}, err
+		return ClientRequestIDClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return ClientRequestIdClientGetResponse{}, err
+		return ClientRequestIDClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return ClientRequestIdClientGetResponse{}, err
+		return ClientRequestIDClientGetResponse{}, err
 	}
-	return ClientRequestIdClientGetResponse{}, nil
+	return ClientRequestIDClientGetResponse{}, nil
 }
 
 // getCreateRequest creates the Get request.
-func (client *ClientRequestIdClient) getCreateRequest(ctx context.Context, options *ClientRequestIdClientGetOptions) (*policy.Request, error) {
+func (client *ClientRequestIDClient) getCreateRequest(ctx context.Context, options *ClientRequestIDClientGetOptions) (*policy.Request, error) {
 	urlPath := "/special-headers/client-request-id"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

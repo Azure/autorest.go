@@ -35,15 +35,15 @@ type AzureLargeInstancesServer struct {
 
 	// BeginRestart is the fake for method AzureLargeInstancesClient.BeginRestart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginRestart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse], errResp azfake.ErrorResponder)
+	BeginRestart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginShutdown is the fake for method AzureLargeInstancesClient.BeginShutdown
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginShutdown func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
+	BeginShutdown func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method AzureLargeInstancesClient.BeginStart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginStart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
+	BeginStart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
 
 	// Update is the fake for method AzureLargeInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
@@ -255,9 +255,9 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Requ
 		if err != nil {
 			return nil, err
 		}
-		var options *armlargeinstance.AzureLargeInstancesClientRestartOptions
+		var options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions
 		if !reflect.ValueOf(body).IsZero() {
-			options = &armlargeinstance.AzureLargeInstancesClientRestartOptions{
+			options = &armlargeinstance.AzureLargeInstancesClientBeginRestartOptions{
 				ForceParameter: &body,
 			}
 		}

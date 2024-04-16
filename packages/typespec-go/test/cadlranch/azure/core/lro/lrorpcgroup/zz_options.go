@@ -4,7 +4,7 @@
 
 package lrorpcgroup
 
-// RpcClientLongRunningRPCOptions contains the optional parameters for the RpcClient.LongRunningRPC method.
-type RpcClientLongRunningRPCOptions struct {
+// RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.LongRunningRPC method.
+type RPCClientBeginLongRunningRPCOptions struct {
 	ResumeToken string
 }

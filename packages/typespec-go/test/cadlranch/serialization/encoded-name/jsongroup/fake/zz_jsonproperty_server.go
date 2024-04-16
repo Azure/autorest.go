@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// JsonPropertyServer is a fake server for instances of the jsongroup.JsonPropertyClient type.
-type JsonPropertyServer struct {
-	// Get is the fake for method JsonPropertyClient.Get
+// JSONPropertyServer is a fake server for instances of the jsongroup.JSONPropertyClient type.
+type JSONPropertyServer struct {
+	// Get is the fake for method JSONPropertyClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, options *jsongroup.JsonPropertyClientGetOptions) (resp azfake.Responder[jsongroup.JsonPropertyClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, options *jsongroup.JSONPropertyClientGetOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientGetResponse], errResp azfake.ErrorResponder)
 
-	// Send is the fake for method JsonPropertyClient.Send
+	// Send is the fake for method JSONPropertyClient.Send
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Send func(ctx context.Context, jsonEncodedNameModel jsongroup.JSONEncodedNameModel, options *jsongroup.JsonPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JsonPropertyClientSendResponse], errResp azfake.ErrorResponder)
+	Send func(ctx context.Context, jsonEncodedNameModel jsongroup.JSONEncodedNameModel, options *jsongroup.JSONPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientSendResponse], errResp azfake.ErrorResponder)
 }
 
-// NewJsonPropertyServerTransport creates a new instance of JsonPropertyServerTransport with the provided implementation.
-// The returned JsonPropertyServerTransport instance is connected to an instance of jsongroup.JsonPropertyClient via the
+// NewJSONPropertyServerTransport creates a new instance of JSONPropertyServerTransport with the provided implementation.
+// The returned JSONPropertyServerTransport instance is connected to an instance of jsongroup.JSONPropertyClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewJsonPropertyServerTransport(srv *JsonPropertyServer) *JsonPropertyServerTransport {
-	return &JsonPropertyServerTransport{srv: srv}
+func NewJSONPropertyServerTransport(srv *JSONPropertyServer) *JSONPropertyServerTransport {
+	return &JSONPropertyServerTransport{srv: srv}
 }
 
-// JsonPropertyServerTransport connects instances of jsongroup.JsonPropertyClient to instances of JsonPropertyServer.
-// Don't use this type directly, use NewJsonPropertyServerTransport instead.
-type JsonPropertyServerTransport struct {
-	srv *JsonPropertyServer
+// JSONPropertyServerTransport connects instances of jsongroup.JSONPropertyClient to instances of JSONPropertyServer.
+// Don't use this type directly, use NewJSONPropertyServerTransport instead.
+type JSONPropertyServerTransport struct {
+	srv *JSONPropertyServer
 }
 
-// Do implements the policy.Transporter interface for JsonPropertyServerTransport.
-func (j *JsonPropertyServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for JSONPropertyServerTransport.
+func (j *JSONPropertyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,14 +50,14 @@ func (j *JsonPropertyServerTransport) Do(req *http.Request) (*http.Response, err
 	return j.dispatchToMethodFake(req, method)
 }
 
-func (j *JsonPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (j *JSONPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "JsonPropertyClient.Get":
+	case "JSONPropertyClient.Get":
 		resp, err = j.dispatchGet(req)
-	case "JsonPropertyClient.Send":
+	case "JSONPropertyClient.Send":
 		resp, err = j.dispatchSend(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -66,7 +66,7 @@ func (j *JsonPropertyServerTransport) dispatchToMethodFake(req *http.Request, me
 	return resp, err
 }
 
-func (j *JsonPropertyServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (j *JSONPropertyServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if j.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
@@ -85,7 +85,7 @@ func (j *JsonPropertyServerTransport) dispatchGet(req *http.Request) (*http.Resp
 	return resp, nil
 }
 
-func (j *JsonPropertyServerTransport) dispatchSend(req *http.Request) (*http.Response, error) {
+func (j *JSONPropertyServerTransport) dispatchSend(req *http.Request) (*http.Response, error) {
 	if j.srv.Send == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Send not implemented")}
 	}
