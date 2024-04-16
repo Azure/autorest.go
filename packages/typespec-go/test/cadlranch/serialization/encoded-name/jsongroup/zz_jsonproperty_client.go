@@ -12,37 +12,37 @@ import (
 	"net/http"
 )
 
-// JsonPropertyClient contains the methods for the Serialization.EncodedName.Json namespace.
-// Don't use this type directly, use [JsonClient.NewJsonPropertyClient] instead.
-type JsonPropertyClient struct {
+// JSONPropertyClient contains the methods for the Serialization.EncodedName.Json namespace.
+// Don't use this type directly, use [JSONClient.NewJSONPropertyClient] instead.
+type JSONPropertyClient struct {
 	internal *azcore.Client
 }
 
-// - options - JsonPropertyClientGetOptions contains the optional parameters for the JsonPropertyClient.Get method.
-func (client *JsonPropertyClient) Get(ctx context.Context, options *JsonPropertyClientGetOptions) (JsonPropertyClientGetResponse, error) {
+// - options - JSONPropertyClientGetOptions contains the optional parameters for the JSONPropertyClient.Get method.
+func (client *JSONPropertyClient) Get(ctx context.Context, options *JSONPropertyClientGetOptions) (JSONPropertyClientGetResponse, error) {
 	var err error
-	const operationName = "JsonPropertyClient.Get"
+	const operationName = "JSONPropertyClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return JsonPropertyClientGetResponse{}, err
+		return JSONPropertyClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return JsonPropertyClientGetResponse{}, err
+		return JSONPropertyClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return JsonPropertyClientGetResponse{}, err
+		return JSONPropertyClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *JsonPropertyClient) getCreateRequest(ctx context.Context, options *JsonPropertyClientGetOptions) (*policy.Request, error) {
+func (client *JSONPropertyClient) getCreateRequest(ctx context.Context, options *JSONPropertyClientGetOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -53,38 +53,38 @@ func (client *JsonPropertyClient) getCreateRequest(ctx context.Context, options 
 }
 
 // getHandleResponse handles the Get response.
-func (client *JsonPropertyClient) getHandleResponse(resp *http.Response) (JsonPropertyClientGetResponse, error) {
-	result := JsonPropertyClientGetResponse{}
+func (client *JSONPropertyClient) getHandleResponse(resp *http.Response) (JSONPropertyClientGetResponse, error) {
+	result := JSONPropertyClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.JSONEncodedNameModel); err != nil {
-		return JsonPropertyClientGetResponse{}, err
+		return JSONPropertyClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// - options - JsonPropertyClientSendOptions contains the optional parameters for the JsonPropertyClient.Send method.
-func (client *JsonPropertyClient) Send(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (JsonPropertyClientSendResponse, error) {
+// - options - JSONPropertyClientSendOptions contains the optional parameters for the JSONPropertyClient.Send method.
+func (client *JSONPropertyClient) Send(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (JSONPropertyClientSendResponse, error) {
 	var err error
-	const operationName = "JsonPropertyClient.Send"
+	const operationName = "JSONPropertyClient.Send"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.sendCreateRequest(ctx, jsonEncodedNameModel, options)
 	if err != nil {
-		return JsonPropertyClientSendResponse{}, err
+		return JSONPropertyClientSendResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return JsonPropertyClientSendResponse{}, err
+		return JSONPropertyClientSendResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return JsonPropertyClientSendResponse{}, err
+		return JSONPropertyClientSendResponse{}, err
 	}
-	return JsonPropertyClientSendResponse{}, nil
+	return JSONPropertyClientSendResponse{}, nil
 }
 
 // sendCreateRequest creates the Send request.
-func (client *JsonPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JsonPropertyClientSendOptions) (*policy.Request, error) {
+func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

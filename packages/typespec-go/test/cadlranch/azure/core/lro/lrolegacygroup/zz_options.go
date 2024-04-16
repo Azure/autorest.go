@@ -4,9 +4,9 @@
 
 package lrolegacygroup
 
-// LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions contains the optional parameters for the LegacyCreateResourcePollViaOperationLocationClient.CreateJob
+// LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions contains the optional parameters for the LegacyCreateResourcePollViaOperationLocationClient.CreateJob
 // method.
-type LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions struct {
+type LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions struct {
 	ResumeToken string
 }
 

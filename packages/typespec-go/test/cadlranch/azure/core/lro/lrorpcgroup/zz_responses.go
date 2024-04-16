@@ -4,8 +4,8 @@
 
 package lrorpcgroup
 
-// RpcClientLongRunningRPCResponse contains the response from method RpcClient.LongRunningRPC.
-type RpcClientLongRunningRPCResponse struct {
+// RPCClientLongRunningRPCResponse contains the response from method RPCClient.LongRunningRPC.
+type RPCClientLongRunningRPCResponse struct {
 	// Result of the generation.
 	GenerationResult
 }

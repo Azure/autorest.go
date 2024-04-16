@@ -18,13 +18,13 @@ import (
 
 func TestClientRequestIdClient_Get(t *testing.T) {
 	// TODO: https://github.com/Azure/typespec-azure/issues/155 causes ClientRequestID optional param
-	_ = clientreqidgroup.ClientRequestIdClientGetOptions{
+	_ = clientreqidgroup.ClientRequestIDClientGetOptions{
 		ClientRequestID: nil, // this should evaporate
 	}
-	client, err := clientreqidgroup.NewClientRequestIdClient(nil)
+	client, err := clientreqidgroup.NewClientRequestIDClient(nil)
 	require.NoError(t, err)
 	var httpResp *http.Response
-	resp, err := client.Get(policy.WithCaptureResponse(context.Background(), &httpResp), &clientreqidgroup.ClientRequestIdClientGetOptions{})
+	resp, err := client.Get(policy.WithCaptureResponse(context.Background(), &httpResp), &clientreqidgroup.ClientRequestIDClientGetOptions{})
 	require.NoError(t, err)
 	require.Zero(t, resp)
 	require.EqualValues(t, httpResp.Header.Get("client-request-id"), "00000000-0000-0000-0000-000000000000")

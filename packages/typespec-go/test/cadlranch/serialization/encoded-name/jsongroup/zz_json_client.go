@@ -6,15 +6,15 @@ package jsongroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// JsonClient - Projection
+// JSONClient - Projection
 // Don't use this type directly, use a constructor function instead.
-type JsonClient struct {
+type JSONClient struct {
 	internal *azcore.Client
 }
 
-// NewJsonPropertyClient creates a new instance of [JsonPropertyClient].
-func (client *JsonClient) NewJsonPropertyClient() *JsonPropertyClient {
-	return &JsonPropertyClient{
+// NewJSONPropertyClient creates a new instance of [JSONPropertyClient].
+func (client *JSONClient) NewJSONPropertyClient() *JSONPropertyClient {
+	return &JSONPropertyClient{
 		internal: client.internal,
 	}
 }

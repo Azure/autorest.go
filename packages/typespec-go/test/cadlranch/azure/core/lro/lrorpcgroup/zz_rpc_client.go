@@ -12,35 +12,35 @@ import (
 	"net/http"
 )
 
-// RpcClient - Illustrates bodies templated with Azure Core with long-running RPC operation
+// RPCClient - Illustrates bodies templated with Azure Core with long-running RPC operation
 // Don't use this type directly, use a constructor function instead.
-type RpcClient struct {
+type RPCClient struct {
 	internal *azcore.Client
 }
 
 // BeginLongRunningRPC - Generate data.
-//   - options - RpcClientLongRunningRPCOptions contains the optional parameters for the RpcClient.LongRunningRPC method.
-func (client *RpcClient) BeginLongRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RpcClientLongRunningRPCOptions) (*runtime.Poller[RpcClientLongRunningRPCResponse], error) {
+//   - options - RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.LongRunningRPC method.
+func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.longRunningRPC(ctx, generationOptions, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RpcClientLongRunningRPCResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[RPCClientLongRunningRPCResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RpcClientLongRunningRPCResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[RPCClientLongRunningRPCResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
 }
 
 // LongRunningRPC - Generate data.
-func (client *RpcClient) longRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RpcClientLongRunningRPCOptions) (*http.Response, error) {
+func (client *RPCClient) longRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*http.Response, error) {
 	var err error
-	const operationName = "RpcClient.BeginLongRunningRPC"
+	const operationName = "RPCClient.BeginLongRunningRPC"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -60,7 +60,7 @@ func (client *RpcClient) longRunningRPC(ctx context.Context, generationOptions G
 }
 
 // longRunningRPCCreateRequest creates the LongRunningRPC request.
-func (client *RpcClient) longRunningRPCCreateRequest(ctx context.Context, generationOptions GenerationOptions, options *RpcClientLongRunningRPCOptions) (*policy.Request, error) {
+func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/rpc/generations:submit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

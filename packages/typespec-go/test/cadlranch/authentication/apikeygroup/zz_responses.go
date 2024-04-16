@@ -4,12 +4,12 @@
 
 package apikeygroup
 
-// ApiKeyClientInvalidResponse contains the response from method ApiKeyClient.Invalid.
-type ApiKeyClientInvalidResponse struct {
+// APIKeyClientInvalidResponse contains the response from method APIKeyClient.Invalid.
+type APIKeyClientInvalidResponse struct {
 	// placeholder for future response values
 }
 
-// ApiKeyClientValidResponse contains the response from method ApiKeyClient.Valid.
-type ApiKeyClientValidResponse struct {
+// APIKeyClientValidResponse contains the response from method APIKeyClient.Valid.
+type APIKeyClientValidResponse struct {
 	// placeholder for future response values
 }

@@ -21,15 +21,15 @@ import (
 type StandardServer struct {
 	// BeginCreateOrReplace is the fake for method StandardClient.BeginCreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreateOrReplace func(ctx context.Context, name string, resource lrostdgroup.User, options *lrostdgroup.StandardClientCreateOrReplaceOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
+	BeginCreateOrReplace func(ctx context.Context, name string, resource lrostdgroup.User, options *lrostdgroup.StandardClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method StandardClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginDelete func(ctx context.Context, name string, options *lrostdgroup.StandardClientDeleteOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, name string, options *lrostdgroup.StandardClientBeginDeleteOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginExport is the fake for method StandardClient.BeginExport
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginExport func(ctx context.Context, name string, formatParam string, options *lrostdgroup.StandardClientExportOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientExportResponse], errResp azfake.ErrorResponder)
+	BeginExport func(ctx context.Context, name string, formatParam string, options *lrostdgroup.StandardClientBeginExportOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientExportResponse], errResp azfake.ErrorResponder)
 }
 
 // NewStandardServerTransport creates a new instance of StandardServerTransport with the provided implementation.

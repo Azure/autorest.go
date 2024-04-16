@@ -8,12 +8,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewJsonClient(options *azcore.ClientOptions) (*JsonClient, error) {
+func NewJSONClient(options *azcore.ClientOptions) (*JSONClient, error) {
 	internal, err := azcore.NewClient("jsongroup", "v0.1.0", runtime.PipelineOptions{}, options)
 	if err != nil {
 		return nil, err
 	}
-	return &JsonClient{
+	return &JSONClient{
 		internal: internal,
 	}, nil
 }

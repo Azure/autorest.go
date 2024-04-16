@@ -13,29 +13,29 @@ import (
 	"sync"
 )
 
-// JsonServer is a fake server for instances of the jsongroup.JsonClient type.
-type JsonServer struct {
-	// JsonPropertyServer contains the fakes for client JsonPropertyClient
-	JsonPropertyServer JsonPropertyServer
+// JSONServer is a fake server for instances of the jsongroup.JSONClient type.
+type JSONServer struct {
+	// JSONPropertyServer contains the fakes for client JSONPropertyClient
+	JSONPropertyServer JSONPropertyServer
 }
 
-// NewJsonServerTransport creates a new instance of JsonServerTransport with the provided implementation.
-// The returned JsonServerTransport instance is connected to an instance of jsongroup.JsonClient via the
+// NewJSONServerTransport creates a new instance of JSONServerTransport with the provided implementation.
+// The returned JSONServerTransport instance is connected to an instance of jsongroup.JSONClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewJsonServerTransport(srv *JsonServer) *JsonServerTransport {
-	return &JsonServerTransport{srv: srv}
+func NewJSONServerTransport(srv *JSONServer) *JSONServerTransport {
+	return &JSONServerTransport{srv: srv}
 }
 
-// JsonServerTransport connects instances of jsongroup.JsonClient to instances of JsonServer.
-// Don't use this type directly, use NewJsonServerTransport instead.
-type JsonServerTransport struct {
-	srv                  *JsonServer
+// JSONServerTransport connects instances of jsongroup.JSONClient to instances of JSONServer.
+// Don't use this type directly, use NewJSONServerTransport instead.
+type JSONServerTransport struct {
+	srv                  *JSONServer
 	trMu                 sync.Mutex
-	trJsonPropertyServer *JsonPropertyServerTransport
+	trJSONPropertyServer *JSONPropertyServerTransport
 }
 
-// Do implements the policy.Transporter interface for JsonServerTransport.
-func (j *JsonServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for JSONServerTransport.
+func (j *JSONServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -45,16 +45,16 @@ func (j *JsonServerTransport) Do(req *http.Request) (*http.Response, error) {
 	return j.dispatchToClientFake(req, method[:strings.Index(method, ".")])
 }
 
-func (j *JsonServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+func (j *JSONServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch client {
-	case "JsonPropertyClient":
-		initServer(&j.trMu, &j.trJsonPropertyServer, func() *JsonPropertyServerTransport {
-			return NewJsonPropertyServerTransport(&j.srv.JsonPropertyServer)
+	case "JSONPropertyClient":
+		initServer(&j.trMu, &j.trJSONPropertyServer, func() *JSONPropertyServerTransport {
+			return NewJSONPropertyServerTransport(&j.srv.JSONPropertyServer)
 		})
-		resp, err = j.trJsonPropertyServer.Do(req)
+		resp, err = j.trJSONPropertyServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

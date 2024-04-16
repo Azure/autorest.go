@@ -14,7 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewClientRequestIdClient(options *azcore.ClientOptions) (*ClientRequestIdClient, error) {
+func NewClientRequestIDClient(options *azcore.ClientOptions) (*ClientRequestIDClient, error) {
 	internal, err := azcore.NewClient("clientreqidgroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			newRequestIDPolicy(),
@@ -23,7 +23,7 @@ func NewClientRequestIdClient(options *azcore.ClientOptions) (*ClientRequestIdCl
 	if err != nil {
 		return nil, err
 	}
-	return &ClientRequestIdClient{
+	return &ClientRequestIDClient{
 		internal: internal,
 	}, nil
 }

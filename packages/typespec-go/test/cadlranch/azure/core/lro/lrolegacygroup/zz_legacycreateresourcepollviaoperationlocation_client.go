@@ -22,9 +22,9 @@ type LegacyCreateResourcePollViaOperationLocationClient struct {
 }
 
 // BeginCreateJob - Creates a Job
-//   - options - LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions contains the optional parameters for the LegacyCreateResourcePollViaOperationLocationClient.CreateJob
-//     method.
-func (client *LegacyCreateResourcePollViaOperationLocationClient) BeginCreateJob(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions) (*runtime.Poller[LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse], error) {
+//   - options - LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions contains the optional parameters for
+//     the LegacyCreateResourcePollViaOperationLocationClient.CreateJob method.
+func (client *LegacyCreateResourcePollViaOperationLocationClient) BeginCreateJob(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions) (*runtime.Poller[LegacyCreateResourcePollViaOperationLocationClientCreateJobResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createJob(ctx, jobData, options)
 		if err != nil {
@@ -42,7 +42,7 @@ func (client *LegacyCreateResourcePollViaOperationLocationClient) BeginCreateJob
 }
 
 // CreateJob - Creates a Job
-func (client *LegacyCreateResourcePollViaOperationLocationClient) createJob(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions) (*http.Response, error) {
+func (client *LegacyCreateResourcePollViaOperationLocationClient) createJob(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LegacyCreateResourcePollViaOperationLocationClient.BeginCreateJob"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -64,7 +64,7 @@ func (client *LegacyCreateResourcePollViaOperationLocationClient) createJob(ctx 
 }
 
 // createJobCreateRequest creates the CreateJob request.
-func (client *LegacyCreateResourcePollViaOperationLocationClient) createJobCreateRequest(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientCreateJobOptions) (*policy.Request, error) {
+func (client *LegacyCreateResourcePollViaOperationLocationClient) createJobCreateRequest(ctx context.Context, jobData JobData, options *LegacyCreateResourcePollViaOperationLocationClientBeginCreateJobOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/rpc/legacy/create-resource-poll-via-operation-location/jobs"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

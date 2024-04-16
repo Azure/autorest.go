@@ -42,9 +42,9 @@ func NewCertificateProfilesClient(credential azcore.TokenCredential, options *ar
 //   - accountName - Trusted Signing account name.
 //   - profileName - Certificate profile name.
 //   - resource - Parameters to create the certificate profile
-//   - options - CertificateProfilesClientCreateOptions contains the optional parameters for the CertificateProfilesClient.Create
+//   - options - CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.Create
 //     method.
-func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientCreateOptions) (*runtime.Poller[CertificateProfilesClientCreateResponse], error) {
+func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientBeginCreateOptions) (*runtime.Poller[CertificateProfilesClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.create(ctx, subscriptionID, resourceGroupName, accountName, profileName, resource, options)
 		if err != nil {
@@ -62,7 +62,7 @@ func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, subscr
 }
 
 // Create - Create a certificate profile.
-func (client *CertificateProfilesClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientCreateOptions) (*http.Response, error) {
+func (client *CertificateProfilesClient) create(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CertificateProfilesClient.BeginCreate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -84,7 +84,7 @@ func (client *CertificateProfilesClient) create(ctx context.Context, subscriptio
 }
 
 // createCreateRequest creates the Create request.
-func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientCreateOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -122,9 +122,9 @@ func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - profileName - Certificate profile name.
-//   - options - CertificateProfilesClientDeleteOptions contains the optional parameters for the CertificateProfilesClient.Delete
+//   - options - CertificateProfilesClientBeginDeleteOptions contains the optional parameters for the CertificateProfilesClient.Delete
 //     method.
-func (client *CertificateProfilesClient) BeginDelete(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientDeleteOptions) (*runtime.Poller[CertificateProfilesClientDeleteResponse], error) {
+func (client *CertificateProfilesClient) BeginDelete(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientBeginDeleteOptions) (*runtime.Poller[CertificateProfilesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, subscriptionID, resourceGroupName, accountName, profileName, options)
 		if err != nil {
@@ -142,7 +142,7 @@ func (client *CertificateProfilesClient) BeginDelete(ctx context.Context, subscr
 }
 
 // Delete - Delete a certificate profile.
-func (client *CertificateProfilesClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientDeleteOptions) (*http.Response, error) {
+func (client *CertificateProfilesClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CertificateProfilesClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -164,7 +164,7 @@ func (client *CertificateProfilesClient) deleteOperation(ctx context.Context, su
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *CertificateProfilesClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientDeleteOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

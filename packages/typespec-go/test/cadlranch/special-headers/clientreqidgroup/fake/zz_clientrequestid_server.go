@@ -15,28 +15,28 @@ import (
 	"net/http"
 )
 
-// ClientRequestIdServer is a fake server for instances of the clientreqidgroup.ClientRequestIdClient type.
-type ClientRequestIdServer struct {
-	// Get is the fake for method ClientRequestIdClient.Get
+// ClientRequestIDServer is a fake server for instances of the clientreqidgroup.ClientRequestIDClient type.
+type ClientRequestIDServer struct {
+	// Get is the fake for method ClientRequestIDClient.Get
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Get func(ctx context.Context, options *clientreqidgroup.ClientRequestIdClientGetOptions) (resp azfake.Responder[clientreqidgroup.ClientRequestIdClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, options *clientreqidgroup.ClientRequestIDClientGetOptions) (resp azfake.Responder[clientreqidgroup.ClientRequestIDClientGetResponse], errResp azfake.ErrorResponder)
 }
 
-// NewClientRequestIdServerTransport creates a new instance of ClientRequestIdServerTransport with the provided implementation.
-// The returned ClientRequestIdServerTransport instance is connected to an instance of clientreqidgroup.ClientRequestIdClient via the
+// NewClientRequestIDServerTransport creates a new instance of ClientRequestIDServerTransport with the provided implementation.
+// The returned ClientRequestIDServerTransport instance is connected to an instance of clientreqidgroup.ClientRequestIDClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewClientRequestIdServerTransport(srv *ClientRequestIdServer) *ClientRequestIdServerTransport {
-	return &ClientRequestIdServerTransport{srv: srv}
+func NewClientRequestIDServerTransport(srv *ClientRequestIDServer) *ClientRequestIDServerTransport {
+	return &ClientRequestIDServerTransport{srv: srv}
 }
 
-// ClientRequestIdServerTransport connects instances of clientreqidgroup.ClientRequestIdClient to instances of ClientRequestIdServer.
-// Don't use this type directly, use NewClientRequestIdServerTransport instead.
-type ClientRequestIdServerTransport struct {
-	srv *ClientRequestIdServer
+// ClientRequestIDServerTransport connects instances of clientreqidgroup.ClientRequestIDClient to instances of ClientRequestIDServer.
+// Don't use this type directly, use NewClientRequestIDServerTransport instead.
+type ClientRequestIDServerTransport struct {
+	srv *ClientRequestIDServer
 }
 
-// Do implements the policy.Transporter interface for ClientRequestIdServerTransport.
-func (c *ClientRequestIdServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ClientRequestIDServerTransport.
+func (c *ClientRequestIDServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -46,12 +46,12 @@ func (c *ClientRequestIdServerTransport) Do(req *http.Request) (*http.Response, 
 	return c.dispatchToMethodFake(req, method)
 }
 
-func (c *ClientRequestIdServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (c *ClientRequestIDServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "ClientRequestIdClient.Get":
+	case "ClientRequestIDClient.Get":
 		resp, err = c.dispatchGet(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -60,14 +60,14 @@ func (c *ClientRequestIdServerTransport) dispatchToMethodFake(req *http.Request,
 	return resp, err
 }
 
-func (c *ClientRequestIdServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (c *ClientRequestIDServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if c.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
 	clientRequestIDParam := getOptional(getHeaderValue(req.Header, "client-request-id"))
-	var options *clientreqidgroup.ClientRequestIdClientGetOptions
+	var options *clientreqidgroup.ClientRequestIDClientGetOptions
 	if clientRequestIDParam != nil {
-		options = &clientreqidgroup.ClientRequestIdClientGetOptions{
+		options = &clientreqidgroup.ClientRequestIDClientGetOptions{
 			ClientRequestID: clientRequestIDParam,
 		}
 	}

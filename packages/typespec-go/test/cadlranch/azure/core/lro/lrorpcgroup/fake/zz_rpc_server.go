@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// RpcServer is a fake server for instances of the lrorpcgroup.RpcClient type.
-type RpcServer struct {
-	// BeginLongRunningRPC is the fake for method RpcClient.BeginLongRunningRPC
+// RPCServer is a fake server for instances of the lrorpcgroup.RPCClient type.
+type RPCServer struct {
+	// BeginLongRunningRPC is the fake for method RPCClient.BeginLongRunningRPC
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginLongRunningRPC func(ctx context.Context, generationOptions lrorpcgroup.GenerationOptions, options *lrorpcgroup.RpcClientLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RpcClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
+	BeginLongRunningRPC func(ctx context.Context, generationOptions lrorpcgroup.GenerationOptions, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
 }
 
-// NewRpcServerTransport creates a new instance of RpcServerTransport with the provided implementation.
-// The returned RpcServerTransport instance is connected to an instance of lrorpcgroup.RpcClient via the
+// NewRPCServerTransport creates a new instance of RPCServerTransport with the provided implementation.
+// The returned RPCServerTransport instance is connected to an instance of lrorpcgroup.RPCClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewRpcServerTransport(srv *RpcServer) *RpcServerTransport {
-	return &RpcServerTransport{
+func NewRPCServerTransport(srv *RPCServer) *RPCServerTransport {
+	return &RPCServerTransport{
 		srv:                 srv,
-		beginLongRunningRPC: newTracker[azfake.PollerResponder[lrorpcgroup.RpcClientLongRunningRPCResponse]](),
+		beginLongRunningRPC: newTracker[azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse]](),
 	}
 }
 
-// RpcServerTransport connects instances of lrorpcgroup.RpcClient to instances of RpcServer.
-// Don't use this type directly, use NewRpcServerTransport instead.
-type RpcServerTransport struct {
-	srv                 *RpcServer
-	beginLongRunningRPC *tracker[azfake.PollerResponder[lrorpcgroup.RpcClientLongRunningRPCResponse]]
+// RPCServerTransport connects instances of lrorpcgroup.RPCClient to instances of RPCServer.
+// Don't use this type directly, use NewRPCServerTransport instead.
+type RPCServerTransport struct {
+	srv                 *RPCServer
+	beginLongRunningRPC *tracker[azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse]]
 }
 
-// Do implements the policy.Transporter interface for RpcServerTransport.
-func (r *RpcServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for RPCServerTransport.
+func (r *RPCServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,12 +50,12 @@ func (r *RpcServerTransport) Do(req *http.Request) (*http.Response, error) {
 	return r.dispatchToMethodFake(req, method)
 }
 
-func (r *RpcServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (r *RPCServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "RpcClient.BeginLongRunningRPC":
+	case "RPCClient.BeginLongRunningRPC":
 		resp, err = r.dispatchBeginLongRunningRPC(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -64,7 +64,7 @@ func (r *RpcServerTransport) dispatchToMethodFake(req *http.Request, method stri
 	return resp, err
 }
 
-func (r *RpcServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*http.Response, error) {
+func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*http.Response, error) {
 	if r.srv.BeginLongRunningRPC == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginLongRunningRPC not implemented")}
 	}

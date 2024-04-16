@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// ApiKeyServer is a fake server for instances of the apikeygroup.ApiKeyClient type.
-type ApiKeyServer struct {
-	// Invalid is the fake for method ApiKeyClient.Invalid
+// APIKeyServer is a fake server for instances of the apikeygroup.APIKeyClient type.
+type APIKeyServer struct {
+	// Invalid is the fake for method APIKeyClient.Invalid
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Invalid func(ctx context.Context, options *apikeygroup.ApiKeyClientInvalidOptions) (resp azfake.Responder[apikeygroup.ApiKeyClientInvalidResponse], errResp azfake.ErrorResponder)
+	Invalid func(ctx context.Context, options *apikeygroup.APIKeyClientInvalidOptions) (resp azfake.Responder[apikeygroup.APIKeyClientInvalidResponse], errResp azfake.ErrorResponder)
 
-	// Valid is the fake for method ApiKeyClient.Valid
+	// Valid is the fake for method APIKeyClient.Valid
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Valid func(ctx context.Context, options *apikeygroup.ApiKeyClientValidOptions) (resp azfake.Responder[apikeygroup.ApiKeyClientValidResponse], errResp azfake.ErrorResponder)
+	Valid func(ctx context.Context, options *apikeygroup.APIKeyClientValidOptions) (resp azfake.Responder[apikeygroup.APIKeyClientValidResponse], errResp azfake.ErrorResponder)
 }
 
-// NewApiKeyServerTransport creates a new instance of ApiKeyServerTransport with the provided implementation.
-// The returned ApiKeyServerTransport instance is connected to an instance of apikeygroup.ApiKeyClient via the
+// NewAPIKeyServerTransport creates a new instance of APIKeyServerTransport with the provided implementation.
+// The returned APIKeyServerTransport instance is connected to an instance of apikeygroup.APIKeyClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewApiKeyServerTransport(srv *ApiKeyServer) *ApiKeyServerTransport {
-	return &ApiKeyServerTransport{srv: srv}
+func NewAPIKeyServerTransport(srv *APIKeyServer) *APIKeyServerTransport {
+	return &APIKeyServerTransport{srv: srv}
 }
 
-// ApiKeyServerTransport connects instances of apikeygroup.ApiKeyClient to instances of ApiKeyServer.
-// Don't use this type directly, use NewApiKeyServerTransport instead.
-type ApiKeyServerTransport struct {
-	srv *ApiKeyServer
+// APIKeyServerTransport connects instances of apikeygroup.APIKeyClient to instances of APIKeyServer.
+// Don't use this type directly, use NewAPIKeyServerTransport instead.
+type APIKeyServerTransport struct {
+	srv *APIKeyServer
 }
 
-// Do implements the policy.Transporter interface for ApiKeyServerTransport.
-func (a *ApiKeyServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for APIKeyServerTransport.
+func (a *APIKeyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,14 +50,14 @@ func (a *ApiKeyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	return a.dispatchToMethodFake(req, method)
 }
 
-func (a *ApiKeyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (a *APIKeyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "ApiKeyClient.Invalid":
+	case "APIKeyClient.Invalid":
 		resp, err = a.dispatchInvalid(req)
-	case "ApiKeyClient.Valid":
+	case "APIKeyClient.Valid":
 		resp, err = a.dispatchValid(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -66,7 +66,7 @@ func (a *ApiKeyServerTransport) dispatchToMethodFake(req *http.Request, method s
 	return resp, err
 }
 
-func (a *ApiKeyServerTransport) dispatchInvalid(req *http.Request) (*http.Response, error) {
+func (a *APIKeyServerTransport) dispatchInvalid(req *http.Request) (*http.Response, error) {
 	if a.srv.Invalid == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Invalid not implemented")}
 	}
@@ -85,7 +85,7 @@ func (a *ApiKeyServerTransport) dispatchInvalid(req *http.Request) (*http.Respon
 	return resp, nil
 }
 
-func (a *ApiKeyServerTransport) dispatchValid(req *http.Request) (*http.Response, error) {
+func (a *APIKeyServerTransport) dispatchValid(req *http.Request) (*http.Response, error) {
 	if a.srv.Valid == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Valid not implemented")}
 	}

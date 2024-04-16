@@ -11,7 +11,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewRpcClient(options *azcore.ClientOptions) (*RpcClient, error) {
+func NewRPCClient(options *azcore.ClientOptions) (*RPCClient, error) {
 	const apiVersion = "2022-12-01-preview"
 	internal, err := azcore.NewClient("lrorpcgroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{&apiVersionPolicy{apiVersion: apiVersion}},
@@ -19,7 +19,7 @@ func NewRpcClient(options *azcore.ClientOptions) (*RpcClient, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &RpcClient{
+	return &RPCClient{
 		internal: internal,
 	}, nil
 }

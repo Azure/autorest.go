@@ -4,20 +4,20 @@
 
 package jmergepatchgroup
 
-// JsonMergePatchClientCreateResourceOptions contains the optional parameters for the JsonMergePatchClient.CreateResource
+// JSONMergePatchClientCreateResourceOptions contains the optional parameters for the JSONMergePatchClient.CreateResource
 // method.
-type JsonMergePatchClientCreateResourceOptions struct {
+type JSONMergePatchClientCreateResourceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// JsonMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JsonMergePatchClient.UpdateOptionalResource
+// JSONMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateOptionalResource
 // method.
-type JsonMergePatchClientUpdateOptionalResourceOptions struct {
+type JSONMergePatchClientUpdateOptionalResourceOptions struct {
 	Body *ResourcePatch
 }
 
-// JsonMergePatchClientUpdateResourceOptions contains the optional parameters for the JsonMergePatchClient.UpdateResource
+// JSONMergePatchClientUpdateResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateResource
 // method.
-type JsonMergePatchClientUpdateResourceOptions struct {
+type JSONMergePatchClientUpdateResourceOptions struct {
 	// placeholder for future optional parameters
 }

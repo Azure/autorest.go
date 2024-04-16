@@ -16,36 +16,36 @@ import (
 	"reflect"
 )
 
-// JsonMergePatchServer is a fake server for instances of the jmergepatchgroup.JsonMergePatchClient type.
-type JsonMergePatchServer struct {
-	// CreateResource is the fake for method JsonMergePatchClient.CreateResource
+// JSONMergePatchServer is a fake server for instances of the jmergepatchgroup.JSONMergePatchClient type.
+type JSONMergePatchServer struct {
+	// CreateResource is the fake for method JSONMergePatchClient.CreateResource
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateResource func(ctx context.Context, body jmergepatchgroup.Resource, options *jmergepatchgroup.JsonMergePatchClientCreateResourceOptions) (resp azfake.Responder[jmergepatchgroup.JsonMergePatchClientCreateResourceResponse], errResp azfake.ErrorResponder)
+	CreateResource func(ctx context.Context, body jmergepatchgroup.Resource, options *jmergepatchgroup.JSONMergePatchClientCreateResourceOptions) (resp azfake.Responder[jmergepatchgroup.JSONMergePatchClientCreateResourceResponse], errResp azfake.ErrorResponder)
 
-	// UpdateOptionalResource is the fake for method JsonMergePatchClient.UpdateOptionalResource
+	// UpdateOptionalResource is the fake for method JSONMergePatchClient.UpdateOptionalResource
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateOptionalResource func(ctx context.Context, options *jmergepatchgroup.JsonMergePatchClientUpdateOptionalResourceOptions) (resp azfake.Responder[jmergepatchgroup.JsonMergePatchClientUpdateOptionalResourceResponse], errResp azfake.ErrorResponder)
+	UpdateOptionalResource func(ctx context.Context, options *jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions) (resp azfake.Responder[jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceResponse], errResp azfake.ErrorResponder)
 
-	// UpdateResource is the fake for method JsonMergePatchClient.UpdateResource
+	// UpdateResource is the fake for method JSONMergePatchClient.UpdateResource
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateResource func(ctx context.Context, body jmergepatchgroup.ResourcePatch, options *jmergepatchgroup.JsonMergePatchClientUpdateResourceOptions) (resp azfake.Responder[jmergepatchgroup.JsonMergePatchClientUpdateResourceResponse], errResp azfake.ErrorResponder)
+	UpdateResource func(ctx context.Context, body jmergepatchgroup.ResourcePatch, options *jmergepatchgroup.JSONMergePatchClientUpdateResourceOptions) (resp azfake.Responder[jmergepatchgroup.JSONMergePatchClientUpdateResourceResponse], errResp azfake.ErrorResponder)
 }
 
-// NewJsonMergePatchServerTransport creates a new instance of JsonMergePatchServerTransport with the provided implementation.
-// The returned JsonMergePatchServerTransport instance is connected to an instance of jmergepatchgroup.JsonMergePatchClient via the
+// NewJSONMergePatchServerTransport creates a new instance of JSONMergePatchServerTransport with the provided implementation.
+// The returned JSONMergePatchServerTransport instance is connected to an instance of jmergepatchgroup.JSONMergePatchClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewJsonMergePatchServerTransport(srv *JsonMergePatchServer) *JsonMergePatchServerTransport {
-	return &JsonMergePatchServerTransport{srv: srv}
+func NewJSONMergePatchServerTransport(srv *JSONMergePatchServer) *JSONMergePatchServerTransport {
+	return &JSONMergePatchServerTransport{srv: srv}
 }
 
-// JsonMergePatchServerTransport connects instances of jmergepatchgroup.JsonMergePatchClient to instances of JsonMergePatchServer.
-// Don't use this type directly, use NewJsonMergePatchServerTransport instead.
-type JsonMergePatchServerTransport struct {
-	srv *JsonMergePatchServer
+// JSONMergePatchServerTransport connects instances of jmergepatchgroup.JSONMergePatchClient to instances of JSONMergePatchServer.
+// Don't use this type directly, use NewJSONMergePatchServerTransport instead.
+type JSONMergePatchServerTransport struct {
+	srv *JSONMergePatchServer
 }
 
-// Do implements the policy.Transporter interface for JsonMergePatchServerTransport.
-func (j *JsonMergePatchServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for JSONMergePatchServerTransport.
+func (j *JSONMergePatchServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -55,16 +55,16 @@ func (j *JsonMergePatchServerTransport) Do(req *http.Request) (*http.Response, e
 	return j.dispatchToMethodFake(req, method)
 }
 
-func (j *JsonMergePatchServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (j *JSONMergePatchServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "JsonMergePatchClient.CreateResource":
+	case "JSONMergePatchClient.CreateResource":
 		resp, err = j.dispatchCreateResource(req)
-	case "JsonMergePatchClient.UpdateOptionalResource":
+	case "JSONMergePatchClient.UpdateOptionalResource":
 		resp, err = j.dispatchUpdateOptionalResource(req)
-	case "JsonMergePatchClient.UpdateResource":
+	case "JSONMergePatchClient.UpdateResource":
 		resp, err = j.dispatchUpdateResource(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -73,7 +73,7 @@ func (j *JsonMergePatchServerTransport) dispatchToMethodFake(req *http.Request, 
 	return resp, err
 }
 
-func (j *JsonMergePatchServerTransport) dispatchCreateResource(req *http.Request) (*http.Response, error) {
+func (j *JSONMergePatchServerTransport) dispatchCreateResource(req *http.Request) (*http.Response, error) {
 	if j.srv.CreateResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateResource not implemented")}
 	}
@@ -96,7 +96,7 @@ func (j *JsonMergePatchServerTransport) dispatchCreateResource(req *http.Request
 	return resp, nil
 }
 
-func (j *JsonMergePatchServerTransport) dispatchUpdateOptionalResource(req *http.Request) (*http.Response, error) {
+func (j *JSONMergePatchServerTransport) dispatchUpdateOptionalResource(req *http.Request) (*http.Response, error) {
 	if j.srv.UpdateOptionalResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateOptionalResource not implemented")}
 	}
@@ -104,9 +104,9 @@ func (j *JsonMergePatchServerTransport) dispatchUpdateOptionalResource(req *http
 	if err != nil {
 		return nil, err
 	}
-	var options *jmergepatchgroup.JsonMergePatchClientUpdateOptionalResourceOptions
+	var options *jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions
 	if !reflect.ValueOf(body).IsZero() {
-		options = &jmergepatchgroup.JsonMergePatchClientUpdateOptionalResourceOptions{
+		options = &jmergepatchgroup.JSONMergePatchClientUpdateOptionalResourceOptions{
 			Body: &body,
 		}
 	}
@@ -125,7 +125,7 @@ func (j *JsonMergePatchServerTransport) dispatchUpdateOptionalResource(req *http
 	return resp, nil
 }
 
-func (j *JsonMergePatchServerTransport) dispatchUpdateResource(req *http.Request) (*http.Response, error) {
+func (j *JSONMergePatchServerTransport) dispatchUpdateResource(req *http.Request) (*http.Response, error) {
 	if j.srv.UpdateResource == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateResource not implemented")}
 	}

@@ -4,7 +4,7 @@
 
 package clientreqidgroup
 
-// ClientRequestIdClientGetResponse contains the response from method ClientRequestIdClient.Get.
-type ClientRequestIdClientGetResponse struct {
+// ClientRequestIDClientGetResponse contains the response from method ClientRequestIDClient.Get.
+type ClientRequestIDClientGetResponse struct {
 	// placeholder for future response values
 }

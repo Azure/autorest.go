@@ -4,17 +4,17 @@
 
 package lrostdgroup
 
-// StandardClientCreateOrReplaceOptions contains the optional parameters for the StandardClient.CreateOrReplace method.
-type StandardClientCreateOrReplaceOptions struct {
+// StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.CreateOrReplace method.
+type StandardClientBeginCreateOrReplaceOptions struct {
 	ResumeToken string
 }
 
-// StandardClientDeleteOptions contains the optional parameters for the StandardClient.Delete method.
-type StandardClientDeleteOptions struct {
+// StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.Delete method.
+type StandardClientBeginDeleteOptions struct {
 	ResumeToken string
 }
 
-// StandardClientExportOptions contains the optional parameters for the StandardClient.Export method.
-type StandardClientExportOptions struct {
+// StandardClientBeginExportOptions contains the optional parameters for the StandardClient.Export method.
+type StandardClientBeginExportOptions struct {
 	ResumeToken string
 }

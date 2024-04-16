@@ -41,7 +41,7 @@ export class clientAdapter {
   }
 
   private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client {
-    let clientName = sdkClient.name;
+    let clientName = ensureNameCase(sdkClient.name);
     if (parent) {
       // for hierarchical clients, the child client names are built
       // from the parent client name. this is because tsp allows subclients
@@ -194,6 +194,9 @@ export class clientAdapter {
       let prefix = method.client.name;
       if (this.opts['single-client']) {
         prefix = '';
+      }
+      if (go.isLROMethod(method)) {
+        prefix += 'Begin';
       }
       let optionalParamsGroupName = `${prefix}${method.name}Options`;
       if (sdkMethod.access === 'internal') {

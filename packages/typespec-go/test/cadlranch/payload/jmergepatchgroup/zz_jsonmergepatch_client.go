@@ -12,39 +12,39 @@ import (
 	"net/http"
 )
 
-// JsonMergePatchClient - Test for merge-patch+json content-type
+// JSONMergePatchClient - Test for merge-patch+json content-type
 // Don't use this type directly, use a constructor function instead.
-type JsonMergePatchClient struct {
+type JSONMergePatchClient struct {
 	internal *azcore.Client
 }
 
 // CreateResource - Test content-type: application/merge-patch+json with required body
-//   - options - JsonMergePatchClientCreateResourceOptions contains the optional parameters for the JsonMergePatchClient.CreateResource
+//   - options - JSONMergePatchClientCreateResourceOptions contains the optional parameters for the JSONMergePatchClient.CreateResource
 //     method.
-func (client *JsonMergePatchClient) CreateResource(ctx context.Context, body Resource, options *JsonMergePatchClientCreateResourceOptions) (JsonMergePatchClientCreateResourceResponse, error) {
+func (client *JSONMergePatchClient) CreateResource(ctx context.Context, body Resource, options *JSONMergePatchClientCreateResourceOptions) (JSONMergePatchClientCreateResourceResponse, error) {
 	var err error
-	const operationName = "JsonMergePatchClient.CreateResource"
+	const operationName = "JSONMergePatchClient.CreateResource"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.createResourceCreateRequest(ctx, body, options)
 	if err != nil {
-		return JsonMergePatchClientCreateResourceResponse{}, err
+		return JSONMergePatchClientCreateResourceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return JsonMergePatchClientCreateResourceResponse{}, err
+		return JSONMergePatchClientCreateResourceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return JsonMergePatchClientCreateResourceResponse{}, err
+		return JSONMergePatchClientCreateResourceResponse{}, err
 	}
 	resp, err := client.createResourceHandleResponse(httpResp)
 	return resp, err
 }
 
 // createResourceCreateRequest creates the CreateResource request.
-func (client *JsonMergePatchClient) createResourceCreateRequest(ctx context.Context, body Resource, options *JsonMergePatchClientCreateResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) createResourceCreateRequest(ctx context.Context, body Resource, options *JSONMergePatchClientCreateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/create/resource"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -59,41 +59,41 @@ func (client *JsonMergePatchClient) createResourceCreateRequest(ctx context.Cont
 }
 
 // createResourceHandleResponse handles the CreateResource response.
-func (client *JsonMergePatchClient) createResourceHandleResponse(resp *http.Response) (JsonMergePatchClientCreateResourceResponse, error) {
-	result := JsonMergePatchClientCreateResourceResponse{}
+func (client *JSONMergePatchClient) createResourceHandleResponse(resp *http.Response) (JSONMergePatchClientCreateResourceResponse, error) {
+	result := JSONMergePatchClientCreateResourceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Resource); err != nil {
-		return JsonMergePatchClientCreateResourceResponse{}, err
+		return JSONMergePatchClientCreateResourceResponse{}, err
 	}
 	return result, nil
 }
 
 // UpdateOptionalResource - Test content-type: application/merge-patch+json with optional body
-//   - options - JsonMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JsonMergePatchClient.UpdateOptionalResource
+//   - options - JSONMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateOptionalResource
 //     method.
-func (client *JsonMergePatchClient) UpdateOptionalResource(ctx context.Context, options *JsonMergePatchClientUpdateOptionalResourceOptions) (JsonMergePatchClientUpdateOptionalResourceResponse, error) {
+func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, options *JSONMergePatchClientUpdateOptionalResourceOptions) (JSONMergePatchClientUpdateOptionalResourceResponse, error) {
 	var err error
-	const operationName = "JsonMergePatchClient.UpdateOptionalResource"
+	const operationName = "JSONMergePatchClient.UpdateOptionalResource"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateOptionalResourceCreateRequest(ctx, options)
 	if err != nil {
-		return JsonMergePatchClientUpdateOptionalResourceResponse{}, err
+		return JSONMergePatchClientUpdateOptionalResourceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return JsonMergePatchClientUpdateOptionalResourceResponse{}, err
+		return JSONMergePatchClientUpdateOptionalResourceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return JsonMergePatchClientUpdateOptionalResourceResponse{}, err
+		return JSONMergePatchClientUpdateOptionalResourceResponse{}, err
 	}
 	resp, err := client.updateOptionalResourceHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateOptionalResourceCreateRequest creates the UpdateOptionalResource request.
-func (client *JsonMergePatchClient) updateOptionalResourceCreateRequest(ctx context.Context, options *JsonMergePatchClientUpdateOptionalResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) updateOptionalResourceCreateRequest(ctx context.Context, options *JSONMergePatchClientUpdateOptionalResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource/optional"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -111,41 +111,41 @@ func (client *JsonMergePatchClient) updateOptionalResourceCreateRequest(ctx cont
 }
 
 // updateOptionalResourceHandleResponse handles the UpdateOptionalResource response.
-func (client *JsonMergePatchClient) updateOptionalResourceHandleResponse(resp *http.Response) (JsonMergePatchClientUpdateOptionalResourceResponse, error) {
-	result := JsonMergePatchClientUpdateOptionalResourceResponse{}
+func (client *JSONMergePatchClient) updateOptionalResourceHandleResponse(resp *http.Response) (JSONMergePatchClientUpdateOptionalResourceResponse, error) {
+	result := JSONMergePatchClientUpdateOptionalResourceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Resource); err != nil {
-		return JsonMergePatchClientUpdateOptionalResourceResponse{}, err
+		return JSONMergePatchClientUpdateOptionalResourceResponse{}, err
 	}
 	return result, nil
 }
 
 // UpdateResource - Test content-type: application/merge-patch+json with required body
-//   - options - JsonMergePatchClientUpdateResourceOptions contains the optional parameters for the JsonMergePatchClient.UpdateResource
+//   - options - JSONMergePatchClientUpdateResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateResource
 //     method.
-func (client *JsonMergePatchClient) UpdateResource(ctx context.Context, body ResourcePatch, options *JsonMergePatchClientUpdateResourceOptions) (JsonMergePatchClientUpdateResourceResponse, error) {
+func (client *JSONMergePatchClient) UpdateResource(ctx context.Context, body ResourcePatch, options *JSONMergePatchClientUpdateResourceOptions) (JSONMergePatchClientUpdateResourceResponse, error) {
 	var err error
-	const operationName = "JsonMergePatchClient.UpdateResource"
+	const operationName = "JSONMergePatchClient.UpdateResource"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateResourceCreateRequest(ctx, body, options)
 	if err != nil {
-		return JsonMergePatchClientUpdateResourceResponse{}, err
+		return JSONMergePatchClientUpdateResourceResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return JsonMergePatchClientUpdateResourceResponse{}, err
+		return JSONMergePatchClientUpdateResourceResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return JsonMergePatchClientUpdateResourceResponse{}, err
+		return JSONMergePatchClientUpdateResourceResponse{}, err
 	}
 	resp, err := client.updateResourceHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateResourceCreateRequest creates the UpdateResource request.
-func (client *JsonMergePatchClient) updateResourceCreateRequest(ctx context.Context, body ResourcePatch, options *JsonMergePatchClientUpdateResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) updateResourceCreateRequest(ctx context.Context, body ResourcePatch, options *JSONMergePatchClientUpdateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -160,10 +160,10 @@ func (client *JsonMergePatchClient) updateResourceCreateRequest(ctx context.Cont
 }
 
 // updateResourceHandleResponse handles the UpdateResource response.
-func (client *JsonMergePatchClient) updateResourceHandleResponse(resp *http.Response) (JsonMergePatchClientUpdateResourceResponse, error) {
-	result := JsonMergePatchClientUpdateResourceResponse{}
+func (client *JSONMergePatchClient) updateResourceHandleResponse(resp *http.Response) (JSONMergePatchClientUpdateResourceResponse, error) {
+	result := JSONMergePatchClientUpdateResourceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Resource); err != nil {
-		return JsonMergePatchClientUpdateResourceResponse{}, err
+		return JSONMergePatchClientUpdateResourceResponse{}, err
 	}
 	return result, nil
 }
