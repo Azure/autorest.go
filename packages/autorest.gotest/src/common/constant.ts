@@ -6,22 +6,22 @@
 import { configDefaults as baseConfigDefaults } from '@autorest/testmodeler/dist/src/common/constant';
 
 export enum Config {
-    exportCodemodel = 'testmodeler.export-codemodel',
-    generateMockTest = 'testmodeler.generate-mock-test',
-    generateSdkExample = 'testmodeler.generate-sdk-example',
-    generateScenarioTest = 'testmodeler.generate-scenario-test',
-    generateSdkSample = 'testmodeler.generate-sdk-sample',
-    generateFakeTest = 'testmodeler.generate-fake-test',
-    parents = '__parents',
-    outputFolder = 'output-folder',
-    module = 'module',
-    moduleVersion = 'module-version',
-    filePrefix = 'file-prefix',
-    exampleFilePrefix = 'example-file-prefix',
-    testFilePrefix = 'test-file-prefix',
-    sendExampleId = 'testmodeler.mock.send-example-id',
-    verifyResponse = 'testmodeler.mock.verify-response',
-    skipLint = 'gotest.skip-lint'
+  exportCodemodel = 'testmodeler.export-codemodel',
+  generateMockTest = 'testmodeler.generate-mock-test',
+  generateSdkExample = 'testmodeler.generate-sdk-example',
+  generateScenarioTest = 'testmodeler.generate-scenario-test',
+  generateSdkSample = 'testmodeler.generate-sdk-sample',
+  generateFakeTest = 'testmodeler.generate-fake-test',
+  parents = '__parents',
+  outputFolder = 'output-folder',
+  module = 'module',
+  moduleVersion = 'module-version',
+  filePrefix = 'file-prefix',
+  exampleFilePrefix = 'example-file-prefix',
+  testFilePrefix = 'test-file-prefix',
+  sendExampleId = 'testmodeler.mock.send-example-id',
+  verifyResponse = 'testmodeler.mock.verify-response',
+  skipLint = 'gotest.skip-lint',
 }
 
 export const configDefaults = {

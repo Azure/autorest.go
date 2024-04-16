@@ -6,7 +6,7 @@
 import { values } from '@azure-tools/linq';
 import { sortAscending } from '../common/helpers';
 
-type importEntry = { imp: string, alias?: string };
+type importEntry = { imp: string; alias?: string };
 
 // tracks packages that need to be imported
 export class ImportManager {
@@ -40,7 +40,9 @@ export class ImportManager {
       const first = this.imports[0];
       return `import ${this.alias(first)}"${first.imp}"\n\n`;
     }
-    this.imports.sort((a: importEntry, b: importEntry) => { return sortAscending(a.imp, b.imp); });
+    this.imports.sort((a: importEntry, b: importEntry) => {
+      return sortAscending(a.imp, b.imp);
+    });
     let text = 'import (\n';
     for (const imp of values(this.imports)) {
       text += `\t${this.alias(imp)}"${imp.imp}"\n`;
