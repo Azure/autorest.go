@@ -119,6 +119,9 @@ generate('armapicenter', armapicenter, 'test/armapicenter');
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
+const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let additionalArgs;
