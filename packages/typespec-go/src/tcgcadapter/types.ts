@@ -27,13 +27,36 @@ export class typeAdapter {
 
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext) {
+    const isOperationStatusModel = function(name: string): boolean {
+      return name.match(/^(?:Arm)?OperationStatus/) !== null;
+    };
+
     for (const enumType of sdkContext.experimental_sdkPackage.enums) {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
       } else if (enumType.crossLanguageDefinitionId.match(/(?:Foundations|ResourceManager)\.(?:Resource)?ProvisioningState/)) {
-        // don't create constants for the LRO provisioning state as they aren't used
-        continue;
+        // don't create constants for the LRO provisioning state if they aren't used
+        let found = false;
+        for (const model of sdkContext.experimental_sdkPackage.models) {
+          if (isOperationStatusModel(model.name)) {
+            // these types are discarded so exclude them from the check
+            continue;
+          }
+          for (const property of model.properties) {
+            if (property.type.kind === 'enum' && property.type.name === enumType.name) {
+              found = true;
+              break;
+            }
+          }
+          if (found) {
+            break;
+          }
+        }
+        if (!found) {
+          // enum isn't used, discard it
+          continue;
+        }
       }
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
@@ -46,7 +69,7 @@ export class typeAdapter {
       if (this.isFoundationsError(modelType)) {
         // don't create a model as we use azcore.ResponseError instead
         continue;
-      } else if (modelType.name.match(/^(?:Arm)?OperationStatus/)) {
+      } else if (isOperationStatusModel(modelType.name)) {
         // don't create a model for the LRO polling status as they aren't used
         continue;
       }
