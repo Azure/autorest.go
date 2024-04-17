@@ -27,16 +27,29 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var err error
+
 type FakeTestSuite struct {
 	suite.Suite
 
+	ctx            context.Context
 	cred           azcore.TokenCredential
 	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *armcompute.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
 	testsuite.cred = &testutil.FakeCredential{}
 	testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+	testsuite.clientFactory, err = armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+		},
+	})
+	testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -48,18 +61,8 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 }
 
 func (testsuite *FakeTestSuite) TestAvailabilitySets_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.AvailabilitySetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAvailabilitySetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAvailabilitySetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnAvailabilitySet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an availability set."},
 	})
 	var exampleResourceGroupName string
@@ -92,7 +95,7 @@ func (testsuite *FakeTestSuite) TestAvailabilitySets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters armcompute.AvailabilitySet, options *armcompute.AvailabilitySetsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.AvailabilitySetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AvailabilitySetsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters armcompute.AvailabilitySet, options *armcompute.AvailabilitySetsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.AvailabilitySetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleAvailabilitySetName, availabilitySetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -100,6 +103,8 @@ func (testsuite *FakeTestSuite) TestAvailabilitySets_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armcompute.AvailabilitySetsClientCreateOrUpdateResponse{AvailabilitySet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAvailabilitySetsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleAvailabilitySetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnAvailabilitySet.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.AvailabilitySet))
@@ -118,18 +123,8 @@ func (testsuite *FakeTestSuite) TestAvailabilitySets_Get() {
 }
 
 func (testsuite *FakeTestSuite) TestAvailabilitySets_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.AvailabilitySetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAvailabilitySetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAvailabilitySetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListAvailabilitySetsInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List availability sets in a subscription."},
 	})
 
@@ -205,11 +200,13 @@ func (testsuite *FakeTestSuite) TestAvailabilitySets_ListBySubscription() {
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armcompute.AvailabilitySetsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcompute.AvailabilitySetsClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.AvailabilitySetsServer.NewListBySubscriptionPager = func(options *armcompute.AvailabilitySetsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcompute.AvailabilitySetsClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armcompute.AvailabilitySetsClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.AvailabilitySetsClientListBySubscriptionResponse{AvailabilitySetListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAvailabilitySetsClient()
 	pager := client.NewListBySubscriptionPager(&armcompute.AvailabilitySetsClientListBySubscriptionOptions{Expand: to.Ptr("Faked for test: +ge+2020, %3E2012")})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -230,18 +227,8 @@ func (testsuite *FakeTestSuite) TestAvailabilitySets_ListAvailableSizes() {
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAProximityPlacementGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or Update a proximity placement group."},
 	})
 	var exampleResourceGroupName string
@@ -266,7 +253,7 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters armcompute.ProximityPlacementGroup, options *armcompute.ProximityPlacementGroupsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters armcompute.ProximityPlacementGroup, options *armcompute.ProximityPlacementGroupsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleProximityPlacementGroupName, proximityPlacementGroupName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -274,24 +261,16 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armcompute.ProximityPlacementGroupsClientCreateOrUpdateResponse{ProximityPlacementGroup: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleProximityPlacementGroupName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAProximityPlacementGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ProximityPlacementGroup))
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Update() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PatchAProximityPlacementGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a proximity placement group."},
 	})
 	var exampleResourceGroupName string
@@ -315,7 +294,7 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Update() {
 		},
 	}
 
-	fakeServer.Update = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters armcompute.ProximityPlacementGroupUpdate, options *armcompute.ProximityPlacementGroupsClientUpdateOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.Update = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters armcompute.ProximityPlacementGroupUpdate, options *armcompute.ProximityPlacementGroupsClientUpdateOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleProximityPlacementGroupName, proximityPlacementGroupName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -323,24 +302,16 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Update() {
 		resp.SetResponse(http.StatusOK, armcompute.ProximityPlacementGroupsClientUpdateResponse{ProximityPlacementGroup: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	res, err := client.Update(ctx, exampleResourceGroupName, exampleProximityPlacementGroupName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PatchAProximityPlacementGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ProximityPlacementGroup))
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteAProximityPlacementGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a proximity placement group."},
 	})
 	var exampleResourceGroupName string
@@ -348,30 +319,22 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleProximityPlacementGroupName = "$(resourceName)"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *armcompute.ProximityPlacementGroupsClientDeleteOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.Delete = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *armcompute.ProximityPlacementGroupsClientDeleteOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleProximityPlacementGroupName, proximityPlacementGroupName)
 		resp = azfake.Responder[armcompute.ProximityPlacementGroupsClientDeleteResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.ProximityPlacementGroupsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleProximityPlacementGroupName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteAProximityPlacementGroup.json")
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAProximityPlacementGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a proximity placement group."},
 	})
 	var exampleResourceGroupName string
@@ -401,31 +364,23 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *armcompute.ProximityPlacementGroupsClientGetOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.Get = func(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *armcompute.ProximityPlacementGroupsClientGetOptions) (resp azfake.Responder[armcompute.ProximityPlacementGroupsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleProximityPlacementGroupName, proximityPlacementGroupName)
 		resp = azfake.Responder[armcompute.ProximityPlacementGroupsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.ProximityPlacementGroupsClientGetResponse{ProximityPlacementGroup: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleProximityPlacementGroupName, &armcompute.ProximityPlacementGroupsClientGetOptions{IncludeColocationStatus: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAProximityPlacementGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ProximityPlacementGroup))
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListProximityPlacementGroupsInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a proximity placement group."},
 	})
 
@@ -454,11 +409,13 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListBySubscription(
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armcompute.ProximityPlacementGroupsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.NewListBySubscriptionPager = func(options *armcompute.ProximityPlacementGroupsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ProximityPlacementGroupsClientListBySubscriptionResponse{ProximityPlacementGroupListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	pager := client.NewListBySubscriptionPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -471,18 +428,8 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListBySubscription(
 }
 
 func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.ProximityPlacementGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewProximityPlacementGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewProximityPlacementGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListProximityPlacementGroupsInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a proximity placement group."},
 	})
 	var exampleResourceGroupName string
@@ -513,12 +460,14 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListByResourceGroup
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.ProximityPlacementGroupsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.ProximityPlacementGroupsServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.ProximityPlacementGroupsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.ProximityPlacementGroupsClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ProximityPlacementGroupsClientListByResourceGroupResponse{ProximityPlacementGroupListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewProximityPlacementGroupsClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -531,18 +480,8 @@ func (testsuite *FakeTestSuite) TestProximityPlacementGroups_ListByResourceGroup
 }
 
 func (testsuite *FakeTestSuite) TestDedicatedHostGroups_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DedicatedHostGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDedicatedHostGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDedicatedHostGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a dedicated host group."},
 	})
 	var exampleResourceGroupName string
@@ -579,7 +518,7 @@ func (testsuite *FakeTestSuite) TestDedicatedHostGroups_CreateOrUpdate() {
 			to.Ptr("1")},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, hostGroupName string, parameters armcompute.DedicatedHostGroup, options *armcompute.DedicatedHostGroupsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.DedicatedHostGroupsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DedicatedHostGroupsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, hostGroupName string, parameters armcompute.DedicatedHostGroup, options *armcompute.DedicatedHostGroupsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.DedicatedHostGroupsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleHostGroupName, hostGroupName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -587,6 +526,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHostGroups_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armcompute.DedicatedHostGroupsClientCreateOrUpdateResponse{DedicatedHostGroup: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDedicatedHostGroupsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleHostGroupName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DedicatedHostGroup))
@@ -601,18 +542,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHostGroups_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDedicatedHostGroups_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DedicatedHostGroupsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDedicatedHostGroupsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDedicatedHostGroupsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a dedicated host group."},
 	})
 	var exampleResourceGroupName string
@@ -688,13 +619,15 @@ func (testsuite *FakeTestSuite) TestDedicatedHostGroups_Get() {
 			to.Ptr("3")},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, hostGroupName string, options *armcompute.DedicatedHostGroupsClientGetOptions) (resp azfake.Responder[armcompute.DedicatedHostGroupsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DedicatedHostGroupsServer.Get = func(ctx context.Context, resourceGroupName string, hostGroupName string, options *armcompute.DedicatedHostGroupsClientGetOptions) (resp azfake.Responder[armcompute.DedicatedHostGroupsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleHostGroupName, hostGroupName)
 		resp = azfake.Responder[armcompute.DedicatedHostGroupsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DedicatedHostGroupsClientGetResponse{DedicatedHostGroup: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDedicatedHostGroupsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleHostGroupName, &armcompute.DedicatedHostGroupsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DedicatedHostGroup))
@@ -709,18 +642,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHostGroups_ListBySubscription() {
 }
 
 func (testsuite *FakeTestSuite) TestDedicatedHosts_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DedicatedHostsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDedicatedHostsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDedicatedHostsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHost.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a dedicated host ."},
 	})
 	var exampleResourceGroupName string
@@ -761,7 +684,7 @@ func (testsuite *FakeTestSuite) TestDedicatedHosts_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters armcompute.DedicatedHost, options *armcompute.DedicatedHostsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DedicatedHostsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DedicatedHostsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters armcompute.DedicatedHost, options *armcompute.DedicatedHostsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DedicatedHostsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleHostGroupName, hostGroupName)
 		testsuite.Require().Equal(exampleHostName, hostName)
@@ -770,6 +693,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHosts_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DedicatedHostsClientCreateOrUpdateResponse{DedicatedHost: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDedicatedHostsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleHostGroupName, exampleHostName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHost.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -786,18 +711,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHosts_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDedicatedHosts_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DedicatedHostsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDedicatedHostsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDedicatedHostsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHost.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a dedicated host."},
 	})
 	var exampleResourceGroupName string
@@ -850,7 +765,7 @@ func (testsuite *FakeTestSuite) TestDedicatedHosts_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *armcompute.DedicatedHostsClientGetOptions) (resp azfake.Responder[armcompute.DedicatedHostsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DedicatedHostsServer.Get = func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *armcompute.DedicatedHostsClientGetOptions) (resp azfake.Responder[armcompute.DedicatedHostsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleHostGroupName, hostGroupName)
 		testsuite.Require().Equal(exampleHostName, hostName)
@@ -858,6 +773,8 @@ func (testsuite *FakeTestSuite) TestDedicatedHosts_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.DedicatedHostsClientGetResponse{DedicatedHost: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDedicatedHostsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleHostGroupName, exampleHostName, &armcompute.DedicatedHostsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHost.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DedicatedHost))
@@ -876,18 +793,8 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestSSHPublicKeys_Create() {
-	ctx := context.Background()
-	fakeServer := fake.SSHPublicKeysServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSSHPublicKeysServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSSHPublicKeysClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnSshPublicKey.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a new SSH public key resource."},
 	})
 	var exampleResourceGroupName string
@@ -911,7 +818,7 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_Create() {
 		},
 	}
 
-	fakeServer.Create = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters armcompute.SSHPublicKeyResource, options *armcompute.SSHPublicKeysClientCreateOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientCreateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SSHPublicKeysServer.Create = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters armcompute.SSHPublicKeyResource, options *armcompute.SSHPublicKeysClientCreateOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientCreateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSshPublicKeyName, sshPublicKeyName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -919,6 +826,8 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_Create() {
 		resp.SetResponse(http.StatusOK, armcompute.SSHPublicKeysClientCreateResponse{SSHPublicKeyResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSSHPublicKeysClient()
 	res, err := client.Create(ctx, exampleResourceGroupName, exampleSshPublicKeyName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnSshPublicKey.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SSHPublicKeyResource))
@@ -933,18 +842,8 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestSSHPublicKeys_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SSHPublicKeysServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSSHPublicKeysServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSSHPublicKeysClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAnSshPublicKey.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get an ssh public key."},
 	})
 	var exampleResourceGroupName string
@@ -964,31 +863,23 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *armcompute.SSHPublicKeysClientGetOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SSHPublicKeysServer.Get = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *armcompute.SSHPublicKeysClientGetOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSshPublicKeyName, sshPublicKeyName)
 		resp = azfake.Responder[armcompute.SSHPublicKeysClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.SSHPublicKeysClientGetResponse{SSHPublicKeyResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSSHPublicKeysClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleSshPublicKeyName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAnSshPublicKey.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SSHPublicKeyResource))
 }
 
 func (testsuite *FakeTestSuite) TestSSHPublicKeys_GenerateKeyPair() {
-	ctx := context.Background()
-	fakeServer := fake.SSHPublicKeysServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSSHPublicKeysServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSSHPublicKeysClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GenerateSshKeyPair.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Generate an SSH key pair."},
 	})
 	var exampleResourceGroupName string
@@ -1002,13 +893,15 @@ func (testsuite *FakeTestSuite) TestSSHPublicKeys_GenerateKeyPair() {
 		PublicKey:  to.Ptr("{ssh-rsa public key}"),
 	}
 
-	fakeServer.GenerateKeyPair = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *armcompute.SSHPublicKeysClientGenerateKeyPairOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientGenerateKeyPairResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SSHPublicKeysServer.GenerateKeyPair = func(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *armcompute.SSHPublicKeysClientGenerateKeyPairOptions) (resp azfake.Responder[armcompute.SSHPublicKeysClientGenerateKeyPairResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSshPublicKeyName, sshPublicKeyName)
 		resp = azfake.Responder[armcompute.SSHPublicKeysClientGenerateKeyPairResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.SSHPublicKeysClientGenerateKeyPairResponse{SSHPublicKeyGenerateKeyPairResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSSHPublicKeysClient()
 	res, err := client.GenerateKeyPair(ctx, exampleResourceGroupName, exampleSshPublicKeyName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GenerateSshKeyPair.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SSHPublicKeyGenerateKeyPairResult))
@@ -1083,18 +976,8 @@ func (testsuite *FakeTestSuite) TestUsage_List() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_ListByLocation() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachinesInASubscriptionByLocation.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Lists all the virtual machines under the specified subscription for the specified location."},
 	})
 	var exampleLocation string
@@ -1214,12 +1097,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_ListByLocation() {
 			}},
 	}
 
-	fakeServer.NewListByLocationPager = func(location string, options *armcompute.VirtualMachinesClientListByLocationOptions) (resp azfake.PagerResponder[armcompute.VirtualMachinesClientListByLocationResponse]) {
+	testsuite.serverFactory.VirtualMachinesServer.NewListByLocationPager = func(location string, options *armcompute.VirtualMachinesClientListByLocationOptions) (resp azfake.PagerResponder[armcompute.VirtualMachinesClientListByLocationResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.VirtualMachinesClientListByLocationResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachinesClientListByLocationResponse{VirtualMachineListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	pager := client.NewListByLocationPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1236,18 +1121,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Capture() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingAssessmentModeOfImageDefault.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Linux vm with a patch setting assessmentMode of ImageDefault."},
 	})
 	var exampleResourceGroupName string
@@ -1352,7 +1227,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1360,6 +1235,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingAssessmentModeOfImageDefault.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1367,7 +1244,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Linux vm with a patch setting patchMode of ImageDefault."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -1469,7 +1346,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1477,6 +1354,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1484,7 +1362,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Linux vm with a patch settings patchMode and assessmentMode set to AutomaticByPlatform."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -1588,7 +1466,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1596,6 +1474,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1603,7 +1482,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a VM with Uefi Settings of secureBoot and vTPM."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -1711,7 +1590,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1719,6 +1598,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1726,7 +1606,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a VM with UserData"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -1833,7 +1713,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1841,6 +1721,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1848,7 +1729,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithNetworkInterfaceConfiguration.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a VM with network interface configuration"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -1962,7 +1843,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1970,6 +1851,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithNetworkInterfaceConfiguration.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1977,7 +1859,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Windows vm with a patch setting assessmentMode of ImageDefault."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2081,7 +1963,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2089,6 +1971,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2096,7 +1979,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Windows vm with a patch setting patchMode of AutomaticByOS."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2200,7 +2083,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2208,6 +2091,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2215,7 +2099,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Windows vm with a patch setting patchMode of AutomaticByPlatform and enableHotpatching set to true."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2321,7 +2205,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2329,6 +2213,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2336,7 +2221,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Windows vm with a patch setting patchMode of Manual."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2440,7 +2325,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2448,6 +2333,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2455,7 +2341,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a Windows vm with patch settings patchMode and assessmentMode set to AutomaticByPlatform."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2561,7 +2447,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2569,6 +2455,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2576,7 +2463,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a custom-image vm from an unmanaged generalized os image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2665,7 +2552,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2673,6 +2560,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2680,7 +2568,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageVmWithUnmanagedOsAndDataDisks.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a platform-image vm with unmanaged os and data disks."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2811,7 +2699,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2819,6 +2707,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageVmWithUnmanagedOsAndDataDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2826,7 +2715,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromACustomImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm from a custom image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -2914,7 +2803,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -2922,6 +2811,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromACustomImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2929,7 +2819,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromAGeneralizedSharedImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm from a generalized shared image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3017,7 +2907,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3025,6 +2915,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromAGeneralizedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3032,7 +2923,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromASpecializedSharedImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm from a specialized shared image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3107,7 +2998,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3115,6 +3006,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromASpecializedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3122,7 +3014,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm in a Virtual Machine Scale Set with customer assigned platformFaultDomain."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3224,7 +3116,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3232,6 +3124,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3239,7 +3132,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAnAvailabilitySet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm in an availability set."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3339,7 +3232,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3347,6 +3240,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAnAvailabilitySet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3354,7 +3248,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with DiskEncryptionSet resource id in the os disk and data disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3499,7 +3393,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3507,6 +3401,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3514,7 +3409,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with Host Encryption using encryptionAtHost property."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3624,7 +3519,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3632,6 +3527,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3639,7 +3535,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithScheduledEventsProfile.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with Scheduled Events Profile"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3757,7 +3653,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3765,6 +3661,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithScheduledEventsProfile.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3772,7 +3669,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithAMarketplaceImagePlan.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with a marketplace image plan."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3876,7 +3773,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -3884,6 +3781,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithAMarketplaceImagePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3891,7 +3789,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with an extensions time budget."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -3999,7 +3897,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4007,6 +3905,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4014,7 +3913,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithBootDiagnostics.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with boot diagnostics."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4120,7 +4019,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4128,6 +4027,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4135,7 +4035,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEmptyDataDisks.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with empty data disks."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4258,7 +4158,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4266,6 +4166,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEmptyDataDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4273,7 +4174,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with ephemeral os disk provisioning in Cache disk using placement property."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4385,7 +4286,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4393,6 +4294,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4400,7 +4302,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with ephemeral os disk provisioning in Resource disk using placement property."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4512,7 +4414,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4520,6 +4422,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4527,7 +4430,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with ephemeral os disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4637,7 +4540,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4645,6 +4548,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4652,7 +4556,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithManagedBootDiagnostics.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with managed boot diagnostics."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4756,7 +4660,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4764,6 +4668,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithManagedBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4771,7 +4676,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPasswordAuthentication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with password authentication."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4865,7 +4770,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4873,6 +4778,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPasswordAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4880,7 +4786,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPremiumStorage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with premium storage."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -4974,7 +4880,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -4982,6 +4888,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPremiumStorage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -4989,7 +4896,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithSshAuthentication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a vm with ssh authentication."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -5098,7 +5005,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachine, options *armcompute.VirtualMachinesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -5106,6 +5013,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientCreateOrUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithSshAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -5114,18 +5022,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a VM by detaching data disk"},
 	})
 	var exampleResourceGroupName string
@@ -5254,7 +5152,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachineUpdate, options *armcompute.VirtualMachinesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachineUpdate, options *armcompute.VirtualMachinesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -5262,6 +5160,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -5269,7 +5169,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a VM by force-detaching data disk"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -5397,7 +5297,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachineUpdate, options *armcompute.VirtualMachinesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.VirtualMachineUpdate, options *armcompute.VirtualMachinesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -5405,6 +5305,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientUpdateResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -5413,18 +5314,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Force delete a VM"},
 	})
 	var exampleResourceGroupName string
@@ -5432,13 +5323,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleVmName = "myVM"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachinesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachinesClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachine.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -5446,18 +5339,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a Virtual Machine."},
 	})
 	var exampleResourceGroupName string
@@ -5571,19 +5454,21 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Get() {
 			}},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.Get = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientGetResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachinesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachine.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineAutoPlacedOnDedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a virtual machine placed on a dedicated host group through automatic placement"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -5644,31 +5529,22 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.Get = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientGetResponse{VirtualMachine: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachinesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineAutoPlacedOnDedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachine))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_InstanceView() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceView.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Virtual Machine Instance View."},
 	})
 	var exampleResourceGroupName string
@@ -5798,19 +5674,21 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_InstanceView() {
 			}},
 	}
 
-	fakeServer.InstanceView = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.InstanceView = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientInstanceViewResponse{VirtualMachineInstanceView: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	res, err := client.InstanceView(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceView.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineInstanceView))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get instance view of a virtual machine placed on a dedicated host group through automatic placement."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -5858,13 +5736,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_InstanceView() {
 		},
 	}
 
-	fakeServer.InstanceView = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.InstanceView = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientInstanceViewResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientInstanceViewResponse{VirtualMachineInstanceView: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.InstanceView(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineInstanceView))
@@ -5879,18 +5758,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Deallocate() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Generalize() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GeneralizeVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Generalize a Virtual Machine."},
 	})
 	var exampleResourceGroupName string
@@ -5898,13 +5767,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Generalize() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleVmName = "myVMName"
 
-	fakeServer.Generalize = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGeneralizeOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGeneralizeResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.Generalize = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientGeneralizeOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientGeneralizeResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientGeneralizeResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientGeneralizeResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	_, err = client.Generalize(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GeneralizeVirtualMachine.json")
 }
@@ -5918,18 +5789,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_ListAll() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_ListAvailableSizes() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListAvailableVmSizes_VirtualMachines.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Lists all available virtual machine sizes to which the specified virtual machine can be resized"},
 	})
 	var exampleResourceGroupName string
@@ -5957,13 +5818,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_ListAvailableSizes() {
 			}},
 	}
 
-	fakeServer.NewListAvailableSizesPager = func(resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientListAvailableSizesOptions) (resp azfake.PagerResponder[armcompute.VirtualMachinesClientListAvailableSizesResponse]) {
+	testsuite.serverFactory.VirtualMachinesServer.NewListAvailableSizesPager = func(resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientListAvailableSizesOptions) (resp azfake.PagerResponder[armcompute.VirtualMachinesClientListAvailableSizesResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PagerResponder[armcompute.VirtualMachinesClientListAvailableSizesResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachinesClientListAvailableSizesResponse{VirtualMachineSizeListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	pager := client.NewListAvailableSizesPager(exampleResourceGroupName, exampleVmName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -5980,18 +5843,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_PowerOff() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Reapply() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReapplyVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Reapply the state of a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -5999,13 +5852,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Reapply() {
 	exampleResourceGroupName = "ResourceGroup"
 	exampleVmName = "VMName"
 
-	fakeServer.BeginReapply = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReapplyOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReapplyResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginReapply = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReapplyOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReapplyResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachinesClientReapplyResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientReapplyResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginReapply(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReapplyVirtualMachine.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -6025,18 +5880,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Redeploy() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_Reimage() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Reimage a Virtual Machine."},
 	})
 	var exampleResourceGroupName string
@@ -6044,13 +5889,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Reimage() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleVmName = "myVMName"
 
-	fakeServer.BeginReimage = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReimageResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginReimage = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientReimageResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachinesClientReimageResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientReimageResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginReimage(ctx, exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachinesClientBeginReimageOptions{Parameters: &armcompute.VirtualMachineReimageParameters{
 		TempDisk: to.Ptr(true),
 	},
@@ -6061,18 +5908,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_Reimage() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_RetrieveBootDiagnosticsData() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVirtualMachine.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"RetrieveBootDiagnosticsData of a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -6085,13 +5922,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_RetrieveBootDiagnosticsData(
 		SerialConsoleLogBlobURI:  to.Ptr("https://storageuri/vm.serialconsole.log?{sasKey}"),
 	}
 
-	fakeServer.RetrieveBootDiagnosticsData = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.RetrieveBootDiagnosticsData = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataResponse{RetrieveBootDiagnosticsDataResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	res, err := client.RetrieveBootDiagnosticsData(ctx, exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVirtualMachine.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RetrieveBootDiagnosticsDataResult))
@@ -6102,18 +5941,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_PerformMaintenance() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_SimulateEviction() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Simulate Eviction a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -6121,30 +5950,22 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_SimulateEviction() {
 	exampleResourceGroupName = "ResourceGroup"
 	exampleVmName = "VMName"
 
-	fakeServer.SimulateEviction = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientSimulateEvictionOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientSimulateEvictionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.SimulateEviction = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientSimulateEvictionOptions) (resp azfake.Responder[armcompute.VirtualMachinesClientSimulateEvictionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.Responder[armcompute.VirtualMachinesClientSimulateEvictionResponse]{}
 		resp.SetResponse(http.StatusNoContent, armcompute.VirtualMachinesClientSimulateEvictionResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	_, err = client.SimulateEviction(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVM.json")
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_AssessPatches() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineAssessPatches.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Assess patch state of a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -6188,13 +6009,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_AssessPatches() {
 		Status:                        to.Ptr(armcompute.PatchOperationStatusSucceeded),
 	}
 
-	fakeServer.BeginAssessPatches = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginAssessPatchesOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientAssessPatchesResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginAssessPatches = func(ctx context.Context, resourceGroupName string, vmName string, options *armcompute.VirtualMachinesClientBeginAssessPatchesOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientAssessPatchesResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachinesClientAssessPatchesResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientAssessPatchesResponse{VirtualMachineAssessPatchesResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginAssessPatches(ctx, exampleResourceGroupName, exampleVmName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineAssessPatches.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -6203,18 +6026,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_AssessPatches() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_InstallPatches() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Install patch state of a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -6265,7 +6078,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_InstallPatches() {
 		Status:            to.Ptr(armcompute.PatchOperationStatusSucceeded),
 	}
 
-	fakeServer.BeginInstallPatches = func(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput armcompute.VirtualMachineInstallPatchesParameters, options *armcompute.VirtualMachinesClientBeginInstallPatchesOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientInstallPatchesResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginInstallPatches = func(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput armcompute.VirtualMachineInstallPatchesParameters, options *armcompute.VirtualMachinesClientBeginInstallPatchesOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientInstallPatchesResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleInstallPatchesInput, installPatchesInput))
@@ -6273,6 +6086,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_InstallPatches() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientInstallPatchesResponse{VirtualMachineInstallPatchesResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginInstallPatches(ctx, exampleResourceGroupName, exampleVmName, exampleInstallPatchesInput, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -6281,18 +6096,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_InstallPatches() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachines_RunCommand() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachinesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachinesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachinesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"VirtualMachineRunCommand"},
 	})
 	var exampleResourceGroupName string
@@ -6320,7 +6125,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_RunCommand() {
 			}},
 	}
 
-	fakeServer.BeginRunCommand = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.RunCommandInput, options *armcompute.VirtualMachinesClientBeginRunCommandOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientRunCommandResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachinesServer.BeginRunCommand = func(ctx context.Context, resourceGroupName string, vmName string, parameters armcompute.RunCommandInput, options *armcompute.VirtualMachinesClientBeginRunCommandOptions) (resp azfake.PollerResponder[armcompute.VirtualMachinesClientRunCommandResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -6328,6 +6133,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_RunCommand() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachinesClientRunCommandResponse{RunCommandResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachinesClient()
 	poller, err := client.BeginRunCommand(ctx, exampleResourceGroupName, exampleVmName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -6336,18 +6143,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachines_RunCommand() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_ListByLocation() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetsInASubscriptionByLocation.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Lists all the VM scale sets under the specified subscription for the specified location."},
 	})
 	var exampleLocation string
@@ -6507,12 +6304,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_ListByLocation() {
 			}},
 	}
 
-	fakeServer.NewListByLocationPager = func(location string, options *armcompute.VirtualMachineScaleSetsClientListByLocationOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineScaleSetsClientListByLocationResponse]) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.NewListByLocationPager = func(location string, options *armcompute.VirtualMachineScaleSetsClientListByLocationOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineScaleSetsClientListByLocationResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.VirtualMachineScaleSetsClientListByLocationResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachineScaleSetsClientListByLocationResponse{VirtualMachineScaleSetListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetsClient()
 	pager := client.NewListByLocationPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -6525,18 +6324,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_ListByLocation() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a custom-image scale set from an unmanaged generalized os image."},
 	})
 	var exampleResourceGroupName string
@@ -6657,12 +6446,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
 		resp = azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -6670,7 +6461,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageScaleSetWithUnmanagedOsDisks.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a platform-image scale set with unmanaged os disks."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -6806,7 +6597,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -6814,6 +6605,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageScaleSetWithUnmanagedOsDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -6821,7 +6613,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromACustomImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set from a custom image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -6946,7 +6738,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -6954,6 +6746,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromACustomImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -6961,7 +6754,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromAGeneralizedSharedImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set from a generalized shared image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7086,7 +6879,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7094,6 +6887,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromAGeneralizedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7101,7 +6895,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromASpecializedSharedImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set from a specialized shared image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7213,7 +7007,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7221,6 +7015,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromASpecializedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7228,7 +7023,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScalesetWithDiskEncryptionSetResource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with DiskEncryptionSet resource in os disk and data disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7385,7 +7180,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7393,6 +7188,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScalesetWithDiskEncryptionSetResource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7400,7 +7196,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromWithFpgaNetworkInterface.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with Fpga Network Interfaces."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7567,7 +7363,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7575,6 +7371,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromWithFpgaNetworkInterface.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7582,7 +7379,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEncryptionAtHost.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with Host Encryption using encryptionAtHost property."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7730,7 +7527,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7738,6 +7535,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEncryptionAtHost.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7745,7 +7543,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithUefiSettings.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with Uefi Settings of secureBoot and vTPM."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -7891,7 +7689,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -7899,6 +7697,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithUefiSettings.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -7906,7 +7705,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAMarketplaceImagePlan.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with a marketplace image plan."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8048,7 +7847,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8056,6 +7855,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAMarketplaceImagePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8063,7 +7863,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureApplicationGateway.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with an azure application gateway."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8203,7 +8003,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8211,6 +8011,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureApplicationGateway.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8218,7 +8019,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureLoadBalancer.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with an azure load balancer."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8372,7 +8173,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8380,6 +8181,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureLoadBalancer.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8387,7 +8189,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAutomaticRepairs.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with automatic repairs enabled"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8527,7 +8329,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8535,6 +8337,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAutomaticRepairs.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8542,7 +8345,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithBootDiagnostics.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with boot diagnostics."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8686,7 +8489,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8694,6 +8497,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8701,7 +8505,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEmptyDataDisksOnEachVm.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with empty data disks on each vm."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -8865,7 +8669,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -8873,6 +8677,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEmptyDataDisksOnEachVm.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -8880,7 +8685,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDiskUsingDiffDiskPlacement.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with ephemeral os disks using placement property."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9030,7 +8835,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9038,6 +8843,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDiskUsingDiffDiskPlacement.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9045,7 +8851,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with ephemeral os disks."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9189,7 +8995,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9197,6 +9003,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9204,7 +9011,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithExtensionsTimeBudget.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with extension time budget."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9376,7 +9183,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9384,6 +9191,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithExtensionsTimeBudget.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9391,7 +9199,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithManagedBootDiagnostics.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with managed boot diagnostics."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9533,7 +9341,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9541,6 +9349,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithManagedBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9548,7 +9357,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPasswordAuthentication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with password authentication."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9680,7 +9489,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9688,6 +9497,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPasswordAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9695,7 +9505,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPremiumStorage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with premium storage."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9827,7 +9637,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9835,6 +9645,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPremiumStorage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -9842,7 +9653,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithSshAuthentication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with ssh authentication."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -9989,7 +9800,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -9997,6 +9808,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithSshAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10004,7 +9816,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithTerminateScheduledEventEnabled.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with terminate scheduled events enabled."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10148,7 +9960,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -10156,6 +9968,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithTerminateScheduledEventEnabled.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10163,7 +9976,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAScaleSetWithUserData.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with userData."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10302,7 +10115,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -10310,6 +10123,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAScaleSetWithUserData.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10317,7 +10131,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithVMsInDifferentZones.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a scale set with virtual machines in different zones."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10488,7 +10302,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 			to.Ptr("3")},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters armcompute.VirtualMachineScaleSet, options *armcompute.VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -10496,6 +10310,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientCreateOrUpdateResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithVMsInDifferentZones.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10508,18 +10323,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSets.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Force Delete a VM scale set."},
 	})
 	var exampleResourceGroupName string
@@ -10527,13 +10332,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleVmScaleSetName = "myvmScaleSet"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachineScaleSetsClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmScaleSetName, &armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSets.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -10541,18 +10348,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetAutoPlacedOnDedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a virtual machine scale set placed on a dedicated host group through automatic placement."},
 	})
 	var exampleResourceGroupName string
@@ -10639,19 +10436,21 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		resp = azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientGetResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleVmScaleSetName, &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetAutoPlacedOnDedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetWithUserData.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a virtual machine scale set with UserData"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10737,13 +10536,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSets_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetsServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		resp = azfake.Responder[armcompute.VirtualMachineScaleSetsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetsClientGetResponse{VirtualMachineScaleSet: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleVmScaleSetName, &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetWithUserData.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSet))
@@ -10822,18 +10622,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineSizes_List() {
 }
 
 func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlobWithDiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a blob with DiskEncryptionSet resource."},
 	})
 	var exampleResourceGroupName string
@@ -10879,7 +10669,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -10887,6 +10677,8 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewImagesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlobWithDiskEncryptionSet.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -10894,7 +10686,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a blob."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10933,7 +10725,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -10941,6 +10733,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10948,7 +10741,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a managed disk with DiskEncryptionSet resource."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -10995,7 +10788,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11003,6 +10796,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11010,7 +10804,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a managed disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11053,7 +10847,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11061,6 +10855,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11068,7 +10863,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a snapshot with DiskEncryptionSet resource."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11115,7 +10910,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11123,6 +10918,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11130,7 +10926,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from a snapshot."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11173,7 +10969,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11181,6 +10977,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11188,7 +10985,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image from an existing virtual machine."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11227,7 +11024,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11235,6 +11032,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11242,7 +11040,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image that includes a data disk from a blob."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11290,7 +11088,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11298,6 +11096,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11305,7 +11104,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image that includes a data disk from a managed disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11361,7 +11160,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11369,6 +11168,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11376,7 +11176,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a virtual machine image that includes a data disk from a snapshot."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11432,7 +11232,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.Image, options *armcompute.ImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11440,6 +11240,7 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientCreateOrUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11448,18 +11249,8 @@ func (testsuite *FakeTestSuite) TestImages_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestImages_Update() {
-	ctx := context.Background()
-	fakeServer := fake.ImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Updates tags of an Image."},
 	})
 	var exampleResourceGroupName string
@@ -11520,7 +11311,7 @@ func (testsuite *FakeTestSuite) TestImages_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.ImageUpdate, options *armcompute.ImagesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, imageName string, parameters armcompute.ImageUpdate, options *armcompute.ImagesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.ImagesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11528,6 +11319,8 @@ func (testsuite *FakeTestSuite) TestImages_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.ImagesClientUpdateResponse{Image: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewImagesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleImageName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -11540,18 +11333,8 @@ func (testsuite *FakeTestSuite) TestImages_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestImages_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInformationAboutAnImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a virtual machine image."},
 	})
 	var exampleResourceGroupName string
@@ -11597,31 +11380,23 @@ func (testsuite *FakeTestSuite) TestImages_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, imageName string, options *armcompute.ImagesClientGetOptions) (resp azfake.Responder[armcompute.ImagesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ImagesServer.Get = func(ctx context.Context, resourceGroupName string, imageName string, options *armcompute.ImagesClientGetOptions) (resp azfake.Responder[armcompute.ImagesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleImageName, imageName)
 		resp = azfake.Responder[armcompute.ImagesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.ImagesClientGetResponse{Image: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewImagesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleImageName, &armcompute.ImagesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInformationAboutAnImage.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Image))
 }
 
 func (testsuite *FakeTestSuite) TestImages_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.ImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListImagesInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all virtual machine images in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -11666,12 +11441,14 @@ func (testsuite *FakeTestSuite) TestImages_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.ImagesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.ImagesClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.ImagesServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.ImagesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.ImagesClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.ImagesClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ImagesClientListByResourceGroupResponse{ImageListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewImagesClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -11684,18 +11461,8 @@ func (testsuite *FakeTestSuite) TestImages_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestImages_List() {
-	ctx := context.Background()
-	fakeServer := fake.ImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListImagesInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all virtual machine images in a subscription."},
 	})
 
@@ -11738,11 +11505,13 @@ func (testsuite *FakeTestSuite) TestImages_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.ImagesClientListOptions) (resp azfake.PagerResponder[armcompute.ImagesClientListResponse]) {
+	testsuite.serverFactory.ImagesServer.NewListPager = func(options *armcompute.ImagesClientListOptions) (resp azfake.PagerResponder[armcompute.ImagesClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.ImagesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ImagesClientListResponse{ImageListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewImagesClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -11755,18 +11524,8 @@ func (testsuite *FakeTestSuite) TestImages_List() {
 }
 
 func (testsuite *FakeTestSuite) TestRestorePointCollections_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointCollectionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointCollectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointCollectionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateARestorePointCollection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a restore point collection."},
 	})
 	var exampleResourceGroupName string
@@ -11804,7 +11563,7 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters armcompute.RestorePointCollection, options *armcompute.RestorePointCollectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RestorePointCollectionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, parameters armcompute.RestorePointCollection, options *armcompute.RestorePointCollectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -11812,6 +11571,8 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armcompute.RestorePointCollectionsClientCreateOrUpdateResponse{RestorePointCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointCollectionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateARestorePointCollection.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RestorePointCollection))
@@ -11826,18 +11587,8 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestRestorePointCollections_Get() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointCollectionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointCollectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointCollectionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a restore point collection (but not the restore points contained in the restore point collection)"},
 	})
 	var exampleResourceGroupName string
@@ -11863,19 +11614,21 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *armcompute.RestorePointCollectionsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RestorePointCollectionsServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *armcompute.RestorePointCollectionsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		resp = azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.RestorePointCollectionsClientGetResponse{RestorePointCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointCollectionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollection.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RestorePointCollection))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionWithContainedRestorePoints.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a restore point collection, including the restore points contained in the restore point collection"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -11965,31 +11718,22 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *armcompute.RestorePointCollectionsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RestorePointCollectionsServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, options *armcompute.RestorePointCollectionsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		resp = azfake.Responder[armcompute.RestorePointCollectionsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.RestorePointCollectionsClientGetResponse{RestorePointCollection: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionWithContainedRestorePoints.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RestorePointCollection))
 }
 
 func (testsuite *FakeTestSuite) TestRestorePointCollections_List() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointCollectionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointCollectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointCollectionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionsInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Gets the list of restore point collections in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -12033,12 +11777,14 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, options *armcompute.RestorePointCollectionsClientListOptions) (resp azfake.PagerResponder[armcompute.RestorePointCollectionsClientListResponse]) {
+	testsuite.serverFactory.RestorePointCollectionsServer.NewListPager = func(resourceGroupName string, options *armcompute.RestorePointCollectionsClientListOptions) (resp azfake.PagerResponder[armcompute.RestorePointCollectionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.RestorePointCollectionsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.RestorePointCollectionsClientListResponse{RestorePointCollectionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointCollectionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -12051,18 +11797,8 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_List() {
 }
 
 func (testsuite *FakeTestSuite) TestRestorePointCollections_ListAll() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointCollectionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointCollectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointCollectionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionsInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Gets the list of restore point collections in a subscription"},
 	})
 
@@ -12104,11 +11840,13 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_ListAll() {
 			}},
 	}
 
-	fakeServer.NewListAllPager = func(options *armcompute.RestorePointCollectionsClientListAllOptions) (resp azfake.PagerResponder[armcompute.RestorePointCollectionsClientListAllResponse]) {
+	testsuite.serverFactory.RestorePointCollectionsServer.NewListAllPager = func(options *armcompute.RestorePointCollectionsClientListAllOptions) (resp azfake.PagerResponder[armcompute.RestorePointCollectionsClientListAllResponse]) {
 		resp = azfake.PagerResponder[armcompute.RestorePointCollectionsClientListAllResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.RestorePointCollectionsClientListAllResponse{RestorePointCollectionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointCollectionsClient()
 	pager := client.NewListAllPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -12121,18 +11859,8 @@ func (testsuite *FakeTestSuite) TestRestorePointCollections_ListAll() {
 }
 
 func (testsuite *FakeTestSuite) TestRestorePoints_Create() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateARestorePoint.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a restore point"},
 	})
 	var exampleResourceGroupName string
@@ -12149,7 +11877,7 @@ func (testsuite *FakeTestSuite) TestRestorePoints_Create() {
 			}},
 	}
 
-	fakeServer.BeginCreate = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, parameters armcompute.RestorePoint, options *armcompute.RestorePointsClientBeginCreateOptions) (resp azfake.PollerResponder[armcompute.RestorePointsClientCreateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RestorePointsServer.BeginCreate = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, parameters armcompute.RestorePoint, options *armcompute.RestorePointsClientBeginCreateOptions) (resp azfake.PollerResponder[armcompute.RestorePointsClientCreateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		testsuite.Require().Equal(exampleRestorePointName, restorePointName)
@@ -12158,6 +11886,8 @@ func (testsuite *FakeTestSuite) TestRestorePoints_Create() {
 		resp.SetTerminalResponse(http.StatusCreated, armcompute.RestorePointsClientCreateResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointsClient()
 	poller, err := client.BeginCreate(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, exampleRestorePointName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateARestorePoint.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -12169,18 +11899,8 @@ func (testsuite *FakeTestSuite) TestRestorePoints_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestRestorePoints_Get() {
-	ctx := context.Background()
-	fakeServer := fake.RestorePointsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRestorePointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRestorePointsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePoint.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a restore point"},
 	})
 	var exampleResourceGroupName string
@@ -12256,7 +11976,7 @@ func (testsuite *FakeTestSuite) TestRestorePoints_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, options *armcompute.RestorePointsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RestorePointsServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, restorePointName string, options *armcompute.RestorePointsClientGetOptions) (resp azfake.Responder[armcompute.RestorePointsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		testsuite.Require().Equal(exampleRestorePointName, restorePointName)
@@ -12264,6 +11984,8 @@ func (testsuite *FakeTestSuite) TestRestorePoints_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.RestorePointsClientGetResponse{RestorePoint: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRestorePointsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, exampleRestorePointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePoint.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RestorePoint))
@@ -12298,18 +12020,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetRollingUpgrades_StartO
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetRollingUpgrades_StartExtensionUpgrade() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetRollingUpgradesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetRollingUpgradesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetRollingUpgradesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetExtensionRollingUpgrade.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Start an extension rolling upgrade."},
 	})
 	var exampleResourceGroupName string
@@ -12317,13 +12029,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetRollingUpgrades_StartE
 	exampleResourceGroupName = "myResourceGroup"
 	exampleVmScaleSetName = "{vmss-name}"
 
-	fakeServer.BeginStartExtensionUpgrade = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetRollingUpgradesServer.BeginStartExtensionUpgrade = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *armcompute.VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		resp = azfake.PollerResponder[armcompute.VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetRollingUpgradesClient()
 	poller, err := client.BeginStartExtensionUpgrade(ctx, exampleResourceGroupName, exampleVmScaleSetName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetExtensionRollingUpgrade.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -12335,18 +12049,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetRollingUpgrades_GetLat
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMExtensionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMExtensions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create VirtualMachineScaleSet VM extension."},
 	})
 	var exampleResourceGroupName string
@@ -12409,7 +12113,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters armcompute.VirtualMachineScaleSetVMExtension, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMExtensionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters armcompute.VirtualMachineScaleSetVMExtension, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12419,6 +12123,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse{VirtualMachineScaleSetVMExtension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleVmExtensionName, exampleExtensionParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMExtensions.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -12427,18 +12133,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMExtensionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMExtensions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update VirtualMachineScaleSet VM extension."},
 	})
 	var exampleResourceGroupName string
@@ -12478,7 +12174,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters armcompute.VirtualMachineScaleSetVMExtensionUpdate, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMExtensionsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters armcompute.VirtualMachineScaleSetVMExtensionUpdate, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12488,6 +12184,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMExtensionsClientUpdateResponse{VirtualMachineScaleSetVMExtension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleVmExtensionName, exampleExtensionParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMExtensions.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -12496,18 +12194,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMExtensionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMExtensions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete VirtualMachineScaleSet VM extension."},
 	})
 	var exampleResourceGroupName string
@@ -12519,7 +12207,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Delete() 
 	exampleInstanceID = "0"
 	exampleVmExtensionName = "myVMExtension"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMExtensionsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMExtensionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12528,6 +12216,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Delete() 
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMExtensionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleVmExtensionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMExtensions.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -12535,18 +12225,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Delete() 
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMExtensionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMExtensions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get VirtualMachineScaleSet VM extension."},
 	})
 	var exampleResourceGroupName string
@@ -12574,7 +12254,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMExtensionsServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12583,24 +12263,16 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMExtensionsClientGetResponse{VirtualMachineScaleSetVMExtension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleVmExtensionName, &armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMExtensions.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSetVMExtension))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMExtensionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMExtensions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List extensions in Vmss instance."},
 	})
 	var exampleResourceGroupName string
@@ -12644,7 +12316,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
 			}},
 	}
 
-	fakeServer.List = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMExtensionsClientListResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMExtensionsServer.List = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMExtensionsClientListResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12652,6 +12324,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMExtensionsClientListResponse{VirtualMachineScaleSetVMExtensionsListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMExtensionsClient()
 	res, err := client.List(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, &armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMExtensions.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSetVMExtensionsListResult))
@@ -12674,18 +12348,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSetVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Force Delete a virtual machine from a VM scale set."},
 	})
 	var exampleResourceGroupName string
@@ -12695,7 +12359,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Delete() {
 	exampleVmScaleSetName = "myvmScaleSet"
 	exampleInstanceID = "0"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12703,6 +12367,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, &armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSetVM.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -12710,18 +12376,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMWithUserData.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get VM scale set VM with UserData"},
 	})
 	var exampleResourceGroupName string
@@ -12846,7 +12502,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Get() {
 			}},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12854,24 +12510,16 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMsClientGetResponse{VirtualMachineScaleSetVM: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, &armcompute.VirtualMachineScaleSetVMsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMWithUserData.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSetVM))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMInstanceViewAutoPlacedOnDedicatedHostGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get instance view of a virtual machine from a VM scale set placed on a dedicated host group through automatic placement."},
 	})
 	var exampleResourceGroupName string
@@ -12921,7 +12569,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 		},
 	}
 
-	fakeServer.GetInstanceView = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.GetInstanceView = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12929,6 +12577,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMsClientGetInstanceViewResponse{VirtualMachineScaleSetVMInstanceView: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	res, err := client.GetInstanceView(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMInstanceViewAutoPlacedOnDedicatedHostGroup.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineScaleSetVMInstanceView))
@@ -12955,18 +12605,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_Redeploy() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RetrieveBootDiagnosticsData() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVMScaleSetVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"RetrieveBootDiagnosticsData of a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -12981,7 +12621,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RetrieveBootDiagno
 		SerialConsoleLogBlobURI:  to.Ptr("https://storageuri/myvmScaleSetinstance.serialconsole.log?{saskey}"),
 	}
 
-	fakeServer.RetrieveBootDiagnosticsData = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.RetrieveBootDiagnosticsData = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -12989,6 +12629,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RetrieveBootDiagno
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataResponse{RetrieveBootDiagnosticsDataResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	res, err := client.RetrieveBootDiagnosticsData(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, &armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVMScaleSetVM.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RetrieveBootDiagnosticsDataResult))
@@ -12999,18 +12641,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_PerformMaintenance
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_SimulateEviction() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVmssVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Simulate Eviction a virtual machine."},
 	})
 	var exampleResourceGroupName string
@@ -13020,7 +12652,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_SimulateEviction()
 	exampleVmScaleSetName = "VmScaleSetName"
 	exampleInstanceID = "InstanceId"
 
-	fakeServer.SimulateEviction = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientSimulateEvictionOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientSimulateEvictionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.SimulateEviction = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMsClientSimulateEvictionOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMsClientSimulateEvictionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13028,23 +12660,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_SimulateEviction()
 		resp.SetResponse(http.StatusNoContent, armcompute.VirtualMachineScaleSetVMsClientSimulateEvictionResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	_, err = client.SimulateEviction(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVmssVM.json")
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RunCommand() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"VirtualMachineScaleSetVMs_RunCommand"},
 	})
 	var exampleResourceGroupName string
@@ -13076,7 +12700,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RunCommand() {
 			}},
 	}
 
-	fakeServer.BeginRunCommand = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters armcompute.RunCommandInput, options *armcompute.VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMsClientRunCommandResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMsServer.BeginRunCommand = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters armcompute.RunCommandInput, options *armcompute.VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMsClientRunCommandResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13085,6 +12709,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RunCommand() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMsClientRunCommandResponse{RunCommandResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMsClient()
 	poller, err := client.BeginRunCommand(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13093,18 +12719,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMs_RunCommand() {
 }
 
 func (testsuite *FakeTestSuite) TestLogAnalytics_ExportRequestRateByInterval() {
-	ctx := context.Background()
-	fakeServer := fake.LogAnalyticsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewLogAnalyticsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewLogAnalyticsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsRequestRateByInterval.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Export logs which contain all Api requests made to Compute Resource Provider within the given time period broken down by intervals."},
 	})
 	var exampleLocation string
@@ -13124,13 +12740,15 @@ func (testsuite *FakeTestSuite) TestLogAnalytics_ExportRequestRateByInterval() {
 		},
 	}
 
-	fakeServer.BeginExportRequestRateByInterval = func(ctx context.Context, location string, parameters armcompute.RequestRateByIntervalInput, options *armcompute.LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (resp azfake.PollerResponder[armcompute.LogAnalyticsClientExportRequestRateByIntervalResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.LogAnalyticsServer.BeginExportRequestRateByInterval = func(ctx context.Context, location string, parameters armcompute.RequestRateByIntervalInput, options *armcompute.LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (resp azfake.PollerResponder[armcompute.LogAnalyticsClientExportRequestRateByIntervalResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
 		resp = azfake.PollerResponder[armcompute.LogAnalyticsClientExportRequestRateByIntervalResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.LogAnalyticsClientExportRequestRateByIntervalResponse{LogAnalyticsOperationResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewLogAnalyticsClient()
 	poller, err := client.BeginExportRequestRateByInterval(ctx, exampleLocation, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsRequestRateByInterval.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13139,18 +12757,8 @@ func (testsuite *FakeTestSuite) TestLogAnalytics_ExportRequestRateByInterval() {
 }
 
 func (testsuite *FakeTestSuite) TestLogAnalytics_ExportThrottledRequests() {
-	ctx := context.Background()
-	fakeServer := fake.LogAnalyticsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewLogAnalyticsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewLogAnalyticsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Export logs which contain all throttled Api requests made to Compute Resource Provider within the given time period."},
 	})
 	var exampleLocation string
@@ -13172,13 +12780,15 @@ func (testsuite *FakeTestSuite) TestLogAnalytics_ExportThrottledRequests() {
 		},
 	}
 
-	fakeServer.BeginExportThrottledRequests = func(ctx context.Context, location string, parameters armcompute.ThrottledRequestsInput, options *armcompute.LogAnalyticsClientBeginExportThrottledRequestsOptions) (resp azfake.PollerResponder[armcompute.LogAnalyticsClientExportThrottledRequestsResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.LogAnalyticsServer.BeginExportThrottledRequests = func(ctx context.Context, location string, parameters armcompute.ThrottledRequestsInput, options *armcompute.LogAnalyticsClientBeginExportThrottledRequestsOptions) (resp azfake.PollerResponder[armcompute.LogAnalyticsClientExportThrottledRequestsResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
 		resp = azfake.PollerResponder[armcompute.LogAnalyticsClientExportThrottledRequestsResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.LogAnalyticsClientExportThrottledRequestsResponse{LogAnalyticsOperationResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewLogAnalyticsClient()
 	poller, err := client.BeginExportThrottledRequests(ctx, exampleLocation, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13187,18 +12797,8 @@ func (testsuite *FakeTestSuite) TestLogAnalytics_ExportThrottledRequests() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_List() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommandList.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"VirtualMachineRunCommandList"},
 	})
 	var exampleLocation string
@@ -13278,12 +12878,14 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, options *armcompute.VirtualMachineRunCommandsClientListOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListResponse]) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.NewListPager = func(location string, options *armcompute.VirtualMachineRunCommandsClientListOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachineRunCommandsClientListResponse{RunCommandListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	pager := client.NewListPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -13296,18 +12898,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_List() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommandGet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"VirtualMachineRunCommandGet"},
 	})
 	var exampleLocation string
@@ -13340,31 +12932,23 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Get() {
 			to.Ptr("Write-Host This is a sample script with parameters $arg1 $arg2")},
 	}
 
-	fakeServer.Get = func(ctx context.Context, location string, commandID string, options *armcompute.VirtualMachineRunCommandsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineRunCommandsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.Get = func(ctx context.Context, location string, commandID string, options *armcompute.VirtualMachineRunCommandsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineRunCommandsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleCommandID, commandID)
 		resp = azfake.Responder[armcompute.VirtualMachineRunCommandsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineRunCommandsClientGetResponse{RunCommandDocument: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	res, err := client.Get(ctx, exampleLocation, exampleCommandID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommandGet.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RunCommandDocument))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a run command."},
 	})
 	var exampleResourceGroupName string
@@ -13425,7 +13009,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand armcompute.VirtualMachineRunCommand, options *armcompute.VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand armcompute.VirtualMachineRunCommand, options *armcompute.VirtualMachineRunCommandsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().Equal(exampleRunCommandName, runCommandName)
@@ -13434,6 +13018,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineRunCommandsClientCreateOrUpdateResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleRunCommandName, exampleRunCommand, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13442,18 +13028,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Update() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a run command."},
 	})
 	var exampleResourceGroupName string
@@ -13500,7 +13076,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand armcompute.VirtualMachineRunCommandUpdate, options *armcompute.VirtualMachineRunCommandsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, runCommand armcompute.VirtualMachineRunCommandUpdate, options *armcompute.VirtualMachineRunCommandsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().Equal(exampleRunCommandName, runCommandName)
@@ -13509,6 +13085,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineRunCommandsClientUpdateResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleVmName, exampleRunCommandName, exampleRunCommand, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13517,18 +13095,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a run command."},
 	})
 	var exampleResourceGroupName string
@@ -13538,7 +13106,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Delete() {
 	exampleVmName = "myVM"
 	exampleRunCommandName = "myRunCommand"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *armcompute.VirtualMachineRunCommandsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *armcompute.VirtualMachineRunCommandsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineRunCommandsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().Equal(exampleRunCommandName, runCommandName)
@@ -13546,6 +13114,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineRunCommandsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmName, exampleRunCommandName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteRunCommand.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -13553,18 +13123,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_GetByVirtualMachine() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRunCommand.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a run command."},
 	})
 	var exampleResourceGroupName string
@@ -13603,7 +13163,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_GetByVirtualMachin
 		},
 	}
 
-	fakeServer.GetByVirtualMachine = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions) (resp azfake.Responder[armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.GetByVirtualMachine = func(ctx context.Context, resourceGroupName string, vmName string, runCommandName string, options *armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions) (resp azfake.Responder[armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		testsuite.Require().Equal(exampleRunCommandName, runCommandName)
@@ -13611,24 +13171,16 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_GetByVirtualMachin
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	res, err := client.GetByVirtualMachine(ctx, exampleResourceGroupName, exampleVmName, exampleRunCommandName, &armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRunCommand.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineRunCommand))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_ListByVirtualMachine() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListRunCommandsInVM.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List run commands in a Virtual Machine."},
 	})
 	var exampleResourceGroupName string
@@ -13668,13 +13220,15 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_ListByVirtualMachi
 			}},
 	}
 
-	fakeServer.NewListByVirtualMachinePager = func(resourceGroupName string, vmName string, options *armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListByVirtualMachineResponse]) {
+	testsuite.serverFactory.VirtualMachineRunCommandsServer.NewListByVirtualMachinePager = func(resourceGroupName string, vmName string, options *armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListByVirtualMachineResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmName, vmName)
 		resp = azfake.PagerResponder[armcompute.VirtualMachineRunCommandsClientListByVirtualMachineResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachineRunCommandsClientListByVirtualMachineResponse{VirtualMachineRunCommandsListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineRunCommandsClient()
 	pager := client.NewListByVirtualMachinePager(exampleResourceGroupName, exampleVmName, &armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -13687,18 +13241,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineRunCommands_ListByVirtualMachi
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMRunCommands.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create VirtualMachineScaleSet VM run command."},
 	})
 	var exampleResourceGroupName string
@@ -13757,7 +13301,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_CreateOr
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, runCommand armcompute.VirtualMachineRunCommand, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMRunCommandsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, runCommand armcompute.VirtualMachineRunCommand, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13767,6 +13311,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_CreateOr
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMRunCommandsClientCreateOrUpdateResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleRunCommandName, exampleRunCommand, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMRunCommands.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13775,18 +13321,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_CreateOr
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Update() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMRunCommands.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update VirtualMachineScaleSet VM run command."},
 	})
 	var exampleResourceGroupName string
@@ -13835,7 +13371,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Update()
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, runCommand armcompute.VirtualMachineRunCommandUpdate, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMRunCommandsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, runCommand armcompute.VirtualMachineRunCommandUpdate, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13845,6 +13381,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Update()
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMRunCommandsClientUpdateResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleRunCommandName, exampleRunCommand, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMRunCommands.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -13853,18 +13391,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Update()
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMRunCommands.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete VirtualMachineScaleSet VM run command."},
 	})
 	var exampleResourceGroupName string
@@ -13876,7 +13404,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Delete()
 	exampleInstanceID = "0"
 	exampleRunCommandName = "myRunCommand"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMRunCommandsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13885,6 +13413,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Delete()
 		resp.SetTerminalResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMRunCommandsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleRunCommandName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMRunCommands.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -13892,18 +13422,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Delete()
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Get() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMRunCommands.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get VirtualMachineScaleSet VM run commands."},
 	})
 	var exampleResourceGroupName string
@@ -13944,7 +13464,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMRunCommandsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMRunCommandsServer.Get = func(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, runCommandName string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions) (resp azfake.Responder[armcompute.VirtualMachineScaleSetVMRunCommandsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -13953,24 +13473,16 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.VirtualMachineScaleSetVMRunCommandsClientGetResponse{VirtualMachineRunCommand: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, exampleRunCommandName, &armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMRunCommands.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineRunCommand))
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_List() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineScaleSetVMRunCommandsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineScaleSetVMRunCommandsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMRunCommands.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List run commands in Vmss instance."},
 	})
 	var exampleResourceGroupName string
@@ -14008,7 +13520,7 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientListResponse]) {
+	testsuite.serverFactory.VirtualMachineScaleSetVMRunCommandsServer.NewListPager = func(resourceGroupName string, vmScaleSetName string, instanceID string, options *armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions) (resp azfake.PagerResponder[armcompute.VirtualMachineScaleSetVMRunCommandsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleVmScaleSetName, vmScaleSetName)
 		testsuite.Require().Equal(exampleInstanceID, instanceID)
@@ -14016,6 +13528,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_List() {
 		resp.AddPage(http.StatusOK, armcompute.VirtualMachineScaleSetVMRunCommandsClientListResponse{VirtualMachineRunCommandsListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineScaleSetVMRunCommandsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleVmScaleSetName, exampleInstanceID, &armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -14028,18 +13542,8 @@ func (testsuite *FakeTestSuite) TestVirtualMachineScaleSetVMRunCommands_List() {
 }
 
 func (testsuite *FakeTestSuite) TestResourceSKUs_List() {
-	ctx := context.Background()
-	fakeServer := fake.ResourceSKUsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewResourceSKUsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewResourceSKUsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2019-04-01/examples/ListAvailableResourceSkus.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Lists all available Resource SKUs"},
 	})
 
@@ -14212,11 +13716,13 @@ func (testsuite *FakeTestSuite) TestResourceSKUs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.ResourceSKUsClientListOptions) (resp azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]) {
+	testsuite.serverFactory.ResourceSKUsServer.NewListPager = func(options *armcompute.ResourceSKUsClientListOptions) (resp azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ResourceSKUsClientListResponse{ResourceSKUsResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewResourceSKUsClient()
 	pager := client.NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -14228,7 +13734,7 @@ func (testsuite *FakeTestSuite) TestResourceSKUs_List() {
 	}
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2019-04-01/examples/ListAvailableResourceSkusForARegion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Lists all available Resource SKUs for the specified region"},
 	})
 
@@ -14401,11 +13907,12 @@ func (testsuite *FakeTestSuite) TestResourceSKUs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.ResourceSKUsClientListOptions) (resp azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]) {
+	testsuite.serverFactory.ResourceSKUsServer.NewListPager = func(options *armcompute.ResourceSKUsClientListOptions) (resp azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.ResourceSKUsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.ResourceSKUsClientListResponse{ResourceSKUsResult: exampleRes}, nil)
 		return
 	}
+
 	pager = client.NewListPager(&armcompute.ResourceSKUsClientListOptions{Filter: to.Ptr("location eq 'westus'")})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -14418,18 +13925,8 @@ func (testsuite *FakeTestSuite) TestResourceSKUs_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DisksServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDisksServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDisksClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk and associate with disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -14463,7 +13960,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14471,6 +13968,8 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDisksClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -14478,7 +13977,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk and associate with disk encryption set."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14511,7 +14010,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14519,6 +14018,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14526,7 +14026,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByCopyingASnapshot.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk by copying a snapshot."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14553,7 +14053,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14561,6 +14061,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByCopyingASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14568,7 +14069,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk by importing an unmanaged blob from a different subscription."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14597,7 +14098,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14605,6 +14106,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14612,7 +14114,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk by importing an unmanaged blob from the same subscription."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14639,7 +14141,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14647,6 +14149,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14654,7 +14157,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAPlatformImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk from a platform image."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14693,7 +14196,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14701,6 +14204,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAPlatformImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14708,7 +14212,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk from an existing managed disk in the same or different subscription."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14735,7 +14239,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14743,6 +14247,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14750,7 +14255,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSecurityProfile.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk with security profile"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14789,7 +14294,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14797,6 +14302,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSecurityProfile.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14804,7 +14310,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed disk with ssd zrs account type."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14838,7 +14344,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14846,6 +14352,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14853,7 +14360,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedUploadDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a managed upload disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14880,7 +14387,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14888,6 +14395,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedUploadDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14895,7 +14403,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDiskInExtendedLocation.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an empty managed disk in extended location."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14930,7 +14438,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14938,6 +14446,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDiskInExtendedLocation.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14945,7 +14454,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an empty managed disk."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -14972,7 +14481,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -14980,6 +14489,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -14987,7 +14497,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an ultra managed disk with logicalSectorSize 512E"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15023,7 +14533,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.Disk, options *armcompute.DisksClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15031,6 +14541,7 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientCreateOrUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15039,18 +14550,8 @@ func (testsuite *FakeTestSuite) TestDisks_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestDisks_Update() {
-	ctx := context.Background()
-	fakeServer := fake.DisksServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDisksServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDisksClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateOrUpdateABurstingEnabledManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a bursting enabled managed disk."},
 	})
 	var exampleResourceGroupName string
@@ -15078,7 +14579,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15086,6 +14587,8 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDisksClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateOrUpdateABurstingEnabledManagedDisk.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -15093,7 +14596,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddPurchasePlan.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a managed disk to add purchase plan."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15136,7 +14639,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15144,6 +14647,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddPurchasePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15151,7 +14655,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddSupportsHibernation.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a managed disk to add supportsHibernation."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15182,7 +14686,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15190,6 +14694,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddSupportsHibernation.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15197,7 +14702,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToChangeTier.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a managed disk to change tier."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15220,7 +14725,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15228,6 +14733,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToChangeTier.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15235,7 +14741,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToDisableBursting.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a managed disk to disable bursting."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15257,7 +14763,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15265,6 +14771,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToDisableBursting.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15272,7 +14779,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update managed disk to remove disk access resource association."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15296,7 +14803,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskName string, disk armcompute.DiskUpdate, options *armcompute.DisksClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DisksClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDisk, disk))
@@ -15304,6 +14811,7 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DisksClientUpdateResponse{Disk: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskName, exampleDisk, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15312,18 +14820,8 @@ func (testsuite *FakeTestSuite) TestDisks_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestDisks_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DisksServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDisksServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDisksClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAManagedDisk.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a managed disk."},
 	})
 	var exampleResourceGroupName string
@@ -15389,13 +14887,15 @@ func (testsuite *FakeTestSuite) TestDisks_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, diskName string, options *armcompute.DisksClientGetOptions) (resp azfake.Responder[armcompute.DisksClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DisksServer.Get = func(ctx context.Context, resourceGroupName string, diskName string, options *armcompute.DisksClientGetOptions) (resp azfake.Responder[armcompute.DisksClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskName, diskName)
 		resp = azfake.Responder[armcompute.DisksClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DisksClientGetResponse{Disk: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDisksClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleDiskName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAManagedDisk.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Disk))
@@ -15406,18 +14906,8 @@ func (testsuite *FakeTestSuite) TestDisks_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDisks_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.DisksServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDisksServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDisksClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListManagedDisksInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all managed disks in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -15529,12 +15019,14 @@ func (testsuite *FakeTestSuite) TestDisks_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DisksClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DisksClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.DisksServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DisksClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DisksClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.DisksClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DisksClientListByResourceGroupResponse{DiskList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDisksClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -15547,18 +15039,8 @@ func (testsuite *FakeTestSuite) TestDisks_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestDisks_List() {
-	ctx := context.Background()
-	fakeServer := fake.DisksServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDisksServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDisksClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListManagedDisksInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all managed disks in a subscription."},
 	})
 
@@ -15668,11 +15150,13 @@ func (testsuite *FakeTestSuite) TestDisks_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.DisksClientListOptions) (resp azfake.PagerResponder[armcompute.DisksClientListResponse]) {
+	testsuite.serverFactory.DisksServer.NewListPager = func(options *armcompute.DisksClientListOptions) (resp azfake.PagerResponder[armcompute.DisksClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.DisksClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DisksClientListResponse{DiskList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDisksClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -15693,18 +15177,8 @@ func (testsuite *FakeTestSuite) TestDisks_RevokeAccess() {
 }
 
 func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.SnapshotsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSnapshotsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSnapshotsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromADifferentSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a snapshot by importing an unmanaged blob from a different subscription."},
 	})
 	var exampleResourceGroupName string
@@ -15736,7 +15210,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SnapshotsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSnapshotName, snapshotName)
 		testsuite.Require().True(reflect.DeepEqual(exampleSnapshot, snapshot))
@@ -15744,6 +15218,8 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.SnapshotsClientCreateOrUpdateResponse{Snapshot: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSnapshotsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleSnapshotName, exampleSnapshot, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromADifferentSubscription.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -15751,7 +15227,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Snapshot))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromTheSameSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a snapshot by importing an unmanaged blob from the same subscription."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15778,7 +15254,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SnapshotsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSnapshotName, snapshotName)
 		testsuite.Require().True(reflect.DeepEqual(exampleSnapshot, snapshot))
@@ -15786,6 +15262,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.SnapshotsClientCreateOrUpdateResponse{Snapshot: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleSnapshotName, exampleSnapshot, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromTheSameSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15793,7 +15270,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Snapshot))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotFromAnExistingSnapshot.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a snapshot from an existing snapshot in the same or a different subscription."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -15820,7 +15297,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SnapshotsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, snapshotName string, snapshot armcompute.Snapshot, options *armcompute.SnapshotsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSnapshotName, snapshotName)
 		testsuite.Require().True(reflect.DeepEqual(exampleSnapshot, snapshot))
@@ -15828,6 +15305,7 @@ func (testsuite *FakeTestSuite) TestSnapshots_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.SnapshotsClientCreateOrUpdateResponse{Snapshot: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleSnapshotName, exampleSnapshot, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotFromAnExistingSnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -15840,18 +15318,8 @@ func (testsuite *FakeTestSuite) TestSnapshots_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestSnapshots_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SnapshotsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSnapshotsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSnapshotsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutASnapshot.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a snapshot."},
 	})
 	var exampleResourceGroupName string
@@ -15909,13 +15377,15 @@ func (testsuite *FakeTestSuite) TestSnapshots_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, snapshotName string, options *armcompute.SnapshotsClientGetOptions) (resp azfake.Responder[armcompute.SnapshotsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SnapshotsServer.Get = func(ctx context.Context, resourceGroupName string, snapshotName string, options *armcompute.SnapshotsClientGetOptions) (resp azfake.Responder[armcompute.SnapshotsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleSnapshotName, snapshotName)
 		resp = azfake.Responder[armcompute.SnapshotsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.SnapshotsClientGetResponse{Snapshot: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSnapshotsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleSnapshotName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutASnapshot.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Snapshot))
@@ -15926,18 +15396,8 @@ func (testsuite *FakeTestSuite) TestSnapshots_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestSnapshots_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.SnapshotsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSnapshotsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSnapshotsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListSnapshotsInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all snapshots in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -15988,12 +15448,14 @@ func (testsuite *FakeTestSuite) TestSnapshots_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.SnapshotsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.SnapshotsServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.SnapshotsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.SnapshotsClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.SnapshotsClientListByResourceGroupResponse{SnapshotList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSnapshotsClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -16006,18 +15468,8 @@ func (testsuite *FakeTestSuite) TestSnapshots_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestSnapshots_List() {
-	ctx := context.Background()
-	fakeServer := fake.SnapshotsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSnapshotsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSnapshotsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListSnapshotsInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all snapshots in a subscription."},
 	})
 
@@ -16108,11 +15560,13 @@ func (testsuite *FakeTestSuite) TestSnapshots_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.SnapshotsClientListOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListResponse]) {
+	testsuite.serverFactory.SnapshotsServer.NewListPager = func(options *armcompute.SnapshotsClientListOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.SnapshotsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.SnapshotsClientListResponse{SnapshotList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSnapshotsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -16133,18 +15587,8 @@ func (testsuite *FakeTestSuite) TestSnapshots_RevokeAccess() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSetWithKeyVaultFromADifferentSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a disk encryption set with key vault from a different subscription."},
 	})
 	var exampleResourceGroupName string
@@ -16180,7 +15624,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSet, options *armcompute.DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSet, options *armcompute.DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskEncryptionSet, diskEncryptionSet))
@@ -16188,6 +15632,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, exampleDiskEncryptionSet, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSetWithKeyVaultFromADifferentSubscription.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -16195,7 +15641,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskEncryptionSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a disk encryption set."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -16234,7 +15680,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSet, options *armcompute.DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSet, options *armcompute.DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskEncryptionSet, diskEncryptionSet))
@@ -16242,6 +15688,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientCreateOrUpdateResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, exampleDiskEncryptionSet, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -16250,18 +15697,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a disk encryption set with rotationToLatestKeyVersionEnabled set to true - Succeeded"},
 	})
 	var exampleResourceGroupName string
@@ -16301,7 +15738,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskEncryptionSet, diskEncryptionSet))
@@ -16309,6 +15746,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientUpdateResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, exampleDiskEncryptionSet, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -16316,7 +15755,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskEncryptionSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a disk encryption set with rotationToLatestKeyVersionEnabled set to true - Updating"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -16357,7 +15796,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskEncryptionSet, diskEncryptionSet))
@@ -16365,6 +15804,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientUpdateResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, exampleDiskEncryptionSet, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -16372,7 +15812,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskEncryptionSet))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a disk encryption set."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -16416,7 +15856,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet armcompute.DiskEncryptionSetUpdate, options *armcompute.DiskEncryptionSetsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskEncryptionSet, diskEncryptionSet))
@@ -16424,6 +15864,7 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientUpdateResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, exampleDiskEncryptionSet, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -16432,18 +15873,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a disk encryption set."},
 	})
 	var exampleResourceGroupName string
@@ -16476,31 +15907,23 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientGetOptions) (resp azfake.Responder[armcompute.DiskEncryptionSetsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.Get = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientGetOptions) (resp azfake.Responder[armcompute.DiskEncryptionSetsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		resp = azfake.Responder[armcompute.DiskEncryptionSetsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientGetResponse{DiskEncryptionSet: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskEncryptionSet.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskEncryptionSet))
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskEncryptionSet.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a disk encryption set."},
 	})
 	var exampleResourceGroupName string
@@ -16508,13 +15931,15 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleDiskEncryptionSetName = "myDiskEncryptionSet"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.DiskEncryptionSetsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		resp = azfake.PollerResponder[armcompute.DiskEncryptionSetsClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskEncryptionSetsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleDiskEncryptionSetName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskEncryptionSet.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -16522,18 +15947,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskEncryptionSetsInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all disk encryption sets in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -16591,12 +16006,14 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DiskEncryptionSetsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DiskEncryptionSetsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskEncryptionSetsClientListByResourceGroupResponse{DiskEncryptionSetList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -16609,18 +16026,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_List() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskEncryptionSetsInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all disk encryption sets in a subscription."},
 	})
 
@@ -16676,11 +16083,13 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.DiskEncryptionSetsClientListOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListResponse]) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.NewListPager = func(options *armcompute.DiskEncryptionSetsClientListOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskEncryptionSetsClientListResponse{DiskEncryptionSetList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -16693,18 +16102,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListAssociatedResources() {
-	ctx := context.Background()
-	fakeServer := fake.DiskEncryptionSetsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskEncryptionSetsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskEncryptionSetsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskEncryptionSetAssociatedResources.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all resources that are encrypted with this disk encryption set."},
 	})
 	var exampleResourceGroupName string
@@ -16718,13 +16117,15 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListAssociatedResources()
 			to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot")},
 	}
 
-	fakeServer.NewListAssociatedResourcesPager = func(resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientListAssociatedResourcesOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListAssociatedResourcesResponse]) {
+	testsuite.serverFactory.DiskEncryptionSetsServer.NewListAssociatedResourcesPager = func(resourceGroupName string, diskEncryptionSetName string, options *armcompute.DiskEncryptionSetsClientListAssociatedResourcesOptions) (resp azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListAssociatedResourcesResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskEncryptionSetName, diskEncryptionSetName)
 		resp = azfake.PagerResponder[armcompute.DiskEncryptionSetsClientListAssociatedResourcesResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskEncryptionSetsClientListAssociatedResourcesResponse{ResourceURIList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskEncryptionSetsClient()
 	pager := client.NewListAssociatedResourcesPager(exampleResourceGroupName, exampleDiskEncryptionSetName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -16737,18 +16138,8 @@ func (testsuite *FakeTestSuite) TestDiskEncryptionSets_ListAssociatedResources()
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -16771,7 +16162,7 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess armcompute.DiskAccess, options *armcompute.DiskAccessesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess armcompute.DiskAccess, options *armcompute.DiskAccessesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskAccess, diskAccess))
@@ -16779,6 +16170,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskAccessesClientCreateOrUpdateResponse{DiskAccess: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleDiskAccessName, exampleDiskAccess, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -16787,18 +16180,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_Update() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -16824,7 +16207,7 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess armcompute.DiskAccessUpdate, options *armcompute.DiskAccessesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess armcompute.DiskAccessUpdate, options *armcompute.DiskAccessesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		testsuite.Require().True(reflect.DeepEqual(exampleDiskAccess, diskAccess))
@@ -16832,6 +16215,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskAccessesClientUpdateResponse{DiskAccess: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleDiskAccessName, exampleDiskAccess, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -16840,18 +16225,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccessWithPrivateEndpoints.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a disk access resource with private endpoints."},
 	})
 	var exampleResourceGroupName string
@@ -16891,19 +16266,21 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.Get = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		resp = azfake.Responder[armcompute.DiskAccessesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DiskAccessesClientGetResponse{DiskAccess: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleDiskAccessName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccessWithPrivateEndpoints.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskAccess))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a disk access resource."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -16924,31 +16301,22 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.Get = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		resp = azfake.Responder[armcompute.DiskAccessesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DiskAccessesClientGetResponse{DiskAccess: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleDiskAccessName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccess.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskAccess))
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -16956,13 +16324,15 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleDiskAccessName = "myDiskAccess"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		resp = azfake.PollerResponder[armcompute.DiskAccessesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskAccessesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleDiskAccessName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskAccess.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -16970,18 +16340,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskAccessesInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all disk access resources in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -17036,12 +16396,14 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DiskAccessesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.DiskAccessesServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.DiskAccessesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.DiskAccessesClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskAccessesClientListByResourceGroupResponse{DiskAccessList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17054,18 +16416,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_List() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskAccessesInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all disk access resources in a subscription."},
 	})
 
@@ -17118,11 +16470,13 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.DiskAccessesClientListOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListResponse]) {
+	testsuite.serverFactory.DiskAccessesServer.NewListPager = func(options *armcompute.DiskAccessesClientListOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.DiskAccessesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskAccessesClientListResponse{DiskAccessList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17135,18 +16489,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_GetPrivateLinkResources() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskAccessPrivateLinkResources.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List all possible private link resources under disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -17170,31 +16514,23 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_GetPrivateLinkResources() {
 			}},
 	}
 
-	fakeServer.GetPrivateLinkResources = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetPrivateLinkResourcesOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetPrivateLinkResourcesResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.GetPrivateLinkResources = func(ctx context.Context, resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientGetPrivateLinkResourcesOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetPrivateLinkResourcesResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		resp = azfake.Responder[armcompute.DiskAccessesClientGetPrivateLinkResourcesResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.DiskAccessesClientGetPrivateLinkResourcesResponse{PrivateLinkResourceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	res, err := client.GetPrivateLinkResources(ctx, exampleResourceGroupName, exampleDiskAccessName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskAccessPrivateLinkResources.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateLinkResourceListResult))
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_UpdateAPrivateEndpointConnection() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ApprovePrivateEndpointConnection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Approve a Private Endpoint Connection under a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -17230,7 +16566,7 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_UpdateAPrivateEndpointConnectio
 		},
 	}
 
-	fakeServer.BeginUpdateAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, privateEndpointConnection armcompute.PrivateEndpointConnection, options *armcompute.DiskAccessesClientBeginUpdateAPrivateEndpointConnectionOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientUpdateAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.BeginUpdateAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, privateEndpointConnection armcompute.PrivateEndpointConnection, options *armcompute.DiskAccessesClientBeginUpdateAPrivateEndpointConnectionOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientUpdateAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -17239,6 +16575,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_UpdateAPrivateEndpointConnectio
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskAccessesClientUpdateAPrivateEndpointConnectionResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	poller, err := client.BeginUpdateAPrivateEndpointConnection(ctx, exampleResourceGroupName, exampleDiskAccessName, examplePrivateEndpointConnectionName, examplePrivateEndpointConnection, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ApprovePrivateEndpointConnection.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -17247,18 +16585,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_UpdateAPrivateEndpointConnectio
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_GetAPrivateEndpointConnection() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAPrivateEndpointConnection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a private endpoint connection under a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -17285,7 +16613,7 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_GetAPrivateEndpointConnection()
 		},
 	}
 
-	fakeServer.GetAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *armcompute.DiskAccessesClientGetAPrivateEndpointConnectionOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.GetAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *armcompute.DiskAccessesClientGetAPrivateEndpointConnectionOptions) (resp azfake.Responder[armcompute.DiskAccessesClientGetAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -17293,24 +16621,16 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_GetAPrivateEndpointConnection()
 		resp.SetResponse(http.StatusOK, armcompute.DiskAccessesClientGetAPrivateEndpointConnectionResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	res, err := client.GetAPrivateEndpointConnection(ctx, exampleResourceGroupName, exampleDiskAccessName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAPrivateEndpointConnection.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_DeleteAPrivateEndpointConnection() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteAPrivateEndpointConnection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a private endpoint connection under a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -17320,7 +16640,7 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_DeleteAPrivateEndpointConnectio
 	exampleDiskAccessName = "myDiskAccess"
 	examplePrivateEndpointConnectionName = "myPrivateEndpointConnection"
 
-	fakeServer.BeginDeleteAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *armcompute.DiskAccessesClientBeginDeleteAPrivateEndpointConnectionOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientDeleteAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskAccessesServer.BeginDeleteAPrivateEndpointConnection = func(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *armcompute.DiskAccessesClientBeginDeleteAPrivateEndpointConnectionOptions) (resp azfake.PollerResponder[armcompute.DiskAccessesClientDeleteAPrivateEndpointConnectionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -17328,6 +16648,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_DeleteAPrivateEndpointConnectio
 		resp.SetTerminalResponse(http.StatusOK, armcompute.DiskAccessesClientDeleteAPrivateEndpointConnectionResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	poller, err := client.BeginDeleteAPrivateEndpointConnection(ctx, exampleResourceGroupName, exampleDiskAccessName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteAPrivateEndpointConnection.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -17335,18 +16657,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_DeleteAPrivateEndpointConnectio
 }
 
 func (testsuite *FakeTestSuite) TestDiskAccesses_ListPrivateEndpointConnections() {
-	ctx := context.Background()
-	fakeServer := fake.DiskAccessesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskAccessesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskAccessesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListPrivateEndpointConnectionsInADiskAccess.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get information about a private endpoint connection under a disk access resource."},
 	})
 	var exampleResourceGroupName string
@@ -17374,13 +16686,15 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_ListPrivateEndpointConnections(
 			}},
 	}
 
-	fakeServer.NewListPrivateEndpointConnectionsPager = func(resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientListPrivateEndpointConnectionsOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListPrivateEndpointConnectionsResponse]) {
+	testsuite.serverFactory.DiskAccessesServer.NewListPrivateEndpointConnectionsPager = func(resourceGroupName string, diskAccessName string, options *armcompute.DiskAccessesClientListPrivateEndpointConnectionsOptions) (resp azfake.PagerResponder[armcompute.DiskAccessesClientListPrivateEndpointConnectionsResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleDiskAccessName, diskAccessName)
 		resp = azfake.PagerResponder[armcompute.DiskAccessesClientListPrivateEndpointConnectionsResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.DiskAccessesClientListPrivateEndpointConnectionsResponse{PrivateEndpointConnectionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskAccessesClient()
 	pager := client.NewListPrivateEndpointConnectionsPager(exampleResourceGroupName, exampleDiskAccessName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17393,18 +16707,8 @@ func (testsuite *FakeTestSuite) TestDiskAccesses_ListPrivateEndpointConnections(
 }
 
 func (testsuite *FakeTestSuite) TestDiskRestorePoint_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DiskRestorePointServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskRestorePointServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskRestorePointClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskRestorePointResources.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get an incremental disk restorePoint resource."},
 	})
 	var exampleResourceGroupName string
@@ -17429,7 +16733,7 @@ func (testsuite *FakeTestSuite) TestDiskRestorePoint_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *armcompute.DiskRestorePointClientGetOptions) (resp azfake.Responder[armcompute.DiskRestorePointClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DiskRestorePointServer.Get = func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *armcompute.DiskRestorePointClientGetOptions) (resp azfake.Responder[armcompute.DiskRestorePointClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		testsuite.Require().Equal(exampleVmRestorePointName, vmRestorePointName)
@@ -17438,24 +16742,16 @@ func (testsuite *FakeTestSuite) TestDiskRestorePoint_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.DiskRestorePointClientGetResponse{DiskRestorePoint: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskRestorePointClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleRestorePointCollectionName, exampleVmRestorePointName, exampleDiskRestorePointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskRestorePointResources.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DiskRestorePoint))
 }
 
 func (testsuite *FakeTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
-	ctx := context.Background()
-	fakeServer := fake.DiskRestorePointServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDiskRestorePointServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDiskRestorePointClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskRestorePointsInVmRestorePoint.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get an incremental disk restorePoint resource."},
 	})
 	var exampleResourceGroupName string
@@ -17481,7 +16777,7 @@ func (testsuite *FakeTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
 			}},
 	}
 
-	fakeServer.NewListByRestorePointPager = func(resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, options *armcompute.DiskRestorePointClientListByRestorePointOptions) (resp azfake.PagerResponder[armcompute.DiskRestorePointClientListByRestorePointResponse]) {
+	testsuite.serverFactory.DiskRestorePointServer.NewListByRestorePointPager = func(resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, options *armcompute.DiskRestorePointClientListByRestorePointOptions) (resp azfake.PagerResponder[armcompute.DiskRestorePointClientListByRestorePointResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleRestorePointCollectionName, restorePointCollectionName)
 		testsuite.Require().Equal(exampleVmRestorePointName, vmRestorePointName)
@@ -17489,6 +16785,8 @@ func (testsuite *FakeTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
 		resp.AddPage(http.StatusOK, armcompute.DiskRestorePointClientListByRestorePointResponse{DiskRestorePointList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDiskRestorePointClient()
 	pager := client.NewListByRestorePointPager(exampleResourceGroupName, exampleRestorePointCollectionName, exampleVmRestorePointName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17501,18 +16799,8 @@ func (testsuite *FakeTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryWithSharingProfile.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple gallery with sharing profile."},
 	})
 	var exampleResourceGroupName string
@@ -17545,7 +16833,7 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.Gallery, options *armcompute.GalleriesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.Gallery, options *armcompute.GalleriesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().True(reflect.DeepEqual(exampleGallery, gallery))
@@ -17553,6 +16841,8 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleriesClientCreateOrUpdateResponse{Gallery: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGallery, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryWithSharingProfile.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -17560,7 +16850,7 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Gallery))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple gallery."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -17584,7 +16874,7 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.Gallery, options *armcompute.GalleriesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.Gallery, options *armcompute.GalleriesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().True(reflect.DeepEqual(exampleGallery, gallery))
@@ -17592,6 +16882,7 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleriesClientCreateOrUpdateResponse{Gallery: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGallery, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGallery.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -17600,18 +16891,8 @@ func (testsuite *FakeTestSuite) TestGalleries_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple gallery."},
 	})
 	var exampleResourceGroupName string
@@ -17637,7 +16918,7 @@ func (testsuite *FakeTestSuite) TestGalleries_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.GalleryUpdate, options *armcompute.GalleriesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, gallery armcompute.GalleryUpdate, options *armcompute.GalleriesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().True(reflect.DeepEqual(exampleGallery, gallery))
@@ -17645,6 +16926,8 @@ func (testsuite *FakeTestSuite) TestGalleries_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleriesClientUpdateResponse{Gallery: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGallery, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGallery.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -17653,18 +16936,8 @@ func (testsuite *FakeTestSuite) TestGalleries_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_Get() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryWithSelectPermissions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery with select permissions."},
 	})
 	var exampleResourceGroupName string
@@ -17694,19 +16967,21 @@ func (testsuite *FakeTestSuite) TestGalleries_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientGetOptions) (resp azfake.Responder[armcompute.GalleriesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientGetOptions) (resp azfake.Responder[armcompute.GalleriesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		resp = azfake.Responder[armcompute.GalleriesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.GalleriesClientGetResponse{Gallery: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleGalleryName, &armcompute.GalleriesClientGetOptions{Select: to.Ptr(armcompute.SelectPermissionsPermissions)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryWithSelectPermissions.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Gallery))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -17724,31 +16999,22 @@ func (testsuite *FakeTestSuite) TestGalleries_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientGetOptions) (resp azfake.Responder[armcompute.GalleriesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientGetOptions) (resp azfake.Responder[armcompute.GalleriesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		resp = azfake.Responder[armcompute.GalleriesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.GalleriesClientGetResponse{Gallery: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleGalleryName, &armcompute.GalleriesClientGetOptions{Select: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGallery.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Gallery))
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a gallery."},
 	})
 	var exampleResourceGroupName string
@@ -17756,13 +17022,15 @@ func (testsuite *FakeTestSuite) TestGalleries_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleGalleryName = "myGalleryName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleriesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, options *armcompute.GalleriesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleriesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		resp = azfake.PollerResponder[armcompute.GalleriesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleriesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleGalleryName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGallery.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -17770,18 +17038,8 @@ func (testsuite *FakeTestSuite) TestGalleries_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleriesInAResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List galleries in a resource group."},
 	})
 	var exampleResourceGroupName string
@@ -17803,12 +17061,14 @@ func (testsuite *FakeTestSuite) TestGalleries_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.GalleriesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.GalleriesClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.GalleriesServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armcompute.GalleriesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.GalleriesClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.GalleriesClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.GalleriesClientListByResourceGroupResponse{GalleryList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17821,18 +17081,8 @@ func (testsuite *FakeTestSuite) TestGalleries_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleries_List() {
-	ctx := context.Background()
-	fakeServer := fake.GalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleriesInASubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List galleries in a subscription."},
 	})
 
@@ -17852,11 +17102,13 @@ func (testsuite *FakeTestSuite) TestGalleries_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armcompute.GalleriesClientListOptions) (resp azfake.PagerResponder[armcompute.GalleriesClientListResponse]) {
+	testsuite.serverFactory.GalleriesServer.NewListPager = func(options *armcompute.GalleriesClientListOptions) (resp azfake.PagerResponder[armcompute.GalleriesClientListResponse]) {
 		resp = azfake.PagerResponder[armcompute.GalleriesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.GalleriesClientListResponse{GalleryList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleriesClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -17869,18 +17121,8 @@ func (testsuite *FakeTestSuite) TestGalleries_List() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImages_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple gallery image."},
 	})
 	var exampleResourceGroupName string
@@ -17920,7 +17162,7 @@ func (testsuite *FakeTestSuite) TestGalleryImages_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage armcompute.GalleryImage, options *armcompute.GalleryImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImagesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage armcompute.GalleryImage, options *armcompute.GalleryImagesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -17929,6 +17171,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImagesClientCreateOrUpdateResponse{GalleryImage: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImagesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImage, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -17937,18 +17181,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImages_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple gallery image."},
 	})
 	var exampleResourceGroupName string
@@ -17987,7 +17221,7 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage armcompute.GalleryImageUpdate, options *armcompute.GalleryImagesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImagesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage armcompute.GalleryImageUpdate, options *armcompute.GalleryImagesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -17996,6 +17230,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImagesClientUpdateResponse{GalleryImage: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImagesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImage, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -18004,18 +17240,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImages_Get() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery image."},
 	})
 	var exampleResourceGroupName string
@@ -18041,7 +17267,7 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImagesClientGetOptions) (resp azfake.Responder[armcompute.GalleryImagesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImagesServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImagesClientGetOptions) (resp azfake.Responder[armcompute.GalleryImagesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18049,24 +17275,16 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryImagesClientGetResponse{GalleryImage: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImagesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImage.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImage))
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImages_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a gallery image."},
 	})
 	var exampleResourceGroupName string
@@ -18076,7 +17294,7 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Delete() {
 	exampleGalleryName = "myGalleryName"
 	exampleGalleryImageName = "myGalleryImageName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImagesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImagesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImagesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryImagesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18084,6 +17302,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImagesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImagesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImage.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -18091,18 +17311,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImages_ListByGallery() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryImagesInAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List gallery images in a gallery."},
 	})
 	var exampleResourceGroupName string
@@ -18129,13 +17339,15 @@ func (testsuite *FakeTestSuite) TestGalleryImages_ListByGallery() {
 			}},
 	}
 
-	fakeServer.NewListByGalleryPager = func(resourceGroupName string, galleryName string, options *armcompute.GalleryImagesClientListByGalleryOptions) (resp azfake.PagerResponder[armcompute.GalleryImagesClientListByGalleryResponse]) {
+	testsuite.serverFactory.GalleryImagesServer.NewListByGalleryPager = func(resourceGroupName string, galleryName string, options *armcompute.GalleryImagesClientListByGalleryOptions) (resp azfake.PagerResponder[armcompute.GalleryImagesClientListByGalleryResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		resp = azfake.PagerResponder[armcompute.GalleryImagesClientListByGalleryResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.GalleryImagesClientListByGalleryResponse{GalleryImageList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImagesClient()
 	pager := client.NewListByGalleryPager(exampleResourceGroupName, exampleGalleryName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -18148,18 +17360,8 @@ func (testsuite *FakeTestSuite) TestGalleryImages_ListByGallery() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVMAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using VM as source."},
 	})
 	var exampleResourceGroupName string
@@ -18289,7 +17491,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18299,6 +17501,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImageVersionsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVMAsSource.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -18306,7 +17510,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using managed image as source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -18431,7 +17635,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18441,6 +17645,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersion.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -18448,7 +17653,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using mix of disks and snapshots as a source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -18571,7 +17776,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18581,6 +17786,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -18588,7 +17794,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithImageVersionAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using shared image as source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -18713,7 +17919,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18723,6 +17929,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithImageVersionAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -18730,7 +17937,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using snapshots as a source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -18853,7 +18060,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18863,6 +18070,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -18870,7 +18078,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVHD.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple Gallery Image Version using vhd as a source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -18975,7 +18183,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersion, options *armcompute.GalleryImageVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -18985,6 +18193,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientCreateOrUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVHD.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -18993,18 +18202,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple Gallery Image Version (Managed Image as source)."},
 	})
 	var exampleResourceGroupName string
@@ -19087,7 +18286,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersionUpdate, options *armcompute.GalleryImageVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersionUpdate, options *armcompute.GalleryImageVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19097,6 +18296,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImageVersionsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -19104,7 +18305,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersionWithoutSourceId.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple Gallery Image Version without source id."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -19178,7 +18379,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersionUpdate, options *armcompute.GalleryImageVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion armcompute.GalleryImageVersionUpdate, options *armcompute.GalleryImageVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19188,6 +18389,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientUpdateResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, exampleGalleryImageVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersionWithoutSourceId.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -19196,18 +18398,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithReplicationStatus.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery image version with replication status."},
 	})
 	var exampleResourceGroupName string
@@ -19288,7 +18480,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19297,12 +18489,14 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryImageVersionsClientGetResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImageVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, &armcompute.GalleryImageVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithReplicationStatus.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithSnapshotsAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery image version with snapshots as a source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -19358,7 +18552,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19367,12 +18561,13 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryImageVersionsClientGetResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithSnapshotsAsSource.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithVhdAsSource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery image version with vhd as a source."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -19432,7 +18627,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19441,12 +18636,13 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryImageVersionsClientGetResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithVhdAsSource.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery image version."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -19507,7 +18703,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19516,24 +18712,15 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryImageVersionsClientGetResponse{GalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersion.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryImageVersion))
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImageVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImageVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a gallery image version."},
 	})
 	var exampleResourceGroupName string
@@ -19545,7 +18732,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Delete() {
 	exampleGalleryImageName = "myGalleryImageName"
 	exampleGalleryImageVersionName = "1.0.0"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryImageVersionsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *armcompute.GalleryImageVersionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryImageVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19554,6 +18741,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryImageVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImageVersionsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, exampleGalleryImageVersionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImageVersion.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -19561,18 +18750,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryImageVersionsInAGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List gallery image versions in a gallery image definition."},
 	})
 	var exampleResourceGroupName string
@@ -19638,7 +18817,7 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
 			}},
 	}
 
-	fakeServer.NewListByGalleryImagePager = func(resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImageVersionsClientListByGalleryImageOptions) (resp azfake.PagerResponder[armcompute.GalleryImageVersionsClientListByGalleryImageResponse]) {
+	testsuite.serverFactory.GalleryImageVersionsServer.NewListByGalleryImagePager = func(resourceGroupName string, galleryName string, galleryImageName string, options *armcompute.GalleryImageVersionsClientListByGalleryImageOptions) (resp azfake.PagerResponder[armcompute.GalleryImageVersionsClientListByGalleryImageResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -19646,6 +18825,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
 		resp.AddPage(http.StatusOK, armcompute.GalleryImageVersionsClientListByGalleryImageResponse{GalleryImageVersionList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryImageVersionsClient()
 	pager := client.NewListByGalleryImagePager(exampleResourceGroupName, exampleGalleryName, exampleGalleryImageName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -19658,18 +18839,8 @@ func (testsuite *FakeTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplications_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple gallery Application."},
 	})
 	var exampleResourceGroupName string
@@ -19704,7 +18875,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication armcompute.GalleryApplication, options *armcompute.GalleryApplicationsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication armcompute.GalleryApplication, options *armcompute.GalleryApplicationsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -19713,6 +18884,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationsClientCreateOrUpdateResponse{GalleryApplication: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplication, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplication.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -19721,18 +18894,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplications_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple gallery Application."},
 	})
 	var exampleResourceGroupName string
@@ -19766,7 +18929,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication armcompute.GalleryApplicationUpdate, options *armcompute.GalleryApplicationsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication armcompute.GalleryApplicationUpdate, options *armcompute.GalleryApplicationsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -19775,6 +18938,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationsClientUpdateResponse{GalleryApplication: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplication, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplication.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -19783,18 +18948,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplications_Get() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery Application."},
 	})
 	var exampleResourceGroupName string
@@ -19816,7 +18971,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -19824,24 +18979,16 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryApplicationsClientGetResponse{GalleryApplication: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplication.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryApplication))
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplications_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a gallery Application."},
 	})
 	var exampleResourceGroupName string
@@ -19851,7 +18998,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Delete() {
 	exampleGalleryName = "myGalleryName"
 	exampleGalleryApplicationName = "myGalleryApplicationName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -19859,6 +19006,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplication.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -19866,18 +19015,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplications_ListByGallery() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryApplicationsInAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List gallery Applications in a gallery."},
 	})
 	var exampleResourceGroupName string
@@ -19900,13 +19039,15 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_ListByGallery() {
 			}},
 	}
 
-	fakeServer.NewListByGalleryPager = func(resourceGroupName string, galleryName string, options *armcompute.GalleryApplicationsClientListByGalleryOptions) (resp azfake.PagerResponder[armcompute.GalleryApplicationsClientListByGalleryResponse]) {
+	testsuite.serverFactory.GalleryApplicationsServer.NewListByGalleryPager = func(resourceGroupName string, galleryName string, options *armcompute.GalleryApplicationsClientListByGalleryOptions) (resp azfake.PagerResponder[armcompute.GalleryApplicationsClientListByGalleryResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		resp = azfake.PagerResponder[armcompute.GalleryApplicationsClientListByGalleryResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.GalleryApplicationsClientListByGalleryResponse{GalleryApplicationList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationsClient()
 	pager := client.NewListByGalleryPager(exampleResourceGroupName, exampleGalleryName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -19919,18 +19060,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplications_ListByGallery() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplicationVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create or update a simple gallery Application Version."},
 	})
 	var exampleResourceGroupName string
@@ -19997,7 +19128,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion armcompute.GalleryApplicationVersion, options *armcompute.GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion armcompute.GalleryApplicationVersion, options *armcompute.GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20007,6 +19138,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationVersionsClientCreateOrUpdateResponse{GalleryApplicationVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationVersionsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplicationVersionName, exampleGalleryApplicationVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplicationVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -20015,18 +19148,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplicationVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a simple gallery Application Version."},
 	})
 	var exampleResourceGroupName string
@@ -20092,7 +19215,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion armcompute.GalleryApplicationVersionUpdate, options *armcompute.GalleryApplicationVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion armcompute.GalleryApplicationVersionUpdate, options *armcompute.GalleryApplicationVersionsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20102,6 +19225,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationVersionsClientUpdateResponse{GalleryApplicationVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationVersionsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplicationVersionName, exampleGalleryApplicationVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplicationVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -20110,18 +19235,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersionWithReplicationStatus.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery Application Version with replication status."},
 	})
 	var exampleResourceGroupName string
@@ -20172,7 +19287,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20181,12 +19296,14 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryApplicationVersionsClientGetResponse{GalleryApplicationVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplicationVersionName, &armcompute.GalleryApplicationVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersionWithReplicationStatus.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryApplicationVersion))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery Application Version."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -20225,7 +19342,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.Get = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientGetOptions) (resp azfake.Responder[armcompute.GalleryApplicationVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20234,24 +19351,15 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.GalleryApplicationVersionsClientGetResponse{GalleryApplicationVersion: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplicationVersionName, &armcompute.GalleryApplicationVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersion.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.GalleryApplicationVersion))
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplicationVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete a gallery Application Version."},
 	})
 	var exampleResourceGroupName string
@@ -20263,7 +19371,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Delete() {
 	exampleGalleryApplicationName = "myGalleryApplicationName"
 	exampleGalleryApplicationVersionName = "1.0.0"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *armcompute.GalleryApplicationVersionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.GalleryApplicationVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20272,6 +19380,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GalleryApplicationVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationVersionsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, exampleGalleryApplicationVersionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplicationVersion.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -20279,18 +19389,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_ListByGalleryApplication() {
-	ctx := context.Background()
-	fakeServer := fake.GalleryApplicationVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGalleryApplicationVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGalleryApplicationVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryApplicationVersionsInAGalleryApplication.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List gallery Application Versions in a gallery Application Definition."},
 	})
 	var exampleResourceGroupName string
@@ -20334,7 +19434,7 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_ListByGalleryAppl
 			}},
 	}
 
-	fakeServer.NewListByGalleryApplicationPager = func(resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationVersionsClientListByGalleryApplicationOptions) (resp azfake.PagerResponder[armcompute.GalleryApplicationVersionsClientListByGalleryApplicationResponse]) {
+	testsuite.serverFactory.GalleryApplicationVersionsServer.NewListByGalleryApplicationPager = func(resourceGroupName string, galleryName string, galleryApplicationName string, options *armcompute.GalleryApplicationVersionsClientListByGalleryApplicationOptions) (resp azfake.PagerResponder[armcompute.GalleryApplicationVersionsClientListByGalleryApplicationResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().Equal(exampleGalleryApplicationName, galleryApplicationName)
@@ -20342,6 +19442,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_ListByGalleryAppl
 		resp.AddPage(http.StatusOK, armcompute.GalleryApplicationVersionsClientListByGalleryApplicationResponse{GalleryApplicationVersionList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGalleryApplicationVersionsClient()
 	pager := client.NewListByGalleryApplicationPager(exampleResourceGroupName, exampleGalleryName, exampleGalleryApplicationName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -20354,18 +19456,8 @@ func (testsuite *FakeTestSuite) TestGalleryApplicationVersions_ListByGalleryAppl
 }
 
 func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
-	ctx := context.Background()
-	fakeServer := fake.GallerySharingProfileServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewGallerySharingProfileServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewGallerySharingProfileClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/AddToSharingProfileInAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Add sharing id to the sharing profile of a gallery."},
 	})
 	var exampleResourceGroupName string
@@ -20405,7 +19497,7 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 		OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesAdd),
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate armcompute.SharingUpdate, options *armcompute.GallerySharingProfileClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GallerySharingProfileClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GallerySharingProfileServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate armcompute.SharingUpdate, options *armcompute.GallerySharingProfileClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GallerySharingProfileClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().True(reflect.DeepEqual(exampleSharingUpdate, sharingUpdate))
@@ -20413,6 +19505,8 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GallerySharingProfileClientUpdateResponse{SharingUpdate: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewGallerySharingProfileClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleSharingUpdate, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/AddToSharingProfileInAGallery.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -20420,7 +19514,7 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SharingUpdate))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"reset sharing profile of a gallery."},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -20433,7 +19527,7 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 		OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesReset),
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate armcompute.SharingUpdate, options *armcompute.GallerySharingProfileClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GallerySharingProfileClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.GallerySharingProfileServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, galleryName string, sharingUpdate armcompute.SharingUpdate, options *armcompute.GallerySharingProfileClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.GallerySharingProfileClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleGalleryName, galleryName)
 		testsuite.Require().True(reflect.DeepEqual(exampleSharingUpdate, sharingUpdate))
@@ -20441,6 +19535,7 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.GallerySharingProfileClientUpdateResponse{SharingUpdate: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleGalleryName, exampleSharingUpdate, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -20449,18 +19544,8 @@ func (testsuite *FakeTestSuite) TestGallerySharingProfile_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleries_List() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleries.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20477,12 +19562,14 @@ func (testsuite *FakeTestSuite) TestSharedGalleries_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, options *armcompute.SharedGalleriesClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleriesClientListResponse]) {
+	testsuite.serverFactory.SharedGalleriesServer.NewListPager = func(location string, options *armcompute.SharedGalleriesClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleriesClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.SharedGalleriesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.SharedGalleriesClientListResponse{SharedGalleryList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleriesClient()
 	pager := client.NewListPager(exampleLocation, &armcompute.SharedGalleriesClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -20495,18 +19582,8 @@ func (testsuite *FakeTestSuite) TestSharedGalleries_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleries_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleriesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleriesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleriesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGallery.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20522,31 +19599,23 @@ func (testsuite *FakeTestSuite) TestSharedGalleries_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, location string, galleryUniqueName string, options *armcompute.SharedGalleriesClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleriesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedGalleriesServer.Get = func(ctx context.Context, location string, galleryUniqueName string, options *armcompute.SharedGalleriesClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleriesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleGalleryUniqueName, galleryUniqueName)
 		resp = azfake.Responder[armcompute.SharedGalleriesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.SharedGalleriesClientGetResponse{SharedGallery: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleriesClient()
 	res, err := client.Get(ctx, exampleLocation, exampleGalleryUniqueName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGallery.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SharedGallery))
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleryImages_List() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleryImages.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20575,13 +19644,15 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImages_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, galleryUniqueName string, options *armcompute.SharedGalleryImagesClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleryImagesClientListResponse]) {
+	testsuite.serverFactory.SharedGalleryImagesServer.NewListPager = func(location string, galleryUniqueName string, options *armcompute.SharedGalleryImagesClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleryImagesClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleGalleryUniqueName, galleryUniqueName)
 		resp = azfake.PagerResponder[armcompute.SharedGalleryImagesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.SharedGalleryImagesClientListResponse{SharedGalleryImageList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleryImagesClient()
 	pager := client.NewListPager(exampleLocation, exampleGalleryUniqueName, &armcompute.SharedGalleryImagesClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -20594,18 +19665,8 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImages_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleryImages_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleryImagesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleryImagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleryImagesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImage.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20633,7 +19694,7 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImages_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, options *armcompute.SharedGalleryImagesClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleryImagesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedGalleryImagesServer.Get = func(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, options *armcompute.SharedGalleryImagesClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleryImagesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleGalleryUniqueName, galleryUniqueName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -20641,24 +19702,16 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImages_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.SharedGalleryImagesClientGetResponse{SharedGalleryImage: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleryImagesClient()
 	res, err := client.Get(ctx, exampleLocation, exampleGalleryUniqueName, exampleGalleryImageName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImage.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SharedGalleryImage))
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleryImageVersions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20683,7 +19736,7 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, galleryUniqueName string, galleryImageName string, options *armcompute.SharedGalleryImageVersionsClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleryImageVersionsClientListResponse]) {
+	testsuite.serverFactory.SharedGalleryImageVersionsServer.NewListPager = func(location string, galleryUniqueName string, galleryImageName string, options *armcompute.SharedGalleryImageVersionsClientListOptions) (resp azfake.PagerResponder[armcompute.SharedGalleryImageVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleGalleryUniqueName, galleryUniqueName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -20691,6 +19744,8 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_List() {
 		resp.AddPage(http.StatusOK, armcompute.SharedGalleryImageVersionsClientListResponse{SharedGalleryImageVersionList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleryImageVersionsClient()
 	pager := client.NewListPager(exampleLocation, exampleGalleryUniqueName, exampleGalleryImageName, &armcompute.SharedGalleryImageVersionsClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -20703,18 +19758,8 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SharedGalleryImageVersionsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedGalleryImageVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedGalleryImageVersionsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImageVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a gallery."},
 	})
 	var exampleLocation string
@@ -20738,7 +19783,7 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, galleryImageVersionName string, options *armcompute.SharedGalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedGalleryImageVersionsServer.Get = func(ctx context.Context, location string, galleryUniqueName string, galleryImageName string, galleryImageVersionName string, options *armcompute.SharedGalleryImageVersionsClientGetOptions) (resp azfake.Responder[armcompute.SharedGalleryImageVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleGalleryUniqueName, galleryUniqueName)
 		testsuite.Require().Equal(exampleGalleryImageName, galleryImageName)
@@ -20747,24 +19792,16 @@ func (testsuite *FakeTestSuite) TestSharedGalleryImageVersions_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.SharedGalleryImageVersionsClientGetResponse{SharedGalleryImageVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedGalleryImageVersionsClient()
 	res, err := client.Get(ctx, exampleLocation, exampleGalleryUniqueName, exampleGalleryImageName, exampleGalleryImageVersionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImageVersion.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SharedGalleryImageVersion))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -20774,7 +19811,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Delete() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginDelete = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.BeginDelete = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -20782,6 +19819,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	poller, err := client.BeginDelete(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -20789,18 +19828,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -20829,7 +19858,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientGetOptions) (resp azfake.Responder[armcompute.CloudServiceRoleInstancesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.Get = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientGetOptions) (resp azfake.Responder[armcompute.CloudServiceRoleInstancesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -20837,24 +19866,16 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientGetResponse{RoleInstance: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	res, err := client.Get(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServiceRoleInstancesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRoleInstance.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RoleInstance))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_GetInstanceView() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInstanceViewOfCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Instance View of Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -20877,7 +19898,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_GetInstanceView() 
 			}},
 	}
 
-	fakeServer.GetInstanceView = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.CloudServiceRoleInstancesClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.GetInstanceView = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.CloudServiceRoleInstancesClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -20885,24 +19906,16 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_GetInstanceView() 
 		resp.SetResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientGetInstanceViewResponse{RoleInstanceView: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	res, err := client.GetInstanceView(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInstanceViewOfCloudServiceRoleInstance.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.RoleInstanceView))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_List() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRolesInstances.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Role Instances in a Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -20986,13 +19999,15 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRoleInstancesClientListResponse]) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.NewListPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRoleInstancesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PagerResponder[armcompute.CloudServiceRoleInstancesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServiceRoleInstancesClientListResponse{RoleInstanceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServiceRoleInstancesClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -21005,18 +20020,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Restart() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Restart Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -21026,7 +20031,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Restart() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginRestart = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRestartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.BeginRestart = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRestartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -21034,6 +20039,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Restart() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientRestartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	poller, err := client.BeginRestart(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -21041,18 +20048,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Restart() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Reimage() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Reimage Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -21062,7 +20059,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Reimage() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginReimage = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientReimageResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.BeginReimage = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientReimageResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -21070,6 +20067,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Reimage() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientReimageResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	poller, err := client.BeginReimage(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -21077,18 +20076,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Reimage() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Rebuild() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRoleInstancesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRoleInstancesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRoleInstancesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Rebuild Cloud Service Role Instance"},
 	})
 	var exampleRoleInstanceName string
@@ -21098,7 +20087,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Rebuild() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginRebuild = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRebuildResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRoleInstancesServer.BeginRebuild = func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRebuildResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleInstanceName, roleInstanceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -21106,6 +20095,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_Rebuild() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServiceRoleInstancesClientRebuildResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRoleInstancesClient()
 	poller, err := client.BeginRebuild(ctx, exampleRoleInstanceName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -21117,18 +20108,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoleInstances_GetRemoteDesktopFi
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoles_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRolesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRolesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRolesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRole.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service Role"},
 	})
 	var exampleRoleName string
@@ -21153,7 +20134,7 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoles_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, roleName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRolesClientGetOptions) (resp azfake.Responder[armcompute.CloudServiceRolesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceRolesServer.Get = func(ctx context.Context, roleName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRolesClientGetOptions) (resp azfake.Responder[armcompute.CloudServiceRolesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleRoleName, roleName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
@@ -21161,24 +20142,16 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoles_Get() {
 		resp.SetResponse(http.StatusOK, armcompute.CloudServiceRolesClientGetResponse{CloudServiceRole: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRolesClient()
 	res, err := client.Get(ctx, exampleRoleName, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRole.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudServiceRole))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceRoles_List() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceRolesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceRolesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceRolesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRoles.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Roles in a Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -21218,13 +20191,15 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoles_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRolesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRolesClientListResponse]) {
+	testsuite.serverFactory.CloudServiceRolesServer.NewListPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRolesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRolesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PagerResponder[armcompute.CloudServiceRolesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServiceRolesClientListResponse{CloudServiceRoleListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceRolesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleCloudServiceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -21237,18 +20212,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceRoles_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithMultiRole.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create New Cloud Service with Multiple Roles"},
 	})
 	var exampleResourceGroupName string
@@ -21354,7 +20319,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -21362,6 +20327,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientCreateOrUpdateResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithMultiRole.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -21369,7 +20336,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudService))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create New Cloud Service with Single Role"},
 	})
 	exampleResourceGroupName = "ConstosoRG"
@@ -21456,7 +20423,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -21464,6 +20431,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientCreateOrUpdateResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -21471,7 +20439,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudService))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create New Cloud Service with Single Role and Certificate from Key Vault"},
 	})
 	exampleResourceGroupName = "ConstosoRG"
@@ -21579,7 +20547,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -21587,6 +20555,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientCreateOrUpdateResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -21594,7 +20563,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudService))
 
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create New Cloud Service with Single Role and RDP Extension"},
 	})
 	exampleResourceGroupName = "ConstosoRG"
@@ -21711,7 +20680,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudService, options *armcompute.CloudServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -21719,6 +20688,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientCreateOrUpdateResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -21727,18 +20697,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Update() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceToIncludeTags.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update existing Cloud Service to add tags"},
 	})
 	var exampleResourceGroupName string
@@ -21807,7 +20767,7 @@ func (testsuite *FakeTestSuite) TestCloudServices_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudServiceUpdate, options *armcompute.CloudServicesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, cloudServiceName string, parameters armcompute.CloudServiceUpdate, options *armcompute.CloudServicesClientBeginUpdateOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -21815,6 +20775,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientUpdateResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceToIncludeTags.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -21823,18 +20785,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudService.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -21842,13 +20794,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_Delete() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -21856,18 +20810,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceWithMultiRoleAndRDP.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service with Multiple Roles and RDP Extension"},
 	})
 	var exampleResourceGroupName string
@@ -21943,31 +20887,23 @@ func (testsuite *FakeTestSuite) TestCloudServices_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientGetOptions) (resp azfake.Responder[armcompute.CloudServicesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.Get = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientGetOptions) (resp azfake.Responder[armcompute.CloudServicesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.Responder[armcompute.CloudServicesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.CloudServicesClientGetResponse{CloudService: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceWithMultiRoleAndRDP.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudService))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_GetInstanceView() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceInstanceViewWithMultiRole.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service Instance View with Multiple Roles"},
 	})
 	var exampleResourceGroupName string
@@ -22019,31 +20955,23 @@ func (testsuite *FakeTestSuite) TestCloudServices_GetInstanceView() {
 			}},
 	}
 
-	fakeServer.GetInstanceView = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.CloudServicesClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.GetInstanceView = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientGetInstanceViewOptions) (resp azfake.Responder[armcompute.CloudServicesClientGetInstanceViewResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.Responder[armcompute.CloudServicesClientGetInstanceViewResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.CloudServicesClientGetInstanceViewResponse{CloudServiceInstanceView: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	res, err := client.GetInstanceView(ctx, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceInstanceViewWithMultiRole.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CloudServiceInstanceView))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_ListAll() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServicesInSubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Cloud Services in a Subscription"},
 	})
 
@@ -22118,11 +21046,13 @@ func (testsuite *FakeTestSuite) TestCloudServices_ListAll() {
 			}},
 	}
 
-	fakeServer.NewListAllPager = func(options *armcompute.CloudServicesClientListAllOptions) (resp azfake.PagerResponder[armcompute.CloudServicesClientListAllResponse]) {
+	testsuite.serverFactory.CloudServicesServer.NewListAllPager = func(options *armcompute.CloudServicesClientListAllOptions) (resp azfake.PagerResponder[armcompute.CloudServicesClientListAllResponse]) {
 		resp = azfake.PagerResponder[armcompute.CloudServicesClientListAllResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServicesClientListAllResponse{CloudServiceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	pager := client.NewListAllPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -22135,18 +21065,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_ListAll() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_List() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServicesInResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Cloud Services in a Resource Group"},
 	})
 	var exampleResourceGroupName string
@@ -22223,12 +21143,14 @@ func (testsuite *FakeTestSuite) TestCloudServices_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, options *armcompute.CloudServicesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServicesClientListResponse]) {
+	testsuite.serverFactory.CloudServicesServer.NewListPager = func(resourceGroupName string, options *armcompute.CloudServicesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServicesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armcompute.CloudServicesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServicesClientListResponse{CloudServiceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	pager := client.NewListPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -22241,18 +21163,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Start() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/StartCloudService.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Start Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -22260,13 +21172,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_Start() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginStart = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginStartOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientStartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginStart = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginStartOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientStartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientStartResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientStartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginStart(ctx, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/StartCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -22274,18 +21188,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Start() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_PowerOff() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PowerOffCloudService.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Stop or PowerOff Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -22293,13 +21197,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_PowerOff() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginPowerOff = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginPowerOffOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientPowerOffResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginPowerOff = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginPowerOffOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientPowerOffResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientPowerOffResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientPowerOffResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginPowerOff(ctx, exampleResourceGroupName, exampleCloudServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PowerOffCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -22307,18 +21213,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_PowerOff() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Restart() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstances.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Restart Cloud Service Role Instances"},
 	})
 	var exampleResourceGroupName string
@@ -22326,13 +21222,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_Restart() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginRestart = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientRestartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginRestart = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientRestartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientRestartResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientRestartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginRestart(ctx, exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServicesClientBeginRestartOptions{Parameters: &armcompute.RoleInstances{
 		RoleInstances: []*string{
 			to.Ptr("ContosoFrontend_IN_0"),
@@ -22345,18 +21243,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Restart() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Reimage() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstances.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Reimage Cloud Service Role Instances"},
 	})
 	var exampleResourceGroupName string
@@ -22364,13 +21252,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_Reimage() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginReimage = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientReimageResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginReimage = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientReimageResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientReimageResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientReimageResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginReimage(ctx, exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServicesClientBeginReimageOptions{Parameters: &armcompute.RoleInstances{
 		RoleInstances: []*string{
 			to.Ptr("ContosoFrontend_IN_0"),
@@ -22383,18 +21273,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Reimage() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_Rebuild() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstances.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Rebuild Cloud Service Role Instances"},
 	})
 	var exampleResourceGroupName string
@@ -22402,13 +21282,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_Rebuild() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginRebuild = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientRebuildResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginRebuild = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientRebuildResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientRebuildResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientRebuildResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginRebuild(ctx, exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServicesClientBeginRebuildOptions{Parameters: &armcompute.RoleInstances{
 		RoleInstances: []*string{
 			to.Ptr("ContosoFrontend_IN_0"),
@@ -22421,18 +21303,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_Rebuild() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServices_DeleteInstances() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstances.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Cloud Service Role Instances"},
 	})
 	var exampleResourceGroupName string
@@ -22440,13 +21312,15 @@ func (testsuite *FakeTestSuite) TestCloudServices_DeleteInstances() {
 	exampleResourceGroupName = "ConstosoRG"
 	exampleCloudServiceName = "{cs-name}"
 
-	fakeServer.BeginDeleteInstances = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginDeleteInstancesOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientDeleteInstancesResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesServer.BeginDeleteInstances = func(ctx context.Context, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesClientBeginDeleteInstancesOptions) (resp azfake.PollerResponder[armcompute.CloudServicesClientDeleteInstancesResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PollerResponder[armcompute.CloudServicesClientDeleteInstancesResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesClientDeleteInstancesResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesClient()
 	poller, err := client.BeginDeleteInstances(ctx, exampleResourceGroupName, exampleCloudServiceName, &armcompute.CloudServicesClientBeginDeleteInstancesOptions{Parameters: &armcompute.RoleInstances{
 		RoleInstances: []*string{
 			to.Ptr("ContosoFrontend_IN_0"),
@@ -22459,18 +21333,8 @@ func (testsuite *FakeTestSuite) TestCloudServices_DeleteInstances() {
 }
 
 func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_WalkUpdateDomain() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesUpdateDomainServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesUpdateDomainServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesUpdateDomainClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceUpdateDomain.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Cloud Service to specified Domain"},
 	})
 	var exampleResourceGroupName string
@@ -22482,7 +21346,7 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_WalkUpdateDomain()
 	exampleUpdateDomain = 1
 	exampleParameters = armcompute.UpdateDomain{}
 
-	fakeServer.BeginWalkUpdateDomain = func(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters armcompute.UpdateDomain, options *armcompute.CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (resp azfake.PollerResponder[armcompute.CloudServicesUpdateDomainClientWalkUpdateDomainResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesUpdateDomainServer.BeginWalkUpdateDomain = func(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters armcompute.UpdateDomain, options *armcompute.CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (resp azfake.PollerResponder[armcompute.CloudServicesUpdateDomainClientWalkUpdateDomainResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().Equal(exampleUpdateDomain, updateDomain)
@@ -22490,6 +21354,8 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_WalkUpdateDomain()
 		resp.SetTerminalResponse(http.StatusOK, armcompute.CloudServicesUpdateDomainClientWalkUpdateDomainResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesUpdateDomainClient()
 	poller, err := client.BeginWalkUpdateDomain(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleUpdateDomain, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceUpdateDomain.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -22497,18 +21363,8 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_WalkUpdateDomain()
 }
 
 func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_GetUpdateDomain() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesUpdateDomainServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesUpdateDomainServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesUpdateDomainClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceUpdateDomain.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service Update Domain"},
 	})
 	var exampleResourceGroupName string
@@ -22523,7 +21379,7 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_GetUpdateDomain() 
 		ID:   to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Compute/cloudServices/{cs-name}/updateDomains/1"),
 	}
 
-	fakeServer.GetUpdateDomain = func(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *armcompute.CloudServicesUpdateDomainClientGetUpdateDomainOptions) (resp azfake.Responder[armcompute.CloudServicesUpdateDomainClientGetUpdateDomainResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServicesUpdateDomainServer.GetUpdateDomain = func(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *armcompute.CloudServicesUpdateDomainClientGetUpdateDomainOptions) (resp azfake.Responder[armcompute.CloudServicesUpdateDomainClientGetUpdateDomainResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		testsuite.Require().Equal(exampleUpdateDomain, updateDomain)
@@ -22531,24 +21387,16 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_GetUpdateDomain() 
 		resp.SetResponse(http.StatusOK, armcompute.CloudServicesUpdateDomainClientGetUpdateDomainResponse{UpdateDomain: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesUpdateDomainClient()
 	res, err := client.GetUpdateDomain(ctx, exampleResourceGroupName, exampleCloudServiceName, exampleUpdateDomain, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceUpdateDomain.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.UpdateDomain))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_ListUpdateDomains() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServicesUpdateDomainServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServicesUpdateDomainServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServicesUpdateDomainClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceUpdateDomains.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Update Domains in Cloud Service"},
 	})
 	var exampleResourceGroupName string
@@ -22568,13 +21416,15 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_ListUpdateDomains(
 			}},
 	}
 
-	fakeServer.NewListUpdateDomainsPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesUpdateDomainClientListUpdateDomainsOptions) (resp azfake.PagerResponder[armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse]) {
+	testsuite.serverFactory.CloudServicesUpdateDomainServer.NewListUpdateDomainsPager = func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesUpdateDomainClientListUpdateDomainsOptions) (resp azfake.PagerResponder[armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleCloudServiceName, cloudServiceName)
 		resp = azfake.PagerResponder[armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse{UpdateDomainListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServicesUpdateDomainClient()
 	pager := client.NewListUpdateDomainsPager(exampleResourceGroupName, exampleCloudServiceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -22587,18 +21437,8 @@ func (testsuite *FakeTestSuite) TestCloudServicesUpdateDomain_ListUpdateDomains(
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_GetOSVersion() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceOperatingSystemsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceOperatingSystemsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceOperatingSystemsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSVersion.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service OS Version"},
 	})
 	var exampleLocation string
@@ -22621,31 +21461,23 @@ func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_GetOSVersion() 
 		},
 	}
 
-	fakeServer.GetOSVersion = func(ctx context.Context, location string, osVersionName string, options *armcompute.CloudServiceOperatingSystemsClientGetOSVersionOptions) (resp azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSVersionResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceOperatingSystemsServer.GetOSVersion = func(ctx context.Context, location string, osVersionName string, options *armcompute.CloudServiceOperatingSystemsClientGetOSVersionOptions) (resp azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSVersionResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleOsVersionName, osVersionName)
 		resp = azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSVersionResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.CloudServiceOperatingSystemsClientGetOSVersionResponse{OSVersion: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceOperatingSystemsClient()
 	res, err := client.GetOSVersion(ctx, exampleLocation, exampleOsVersionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSVersion.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OSVersion))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_ListOSVersions() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceOperatingSystemsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceOperatingSystemsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceOperatingSystemsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSVersions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Cloud Service OS Versions in a subscription"},
 	})
 	var exampleLocation string
@@ -22683,12 +21515,14 @@ func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_ListOSVersions(
 			}},
 	}
 
-	fakeServer.NewListOSVersionsPager = func(location string, options *armcompute.CloudServiceOperatingSystemsClientListOSVersionsOptions) (resp azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSVersionsResponse]) {
+	testsuite.serverFactory.CloudServiceOperatingSystemsServer.NewListOSVersionsPager = func(location string, options *armcompute.CloudServiceOperatingSystemsClientListOSVersionsOptions) (resp azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSVersionsResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSVersionsResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServiceOperatingSystemsClientListOSVersionsResponse{OSVersionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceOperatingSystemsClient()
 	pager := client.NewListOSVersionsPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -22701,18 +21535,8 @@ func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_ListOSVersions(
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_GetOSFamily() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceOperatingSystemsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceOperatingSystemsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceOperatingSystemsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSFamily.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Cloud Service OS Family"},
 	})
 	var exampleLocation string
@@ -22738,31 +21562,23 @@ func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_GetOSFamily() {
 		},
 	}
 
-	fakeServer.GetOSFamily = func(ctx context.Context, location string, osFamilyName string, options *armcompute.CloudServiceOperatingSystemsClientGetOSFamilyOptions) (resp azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSFamilyResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CloudServiceOperatingSystemsServer.GetOSFamily = func(ctx context.Context, location string, osFamilyName string, options *armcompute.CloudServiceOperatingSystemsClientGetOSFamilyOptions) (resp azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSFamilyResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().Equal(exampleOsFamilyName, osFamilyName)
 		resp = azfake.Responder[armcompute.CloudServiceOperatingSystemsClientGetOSFamilyResponse]{}
 		resp.SetResponse(http.StatusOK, armcompute.CloudServiceOperatingSystemsClientGetOSFamilyResponse{OSFamily: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceOperatingSystemsClient()
 	res, err := client.GetOSFamily(ctx, exampleLocation, exampleOsFamilyName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSFamily.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OSFamily))
 }
 
 func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_ListOSFamilies() {
-	ctx := context.Background()
-	fakeServer := fake.CloudServiceOperatingSystemsServer{}
-	clientFactory, err := armcompute.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCloudServiceOperatingSystemsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCloudServiceOperatingSystemsClient()
-
 	// From example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSFamilies.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Cloud Service OS Families in a subscription"},
 	})
 	var exampleLocation string
@@ -22806,12 +21622,14 @@ func (testsuite *FakeTestSuite) TestCloudServiceOperatingSystems_ListOSFamilies(
 			}},
 	}
 
-	fakeServer.NewListOSFamiliesPager = func(location string, options *armcompute.CloudServiceOperatingSystemsClientListOSFamiliesOptions) (resp azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSFamiliesResponse]) {
+	testsuite.serverFactory.CloudServiceOperatingSystemsServer.NewListOSFamiliesPager = func(location string, options *armcompute.CloudServiceOperatingSystemsClientListOSFamiliesOptions) (resp azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSFamiliesResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armcompute.CloudServiceOperatingSystemsClientListOSFamiliesResponse]{}
 		resp.AddPage(http.StatusOK, armcompute.CloudServiceOperatingSystemsClientListOSFamiliesResponse{OSFamilyListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCloudServiceOperatingSystemsClient()
 	pager := client.NewListOSFamiliesPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)

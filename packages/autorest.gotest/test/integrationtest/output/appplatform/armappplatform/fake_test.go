@@ -26,16 +26,29 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var err error
+
 type FakeTestSuite struct {
 	suite.Suite
 
+	ctx            context.Context
 	cred           azcore.TokenCredential
 	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *armappplatform.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
 	testsuite.cred = &testutil.FakeCredential{}
 	testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+	testsuite.clientFactory, err = armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+		},
+	})
+	testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -43,18 +56,8 @@ func TestFakeTest(t *testing.T) {
 }
 
 func (testsuite *FakeTestSuite) TestServices_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_Get"},
 	})
 	var exampleResourceGroupName string
@@ -112,31 +115,23 @@ func (testsuite *FakeTestSuite) TestServices_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientGetOptions) (resp azfake.Responder[armappplatform.ServicesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientGetOptions) (resp azfake.Responder[armappplatform.ServicesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.ServicesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientGetResponse{ServiceResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ServiceResource))
 }
 
 func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -206,7 +201,7 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleResource, resource))
@@ -214,6 +209,8 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ServicesClientCreateOrUpdateResponse{ServiceResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -221,7 +218,7 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ServiceResource))
 
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_CreateOrUpdate_VNetInjection"},
 	})
 	exampleResourceGroupName = "myResourceGroup"
@@ -300,7 +297,7 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleResource, resource))
@@ -308,6 +305,7 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ServicesClientCreateOrUpdateResponse{ServiceResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -316,18 +314,8 @@ func (testsuite *FakeTestSuite) TestServices_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestServices_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -335,13 +323,15 @@ func (testsuite *FakeTestSuite) TestServices_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleServiceName = "myservice"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.PollerResponder[armappplatform.ServicesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusAccepted, armappplatform.ServicesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -349,18 +339,8 @@ func (testsuite *FakeTestSuite) TestServices_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestServices_Update() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_Update"},
 	})
 	var exampleResourceGroupName string
@@ -430,7 +410,7 @@ func (testsuite *FakeTestSuite) TestServices_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, resource armappplatform.ServiceResource, options *armappplatform.ServicesClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.ServicesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleResource, resource))
@@ -438,6 +418,8 @@ func (testsuite *FakeTestSuite) TestServices_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ServicesClientUpdateResponse{ServiceResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -446,18 +428,8 @@ func (testsuite *FakeTestSuite) TestServices_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestServices_ListTestKeys() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_ListTestKeys"},
 	})
 	var exampleResourceGroupName string
@@ -473,31 +445,23 @@ func (testsuite *FakeTestSuite) TestServices_ListTestKeys() {
 		SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
 	}
 
-	fakeServer.ListTestKeys = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientListTestKeysOptions) (resp azfake.Responder[armappplatform.ServicesClientListTestKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.ListTestKeys = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientListTestKeysOptions) (resp azfake.Responder[armappplatform.ServicesClientListTestKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.ServicesClientListTestKeysResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientListTestKeysResponse{TestKeys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	res, err := client.ListTestKeys(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.TestKeys))
 }
 
 func (testsuite *FakeTestSuite) TestServices_RegenerateTestKey() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_RegenerateTestKey"},
 	})
 	var exampleResourceGroupName string
@@ -517,7 +481,7 @@ func (testsuite *FakeTestSuite) TestServices_RegenerateTestKey() {
 		SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
 	}
 
-	fakeServer.RegenerateTestKey = func(ctx context.Context, resourceGroupName string, serviceName string, regenerateTestKeyRequest armappplatform.RegenerateTestKeyRequestPayload, options *armappplatform.ServicesClientRegenerateTestKeyOptions) (resp azfake.Responder[armappplatform.ServicesClientRegenerateTestKeyResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.RegenerateTestKey = func(ctx context.Context, resourceGroupName string, serviceName string, regenerateTestKeyRequest armappplatform.RegenerateTestKeyRequestPayload, options *armappplatform.ServicesClientRegenerateTestKeyOptions) (resp azfake.Responder[armappplatform.ServicesClientRegenerateTestKeyResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleRegenerateTestKeyRequest, regenerateTestKeyRequest))
@@ -525,24 +489,16 @@ func (testsuite *FakeTestSuite) TestServices_RegenerateTestKey() {
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientRegenerateTestKeyResponse{TestKeys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	res, err := client.RegenerateTestKey(ctx, exampleResourceGroupName, exampleServiceName, exampleRegenerateTestKeyRequest, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.TestKeys))
 }
 
 func (testsuite *FakeTestSuite) TestServices_DisableTestEndpoint() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_DisableTestEndpoint"},
 	})
 	var exampleResourceGroupName string
@@ -550,30 +506,22 @@ func (testsuite *FakeTestSuite) TestServices_DisableTestEndpoint() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleServiceName = "myservice"
 
-	fakeServer.DisableTestEndpoint = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientDisableTestEndpointOptions) (resp azfake.Responder[armappplatform.ServicesClientDisableTestEndpointResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.DisableTestEndpoint = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientDisableTestEndpointOptions) (resp azfake.Responder[armappplatform.ServicesClientDisableTestEndpointResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.ServicesClientDisableTestEndpointResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientDisableTestEndpointResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	_, err = client.DisableTestEndpoint(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json")
 }
 
 func (testsuite *FakeTestSuite) TestServices_EnableTestEndpoint() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_EnableTestEndpoint"},
 	})
 	var exampleResourceGroupName string
@@ -589,31 +537,23 @@ func (testsuite *FakeTestSuite) TestServices_EnableTestEndpoint() {
 		SecondaryTestEndpoint: to.Ptr("<secondaryTestEndpoint>"),
 	}
 
-	fakeServer.EnableTestEndpoint = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientEnableTestEndpointOptions) (resp azfake.Responder[armappplatform.ServicesClientEnableTestEndpointResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.EnableTestEndpoint = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ServicesClientEnableTestEndpointOptions) (resp azfake.Responder[armappplatform.ServicesClientEnableTestEndpointResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.ServicesClientEnableTestEndpointResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientEnableTestEndpointResponse{TestKeys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	res, err := client.EnableTestEndpoint(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.TestKeys))
 }
 
 func (testsuite *FakeTestSuite) TestServices_CheckNameAvailability() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_CheckNameAvailability"},
 	})
 	var exampleLocation string
@@ -630,31 +570,23 @@ func (testsuite *FakeTestSuite) TestServices_CheckNameAvailability() {
 		Reason:        to.Ptr("AlreadyExists"),
 	}
 
-	fakeServer.CheckNameAvailability = func(ctx context.Context, location string, availabilityParameters armappplatform.NameAvailabilityParameters, options *armappplatform.ServicesClientCheckNameAvailabilityOptions) (resp azfake.Responder[armappplatform.ServicesClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ServicesServer.CheckNameAvailability = func(ctx context.Context, location string, availabilityParameters armappplatform.NameAvailabilityParameters, options *armappplatform.ServicesClientCheckNameAvailabilityOptions) (resp azfake.Responder[armappplatform.ServicesClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().True(reflect.DeepEqual(exampleAvailabilityParameters, availabilityParameters))
 		resp = azfake.Responder[armappplatform.ServicesClientCheckNameAvailabilityResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ServicesClientCheckNameAvailabilityResponse{NameAvailability: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	res, err := client.CheckNameAvailability(ctx, exampleLocation, exampleAvailabilityParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.NameAvailability))
 }
 
 func (testsuite *FakeTestSuite) TestServices_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_ListBySubscription"},
 	})
 
@@ -711,11 +643,13 @@ func (testsuite *FakeTestSuite) TestServices_ListBySubscription() {
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armappplatform.ServicesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armappplatform.ServicesClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.ServicesServer.NewListBySubscriptionPager = func(options *armappplatform.ServicesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armappplatform.ServicesClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armappplatform.ServicesClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.ServicesClientListBySubscriptionResponse{ServiceResourceList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	pager := client.NewListBySubscriptionPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -728,18 +662,8 @@ func (testsuite *FakeTestSuite) TestServices_ListBySubscription() {
 }
 
 func (testsuite *FakeTestSuite) TestServices_List() {
-	ctx := context.Background()
-	fakeServer := fake.ServicesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServicesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewServicesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Services_List"},
 	})
 	var exampleResourceGroupName string
@@ -798,12 +722,14 @@ func (testsuite *FakeTestSuite) TestServices_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, options *armappplatform.ServicesClientListOptions) (resp azfake.PagerResponder[armappplatform.ServicesClientListResponse]) {
+	testsuite.serverFactory.ServicesServer.NewListPager = func(resourceGroupName string, options *armappplatform.ServicesClientListOptions) (resp azfake.PagerResponder[armappplatform.ServicesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armappplatform.ServicesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.ServicesClientListResponse{ServiceResourceList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewServicesClient()
 	pager := client.NewListPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -816,18 +742,8 @@ func (testsuite *FakeTestSuite) TestServices_List() {
 }
 
 func (testsuite *FakeTestSuite) TestConfigServers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ConfigServersServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewConfigServersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewConfigServersClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ConfigServers_Get"},
 	})
 	var exampleResourceGroupName string
@@ -852,31 +768,23 @@ func (testsuite *FakeTestSuite) TestConfigServers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ConfigServersClientGetOptions) (resp azfake.Responder[armappplatform.ConfigServersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ConfigServersServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.ConfigServersClientGetOptions) (resp azfake.Responder[armappplatform.ConfigServersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.ConfigServersClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.ConfigServersClientGetResponse{ConfigServerResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewConfigServersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ConfigServerResource))
 }
 
 func (testsuite *FakeTestSuite) TestConfigServers_UpdatePut() {
-	ctx := context.Background()
-	fakeServer := fake.ConfigServersServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewConfigServersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewConfigServersClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ConfigServers_UpdatePut"},
 	})
 	var exampleResourceGroupName string
@@ -914,7 +822,7 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePut() {
 		},
 	}
 
-	fakeServer.BeginUpdatePut = func(ctx context.Context, resourceGroupName string, serviceName string, configServerResource armappplatform.ConfigServerResource, options *armappplatform.ConfigServersClientBeginUpdatePutOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientUpdatePutResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ConfigServersServer.BeginUpdatePut = func(ctx context.Context, resourceGroupName string, serviceName string, configServerResource armappplatform.ConfigServerResource, options *armappplatform.ConfigServersClientBeginUpdatePutOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientUpdatePutResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleConfigServerResource, configServerResource))
@@ -922,6 +830,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePut() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ConfigServersClientUpdatePutResponse{ConfigServerResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewConfigServersClient()
 	poller, err := client.BeginUpdatePut(ctx, exampleResourceGroupName, exampleServiceName, exampleConfigServerResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -930,18 +840,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePut() {
 }
 
 func (testsuite *FakeTestSuite) TestConfigServers_UpdatePatch() {
-	ctx := context.Background()
-	fakeServer := fake.ConfigServersServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewConfigServersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewConfigServersClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ConfigServers_UpdatePatch"},
 	})
 	var exampleResourceGroupName string
@@ -979,7 +879,7 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePatch() {
 		},
 	}
 
-	fakeServer.BeginUpdatePatch = func(ctx context.Context, resourceGroupName string, serviceName string, configServerResource armappplatform.ConfigServerResource, options *armappplatform.ConfigServersClientBeginUpdatePatchOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientUpdatePatchResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ConfigServersServer.BeginUpdatePatch = func(ctx context.Context, resourceGroupName string, serviceName string, configServerResource armappplatform.ConfigServerResource, options *armappplatform.ConfigServersClientBeginUpdatePatchOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientUpdatePatchResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleConfigServerResource, configServerResource))
@@ -987,6 +887,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePatch() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ConfigServersClientUpdatePatchResponse{ConfigServerResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewConfigServersClient()
 	poller, err := client.BeginUpdatePatch(ctx, exampleResourceGroupName, exampleServiceName, exampleConfigServerResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -995,18 +897,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_UpdatePatch() {
 }
 
 func (testsuite *FakeTestSuite) TestConfigServers_Validate() {
-	ctx := context.Background()
-	fakeServer := fake.ConfigServersServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewConfigServersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewConfigServersClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ConfigServers_Validate"},
 	})
 	var exampleResourceGroupName string
@@ -1027,7 +919,7 @@ func (testsuite *FakeTestSuite) TestConfigServers_Validate() {
 		IsValid: to.Ptr(true),
 	}
 
-	fakeServer.BeginValidate = func(ctx context.Context, resourceGroupName string, serviceName string, configServerSettings armappplatform.ConfigServerSettings, options *armappplatform.ConfigServersClientBeginValidateOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientValidateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ConfigServersServer.BeginValidate = func(ctx context.Context, resourceGroupName string, serviceName string, configServerSettings armappplatform.ConfigServerSettings, options *armappplatform.ConfigServersClientBeginValidateOptions) (resp azfake.PollerResponder[armappplatform.ConfigServersClientValidateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleConfigServerSettings, configServerSettings))
@@ -1035,6 +927,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_Validate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.ConfigServersClientValidateResponse{ConfigServerSettingsValidateResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewConfigServersClient()
 	poller, err := client.BeginValidate(ctx, exampleResourceGroupName, exampleServiceName, exampleConfigServerSettings, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1043,18 +937,8 @@ func (testsuite *FakeTestSuite) TestConfigServers_Validate() {
 }
 
 func (testsuite *FakeTestSuite) TestMonitoringSettings_Get() {
-	ctx := context.Background()
-	fakeServer := fake.MonitoringSettingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewMonitoringSettingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewMonitoringSettingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"MonitoringSettings_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1077,31 +961,23 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.MonitoringSettingsClientGetOptions) (resp azfake.Responder[armappplatform.MonitoringSettingsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.MonitoringSettingsServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, options *armappplatform.MonitoringSettingsClientGetOptions) (resp azfake.Responder[armappplatform.MonitoringSettingsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.Responder[armappplatform.MonitoringSettingsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.MonitoringSettingsClientGetResponse{MonitoringSettingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewMonitoringSettingsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.MonitoringSettingResource))
 }
 
 func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePut() {
-	ctx := context.Background()
-	fakeServer := fake.MonitoringSettingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewMonitoringSettingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewMonitoringSettingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"MonitoringSettings_UpdatePut"},
 	})
 	var exampleResourceGroupName string
@@ -1132,7 +1008,7 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePut() {
 		},
 	}
 
-	fakeServer.BeginUpdatePut = func(ctx context.Context, resourceGroupName string, serviceName string, monitoringSettingResource armappplatform.MonitoringSettingResource, options *armappplatform.MonitoringSettingsClientBeginUpdatePutOptions) (resp azfake.PollerResponder[armappplatform.MonitoringSettingsClientUpdatePutResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.MonitoringSettingsServer.BeginUpdatePut = func(ctx context.Context, resourceGroupName string, serviceName string, monitoringSettingResource armappplatform.MonitoringSettingResource, options *armappplatform.MonitoringSettingsClientBeginUpdatePutOptions) (resp azfake.PollerResponder[armappplatform.MonitoringSettingsClientUpdatePutResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleMonitoringSettingResource, monitoringSettingResource))
@@ -1140,6 +1016,8 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePut() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.MonitoringSettingsClientUpdatePutResponse{MonitoringSettingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewMonitoringSettingsClient()
 	poller, err := client.BeginUpdatePut(ctx, exampleResourceGroupName, exampleServiceName, exampleMonitoringSettingResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1148,18 +1026,8 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePut() {
 }
 
 func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePatch() {
-	ctx := context.Background()
-	fakeServer := fake.MonitoringSettingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewMonitoringSettingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewMonitoringSettingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"MonitoringSettings_UpdatePatch"},
 	})
 	var exampleResourceGroupName string
@@ -1190,7 +1058,7 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePatch() {
 		},
 	}
 
-	fakeServer.BeginUpdatePatch = func(ctx context.Context, resourceGroupName string, serviceName string, monitoringSettingResource armappplatform.MonitoringSettingResource, options *armappplatform.MonitoringSettingsClientBeginUpdatePatchOptions) (resp azfake.PollerResponder[armappplatform.MonitoringSettingsClientUpdatePatchResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.MonitoringSettingsServer.BeginUpdatePatch = func(ctx context.Context, resourceGroupName string, serviceName string, monitoringSettingResource armappplatform.MonitoringSettingResource, options *armappplatform.MonitoringSettingsClientBeginUpdatePatchOptions) (resp azfake.PollerResponder[armappplatform.MonitoringSettingsClientUpdatePatchResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleMonitoringSettingResource, monitoringSettingResource))
@@ -1198,6 +1066,8 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePatch() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.MonitoringSettingsClientUpdatePatchResponse{MonitoringSettingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewMonitoringSettingsClient()
 	poller, err := client.BeginUpdatePatch(ctx, exampleResourceGroupName, exampleServiceName, exampleMonitoringSettingResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1206,18 +1076,8 @@ func (testsuite *FakeTestSuite) TestMonitoringSettings_UpdatePatch() {
 }
 
 func (testsuite *FakeTestSuite) TestApps_Get() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1257,7 +1117,7 @@ func (testsuite *FakeTestSuite) TestApps_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, options *armappplatform.AppsClientGetOptions) (resp azfake.Responder[armappplatform.AppsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AppsServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, options *armappplatform.AppsClientGetOptions) (resp azfake.Responder[armappplatform.AppsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1265,24 +1125,16 @@ func (testsuite *FakeTestSuite) TestApps_Get() {
 		resp.SetResponse(http.StatusOK, armappplatform.AppsClientGetResponse{AppResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, &armappplatform.AppsClientGetOptions{SyncStatus: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.AppResource))
 }
 
 func (testsuite *FakeTestSuite) TestApps_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -1341,7 +1193,7 @@ func (testsuite *FakeTestSuite) TestApps_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource armappplatform.AppResource, options *armappplatform.AppsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.AppsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AppsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource armappplatform.AppResource, options *armappplatform.AppsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.AppsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1350,6 +1202,8 @@ func (testsuite *FakeTestSuite) TestApps_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.AppsClientCreateOrUpdateResponse{AppResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleAppResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1358,18 +1212,8 @@ func (testsuite *FakeTestSuite) TestApps_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestApps_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -1379,7 +1223,7 @@ func (testsuite *FakeTestSuite) TestApps_Delete() {
 	exampleServiceName = "myservice"
 	exampleAppName = "myapp"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, options *armappplatform.AppsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.AppsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AppsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, options *armappplatform.AppsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.AppsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1387,6 +1231,8 @@ func (testsuite *FakeTestSuite) TestApps_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.AppsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1394,18 +1240,8 @@ func (testsuite *FakeTestSuite) TestApps_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestApps_Update() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_Update"},
 	})
 	var exampleResourceGroupName string
@@ -1467,7 +1303,7 @@ func (testsuite *FakeTestSuite) TestApps_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource armappplatform.AppResource, options *armappplatform.AppsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.AppsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AppsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, appResource armappplatform.AppResource, options *armappplatform.AppsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.AppsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1476,6 +1312,8 @@ func (testsuite *FakeTestSuite) TestApps_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.AppsClientUpdateResponse{AppResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleAppResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1484,18 +1322,8 @@ func (testsuite *FakeTestSuite) TestApps_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestApps_List() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_List"},
 	})
 	var exampleResourceGroupName string
@@ -1536,13 +1364,15 @@ func (testsuite *FakeTestSuite) TestApps_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, serviceName string, options *armappplatform.AppsClientListOptions) (resp azfake.PagerResponder[armappplatform.AppsClientListResponse]) {
+	testsuite.serverFactory.AppsServer.NewListPager = func(resourceGroupName string, serviceName string, options *armappplatform.AppsClientListOptions) (resp azfake.PagerResponder[armappplatform.AppsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.PagerResponder[armappplatform.AppsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.AppsClientListResponse{AppResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleServiceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1555,18 +1385,8 @@ func (testsuite *FakeTestSuite) TestApps_List() {
 }
 
 func (testsuite *FakeTestSuite) TestApps_ValidateDomain() {
-	ctx := context.Background()
-	fakeServer := fake.AppsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewAppsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewAppsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Apps_ValidateDomain"},
 	})
 	var exampleResourceGroupName string
@@ -1585,7 +1405,7 @@ func (testsuite *FakeTestSuite) TestApps_ValidateDomain() {
 		Message: to.Ptr("Certificate is invalid, please check if it is a self signed cert or if it contains a suitable dns name"),
 	}
 
-	fakeServer.ValidateDomain = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, validatePayload armappplatform.CustomDomainValidatePayload, options *armappplatform.AppsClientValidateDomainOptions) (resp azfake.Responder[armappplatform.AppsClientValidateDomainResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.AppsServer.ValidateDomain = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, validatePayload armappplatform.CustomDomainValidatePayload, options *armappplatform.AppsClientValidateDomainOptions) (resp azfake.Responder[armappplatform.AppsClientValidateDomainResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1594,24 +1414,16 @@ func (testsuite *FakeTestSuite) TestApps_ValidateDomain() {
 		resp.SetResponse(http.StatusOK, armappplatform.AppsClientValidateDomainResponse{CustomDomainValidateResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewAppsClient()
 	res, err := client.ValidateDomain(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleValidatePayload, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CustomDomainValidateResult))
 }
 
 func (testsuite *FakeTestSuite) TestBindings_Get() {
-	ctx := context.Background()
-	fakeServer := fake.BindingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBindingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBindingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Bindings_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1641,7 +1453,7 @@ func (testsuite *FakeTestSuite) TestBindings_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, options *armappplatform.BindingsClientGetOptions) (resp azfake.Responder[armappplatform.BindingsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BindingsServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, options *armappplatform.BindingsClientGetOptions) (resp azfake.Responder[armappplatform.BindingsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1650,24 +1462,16 @@ func (testsuite *FakeTestSuite) TestBindings_Get() {
 		resp.SetResponse(http.StatusOK, armappplatform.BindingsClientGetResponse{BindingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBindingsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleBindingName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.BindingResource))
 }
 
 func (testsuite *FakeTestSuite) TestBindings_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.BindingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBindingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBindingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Bindings_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -1708,7 +1512,7 @@ func (testsuite *FakeTestSuite) TestBindings_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource armappplatform.BindingResource, options *armappplatform.BindingsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BindingsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource armappplatform.BindingResource, options *armappplatform.BindingsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1718,6 +1522,8 @@ func (testsuite *FakeTestSuite) TestBindings_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.BindingsClientCreateOrUpdateResponse{BindingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBindingsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleBindingName, exampleBindingResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1726,18 +1532,8 @@ func (testsuite *FakeTestSuite) TestBindings_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestBindings_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.BindingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBindingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBindingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Bindings_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -1749,7 +1545,7 @@ func (testsuite *FakeTestSuite) TestBindings_Delete() {
 	exampleAppName = "myapp"
 	exampleBindingName = "mybinding"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, options *armappplatform.BindingsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BindingsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, options *armappplatform.BindingsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1758,6 +1554,8 @@ func (testsuite *FakeTestSuite) TestBindings_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.BindingsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBindingsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleBindingName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1765,18 +1563,8 @@ func (testsuite *FakeTestSuite) TestBindings_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestBindings_Update() {
-	ctx := context.Background()
-	fakeServer := fake.BindingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBindingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBindingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Bindings_Update"},
 	})
 	var exampleResourceGroupName string
@@ -1816,7 +1604,7 @@ func (testsuite *FakeTestSuite) TestBindings_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource armappplatform.BindingResource, options *armappplatform.BindingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BindingsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, bindingName string, bindingResource armappplatform.BindingResource, options *armappplatform.BindingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.BindingsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1826,6 +1614,8 @@ func (testsuite *FakeTestSuite) TestBindings_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.BindingsClientUpdateResponse{BindingResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBindingsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleBindingName, exampleBindingResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1834,18 +1624,8 @@ func (testsuite *FakeTestSuite) TestBindings_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestBindings_List() {
-	ctx := context.Background()
-	fakeServer := fake.BindingsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBindingsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBindingsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Bindings_List"},
 	})
 	var exampleResourceGroupName string
@@ -1876,7 +1656,7 @@ func (testsuite *FakeTestSuite) TestBindings_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.BindingsClientListOptions) (resp azfake.PagerResponder[armappplatform.BindingsClientListResponse]) {
+	testsuite.serverFactory.BindingsServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.BindingsClientListOptions) (resp azfake.PagerResponder[armappplatform.BindingsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -1884,6 +1664,8 @@ func (testsuite *FakeTestSuite) TestBindings_List() {
 		resp.AddPage(http.StatusOK, armappplatform.BindingsClientListResponse{BindingResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBindingsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleServiceName, exampleAppName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1896,18 +1678,8 @@ func (testsuite *FakeTestSuite) TestBindings_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCertificates_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CertificatesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCertificatesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCertificatesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Certificates_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1938,7 +1710,7 @@ func (testsuite *FakeTestSuite) TestCertificates_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, options *armappplatform.CertificatesClientGetOptions) (resp azfake.Responder[armappplatform.CertificatesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CertificatesServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, options *armappplatform.CertificatesClientGetOptions) (resp azfake.Responder[armappplatform.CertificatesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleCertificateName, certificateName)
@@ -1946,24 +1718,16 @@ func (testsuite *FakeTestSuite) TestCertificates_Get() {
 		resp.SetResponse(http.StatusOK, armappplatform.CertificatesClientGetResponse{CertificateResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCertificatesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, exampleCertificateName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CertificateResource))
 }
 
 func (testsuite *FakeTestSuite) TestCertificates_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.CertificatesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCertificatesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCertificatesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Certificates_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -2002,7 +1766,7 @@ func (testsuite *FakeTestSuite) TestCertificates_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, certificateResource armappplatform.CertificateResource, options *armappplatform.CertificatesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.CertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CertificatesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, certificateResource armappplatform.CertificateResource, options *armappplatform.CertificatesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.CertificatesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleCertificateName, certificateName)
@@ -2011,6 +1775,8 @@ func (testsuite *FakeTestSuite) TestCertificates_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.CertificatesClientCreateOrUpdateResponse{CertificateResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCertificatesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleCertificateName, exampleCertificateResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2019,18 +1785,8 @@ func (testsuite *FakeTestSuite) TestCertificates_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestCertificates_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CertificatesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCertificatesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCertificatesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Certificates_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -2040,7 +1796,7 @@ func (testsuite *FakeTestSuite) TestCertificates_Delete() {
 	exampleServiceName = "myservice"
 	exampleCertificateName = "mycertificate"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, options *armappplatform.CertificatesClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.CertificatesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CertificatesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, certificateName string, options *armappplatform.CertificatesClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.CertificatesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleCertificateName, certificateName)
@@ -2048,6 +1804,8 @@ func (testsuite *FakeTestSuite) TestCertificates_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.CertificatesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCertificatesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, exampleCertificateName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2055,18 +1813,8 @@ func (testsuite *FakeTestSuite) TestCertificates_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestCertificates_List() {
-	ctx := context.Background()
-	fakeServer := fake.CertificatesServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCertificatesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCertificatesClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Certificates_List"},
 	})
 	var exampleResourceGroupName string
@@ -2098,13 +1846,15 @@ func (testsuite *FakeTestSuite) TestCertificates_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, serviceName string, options *armappplatform.CertificatesClientListOptions) (resp azfake.PagerResponder[armappplatform.CertificatesClientListResponse]) {
+	testsuite.serverFactory.CertificatesServer.NewListPager = func(resourceGroupName string, serviceName string, options *armappplatform.CertificatesClientListOptions) (resp azfake.PagerResponder[armappplatform.CertificatesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.PagerResponder[armappplatform.CertificatesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.CertificatesClientListResponse{CertificateResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCertificatesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleServiceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2117,18 +1867,8 @@ func (testsuite *FakeTestSuite) TestCertificates_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCustomDomains_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CustomDomainsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCustomDomainsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCustomDomainsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CustomDomains_Get"},
 	})
 	var exampleResourceGroupName string
@@ -2151,7 +1891,7 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, options *armappplatform.CustomDomainsClientGetOptions) (resp azfake.Responder[armappplatform.CustomDomainsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CustomDomainsServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, options *armappplatform.CustomDomainsClientGetOptions) (resp azfake.Responder[armappplatform.CustomDomainsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2160,24 +1900,16 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Get() {
 		resp.SetResponse(http.StatusOK, armappplatform.CustomDomainsClientGetResponse{CustomDomainResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCustomDomainsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDomainName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CustomDomainResource))
 }
 
 func (testsuite *FakeTestSuite) TestCustomDomains_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.CustomDomainsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCustomDomainsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCustomDomainsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CustomDomains_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -2207,7 +1939,7 @@ func (testsuite *FakeTestSuite) TestCustomDomains_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, domainResource armappplatform.CustomDomainResource, options *armappplatform.CustomDomainsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CustomDomainsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, domainResource armappplatform.CustomDomainResource, options *armappplatform.CustomDomainsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2217,6 +1949,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.CustomDomainsClientCreateOrUpdateResponse{CustomDomainResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCustomDomainsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDomainName, exampleDomainResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2225,18 +1959,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestCustomDomains_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CustomDomainsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCustomDomainsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCustomDomainsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CustomDomains_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -2248,7 +1972,7 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Delete() {
 	exampleAppName = "myapp"
 	exampleDomainName = "mydomain.com"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, options *armappplatform.CustomDomainsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CustomDomainsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, options *armappplatform.CustomDomainsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2257,6 +1981,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.CustomDomainsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCustomDomainsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDomainName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2264,18 +1990,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestCustomDomains_Update() {
-	ctx := context.Background()
-	fakeServer := fake.CustomDomainsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCustomDomainsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCustomDomainsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CustomDomains_Update"},
 	})
 	var exampleResourceGroupName string
@@ -2305,7 +2021,7 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, domainResource armappplatform.CustomDomainResource, options *armappplatform.CustomDomainsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CustomDomainsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, domainName string, domainResource armappplatform.CustomDomainResource, options *armappplatform.CustomDomainsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.CustomDomainsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2315,6 +2031,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.CustomDomainsClientUpdateResponse{CustomDomainResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCustomDomainsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDomainName, exampleDomainResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2323,18 +2041,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestCustomDomains_List() {
-	ctx := context.Background()
-	fakeServer := fake.CustomDomainsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCustomDomainsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCustomDomainsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CustomDomains_List"},
 	})
 	var exampleResourceGroupName string
@@ -2358,7 +2066,7 @@ func (testsuite *FakeTestSuite) TestCustomDomains_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.CustomDomainsClientListOptions) (resp azfake.PagerResponder[armappplatform.CustomDomainsClientListResponse]) {
+	testsuite.serverFactory.CustomDomainsServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.CustomDomainsClientListOptions) (resp azfake.PagerResponder[armappplatform.CustomDomainsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2366,6 +2074,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_List() {
 		resp.AddPage(http.StatusOK, armappplatform.CustomDomainsClientListResponse{CustomDomainResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCustomDomainsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleServiceName, exampleAppName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2378,18 +2088,8 @@ func (testsuite *FakeTestSuite) TestCustomDomains_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Get"},
 	})
 	var exampleResourceGroupName string
@@ -2440,7 +2140,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientGetOptions) (resp azfake.Responder[armappplatform.DeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.Get = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientGetOptions) (resp azfake.Responder[armappplatform.DeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2449,24 +2149,16 @@ func (testsuite *FakeTestSuite) TestDeployments_Get() {
 		resp.SetResponse(http.StatusOK, armappplatform.DeploymentsClientGetResponse{DeploymentResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DeploymentResource))
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -2542,7 +2234,7 @@ func (testsuite *FakeTestSuite) TestDeployments_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource armappplatform.DeploymentResource, options *armappplatform.DeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource armappplatform.DeploymentResource, options *armappplatform.DeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2552,6 +2244,8 @@ func (testsuite *FakeTestSuite) TestDeployments_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientCreateOrUpdateResponse{DeploymentResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, exampleDeploymentResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2560,18 +2254,8 @@ func (testsuite *FakeTestSuite) TestDeployments_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -2583,7 +2267,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Delete() {
 	exampleAppName = "myapp"
 	exampleDeploymentName = "mydeployment"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2592,6 +2276,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2599,18 +2285,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Update() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Update"},
 	})
 	var exampleResourceGroupName string
@@ -2672,7 +2348,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource armappplatform.DeploymentResource, options *armappplatform.DeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, deploymentResource armappplatform.DeploymentResource, options *armappplatform.DeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2682,6 +2358,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientUpdateResponse{DeploymentResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, exampleDeploymentResource, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2690,18 +2368,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_List() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_List"},
 	})
 	var exampleResourceGroupName string
@@ -2753,7 +2421,7 @@ func (testsuite *FakeTestSuite) TestDeployments_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.DeploymentsClientListOptions) (resp azfake.PagerResponder[armappplatform.DeploymentsClientListResponse]) {
+	testsuite.serverFactory.DeploymentsServer.NewListPager = func(resourceGroupName string, serviceName string, appName string, options *armappplatform.DeploymentsClientListOptions) (resp azfake.PagerResponder[armappplatform.DeploymentsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2761,6 +2429,8 @@ func (testsuite *FakeTestSuite) TestDeployments_List() {
 		resp.AddPage(http.StatusOK, armappplatform.DeploymentsClientListResponse{DeploymentResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleServiceName, exampleAppName, &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2773,18 +2443,8 @@ func (testsuite *FakeTestSuite) TestDeployments_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_ListForCluster() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_ListForCluster"},
 	})
 	var exampleResourceGroupName string
@@ -2834,13 +2494,15 @@ func (testsuite *FakeTestSuite) TestDeployments_ListForCluster() {
 			}},
 	}
 
-	fakeServer.NewListForClusterPager = func(resourceGroupName string, serviceName string, options *armappplatform.DeploymentsClientListForClusterOptions) (resp azfake.PagerResponder[armappplatform.DeploymentsClientListForClusterResponse]) {
+	testsuite.serverFactory.DeploymentsServer.NewListForClusterPager = func(resourceGroupName string, serviceName string, options *armappplatform.DeploymentsClientListForClusterOptions) (resp azfake.PagerResponder[armappplatform.DeploymentsClientListForClusterResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		resp = azfake.PagerResponder[armappplatform.DeploymentsClientListForClusterResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.DeploymentsClientListForClusterResponse{DeploymentResourceCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	pager := client.NewListForClusterPager(exampleResourceGroupName, exampleServiceName, &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2853,18 +2515,8 @@ func (testsuite *FakeTestSuite) TestDeployments_ListForCluster() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Start() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Start"},
 	})
 	var exampleResourceGroupName string
@@ -2876,7 +2528,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Start() {
 	exampleAppName = "myapp"
 	exampleDeploymentName = "mydeployment"
 
-	fakeServer.BeginStart = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginStartOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientStartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginStart = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginStartOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientStartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2885,6 +2537,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Start() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientStartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginStart(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2892,18 +2546,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Start() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Stop() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Stop"},
 	})
 	var exampleResourceGroupName string
@@ -2915,7 +2559,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Stop() {
 	exampleAppName = "myapp"
 	exampleDeploymentName = "mydeployment"
 
-	fakeServer.BeginStop = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginStopOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientStopResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginStop = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginStopOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientStopResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2924,6 +2568,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Stop() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientStopResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginStop(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2931,18 +2577,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Stop() {
 }
 
 func (testsuite *FakeTestSuite) TestDeployments_Restart() {
-	ctx := context.Background()
-	fakeServer := fake.DeploymentsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDeploymentsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Deployments_Restart"},
 	})
 	var exampleResourceGroupName string
@@ -2954,7 +2590,7 @@ func (testsuite *FakeTestSuite) TestDeployments_Restart() {
 	exampleAppName = "myapp"
 	exampleDeploymentName = "mydeployment"
 
-	fakeServer.BeginRestart = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginRestartOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientRestartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DeploymentsServer.BeginRestart = func(ctx context.Context, resourceGroupName string, serviceName string, appName string, deploymentName string, options *armappplatform.DeploymentsClientBeginRestartOptions) (resp azfake.PollerResponder[armappplatform.DeploymentsClientRestartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleServiceName, serviceName)
 		testsuite.Require().Equal(exampleAppName, appName)
@@ -2963,6 +2599,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Restart() {
 		resp.SetTerminalResponse(http.StatusOK, armappplatform.DeploymentsClientRestartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDeploymentsClient()
 	poller, err := client.BeginRestart(ctx, exampleResourceGroupName, exampleServiceName, exampleAppName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -2970,18 +2608,8 @@ func (testsuite *FakeTestSuite) TestDeployments_Restart() {
 }
 
 func (testsuite *FakeTestSuite) TestOperations_List() {
-	ctx := context.Background()
-	fakeServer := fake.OperationsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOperationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOperationsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Operations_List"},
 	})
 
@@ -3001,11 +2629,13 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armappplatform.OperationsClientListOptions) (resp azfake.PagerResponder[armappplatform.OperationsClientListResponse]) {
+	testsuite.serverFactory.OperationsServer.NewListPager = func(options *armappplatform.OperationsClientListOptions) (resp azfake.PagerResponder[armappplatform.OperationsClientListResponse]) {
 		resp = azfake.PagerResponder[armappplatform.OperationsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.OperationsClientListResponse{AvailableOperations: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOperationsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -3018,18 +2648,8 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 }
 
 func (testsuite *FakeTestSuite) TestRuntimeVersions_ListRuntimeVersions() {
-	ctx := context.Background()
-	fakeServer := fake.RuntimeVersionsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewRuntimeVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewRuntimeVersionsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"RuntimeVersions_ListRuntimeVersions"},
 	})
 
@@ -3052,29 +2672,21 @@ func (testsuite *FakeTestSuite) TestRuntimeVersions_ListRuntimeVersions() {
 			}},
 	}
 
-	fakeServer.ListRuntimeVersions = func(ctx context.Context, options *armappplatform.RuntimeVersionsClientListRuntimeVersionsOptions) (resp azfake.Responder[armappplatform.RuntimeVersionsClientListRuntimeVersionsResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.RuntimeVersionsServer.ListRuntimeVersions = func(ctx context.Context, options *armappplatform.RuntimeVersionsClientListRuntimeVersionsOptions) (resp azfake.Responder[armappplatform.RuntimeVersionsClientListRuntimeVersionsResponse], errResp azfake.ErrorResponder) {
 		resp = azfake.Responder[armappplatform.RuntimeVersionsClientListRuntimeVersionsResponse]{}
 		resp.SetResponse(http.StatusOK, armappplatform.RuntimeVersionsClientListRuntimeVersionsResponse{AvailableRuntimeVersions: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewRuntimeVersionsClient()
 	res, err := client.ListRuntimeVersions(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.AvailableRuntimeVersions))
 }
 
 func (testsuite *FakeTestSuite) TestSKUs_List() {
-	ctx := context.Background()
-	fakeServer := fake.SKUsServer{}
-	clientFactory, err := armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSKUsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSKUsClient()
-
 	// From example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Skus_List"},
 	})
 
@@ -3102,11 +2714,13 @@ func (testsuite *FakeTestSuite) TestSKUs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armappplatform.SKUsClientListOptions) (resp azfake.PagerResponder[armappplatform.SKUsClientListResponse]) {
+	testsuite.serverFactory.SKUsServer.NewListPager = func(options *armappplatform.SKUsClientListOptions) (resp azfake.PagerResponder[armappplatform.SKUsClientListResponse]) {
 		resp = azfake.PagerResponder[armappplatform.SKUsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armappplatform.SKUsClientListResponse{ResourceSKUCollection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSKUsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)

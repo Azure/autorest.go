@@ -27,16 +27,29 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var err error
+
 type FakeTestSuite struct {
 	suite.Suite
 
+	ctx            context.Context
 	cred           azcore.TokenCredential
 	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *armmachinelearningservices.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
 	testsuite.cred = &testutil.FakeCredential{}
 	testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+	testsuite.clientFactory, err = armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+		},
+	})
+	testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -44,18 +57,8 @@ func TestFakeTest(t *testing.T) {
 }
 
 func (testsuite *FakeTestSuite) TestOperations_List() {
-	ctx := context.Background()
-	fakeServer := fake.OperationsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOperationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOperationsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"OperationsList"},
 	})
 
@@ -87,11 +90,13 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armmachinelearningservices.OperationsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OperationsClientListResponse]) {
+	testsuite.serverFactory.OperationsServer.NewListPager = func(options *armmachinelearningservices.OperationsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OperationsClientListResponse]) {
 		resp = azfake.PagerResponder[armmachinelearningservices.OperationsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.OperationsClientListResponse{AmlOperations: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOperationsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -104,18 +109,8 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_Get() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Workspace"},
 	})
 	var exampleResourceGroupName string
@@ -194,31 +189,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientGetOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientGetOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientGetResponse{Workspace: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Workspace))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create Workspace"},
 	})
 	var exampleResourceGroupName string
@@ -317,7 +304,7 @@ func (testsuite *FakeTestSuite) TestWorkspaces_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, parameters armmachinelearningservices.Workspace, options *armmachinelearningservices.WorkspacesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, parameters armmachinelearningservices.Workspace, options *armmachinelearningservices.WorkspacesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -325,6 +312,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientCreateOrUpdateResponse{Workspace: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -333,18 +322,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Workspace"},
 	})
 	var exampleResourceGroupName string
@@ -352,13 +331,15 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Delete() {
 	exampleResourceGroupName = "workspace-1234"
 	exampleWorkspaceName = "testworkspace"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -366,18 +347,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_Update() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Workspace"},
 	})
 	var exampleResourceGroupName string
@@ -415,7 +386,7 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, parameters armmachinelearningservices.WorkspaceUpdateParameters, options *armmachinelearningservices.WorkspacesClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, parameters armmachinelearningservices.WorkspaceUpdateParameters, options *armmachinelearningservices.WorkspacesClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -423,6 +394,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientUpdateResponse{Workspace: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -431,18 +404,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Workspaces by Resource Group"},
 	})
 	var exampleResourceGroupName string
@@ -482,12 +445,14 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armmachinelearningservices.WorkspacesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.WorkspacesServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armmachinelearningservices.WorkspacesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.WorkspacesClientListByResourceGroupResponse{WorkspaceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, &armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -500,18 +465,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_Diagnose() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Diagnose Workspace"},
 	})
 	var exampleResourceGroupName string
@@ -538,13 +493,15 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Diagnose() {
 		},
 	}
 
-	fakeServer.BeginDiagnose = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDiagnoseResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginDiagnose = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDiagnoseResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PollerResponder[armmachinelearningservices.WorkspacesClientDiagnoseResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientDiagnoseResponse{DiagnoseResponseResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginDiagnose(ctx, exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
 		Value: &armmachinelearningservices.DiagnoseRequestProperties{
 			ApplicationInsights: map[string]any{},
@@ -566,18 +523,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_Diagnose() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListKeys() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Workspace Keys"},
 	})
 	var exampleResourceGroupName string
@@ -602,31 +549,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListKeys() {
 		UserStorageResourceID: to.Ptr("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/ragargeastus2euap/providers/Microsoft.Storage/storageAccounts/testdemoworkazashomr"),
 	}
 
-	fakeServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientListKeysResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientListKeysResponse{ListWorkspaceKeysResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.ListKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ListWorkspaceKeysResult))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ResyncKeys() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Resync Workspace Keys"},
 	})
 	var exampleResourceGroupName string
@@ -634,13 +573,15 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ResyncKeys() {
 	exampleResourceGroupName = "testrg123"
 	exampleWorkspaceName = "workspaces123"
 
-	fakeServer.BeginResyncKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginResyncKeysOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientResyncKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginResyncKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginResyncKeysOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientResyncKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PollerResponder[armmachinelearningservices.WorkspacesClientResyncKeysResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientResyncKeysResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginResyncKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -648,18 +589,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ResyncKeys() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listBySubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Workspaces by subscription"},
 	})
 
@@ -697,11 +628,13 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListBySubscription() {
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armmachinelearningservices.WorkspacesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.WorkspacesServer.NewListBySubscriptionPager = func(options *armmachinelearningservices.WorkspacesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armmachinelearningservices.WorkspacesClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.WorkspacesClientListBySubscriptionResponse{WorkspaceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	pager := client.NewListBySubscriptionPager(&armmachinelearningservices.WorkspacesClientListBySubscriptionOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -714,18 +647,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListBySubscription() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListNotebookAccessToken() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Workspace Keys"},
 	})
 	var exampleResourceGroupName string
@@ -742,31 +665,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListNotebookAccessToken() {
 		TokenType:          to.Ptr("Bearer"),
 	}
 
-	fakeServer.ListNotebookAccessToken = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListNotebookAccessTokenOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookAccessTokenResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.ListNotebookAccessToken = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListNotebookAccessTokenOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookAccessTokenResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookAccessTokenResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientListNotebookAccessTokenResponse{NotebookAccessTokenResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.ListNotebookAccessToken(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.NotebookAccessTokenResult))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_PrepareNotebook() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Prepare Notebook"},
 	})
 	var exampleResourceGroupName string
@@ -783,13 +698,15 @@ func (testsuite *FakeTestSuite) TestWorkspaces_PrepareNotebook() {
 		ResourceID: to.Ptr("aabbccddee112233445566778899"),
 	}
 
-	fakeServer.BeginPrepareNotebook = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginPrepareNotebookOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientPrepareNotebookResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.BeginPrepareNotebook = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientBeginPrepareNotebookOptions) (resp azfake.PollerResponder[armmachinelearningservices.WorkspacesClientPrepareNotebookResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PollerResponder[armmachinelearningservices.WorkspacesClientPrepareNotebookResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientPrepareNotebookResponse{NotebookResourceInfo: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	poller, err := client.BeginPrepareNotebook(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -798,18 +715,8 @@ func (testsuite *FakeTestSuite) TestWorkspaces_PrepareNotebook() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListStorageAccountKeys() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Workspace Keys"},
 	})
 	var exampleResourceGroupName string
@@ -819,31 +726,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListStorageAccountKeys() {
 
 	exampleRes := armmachinelearningservices.ListStorageAccountKeysResult{}
 
-	fakeServer.ListStorageAccountKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListStorageAccountKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListStorageAccountKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.ListStorageAccountKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListStorageAccountKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListStorageAccountKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientListStorageAccountKeysResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientListStorageAccountKeysResponse{ListStorageAccountKeysResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.ListStorageAccountKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ListStorageAccountKeysResult))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListNotebookKeys() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Workspace Keys"},
 	})
 	var exampleResourceGroupName string
@@ -853,31 +752,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListNotebookKeys() {
 
 	exampleRes := armmachinelearningservices.ListNotebookKeysResult{}
 
-	fakeServer.ListNotebookKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListNotebookKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.ListNotebookKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListNotebookKeysOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientListNotebookKeysResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientListNotebookKeysResponse{ListNotebookKeysResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.ListNotebookKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ListNotebookKeysResult))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaces_ListOutboundNetworkDependenciesEndpoints() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspacesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspacesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspacesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ListOutboundNetworkDependenciesEndpoints"},
 	})
 	var exampleResourceGroupName string
@@ -915,31 +806,23 @@ func (testsuite *FakeTestSuite) TestWorkspaces_ListOutboundNetworkDependenciesEn
 			}},
 	}
 
-	fakeServer.ListOutboundNetworkDependenciesEndpoints = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspacesServer.ListOutboundNetworkDependenciesEndpoints = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsOptions) (resp azfake.Responder[armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspacesClientListOutboundNetworkDependenciesEndpointsResponse{ExternalFQDNResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspacesClient()
 	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ExternalFQDNResponse))
 }
 
 func (testsuite *FakeTestSuite) TestUsages_List() {
-	ctx := context.Background()
-	fakeServer := fake.UsagesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewUsagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewUsagesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Usages"},
 	})
 	var exampleLocation string
@@ -1334,12 +1217,14 @@ func (testsuite *FakeTestSuite) TestUsages_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, options *armmachinelearningservices.UsagesClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.UsagesClientListResponse]) {
+	testsuite.serverFactory.UsagesServer.NewListPager = func(location string, options *armmachinelearningservices.UsagesClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.UsagesClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armmachinelearningservices.UsagesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.UsagesClientListResponse{ListUsagesResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewUsagesClient()
 	pager := client.NewListPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1352,18 +1237,8 @@ func (testsuite *FakeTestSuite) TestUsages_List() {
 }
 
 func (testsuite *FakeTestSuite) TestVirtualMachineSizes_List() {
-	ctx := context.Background()
-	fakeServer := fake.VirtualMachineSizesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewVirtualMachineSizesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewVirtualMachineSizesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List VM Sizes"},
 	})
 	var exampleLocation string
@@ -1728,30 +1603,22 @@ func (testsuite *FakeTestSuite) TestVirtualMachineSizes_List() {
 			}},
 	}
 
-	fakeServer.List = func(ctx context.Context, location string, options *armmachinelearningservices.VirtualMachineSizesClientListOptions) (resp azfake.Responder[armmachinelearningservices.VirtualMachineSizesClientListResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.VirtualMachineSizesServer.List = func(ctx context.Context, location string, options *armmachinelearningservices.VirtualMachineSizesClientListOptions) (resp azfake.Responder[armmachinelearningservices.VirtualMachineSizesClientListResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.Responder[armmachinelearningservices.VirtualMachineSizesClientListResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.VirtualMachineSizesClientListResponse{VirtualMachineSizeListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewVirtualMachineSizesClient()
 	res, err := client.List(ctx, exampleLocation, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.VirtualMachineSizeListResult))
 }
 
 func (testsuite *FakeTestSuite) TestQuotas_Update() {
-	ctx := context.Background()
-	fakeServer := fake.QuotasServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewQuotasServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewQuotasClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"update quotas"},
 	})
 	var exampleLocation string
@@ -1791,31 +1658,23 @@ func (testsuite *FakeTestSuite) TestQuotas_Update() {
 			}},
 	}
 
-	fakeServer.Update = func(ctx context.Context, location string, parameters armmachinelearningservices.QuotaUpdateParameters, options *armmachinelearningservices.QuotasClientUpdateOptions) (resp azfake.Responder[armmachinelearningservices.QuotasClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.QuotasServer.Update = func(ctx context.Context, location string, parameters armmachinelearningservices.QuotaUpdateParameters, options *armmachinelearningservices.QuotasClientUpdateOptions) (resp azfake.Responder[armmachinelearningservices.QuotasClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
 		resp = azfake.Responder[armmachinelearningservices.QuotasClientUpdateResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.QuotasClientUpdateResponse{UpdateWorkspaceQuotasResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewQuotasClient()
 	res, err := client.Update(ctx, exampleLocation, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.UpdateWorkspaceQuotasResult))
 }
 
 func (testsuite *FakeTestSuite) TestQuotas_List() {
-	ctx := context.Background()
-	fakeServer := fake.QuotasServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewQuotasServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewQuotasClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List workspace quotas by VMFamily"},
 	})
 	var exampleLocation string
@@ -2225,12 +2084,14 @@ func (testsuite *FakeTestSuite) TestQuotas_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, options *armmachinelearningservices.QuotasClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.QuotasClientListResponse]) {
+	testsuite.serverFactory.QuotasServer.NewListPager = func(location string, options *armmachinelearningservices.QuotasClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.QuotasClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armmachinelearningservices.QuotasClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.QuotasClientListResponse{ListWorkspaceQuotas: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewQuotasClient()
 	pager := client.NewListPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2243,18 +2104,8 @@ func (testsuite *FakeTestSuite) TestQuotas_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_List() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Computes"},
 	})
 	var exampleResourceGroupName string
@@ -2294,13 +2145,15 @@ func (testsuite *FakeTestSuite) TestCompute_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ComputeClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComputeClientListResponse]) {
+	testsuite.serverFactory.ComputeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ComputeClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComputeClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.ComputeClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ComputeClientListResponse{PaginatedComputeResourcesList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.ComputeClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -2313,18 +2166,8 @@ func (testsuite *FakeTestSuite) TestCompute_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a AKS Compute"},
 	})
 	var exampleResourceGroupName string
@@ -2349,7 +2192,7 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2357,12 +2200,14 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComputeClientGetResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a AML Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2411,7 +2256,7 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		Location: to.Ptr("eastus2"),
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2419,12 +2264,13 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComputeClientGetResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get a Kubernetes Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2468,7 +2314,7 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2476,12 +2322,13 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComputeClientGetResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get an ComputeInstance"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2536,7 +2383,7 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		Location: to.Ptr("eastus2"),
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2544,24 +2391,15 @@ func (testsuite *FakeTestSuite) TestCompute_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComputeClientGetResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 }
 
 func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Attach a Kubernetes Compute"},
 	})
 	var exampleResourceGroupName string
@@ -2634,7 +2472,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2643,6 +2481,8 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -2650,7 +2490,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a AML Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2690,7 +2530,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2699,6 +2539,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2706,7 +2547,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create a DataFactory Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2730,7 +2571,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2739,6 +2580,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2746,7 +2588,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an AKS Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2770,7 +2612,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2779,6 +2621,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2786,7 +2629,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an ComputeInstance Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2827,7 +2670,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2836,6 +2679,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2843,7 +2687,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Create an ComputeInstance Compute with minimal inputs"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2870,7 +2714,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2879,6 +2723,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2886,7 +2731,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a AML Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2949,7 +2794,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus2"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -2958,6 +2803,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -2965,7 +2811,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComputeResource))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update an AKS Compute"},
 	})
 	exampleResourceGroupName = "testrg123"
@@ -2999,7 +2845,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		Location: to.Ptr("eastus"),
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ComputeResource, options *armmachinelearningservices.ComputeClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3008,6 +2854,7 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientCreateOrUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -3016,18 +2863,8 @@ func (testsuite *FakeTestSuite) TestCompute_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Update() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update a AmlCompute Compute"},
 	})
 	var exampleResourceGroupName string
@@ -3061,7 +2898,7 @@ func (testsuite *FakeTestSuite) TestCompute_Update() {
 		Location: to.Ptr("eastus2"),
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ClusterUpdateParameters, options *armmachinelearningservices.ComputeClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, parameters armmachinelearningservices.ClusterUpdateParameters, options *armmachinelearningservices.ComputeClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3070,6 +2907,8 @@ func (testsuite *FakeTestSuite) TestCompute_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientUpdateResponse{ComputeResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -3078,18 +2917,8 @@ func (testsuite *FakeTestSuite) TestCompute_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Compute"},
 	})
 	var exampleResourceGroupName string
@@ -3101,7 +2930,7 @@ func (testsuite *FakeTestSuite) TestCompute_Delete() {
 	exampleComputeName = "compute123"
 	exampleUnderlyingResourceAction = armmachinelearningservices.UnderlyingResourceActionDelete
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, underlyingResourceAction armmachinelearningservices.UnderlyingResourceAction, options *armmachinelearningservices.ComputeClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, underlyingResourceAction armmachinelearningservices.UnderlyingResourceAction, options *armmachinelearningservices.ComputeClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3110,6 +2939,8 @@ func (testsuite *FakeTestSuite) TestCompute_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.ComputeClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, exampleUnderlyingResourceAction, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -3117,18 +2948,8 @@ func (testsuite *FakeTestSuite) TestCompute_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_ListNodes() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get compute nodes information for a compute"},
 	})
 	var exampleResourceGroupName string
@@ -3157,7 +2978,7 @@ func (testsuite *FakeTestSuite) TestCompute_ListNodes() {
 			}},
 	}
 
-	fakeServer.NewListNodesPager = func(resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientListNodesOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComputeClientListNodesResponse]) {
+	testsuite.serverFactory.ComputeServer.NewListNodesPager = func(resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientListNodesOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComputeClientListNodesResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3165,6 +2986,8 @@ func (testsuite *FakeTestSuite) TestCompute_ListNodes() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ComputeClientListNodesResponse{AmlComputeNodesInformation: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	pager := client.NewListNodesPager(exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -3177,18 +3000,8 @@ func (testsuite *FakeTestSuite) TestCompute_ListNodes() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_ListKeys() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List AKS Compute Keys"},
 	})
 	var exampleResourceGroupName string
@@ -3207,7 +3020,7 @@ func (testsuite *FakeTestSuite) TestCompute_ListKeys() {
 		},
 	}
 
-	fakeServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientListKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.ComputeClientListKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3215,24 +3028,16 @@ func (testsuite *FakeTestSuite) TestCompute_ListKeys() {
 		resp.SetResponse(http.StatusOK, exampleRes, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	res, err := client.ListKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res))
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Start() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Start ComputeInstance Compute"},
 	})
 	var exampleResourceGroupName string
@@ -3242,7 +3047,7 @@ func (testsuite *FakeTestSuite) TestCompute_Start() {
 	exampleWorkspaceName = "workspaces123"
 	exampleComputeName = "compute123"
 
-	fakeServer.BeginStart = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginStartOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientStartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginStart = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginStartOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientStartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3250,6 +3055,8 @@ func (testsuite *FakeTestSuite) TestCompute_Start() {
 		resp.SetTerminalResponse(http.StatusAccepted, armmachinelearningservices.ComputeClientStartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginStart(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -3257,18 +3064,8 @@ func (testsuite *FakeTestSuite) TestCompute_Start() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Stop() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Stop ComputeInstance Compute"},
 	})
 	var exampleResourceGroupName string
@@ -3278,7 +3075,7 @@ func (testsuite *FakeTestSuite) TestCompute_Stop() {
 	exampleWorkspaceName = "workspaces123"
 	exampleComputeName = "compute123"
 
-	fakeServer.BeginStop = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginStopOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientStopResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginStop = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginStopOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientStopResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3286,6 +3083,8 @@ func (testsuite *FakeTestSuite) TestCompute_Stop() {
 		resp.SetTerminalResponse(http.StatusAccepted, armmachinelearningservices.ComputeClientStopResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginStop(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -3293,18 +3092,8 @@ func (testsuite *FakeTestSuite) TestCompute_Stop() {
 }
 
 func (testsuite *FakeTestSuite) TestCompute_Restart() {
-	ctx := context.Background()
-	fakeServer := fake.ComputeServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComputeServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComputeClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Restart ComputeInstance Compute"},
 	})
 	var exampleResourceGroupName string
@@ -3314,7 +3103,7 @@ func (testsuite *FakeTestSuite) TestCompute_Restart() {
 	exampleWorkspaceName = "workspaces123"
 	exampleComputeName = "compute123"
 
-	fakeServer.BeginRestart = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginRestartOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientRestartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComputeServer.BeginRestart = func(ctx context.Context, resourceGroupName string, workspaceName string, computeName string, options *armmachinelearningservices.ComputeClientBeginRestartOptions) (resp azfake.PollerResponder[armmachinelearningservices.ComputeClientRestartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleComputeName, computeName)
@@ -3322,6 +3111,8 @@ func (testsuite *FakeTestSuite) TestCompute_Restart() {
 		resp.SetTerminalResponse(http.StatusAccepted, armmachinelearningservices.ComputeClientRestartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComputeClient()
 	poller, err := client.BeginRestart(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleComputeName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -3329,18 +3120,8 @@ func (testsuite *FakeTestSuite) TestCompute_Restart() {
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_List() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"StorageAccountListPrivateEndpointConnections"},
 	})
 	var exampleResourceGroupName string
@@ -3384,13 +3165,15 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.PrivateEndpointConnectionsClientListResponse]) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.PrivateEndpointConnectionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.PrivateEndpointConnectionsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.PrivateEndpointConnectionsClientListResponse{PrivateEndpointConnectionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -3403,18 +3186,8 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_List() {
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"WorkspaceGetPrivateEndpointConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3441,7 +3214,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -3449,24 +3222,16 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.PrivateEndpointConnectionsClientGetResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"WorkspacePutPrivateEndpointConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3502,7 +3267,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() 
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, properties armmachinelearningservices.PrivateEndpointConnection, options *armmachinelearningservices.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, properties armmachinelearningservices.PrivateEndpointConnection, options *armmachinelearningservices.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -3511,24 +3276,16 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() 
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.PrivateEndpointConnectionsClientCreateOrUpdateResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, examplePrivateEndpointConnectionName, exampleProperties, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"WorkspaceDeletePrivateEndpointConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3538,7 +3295,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
 	exampleWorkspaceName = "testworkspace"
 	examplePrivateEndpointConnectionName = "{privateEndpointConnectionName}"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, options *armmachinelearningservices.PrivateEndpointConnectionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -3546,23 +3303,15 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.PrivateEndpointConnectionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestPrivateLinkResources_List() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateLinkResourcesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateLinkResourcesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"WorkspaceListPrivateLinkResources"},
 	})
 	var exampleResourceGroupName string
@@ -3584,31 +3333,23 @@ func (testsuite *FakeTestSuite) TestPrivateLinkResources_List() {
 			}},
 	}
 
-	fakeServer.List = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.PrivateLinkResourcesClientListOptions) (resp azfake.Responder[armmachinelearningservices.PrivateLinkResourcesClientListResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateLinkResourcesServer.List = func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearningservices.PrivateLinkResourcesClientListOptions) (resp azfake.Responder[armmachinelearningservices.PrivateLinkResourcesClientListResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.Responder[armmachinelearningservices.PrivateLinkResourcesClientListResponse]{}
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.PrivateLinkResourcesClientListResponse{PrivateLinkResourceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateLinkResourcesClient()
 	res, err := client.List(ctx, exampleResourceGroupName, exampleWorkspaceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateLinkResourceListResult))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaceConnections_List() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspaceConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspaceConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspaceConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ListWorkspaceConnections"},
 	})
 	var exampleResourceGroupName string
@@ -3642,13 +3383,15 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspaceConnectionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspaceConnectionsClientListResponse]) {
+	testsuite.serverFactory.WorkspaceConnectionsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspaceConnectionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspaceConnectionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.WorkspaceConnectionsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.WorkspaceConnectionsClientListResponse{PaginatedWorkspaceConnectionsList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspaceConnectionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.WorkspaceConnectionsClientListOptions{Target: to.Ptr("www.facebook.com"),
 		Category: to.Ptr("ACR"),
 	})
@@ -3663,18 +3406,8 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_List() {
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaceConnections_Create() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspaceConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspaceConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspaceConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateWorkspaceConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3705,7 +3438,7 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Create() {
 		},
 	}
 
-	fakeServer.Create = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, parameters armmachinelearningservices.WorkspaceConnection, options *armmachinelearningservices.WorkspaceConnectionsClientCreateOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientCreateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspaceConnectionsServer.Create = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, parameters armmachinelearningservices.WorkspaceConnection, options *armmachinelearningservices.WorkspaceConnectionsClientCreateOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientCreateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleConnectionName, connectionName)
@@ -3714,24 +3447,16 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Create() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspaceConnectionsClientCreateResponse{WorkspaceConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspaceConnectionsClient()
 	res, err := client.Create(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleConnectionName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.WorkspaceConnection))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaceConnections_Get() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspaceConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspaceConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspaceConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"GetWorkspaceConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3753,7 +3478,7 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, options *armmachinelearningservices.WorkspaceConnectionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspaceConnectionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, options *armmachinelearningservices.WorkspaceConnectionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleConnectionName, connectionName)
@@ -3761,24 +3486,16 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspaceConnectionsClientGetResponse{WorkspaceConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspaceConnectionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.WorkspaceConnection))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaceConnections_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspaceConnectionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspaceConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspaceConnectionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"DeleteWorkspaceConnection"},
 	})
 	var exampleResourceGroupName string
@@ -3788,7 +3505,7 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Delete() {
 	exampleWorkspaceName = "workspace-1"
 	exampleConnectionName = "connection-1"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, options *armmachinelearningservices.WorkspaceConnectionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.WorkspaceConnectionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, connectionName string, options *armmachinelearningservices.WorkspaceConnectionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.WorkspaceConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleConnectionName, connectionName)
@@ -3796,23 +3513,15 @@ func (testsuite *FakeTestSuite) TestWorkspaceConnections_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.WorkspaceConnectionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspaceConnectionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_List() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -3870,13 +3579,15 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.BatchEndpointsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.BatchEndpointsClientListResponse]) {
+	testsuite.serverFactory.BatchEndpointsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.BatchEndpointsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.BatchEndpointsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.BatchEndpointsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.BatchEndpointsClientListResponse{BatchEndpointTrackedResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
 		Skip: nil,
 	})
@@ -3891,18 +3602,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_List() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -3912,7 +3613,7 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Delete() {
 	exampleWorkspaceName = "testworkspace"
 	exampleEndpointName = "testBatchEndpoint"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchEndpointsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -3920,6 +3621,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchEndpointsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -3927,18 +3630,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_Get() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -3995,7 +3688,7 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.BatchEndpointsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchEndpointsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.BatchEndpointsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4003,24 +3696,16 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.BatchEndpointsClientGetResponse{BatchEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.BatchEndpointData))
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_Update() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -4102,7 +3787,7 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.PartialBatchEndpointPartialTrackedResource, options *armmachinelearningservices.BatchEndpointsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchEndpointsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.PartialBatchEndpointPartialTrackedResource, options *armmachinelearningservices.BatchEndpointsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4111,6 +3796,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchEndpointsClientUpdateResponse{BatchEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -4119,18 +3806,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -4216,7 +3893,7 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.BatchEndpointData, options *armmachinelearningservices.BatchEndpointsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchEndpointsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.BatchEndpointData, options *armmachinelearningservices.BatchEndpointsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchEndpointsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4225,6 +3902,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchEndpointsClientCreateOrUpdateResponse{BatchEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -4233,18 +3912,8 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchEndpoints_ListKeys() {
-	ctx := context.Background()
-	fakeServer := fake.BatchEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ListKeys Batch Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -4259,7 +3928,7 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_ListKeys() {
 		SecondaryKey: to.Ptr("string"),
 	}
 
-	fakeServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.BatchEndpointsClientListKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchEndpointsServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchEndpointsClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.BatchEndpointsClientListKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4267,24 +3936,16 @@ func (testsuite *FakeTestSuite) TestBatchEndpoints_ListKeys() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.BatchEndpointsClientListKeysResponse{EndpointAuthKeys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchEndpointsClient()
 	res, err := client.ListKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EndpointAuthKeys))
 }
 
 func (testsuite *FakeTestSuite) TestBatchDeployments_List() {
-	ctx := context.Background()
-	fakeServer := fake.BatchDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Batch Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -4371,7 +4032,7 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchDeploymentsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.BatchDeploymentsClientListResponse]) {
+	testsuite.serverFactory.BatchDeploymentsServer.NewListPager = func(resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.BatchDeploymentsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.BatchDeploymentsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4379,6 +4040,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.BatchDeploymentsClientListResponse{BatchDeploymentTrackedResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchDeploymentsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, &armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:  to.Ptr[int32](1),
 		Skip: nil,
@@ -4394,18 +4057,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_List() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchDeployments_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.BatchDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Batch Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -4417,7 +4070,7 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Delete() {
 	exampleEndpointName = "testEndpointName"
 	exampleDeploymentName = "testDeploymentName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.BatchDeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchDeploymentsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.BatchDeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4426,6 +4079,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchDeploymentsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchDeploymentsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -4433,18 +4088,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchDeployments_Get() {
-	ctx := context.Background()
-	fakeServer := fake.BatchDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Batch Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -4530,7 +4175,7 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.BatchDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.BatchDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchDeploymentsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.BatchDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.BatchDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4539,24 +4184,16 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.BatchDeploymentsClientGetResponse{BatchDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchDeploymentsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.BatchDeploymentData))
 }
 
 func (testsuite *FakeTestSuite) TestBatchDeployments_Update() {
-	ctx := context.Background()
-	fakeServer := fake.BatchDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Batch Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -4690,7 +4327,7 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource, options *armmachinelearningservices.BatchDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchDeploymentsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource, options *armmachinelearningservices.BatchDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4700,6 +4337,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchDeploymentsClientUpdateResponse{BatchDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchDeploymentsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -4708,18 +4347,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestBatchDeployments_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.BatchDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewBatchDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewBatchDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Batch Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -4862,7 +4491,7 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.BatchDeploymentData, options *armmachinelearningservices.BatchDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.BatchDeploymentsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.BatchDeploymentData, options *armmachinelearningservices.BatchDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.BatchDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -4872,6 +4501,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.BatchDeploymentsClientCreateOrUpdateResponse{BatchDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewBatchDeploymentsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -4880,18 +4511,8 @@ func (testsuite *FakeTestSuite) TestBatchDeployments_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestCodeContainers_List() {
-	ctx := context.Background()
-	fakeServer := fake.CodeContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Code Container."},
 	})
 	var exampleResourceGroupName string
@@ -4943,13 +4564,15 @@ func (testsuite *FakeTestSuite) TestCodeContainers_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.CodeContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.CodeContainersClientListResponse]) {
+	testsuite.serverFactory.CodeContainersServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.CodeContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.CodeContainersClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.CodeContainersClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.CodeContainersClientListResponse{CodeContainerResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeContainersClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.CodeContainersClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -4962,18 +4585,8 @@ func (testsuite *FakeTestSuite) TestCodeContainers_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCodeContainers_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CodeContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Code Container."},
 	})
 	var exampleResourceGroupName string
@@ -4983,7 +4596,7 @@ func (testsuite *FakeTestSuite) TestCodeContainers_Delete() {
 	exampleWorkspaceName = "testworkspace"
 	exampleName = "testContainer"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeContainersServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -4991,23 +4604,15 @@ func (testsuite *FakeTestSuite) TestCodeContainers_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeContainersClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeContainersClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestCodeContainers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CodeContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Code Container."},
 	})
 	var exampleResourceGroupName string
@@ -5038,7 +4643,7 @@ func (testsuite *FakeTestSuite) TestCodeContainers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeContainersServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5046,24 +4651,16 @@ func (testsuite *FakeTestSuite) TestCodeContainers_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeContainersClientGetResponse{CodeContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeContainersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CodeContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestCodeContainers_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.CodeContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Code Container."},
 	})
 	var exampleResourceGroupName string
@@ -5104,7 +4701,7 @@ func (testsuite *FakeTestSuite) TestCodeContainers_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.CodeContainerData, options *armmachinelearningservices.CodeContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeContainersServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.CodeContainerData, options *armmachinelearningservices.CodeContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.CodeContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5113,24 +4710,16 @@ func (testsuite *FakeTestSuite) TestCodeContainers_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeContainersClientCreateOrUpdateResponse{CodeContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeContainersClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CodeContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestCodeVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.CodeVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Code Version."},
 	})
 	var exampleResourceGroupName string
@@ -5168,7 +4757,7 @@ func (testsuite *FakeTestSuite) TestCodeVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.CodeVersionsClientListResponse]) {
+	testsuite.serverFactory.CodeVersionsServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.CodeVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.CodeVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5176,6 +4765,8 @@ func (testsuite *FakeTestSuite) TestCodeVersions_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.CodeVersionsClientListResponse{CodeVersionResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeVersionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleName, &armmachinelearningservices.CodeVersionsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:  to.Ptr[int32](1),
 		Skip: nil,
@@ -5191,18 +4782,8 @@ func (testsuite *FakeTestSuite) TestCodeVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestCodeVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.CodeVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Code Version."},
 	})
 	var exampleResourceGroupName string
@@ -5214,7 +4795,7 @@ func (testsuite *FakeTestSuite) TestCodeVersions_Delete() {
 	exampleName = "string"
 	exampleVersion = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.CodeVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeVersionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.CodeVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5223,23 +4804,15 @@ func (testsuite *FakeTestSuite) TestCodeVersions_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeVersionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestCodeVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.CodeVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Code Version."},
 	})
 	var exampleResourceGroupName string
@@ -5276,7 +4849,7 @@ func (testsuite *FakeTestSuite) TestCodeVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.CodeVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeVersionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.CodeVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5285,24 +4858,16 @@ func (testsuite *FakeTestSuite) TestCodeVersions_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeVersionsClientGetResponse{CodeVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CodeVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestCodeVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.CodeVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewCodeVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewCodeVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Code Version."},
 	})
 	var exampleResourceGroupName string
@@ -5353,7 +4918,7 @@ func (testsuite *FakeTestSuite) TestCodeVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.CodeVersionData, options *armmachinelearningservices.CodeVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.CodeVersionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.CodeVersionData, options *armmachinelearningservices.CodeVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.CodeVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5363,24 +4928,16 @@ func (testsuite *FakeTestSuite) TestCodeVersions_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.CodeVersionsClientCreateOrUpdateResponse{CodeVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewCodeVersionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CodeVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestComponentContainers_List() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Component Container."},
 	})
 	var exampleResourceGroupName string
@@ -5414,13 +4971,15 @@ func (testsuite *FakeTestSuite) TestComponentContainers_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ComponentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComponentContainersClientListResponse]) {
+	testsuite.serverFactory.ComponentContainersServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ComponentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComponentContainersClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.ComponentContainersClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ComponentContainersClientListResponse{ComponentContainerResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentContainersClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.ComponentContainersClientListOptions{Skip: nil,
 		ListViewType: nil,
 	})
@@ -5435,18 +4994,8 @@ func (testsuite *FakeTestSuite) TestComponentContainers_List() {
 }
 
 func (testsuite *FakeTestSuite) TestComponentContainers_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Component Container."},
 	})
 	var exampleResourceGroupName string
@@ -5456,7 +5005,7 @@ func (testsuite *FakeTestSuite) TestComponentContainers_Delete() {
 	exampleWorkspaceName = "my-aml-workspace"
 	exampleName = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentContainersServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5464,23 +5013,15 @@ func (testsuite *FakeTestSuite) TestComponentContainers_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentContainersClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentContainersClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestComponentContainers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Component Container."},
 	})
 	var exampleResourceGroupName string
@@ -5513,7 +5054,7 @@ func (testsuite *FakeTestSuite) TestComponentContainers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentContainersServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5521,24 +5062,16 @@ func (testsuite *FakeTestSuite) TestComponentContainers_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentContainersClientGetResponse{ComponentContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentContainersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComponentContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestComponentContainers_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Component Container."},
 	})
 	var exampleResourceGroupName string
@@ -5583,7 +5116,7 @@ func (testsuite *FakeTestSuite) TestComponentContainers_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.ComponentContainerData, options *armmachinelearningservices.ComponentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentContainersServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.ComponentContainerData, options *armmachinelearningservices.ComponentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ComponentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5592,24 +5125,16 @@ func (testsuite *FakeTestSuite) TestComponentContainers_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentContainersClientCreateOrUpdateResponse{ComponentContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentContainersClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComponentContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestComponentVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Component Version."},
 	})
 	var exampleResourceGroupName string
@@ -5649,7 +5174,7 @@ func (testsuite *FakeTestSuite) TestComponentVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComponentVersionsClientListResponse]) {
+	testsuite.serverFactory.ComponentVersionsServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ComponentVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ComponentVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5657,6 +5182,8 @@ func (testsuite *FakeTestSuite) TestComponentVersions_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ComponentVersionsClientListResponse{ComponentVersionResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentVersionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleName, &armmachinelearningservices.ComponentVersionsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:          to.Ptr[int32](1),
 		Skip:         nil,
@@ -5673,18 +5200,8 @@ func (testsuite *FakeTestSuite) TestComponentVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestComponentVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Component Version."},
 	})
 	var exampleResourceGroupName string
@@ -5696,7 +5213,7 @@ func (testsuite *FakeTestSuite) TestComponentVersions_Delete() {
 	exampleName = "string"
 	exampleVersion = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ComponentVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentVersionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ComponentVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5705,23 +5222,15 @@ func (testsuite *FakeTestSuite) TestComponentVersions_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentVersionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestComponentVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Component Version."},
 	})
 	var exampleResourceGroupName string
@@ -5760,7 +5269,7 @@ func (testsuite *FakeTestSuite) TestComponentVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ComponentVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentVersionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ComponentVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5769,24 +5278,16 @@ func (testsuite *FakeTestSuite) TestComponentVersions_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentVersionsClientGetResponse{ComponentVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComponentVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestComponentVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ComponentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewComponentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewComponentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Component Version."},
 	})
 	var exampleResourceGroupName string
@@ -5841,7 +5342,7 @@ func (testsuite *FakeTestSuite) TestComponentVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.ComponentVersionData, options *armmachinelearningservices.ComponentVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ComponentVersionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.ComponentVersionData, options *armmachinelearningservices.ComponentVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ComponentVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5851,24 +5352,16 @@ func (testsuite *FakeTestSuite) TestComponentVersions_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ComponentVersionsClientCreateOrUpdateResponse{ComponentVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewComponentVersionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ComponentVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestDataContainers_List() {
-	ctx := context.Background()
-	fakeServer := fake.DataContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Data Container."},
 	})
 	var exampleResourceGroupName string
@@ -5930,13 +5423,15 @@ func (testsuite *FakeTestSuite) TestDataContainers_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.DataContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DataContainersClientListResponse]) {
+	testsuite.serverFactory.DataContainersServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.DataContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DataContainersClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.DataContainersClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.DataContainersClientListResponse{DataContainerResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataContainersClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.DataContainersClientListOptions{Skip: nil,
 		ListViewType: nil,
 	})
@@ -5951,18 +5446,8 @@ func (testsuite *FakeTestSuite) TestDataContainers_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDataContainers_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DataContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Data Container."},
 	})
 	var exampleResourceGroupName string
@@ -5972,7 +5457,7 @@ func (testsuite *FakeTestSuite) TestDataContainers_Delete() {
 	exampleWorkspaceName = "workspace123"
 	exampleName = "datacontainer123"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataContainersServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -5980,23 +5465,15 @@ func (testsuite *FakeTestSuite) TestDataContainers_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataContainersClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataContainersClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestDataContainers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DataContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Data Container."},
 	})
 	var exampleResourceGroupName string
@@ -6032,7 +5509,7 @@ func (testsuite *FakeTestSuite) TestDataContainers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataContainersServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6040,24 +5517,16 @@ func (testsuite *FakeTestSuite) TestDataContainers_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataContainersClientGetResponse{DataContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataContainersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DataContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestDataContainers_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DataContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Data Container."},
 	})
 	var exampleResourceGroupName string
@@ -6108,7 +5577,7 @@ func (testsuite *FakeTestSuite) TestDataContainers_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DataContainerData, options *armmachinelearningservices.DataContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataContainersServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DataContainerData, options *armmachinelearningservices.DataContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DataContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6117,24 +5586,16 @@ func (testsuite *FakeTestSuite) TestDataContainers_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataContainersClientCreateOrUpdateResponse{DataContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataContainersClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DataContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestDataVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.DataVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Data Version Base."},
 	})
 	var exampleResourceGroupName string
@@ -6173,7 +5634,7 @@ func (testsuite *FakeTestSuite) TestDataVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DataVersionsClientListResponse]) {
+	testsuite.serverFactory.DataVersionsServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DataVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DataVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6181,6 +5642,8 @@ func (testsuite *FakeTestSuite) TestDataVersions_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.DataVersionsClientListResponse{DataVersionBaseResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataVersionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleName, &armmachinelearningservices.DataVersionsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:          to.Ptr[int32](1),
 		Skip:         nil,
@@ -6198,18 +5661,8 @@ func (testsuite *FakeTestSuite) TestDataVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDataVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DataVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Data Version Base."},
 	})
 	var exampleResourceGroupName string
@@ -6221,7 +5674,7 @@ func (testsuite *FakeTestSuite) TestDataVersions_Delete() {
 	exampleName = "string"
 	exampleVersion = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.DataVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataVersionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.DataVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6230,23 +5683,15 @@ func (testsuite *FakeTestSuite) TestDataVersions_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataVersionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestDataVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DataVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Data Version Base."},
 	})
 	var exampleResourceGroupName string
@@ -6284,7 +5729,7 @@ func (testsuite *FakeTestSuite) TestDataVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.DataVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataVersionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.DataVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6293,24 +5738,16 @@ func (testsuite *FakeTestSuite) TestDataVersions_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataVersionsClientGetResponse{DataVersionBaseData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DataVersionBaseData))
 }
 
 func (testsuite *FakeTestSuite) TestDataVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DataVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDataVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDataVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Data Version Base."},
 	})
 	var exampleResourceGroupName string
@@ -6363,7 +5800,7 @@ func (testsuite *FakeTestSuite) TestDataVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.DataVersionBaseData, options *armmachinelearningservices.DataVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DataVersionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.DataVersionBaseData, options *armmachinelearningservices.DataVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DataVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6373,24 +5810,16 @@ func (testsuite *FakeTestSuite) TestDataVersions_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DataVersionsClientCreateOrUpdateResponse{DataVersionBaseData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDataVersionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DataVersionBaseData))
 }
 
 func (testsuite *FakeTestSuite) TestDatastores_List() {
-	ctx := context.Background()
-	fakeServer := fake.DatastoresServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDatastoresServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDatastoresClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List datastores."},
 	})
 	var exampleResourceGroupName string
@@ -6430,13 +5859,15 @@ func (testsuite *FakeTestSuite) TestDatastores_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.DatastoresClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DatastoresClientListResponse]) {
+	testsuite.serverFactory.DatastoresServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.DatastoresClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.DatastoresClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.DatastoresClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.DatastoresClientListResponse{DatastoreResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDatastoresClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
 		Count:     to.Ptr[int32](1),
 		IsDefault: to.Ptr(false),
@@ -6457,18 +5888,8 @@ func (testsuite *FakeTestSuite) TestDatastores_List() {
 }
 
 func (testsuite *FakeTestSuite) TestDatastores_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.DatastoresServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDatastoresServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDatastoresClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete datastore."},
 	})
 	var exampleResourceGroupName string
@@ -6478,7 +5899,7 @@ func (testsuite *FakeTestSuite) TestDatastores_Delete() {
 	exampleWorkspaceName = "my-aml-workspace"
 	exampleName = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6486,23 +5907,15 @@ func (testsuite *FakeTestSuite) TestDatastores_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDatastoresClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestDatastores_Get() {
-	ctx := context.Background()
-	fakeServer := fake.DatastoresServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDatastoresServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDatastoresClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get datastore."},
 	})
 	var exampleResourceGroupName string
@@ -6541,7 +5954,7 @@ func (testsuite *FakeTestSuite) TestDatastores_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientGetOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6549,24 +5962,16 @@ func (testsuite *FakeTestSuite) TestDatastores_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientGetResponse{DatastoreData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDatastoresClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DatastoreData))
 }
 
 func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.DatastoresServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDatastoresServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDatastoresClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate datastore (Azure Data Lake Gen1 w/ ServicePrincipal)."},
 	})
 	var exampleResourceGroupName string
@@ -6627,7 +6032,7 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6636,12 +6041,14 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientCreateOrUpdateResponse{DatastoreData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDatastoresClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DatastoreData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate datastore (Azure Data Lake Gen2 w/ Service Principal)."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -6704,7 +6111,7 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6713,12 +6120,13 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientCreateOrUpdateResponse{DatastoreData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DatastoreData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate datastore (Azure File store w/ AccountKey)."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -6773,7 +6181,7 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6782,12 +6190,13 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientCreateOrUpdateResponse{DatastoreData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DatastoreData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate datastore (AzureBlob w/ AccountKey)."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -6843,7 +6252,7 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.DatastoreData, options *armmachinelearningservices.DatastoresClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6852,24 +6261,15 @@ func (testsuite *FakeTestSuite) TestDatastores_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.DatastoresClientCreateOrUpdateResponse{DatastoreData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DatastoreData))
 }
 
 func (testsuite *FakeTestSuite) TestDatastores_ListSecrets() {
-	ctx := context.Background()
-	fakeServer := fake.DatastoresServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewDatastoresServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewDatastoresClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get datastore secrets."},
 	})
 	var exampleResourceGroupName string
@@ -6886,7 +6286,7 @@ func (testsuite *FakeTestSuite) TestDatastores_ListSecrets() {
 		},
 	}
 
-	fakeServer.ListSecrets = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientListSecretsOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientListSecretsResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.DatastoresServer.ListSecrets = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.DatastoresClientListSecretsOptions) (resp azfake.Responder[armmachinelearningservices.DatastoresClientListSecretsResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6894,24 +6294,16 @@ func (testsuite *FakeTestSuite) TestDatastores_ListSecrets() {
 		resp.SetResponse(http.StatusOK, exampleRes, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewDatastoresClient()
 	res, err := client.ListSecrets(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res))
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentContainers_List() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Environment Container."},
 	})
 	var exampleResourceGroupName string
@@ -6943,13 +6335,15 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.EnvironmentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.EnvironmentContainersClientListResponse]) {
+	testsuite.serverFactory.EnvironmentContainersServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.EnvironmentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.EnvironmentContainersClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.EnvironmentContainersClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.EnvironmentContainersClientListResponse{EnvironmentContainerResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentContainersClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
 		ListViewType: nil,
 	})
@@ -6964,18 +6358,8 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_List() {
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentContainers_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Environment Container."},
 	})
 	var exampleResourceGroupName string
@@ -6985,7 +6369,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_Delete() {
 	exampleWorkspaceName = "testworkspace"
 	exampleName = "testContainer"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentContainersServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -6993,23 +6377,15 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentContainersClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentContainersClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentContainers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Environment Container."},
 	})
 	var exampleResourceGroupName string
@@ -7040,7 +6416,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentContainersServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7048,24 +6424,16 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentContainersClientGetResponse{EnvironmentContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentContainersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EnvironmentContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentContainers_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Environment Container."},
 	})
 	var exampleResourceGroupName string
@@ -7118,7 +6486,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.EnvironmentContainerData, options *armmachinelearningservices.EnvironmentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentContainersServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.EnvironmentContainerData, options *armmachinelearningservices.EnvironmentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7127,24 +6495,16 @@ func (testsuite *FakeTestSuite) TestEnvironmentContainers_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentContainersClientCreateOrUpdateResponse{EnvironmentContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentContainersClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EnvironmentContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Environment Version."},
 	})
 	var exampleResourceGroupName string
@@ -7202,7 +6562,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.EnvironmentVersionsClientListResponse]) {
+	testsuite.serverFactory.EnvironmentVersionsServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.EnvironmentVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.EnvironmentVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7210,6 +6570,8 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.EnvironmentVersionsClientListResponse{EnvironmentVersionResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentVersionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleName, &armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:          to.Ptr[int32](1),
 		Skip:         nil,
@@ -7226,18 +6588,8 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Environment Version."},
 	})
 	var exampleResourceGroupName string
@@ -7249,7 +6601,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_Delete() {
 	exampleName = "string"
 	exampleVersion = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.EnvironmentVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentVersionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.EnvironmentVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7258,23 +6610,15 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentVersionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Environment Version."},
 	})
 	var exampleResourceGroupName string
@@ -7331,7 +6675,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.EnvironmentVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentVersionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.EnvironmentVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7340,24 +6684,16 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentVersionsClientGetResponse{EnvironmentVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EnvironmentVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestEnvironmentVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.EnvironmentVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewEnvironmentVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewEnvironmentVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Environment Version."},
 	})
 	var exampleResourceGroupName string
@@ -7447,7 +6783,7 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.EnvironmentVersionData, options *armmachinelearningservices.EnvironmentVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.EnvironmentVersionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.EnvironmentVersionData, options *armmachinelearningservices.EnvironmentVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.EnvironmentVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -7457,24 +6793,16 @@ func (testsuite *FakeTestSuite) TestEnvironmentVersions_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.EnvironmentVersionsClientCreateOrUpdateResponse{EnvironmentVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewEnvironmentVersionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EnvironmentVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestJobs_List() {
-	ctx := context.Background()
-	fakeServer := fake.JobsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewJobsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewJobsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List AutoML Job."},
 	})
 	var exampleResourceGroupName string
@@ -7580,13 +6908,15 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
+	testsuite.serverFactory.JobsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.JobsClientListResponse{JobBaseResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewJobsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      nil,
 		Tag:          nil,
@@ -7604,7 +6934,7 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 	}
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Command Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -7698,13 +7028,14 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
+	testsuite.serverFactory.JobsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.JobsClientListResponse{JobBaseResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
 	pager = client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
@@ -7722,7 +7053,7 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 	}
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Pipeline Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -7787,13 +7118,14 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
+	testsuite.serverFactory.JobsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.JobsClientListResponse{JobBaseResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
 	pager = client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
@@ -7811,7 +7143,7 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 	}
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Sweep Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -7902,13 +7234,14 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
+	testsuite.serverFactory.JobsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.JobsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.JobsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.JobsClientListResponse{JobBaseResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
 	pager = client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.JobsClientListOptions{Skip: nil,
 		JobType:      to.Ptr("string"),
 		Tag:          to.Ptr("string"),
@@ -7927,18 +7260,8 @@ func (testsuite *FakeTestSuite) TestJobs_List() {
 }
 
 func (testsuite *FakeTestSuite) TestJobs_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.JobsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewJobsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewJobsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Job."},
 	})
 	var exampleResourceGroupName string
@@ -7948,7 +7271,7 @@ func (testsuite *FakeTestSuite) TestJobs_Delete() {
 	exampleWorkspaceName = "my-aml-workspace"
 	exampleId = "string"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.JobsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.JobsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -7956,6 +7279,8 @@ func (testsuite *FakeTestSuite) TestJobs_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.JobsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewJobsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -7963,18 +7288,8 @@ func (testsuite *FakeTestSuite) TestJobs_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestJobs_Get() {
-	ctx := context.Background()
-	fakeServer := fake.JobsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewJobsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewJobsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get AutoML Job."},
 	})
 	var exampleResourceGroupName string
@@ -8079,7 +7394,7 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8087,12 +7402,14 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientGetResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewJobsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Command Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -8184,7 +7501,7 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8192,12 +7509,13 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientGetResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Pipeline Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -8260,7 +7578,7 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8268,12 +7586,13 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientGetResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Sweep Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -8362,7 +7681,7 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8370,24 +7689,15 @@ func (testsuite *FakeTestSuite) TestJobs_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientGetResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 }
 
 func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.JobsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewJobsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewJobsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate AutoML Job."},
 	})
 	var exampleResourceGroupName string
@@ -8573,7 +7883,7 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8582,12 +7892,14 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientCreateOrUpdateResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewJobsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Command Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -8746,7 +8058,7 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8755,12 +8067,13 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientCreateOrUpdateResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Pipeline Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -8864,7 +8177,7 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -8873,12 +8186,13 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientCreateOrUpdateResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Sweep Job."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -9034,7 +8348,7 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, body armmachinelearningservices.JobBaseData, options *armmachinelearningservices.JobsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -9043,24 +8357,15 @@ func (testsuite *FakeTestSuite) TestJobs_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientCreateOrUpdateResponse{JobBaseData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.JobBaseData))
 }
 
 func (testsuite *FakeTestSuite) TestJobs_Cancel() {
-	ctx := context.Background()
-	fakeServer := fake.JobsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewJobsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewJobsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Cancel Job."},
 	})
 	var exampleResourceGroupName string
@@ -9070,7 +8375,7 @@ func (testsuite *FakeTestSuite) TestJobs_Cancel() {
 	exampleWorkspaceName = "my-aml-workspace"
 	exampleId = "string"
 
-	fakeServer.Cancel = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientCancelOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCancelResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.JobsServer.Cancel = func(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *armmachinelearningservices.JobsClientCancelOptions) (resp azfake.Responder[armmachinelearningservices.JobsClientCancelResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleId, id)
@@ -9078,23 +8383,15 @@ func (testsuite *FakeTestSuite) TestJobs_Cancel() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.JobsClientCancelResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewJobsClient()
 	_, err = client.Cancel(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleId, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json")
 }
 
 func (testsuite *FakeTestSuite) TestModelContainers_List() {
-	ctx := context.Background()
-	fakeServer := fake.ModelContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Model Container."},
 	})
 	var exampleResourceGroupName string
@@ -9126,13 +8423,15 @@ func (testsuite *FakeTestSuite) TestModelContainers_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ModelContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ModelContainersClientListResponse]) {
+	testsuite.serverFactory.ModelContainersServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.ModelContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ModelContainersClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.ModelContainersClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ModelContainersClientListResponse{ModelContainerResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelContainersClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.ModelContainersClientListOptions{Skip: nil,
 		Count:        nil,
 		ListViewType: nil,
@@ -9148,18 +8447,8 @@ func (testsuite *FakeTestSuite) TestModelContainers_List() {
 }
 
 func (testsuite *FakeTestSuite) TestModelContainers_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ModelContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Model Container."},
 	})
 	var exampleResourceGroupName string
@@ -9169,7 +8458,7 @@ func (testsuite *FakeTestSuite) TestModelContainers_Delete() {
 	exampleWorkspaceName = "workspace123"
 	exampleName = "testContainer"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelContainersServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelContainersClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9177,23 +8466,15 @@ func (testsuite *FakeTestSuite) TestModelContainers_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelContainersClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelContainersClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestModelContainers_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ModelContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Model Container."},
 	})
 	var exampleResourceGroupName string
@@ -9224,7 +8505,7 @@ func (testsuite *FakeTestSuite) TestModelContainers_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelContainersServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelContainersClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9232,24 +8513,16 @@ func (testsuite *FakeTestSuite) TestModelContainers_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelContainersClientGetResponse{ModelContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelContainersClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ModelContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestModelContainers_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ModelContainersServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelContainersServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelContainersClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Model Container."},
 	})
 	var exampleResourceGroupName string
@@ -9290,7 +8563,7 @@ func (testsuite *FakeTestSuite) TestModelContainers_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.ModelContainerData, options *armmachinelearningservices.ModelContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelContainersServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearningservices.ModelContainerData, options *armmachinelearningservices.ModelContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ModelContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9299,24 +8572,16 @@ func (testsuite *FakeTestSuite) TestModelContainers_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelContainersClientCreateOrUpdateResponse{ModelContainerData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelContainersClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ModelContainerData))
 }
 
 func (testsuite *FakeTestSuite) TestModelVersions_List() {
-	ctx := context.Background()
-	fakeServer := fake.ModelVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Model Version."},
 	})
 	var exampleResourceGroupName string
@@ -9362,7 +8627,7 @@ func (testsuite *FakeTestSuite) TestModelVersions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ModelVersionsClientListResponse]) {
+	testsuite.serverFactory.ModelVersionsServer.NewListPager = func(resourceGroupName string, workspaceName string, name string, options *armmachinelearningservices.ModelVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.ModelVersionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9370,6 +8635,8 @@ func (testsuite *FakeTestSuite) TestModelVersions_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.ModelVersionsClientListResponse{ModelVersionResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelVersionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleName, &armmachinelearningservices.ModelVersionsClientListOptions{Skip: nil,
 		OrderBy:      to.Ptr("string"),
 		Top:          to.Ptr[int32](1),
@@ -9392,18 +8659,8 @@ func (testsuite *FakeTestSuite) TestModelVersions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestModelVersions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ModelVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Model Version."},
 	})
 	var exampleResourceGroupName string
@@ -9415,7 +8672,7 @@ func (testsuite *FakeTestSuite) TestModelVersions_Delete() {
 	exampleName = "string"
 	exampleVersion = "string"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ModelVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelVersionsServer.Delete = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ModelVersionsClientDeleteOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9424,23 +8681,15 @@ func (testsuite *FakeTestSuite) TestModelVersions_Delete() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelVersionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelVersionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestModelVersions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ModelVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Model Version."},
 	})
 	var exampleResourceGroupName string
@@ -9485,7 +8734,7 @@ func (testsuite *FakeTestSuite) TestModelVersions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ModelVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelVersionsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *armmachinelearningservices.ModelVersionsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9494,24 +8743,16 @@ func (testsuite *FakeTestSuite) TestModelVersions_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelVersionsClientGetResponse{ModelVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelVersionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ModelVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestModelVersions_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.ModelVersionsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewModelVersionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewModelVersionsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Model Version."},
 	})
 	var exampleResourceGroupName string
@@ -9578,7 +8819,7 @@ func (testsuite *FakeTestSuite) TestModelVersions_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.ModelVersionData, options *armmachinelearningservices.ModelVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ModelVersionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearningservices.ModelVersionData, options *armmachinelearningservices.ModelVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearningservices.ModelVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleName, name)
@@ -9588,24 +8829,16 @@ func (testsuite *FakeTestSuite) TestModelVersions_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.ModelVersionsClientCreateOrUpdateResponse{ModelVersionData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewModelVersionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleName, exampleVersion, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ModelVersionData))
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_List() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -9665,13 +8898,15 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.OnlineEndpointsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OnlineEndpointsClientListResponse]) {
+	testsuite.serverFactory.OnlineEndpointsServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.OnlineEndpointsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OnlineEndpointsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.OnlineEndpointsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientListResponse{OnlineEndpointTrackedResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, &armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
 		Count:       to.Ptr[int32](1),
 		ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
@@ -9691,18 +8926,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_List() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -9712,7 +8937,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Delete() {
 	exampleWorkspaceName = "my-aml-workspace"
 	exampleEndpointName = "testEndpointName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -9720,6 +8945,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -9727,18 +8954,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_Get() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -9797,7 +9014,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -9805,24 +9022,16 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientGetResponse{OnlineEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OnlineEndpointData))
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_Update() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -9905,7 +9114,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource, options *armmachinelearningservices.OnlineEndpointsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource, options *armmachinelearningservices.OnlineEndpointsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -9914,6 +9123,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientUpdateResponse{OnlineEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -9922,18 +9133,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -10022,7 +9223,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.OnlineEndpointData, options *armmachinelearningservices.OnlineEndpointsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.OnlineEndpointData, options *armmachinelearningservices.OnlineEndpointsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10031,6 +9232,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientCreateOrUpdateResponse{OnlineEndpointData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -10039,18 +9242,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_ListKeys() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"ListKeys Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -10065,7 +9258,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_ListKeys() {
 		SecondaryKey: to.Ptr("string"),
 	}
 
-	fakeServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientListKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.ListKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientListKeysOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientListKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10073,24 +9266,16 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_ListKeys() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientListKeysResponse{EndpointAuthKeys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	res, err := client.ListKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EndpointAuthKeys))
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_RegenerateKeys() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"RegenerateKeys Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -10105,7 +9290,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_RegenerateKeys() {
 		KeyValue: to.Ptr("string"),
 	}
 
-	fakeServer.BeginRegenerateKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.RegenerateEndpointKeysRequest, options *armmachinelearningservices.OnlineEndpointsClientBeginRegenerateKeysOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientRegenerateKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.BeginRegenerateKeys = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearningservices.RegenerateEndpointKeysRequest, options *armmachinelearningservices.OnlineEndpointsClientBeginRegenerateKeysOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineEndpointsClientRegenerateKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10114,6 +9299,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_RegenerateKeys() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientRegenerateKeysResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	poller, err := client.BeginRegenerateKeys(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -10121,18 +9308,8 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_RegenerateKeys() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineEndpoints_GetToken() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineEndpointsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineEndpointsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineEndpointsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"GetToken Online Endpoint."},
 	})
 	var exampleResourceGroupName string
@@ -10149,7 +9326,7 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_GetToken() {
 		TokenType:           to.Ptr("string"),
 	}
 
-	fakeServer.GetToken = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientGetTokenOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientGetTokenResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineEndpointsServer.GetToken = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineEndpointsClientGetTokenOptions) (resp azfake.Responder[armmachinelearningservices.OnlineEndpointsClientGetTokenResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10157,24 +9334,16 @@ func (testsuite *FakeTestSuite) TestOnlineEndpoints_GetToken() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineEndpointsClientGetTokenResponse{EndpointAuthToken: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineEndpointsClient()
 	res, err := client.GetToken(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.EndpointAuthToken))
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_List() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Online Deployments."},
 	})
 	var exampleResourceGroupName string
@@ -10269,7 +9438,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineDeploymentsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OnlineDeploymentsClientListResponse]) {
+	testsuite.serverFactory.OnlineDeploymentsServer.NewListPager = func(resourceGroupName string, workspaceName string, endpointName string, options *armmachinelearningservices.OnlineDeploymentsClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.OnlineDeploymentsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10277,6 +9446,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_List() {
 		resp.AddPage(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientListResponse{OnlineDeploymentTrackedResourceArmPaginatedResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, &armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
 		Top:  to.Ptr[int32](1),
 		Skip: nil,
@@ -10292,18 +9463,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_List() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Delete Online Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -10315,7 +9476,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Delete() {
 	exampleEndpointName = "testEndpoint"
 	exampleDeploymentName = "testDeployment"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientBeginDeleteOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10324,6 +9485,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -10331,18 +9494,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_Get() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Kubernetes Online Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -10436,7 +9589,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10445,12 +9598,14 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientGetResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OnlineDeploymentData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Managed Online Deployment."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -10535,7 +9690,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.Get = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *armmachinelearningservices.OnlineDeploymentsClientGetOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10544,24 +9699,15 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Get() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientGetResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.Get(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OnlineDeploymentData))
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Kubernetes Online Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -10677,7 +9823,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource, options *armmachinelearningservices.OnlineDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource, options *armmachinelearningservices.OnlineDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10687,6 +9833,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientUpdateResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -10694,7 +9842,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OnlineDeploymentData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Update Managed Online Deployment."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -10800,7 +9948,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource, options *armmachinelearningservices.OnlineDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource, options *armmachinelearningservices.OnlineDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10810,6 +9958,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientUpdateResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -10818,18 +9967,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Kubernetes Online Deployment."},
 	})
 	var exampleResourceGroupName string
@@ -10988,7 +10127,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.OnlineDeploymentData, options *armmachinelearningservices.OnlineDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.OnlineDeploymentData, options *armmachinelearningservices.OnlineDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -10998,6 +10137,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -11005,7 +10146,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.OnlineDeploymentData))
 
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"CreateOrUpdate Managed Online Deployment."},
 	})
 	exampleResourceGroupName = "test-rg"
@@ -11149,7 +10290,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.OnlineDeploymentData, options *armmachinelearningservices.OnlineDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.OnlineDeploymentData, options *armmachinelearningservices.OnlineDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -11159,6 +10300,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientCreateOrUpdateResponse{OnlineDeploymentData: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -11167,18 +10309,8 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestOnlineDeployments_GetLogs() {
-	ctx := context.Background()
-	fakeServer := fake.OnlineDeploymentsServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOnlineDeploymentsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOnlineDeploymentsClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Get Online Deployment Logs."},
 	})
 	var exampleResourceGroupName string
@@ -11199,7 +10331,7 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_GetLogs() {
 		Content: to.Ptr("string"),
 	}
 
-	fakeServer.GetLogs = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.DeploymentLogsRequest, options *armmachinelearningservices.OnlineDeploymentsClientGetLogsOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetLogsResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.OnlineDeploymentsServer.GetLogs = func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearningservices.DeploymentLogsRequest, options *armmachinelearningservices.OnlineDeploymentsClientGetLogsOptions) (resp azfake.Responder[armmachinelearningservices.OnlineDeploymentsClientGetLogsResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		testsuite.Require().Equal(exampleEndpointName, endpointName)
@@ -11209,24 +10341,16 @@ func (testsuite *FakeTestSuite) TestOnlineDeployments_GetLogs() {
 		resp.SetResponse(http.StatusOK, armmachinelearningservices.OnlineDeploymentsClientGetLogsResponse{DeploymentLogs: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOnlineDeploymentsClient()
 	res, err := client.GetLogs(ctx, exampleResourceGroupName, exampleWorkspaceName, exampleEndpointName, exampleDeploymentName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.DeploymentLogs))
 }
 
 func (testsuite *FakeTestSuite) TestWorkspaceFeatures_List() {
-	ctx := context.Background()
-	fakeServer := fake.WorkspaceFeaturesServer{}
-	clientFactory, err := armmachinelearningservices.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewWorkspaceFeaturesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewWorkspaceFeaturesClient()
-
 	// From example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"List Workspace features"},
 	})
 	var exampleResourceGroupName string
@@ -11248,13 +10372,15 @@ func (testsuite *FakeTestSuite) TestWorkspaceFeatures_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspaceFeaturesClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspaceFeaturesClientListResponse]) {
+	testsuite.serverFactory.WorkspaceFeaturesServer.NewListPager = func(resourceGroupName string, workspaceName string, options *armmachinelearningservices.WorkspaceFeaturesClientListOptions) (resp azfake.PagerResponder[armmachinelearningservices.WorkspaceFeaturesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleWorkspaceName, workspaceName)
 		resp = azfake.PagerResponder[armmachinelearningservices.WorkspaceFeaturesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armmachinelearningservices.WorkspaceFeaturesClientListResponse{ListAmlUserFeatureResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewWorkspaceFeaturesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleWorkspaceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)

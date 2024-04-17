@@ -27,16 +27,29 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var err error
+
 type FakeTestSuite struct {
 	suite.Suite
 
+	ctx            context.Context
 	cred           azcore.TokenCredential
 	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *armagrifood.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
 	testsuite.cred = &testutil.FakeCredential{}
 	testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+	testsuite.clientFactory, err = armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+		},
+	})
+	testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -44,18 +57,8 @@ func TestFakeTest(t *testing.T) {
 }
 
 func (testsuite *FakeTestSuite) TestExtensions_Create() {
-	ctx := context.Background()
-	fakeServer := fake.ExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Create.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Extensions_Create"},
 	})
 	var exampleResourceGroupName string
@@ -65,7 +68,7 @@ func (testsuite *FakeTestSuite) TestExtensions_Create() {
 	exampleFarmBeatsResourceName = "examples-farmbeatsResourceName"
 	exampleExtensionID = "provider.extension"
 
-	fakeServer.Create = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientCreateOptions) (resp azfake.Responder[armagrifood.ExtensionsClientCreateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ExtensionsServer.Create = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientCreateOptions) (resp azfake.Responder[armagrifood.ExtensionsClientCreateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleExtensionID, extensionID)
@@ -73,23 +76,15 @@ func (testsuite *FakeTestSuite) TestExtensions_Create() {
 		resp.SetResponse(http.StatusCreated, armagrifood.ExtensionsClientCreateResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewExtensionsClient()
 	_, err = client.Create(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleExtensionID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Create.json")
 }
 
 func (testsuite *FakeTestSuite) TestExtensions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.ExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Extensions_Get"},
 	})
 	var exampleResourceGroupName string
@@ -120,7 +115,7 @@ func (testsuite *FakeTestSuite) TestExtensions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientGetOptions) (resp azfake.Responder[armagrifood.ExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ExtensionsServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientGetOptions) (resp azfake.Responder[armagrifood.ExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleExtensionID, extensionID)
@@ -128,24 +123,16 @@ func (testsuite *FakeTestSuite) TestExtensions_Get() {
 		resp.SetResponse(http.StatusOK, armagrifood.ExtensionsClientGetResponse{Extension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewExtensionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleExtensionID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Extension))
 }
 
 func (testsuite *FakeTestSuite) TestExtensions_Update() {
-	ctx := context.Background()
-	fakeServer := fake.ExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Extensions_Update"},
 	})
 	var exampleResourceGroupName string
@@ -176,7 +163,7 @@ func (testsuite *FakeTestSuite) TestExtensions_Update() {
 		},
 	}
 
-	fakeServer.Update = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientUpdateOptions) (resp azfake.Responder[armagrifood.ExtensionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ExtensionsServer.Update = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientUpdateOptions) (resp azfake.Responder[armagrifood.ExtensionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleExtensionID, extensionID)
@@ -184,24 +171,16 @@ func (testsuite *FakeTestSuite) TestExtensions_Update() {
 		resp.SetResponse(http.StatusOK, armagrifood.ExtensionsClientUpdateResponse{Extension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewExtensionsClient()
 	res, err := client.Update(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleExtensionID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Update.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Extension))
 }
 
 func (testsuite *FakeTestSuite) TestExtensions_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.ExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Extensions_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -211,7 +190,7 @@ func (testsuite *FakeTestSuite) TestExtensions_Delete() {
 	exampleFarmBeatsResourceName = "examples-farmbeatsResourceName"
 	exampleExtensionID = "provider.extension"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientDeleteOptions) (resp azfake.Responder[armagrifood.ExtensionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.ExtensionsServer.Delete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, extensionID string, options *armagrifood.ExtensionsClientDeleteOptions) (resp azfake.Responder[armagrifood.ExtensionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleExtensionID, extensionID)
@@ -219,23 +198,15 @@ func (testsuite *FakeTestSuite) TestExtensions_Delete() {
 		resp.SetResponse(http.StatusOK, armagrifood.ExtensionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewExtensionsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleExtensionID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_Delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestExtensions_ListByFarmBeats() {
-	ctx := context.Background()
-	fakeServer := fake.ExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Extensions_ListByFarmBeats.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Extensions_ListByFarmBeats"},
 	})
 	var exampleResourceGroupName string
@@ -267,13 +238,15 @@ func (testsuite *FakeTestSuite) TestExtensions_ListByFarmBeats() {
 			}},
 	}
 
-	fakeServer.NewListByFarmBeatsPager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.ExtensionsClientListByFarmBeatsOptions) (resp azfake.PagerResponder[armagrifood.ExtensionsClientListByFarmBeatsResponse]) {
+	testsuite.serverFactory.ExtensionsServer.NewListByFarmBeatsPager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.ExtensionsClientListByFarmBeatsOptions) (resp azfake.PagerResponder[armagrifood.ExtensionsClientListByFarmBeatsResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		resp = azfake.PagerResponder[armagrifood.ExtensionsClientListByFarmBeatsResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.ExtensionsClientListByFarmBeatsResponse{ExtensionListResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewExtensionsClient()
 	pager := client.NewListByFarmBeatsPager(exampleResourceGroupName, exampleFarmBeatsResourceName, &armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
 		ExtensionCategories: []string{},
 		MaxPageSize:         nil,
@@ -290,18 +263,8 @@ func (testsuite *FakeTestSuite) TestExtensions_ListByFarmBeats() {
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsExtensions_List() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsExtensions_List"},
 	})
 
@@ -525,11 +488,13 @@ func (testsuite *FakeTestSuite) TestFarmBeatsExtensions_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armagrifood.FarmBeatsExtensionsClientListOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsExtensionsClientListResponse]) {
+	testsuite.serverFactory.FarmBeatsExtensionsServer.NewListPager = func(options *armagrifood.FarmBeatsExtensionsClientListOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsExtensionsClientListResponse]) {
 		resp = azfake.PagerResponder[armagrifood.FarmBeatsExtensionsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.FarmBeatsExtensionsClientListResponse{FarmBeatsExtensionListResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsExtensionsClient()
 	pager := client.NewListPager(&armagrifood.FarmBeatsExtensionsClientListOptions{FarmBeatsExtensionIDs: []string{},
 		FarmBeatsExtensionNames: []string{},
 		ExtensionCategories:     []string{},
@@ -547,18 +512,8 @@ func (testsuite *FakeTestSuite) TestFarmBeatsExtensions_List() {
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsExtensions_Get() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsExtensionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsExtensionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsExtensionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsExtensions_Get"},
 	})
 	var exampleFarmBeatsExtensionID string
@@ -781,30 +736,22 @@ func (testsuite *FakeTestSuite) TestFarmBeatsExtensions_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, farmBeatsExtensionID string, options *armagrifood.FarmBeatsExtensionsClientGetOptions) (resp azfake.Responder[armagrifood.FarmBeatsExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsExtensionsServer.Get = func(ctx context.Context, farmBeatsExtensionID string, options *armagrifood.FarmBeatsExtensionsClientGetOptions) (resp azfake.Responder[armagrifood.FarmBeatsExtensionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleFarmBeatsExtensionID, farmBeatsExtensionID)
 		resp = azfake.Responder[armagrifood.FarmBeatsExtensionsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armagrifood.FarmBeatsExtensionsClientGetResponse{FarmBeatsExtension: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsExtensionsClient()
 	res, err := client.Get(ctx, exampleFarmBeatsExtensionID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsExtensions_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.FarmBeatsExtension))
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_Get() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_Get"},
 	})
 	var exampleResourceGroupName string
@@ -835,31 +782,23 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, options *armagrifood.FarmBeatsModelsClientGetOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, options *armagrifood.FarmBeatsModelsClientGetOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		resp = azfake.Responder[armagrifood.FarmBeatsModelsClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientGetResponse{FarmBeats: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.FarmBeats))
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -898,7 +837,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeats, options *armagrifood.FarmBeatsModelsClientCreateOrUpdateOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeats, options *armagrifood.FarmBeatsModelsClientCreateOrUpdateOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleBody, body))
@@ -906,24 +845,16 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_CreateOrUpdate() {
 		resp.SetResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientCreateOrUpdateResponse{FarmBeats: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_CreateOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.FarmBeats))
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_Update"},
 	})
 	var exampleResourceGroupName string
@@ -961,7 +892,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeatsUpdateRequestModel, options *armagrifood.FarmBeatsModelsClientBeginUpdateOptions) (resp azfake.PollerResponder[armagrifood.FarmBeatsModelsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeatsUpdateRequestModel, options *armagrifood.FarmBeatsModelsClientBeginUpdateOptions) (resp azfake.PollerResponder[armagrifood.FarmBeatsModelsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleBody, body))
@@ -969,6 +900,8 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientUpdateResponse{FarmBeats: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -976,7 +909,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.FarmBeats))
 
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_UpdateWithSensor.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_UpdateWithSensor"},
 	})
 	exampleResourceGroupName = "examples-rg"
@@ -1027,7 +960,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeatsUpdateRequestModel, options *armagrifood.FarmBeatsModelsClientBeginUpdateOptions) (resp azfake.PollerResponder[armagrifood.FarmBeatsModelsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, body armagrifood.FarmBeatsUpdateRequestModel, options *armagrifood.FarmBeatsModelsClientBeginUpdateOptions) (resp azfake.PollerResponder[armagrifood.FarmBeatsModelsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleBody, body))
@@ -1035,6 +968,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientUpdateResponse{FarmBeats: exampleRes}, nil)
 		return
 	}
+
 	poller, err = client.BeginUpdate(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_UpdateWithSensor.json")
 	res, err = poller.PollUntilDone(ctx, nil)
@@ -1043,18 +977,8 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -1062,30 +986,22 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_Delete() {
 	exampleResourceGroupName = "examples-rg"
 	exampleFarmBeatsResourceName = "examples-farmBeatsResourceName"
 
-	fakeServer.Delete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, options *armagrifood.FarmBeatsModelsClientDeleteOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.Delete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, options *armagrifood.FarmBeatsModelsClientDeleteOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		resp = azfake.Responder[armagrifood.FarmBeatsModelsClientDeleteResponse]{}
 		resp.SetResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	_, err = client.Delete(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Delete.json")
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_ListBySubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_ListBySubscription"},
 	})
 
@@ -1115,11 +1031,13 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListBySubscription() {
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armagrifood.FarmBeatsModelsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.FarmBeatsModelsServer.NewListBySubscriptionPager = func(options *armagrifood.FarmBeatsModelsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.FarmBeatsModelsClientListBySubscriptionResponse{FarmBeatsListResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	pager := client.NewListBySubscriptionPager(&armagrifood.FarmBeatsModelsClientListBySubscriptionOptions{MaxPageSize: nil,
 		SkipToken: nil,
 	})
@@ -1134,18 +1052,8 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListBySubscription() {
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_ListByResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_ListByResourceGroup"},
 	})
 	var exampleResourceGroupName string
@@ -1177,12 +1085,14 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armagrifood.FarmBeatsModelsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.FarmBeatsModelsServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armagrifood.FarmBeatsModelsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armagrifood.FarmBeatsModelsClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.FarmBeatsModelsClientListByResourceGroupResponse{FarmBeatsListResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, &armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
 		SkipToken: nil,
 	})
@@ -1197,18 +1107,8 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestFarmBeatsModels_GetOperationResult() {
-	ctx := context.Background()
-	fakeServer := fake.FarmBeatsModelsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewFarmBeatsModelsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewFarmBeatsModelsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_GetOperationResult.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"FarmBeatsModels_GetOperationResult"},
 	})
 	var exampleResourceGroupName string
@@ -1222,7 +1122,7 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_GetOperationResult() {
 		Status: to.Ptr("Succeeded"),
 	}
 
-	fakeServer.GetOperationResult = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, operationResultsID string, options *armagrifood.FarmBeatsModelsClientGetOperationResultOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientGetOperationResultResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.FarmBeatsModelsServer.GetOperationResult = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, operationResultsID string, options *armagrifood.FarmBeatsModelsClientGetOperationResultOptions) (resp azfake.Responder[armagrifood.FarmBeatsModelsClientGetOperationResultResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleOperationResultsID, operationResultsID)
@@ -1230,24 +1130,16 @@ func (testsuite *FakeTestSuite) TestFarmBeatsModels_GetOperationResult() {
 		resp.SetResponse(http.StatusOK, armagrifood.FarmBeatsModelsClientGetOperationResultResponse{ArmAsyncOperation: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewFarmBeatsModelsClient()
 	res, err := client.GetOperationResult(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleOperationResultsID, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_GetOperationResult.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ArmAsyncOperation))
 }
 
 func (testsuite *FakeTestSuite) TestLocations_CheckNameAvailability() {
-	ctx := context.Background()
-	fakeServer := fake.LocationsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewLocationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewLocationsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Locations_CheckNameAvailability_AlreadyExists"},
 	})
 	var exampleBody armagrifood.CheckNameAvailabilityRequest
@@ -1262,18 +1154,20 @@ func (testsuite *FakeTestSuite) TestLocations_CheckNameAvailability() {
 		Reason:        to.Ptr(armagrifood.CheckNameAvailabilityReasonAlreadyExists),
 	}
 
-	fakeServer.CheckNameAvailability = func(ctx context.Context, body armagrifood.CheckNameAvailabilityRequest, options *armagrifood.LocationsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.LocationsServer.CheckNameAvailability = func(ctx context.Context, body armagrifood.CheckNameAvailabilityRequest, options *armagrifood.LocationsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().True(reflect.DeepEqual(exampleBody, body))
 		resp = azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse]{}
 		resp.SetResponse(http.StatusOK, armagrifood.LocationsClientCheckNameAvailabilityResponse{CheckNameAvailabilityResponse: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewLocationsClient()
 	res, err := client.CheckNameAvailability(ctx, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CheckNameAvailabilityResponse))
 
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_Available.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx = runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Locations_CheckNameAvailability_Available"},
 	})
 	exampleBody = armagrifood.CheckNameAvailabilityRequest{
@@ -1285,30 +1179,21 @@ func (testsuite *FakeTestSuite) TestLocations_CheckNameAvailability() {
 		NameAvailable: to.Ptr(true),
 	}
 
-	fakeServer.CheckNameAvailability = func(ctx context.Context, body armagrifood.CheckNameAvailabilityRequest, options *armagrifood.LocationsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.LocationsServer.CheckNameAvailability = func(ctx context.Context, body armagrifood.CheckNameAvailabilityRequest, options *armagrifood.LocationsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().True(reflect.DeepEqual(exampleBody, body))
 		resp = azfake.Responder[armagrifood.LocationsClientCheckNameAvailabilityResponse]{}
 		resp.SetResponse(http.StatusOK, armagrifood.LocationsClientCheckNameAvailabilityResponse{CheckNameAvailabilityResponse: exampleRes}, nil)
 		return
 	}
+
 	res, err = client.CheckNameAvailability(ctx, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_Available.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.CheckNameAvailabilityResponse))
 }
 
 func (testsuite *FakeTestSuite) TestOperations_List() {
-	ctx := context.Background()
-	fakeServer := fake.OperationsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOperationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOperationsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Operations_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Operations_List"},
 	})
 
@@ -1396,11 +1281,13 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armagrifood.OperationsClientListOptions) (resp azfake.PagerResponder[armagrifood.OperationsClientListResponse]) {
+	testsuite.serverFactory.OperationsServer.NewListPager = func(options *armagrifood.OperationsClientListOptions) (resp azfake.PagerResponder[armagrifood.OperationsClientListResponse]) {
 		resp = azfake.PagerResponder[armagrifood.OperationsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.OperationsClientListResponse{OperationListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOperationsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1413,18 +1300,8 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateEndpointConnections_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -1460,7 +1337,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() 
 		},
 	}
 
-	fakeServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, body armagrifood.PrivateEndpointConnection, options *armagrifood.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armagrifood.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.CreateOrUpdate = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, body armagrifood.PrivateEndpointConnection, options *armagrifood.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armagrifood.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -1469,24 +1346,16 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() 
 		resp.SetResponse(http.StatusOK, armagrifood.PrivateEndpointConnectionsClientCreateOrUpdateResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.CreateOrUpdate(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, examplePrivateEndpointConnectionName, exampleBody, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_CreateOrUpdate.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateEndpointConnections_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1513,7 +1382,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, options *armagrifood.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armagrifood.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, options *armagrifood.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armagrifood.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -1521,24 +1390,16 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Get() {
 		resp.SetResponse(http.StatusOK, armagrifood.PrivateEndpointConnectionsClientGetResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateEndpointConnections_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -1548,7 +1409,7 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
 	exampleFarmBeatsResourceName = "examples-farmbeatsResourceName"
 	examplePrivateEndpointConnectionName = "privateEndpointConnectionName"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, options *armagrifood.PrivateEndpointConnectionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armagrifood.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.BeginDelete = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, privateEndpointConnectionName string, options *armagrifood.PrivateEndpointConnectionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armagrifood.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
@@ -1556,6 +1417,8 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armagrifood.PrivateEndpointConnectionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, examplePrivateEndpointConnectionName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1563,18 +1426,8 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_ListByResource() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateEndpointConnections_ListByResource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateEndpointConnections_ListByResource"},
 	})
 	var exampleResourceGroupName string
@@ -1618,13 +1471,15 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_ListByResource() 
 			}},
 	}
 
-	fakeServer.NewListByResourcePager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.PrivateEndpointConnectionsClientListByResourceOptions) (resp azfake.PagerResponder[armagrifood.PrivateEndpointConnectionsClientListByResourceResponse]) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.NewListByResourcePager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.PrivateEndpointConnectionsClientListByResourceOptions) (resp azfake.PagerResponder[armagrifood.PrivateEndpointConnectionsClientListByResourceResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		resp = azfake.PagerResponder[armagrifood.PrivateEndpointConnectionsClientListByResourceResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.PrivateEndpointConnectionsClientListByResourceResponse{PrivateEndpointConnectionListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	pager := client.NewListByResourcePager(exampleResourceGroupName, exampleFarmBeatsResourceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1637,18 +1492,8 @@ func (testsuite *FakeTestSuite) TestPrivateEndpointConnections_ListByResource() 
 }
 
 func (testsuite *FakeTestSuite) TestPrivateLinkResources_ListByResource() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateLinkResourcesServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateLinkResourcesClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_ListByResource.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateLinkResources_ListByResource"},
 	})
 	var exampleResourceGroupName string
@@ -1672,13 +1517,15 @@ func (testsuite *FakeTestSuite) TestPrivateLinkResources_ListByResource() {
 			}},
 	}
 
-	fakeServer.NewListByResourcePager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.PrivateLinkResourcesClientListByResourceOptions) (resp azfake.PagerResponder[armagrifood.PrivateLinkResourcesClientListByResourceResponse]) {
+	testsuite.serverFactory.PrivateLinkResourcesServer.NewListByResourcePager = func(resourceGroupName string, farmBeatsResourceName string, options *armagrifood.PrivateLinkResourcesClientListByResourceOptions) (resp azfake.PagerResponder[armagrifood.PrivateLinkResourcesClientListByResourceResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		resp = azfake.PagerResponder[armagrifood.PrivateLinkResourcesClientListByResourceResponse]{}
 		resp.AddPage(http.StatusOK, armagrifood.PrivateLinkResourcesClientListByResourceResponse{PrivateLinkResourceListResult: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateLinkResourcesClient()
 	pager := client.NewListByResourcePager(exampleResourceGroupName, exampleFarmBeatsResourceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1691,18 +1538,8 @@ func (testsuite *FakeTestSuite) TestPrivateLinkResources_ListByResource() {
 }
 
 func (testsuite *FakeTestSuite) TestPrivateLinkResources_Get() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateLinkResourcesServer{}
-	clientFactory, err := armagrifood.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateLinkResourcesClient()
-
 	// From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"PrivateLinkResources_Get"},
 	})
 	var exampleResourceGroupName string
@@ -1725,7 +1562,7 @@ func (testsuite *FakeTestSuite) TestPrivateLinkResources_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, subResourceName string, options *armagrifood.PrivateLinkResourcesClientGetOptions) (resp azfake.Responder[armagrifood.PrivateLinkResourcesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateLinkResourcesServer.Get = func(ctx context.Context, resourceGroupName string, farmBeatsResourceName string, subResourceName string, options *armagrifood.PrivateLinkResourcesClientGetOptions) (resp azfake.Responder[armagrifood.PrivateLinkResourcesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleFarmBeatsResourceName, farmBeatsResourceName)
 		testsuite.Require().Equal(exampleSubResourceName, subResourceName)
@@ -1733,6 +1570,8 @@ func (testsuite *FakeTestSuite) TestPrivateLinkResources_Get() {
 		resp.SetResponse(http.StatusOK, armagrifood.PrivateLinkResourcesClientGetResponse{PrivateLinkResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateLinkResourcesClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleFarmBeatsResourceName, exampleSubResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateLinkResource))

@@ -27,16 +27,29 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var err error
+
 type FakeTestSuite struct {
 	suite.Suite
 
+	ctx            context.Context
 	cred           azcore.TokenCredential
 	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *armsignalr.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
 	testsuite.cred = &testutil.FakeCredential{}
 	testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+	testsuite.clientFactory, err = armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
+		ClientOptions: azcore.ClientOptions{
+			Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+		},
+	})
+	testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -44,18 +57,8 @@ func TestFakeTest(t *testing.T) {
 }
 
 func (testsuite *FakeTestSuite) TestOperations_List() {
-	ctx := context.Background()
-	fakeServer := fake.OperationsServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewOperationsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewOperationsClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Operations_List"},
 	})
 
@@ -74,11 +77,13 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(options *armsignalr.OperationsClientListOptions) (resp azfake.PagerResponder[armsignalr.OperationsClientListResponse]) {
+	testsuite.serverFactory.OperationsServer.NewListPager = func(options *armsignalr.OperationsClientListOptions) (resp azfake.PagerResponder[armsignalr.OperationsClientListResponse]) {
 		resp = azfake.PagerResponder[armsignalr.OperationsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.OperationsClientListResponse{OperationList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewOperationsClient()
 	pager := client.NewListPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -91,18 +96,8 @@ func (testsuite *FakeTestSuite) TestOperations_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_CheckNameAvailability() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_CheckNameAvailability"},
 	})
 	var exampleLocation string
@@ -119,31 +114,23 @@ func (testsuite *FakeTestSuite) TestSignalR_CheckNameAvailability() {
 		Reason:        to.Ptr("AlreadyExists"),
 	}
 
-	fakeServer.CheckNameAvailability = func(ctx context.Context, location string, parameters armsignalr.NameAvailabilityParameters, options *armsignalr.ClientCheckNameAvailabilityOptions) (resp azfake.Responder[armsignalr.ClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.CheckNameAvailability = func(ctx context.Context, location string, parameters armsignalr.NameAvailabilityParameters, options *armsignalr.ClientCheckNameAvailabilityOptions) (resp azfake.Responder[armsignalr.ClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleLocation, location)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
 		resp = azfake.Responder[armsignalr.ClientCheckNameAvailabilityResponse]{}
 		resp.SetResponse(http.StatusOK, armsignalr.ClientCheckNameAvailabilityResponse{NameAvailability: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	res, err := client.CheckNameAvailability(ctx, exampleLocation, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.NameAvailability))
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_ListBySubscription() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_ListBySubscription"},
 	})
 
@@ -263,11 +250,13 @@ func (testsuite *FakeTestSuite) TestSignalR_ListBySubscription() {
 			}},
 	}
 
-	fakeServer.NewListBySubscriptionPager = func(options *armsignalr.ClientListBySubscriptionOptions) (resp azfake.PagerResponder[armsignalr.ClientListBySubscriptionResponse]) {
+	testsuite.serverFactory.Server.NewListBySubscriptionPager = func(options *armsignalr.ClientListBySubscriptionOptions) (resp azfake.PagerResponder[armsignalr.ClientListBySubscriptionResponse]) {
 		resp = azfake.PagerResponder[armsignalr.ClientListBySubscriptionResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.ClientListBySubscriptionResponse{ResourceInfoList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	pager := client.NewListBySubscriptionPager(nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -280,18 +269,8 @@ func (testsuite *FakeTestSuite) TestSignalR_ListBySubscription() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_ListByResourceGroup() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_ListByResourceGroup"},
 	})
 	var exampleResourceGroupName string
@@ -413,12 +392,14 @@ func (testsuite *FakeTestSuite) TestSignalR_ListByResourceGroup() {
 			}},
 	}
 
-	fakeServer.NewListByResourceGroupPager = func(resourceGroupName string, options *armsignalr.ClientListByResourceGroupOptions) (resp azfake.PagerResponder[armsignalr.ClientListByResourceGroupResponse]) {
+	testsuite.serverFactory.Server.NewListByResourceGroupPager = func(resourceGroupName string, options *armsignalr.ClientListByResourceGroupOptions) (resp azfake.PagerResponder[armsignalr.ClientListByResourceGroupResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		resp = azfake.PagerResponder[armsignalr.ClientListByResourceGroupResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.ClientListByResourceGroupResponse{ResourceInfoList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	pager := client.NewListByResourceGroupPager(exampleResourceGroupName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -431,18 +412,8 @@ func (testsuite *FakeTestSuite) TestSignalR_ListByResourceGroup() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_Get() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_Get"},
 	})
 	var exampleResourceGroupName string
@@ -563,31 +534,23 @@ func (testsuite *FakeTestSuite) TestSignalR_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientGetOptions) (resp azfake.Responder[armsignalr.ClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.Get = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientGetOptions) (resp azfake.Responder[armsignalr.ClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.Responder[armsignalr.ClientGetResponse]{}
 		resp.SetResponse(http.StatusOK, armsignalr.ClientGetResponse{ResourceInfo: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	res, err := client.Get(ctx, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.ResourceInfo))
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_CreateOrUpdate"},
 	})
 	var exampleResourceGroupName string
@@ -786,7 +749,7 @@ func (testsuite *FakeTestSuite) TestSignalR_CreateOrUpdate() {
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.ResourceInfo, options *armsignalr.ClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armsignalr.ClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.BeginCreateOrUpdate = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.ResourceInfo, options *armsignalr.ClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armsignalr.ClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -794,6 +757,8 @@ func (testsuite *FakeTestSuite) TestSignalR_CreateOrUpdate() {
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.ClientCreateOrUpdateResponse{ResourceInfo: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleResourceGroupName, exampleResourceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -802,18 +767,8 @@ func (testsuite *FakeTestSuite) TestSignalR_CreateOrUpdate() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_Delete"},
 	})
 	var exampleResourceGroupName string
@@ -821,13 +776,15 @@ func (testsuite *FakeTestSuite) TestSignalR_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleResourceName = "mySignalRService"
 
-	fakeServer.BeginDelete = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.ClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.BeginDelete = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.ClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.PollerResponder[armsignalr.ClientDeleteResponse]{}
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.ClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	poller, err := client.BeginDelete(ctx, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -835,18 +792,8 @@ func (testsuite *FakeTestSuite) TestSignalR_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_Update() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_Update"},
 	})
 	var exampleResourceGroupName string
@@ -1046,7 +993,7 @@ func (testsuite *FakeTestSuite) TestSignalR_Update() {
 		},
 	}
 
-	fakeServer.BeginUpdate = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.ResourceInfo, options *armsignalr.ClientBeginUpdateOptions) (resp azfake.PollerResponder[armsignalr.ClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.BeginUpdate = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.ResourceInfo, options *armsignalr.ClientBeginUpdateOptions) (resp azfake.PollerResponder[armsignalr.ClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1054,6 +1001,8 @@ func (testsuite *FakeTestSuite) TestSignalR_Update() {
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.ClientUpdateResponse{ResourceInfo: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	poller, err := client.BeginUpdate(ctx, exampleResourceGroupName, exampleResourceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1062,18 +1011,8 @@ func (testsuite *FakeTestSuite) TestSignalR_Update() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_ListKeys() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_ListKeys"},
 	})
 	var exampleResourceGroupName string
@@ -1083,31 +1022,23 @@ func (testsuite *FakeTestSuite) TestSignalR_ListKeys() {
 
 	exampleRes := armsignalr.Keys{}
 
-	fakeServer.ListKeys = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientListKeysOptions) (resp azfake.Responder[armsignalr.ClientListKeysResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.ListKeys = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientListKeysOptions) (resp azfake.Responder[armsignalr.ClientListKeysResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.Responder[armsignalr.ClientListKeysResponse]{}
 		resp.SetResponse(http.StatusOK, armsignalr.ClientListKeysResponse{Keys: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	res, err := client.ListKeys(ctx, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.Keys))
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_RegenerateKey() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_RegenerateKey"},
 	})
 	var exampleResourceGroupName string
@@ -1119,7 +1050,7 @@ func (testsuite *FakeTestSuite) TestSignalR_RegenerateKey() {
 		KeyType: to.Ptr(armsignalr.KeyTypePrimary),
 	}
 
-	fakeServer.BeginRegenerateKey = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.RegenerateKeyParameters, options *armsignalr.ClientBeginRegenerateKeyOptions) (resp azfake.PollerResponder[armsignalr.ClientRegenerateKeyResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.BeginRegenerateKey = func(ctx context.Context, resourceGroupName string, resourceName string, parameters armsignalr.RegenerateKeyParameters, options *armsignalr.ClientBeginRegenerateKeyOptions) (resp azfake.PollerResponder[armsignalr.ClientRegenerateKeyResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		testsuite.Require().True(reflect.DeepEqual(exampleParameters, parameters))
@@ -1127,6 +1058,8 @@ func (testsuite *FakeTestSuite) TestSignalR_RegenerateKey() {
 		resp.SetTerminalResponse(http.StatusAccepted, armsignalr.ClientRegenerateKeyResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	poller, err := client.BeginRegenerateKey(ctx, exampleResourceGroupName, exampleResourceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1134,18 +1067,8 @@ func (testsuite *FakeTestSuite) TestSignalR_RegenerateKey() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalR_Restart() {
-	ctx := context.Background()
-	fakeServer := fake.Server{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalR_Restart"},
 	})
 	var exampleResourceGroupName string
@@ -1153,13 +1076,15 @@ func (testsuite *FakeTestSuite) TestSignalR_Restart() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleResourceName = "mySignalRService"
 
-	fakeServer.BeginRestart = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientBeginRestartOptions) (resp azfake.PollerResponder[armsignalr.ClientRestartResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.Server.BeginRestart = func(ctx context.Context, resourceGroupName string, resourceName string, options *armsignalr.ClientBeginRestartOptions) (resp azfake.PollerResponder[armsignalr.ClientRestartResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.PollerResponder[armsignalr.ClientRestartResponse]{}
 		resp.SetTerminalResponse(http.StatusAccepted, armsignalr.ClientRestartResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewClient()
 	poller, err := client.BeginRestart(ctx, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1167,18 +1092,8 @@ func (testsuite *FakeTestSuite) TestSignalR_Restart() {
 }
 
 func (testsuite *FakeTestSuite) TestUsages_List() {
-	ctx := context.Background()
-	fakeServer := fake.UsagesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewUsagesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewUsagesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"Usages_List"},
 	})
 	var exampleLocation string
@@ -1208,12 +1123,14 @@ func (testsuite *FakeTestSuite) TestUsages_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(location string, options *armsignalr.UsagesClientListOptions) (resp azfake.PagerResponder[armsignalr.UsagesClientListResponse]) {
+	testsuite.serverFactory.UsagesServer.NewListPager = func(location string, options *armsignalr.UsagesClientListOptions) (resp azfake.PagerResponder[armsignalr.UsagesClientListResponse]) {
 		testsuite.Require().Equal(exampleLocation, location)
 		resp = azfake.PagerResponder[armsignalr.UsagesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.UsagesClientListResponse{UsageList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewUsagesClient()
 	pager := client.NewListPager(exampleLocation, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1226,18 +1143,8 @@ func (testsuite *FakeTestSuite) TestUsages_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_List() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRPrivateEndpointConnections_List"},
 	})
 	var exampleResourceGroupName string
@@ -1272,13 +1179,15 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientListOptions) (resp azfake.PagerResponder[armsignalr.PrivateEndpointConnectionsClientListResponse]) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientListOptions) (resp azfake.PagerResponder[armsignalr.PrivateEndpointConnectionsClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.PagerResponder[armsignalr.PrivateEndpointConnectionsClientListResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.PrivateEndpointConnectionsClientListResponse{PrivateEndpointConnectionList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleResourceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1291,18 +1200,8 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Get() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRPrivateEndpointConnections_Get"},
 	})
 	var examplePrivateEndpointConnectionName string
@@ -1336,7 +1235,7 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armsignalr.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.Get = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientGetOptions) (resp azfake.Responder[armsignalr.PrivateEndpointConnectionsClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1344,24 +1243,16 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Get() {
 		resp.SetResponse(http.StatusOK, armsignalr.PrivateEndpointConnectionsClientGetResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.Get(ctx, examplePrivateEndpointConnectionName, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Update() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRPrivateEndpointConnections_Update"},
 	})
 	var examplePrivateEndpointConnectionName string
@@ -1407,7 +1298,7 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Update() {
 		},
 	}
 
-	fakeServer.Update = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, parameters armsignalr.PrivateEndpointConnection, options *armsignalr.PrivateEndpointConnectionsClientUpdateOptions) (resp azfake.Responder[armsignalr.PrivateEndpointConnectionsClientUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.Update = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, parameters armsignalr.PrivateEndpointConnection, options *armsignalr.PrivateEndpointConnectionsClientUpdateOptions) (resp azfake.Responder[armsignalr.PrivateEndpointConnectionsClientUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1416,24 +1307,16 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Update() {
 		resp.SetResponse(http.StatusOK, armsignalr.PrivateEndpointConnectionsClientUpdateResponse{PrivateEndpointConnection: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	res, err := client.Update(ctx, examplePrivateEndpointConnectionName, exampleResourceGroupName, exampleResourceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.PrivateEndpointConnection))
 }
 
 func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateEndpointConnectionsServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateEndpointConnectionsServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateEndpointConnectionsClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRPrivateEndpointConnections_Delete"},
 	})
 	var examplePrivateEndpointConnectionName string
@@ -1443,7 +1326,7 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleResourceName = "mySignalRService"
 
-	fakeServer.BeginDelete = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.PrivateEndpointConnectionsServer.BeginDelete = func(ctx context.Context, privateEndpointConnectionName string, resourceGroupName string, resourceName string, options *armsignalr.PrivateEndpointConnectionsClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.PrivateEndpointConnectionsClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(examplePrivateEndpointConnectionName, privateEndpointConnectionName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1451,6 +1334,8 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.PrivateEndpointConnectionsClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateEndpointConnectionsClient()
 	poller, err := client.BeginDelete(ctx, examplePrivateEndpointConnectionName, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
@@ -1458,18 +1343,8 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateEndpointConnections_Delete() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalRPrivateLinkResources_List() {
-	ctx := context.Background()
-	fakeServer := fake.PrivateLinkResourcesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewPrivateLinkResourcesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRPrivateLinkResources_List"},
 	})
 	var exampleResourceGroupName string
@@ -1502,13 +1377,15 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateLinkResources_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.PrivateLinkResourcesClientListOptions) (resp azfake.PagerResponder[armsignalr.PrivateLinkResourcesClientListResponse]) {
+	testsuite.serverFactory.PrivateLinkResourcesServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.PrivateLinkResourcesClientListOptions) (resp azfake.PagerResponder[armsignalr.PrivateLinkResourcesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.PagerResponder[armsignalr.PrivateLinkResourcesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.PrivateLinkResourcesClientListResponse{PrivateLinkResourceList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewPrivateLinkResourcesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleResourceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1521,18 +1398,8 @@ func (testsuite *FakeTestSuite) TestSignalRPrivateLinkResources_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_List() {
-	ctx := context.Background()
-	fakeServer := fake.SharedPrivateLinkResourcesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedPrivateLinkResourcesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRSharedPrivateLinkResources_List"},
 	})
 	var exampleResourceGroupName string
@@ -1556,13 +1423,15 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_List() {
 			}},
 	}
 
-	fakeServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientListOptions) (resp azfake.PagerResponder[armsignalr.SharedPrivateLinkResourcesClientListResponse]) {
+	testsuite.serverFactory.SharedPrivateLinkResourcesServer.NewListPager = func(resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientListOptions) (resp azfake.PagerResponder[armsignalr.SharedPrivateLinkResourcesClientListResponse]) {
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
 		resp = azfake.PagerResponder[armsignalr.SharedPrivateLinkResourcesClientListResponse]{}
 		resp.AddPage(http.StatusOK, armsignalr.SharedPrivateLinkResourcesClientListResponse{SharedPrivateLinkResourceList: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedPrivateLinkResourcesClient()
 	pager := client.NewListPager(exampleResourceGroupName, exampleResourceName, nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
@@ -1575,18 +1444,8 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_List() {
 }
 
 func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Get() {
-	ctx := context.Background()
-	fakeServer := fake.SharedPrivateLinkResourcesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedPrivateLinkResourcesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRSharedPrivateLinkResources_Get"},
 	})
 	var exampleSharedPrivateLinkResourceName string
@@ -1609,7 +1468,7 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Get() {
 		},
 	}
 
-	fakeServer.Get = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientGetOptions) (resp azfake.Responder[armsignalr.SharedPrivateLinkResourcesClientGetResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedPrivateLinkResourcesServer.Get = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientGetOptions) (resp azfake.Responder[armsignalr.SharedPrivateLinkResourcesClientGetResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleSharedPrivateLinkResourceName, sharedPrivateLinkResourceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1617,24 +1476,16 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Get() {
 		resp.SetResponse(http.StatusOK, armsignalr.SharedPrivateLinkResourcesClientGetResponse{SharedPrivateLinkResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedPrivateLinkResourcesClient()
 	res, err := client.Get(ctx, exampleSharedPrivateLinkResourceName, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json")
 	testsuite.Require().True(reflect.DeepEqual(exampleRes, res.SharedPrivateLinkResource))
 }
 
 func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_CreateOrUpdate() {
-	ctx := context.Background()
-	fakeServer := fake.SharedPrivateLinkResourcesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedPrivateLinkResourcesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRSharedPrivateLinkResources_CreateOrUpdate"},
 	})
 	var exampleSharedPrivateLinkResourceName string
@@ -1665,7 +1516,7 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_CreateOrUp
 		},
 	}
 
-	fakeServer.BeginCreateOrUpdate = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, parameters armsignalr.SharedPrivateLinkResource, options *armsignalr.SharedPrivateLinkResourcesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armsignalr.SharedPrivateLinkResourcesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedPrivateLinkResourcesServer.BeginCreateOrUpdate = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, parameters armsignalr.SharedPrivateLinkResource, options *armsignalr.SharedPrivateLinkResourcesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armsignalr.SharedPrivateLinkResourcesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleSharedPrivateLinkResourceName, sharedPrivateLinkResourceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1674,6 +1525,8 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_CreateOrUp
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.SharedPrivateLinkResourcesClientCreateOrUpdateResponse{SharedPrivateLinkResource: exampleRes}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedPrivateLinkResourcesClient()
 	poller, err := client.BeginCreateOrUpdate(ctx, exampleSharedPrivateLinkResourceName, exampleResourceGroupName, exampleResourceName, exampleParameters, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
@@ -1682,18 +1535,8 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_CreateOrUp
 }
 
 func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Delete() {
-	ctx := context.Background()
-	fakeServer := fake.SharedPrivateLinkResourcesServer{}
-	clientFactory, err := armsignalr.NewClientFactory(testsuite.subscriptionId, testsuite.cred, &arm.ClientOptions{
-		ClientOptions: azcore.ClientOptions{
-			Transport: fake.NewSharedPrivateLinkResourcesServerTransport(&fakeServer),
-		},
-	})
-	testsuite.Require().NoError(err, "Failed to create client factory")
-	client := clientFactory.NewSharedPrivateLinkResourcesClient()
-
 	// From example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+	ctx := runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
 		"example-id": {"SignalRSharedPrivateLinkResources_Delete"},
 	})
 	var exampleSharedPrivateLinkResourceName string
@@ -1703,7 +1546,7 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Delete() {
 	exampleResourceGroupName = "myResourceGroup"
 	exampleResourceName = "mySignalRService"
 
-	fakeServer.BeginDelete = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.SharedPrivateLinkResourcesClientDeleteResponse], errResp azfake.ErrorResponder) {
+	testsuite.serverFactory.SharedPrivateLinkResourcesServer.BeginDelete = func(ctx context.Context, sharedPrivateLinkResourceName string, resourceGroupName string, resourceName string, options *armsignalr.SharedPrivateLinkResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[armsignalr.SharedPrivateLinkResourcesClientDeleteResponse], errResp azfake.ErrorResponder) {
 		testsuite.Require().Equal(exampleSharedPrivateLinkResourceName, sharedPrivateLinkResourceName)
 		testsuite.Require().Equal(exampleResourceGroupName, resourceGroupName)
 		testsuite.Require().Equal(exampleResourceName, resourceName)
@@ -1711,6 +1554,8 @@ func (testsuite *FakeTestSuite) TestSignalRSharedPrivateLinkResources_Delete() {
 		resp.SetTerminalResponse(http.StatusOK, armsignalr.SharedPrivateLinkResourcesClientDeleteResponse{}, nil)
 		return
 	}
+
+	client := testsuite.clientFactory.NewSharedPrivateLinkResourcesClient()
 	poller, err := client.BeginDelete(ctx, exampleSharedPrivateLinkResourceName, exampleResourceGroupName, exampleResourceName, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
