@@ -34,8 +34,6 @@ export interface CodeModel {
 
   // all of the interfaces for discriminated types (interfaces.go file)
   interfaceTypes: Array<InterfaceType>;
-
-  marshallingRequirements: MarshallingRequirements;
 }
 
 export type CodeModelType = 'azure-arm' | 'data-plane';
@@ -78,21 +76,6 @@ export interface Module {
   
   // the semantic version x.y.z[-beta.N]
   version: string;
-}
-
-// MarshallingRequirements contains flags for required marshalling helpers
-export interface MarshallingRequirements {
-  generateDateHelper: boolean;
-
-  generateDateTimeRFC1123Helper: boolean;
-
-  generateDateTimeRFC3339Helper: boolean;
-
-  generateTimeRFC3339Helper: boolean;
-
-  generateUnixTimeHelper: boolean;
-
-  generateXMLDictionaryUnmarshallingHelper: boolean;
 }
 
 // Struct describes a vanilla struct definition (pretty much exclusively used for parameter groups/options bag types)
@@ -1029,24 +1012,12 @@ export class Module implements Module {
   }
 }
 
-export class MarshallingRequirements implements MarshallingRequirements {
-  constructor() {
-    this.generateDateHelper = false;
-    this.generateDateTimeRFC1123Helper = false;
-    this.generateDateTimeRFC3339Helper = false;
-    this.generateTimeRFC3339Helper = false;
-    this.generateUnixTimeHelper = false;
-    this.generateXMLDictionaryUnmarshallingHelper = false;
-  }
-}
-
 export class CodeModel implements CodeModel {
   constructor(info: Info, type: CodeModelType, packageName: string, options: Options) {
     this.clients = new Array<Client>();
     this.constants = new Array<ConstantType>();
     this.info = info;
     this.interfaceTypes = new Array<InterfaceType>();
-    this.marshallingRequirements = new MarshallingRequirements();
     this.models = new Array<ModelType | PolymorphicType>();
     this.options = options;
     this.packageName = packageName;

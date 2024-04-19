@@ -5,7 +5,7 @@
 
 import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/gocodemodel.js';
-import { contentPreamble } from './helpers.js';
+import { contentPreamble, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // represents the generated content for an operation group
@@ -22,42 +22,103 @@ export class Content {
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
 export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?: string): Promise<Array<Content>> {
-  const content = new Array<Content>();
-  if (!codeModel.marshallingRequirements.generateDateTimeRFC1123Helper &&
-    !codeModel.marshallingRequirements.generateDateTimeRFC3339Helper &&
-	!codeModel.marshallingRequirements.generateTimeRFC3339Helper &&
-    !codeModel.marshallingRequirements.generateUnixTimeHelper &&
-    !codeModel.marshallingRequirements.generateDateHelper) {
-    return content;
-  }
-  let needsPopulate = false;
-  for (const model of codeModel.models) {
-    if (model.format !== 'json') {
-      // population helpers are for JSON only
-      continue;
-    }
-    for (const field of values(model.fields)) {
-      if (go.isTimeType(field.type)) {
-        needsPopulate = true;
+  let needsDateHelper = false;
+  let needsDateTimeRFC1123Helper = false;
+  let needsDateTimeRFC3339Helper = false;
+  let needsTimeRFC3339Helper = false;
+  let needsUnixTimeHelper = false;
+
+  const setHelper = function(dateTimeFormat: go.DateTimeFormat): void {
+    switch (dateTimeFormat) {
+      case 'dateTimeRFC1123':
+        needsDateTimeRFC1123Helper = true;
         break;
+      case 'dateTimeRFC3339':
+        needsDateTimeRFC3339Helper = true;
+        break;
+      case 'dateType':
+        needsDateHelper = true;
+        break;
+      case 'timeRFC3339':
+        needsTimeRFC3339Helper = true;
+        break;
+      case 'timeUnix':
+        needsUnixTimeHelper = true;
+        break;
+      default:
+        throw new Error(`unhandled date-time format ${dateTimeFormat}`);
+    }
+  };
+
+  // find the required helpers. we must check params, response envelopes, and models
+
+  for (const client of codeModel.clients) {
+    for (const method of client.methods) {
+      for (const param of method.parameters) {
+        const unwrappedParam = recursiveUnwrapMapSlice(param.type);
+        if (!go.isTimeType(unwrappedParam)) {
+          continue;
+        }
+        // for body params, the helpers are always required.
+        // for header/path/query params, the conversion happens in place. the only
+        // exceptions are for timeRFC3339 and timeUnix
+        // TODO: clean this up when moving to DateTime type in azcore
+        if (go.isBodyParameter(param) || (unwrappedParam.dateTimeFormat === 'timeRFC3339' || unwrappedParam.dateTimeFormat === 'timeUnix')) {
+          setHelper(unwrappedParam.dateTimeFormat);
+        }
       }
     }
-    if (needsPopulate) {
-      break;
+  }
+
+  for (const respEnv of codeModel.responseEnvelopes) {
+    if (!respEnv.result || !go.isMonomorphicResult(respEnv.result) || respEnv.result.format !== 'JSON') {
+      continue;
+    }
+    const unwrappedResult = recursiveUnwrapMapSlice(respEnv.result.monomorphicType);
+    if (!go.isTimeType(unwrappedResult)) {
+      continue;
+    }
+    setHelper(unwrappedResult.dateTimeFormat);
+  }
+
+  // needsSerDeHelpers is only required when time.Time is a struct field
+  let needsSerDeHelpers = false;
+
+  for (const model of codeModel.models) {
+    for (const field of values(model.fields)) {
+      const unwrappedField = recursiveUnwrapMapSlice(field.type);
+      if (!go.isTimeType(unwrappedField)) {
+        continue;
+      }
+      if (model.format === 'json') {
+        // needsSerDeHelpers helpers are for JSON only
+        needsSerDeHelpers = true;
+      }
+      setHelper(unwrappedField.dateTimeFormat);
     }
   }
+
+  const content = new Array<Content>();
+  if (!needsDateHelper &&
+    !needsDateTimeRFC1123Helper &&
+    !needsDateTimeRFC3339Helper &&
+    !needsTimeRFC3339Helper &&
+    !needsUnixTimeHelper) {
+    return content;
+  }
+
   const preamble = contentPreamble(codeModel, packageName);
-  if (codeModel.marshallingRequirements.generateDateTimeRFC1123Helper) {
-    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsPopulate)));
+  if (needsDateTimeRFC1123Helper) {
+    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsSerDeHelpers)));
   }
-  if (codeModel.marshallingRequirements.generateDateTimeRFC3339Helper || codeModel.marshallingRequirements.generateTimeRFC3339Helper) {
-    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, codeModel.marshallingRequirements.generateDateTimeRFC3339Helper, codeModel.marshallingRequirements.generateTimeRFC3339Helper, needsPopulate)));
+  if (needsDateTimeRFC3339Helper || needsTimeRFC3339Helper) {
+    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsDateTimeRFC3339Helper, needsTimeRFC3339Helper, needsSerDeHelpers)));
   }
-  if (codeModel.marshallingRequirements.generateUnixTimeHelper) {
-    content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsPopulate)));
+  if (needsUnixTimeHelper) {
+    content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsSerDeHelpers)));
   }
-  if (codeModel.marshallingRequirements.generateDateHelper) {
-    content.push(new Content('date_type', generateDateHelper(preamble, needsPopulate)));
+  if (needsDateHelper) {
+    content.push(new Content('date_type', generateDateHelper(preamble, needsSerDeHelpers)));
   }
   return content;
 }

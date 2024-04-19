@@ -39,24 +39,6 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     if (session.model.language.go!.host) {
       codeModel.host = session.model.language.go!.host;
     }
-    if (session.model.language.go!.generateDateTimeRFC1123Helper) {
-      codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
-    }
-    if (session.model.language.go!.generateTimeRFC3339Helper) {
-      codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
-    }
-    if (session.model.language.go!.generateDateTimeRFC3339Helper) {
-      codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
-    }
-    if (session.model.language.go!.generateUnixTimeHelper) {
-      codeModel.marshallingRequirements.generateUnixTimeHelper = true;
-    }
-    if (session.model.language.go!.generateDateHelper) {
-      codeModel.marshallingRequirements.generateDateHelper = true;
-    }
-    if (session.model.language.go!.needsXMLDictionaryUnmarshalling) {
-      codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper = true;
-    }
     if (session.model.language.go!.module && session.model.language.go!.moduleVersion) {
       codeModel.options.module = new go.Module(session.model.language.go!.module, session.model.language.go!.moduleVersion);
     } else if (session.model.language.go!.module || session.model.language.go!.moduleVersion) {
