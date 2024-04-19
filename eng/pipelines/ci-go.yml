@@ -28,12 +28,13 @@ jobs:
 
     strategy:
       matrix:
-        Linux_Go121:
-          vm.image: "ubuntu-22.04"
-          go.version: "1.21.4"
-
+        Linux:
+          image: $(LINUXNEXTVMIMAGE)
+          pool: $(LINUXPOOL)
     pool:
-      vmImage: "$(vm.image)"
+      name: $(pool)
+      image: "$(image)"
+      os: linux
 
     steps:
       - template: ../steps/set-env.yaml
