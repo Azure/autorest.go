@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 const execSync = require('child_process').execSync;
 const fs = require('fs');
+const path = require('path');
 
-recursiveUpdateGoMod('test');
+recursiveUpdateGoMod(process.env.RUSH_INVOKED_FOLDER);
 
 function recursiveUpdateGoMod(cur) {
     const dir = fs.opendirSync(cur);
@@ -18,7 +19,7 @@ function recursiveUpdateGoMod(cur) {
             console.log('go mod tidy ' + cur);
             execSync('go mod tidy', { cwd: cur });
         } else if (dirEnt.isDirectory()) {
-            recursiveUpdateGoMod(cur + '/' + dirEnt.name);
+            recursiveUpdateGoMod(path.join(cur, dirEnt.name));
         }
     }
     dir.close();
