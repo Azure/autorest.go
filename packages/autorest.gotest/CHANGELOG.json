@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.7.3",
+      "tag": "@autorest/gotest_v4.7.3",
+      "date": "Mon, 22 Apr 2024 09:31:17 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Test template initializes the client using the client factory"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.7.2",
       "tag": "@autorest/gotest_v4.7.2",
       "date": "Mon, 08 Apr 2024 06:34:25 GMT",

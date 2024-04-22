@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 08 Apr 2024 06:34:25 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Apr 2024 09:31:17 GMT and should not be manually modified.
+
+## 4.7.3
+Mon, 22 Apr 2024 09:31:17 GMT
+
+### Patches
+
+- Test template initializes the client using the client factory
 
 ## 4.7.2
 Mon, 08 Apr 2024 06:34:25 GMT
