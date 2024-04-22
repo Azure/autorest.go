@@ -10,9 +10,27 @@ import { ImportManager } from './imports.js';
 // Creates the content for required additional properties XML marshalling helpers.
 // Will be empty if no helpers are required.
 export async function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel): Promise<string> {
-  if (!codeModel.marshallingRequirements.generateXMLDictionaryUnmarshallingHelper) {
+  // check if any models need this helper
+  let required = false;
+  for (const model of codeModel.models) {
+    if (model.format !== 'xml') {
+      continue;
+    }
+    for (const field of model.fields) {
+      if (go.isMapType(field.type)) {
+        required = true;
+        break;
+      }
+    }
+    if (required) {
+      break;
+    }
+  }
+
+  if (!required) {
     return '';
   }
+
   let text = contentPreamble(codeModel);
   // add standard imports
   const imports = new ImportManager();

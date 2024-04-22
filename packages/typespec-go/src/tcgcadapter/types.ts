@@ -250,19 +250,6 @@ export class typeAdapter {
     }
     datetime = new go.TimeType(encoding, utc);
     this.types.set(encoding, datetime);
-    switch (encoding) {
-      case 'dateTimeRFC1123':
-        this.codeModel.marshallingRequirements.generateDateTimeRFC1123Helper = true;
-        break;
-      case 'dateTimeRFC3339':
-        this.codeModel.marshallingRequirements.generateDateTimeRFC3339Helper = true;
-        break;
-      case 'timeUnix':
-        this.codeModel.marshallingRequirements.generateUnixTimeHelper = true;
-        break;
-      default:
-        throw new Error(`unhandled datetime encoding ${encoding}`);
-    }
     return <go.TimeType>datetime;
   }
 
@@ -346,7 +333,6 @@ export class typeAdapter {
         }
         date = new go.TimeType('dateType', false);
         this.types.set(dateKey, date);
-        this.codeModel.marshallingRequirements.generateDateHelper = true;
         return date;
       }
       case 'decimal':
@@ -435,7 +421,6 @@ export class typeAdapter {
         }
         time = new go.TimeType(encoding, false);
         this.types.set(encoding, time);
-        this.codeModel.marshallingRequirements.generateTimeRFC3339Helper = true;
         return time;
       
       }
