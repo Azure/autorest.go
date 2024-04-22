@@ -3,6 +3,8 @@
 variables:
   - name: LINUXPOOL
     value: azsdk-pool-mms-ubuntu-2004-general
+  - name: LINUXNEXTPOOL
+    value: azsdk-pool-mms-ubuntu-2204-general
   - name: WINDOWSPOOL
     value: azsdk-pool-mms-win-2022-general
   - name: MACPOOL
@@ -11,7 +13,7 @@ variables:
   - name: LINUXVMIMAGE
     value: azsdk-pool-mms-ubuntu-2004-1espt
   - name: LINUXNEXTVMIMAGE
-    value: ubuntu-22.04
+    value: azsdk-pool-mms-ubuntu-2204-1espt
   - name: WINDOWSVMIMAGE
     value: azsdk-pool-mms-win-2022-1espt
   - name: MACVMIMAGE
