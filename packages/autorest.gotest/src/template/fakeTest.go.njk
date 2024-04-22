@@ -15,20 +15,34 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
 	"github.com/stretchr/testify/suite"
 )
 {{imports}}
 
+var err error
+
 type FakeTestSuite struct {
     suite.Suite
 
-    cred              azcore.TokenCredential
-    options           arm.ClientOptions
+	ctx            context.Context
+	cred           azcore.TokenCredential
+	subscriptionId string
+	serverFactory  *fake.ServerFactory
+	clientFactory  *{{packageName}}.ClientFactory
 }
 
 func (testsuite *FakeTestSuite) SetupSuite() {
+	testsuite.ctx = context.Background()
     testsuite.cred = &testutil.FakeCredential{}
+    testsuite.subscriptionId = "00000000-0000-0000-0000-000000000000"
+	testsuite.serverFactory = &fake.ServerFactory{}
+    testsuite.clientFactory, err = {{packageName}}.NewClientFactory({{jsFunc.getParamsValue(clientFactoryParametersOutput) + ", " if clientFactoryParametersOutput.length>0 else ""}}testsuite.cred, &arm.ClientOptions{
+        ClientOptions: azcore.ClientOptions{
+            Transport: fake.NewServerFactoryTransport(testsuite.serverFactory),
+        },
+    })
+    testsuite.Require().NoError(err, "Failed to create client factory")
 }
 
 func TestFakeTest(t *testing.T) {
@@ -40,24 +54,12 @@ func TestFakeTest(t *testing.T) {
 func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.name}}_{{exampleGroup.operation.language.go.name}}() {
 {%- if exampleGroup.examples|length <=0 %}
     testsuite.T().Skip("Warning: No test steps for this operation!")
-{%- else %}
-    ctx := context.Background()
 {%- endif %}
 
 {%- for example in exampleGroup.examples %}
-    {%- if loop.first %}
-    fakeServer := fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientName)}}Server{}
-    client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &arm.ClientOptions{
-        ClientOptions: azcore.ClientOptions{
-            Transport: fake.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientCtorName)}}ServerTransport(&fakeServer),
-        },
-    })
-    testsuite.Require().NoError(err, "Failed to create client")
-    {%- endif %}
-
     // From example {{example.originalFile}}
     {%- if sendExampleId %}
-    ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+    ctx {%- if loop.first %}:{%- endif %}= runtime.WithHTTPHeader(testsuite.ctx, map[string][]string{
         "example-id": {"{{example.name.split('\\').join('\\\\').split('"').join('\\"')}}"},
     })
     {%- endif %}
@@ -78,7 +80,7 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
 
     {% if example.checkResponse %}exampleRes {%- if loop.first %}:{% endif %}= {{example.responseOutput}}{% endif %}
 
-    fakeServer.{{example.opName}} = {{jsFunc.funcMethodReturns(exampleGroup.operation,packageName)}} {
+    testsuite.serverFactory.{{jsFunc.cutClientSuffix(example.operationGroup.language.go.clientName)}}Server.{{example.opName}} = {{jsFunc.funcMethodReturns(exampleGroup.operation,packageName)}} {
         {%- for param in example.methodParametersOutput %}
         {%- if param.paramName != 'options' and param.paramName != 'ctx' %}
         {%- for methodParam in example.methodParameters %}
@@ -131,6 +133,9 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
         {%- endif %}
     }
 
+    {% if loop.first %}
+    client := testsuite.clientFactory.{{example.operationGroup.language.go.clientCtorName}}()
+    {%- endif %}
     {%- if example.returnInfo.length == 2 %}
         {%- if example.isLRO %}
             poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})
@@ -150,6 +155,9 @@ func (testsuite *FakeTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             {%- if example.checkResponse and verifyResponse%}
             testsuite.Require().True(reflect.DeepEqual(exampleRes, {% if example.responseTypePointer %}*{% endif %}nextResult{% if not example.responseIsDiscriminator %}.{{example.responseType}}{% endif %}))
             {%- endif %}
+            if err == nil {
+                break
+            }
         }
     {%- else %}
         client.{{example.opName}}({{jsFunc.getExampleParams(example.methodParametersOutput)}})

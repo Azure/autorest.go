@@ -6,9 +6,9 @@ import { getModuleNameWithMajorVersion, isLROOperation, isMultiRespOperation, is
 import { ParameterOutput } from '../common/model';
 import { getMethodParameters, getResponseEnvelopeName } from '../util/codegenBridge';
 import { BaseCodeGenerator } from './baseGenerator';
-import { MockTestDataRender } from './mockTestGenerator';
+import { ExampleDataRender } from './exampleGenerator';
 
-export class FakeDataRender extends MockTestDataRender {
+export class FakeDataRender extends ExampleDataRender {
   public renderData(): void {
     super.renderData();
     const modName = getModuleNameWithMajorVersion(this.context.codeModel);
@@ -24,6 +24,9 @@ export class FakeTestCodeGenerator extends BaseCodeGenerator {
       getParamsValue: (params: Array<ParameterOutput>) => {
         return params
           .map((p) => {
+            if (p.paramName == 'subscriptionID') {
+              return 'testsuite.subscriptionId';
+            }
             return p.paramOutput;
           })
           .join(', ');

@@ -18,7 +18,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/appplatform/armappplatform/v2"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 	"github.com/stretchr/testify/suite"
 )
@@ -29,6 +29,7 @@ type SpringTestSuite struct {
 	ctx                        context.Context
 	cred                       azcore.TokenCredential
 	options                    *arm.ClientOptions
+	clientFactory              *armappplatform.ClientFactory
 	appName                    string
 	armEndpoint                string
 	ascDomainName              string
@@ -49,8 +50,11 @@ type SpringTestSuite struct {
 func (testsuite *SpringTestSuite) SetupSuite() {
 	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/appplatform/armappplatform/testdata")
 
+	var err error
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+	testsuite.clientFactory, err = armappplatform.NewClientFactory(testsuite.subscriptionId, testsuite.cred, testsuite.options)
+	testsuite.Require().NoError(err)
 	testsuite.appName = "app01"
 	testsuite.armEndpoint = "https://management.azure.com"
 	testsuite.ascDomainName = ".azuremicroservices.io"
@@ -233,8 +237,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	var err error
 	// From step Services_CheckNameAvailability
 	fmt.Println("Call operation: Services_CheckNameAvailability")
-	servicesClient, err := armappplatform.NewServicesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	servicesClient := testsuite.clientFactory.NewServicesClient()
 	_, err = servicesClient.CheckNameAvailability(testsuite.ctx, testsuite.location, armappplatform.NameAvailabilityParameters{
 		Name: to.Ptr(testsuite.serviceName),
 		Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -305,8 +308,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Certificates_CreateOrUpdate
 	fmt.Println("Call operation: Certificates_CreateOrUpdate")
-	certificatesClient, err := armappplatform.NewCertificatesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	certificatesClient := testsuite.clientFactory.NewCertificatesClient()
 	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, "asc-certificate", armappplatform.CertificateResource{
 		Properties: &armappplatform.CertificateProperties{
 			KeyVaultCertName: to.Ptr("pfx-cert"),
@@ -333,8 +335,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step ConfigServers_Validate
 	fmt.Println("Call operation: ConfigServers_Validate")
-	configServersClient, err := armappplatform.NewConfigServersClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	configServersClient := testsuite.clientFactory.NewConfigServersClient()
 	configServersClientValidateResponsePoller, err := configServersClient.BeginValidate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerSettings{
 		GitProperty: &armappplatform.ConfigServerGitProperty{
 			Label: to.Ptr("master"),
@@ -387,8 +388,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step MonitoringSettings_UpdatePut
 	fmt.Println("Call operation: MonitoringSettings_UpdatePut")
-	monitoringSettingsClient, err := armappplatform.NewMonitoringSettingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	monitoringSettingsClient := testsuite.clientFactory.NewMonitoringSettingsClient()
 	monitoringSettingsClientUpdatePutResponsePoller, err := monitoringSettingsClient.BeginUpdatePut(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
 			AppInsightsInstrumentationKey: to.Ptr(testsuite.insightsInstrumentationKey),
@@ -420,8 +420,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Apps_Create
 	fmt.Println("Call operation: Apps_CreateOrUpdate")
-	appsClient, err := armappplatform.NewAppsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	appsClient := testsuite.clientFactory.NewAppsClient()
 	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Location: to.Ptr(testsuite.location),
 		Properties: &armappplatform.AppResourceProperties{
@@ -443,8 +442,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Deployments_CreateOrUpdate_Default
 	fmt.Println("Call operation: Deployments_CreateOrUpdate")
-	deploymentsClient, err := armappplatform.NewDeploymentsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	deploymentsClient := testsuite.clientFactory.NewDeploymentsClient()
 	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "default", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
@@ -543,8 +541,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Bindings_Create
 	fmt.Println("Call operation: Bindings_CreateOrUpdate")
-	bindingsClient, err := armappplatform.NewBindingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	bindingsClient := testsuite.clientFactory.NewBindingsClient()
 	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]any{
@@ -606,8 +603,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step CustomDomains_CreateOrUpdate
 	fmt.Println("Call operation: CustomDomains_CreateOrUpdate")
-	customDomainsClient, err := armappplatform.NewCustomDomainsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	customDomainsClient := testsuite.clientFactory.NewCustomDomainsClient()
 	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, testsuite.dnsCname+"."+testsuite.customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
@@ -862,8 +858,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Skus_List
 	fmt.Println("Call operation: SKUs_List")
-	sKUsClient, err := armappplatform.NewSKUsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	sKUsClient := testsuite.clientFactory.NewSKUsClient()
 	sKUsClientNewListPager := sKUsClient.NewListPager(nil)
 	for sKUsClientNewListPager.More() {
 		_, err := sKUsClientNewListPager.NextPage(testsuite.ctx)
@@ -873,8 +868,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Operations_List
 	fmt.Println("Call operation: Operations_List")
-	operationsClient, err := armappplatform.NewOperationsClient(testsuite.cred, testsuite.options)
-	testsuite.Require().NoError(err)
+	operationsClient := testsuite.clientFactory.NewOperationsClient()
 	operationsClientNewListPager := operationsClient.NewListPager(nil)
 	for operationsClientNewListPager.More() {
 		_, err := operationsClientNewListPager.NextPage(testsuite.ctx)

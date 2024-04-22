@@ -27,6 +27,7 @@ var (
 	err               error
 	ctx               context.Context
 	cred              azcore.TokenCredential
+	clientFactory     *armsignalr.ClientFactory
 	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	armEndpoint       = "https://management.azure.com"
 	globalLocation    = "Global"
@@ -39,6 +40,11 @@ var (
 func main() {
 	ctx = context.Background()
 	cred, err = azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	clientFactory, err = armsignalr.NewClientFactory(subscriptionId, cred, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -81,10 +87,7 @@ func signalRSample() {
 	resourceName = deploymentExtend.Properties.Outputs.(map[string]interface{})["resourceName"].(map[string]interface{})["value"].(string)
 
 	// From step SignalR_CheckNameAvailability
-	client, err := armsignalr.NewClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	client := clientFactory.NewClient()
 	_, err = client.CheckNameAvailability(ctx, location, armsignalr.NameAvailabilityParameters{
 		Name: to.Ptr(resourceName),
 		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
@@ -304,10 +307,7 @@ func signalRSample() {
 	}
 
 	// From step Usages_List
-	usagesClient, err := armsignalr.NewUsagesClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	usagesClient := clientFactory.NewUsagesClient()
 	usagesClientNewListPagerPager := usagesClient.NewListPager(location, nil)
 	for usagesClientNewListPagerPager.More() {
 		_, err := usagesClientNewListPagerPager.NextPage(ctx)
@@ -338,10 +338,7 @@ func signalRSample() {
 	}
 
 	// From step Operations_List
-	operationsClient, err := armsignalr.NewOperationsClient(cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	operationsClient := clientFactory.NewOperationsClient()
 	operationsClientNewListPagerPager := operationsClient.NewListPager(nil)
 	for operationsClientNewListPagerPager.More() {
 		_, err := operationsClientNewListPagerPager.NextPage(ctx)

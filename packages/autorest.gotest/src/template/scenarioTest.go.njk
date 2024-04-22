@@ -13,7 +13,7 @@ import (
     "github.com/Azure/azure-sdk-for-go/sdk/azcore"
     "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
     "github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
-    "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+    "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v2/testutil"
     "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
     "github.com/stretchr/testify/suite"
 )
@@ -25,6 +25,7 @@ type {{testCaseName}}TestSuite struct {
     ctx     context.Context
     cred    azcore.TokenCredential
     options *arm.ClientOptions
+    clientFactory *{{packageName}}.ClientFactory
 
     {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
@@ -43,9 +44,11 @@ type {{testCaseName}}TestSuite struct {
 func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
     testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/{{rpName}}/{{packageName}}/testdata")
     
+    var err error
     testsuite.ctx = context.Background()
     testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
-
+    testsuite.clientFactory, err = {{packageName}}.NewClientFactory({{jsFunc.getParamsValue(clientFactoryParametersOutput) + ", " if clientFactoryParametersOutput.length>0 else ""}}testsuite.cred, testsuite.options)
+    testsuite.Require().NoError(err)
     {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
         {%- if variable.type === "prefix-string" %}

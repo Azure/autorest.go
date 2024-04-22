@@ -22,6 +22,7 @@ var (
     err            error
     ctx            context.Context
     cred           azcore.TokenCredential
+    clientFactory  *{{packageName}}.ClientFactory
     letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 {%- for name, variable in variablesOutput %}
 {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
@@ -51,6 +52,11 @@ func main() {
     if err != nil {
         panic(err)
     }
+
+	clientFactory, err = {{packageName}}.NewClientFactory({{jsFunc.getParamsValue(clientFactoryParametersOutput) + ", " if clientFactoryParametersOutput.length>0 else ""}}cred, nil)
+	if err != nil {
+		panic(err)
+	}
 
     {%- if scope.toLowerCase() == 'resourcegroup'%}
     createResourceGroup()

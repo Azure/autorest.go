@@ -27,6 +27,7 @@ var (
 	err               error
 	ctx               context.Context
 	cred              azcore.TokenCredential
+	clientFactory     *armcompute.ClientFactory
 	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	armEndpoint       = "https://management.azure.com"
 	fakeStepVar       = "signalrswaggertest4"
@@ -43,6 +44,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	clientFactory, err = armcompute.NewClientFactory(subscriptionId, cred, nil)
+	if err != nil {
+		panic(err)
+	}
 	createResourceGroup()
 	prepare()
 	scenario0Sample()
@@ -52,10 +58,7 @@ func main() {
 
 func prepare() {
 	// From step Delete-proximity-placement-group
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	proximityPlacementGroupsClient := clientFactory.NewProximityPlacementGroupsClient()
 	_, err = proximityPlacementGroupsClient.Delete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
@@ -102,10 +105,7 @@ func scenario0Sample() {
 	resourceName = deploymentExtend.Properties.Outputs.(map[string]interface{})["resourceName"].(map[string]interface{})["value"].(string)
 
 	// From step Create-or-Update-a-proximity-placement-group
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	proximityPlacementGroupsClient := clientFactory.NewProximityPlacementGroupsClient()
 	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(ctx, resourceGroupName, resourceName, armcompute.ProximityPlacementGroup{
 		Location: to.Ptr(location),
 		Properties: &armcompute.ProximityPlacementGroupProperties{
@@ -124,10 +124,7 @@ func scenario0Sample() {
 	}
 
 	// From step Create_a_vm_with_Host_Encryption_using_encryptionAtHost_property
-	virtualMachinesClient, err := armcompute.NewVirtualMachinesClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	virtualMachinesClient := clientFactory.NewVirtualMachinesClient()
 	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(ctx, resourceGroupName, "myVM", armcompute.VirtualMachine{
 		Location: to.Ptr(location),
 		Plan: &armcompute.Plan{
@@ -186,10 +183,7 @@ func scenario0Sample() {
 // Microsoft.SignalRService/DeleteOnly
 func scenario1Sample() {
 	// From step Delete_proximity_placement_group
-	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	proximityPlacementGroupsClient := clientFactory.NewProximityPlacementGroupsClient()
 	_, err = proximityPlacementGroupsClient.Delete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)

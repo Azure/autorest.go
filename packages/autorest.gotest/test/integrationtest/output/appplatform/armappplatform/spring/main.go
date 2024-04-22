@@ -26,6 +26,7 @@ var (
 	err                        error
 	ctx                        context.Context
 	cred                       azcore.TokenCredential
+	clientFactory              *armappplatform.ClientFactory
 	letterRunes                = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	appName                    = "app01"
 	armEndpoint                = "https://management.azure.com"
@@ -47,6 +48,11 @@ var (
 func main() {
 	ctx = context.Background()
 	cred, err = azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	clientFactory, err = armappplatform.NewClientFactory(subscriptionId, cred, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -202,10 +208,7 @@ func springSample() {
 	var relativePath string
 	var uploadUrl string
 	// From step Services_CheckNameAvailability
-	servicesClient, err := armappplatform.NewServicesClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	servicesClient := clientFactory.NewServicesClient()
 	_, err = servicesClient.CheckNameAvailability(ctx, location, armappplatform.NameAvailabilityParameters{
 		Name: to.Ptr(serviceName),
 		Type: to.Ptr("Microsoft.AppPlatform/Spring"),
@@ -288,10 +291,7 @@ func springSample() {
 	}
 
 	// From step Certificates_CreateOrUpdate
-	certificatesClient, err := armappplatform.NewCertificatesClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	certificatesClient := clientFactory.NewCertificatesClient()
 	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, "asc-certificate", armappplatform.CertificateResource{
 		Properties: &armappplatform.CertificateProperties{
 			KeyVaultCertName: to.Ptr("pfx-cert"),
@@ -323,10 +323,7 @@ func springSample() {
 	}
 
 	// From step ConfigServers_Validate
-	configServersClient, err := armappplatform.NewConfigServersClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	configServersClient := clientFactory.NewConfigServersClient()
 	configServersClientValidateResponsePoller, err := configServersClient.BeginValidate(ctx, resourceGroupName, serviceName, armappplatform.ConfigServerSettings{
 		GitProperty: &armappplatform.ConfigServerGitProperty{
 			Label: to.Ptr("master"),
@@ -389,10 +386,7 @@ func springSample() {
 	}
 
 	// From step MonitoringSettings_UpdatePut
-	monitoringSettingsClient, err := armappplatform.NewMonitoringSettingsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	monitoringSettingsClient := clientFactory.NewMonitoringSettingsClient()
 	monitoringSettingsClientUpdatePutResponsePoller, err := monitoringSettingsClient.BeginUpdatePut(ctx, resourceGroupName, serviceName, armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
 			AppInsightsInstrumentationKey: to.Ptr(insightsInstrumentationKey),
@@ -431,10 +425,7 @@ func springSample() {
 	}
 
 	// From step Apps_Create
-	appsClient, err := armappplatform.NewAppsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	appsClient := clientFactory.NewAppsClient()
 	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, armappplatform.AppResource{
 		Location: to.Ptr(location),
 		Properties: &armappplatform.AppResourceProperties{
@@ -460,10 +451,7 @@ func springSample() {
 	}
 
 	// From step Deployments_CreateOrUpdate_Default
-	deploymentsClient, err := armappplatform.NewDeploymentsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	deploymentsClient := clientFactory.NewDeploymentsClient()
 	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "default", armappplatform.DeploymentResource{
 		Properties: &armappplatform.DeploymentResourceProperties{
 			DeploymentSettings: &armappplatform.DeploymentSettings{
@@ -573,10 +561,7 @@ func springSample() {
 	}
 
 	// From step Bindings_Create
-	bindingsClient, err := armappplatform.NewBindingsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	bindingsClient := clientFactory.NewBindingsClient()
 	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, "mysql-binding", armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]any{
@@ -650,10 +635,7 @@ func springSample() {
 	}
 
 	// From step CustomDomains_CreateOrUpdate
-	customDomainsClient, err := armappplatform.NewCustomDomainsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	customDomainsClient := clientFactory.NewCustomDomainsClient()
 	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, dnsCname+"."+customDomainName, armappplatform.CustomDomainResource{
 		Properties: &armappplatform.CustomDomainProperties{
 			CertName: to.Ptr("asc-certificate"),
@@ -951,10 +933,7 @@ func springSample() {
 	}
 
 	// From step Skus_List
-	sKUsClient, err := armappplatform.NewSKUsClient(subscriptionId, cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	sKUsClient := clientFactory.NewSKUsClient()
 	sKUsClientNewListPagerPager := sKUsClient.NewListPager(nil)
 	for sKUsClientNewListPagerPager.More() {
 		_, err := sKUsClientNewListPagerPager.NextPage(ctx)
@@ -965,10 +944,7 @@ func springSample() {
 	}
 
 	// From step Operations_List
-	operationsClient, err := armappplatform.NewOperationsClient(cred, nil)
-	if err != nil {
-		panic(err)
-	}
+	operationsClient := clientFactory.NewOperationsClient()
 	operationsClientNewListPagerPager := operationsClient.NewListPager(nil)
 	for operationsClientNewListPagerPager.More() {
 		_, err := operationsClientNewListPagerPager.NextPage(ctx)
