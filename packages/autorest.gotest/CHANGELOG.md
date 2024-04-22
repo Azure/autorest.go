@@ -7,7 +7,7 @@ Mon, 22 Apr 2024 09:31:17 GMT
 
 ### Patches
 
-- Test template initializes the client using the client factory
+- Consolidate to use client factory to initialize clients
 
 ## 4.7.2
 Mon, 08 Apr 2024 06:34:25 GMT

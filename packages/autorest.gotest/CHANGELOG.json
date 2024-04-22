@@ -8,7 +8,7 @@
       "comments": {
         "patch": [
           {
-            "comment": "Test template initializes the client using the client factory"
+            "comment": "Consolidate to use client factory to initialize clients"
           }
         ]
       }
