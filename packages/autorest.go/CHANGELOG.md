@@ -1,5 +1,25 @@
 # Release History
 
+## 4.0.0-preview.64 (2024-04-23)
+
+### Bugs Fixed
+
+* Fixed hard-coded `Metadata` field in header collection responses.
+* Don't error on empty time values during unmarshaling.
+* Fixed bad codegen for optional multipart/form parameters.
+* Fixed bad codegen for templated host parameters.
+
+### Features Added
+
+* Added option `fix-const-stuttering` to fix stuttering for `const` types and values.
+
+## Other Changes
+
+* Removed Go 1.18 build constraints from generated code.
+* Use latest `azcore` in generated `go.mod` files.
+* Moved response envelope SerDe methods to their own file.
+* Improved support for multipart/form parameter types.
+
 ## 4.0.0-preview.63 (2024-02-07)
 
 ### Bugs Fixed
