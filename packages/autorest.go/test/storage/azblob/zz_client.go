@@ -1288,10 +1288,10 @@ func (client *Client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 	}
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
-			if result.Metadata == nil {
-				result.Metadata = map[string]*string{}
+			if result.ObjectReplicationRules == nil {
+				result.ObjectReplicationRules = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
+			result.ObjectReplicationRules[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-request-id"); val != "" {
@@ -1698,10 +1698,10 @@ func (client *Client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 	}
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-or-") && strings.EqualFold(hh[:len("x-ms-or-")], "x-ms-or-") {
-			if result.Metadata == nil {
-				result.Metadata = map[string]*string{}
+			if result.ObjectReplicationRules == nil {
+				result.ObjectReplicationRules = map[string]*string{}
 			}
-			result.Metadata[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
+			result.ObjectReplicationRules[hh[len("x-ms-or-"):]] = to.Ptr(resp.Header.Get(hh))
 		}
 	}
 	if val := resp.Header.Get("x-ms-rehydrate-priority"); val != "" {

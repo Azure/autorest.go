@@ -244,10 +244,10 @@ function formatHeaderResponseValue(headerResp: go.HeaderResponse | go.HeaderMapR
     const headerPrefix = headerResp.collectionPrefix;
     let text = '\tfor hh := range resp.Header {\n';
     text += `\t\tif len(hh) > len("${headerPrefix}") && strings.EqualFold(hh[:len("${headerPrefix}")], "${headerPrefix}") {\n`;
-    text += `\t\t\tif ${respObj}.Metadata == nil {\n`;
-    text += `\t\t\t\t${respObj}.Metadata = map[string]*string{}\n`;
+    text += `\t\t\tif ${respObj}.${headerResp.fieldName} == nil {\n`;
+    text += `\t\t\t\t${respObj}.${headerResp.fieldName} = map[string]*string{}\n`;
     text += '\t\t\t}\n';
-    text += `\t\t\t${respObj}.Metadata[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
+    text += `\t\t\t${respObj}.${headerResp.fieldName}[hh[len("${headerPrefix}"):]] = to.Ptr(resp.Header.Get(hh))\n`;
     text += '\t\t}\n';
     text += '\t}\n';
     return text;
