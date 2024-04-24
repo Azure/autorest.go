@@ -1,6 +1,6 @@
 {
   "name": "@autorest/go",
-  "version": "4.0.0-preview.64",
+  "version": "4.0.0-preview.65",
   "description": "AutoRest Go Generator",
   "main": "dist/autorest.go/src/main.js",
   "type": "module",
@@ -11,6 +11,10 @@
   "engines": {
     "node": ">=12.0.0"
   },
+  "files": [
+    "dist/**",
+    "!dist/test/**"
+  ],
   "scripts": {
     "start": "node --max_old_space_size=4096 ./dist/autorest.go/src/main.js",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/autorest.go/src/main.js",
