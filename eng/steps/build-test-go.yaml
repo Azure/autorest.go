@@ -14,7 +14,7 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - script: |
-      $currentVersion = node -p -e "require('package.json').version";
+      export currentVersion=$(node -p -e "require('./package.json').version")
       npm pack
       rush regenerate --use-package=$(System.DefaultWorkingDirectory)/packages/autorest.go/autorest-go-$currentVersion.tgz
       cd test
