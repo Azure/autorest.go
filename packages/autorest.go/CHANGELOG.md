@@ -6,7 +6,7 @@
 
 * Fixed missing dependencies.
 
-## 4.0.0-preview.64 (2024-04-23)
+## 4.0.0-preview.64 (2024-04-23) - DEPRECATED
 
 ### Bugs Fixed
 
