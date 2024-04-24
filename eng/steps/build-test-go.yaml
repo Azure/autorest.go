@@ -14,7 +14,7 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - script: npm pack
-    displanName: "Create npm tarball"
+    displayName: "Create npm tarball"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
   - script: |
