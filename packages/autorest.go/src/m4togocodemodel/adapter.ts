@@ -11,6 +11,7 @@ import * as go from '../../../codemodel.go/src/gocodemodel.js';
 import { adaptClients } from './clients.js';
 import { adaptConstantType, adaptInterfaceType, adaptModel, adaptModelField } from './types.js';
 import { aggregateProperties } from '../transform/helpers.js';
+import { fileURLToPath } from 'url';
 
 // converts an M4 code model into a GoCodeModel
 export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
@@ -88,7 +89,7 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
     });
   } catch (E) {
     if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
+      console.error(`${fileURLToPath(import.meta.url)} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }
