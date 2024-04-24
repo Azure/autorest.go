@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.65 (2024-04-24)
+
+### Bugs Fixed
+
+* Fixed missing dependencies.
+
 ## 4.0.0-preview.64 (2024-04-23)
 
 ### Bugs Fixed
