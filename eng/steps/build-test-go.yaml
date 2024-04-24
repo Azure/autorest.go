@@ -13,13 +13,19 @@ steps:
     displayName: "Run Lint"
     workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
 
+  - script: npm pack
+    displayName: "Create npm tarball"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
+
   - script: |
-      rush regenerate
+      export currentVersion=$(node -p -e "require('./package.json').version")
+      rush regenerate --use-package=$(System.DefaultWorkingDirectory)/packages/autorest.go/autorest-go-$currentVersion.tgz
+      cd test
       rush modtidy 2>&1
       git add -A .
       git diff --staged -w 1>&2
     displayName: "Regenerate Autorest Tests"
-    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go/test
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go
     failOnStderr: true
 
   - script: |

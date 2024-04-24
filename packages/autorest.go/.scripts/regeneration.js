@@ -58,12 +58,15 @@ const goMappings = {
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
 const args = process.argv.slice(2);
 var filter = undefined;
+
+// default to using the locally built generator sources
+var generator = './packages/autorest.go';
 const switches = [];
 for (var i = 0 ; i < args.length; i += 1) {
   switch (args[i]) {
     case '--filter':
-      filter = args[i + 1]
-      i += 1
+      filter = args[i + 1];
+      i += 1;
       break;
     case '--verbose':
       switches.push('--debug');
@@ -73,6 +76,10 @@ for (var i = 0 ; i < args.length; i += 1) {
       break;
     case '--dump-code-model':
       switches.push('--output-artifact:code-model-v4');
+      break;
+    case '--use-package':
+      generator = args[i + 1];
+      i += 1;
       break;
     default:
       break;
@@ -155,7 +162,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
     console.log('generating ' + inputFile);
     outputDir = fullPath(outputDir);
     cleanGeneratedFiles(outputDir);
-    exec('autorest --use=./packages/autorest.go --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --inject-spans --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
+    exec('autorest --use=' + generator + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --generate-fakes --inject-spans --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
   });
 }
 
@@ -170,7 +177,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
     console.log('generating ' + readme);
     outputDir = fullPath(outputDir);
     cleanGeneratedFiles(outputDir);
-    exec('autorest --use=./packages/autorest.go ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
+    exec('autorest --use=' + generator + ' ' + readme + ' --go --tag=' + tag + ' --file-prefix="zz_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
   });
 }
 

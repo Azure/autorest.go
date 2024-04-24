@@ -1,6 +1,7 @@
 .rush/
 .scripts/
 .vscode/
+coverage/
 src/
 test/
 .eslint*
