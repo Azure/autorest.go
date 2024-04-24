@@ -107,6 +107,13 @@
       "associatedCommands": ["regenerate", "tspcompile"]
     },
     {
+      "parameterKind": "string",
+      "argumentName": "USEPACKAGE",
+      "longName": "--use-package",
+      "description": "Uses the specified npm tarball instead of local sources",
+      "associatedCommands": ["regenerate"]
+    },
+    {
       "parameterKind": "flag",
       "longName": "--debugger",
       "description": "Starts the build and waits for the debugger to attach",
