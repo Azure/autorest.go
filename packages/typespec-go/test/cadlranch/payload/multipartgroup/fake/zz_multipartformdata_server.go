@@ -23,6 +23,10 @@ import (
 
 // MultiPartFormDataServer is a fake server for instances of the multipartgroup.MultiPartFormDataClient type.
 type MultiPartFormDataServer struct {
+	// AnonymousModel is the fake for method MultiPartFormDataClient.AnonymousModel
+	// HTTP status codes to indicate success: http.StatusNoContent
+	AnonymousModel func(ctx context.Context, anonymousModelRequest multipartgroup.AnonymousModelRequest, options *multipartgroup.MultiPartFormDataClientAnonymousModelOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientAnonymousModelResponse], errResp azfake.ErrorResponder)
+
 	// Basic is the fake for method MultiPartFormDataClient.Basic
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Basic func(ctx context.Context, body multipartgroup.MultiPartRequest, options *multipartgroup.MultiPartFormDataClientBasicOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientBasicResponse], errResp azfake.ErrorResponder)
@@ -81,6 +85,8 @@ func (m *MultiPartFormDataServerTransport) dispatchToMethodFake(req *http.Reques
 	var err error
 
 	switch method {
+	case "MultiPartFormDataClient.AnonymousModel":
+		resp, err = m.dispatchAnonymousModel(req)
 	case "MultiPartFormDataClient.Basic":
 		resp, err = m.dispatchBasic(req)
 	case "MultiPartFormDataClient.BinaryArrayParts":
@@ -100,6 +106,53 @@ func (m *MultiPartFormDataServerTransport) dispatchToMethodFake(req *http.Reques
 	}
 
 	return resp, err
+}
+
+func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Request) (*http.Response, error) {
+	if m.srv.AnonymousModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method AnonymousModel not implemented")}
+	}
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var anonymousModelRequest multipartgroup.AnonymousModelRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			anonymousModelRequest.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			anonymousModelRequest.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			anonymousModelRequest.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.AnonymousModel(req.Context(), anonymousModelRequest, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (m *MultiPartFormDataServerTransport) dispatchBasic(req *http.Request) (*http.Response, error) {

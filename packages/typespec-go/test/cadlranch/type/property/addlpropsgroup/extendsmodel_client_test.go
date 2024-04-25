@@ -22,6 +22,9 @@ func TestExtendsModelClient_Get(t *testing.T) {
 	require.NoError(t, err)
 	require.EqualValues(t, addlpropsgroup.ExtendsModelAdditionalProperties{
 		AdditionalProperties: map[string]*addlpropsgroup.ModelForRecord{
+			"knownProp": {
+				State: to.Ptr("ok"),
+			},
 			"prop": {
 				State: to.Ptr("ok"),
 			},
@@ -34,6 +37,9 @@ func TestExtendsModelClient_Put(t *testing.T) {
 	require.NoError(t, err)
 	resp, err := client.NewAdditionalPropertiesExtendsModelClient().Put(context.Background(), addlpropsgroup.ExtendsModelAdditionalProperties{
 		AdditionalProperties: map[string]*addlpropsgroup.ModelForRecord{
+			"knownProp": {
+				State: to.Ptr("ok"),
+			},
 			"prop": {
 				State: to.Ptr("ok"),
 			},

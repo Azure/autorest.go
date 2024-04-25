@@ -4,6 +4,11 @@
 
 package multipartgroup
 
+// MultiPartFormDataClientAnonymousModelResponse contains the response from method MultiPartFormDataClient.AnonymousModel.
+type MultiPartFormDataClientAnonymousModelResponse struct {
+	// placeholder for future response values
+}
+
 // MultiPartFormDataClientBasicResponse contains the response from method MultiPartFormDataClient.Basic.
 type MultiPartFormDataClientBasicResponse struct {
 	// placeholder for future response values

@@ -15,6 +15,21 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestFormDataClient_AnonymousModel(t *testing.T) {
+	client, err := multipartgroup.NewMultiPartClient(nil)
+	require.NoError(t, err)
+	jpgFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	defer jpgFile.Close()
+	resp, err := client.NewMultiPartFormDataClient().AnonymousModel(context.Background(), multipartgroup.AnonymousModelRequest{
+		ProfileImage: streaming.MultipartContent{
+			Body: jpgFile,
+		},
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
 func TestFormDataClient_Basic(t *testing.T) {
 	client, err := multipartgroup.NewMultiPartClient(nil)
 	require.NoError(t, err)

@@ -4,6 +4,12 @@
 
 package multipartgroup
 
+// MultiPartFormDataClientAnonymousModelOptions contains the optional parameters for the MultiPartFormDataClient.AnonymousModel
+// method.
+type MultiPartFormDataClientAnonymousModelOptions struct {
+	// placeholder for future optional parameters
+}
+
 // MultiPartFormDataClientBasicOptions contains the optional parameters for the MultiPartFormDataClient.Basic method.
 type MultiPartFormDataClientBasicOptions struct {
 	// placeholder for future optional parameters

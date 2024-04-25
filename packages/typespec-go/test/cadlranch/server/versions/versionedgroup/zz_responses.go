@@ -16,6 +16,12 @@ type VersionedClientWithQueryAPIVersionResponse struct {
 	Success bool
 }
 
+// VersionedClientWithQueryOldAPIVersionResponse contains the response from method VersionedClient.WithQueryOldAPIVersion.
+type VersionedClientWithQueryOldAPIVersionResponse struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
 // VersionedClientWithoutAPIVersionResponse contains the response from method VersionedClient.WithoutAPIVersion.
 type VersionedClientWithoutAPIVersionResponse struct {
 	// Success indicates if the operation succeeded or failed.

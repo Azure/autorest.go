@@ -26,7 +26,6 @@ const cadlRanch = {
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
-  'lrolegacygroup': ['azure/core/lro/rpc-legacy'],
   'lrostdgroup': ['azure/core/lro/standard'],
   'corescalargroup': ['azure/core/scalar'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
@@ -69,7 +68,7 @@ const cadlRanch = {
   'singlediscgroup': ['type/model/inheritance/single-discriminator'],
   'usagegroup': ['type/model/usage'],
   'visibilitygroup': ['type/model/visibility'],
-  'addlpropsgroup': ['type/property/additional-properties'],
+  //'addlpropsgroup': ['type/property/additional-properties'], // requires union support
   'nullablegroup': ['type/property/nullable'],
   //'optionalitygroup': ['type/property/optionality'], // requires union support
   //'valuetypesgroup': ['type/property/value-types'], // requires union support
