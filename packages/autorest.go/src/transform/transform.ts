@@ -12,6 +12,7 @@ import * as helpers from './helpers.js';
 import { namer, protocolMethods } from './namer.js';
 import { fromString } from 'html-to-text';
 import showdown from 'showdown';
+import { fileURLToPath } from 'url';
 const { Converter } = showdown;
 
 // The transformer adds Go-specific information to the code model.
@@ -35,7 +36,7 @@ export async function transformM4(host: AutorestExtensionHost) {
 
   } catch (E) {
     if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
+      console.error(`${fileURLToPath(import.meta.url)} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }

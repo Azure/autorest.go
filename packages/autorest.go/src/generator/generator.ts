@@ -20,6 +20,7 @@ import { generateGoModFile } from '../../../codegen.go/src/gomod.js';
 import { generateXMLAdditionalPropsHelpers } from '../../../codegen.go/src/xmlAdditionalProps.js';
 import { generateServers } from '../../../codegen.go/src/fake/servers.js';
 import { generateServerFactory } from '../../../codegen.go/src/fake/factory.js';
+import { fileURLToPath } from 'url';
 
 // The generator emits Go source code files to disk.
 export async function generateCode(host: AutorestExtensionHost) {
@@ -214,7 +215,7 @@ export async function generateCode(host: AutorestExtensionHost) {
     }
   } catch (E) {
     if (debug) {
-      console.error(`${import.meta.url} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
+      console.error(`${fileURLToPath(import.meta.url)} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }

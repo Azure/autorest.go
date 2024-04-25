@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.66 (2024-04-25)
+
+### Bugs Fixed
+
+* Removed references to `__filename`.
+
 ## 4.0.0-preview.65 (2024-04-24)
 
 ### Bugs Fixed
