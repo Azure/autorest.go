@@ -22,23 +22,23 @@ import (
 type CertificateProfilesServer struct {
 	// BeginCreate is the fake for method CertificateProfilesClient.BeginCreate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, resource armcodesigning.CertificateProfile, options *armcodesigning.CertificateProfilesClientBeginCreateOptions) (resp azfake.PollerResponder[armcodesigning.CertificateProfilesClientCreateResponse], errResp azfake.ErrorResponder)
+	BeginCreate func(ctx context.Context, resourceGroupName string, accountName string, profileName string, resource armcodesigning.CertificateProfile, options *armcodesigning.CertificateProfilesClientBeginCreateOptions) (resp azfake.PollerResponder[armcodesigning.CertificateProfilesClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method CertificateProfilesClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
-	BeginDelete func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *armcodesigning.CertificateProfilesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcodesigning.CertificateProfilesClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, resourceGroupName string, accountName string, profileName string, options *armcodesigning.CertificateProfilesClientBeginDeleteOptions) (resp azfake.PollerResponder[armcodesigning.CertificateProfilesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method CertificateProfilesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, options *armcodesigning.CertificateProfilesClientGetOptions) (resp azfake.Responder[armcodesigning.CertificateProfilesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, accountName string, profileName string, options *armcodesigning.CertificateProfilesClientGetOptions) (resp azfake.Responder[armcodesigning.CertificateProfilesClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByCodeSigningAccountPager is the fake for method CertificateProfilesClient.NewListByCodeSigningAccountPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByCodeSigningAccountPager func(subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.CertificateProfilesClientListByCodeSigningAccountOptions) (resp azfake.PagerResponder[armcodesigning.CertificateProfilesClientListByCodeSigningAccountResponse])
+	NewListByCodeSigningAccountPager func(resourceGroupName string, accountName string, options *armcodesigning.CertificateProfilesClientListByCodeSigningAccountOptions) (resp azfake.PagerResponder[armcodesigning.CertificateProfilesClientListByCodeSigningAccountResponse])
 
 	// RevokeCertificate is the fake for method CertificateProfilesClient.RevokeCertificate
 	// HTTP status codes to indicate success: http.StatusNoContent
-	RevokeCertificate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, profileName string, body armcodesigning.RevokeCertificate, options *armcodesigning.CertificateProfilesClientRevokeCertificateOptions) (resp azfake.Responder[armcodesigning.CertificateProfilesClientRevokeCertificateResponse], errResp azfake.ErrorResponder)
+	RevokeCertificate func(ctx context.Context, resourceGroupName string, accountName string, profileName string, body armcodesigning.RevokeCertificate, options *armcodesigning.CertificateProfilesClientRevokeCertificateOptions) (resp azfake.Responder[armcodesigning.CertificateProfilesClientRevokeCertificateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCertificateProfilesServerTransport creates a new instance of CertificateProfilesServerTransport with the provided implementation.
@@ -111,10 +111,6 @@ func (c *CertificateProfilesServerTransport) dispatchBeginCreate(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -127,7 +123,7 @@ func (c *CertificateProfilesServerTransport) dispatchBeginCreate(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginCreate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, profileNameParam, body, nil)
+		respr, errRespr := c.srv.BeginCreate(req.Context(), resourceGroupNameParam, accountNameParam, profileNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -163,10 +159,6 @@ func (c *CertificateProfilesServerTransport) dispatchBeginDelete(req *http.Reque
 		if matches == nil || len(matches) < 4 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -179,7 +171,7 @@ func (c *CertificateProfilesServerTransport) dispatchBeginDelete(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := c.srv.BeginDelete(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, profileNameParam, nil)
+		respr, errRespr := c.srv.BeginDelete(req.Context(), resourceGroupNameParam, accountNameParam, profileNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -213,10 +205,6 @@ func (c *CertificateProfilesServerTransport) dispatchGet(req *http.Request) (*ht
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -229,7 +217,7 @@ func (c *CertificateProfilesServerTransport) dispatchGet(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, profileNameParam, nil)
+	respr, errRespr := c.srv.Get(req.Context(), resourceGroupNameParam, accountNameParam, profileNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -256,10 +244,6 @@ func (c *CertificateProfilesServerTransport) dispatchNewListByCodeSigningAccount
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -268,7 +252,7 @@ func (c *CertificateProfilesServerTransport) dispatchNewListByCodeSigningAccount
 		if err != nil {
 			return nil, err
 		}
-		resp := c.srv.NewListByCodeSigningAccountPager(subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
+		resp := c.srv.NewListByCodeSigningAccountPager(resourceGroupNameParam, accountNameParam, nil)
 		newListByCodeSigningAccountPager = &resp
 		c.newListByCodeSigningAccountPager.add(req, newListByCodeSigningAccountPager)
 		server.PagerResponderInjectNextLinks(newListByCodeSigningAccountPager, req, func(page *armcodesigning.CertificateProfilesClientListByCodeSigningAccountResponse, createLink func() string) {
@@ -303,10 +287,6 @@ func (c *CertificateProfilesServerTransport) dispatchRevokeCertificate(req *http
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -319,7 +299,7 @@ func (c *CertificateProfilesServerTransport) dispatchRevokeCertificate(req *http
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := c.srv.RevokeCertificate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, profileNameParam, body, nil)
+	respr, errRespr := c.srv.RevokeCertificate(req.Context(), resourceGroupNameParam, accountNameParam, profileNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

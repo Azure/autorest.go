@@ -22,19 +22,19 @@ import (
 type AzureLargeStorageInstancesServer struct {
 	// Get is the fake for method AzureLargeStorageInstancesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeStorageInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, options *armlargeinstance.AzureLargeStorageInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByResourceGroupPager is the fake for method AzureLargeStorageInstancesClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse])
 
 	// NewListBySubscriptionPager is the fake for method AzureLargeStorageInstancesClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse])
 
 	// Update is the fake for method AzureLargeStorageInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeStorageInstanceName string, properties armlargeinstance.AzureLargeStorageInstanceTagsUpdate, options *armlargeinstance.AzureLargeStorageInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, properties armlargeinstance.AzureLargeStorageInstanceTagsUpdate, options *armlargeinstance.AzureLargeStorageInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeStorageInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewAzureLargeStorageInstancesServerTransport creates a new instance of AzureLargeStorageInstancesServerTransport with the provided implementation.
@@ -97,10 +97,6 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchGet(req *http.Reques
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -109,7 +105,7 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchGet(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeStorageInstanceNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, azureLargeStorageInstanceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -136,15 +132,11 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchNewListByResourceGro
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
+		resp := a.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeStorageInstancesClientListByResourceGroupResponse, createLink func() string) {
@@ -177,11 +169,7 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchNewListBySubscriptio
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
-		resp := a.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
+		resp := a.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
 		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeStorageInstancesClientListBySubscriptionResponse, createLink func() string) {
@@ -216,10 +204,6 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchUpdate(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -228,7 +212,7 @@ func (a *AzureLargeStorageInstancesServerTransport) dispatchUpdate(req *http.Req
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Update(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeStorageInstanceNameParam, body, nil)
+	respr, errRespr := a.srv.Update(req.Context(), resourceGroupNameParam, azureLargeStorageInstanceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

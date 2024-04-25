@@ -22,31 +22,31 @@ import (
 type APIDefinitionsServer struct {
 	// CreateOrUpdate is the fake for method APIDefinitionsClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload armapicenter.APIDefinition, options *armapicenter.APIDefinitionsClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload armapicenter.APIDefinition, options *armapicenter.APIDefinitionsClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method APIDefinitionsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientDeleteOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientDeleteOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginExportSpecification is the fake for method APIDefinitionsClient.BeginExportSpecification
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginExportSpecification func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *armapicenter.APIDefinitionsClientBeginExportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientExportSpecificationResponse], errResp azfake.ErrorResponder)
+	BeginExportSpecification func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *armapicenter.APIDefinitionsClientBeginExportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientExportSpecificationResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method APIDefinitionsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientGetOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientGetOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// Head is the fake for method APIDefinitionsClient.Head
 	// HTTP status codes to indicate success: http.StatusOK
-	Head func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientHeadOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientHeadResponse], errResp azfake.ErrorResponder)
+	Head func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientHeadOptions) (resp azfake.Responder[armapicenter.APIDefinitionsClientHeadResponse], errResp azfake.ErrorResponder)
 
 	// BeginImportSpecification is the fake for method APIDefinitionsClient.BeginImportSpecification
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginImportSpecification func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload armapicenter.APISpecImportRequest, options *armapicenter.APIDefinitionsClientBeginImportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientImportSpecificationResponse], errResp azfake.ErrorResponder)
+	BeginImportSpecification func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload armapicenter.APISpecImportRequest, options *armapicenter.APIDefinitionsClientBeginImportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientImportSpecificationResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method APIDefinitionsClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIDefinitionsClientListOptions) (resp azfake.PagerResponder[armapicenter.APIDefinitionsClientListResponse])
+	NewListPager func(resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIDefinitionsClientListOptions) (resp azfake.PagerResponder[armapicenter.APIDefinitionsClientListResponse])
 }
 
 // NewAPIDefinitionsServerTransport creates a new instance of APIDefinitionsServerTransport with the provided implementation.
@@ -121,10 +121,6 @@ func (a *APIDefinitionsServerTransport) dispatchCreateOrUpdate(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -149,7 +145,7 @@ func (a *APIDefinitionsServerTransport) dispatchCreateOrUpdate(req *http.Request
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
+	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -177,10 +173,6 @@ func (a *APIDefinitionsServerTransport) dispatchDelete(req *http.Request) (*http
 	if matches == nil || len(matches) < 7 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -205,7 +197,7 @@ func (a *APIDefinitionsServerTransport) dispatchDelete(req *http.Request) (*http
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -236,10 +228,6 @@ func (a *APIDefinitionsServerTransport) dispatchBeginExportSpecification(req *ht
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -264,7 +252,7 @@ func (a *APIDefinitionsServerTransport) dispatchBeginExportSpecification(req *ht
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginExportSpecification(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
+		respr, errRespr := a.srv.BeginExportSpecification(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -298,10 +286,6 @@ func (a *APIDefinitionsServerTransport) dispatchGet(req *http.Request) (*http.Re
 	if matches == nil || len(matches) < 7 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -326,7 +310,7 @@ func (a *APIDefinitionsServerTransport) dispatchGet(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -354,10 +338,6 @@ func (a *APIDefinitionsServerTransport) dispatchHead(req *http.Request) (*http.R
 	if matches == nil || len(matches) < 7 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -382,7 +362,7 @@ func (a *APIDefinitionsServerTransport) dispatchHead(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Head(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
+	respr, errRespr := a.srv.Head(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -413,10 +393,6 @@ func (a *APIDefinitionsServerTransport) dispatchBeginImportSpecification(req *ht
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -441,7 +417,7 @@ func (a *APIDefinitionsServerTransport) dispatchBeginImportSpecification(req *ht
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginImportSpecification(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
+		respr, errRespr := a.srv.BeginImportSpecification(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -478,10 +454,6 @@ func (a *APIDefinitionsServerTransport) dispatchNewListPager(req *http.Request) 
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -513,7 +485,7 @@ func (a *APIDefinitionsServerTransport) dispatchNewListPager(req *http.Request) 
 				Filter: filterParam,
 			}
 		}
-		resp := a.srv.NewListPager(subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, options)
+		resp := a.srv.NewListPager(resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, options)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armapicenter.APIDefinitionsClientListResponse, createLink func() string) {

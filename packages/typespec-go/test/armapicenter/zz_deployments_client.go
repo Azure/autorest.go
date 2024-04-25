@@ -19,25 +19,27 @@ import (
 // DeploymentsClient contains the methods for the Microsoft.ApiCenter namespace.
 // Don't use this type directly, use NewDeploymentsClient() instead.
 type DeploymentsClient struct {
-	internal *arm.Client
+	internal       *arm.Client
+	subscriptionID string
 }
 
 // NewDeploymentsClient creates a new instance of DeploymentsClient with the specified values.
+//   - subscriptionID - The ID of the target subscription.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewDeploymentsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*DeploymentsClient, error) {
+func NewDeploymentsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DeploymentsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &DeploymentsClient{
-		internal: cl,
+		subscriptionID: subscriptionID,
+		internal:       cl,
 	}
 	return client, nil
 }
 
 // CreateOrUpdate - Creates new or updates existing API deployment.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -46,13 +48,13 @@ func NewDeploymentsClient(credential azcore.TokenCredential, options *arm.Client
 //   - payload - Resource create parameters.
 //   - options - DeploymentsClientCreateOrUpdateOptions contains the optional parameters for the DeploymentsClient.CreateOrUpdate
 //     method.
-func (client *DeploymentsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, options *DeploymentsClientCreateOrUpdateOptions) (DeploymentsClientCreateOrUpdateResponse, error) {
+func (client *DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, options *DeploymentsClientCreateOrUpdateOptions) (DeploymentsClientCreateOrUpdateResponse, error) {
 	var err error
 	const operationName = "DeploymentsClient.CreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, payload, options)
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, payload, options)
 	if err != nil {
 		return DeploymentsClientCreateOrUpdateResponse{}, err
 	}
@@ -69,12 +71,12 @@ func (client *DeploymentsClient) CreateOrUpdate(ctx context.Context, subscriptio
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, options *DeploymentsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, options *DeploymentsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -123,20 +125,19 @@ func (client *DeploymentsClient) createOrUpdateHandleResponse(resp *http.Respons
 }
 
 // Delete - Deletes API deployment.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - deploymentName - The name of the API deployment.
 //   - options - DeploymentsClientDeleteOptions contains the optional parameters for the DeploymentsClient.Delete method.
-func (client *DeploymentsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientDeleteOptions) (DeploymentsClientDeleteResponse, error) {
+func (client *DeploymentsClient) Delete(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientDeleteOptions) (DeploymentsClientDeleteResponse, error) {
 	var err error
 	const operationName = "DeploymentsClient.Delete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
 	if err != nil {
 		return DeploymentsClientDeleteResponse{}, err
 	}
@@ -152,12 +153,12 @@ func (client *DeploymentsClient) Delete(ctx context.Context, subscriptionID stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientDeleteOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -190,20 +191,19 @@ func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, subscr
 }
 
 // Get - Returns details of the API deployment.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - deploymentName - The name of the API deployment.
 //   - options - DeploymentsClientGetOptions contains the optional parameters for the DeploymentsClient.Get method.
-func (client *DeploymentsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientGetOptions) (DeploymentsClientGetResponse, error) {
+func (client *DeploymentsClient) Get(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientGetOptions) (DeploymentsClientGetResponse, error) {
 	var err error
 	const operationName = "DeploymentsClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
 	if err != nil {
 		return DeploymentsClientGetResponse{}, err
 	}
@@ -220,12 +220,12 @@ func (client *DeploymentsClient) Get(ctx context.Context, subscriptionID string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *DeploymentsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientGetOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -270,20 +270,19 @@ func (client *DeploymentsClient) getHandleResponse(resp *http.Response) (Deploym
 }
 
 // Head - Checks if specified API deployment exists.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - deploymentName - The name of the API deployment.
 //   - options - DeploymentsClientHeadOptions contains the optional parameters for the DeploymentsClient.Head method.
-func (client *DeploymentsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientHeadOptions) (DeploymentsClientHeadResponse, error) {
+func (client *DeploymentsClient) Head(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientHeadOptions) (DeploymentsClientHeadResponse, error) {
 	var err error
 	const operationName = "DeploymentsClient.Head"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
+	req, err := client.headCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, options)
 	if err != nil {
 		return DeploymentsClientHeadResponse{}, err
 	}
@@ -299,12 +298,12 @@ func (client *DeploymentsClient) Head(ctx context.Context, subscriptionID string
 }
 
 // headCreateRequest creates the Head request.
-func (client *DeploymentsClient) headCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientHeadOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -337,13 +336,12 @@ func (client *DeploymentsClient) headCreateRequest(ctx context.Context, subscrip
 }
 
 // NewListPager - Returns a collection of API deployments.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - options - DeploymentsClientListOptions contains the optional parameters for the DeploymentsClient.NewListPager method.
-func (client *DeploymentsClient) NewListPager(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *DeploymentsClientListOptions) *runtime.Pager[DeploymentsClientListResponse] {
+func (client *DeploymentsClient) NewListPager(resourceGroupName string, serviceName string, workspaceName string, apiName string, options *DeploymentsClientListOptions) *runtime.Pager[DeploymentsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DeploymentsClientListResponse]{
 		More: func(page DeploymentsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -355,7 +353,7 @@ func (client *DeploymentsClient) NewListPager(subscriptionID string, resourceGro
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, options)
+				return client.listCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, options)
 			}, nil)
 			if err != nil {
 				return DeploymentsClientListResponse{}, err
@@ -367,12 +365,12 @@ func (client *DeploymentsClient) NewListPager(subscriptionID string, resourceGro
 }
 
 // listCreateRequest creates the List request.
-func (client *DeploymentsClient) listCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *DeploymentsClientListOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) listCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *DeploymentsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}

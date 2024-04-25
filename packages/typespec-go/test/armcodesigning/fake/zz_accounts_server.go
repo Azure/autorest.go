@@ -22,31 +22,31 @@ import (
 type AccountsServer struct {
 	// CheckNameAvailability is the fake for method AccountsClient.CheckNameAvailability
 	// HTTP status codes to indicate success: http.StatusOK
-	CheckNameAvailability func(ctx context.Context, subscriptionID string, body armcodesigning.CheckNameAvailability, options *armcodesigning.AccountsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armcodesigning.AccountsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder)
+	CheckNameAvailability func(ctx context.Context, body armcodesigning.CheckNameAvailability, options *armcodesigning.AccountsClientCheckNameAvailabilityOptions) (resp azfake.Responder[armcodesigning.AccountsClientCheckNameAvailabilityResponse], errResp azfake.ErrorResponder)
 
 	// BeginCreate is the fake for method AccountsClient.BeginCreate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	BeginCreate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, resource armcodesigning.Account, options *armcodesigning.AccountsClientBeginCreateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse], errResp azfake.ErrorResponder)
+	BeginCreate func(ctx context.Context, resourceGroupName string, accountName string, resource armcodesigning.Account, options *armcodesigning.AccountsClientBeginCreateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method AccountsClient.BeginDelete
 	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
-	BeginDelete func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse], errResp azfake.ErrorResponder)
+	BeginDelete func(ctx context.Context, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method AccountsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientGetOptions) (resp azfake.Responder[armcodesigning.AccountsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientGetOptions) (resp azfake.Responder[armcodesigning.AccountsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByResourceGroupPager is the fake for method AccountsClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armcodesigning.AccountsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *armcodesigning.AccountsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListByResourceGroupResponse])
 
 	// NewListBySubscriptionPager is the fake for method AccountsClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armcodesigning.AccountsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *armcodesigning.AccountsClientListBySubscriptionOptions) (resp azfake.PagerResponder[armcodesigning.AccountsClientListBySubscriptionResponse])
 
 	// BeginUpdate is the fake for method AccountsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, accountName string, properties armcodesigning.AccountPatch, options *armcodesigning.AccountsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, accountName string, properties armcodesigning.AccountPatch, options *armcodesigning.AccountsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewAccountsServerTransport creates a new instance of AccountsServerTransport with the provided implementation.
@@ -125,11 +125,7 @@ func (a *AccountsServerTransport) dispatchCheckNameAvailability(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := a.srv.CheckNameAvailability(req.Context(), subscriptionIDParam, body, nil)
+	respr, errRespr := a.srv.CheckNameAvailability(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -160,10 +156,6 @@ func (a *AccountsServerTransport) dispatchBeginCreate(req *http.Request) (*http.
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -172,7 +164,7 @@ func (a *AccountsServerTransport) dispatchBeginCreate(req *http.Request) (*http.
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginCreate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
+		respr, errRespr := a.srv.BeginCreate(req.Context(), resourceGroupNameParam, accountNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -208,10 +200,6 @@ func (a *AccountsServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -220,7 +208,7 @@ func (a *AccountsServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginDelete(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
+		respr, errRespr := a.srv.BeginDelete(req.Context(), resourceGroupNameParam, accountNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -254,10 +242,6 @@ func (a *AccountsServerTransport) dispatchGet(req *http.Request) (*http.Response
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -266,7 +250,7 @@ func (a *AccountsServerTransport) dispatchGet(req *http.Request) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, accountNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -293,15 +277,11 @@ func (a *AccountsServerTransport) dispatchNewListByResourceGroupPager(req *http.
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
+		resp := a.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armcodesigning.AccountsClientListByResourceGroupResponse, createLink func() string) {
@@ -334,11 +314,7 @@ func (a *AccountsServerTransport) dispatchNewListBySubscriptionPager(req *http.R
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
-		resp := a.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
+		resp := a.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
 		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armcodesigning.AccountsClientListBySubscriptionResponse, createLink func() string) {
@@ -375,10 +351,6 @@ func (a *AccountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -387,7 +359,7 @@ func (a *AccountsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, accountNameParam, body, nil)
+		respr, errRespr := a.srv.BeginUpdate(req.Context(), resourceGroupNameParam, accountNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

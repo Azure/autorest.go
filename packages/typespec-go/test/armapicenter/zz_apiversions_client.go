@@ -19,25 +19,27 @@ import (
 // APIVersionsClient contains the methods for the Microsoft.ApiCenter namespace.
 // Don't use this type directly, use NewAPIVersionsClient() instead.
 type APIVersionsClient struct {
-	internal *arm.Client
+	internal       *arm.Client
+	subscriptionID string
 }
 
 // NewAPIVersionsClient creates a new instance of APIVersionsClient with the specified values.
+//   - subscriptionID - The ID of the target subscription.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewAPIVersionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*APIVersionsClient, error) {
+func NewAPIVersionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*APIVersionsClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &APIVersionsClient{
-		internal: cl,
+		subscriptionID: subscriptionID,
+		internal:       cl,
 	}
 	return client, nil
 }
 
 // CreateOrUpdate - Creates new or updates existing API version.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -46,13 +48,13 @@ func NewAPIVersionsClient(credential azcore.TokenCredential, options *arm.Client
 //   - payload - Resource create parameters.
 //   - options - APIVersionsClientCreateOrUpdateOptions contains the optional parameters for the APIVersionsClient.CreateOrUpdate
 //     method.
-func (client *APIVersionsClient) CreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload APIVersion, options *APIVersionsClientCreateOrUpdateOptions) (APIVersionsClientCreateOrUpdateResponse, error) {
+func (client *APIVersionsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload APIVersion, options *APIVersionsClientCreateOrUpdateOptions) (APIVersionsClientCreateOrUpdateResponse, error) {
 	var err error
 	const operationName = "APIVersionsClient.CreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, payload, options)
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, payload, options)
 	if err != nil {
 		return APIVersionsClientCreateOrUpdateResponse{}, err
 	}
@@ -69,12 +71,12 @@ func (client *APIVersionsClient) CreateOrUpdate(ctx context.Context, subscriptio
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *APIVersionsClient) createOrUpdateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload APIVersion, options *APIVersionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *APIVersionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload APIVersion, options *APIVersionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -123,20 +125,19 @@ func (client *APIVersionsClient) createOrUpdateHandleResponse(resp *http.Respons
 }
 
 // Delete - Deletes specified API version
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - options - APIVersionsClientDeleteOptions contains the optional parameters for the APIVersionsClient.Delete method.
-func (client *APIVersionsClient) Delete(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientDeleteOptions) (APIVersionsClientDeleteResponse, error) {
+func (client *APIVersionsClient) Delete(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientDeleteOptions) (APIVersionsClientDeleteResponse, error) {
 	var err error
 	const operationName = "APIVersionsClient.Delete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return APIVersionsClientDeleteResponse{}, err
 	}
@@ -152,12 +153,12 @@ func (client *APIVersionsClient) Delete(ctx context.Context, subscriptionID stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *APIVersionsClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientDeleteOptions) (*policy.Request, error) {
+func (client *APIVersionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -190,20 +191,19 @@ func (client *APIVersionsClient) deleteCreateRequest(ctx context.Context, subscr
 }
 
 // Get - Returns details of the API version.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - options - APIVersionsClientGetOptions contains the optional parameters for the APIVersionsClient.Get method.
-func (client *APIVersionsClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientGetOptions) (APIVersionsClientGetResponse, error) {
+func (client *APIVersionsClient) Get(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientGetOptions) (APIVersionsClientGetResponse, error) {
 	var err error
 	const operationName = "APIVersionsClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return APIVersionsClientGetResponse{}, err
 	}
@@ -220,12 +220,12 @@ func (client *APIVersionsClient) Get(ctx context.Context, subscriptionID string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *APIVersionsClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientGetOptions) (*policy.Request, error) {
+func (client *APIVersionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -270,20 +270,19 @@ func (client *APIVersionsClient) getHandleResponse(resp *http.Response) (APIVers
 }
 
 // Head - Checks if specified API version exists.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - options - APIVersionsClientHeadOptions contains the optional parameters for the APIVersionsClient.Head method.
-func (client *APIVersionsClient) Head(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientHeadOptions) (APIVersionsClientHeadResponse, error) {
+func (client *APIVersionsClient) Head(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientHeadOptions) (APIVersionsClientHeadResponse, error) {
 	var err error
 	const operationName = "APIVersionsClient.Head"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.headCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
+	req, err := client.headCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, options)
 	if err != nil {
 		return APIVersionsClientHeadResponse{}, err
 	}
@@ -299,12 +298,12 @@ func (client *APIVersionsClient) Head(ctx context.Context, subscriptionID string
 }
 
 // headCreateRequest creates the Head request.
-func (client *APIVersionsClient) headCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientHeadOptions) (*policy.Request, error) {
+func (client *APIVersionsClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *APIVersionsClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -337,13 +336,12 @@ func (client *APIVersionsClient) headCreateRequest(ctx context.Context, subscrip
 }
 
 // NewListPager - Returns a collection of API versions.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
 //   - apiName - The name of the API.
 //   - options - APIVersionsClientListOptions contains the optional parameters for the APIVersionsClient.NewListPager method.
-func (client *APIVersionsClient) NewListPager(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *APIVersionsClientListOptions) *runtime.Pager[APIVersionsClientListResponse] {
+func (client *APIVersionsClient) NewListPager(resourceGroupName string, serviceName string, workspaceName string, apiName string, options *APIVersionsClientListOptions) *runtime.Pager[APIVersionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[APIVersionsClientListResponse]{
 		More: func(page APIVersionsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -355,7 +353,7 @@ func (client *APIVersionsClient) NewListPager(subscriptionID string, resourceGro
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listCreateRequest(ctx, subscriptionID, resourceGroupName, serviceName, workspaceName, apiName, options)
+				return client.listCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, options)
 			}, nil)
 			if err != nil {
 				return APIVersionsClientListResponse{}, err
@@ -367,12 +365,12 @@ func (client *APIVersionsClient) NewListPager(subscriptionID string, resourceGro
 }
 
 // listCreateRequest creates the List request.
-func (client *APIVersionsClient) listCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *APIVersionsClientListOptions) (*policy.Request, error) {
+func (client *APIVersionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *APIVersionsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}

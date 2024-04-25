@@ -19,33 +19,35 @@ import (
 // WatchersClient contains the methods for the Microsoft.DatabaseWatcher namespace.
 // Don't use this type directly, use NewWatchersClient() instead.
 type WatchersClient struct {
-	internal *arm.Client
+	internal       *arm.Client
+	subscriptionID string
 }
 
 // NewWatchersClient creates a new instance of WatchersClient with the specified values.
+//   - subscriptionID - The ID of the target subscription.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewWatchersClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*WatchersClient, error) {
+func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*WatchersClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &WatchersClient{
-		internal: cl,
+		subscriptionID: subscriptionID,
+		internal:       cl,
 	}
 	return client, nil
 }
 
 // BeginCreateOrUpdate - Create a Watcher
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - resource - Resource create parameters.
 //   - options - WatchersClientBeginCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate
 //     method.
-func (client *WatchersClient) BeginCreateOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*runtime.Poller[WatchersClientCreateOrUpdateResponse], error) {
+func (client *WatchersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*runtime.Poller[WatchersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.createOrUpdate(ctx, subscriptionID, resourceGroupName, watcherName, resource, options)
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, watcherName, resource, options)
 		if err != nil {
 			return nil, err
 		}
@@ -61,13 +63,13 @@ func (client *WatchersClient) BeginCreateOrUpdate(ctx context.Context, subscript
 }
 
 // CreateOrUpdate - Create a Watcher
-func (client *WatchersClient) createOrUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *WatchersClient) createOrUpdate(ctx context.Context, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginCreateOrUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.createOrUpdateCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, resource, options)
+	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, watcherName, resource, options)
 	if err != nil {
 		return nil, err
 	}
@@ -83,12 +85,12 @@ func (client *WatchersClient) createOrUpdate(ctx context.Context, subscriptionID
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -113,13 +115,12 @@ func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, s
 }
 
 // BeginDelete - Delete a Watcher
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.Delete method.
-func (client *WatchersClient) BeginDelete(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*runtime.Poller[WatchersClientDeleteResponse], error) {
+func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*runtime.Poller[WatchersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.deleteOperation(ctx, subscriptionID, resourceGroupName, watcherName, options)
+		resp, err := client.deleteOperation(ctx, resourceGroupName, watcherName, options)
 		if err != nil {
 			return nil, err
 		}
@@ -135,13 +136,13 @@ func (client *WatchersClient) BeginDelete(ctx context.Context, subscriptionID st
 }
 
 // Delete - Delete a Watcher
-func (client *WatchersClient) deleteOperation(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*http.Response, error) {
+func (client *WatchersClient) deleteOperation(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginDelete"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.deleteCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, options)
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, watcherName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -157,12 +158,12 @@ func (client *WatchersClient) deleteOperation(ctx context.Context, subscriptionI
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *WatchersClient) deleteCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *WatchersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -183,17 +184,16 @@ func (client *WatchersClient) deleteCreateRequest(ctx context.Context, subscript
 }
 
 // Get - Get a Watcher
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - WatchersClientGetOptions contains the optional parameters for the WatchersClient.Get method.
-func (client *WatchersClient) Get(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientGetOptions) (WatchersClientGetResponse, error) {
+func (client *WatchersClient) Get(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientGetOptions) (WatchersClientGetResponse, error) {
 	var err error
 	const operationName = "WatchersClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.getCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, options)
+	req, err := client.getCreateRequest(ctx, resourceGroupName, watcherName, options)
 	if err != nil {
 		return WatchersClientGetResponse{}, err
 	}
@@ -210,12 +210,12 @@ func (client *WatchersClient) Get(ctx context.Context, subscriptionID string, re
 }
 
 // getCreateRequest creates the Get request.
-func (client *WatchersClient) getCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientGetOptions) (*policy.Request, error) {
+func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -245,11 +245,10 @@ func (client *WatchersClient) getHandleResponse(resp *http.Response) (WatchersCl
 }
 
 // NewListByResourceGroupPager - List Watcher resources by resource group
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - WatchersClientListByResourceGroupOptions contains the optional parameters for the WatchersClient.NewListByResourceGroupPager
 //     method.
-func (client *WatchersClient) NewListByResourceGroupPager(subscriptionID string, resourceGroupName string, options *WatchersClientListByResourceGroupOptions) *runtime.Pager[WatchersClientListByResourceGroupResponse] {
+func (client *WatchersClient) NewListByResourceGroupPager(resourceGroupName string, options *WatchersClientListByResourceGroupOptions) *runtime.Pager[WatchersClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListByResourceGroupResponse]{
 		More: func(page WatchersClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -261,7 +260,7 @@ func (client *WatchersClient) NewListByResourceGroupPager(subscriptionID string,
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listByResourceGroupCreateRequest(ctx, subscriptionID, resourceGroupName, options)
+				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 			}, nil)
 			if err != nil {
 				return WatchersClientListByResourceGroupResponse{}, err
@@ -273,12 +272,12 @@ func (client *WatchersClient) NewListByResourceGroupPager(subscriptionID string,
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *WatchersClient) listByResourceGroupCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, options *WatchersClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *WatchersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *WatchersClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -304,10 +303,9 @@ func (client *WatchersClient) listByResourceGroupHandleResponse(resp *http.Respo
 }
 
 // NewListBySubscriptionPager - List Watcher resources by subscription ID
-//   - subscriptionID - The ID of the target subscription.
 //   - options - WatchersClientListBySubscriptionOptions contains the optional parameters for the WatchersClient.NewListBySubscriptionPager
 //     method.
-func (client *WatchersClient) NewListBySubscriptionPager(subscriptionID string, options *WatchersClientListBySubscriptionOptions) *runtime.Pager[WatchersClientListBySubscriptionResponse] {
+func (client *WatchersClient) NewListBySubscriptionPager(options *WatchersClientListBySubscriptionOptions) *runtime.Pager[WatchersClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListBySubscriptionResponse]{
 		More: func(page WatchersClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -319,7 +317,7 @@ func (client *WatchersClient) NewListBySubscriptionPager(subscriptionID string, 
 				nextLink = *page.NextLink
 			}
 			resp, err := runtime.FetcherForNextLink(ctx, client.internal.Pipeline(), nextLink, func(ctx context.Context) (*policy.Request, error) {
-				return client.listBySubscriptionCreateRequest(ctx, subscriptionID, options)
+				return client.listBySubscriptionCreateRequest(ctx, options)
 			}, nil)
 			if err != nil {
 				return WatchersClientListBySubscriptionResponse{}, err
@@ -331,12 +329,12 @@ func (client *WatchersClient) NewListBySubscriptionPager(subscriptionID string, 
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *WatchersClient) listBySubscriptionCreateRequest(ctx context.Context, subscriptionID string, options *WatchersClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *WatchersClient) listBySubscriptionCreateRequest(ctx context.Context, options *WatchersClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
@@ -358,13 +356,12 @@ func (client *WatchersClient) listBySubscriptionHandleResponse(resp *http.Respon
 }
 
 // BeginStart - The action to start monitoring all targets configured for a database watcher.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - WatchersClientBeginStartOptions contains the optional parameters for the WatchersClient.Start method.
-func (client *WatchersClient) BeginStart(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*runtime.Poller[WatchersClientStartResponse], error) {
+func (client *WatchersClient) BeginStart(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*runtime.Poller[WatchersClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.start(ctx, subscriptionID, resourceGroupName, watcherName, options)
+		resp, err := client.start(ctx, resourceGroupName, watcherName, options)
 		if err != nil {
 			return nil, err
 		}
@@ -380,13 +377,13 @@ func (client *WatchersClient) BeginStart(ctx context.Context, subscriptionID str
 }
 
 // Start - The action to start monitoring all targets configured for a database watcher.
-func (client *WatchersClient) start(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*http.Response, error) {
+func (client *WatchersClient) start(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginStart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.startCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, options)
+	req, err := client.startCreateRequest(ctx, resourceGroupName, watcherName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -402,12 +399,12 @@ func (client *WatchersClient) start(ctx context.Context, subscriptionID string, 
 }
 
 // startCreateRequest creates the Start request.
-func (client *WatchersClient) startCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*policy.Request, error) {
+func (client *WatchersClient) startCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/start"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -428,13 +425,12 @@ func (client *WatchersClient) startCreateRequest(ctx context.Context, subscripti
 }
 
 // BeginStop - The action to stop monitoring all targets configured for a database watcher.
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - WatchersClientBeginStopOptions contains the optional parameters for the WatchersClient.Stop method.
-func (client *WatchersClient) BeginStop(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*runtime.Poller[WatchersClientStopResponse], error) {
+func (client *WatchersClient) BeginStop(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*runtime.Poller[WatchersClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.stop(ctx, subscriptionID, resourceGroupName, watcherName, options)
+		resp, err := client.stop(ctx, resourceGroupName, watcherName, options)
 		if err != nil {
 			return nil, err
 		}
@@ -450,13 +446,13 @@ func (client *WatchersClient) BeginStop(ctx context.Context, subscriptionID stri
 }
 
 // Stop - The action to stop monitoring all targets configured for a database watcher.
-func (client *WatchersClient) stop(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*http.Response, error) {
+func (client *WatchersClient) stop(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginStop"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.stopCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, options)
+	req, err := client.stopCreateRequest(ctx, resourceGroupName, watcherName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -472,12 +468,12 @@ func (client *WatchersClient) stop(ctx context.Context, subscriptionID string, r
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *WatchersClient) stopCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*policy.Request, error) {
+func (client *WatchersClient) stopCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/stop"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
@@ -498,14 +494,13 @@ func (client *WatchersClient) stopCreateRequest(ctx context.Context, subscriptio
 }
 
 // BeginUpdate - Update a Watcher
-//   - subscriptionID - The ID of the target subscription.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - properties - The resource properties to be updated.
 //   - options - WatchersClientBeginUpdateOptions contains the optional parameters for the WatchersClient.Update method.
-func (client *WatchersClient) BeginUpdate(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*runtime.Poller[WatchersClientUpdateResponse], error) {
+func (client *WatchersClient) BeginUpdate(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*runtime.Poller[WatchersClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.update(ctx, subscriptionID, resourceGroupName, watcherName, properties, options)
+		resp, err := client.update(ctx, resourceGroupName, watcherName, properties, options)
 		if err != nil {
 			return nil, err
 		}
@@ -521,13 +516,13 @@ func (client *WatchersClient) BeginUpdate(ctx context.Context, subscriptionID st
 }
 
 // Update - Update a Watcher
-func (client *WatchersClient) update(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*http.Response, error) {
+func (client *WatchersClient) update(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, watcherName, properties, options)
+	req, err := client.updateCreateRequest(ctx, resourceGroupName, watcherName, properties, options)
 	if err != nil {
 		return nil, err
 	}
@@ -543,12 +538,12 @@ func (client *WatchersClient) update(ctx context.Context, subscriptionID string,
 }
 
 // updateCreateRequest creates the Update request.
-func (client *WatchersClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *WatchersClient) updateCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}"
-	if subscriptionID == "" {
-		return nil, errors.New("parameter subscriptionID cannot be empty")
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
