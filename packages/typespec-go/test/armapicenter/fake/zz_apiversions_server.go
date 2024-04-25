@@ -22,23 +22,23 @@ import (
 type APIVersionsServer struct {
 	// CreateOrUpdate is the fake for method APIVersionsClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload armapicenter.APIVersion, options *armapicenter.APIVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.APIVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, payload armapicenter.APIVersion, options *armapicenter.APIVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.APIVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method APIVersionsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientDeleteOptions) (resp azfake.Responder[armapicenter.APIVersionsClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientDeleteOptions) (resp azfake.Responder[armapicenter.APIVersionsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method APIVersionsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientGetOptions) (resp azfake.Responder[armapicenter.APIVersionsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientGetOptions) (resp azfake.Responder[armapicenter.APIVersionsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// Head is the fake for method APIVersionsClient.Head
 	// HTTP status codes to indicate success: http.StatusOK
-	Head func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientHeadOptions) (resp azfake.Responder[armapicenter.APIVersionsClientHeadResponse], errResp azfake.ErrorResponder)
+	Head func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, options *armapicenter.APIVersionsClientHeadOptions) (resp azfake.Responder[armapicenter.APIVersionsClientHeadResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method APIVersionsClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, apiName string, options *armapicenter.APIVersionsClientListOptions) (resp azfake.PagerResponder[armapicenter.APIVersionsClientListResponse])
+	NewListPager func(resourceGroupName string, serviceName string, workspaceName string, apiName string, options *armapicenter.APIVersionsClientListOptions) (resp azfake.PagerResponder[armapicenter.APIVersionsClientListResponse])
 }
 
 // NewAPIVersionsServerTransport creates a new instance of APIVersionsServerTransport with the provided implementation.
@@ -105,10 +105,6 @@ func (a *APIVersionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -129,7 +125,7 @@ func (a *APIVersionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, body, nil)
+	respr, errRespr := a.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -157,10 +153,6 @@ func (a *APIVersionsServerTransport) dispatchDelete(req *http.Request) (*http.Re
 	if matches == nil || len(matches) < 6 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -181,7 +173,7 @@ func (a *APIVersionsServerTransport) dispatchDelete(req *http.Request) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -206,10 +198,6 @@ func (a *APIVersionsServerTransport) dispatchGet(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 6 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -230,7 +218,7 @@ func (a *APIVersionsServerTransport) dispatchGet(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -258,10 +246,6 @@ func (a *APIVersionsServerTransport) dispatchHead(req *http.Request) (*http.Resp
 	if matches == nil || len(matches) < 6 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -282,7 +266,7 @@ func (a *APIVersionsServerTransport) dispatchHead(req *http.Request) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Head(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
+	respr, errRespr := a.srv.Head(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -310,10 +294,6 @@ func (a *APIVersionsServerTransport) dispatchNewListPager(req *http.Request) (*h
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -341,7 +321,7 @@ func (a *APIVersionsServerTransport) dispatchNewListPager(req *http.Request) (*h
 				Filter: filterParam,
 			}
 		}
-		resp := a.srv.NewListPager(subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, options)
+		resp := a.srv.NewListPager(resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, options)
 		newListPager = &resp
 		a.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armapicenter.APIVersionsClientListResponse, createLink func() string) {

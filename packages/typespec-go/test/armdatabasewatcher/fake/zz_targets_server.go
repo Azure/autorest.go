@@ -22,19 +22,19 @@ import (
 type TargetsServer struct {
 	// CreateOrUpdate is the fake for method TargetsClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, targetName string, resource armdatabasewatcher.Target, options *armdatabasewatcher.TargetsClientCreateOrUpdateOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, watcherName string, targetName string, resource armdatabasewatcher.Target, options *armdatabasewatcher.TargetsClientCreateOrUpdateOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method TargetsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, targetName string, options *armdatabasewatcher.TargetsClientDeleteOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, watcherName string, targetName string, options *armdatabasewatcher.TargetsClientDeleteOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method TargetsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, watcherName string, targetName string, options *armdatabasewatcher.TargetsClientGetOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, watcherName string, targetName string, options *armdatabasewatcher.TargetsClientGetOptions) (resp azfake.Responder[armdatabasewatcher.TargetsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByWatcherPager is the fake for method TargetsClient.NewListByWatcherPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByWatcherPager func(subscriptionID string, resourceGroupName string, watcherName string, options *armdatabasewatcher.TargetsClientListByWatcherOptions) (resp azfake.PagerResponder[armdatabasewatcher.TargetsClientListByWatcherResponse])
+	NewListByWatcherPager func(resourceGroupName string, watcherName string, options *armdatabasewatcher.TargetsClientListByWatcherOptions) (resp azfake.PagerResponder[armdatabasewatcher.TargetsClientListByWatcherResponse])
 }
 
 // NewTargetsServerTransport creates a new instance of TargetsServerTransport with the provided implementation.
@@ -99,10 +99,6 @@ func (t *TargetsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -115,7 +111,7 @@ func (t *TargetsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := t.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, watcherNameParam, targetNameParam, body, nil)
+	respr, errRespr := t.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, watcherNameParam, targetNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -140,10 +136,6 @@ func (t *TargetsServerTransport) dispatchDelete(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -156,7 +148,7 @@ func (t *TargetsServerTransport) dispatchDelete(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := t.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, watcherNameParam, targetNameParam, nil)
+	respr, errRespr := t.srv.Delete(req.Context(), resourceGroupNameParam, watcherNameParam, targetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -181,10 +173,6 @@ func (t *TargetsServerTransport) dispatchGet(req *http.Request) (*http.Response,
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -197,7 +185,7 @@ func (t *TargetsServerTransport) dispatchGet(req *http.Request) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := t.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, watcherNameParam, targetNameParam, nil)
+	respr, errRespr := t.srv.Get(req.Context(), resourceGroupNameParam, watcherNameParam, targetNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -224,10 +212,6 @@ func (t *TargetsServerTransport) dispatchNewListByWatcherPager(req *http.Request
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -236,7 +220,7 @@ func (t *TargetsServerTransport) dispatchNewListByWatcherPager(req *http.Request
 		if err != nil {
 			return nil, err
 		}
-		resp := t.srv.NewListByWatcherPager(subscriptionIDParam, resourceGroupNameParam, watcherNameParam, nil)
+		resp := t.srv.NewListByWatcherPager(resourceGroupNameParam, watcherNameParam, nil)
 		newListByWatcherPager = &resp
 		t.newListByWatcherPager.add(req, newListByWatcherPager)
 		server.PagerResponderInjectNextLinks(newListByWatcherPager, req, func(page *armdatabasewatcher.TargetsClientListByWatcherResponse, createLink func() string) {

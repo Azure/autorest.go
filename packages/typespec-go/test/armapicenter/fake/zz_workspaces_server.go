@@ -22,23 +22,23 @@ import (
 type WorkspacesServer struct {
 	// CreateOrUpdate is the fake for method WorkspacesClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, payload armapicenter.Workspace, options *armapicenter.WorkspacesClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.WorkspacesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, payload armapicenter.Workspace, options *armapicenter.WorkspacesClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.WorkspacesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method WorkspacesClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientDeleteOptions) (resp azfake.Responder[armapicenter.WorkspacesClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientDeleteOptions) (resp azfake.Responder[armapicenter.WorkspacesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method WorkspacesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientGetOptions) (resp azfake.Responder[armapicenter.WorkspacesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientGetOptions) (resp azfake.Responder[armapicenter.WorkspacesClientGetResponse], errResp azfake.ErrorResponder)
 
 	// Head is the fake for method WorkspacesClient.Head
 	// HTTP status codes to indicate success: http.StatusOK
-	Head func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientHeadOptions) (resp azfake.Responder[armapicenter.WorkspacesClientHeadResponse], errResp azfake.ErrorResponder)
+	Head func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *armapicenter.WorkspacesClientHeadOptions) (resp azfake.Responder[armapicenter.WorkspacesClientHeadResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method WorkspacesClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(subscriptionID string, resourceGroupName string, serviceName string, options *armapicenter.WorkspacesClientListOptions) (resp azfake.PagerResponder[armapicenter.WorkspacesClientListResponse])
+	NewListPager func(resourceGroupName string, serviceName string, options *armapicenter.WorkspacesClientListOptions) (resp azfake.PagerResponder[armapicenter.WorkspacesClientListResponse])
 }
 
 // NewWorkspacesServerTransport creates a new instance of WorkspacesServerTransport with the provided implementation.
@@ -105,10 +105,6 @@ func (w *WorkspacesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -121,7 +117,7 @@ func (w *WorkspacesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, body, nil)
+	respr, errRespr := w.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -149,10 +145,6 @@ func (w *WorkspacesServerTransport) dispatchDelete(req *http.Request) (*http.Res
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -165,7 +157,7 @@ func (w *WorkspacesServerTransport) dispatchDelete(req *http.Request) (*http.Res
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
+	respr, errRespr := w.srv.Delete(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -190,10 +182,6 @@ func (w *WorkspacesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -206,7 +194,7 @@ func (w *WorkspacesServerTransport) dispatchGet(req *http.Request) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
+	respr, errRespr := w.srv.Get(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -234,10 +222,6 @@ func (w *WorkspacesServerTransport) dispatchHead(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -250,7 +234,7 @@ func (w *WorkspacesServerTransport) dispatchHead(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := w.srv.Head(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
+	respr, errRespr := w.srv.Head(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -278,10 +262,6 @@ func (w *WorkspacesServerTransport) dispatchNewListPager(req *http.Request) (*ht
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -301,7 +281,7 @@ func (w *WorkspacesServerTransport) dispatchNewListPager(req *http.Request) (*ht
 				Filter: filterParam,
 			}
 		}
-		resp := w.srv.NewListPager(subscriptionIDParam, resourceGroupNameParam, serviceNameParam, options)
+		resp := w.srv.NewListPager(resourceGroupNameParam, serviceNameParam, options)
 		newListPager = &resp
 		w.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armapicenter.WorkspacesClientListResponse, createLink func() string) {

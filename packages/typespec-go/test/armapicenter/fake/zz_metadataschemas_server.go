@@ -22,23 +22,23 @@ import (
 type MetadataSchemasServer struct {
 	// CreateOrUpdate is the fake for method MetadataSchemasClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, metadataSchemaName string, payload armapicenter.MetadataSchema, options *armapicenter.MetadataSchemasClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, payload armapicenter.MetadataSchema, options *armapicenter.MetadataSchemasClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method MetadataSchemasClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientDeleteOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientDeleteOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method MetadataSchemasClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientGetOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientGetOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientGetResponse], errResp azfake.ErrorResponder)
 
 	// Head is the fake for method MetadataSchemasClient.Head
 	// HTTP status codes to indicate success: http.StatusOK
-	Head func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientHeadOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientHeadResponse], errResp azfake.ErrorResponder)
+	Head func(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *armapicenter.MetadataSchemasClientHeadOptions) (resp azfake.Responder[armapicenter.MetadataSchemasClientHeadResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method MetadataSchemasClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListPager func(subscriptionID string, resourceGroupName string, serviceName string, options *armapicenter.MetadataSchemasClientListOptions) (resp azfake.PagerResponder[armapicenter.MetadataSchemasClientListResponse])
+	NewListPager func(resourceGroupName string, serviceName string, options *armapicenter.MetadataSchemasClientListOptions) (resp azfake.PagerResponder[armapicenter.MetadataSchemasClientListResponse])
 }
 
 // NewMetadataSchemasServerTransport creates a new instance of MetadataSchemasServerTransport with the provided implementation.
@@ -105,10 +105,6 @@ func (m *MetadataSchemasServerTransport) dispatchCreateOrUpdate(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -121,7 +117,7 @@ func (m *MetadataSchemasServerTransport) dispatchCreateOrUpdate(req *http.Reques
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, body, nil)
+	respr, errRespr := m.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -149,10 +145,6 @@ func (m *MetadataSchemasServerTransport) dispatchDelete(req *http.Request) (*htt
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -165,7 +157,7 @@ func (m *MetadataSchemasServerTransport) dispatchDelete(req *http.Request) (*htt
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
+	respr, errRespr := m.srv.Delete(req.Context(), resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -190,10 +182,6 @@ func (m *MetadataSchemasServerTransport) dispatchGet(req *http.Request) (*http.R
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -206,7 +194,7 @@ func (m *MetadataSchemasServerTransport) dispatchGet(req *http.Request) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
+	respr, errRespr := m.srv.Get(req.Context(), resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -234,10 +222,6 @@ func (m *MetadataSchemasServerTransport) dispatchHead(req *http.Request) (*http.
 	if matches == nil || len(matches) < 4 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -250,7 +234,7 @@ func (m *MetadataSchemasServerTransport) dispatchHead(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := m.srv.Head(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
+	respr, errRespr := m.srv.Head(req.Context(), resourceGroupNameParam, serviceNameParam, metadataSchemaNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -278,10 +262,6 @@ func (m *MetadataSchemasServerTransport) dispatchNewListPager(req *http.Request)
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
 		qp := req.URL.Query()
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -301,7 +281,7 @@ func (m *MetadataSchemasServerTransport) dispatchNewListPager(req *http.Request)
 				Filter: filterParam,
 			}
 		}
-		resp := m.srv.NewListPager(subscriptionIDParam, resourceGroupNameParam, serviceNameParam, options)
+		resp := m.srv.NewListPager(resourceGroupNameParam, serviceNameParam, options)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armapicenter.MetadataSchemasClientListResponse, createLink func() string) {

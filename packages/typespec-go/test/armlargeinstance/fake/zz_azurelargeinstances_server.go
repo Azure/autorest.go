@@ -23,31 +23,31 @@ import (
 type AzureLargeInstancesServer struct {
 	// Get is the fake for method AzureLargeInstancesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByResourceGroupPager is the fake for method AzureLargeInstancesClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armlargeinstance.AzureLargeInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *armlargeinstance.AzureLargeInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse])
 
 	// NewListBySubscriptionPager is the fake for method AzureLargeInstancesClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armlargeinstance.AzureLargeInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse])
 
 	// BeginRestart is the fake for method AzureLargeInstancesClient.BeginRestart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginRestart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse], errResp azfake.ErrorResponder)
+	BeginRestart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginShutdown is the fake for method AzureLargeInstancesClient.BeginShutdown
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginShutdown func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
+	BeginShutdown func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method AzureLargeInstancesClient.BeginStart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginStart func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
+	BeginStart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
 
 	// Update is the fake for method AzureLargeInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.TagsUpdate, options *armlargeinstance.AzureLargeInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.TagsUpdate, options *armlargeinstance.AzureLargeInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewAzureLargeInstancesServerTransport creates a new instance of AzureLargeInstancesServerTransport with the provided implementation.
@@ -122,10 +122,6 @@ func (a *AzureLargeInstancesServerTransport) dispatchGet(req *http.Request) (*ht
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -134,7 +130,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchGet(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+	respr, errRespr := a.srv.Get(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -161,15 +157,11 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListByResourceGroupPager
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := a.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
+		resp := a.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse, createLink func() string) {
@@ -202,11 +194,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListBySubscriptionPager(
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
-		resp := a.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
+		resp := a.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
 		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse, createLink func() string) {
@@ -243,10 +231,6 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Requ
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -261,7 +245,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Requ
 				ForceParameter: &body,
 			}
 		}
-		respr, errRespr := a.srv.BeginRestart(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeInstanceNameParam, options)
+		respr, errRespr := a.srv.BeginRestart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, options)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -297,10 +281,6 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -309,7 +289,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginShutdown(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+		respr, errRespr := a.srv.BeginShutdown(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -345,10 +325,6 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -357,7 +333,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Reques
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginStart(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+		respr, errRespr := a.srv.BeginStart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -395,10 +371,6 @@ func (a *AzureLargeInstancesServerTransport) dispatchUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -407,7 +379,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchUpdate(req *http.Request) (
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := a.srv.Update(req.Context(), subscriptionIDParam, resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
+	respr, errRespr := a.srv.Update(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

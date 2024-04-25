@@ -22,31 +22,31 @@ import (
 type ServicesServer struct {
 	// CreateOrUpdate is the fake for method ServicesClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateOrUpdate func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, resource armapicenter.Service, options *armapicenter.ServicesClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, serviceName string, resource armapicenter.Service, options *armapicenter.ServicesClientCreateOrUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method ServicesClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
-	Delete func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, options *armapicenter.ServicesClientDeleteOptions) (resp azfake.Responder[armapicenter.ServicesClientDeleteResponse], errResp azfake.ErrorResponder)
+	Delete func(ctx context.Context, resourceGroupName string, serviceName string, options *armapicenter.ServicesClientDeleteOptions) (resp azfake.Responder[armapicenter.ServicesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginExportMetadataSchema is the fake for method ServicesClient.BeginExportMetadataSchema
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginExportMetadataSchema func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, payload armapicenter.MetadataSchemaExportRequest, options *armapicenter.ServicesClientBeginExportMetadataSchemaOptions) (resp azfake.PollerResponder[armapicenter.ServicesClientExportMetadataSchemaResponse], errResp azfake.ErrorResponder)
+	BeginExportMetadataSchema func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.MetadataSchemaExportRequest, options *armapicenter.ServicesClientBeginExportMetadataSchemaOptions) (resp azfake.PollerResponder[armapicenter.ServicesClientExportMetadataSchemaResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method ServicesClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, options *armapicenter.ServicesClientGetOptions) (resp azfake.Responder[armapicenter.ServicesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, serviceName string, options *armapicenter.ServicesClientGetOptions) (resp azfake.Responder[armapicenter.ServicesClientGetResponse], errResp azfake.ErrorResponder)
 
 	// NewListByResourceGroupPager is the fake for method ServicesClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(subscriptionID string, resourceGroupName string, options *armapicenter.ServicesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armapicenter.ServicesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *armapicenter.ServicesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armapicenter.ServicesClientListByResourceGroupResponse])
 
 	// NewListBySubscriptionPager is the fake for method ServicesClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(subscriptionID string, options *armapicenter.ServicesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armapicenter.ServicesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *armapicenter.ServicesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armapicenter.ServicesClientListBySubscriptionResponse])
 
 	// Update is the fake for method ServicesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, subscriptionID string, resourceGroupName string, serviceName string, payload armapicenter.ServiceUpdate, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.ServiceUpdate, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServicesServerTransport creates a new instance of ServicesServerTransport with the provided implementation.
@@ -121,10 +121,6 @@ func (s *ServicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -133,7 +129,7 @@ func (s *ServicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*ht
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, body, nil)
+	respr, errRespr := s.srv.CreateOrUpdate(req.Context(), resourceGroupNameParam, serviceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -158,10 +154,6 @@ func (s *ServicesServerTransport) dispatchDelete(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -170,7 +162,7 @@ func (s *ServicesServerTransport) dispatchDelete(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Delete(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, nil)
+	respr, errRespr := s.srv.Delete(req.Context(), resourceGroupNameParam, serviceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -201,10 +193,6 @@ func (s *ServicesServerTransport) dispatchBeginExportMetadataSchema(req *http.Re
 		if err != nil {
 			return nil, err
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -213,7 +201,7 @@ func (s *ServicesServerTransport) dispatchBeginExportMetadataSchema(req *http.Re
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := s.srv.BeginExportMetadataSchema(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, body, nil)
+		respr, errRespr := s.srv.BeginExportMetadataSchema(req.Context(), resourceGroupNameParam, serviceNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -247,10 +235,6 @@ func (s *ServicesServerTransport) dispatchGet(req *http.Request) (*http.Response
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -259,7 +243,7 @@ func (s *ServicesServerTransport) dispatchGet(req *http.Request) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Get(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, nil)
+	respr, errRespr := s.srv.Get(req.Context(), resourceGroupNameParam, serviceNameParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -286,15 +270,11 @@ func (s *ServicesServerTransport) dispatchNewListByResourceGroupPager(req *http.
 		if matches == nil || len(matches) < 2 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
 		}
-		resp := s.srv.NewListByResourceGroupPager(subscriptionIDParam, resourceGroupNameParam, nil)
+		resp := s.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		s.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
 		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armapicenter.ServicesClientListByResourceGroupResponse, createLink func() string) {
@@ -327,11 +307,7 @@ func (s *ServicesServerTransport) dispatchNewListBySubscriptionPager(req *http.R
 		if matches == nil || len(matches) < 1 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-		if err != nil {
-			return nil, err
-		}
-		resp := s.srv.NewListBySubscriptionPager(subscriptionIDParam, nil)
+		resp := s.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		s.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
 		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armapicenter.ServicesClientListBySubscriptionResponse, createLink func() string) {
@@ -366,10 +342,6 @@ func (s *ServicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	subscriptionIDParam, err := url.PathUnescape(matches[regex.SubexpIndex("subscriptionId")])
-	if err != nil {
-		return nil, err
-	}
 	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 	if err != nil {
 		return nil, err
@@ -378,7 +350,7 @@ func (s *ServicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.Update(req.Context(), subscriptionIDParam, resourceGroupNameParam, serviceNameParam, body, nil)
+	respr, errRespr := s.srv.Update(req.Context(), resourceGroupNameParam, serviceNameParam, body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

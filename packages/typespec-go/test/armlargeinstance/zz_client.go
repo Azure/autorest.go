@@ -12,19 +12,22 @@ import (
 // Client - The AzureLargeInstance Management client
 // Don't use this type directly, use NewClient() instead.
 type Client struct {
-	internal *arm.Client
+	internal       *arm.Client
+	subscriptionID string
 }
 
 // NewClient creates a new instance of Client with the specified values.
+//   - subscriptionID - The ID of the target subscription.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*Client, error) {
+func NewClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*Client, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
 	client := &Client{
-		internal: cl,
+		subscriptionID: subscriptionID,
+		internal:       cl,
 	}
 	return client, nil
 }
@@ -32,20 +35,23 @@ func NewClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*
 // NewAzureLargeInstancesClient creates a new instance of [AzureLargeInstancesClient].
 func (client *Client) NewAzureLargeInstancesClient() *AzureLargeInstancesClient {
 	return &AzureLargeInstancesClient{
-		internal: client.internal,
+		internal:       client.internal,
+		subscriptionID: client.subscriptionID,
 	}
 }
 
 // NewAzureLargeStorageInstancesClient creates a new instance of [AzureLargeStorageInstancesClient].
 func (client *Client) NewAzureLargeStorageInstancesClient() *AzureLargeStorageInstancesClient {
 	return &AzureLargeStorageInstancesClient{
-		internal: client.internal,
+		internal:       client.internal,
+		subscriptionID: client.subscriptionID,
 	}
 }
 
 // NewOperationsClient creates a new instance of [OperationsClient].
 func (client *Client) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
-		internal: client.internal,
+		internal:       client.internal,
+		subscriptionID: client.subscriptionID,
 	}
 }
