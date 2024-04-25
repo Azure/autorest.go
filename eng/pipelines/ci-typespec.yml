@@ -24,20 +24,27 @@ pr:
       - packages/autorest.gotest
       - swagger
 
-jobs:
-  - job: "TypeSpec_Go_CI"
-    displayName: "Run TypeSpec Go CI Checks"
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    Use1ESOfficial: false
+    stages:
+      - stage: "TypeSpec_Go_CI"
+        jobs:
+          - job: "TypeSpec_Go_CI"
+            displayName: "Run TypeSpec Go CI Checks - go1.21"
 
-    strategy:
-      matrix:
-        Linux_Go121:
-          vm.image: "ubuntu-22.04"
-          go.version: "1.21.4"
+            variables:
+              - template: /eng/pipelines/templates/variables/image.yml
 
-    pool:
-      vmImage: "$(vm.image)"
+            pool:
+              name: "$(LINUXNEXTPOOL)"
+              image: "$(LINUXNEXTVMIMAGE)"
+              os: linux
 
-    steps:
-      - template: ../steps/set-env.yaml
+            steps:
+              - template: /eng/pipelines/templates/steps/set-env.yaml
+                parameters:
+                  GoVersion: "1.21.4"
 
-      - template: ../steps/build-test-typespec.yaml
+              - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
