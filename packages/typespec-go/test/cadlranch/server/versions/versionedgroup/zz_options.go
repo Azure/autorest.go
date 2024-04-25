@@ -15,6 +15,12 @@ type VersionedClientWithQueryAPIVersionOptions struct {
 	// placeholder for future optional parameters
 }
 
+// VersionedClientWithQueryOldAPIVersionOptions contains the optional parameters for the VersionedClient.WithQueryOldAPIVersion
+// method.
+type VersionedClientWithQueryOldAPIVersionOptions struct {
+	// placeholder for future optional parameters
+}
+
 // VersionedClientWithoutAPIVersionOptions contains the optional parameters for the VersionedClient.WithoutAPIVersion method.
 type VersionedClientWithoutAPIVersionOptions struct {
 	// placeholder for future optional parameters

@@ -95,6 +95,44 @@ func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+//   - options - VersionedClientWithQueryOldAPIVersionOptions contains the optional parameters for the VersionedClient.WithQueryOldAPIVersion
+//     method.
+func (client *VersionedClient) WithQueryOldAPIVersion(ctx context.Context, options *VersionedClientWithQueryOldAPIVersionOptions) (VersionedClientWithQueryOldAPIVersionResponse, error) {
+	var err error
+	const operationName = "VersionedClient.WithQueryOldAPIVersion"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.withQueryOldAPIVersionCreateRequest(ctx, options)
+	if err != nil {
+		return VersionedClientWithQueryOldAPIVersionResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return VersionedClientWithQueryOldAPIVersionResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return VersionedClientWithQueryOldAPIVersionResponse{}, err
+	}
+	return VersionedClientWithQueryOldAPIVersionResponse{Success: httpResp.StatusCode >= 200 && httpResp.StatusCode < 300}, nil
+}
+
+// withQueryOldAPIVersionCreateRequest creates the WithQueryOldAPIVersion request.
+func (client *VersionedClient) withQueryOldAPIVersionCreateRequest(ctx context.Context, options *VersionedClientWithQueryOldAPIVersionOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
+	urlPath := "/server/versions/versioned/with-query-old-api-version"
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2022-12-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
 //   - options - VersionedClientWithoutAPIVersionOptions contains the optional parameters for the VersionedClient.WithoutAPIVersion
 //     method.
 func (client *VersionedClient) WithoutAPIVersion(ctx context.Context, options *VersionedClientWithoutAPIVersionOptions) (VersionedClientWithoutAPIVersionResponse, error) {

@@ -18,6 +18,48 @@ type MultiPartFormDataClient struct {
 	internal *azcore.Client
 }
 
+// AnonymousModel - Test content-type: multipart/form-data
+//   - options - MultiPartFormDataClientAnonymousModelOptions contains the optional parameters for the MultiPartFormDataClient.AnonymousModel
+//     method.
+func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, anonymousModelRequest AnonymousModelRequest, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
+	var err error
+	const operationName = "MultiPartFormDataClient.AnonymousModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.anonymousModelCreateRequest(ctx, anonymousModelRequest, options)
+	if err != nil {
+		return MultiPartFormDataClientAnonymousModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MultiPartFormDataClientAnonymousModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return MultiPartFormDataClientAnonymousModelResponse{}, err
+	}
+	return MultiPartFormDataClientAnonymousModelResponse{}, nil
+}
+
+// anonymousModelCreateRequest creates the AnonymousModel request.
+func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, anonymousModelRequest AnonymousModelRequest, options *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
+	urlPath := "/multipart/form-data/anonymous-model"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
+	formData, err := anonymousModelRequest.toMultipartFormData()
+	if err != nil {
+		return nil, err
+	}
+	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // Basic - Test content-type: multipart/form-data
 //   - options - MultiPartFormDataClientBasicOptions contains the optional parameters for the MultiPartFormDataClient.Basic method.
 func (client *MultiPartFormDataClient) Basic(ctx context.Context, body MultiPartRequest, options *MultiPartFormDataClientBasicOptions) (MultiPartFormDataClientBasicResponse, error) {

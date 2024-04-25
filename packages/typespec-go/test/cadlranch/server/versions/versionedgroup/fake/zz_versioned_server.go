@@ -25,6 +25,10 @@ type VersionedServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	WithQueryAPIVersion func(ctx context.Context, options *versionedgroup.VersionedClientWithQueryAPIVersionOptions) (resp azfake.Responder[versionedgroup.VersionedClientWithQueryAPIVersionResponse], errResp azfake.ErrorResponder)
 
+	// WithQueryOldAPIVersion is the fake for method VersionedClient.WithQueryOldAPIVersion
+	// HTTP status codes to indicate success: http.StatusOK
+	WithQueryOldAPIVersion func(ctx context.Context, options *versionedgroup.VersionedClientWithQueryOldAPIVersionOptions) (resp azfake.Responder[versionedgroup.VersionedClientWithQueryOldAPIVersionResponse], errResp azfake.ErrorResponder)
+
 	// WithoutAPIVersion is the fake for method VersionedClient.WithoutAPIVersion
 	// HTTP status codes to indicate success: http.StatusOK
 	WithoutAPIVersion func(ctx context.Context, options *versionedgroup.VersionedClientWithoutAPIVersionOptions) (resp azfake.Responder[versionedgroup.VersionedClientWithoutAPIVersionResponse], errResp azfake.ErrorResponder)
@@ -63,6 +67,8 @@ func (v *VersionedServerTransport) dispatchToMethodFake(req *http.Request, metho
 		resp, err = v.dispatchWithPathAPIVersion(req)
 	case "VersionedClient.WithQueryAPIVersion":
 		resp, err = v.dispatchWithQueryAPIVersion(req)
+	case "VersionedClient.WithQueryOldAPIVersion":
+		resp, err = v.dispatchWithQueryOldAPIVersion(req)
 	case "VersionedClient.WithoutAPIVersion":
 		resp, err = v.dispatchWithoutAPIVersion(req)
 	default:
@@ -96,6 +102,25 @@ func (v *VersionedServerTransport) dispatchWithQueryAPIVersion(req *http.Request
 		return nil, &nonRetriableError{errors.New("fake for method WithQueryAPIVersion not implemented")}
 	}
 	respr, errRespr := v.srv.WithQueryAPIVersion(req.Context(), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (v *VersionedServerTransport) dispatchWithQueryOldAPIVersion(req *http.Request) (*http.Response, error) {
+	if v.srv.WithQueryOldAPIVersion == nil {
+		return nil, &nonRetriableError{errors.New("fake for method WithQueryOldAPIVersion not implemented")}
+	}
+	respr, errRespr := v.srv.WithQueryOldAPIVersion(req.Context(), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
