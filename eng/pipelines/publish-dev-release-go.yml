@@ -5,9 +5,9 @@ pool:
   vmImage: "ubuntu-22.04"
 
 steps:
-  - template: ../steps/set-env.yaml
+  - template: /eng/pipelines/templates/steps/set-env.yaml
 
-  - template: ../steps/build-test-go.yaml
+  - template: /eng/pipelines/templates/steps/build-test-go.yaml
 
   - pwsh: |
       $currentVersion = node -p -e "require('$(System.DefaultWorkingDirectory)/packages/autorest.go/package.json').version";

@@ -5,9 +5,9 @@ pool:
   vmImage: "ubuntu-22.04"
 
 steps:
-  - template: ../steps/set-env.yaml
+  - template: /eng/pipelines/templates/steps/set-env.yaml
 
-  - template: ../steps/build-test-typespec.yaml
+  - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
 
   - pwsh: |
       $currentVersion = node -p -e "require('$(System.DefaultWorkingDirectory)/packages/typespec-go/package.json').version";

@@ -12,9 +12,9 @@ variables:
     value: $(System.DefaultWorkingDirectory)/packages/typespec-go/node_modules/@azure-tools/cadl-ranch/node_modules/.bin/cadl-ranch
 
 steps:
-  - template: ../steps/set-env.yaml
+  - template: /eng/pipelines/templates/steps/set-env.yaml
 
-  - template: ../steps/build-test-typespec.yaml
+  - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
 
   - task: AzureCLI@2
     displayName: Upload CADL Ranch Test Coverage
