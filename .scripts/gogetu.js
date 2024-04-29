@@ -14,8 +14,8 @@ function recursiveUpdateGoMod(cur) {
             break;
         }
         if (dirEnt.isFile() && dirEnt.name === 'go.mod') {
-            console.log('go get -u ' + cur);
-            execSync('go get -u', { cwd: cur });
+            console.log('go get -u all ' + cur);
+            execSync('go get -u all', { cwd: cur });
             console.log('go mod tidy ' + cur);
             execSync('go mod tidy', { cwd: cur });
         } else if (dirEnt.isDirectory()) {
