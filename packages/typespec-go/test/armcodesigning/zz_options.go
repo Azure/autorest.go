@@ -4,17 +4,17 @@
 
 package armcodesigning
 
-// AccountsClientBeginCreateOptions contains the optional parameters for the AccountsClient.Create method.
+// AccountsClientBeginCreateOptions contains the optional parameters for the AccountsClient.BeginCreate method.
 type AccountsClientBeginCreateOptions struct {
 	ResumeToken string
 }
 
-// AccountsClientBeginDeleteOptions contains the optional parameters for the AccountsClient.Delete method.
+// AccountsClientBeginDeleteOptions contains the optional parameters for the AccountsClient.BeginDelete method.
 type AccountsClientBeginDeleteOptions struct {
 	ResumeToken string
 }
 
-// AccountsClientBeginUpdateOptions contains the optional parameters for the AccountsClient.Update method.
+// AccountsClientBeginUpdateOptions contains the optional parameters for the AccountsClient.BeginUpdate method.
 type AccountsClientBeginUpdateOptions struct {
 	ResumeToken string
 }
@@ -42,12 +42,14 @@ type AccountsClientListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.Create method.
+// CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.BeginCreate
+// method.
 type CertificateProfilesClientBeginCreateOptions struct {
 	ResumeToken string
 }
 
-// CertificateProfilesClientBeginDeleteOptions contains the optional parameters for the CertificateProfilesClient.Delete method.
+// CertificateProfilesClientBeginDeleteOptions contains the optional parameters for the CertificateProfilesClient.BeginDelete
+// method.
 type CertificateProfilesClientBeginDeleteOptions struct {
 	ResumeToken string
 }

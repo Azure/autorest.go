@@ -208,7 +208,7 @@ func (client *APIDefinitionsClient) deleteCreateRequest(ctx context.Context, res
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
 //   - payload - The content of the action request
-//   - options - APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ExportSpecification
+//   - options - APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginExportSpecification
 //     method.
 func (client *APIDefinitionsClient) BeginExportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientExportSpecificationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -458,7 +458,7 @@ func (client *APIDefinitionsClient) headCreateRequest(ctx context.Context, resou
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
 //   - payload - The content of the action request
-//   - options - APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ImportSpecification
+//   - options - APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginImportSpecification
 //     method.
 func (client *APIDefinitionsClient) BeginImportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload APISpecImportRequest, options *APIDefinitionsClientBeginImportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientImportSpecificationResponse], error) {
 	if options == nil || options.ResumeToken == "" {

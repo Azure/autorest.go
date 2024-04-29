@@ -160,7 +160,7 @@ func (client *ServicesClient) deleteCreateRequest(ctx context.Context, resourceG
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - payload - The content of the action request
-//   - options - ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.ExportMetadataSchema
+//   - options - ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.BeginExportMetadataSchema
 //     method.
 func (client *ServicesClient) BeginExportMetadataSchema(ctx context.Context, resourceGroupName string, serviceName string, payload MetadataSchemaExportRequest, options *ServicesClientBeginExportMetadataSchemaOptions) (*runtime.Poller[ServicesClientExportMetadataSchemaResponse], error) {
 	if options == nil || options.ResumeToken == "" {
