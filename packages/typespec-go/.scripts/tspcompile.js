@@ -22,7 +22,6 @@ const cadlRanch = {
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
   'accessgroup': ['azure/client-generator-core/access'],
-  'flattengroup': ['azure/client-generator-core/flatten'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
   'lrorpcgroup': ['azure/core/lro/rpc'],
@@ -52,7 +51,6 @@ const cadlRanch = {
   'singlegroup': ['server/path/single'],
   'unversionedgroup': ['server/versions/not-versioned'],
   'versionedgroup': ['server/versions/versioned'],
-  'clientreqidgroup': ['special-headers/client-request-id'],
   'condreqgroup': ['special-headers/conditional-request'],
   //'repeatabilitygroup': ['special-headers/repeatability'],   // requires union support
   'specialwordsgroup': ['special-words'],
@@ -61,6 +59,7 @@ const cadlRanch = {
   'extensiblegroup': ['type/enum/extensible'],
   'fixedgroup': ['type/enum/fixed'],
   'emptygroup': ['type/model/empty', 'single-client=true'],
+  'flattengroup': ['type/model/flatten'],
   'enumdiscgroup': ['type/model/inheritance/enum-discriminator'],
   //'nesteddiscgroup': ['type/model/inheritance/nested-discriminator'], // not a real scenario
   'nodiscgroup': ['type/model/inheritance/not-discriminated'],
