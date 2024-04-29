@@ -24,7 +24,7 @@ type StandardClient struct {
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.
 //   - name - The name of user.
 //   - resource - The resource instance.
-//   - options - StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.CreateOrReplace
+//   - options - StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.BeginCreateOrReplace
 //     method.
 func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*runtime.Poller[StandardClientCreateOrReplaceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -89,7 +89,7 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 
 // BeginDelete - Deletes a user.
 //   - name - The name of user.
-//   - options - StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.Delete method.
+//   - options - StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.BeginDelete method.
 func (client *StandardClient) BeginDelete(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*runtime.Poller[StandardClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, name, options)
@@ -150,7 +150,7 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 // BeginExport - Exports a user.
 //   - name - The name of user.
 //   - formatParam - The format of the data.
-//   - options - StandardClientBeginExportOptions contains the optional parameters for the StandardClient.Export method.
+//   - options - StandardClientBeginExportOptions contains the optional parameters for the StandardClient.BeginExport method.
 func (client *StandardClient) BeginExport(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*runtime.Poller[StandardClientExportResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.export(ctx, name, formatParam, options)

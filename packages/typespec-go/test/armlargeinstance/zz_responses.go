@@ -23,17 +23,17 @@ type AzureLargeInstancesClientListBySubscriptionResponse struct {
 	ListResult
 }
 
-// AzureLargeInstancesClientRestartResponse contains the response from method AzureLargeInstancesClient.Restart.
+// AzureLargeInstancesClientRestartResponse contains the response from method AzureLargeInstancesClient.BeginRestart.
 type AzureLargeInstancesClientRestartResponse struct {
 	// placeholder for future response values
 }
 
-// AzureLargeInstancesClientShutdownResponse contains the response from method AzureLargeInstancesClient.Shutdown.
+// AzureLargeInstancesClientShutdownResponse contains the response from method AzureLargeInstancesClient.BeginShutdown.
 type AzureLargeInstancesClientShutdownResponse struct {
 	// placeholder for future response values
 }
 
-// AzureLargeInstancesClientStartResponse contains the response from method AzureLargeInstancesClient.Start.
+// AzureLargeInstancesClientStartResponse contains the response from method AzureLargeInstancesClient.BeginStart.
 type AzureLargeInstancesClientStartResponse struct {
 	// placeholder for future response values
 }

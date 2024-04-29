@@ -10,13 +10,13 @@ type OperationsClientListResponse struct {
 	PagedOperation
 }
 
-// SharedPrivateLinkResourcesClientCreateResponse contains the response from method SharedPrivateLinkResourcesClient.Create.
+// SharedPrivateLinkResourcesClientCreateResponse contains the response from method SharedPrivateLinkResourcesClient.BeginCreate.
 type SharedPrivateLinkResourcesClientCreateResponse struct {
 	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
 	SharedPrivateLinkResource
 }
 
-// SharedPrivateLinkResourcesClientDeleteResponse contains the response from method SharedPrivateLinkResourcesClient.Delete.
+// SharedPrivateLinkResourcesClientDeleteResponse contains the response from method SharedPrivateLinkResourcesClient.BeginDelete.
 type SharedPrivateLinkResourcesClientDeleteResponse struct {
 	// placeholder for future response values
 }
@@ -56,13 +56,13 @@ type TargetsClientListByWatcherResponse struct {
 	TargetListResult
 }
 
-// WatchersClientCreateOrUpdateResponse contains the response from method WatchersClient.CreateOrUpdate.
+// WatchersClientCreateOrUpdateResponse contains the response from method WatchersClient.BeginCreateOrUpdate.
 type WatchersClientCreateOrUpdateResponse struct {
 	// The DatabaseWatcherProviderHub resource.
 	Watcher
 }
 
-// WatchersClientDeleteResponse contains the response from method WatchersClient.Delete.
+// WatchersClientDeleteResponse contains the response from method WatchersClient.BeginDelete.
 type WatchersClientDeleteResponse struct {
 	// placeholder for future response values
 }
@@ -85,17 +85,17 @@ type WatchersClientListBySubscriptionResponse struct {
 	WatcherListResult
 }
 
-// WatchersClientStartResponse contains the response from method WatchersClient.Start.
+// WatchersClientStartResponse contains the response from method WatchersClient.BeginStart.
 type WatchersClientStartResponse struct {
 	// placeholder for future response values
 }
 
-// WatchersClientStopResponse contains the response from method WatchersClient.Stop.
+// WatchersClientStopResponse contains the response from method WatchersClient.BeginStop.
 type WatchersClientStopResponse struct {
 	// placeholder for future response values
 }
 
-// WatchersClientUpdateResponse contains the response from method WatchersClient.Update.
+// WatchersClientUpdateResponse contains the response from method WatchersClient.BeginUpdate.
 type WatchersClientUpdateResponse struct {
 	// The DatabaseWatcherProviderHub resource.
 	Watcher

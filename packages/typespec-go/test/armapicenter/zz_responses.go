@@ -18,7 +18,7 @@ type APIDefinitionsClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
-// APIDefinitionsClientExportSpecificationResponse contains the response from method APIDefinitionsClient.ExportSpecification.
+// APIDefinitionsClientExportSpecificationResponse contains the response from method APIDefinitionsClient.BeginExportSpecification.
 type APIDefinitionsClientExportSpecificationResponse struct {
 	// The API specification export result.
 	APISpecExportResult
@@ -39,7 +39,7 @@ type APIDefinitionsClientHeadResponse struct {
 	Success bool
 }
 
-// APIDefinitionsClientImportSpecificationResponse contains the response from method APIDefinitionsClient.ImportSpecification.
+// APIDefinitionsClientImportSpecificationResponse contains the response from method APIDefinitionsClient.BeginImportSpecification.
 type APIDefinitionsClientImportSpecificationResponse struct {
 	// The API specification was successfully imported.
 	APIImportSuccess
@@ -243,7 +243,7 @@ type ServicesClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
-// ServicesClientExportMetadataSchemaResponse contains the response from method ServicesClient.ExportMetadataSchema.
+// ServicesClientExportMetadataSchemaResponse contains the response from method ServicesClient.BeginExportMetadataSchema.
 type ServicesClientExportMetadataSchemaResponse struct {
 	// The metadata schema export result.
 	MetadataSchemaExportResult

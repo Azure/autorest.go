@@ -365,7 +365,13 @@ export class clientAdapter {
   }
 
   private getMethodNameForDocComment(method: go.Method): string {
-    return `${method.client.name}.${go.isPageableMethod(method) && !go.isLROMethod(method) ? `New${method.name}Pager` : method.name}`;
+    let methodName = method.name;
+    if (go.isLROMethod(method)) {
+      methodName = `Begin${methodName}`;
+    } else if (go.isPageableMethod(method)) {
+      methodName = `New${methodName}Pager`;
+    }
+    return `${method.client.name}.${methodName}`;
   }
 
   private adaptResponseEnvelope(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method): go.ResponseEnvelope {

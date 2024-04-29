@@ -44,7 +44,7 @@ func NewCertificateProfilesClient(subscriptionID string, credential azcore.Token
 //   - accountName - Trusted Signing account name.
 //   - profileName - Certificate profile name.
 //   - resource - Parameters to create the certificate profile
-//   - options - CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.Create
+//   - options - CertificateProfilesClientBeginCreateOptions contains the optional parameters for the CertificateProfilesClient.BeginCreate
 //     method.
 func (client *CertificateProfilesClient) BeginCreate(ctx context.Context, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientBeginCreateOptions) (*runtime.Poller[CertificateProfilesClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -123,7 +123,7 @@ func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - profileName - Certificate profile name.
-//   - options - CertificateProfilesClientBeginDeleteOptions contains the optional parameters for the CertificateProfilesClient.Delete
+//   - options - CertificateProfilesClientBeginDeleteOptions contains the optional parameters for the CertificateProfilesClient.BeginDelete
 //     method.
 func (client *CertificateProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientBeginDeleteOptions) (*runtime.Poller[CertificateProfilesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {

@@ -44,7 +44,7 @@ func NewSharedPrivateLinkResourcesClient(subscriptionID string, credential azcor
 //   - watcherName - The database watcher name.
 //   - sharedPrivateLinkResourceName - The Shared Private Link resource name.
 //   - resource - Resource create parameters.
-//   - options - SharedPrivateLinkResourcesClientBeginCreateOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.Create
+//   - options - SharedPrivateLinkResourcesClientBeginCreateOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.BeginCreate
 //     method.
 func (client *SharedPrivateLinkResourcesClient) BeginCreate(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, resource SharedPrivateLinkResource, options *SharedPrivateLinkResourcesClientBeginCreateOptions) (*runtime.Poller[SharedPrivateLinkResourcesClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -123,7 +123,7 @@ func (client *SharedPrivateLinkResourcesClient) createCreateRequest(ctx context.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - sharedPrivateLinkResourceName - The Shared Private Link resource name.
-//   - options - SharedPrivateLinkResourcesClientBeginDeleteOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.Delete
+//   - options - SharedPrivateLinkResourcesClientBeginDeleteOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.BeginDelete
 //     method.
 func (client *SharedPrivateLinkResourcesClient) BeginDelete(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, options *SharedPrivateLinkResourcesClientBeginDeleteOptions) (*runtime.Poller[SharedPrivateLinkResourcesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {

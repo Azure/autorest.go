@@ -4,7 +4,7 @@
 
 package armlargeinstance
 
-// AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart
+// AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginRestart
 // method.
 type AzureLargeInstancesClientBeginRestartOptions struct {
 	ResumeToken string
@@ -14,13 +14,14 @@ type AzureLargeInstancesClientBeginRestartOptions struct {
 	ForceParameter *ForceState
 }
 
-// AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown
+// AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.BeginShutdown
 // method.
 type AzureLargeInstancesClientBeginShutdownOptions struct {
 	ResumeToken string
 }
 
-// AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start method.
+// AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginStart
+// method.
 type AzureLargeInstancesClientBeginStartOptions struct {
 	ResumeToken string
 }

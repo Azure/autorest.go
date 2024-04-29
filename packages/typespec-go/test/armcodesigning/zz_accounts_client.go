@@ -100,7 +100,7 @@ func (client *AccountsClient) checkNameAvailabilityHandleResponse(resp *http.Res
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - resource - Parameters to create the trusted signing account
-//   - options - AccountsClientBeginCreateOptions contains the optional parameters for the AccountsClient.Create method.
+//   - options - AccountsClientBeginCreateOptions contains the optional parameters for the AccountsClient.BeginCreate method.
 func (client *AccountsClient) BeginCreate(ctx context.Context, resourceGroupName string, accountName string, resource Account, options *AccountsClientBeginCreateOptions) (*runtime.Poller[AccountsClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.create(ctx, resourceGroupName, accountName, resource, options)
@@ -173,7 +173,7 @@ func (client *AccountsClient) createCreateRequest(ctx context.Context, resourceG
 // BeginDelete - Delete a trusted signing account.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
-//   - options - AccountsClientBeginDeleteOptions contains the optional parameters for the AccountsClient.Delete method.
+//   - options - AccountsClientBeginDeleteOptions contains the optional parameters for the AccountsClient.BeginDelete method.
 func (client *AccountsClient) BeginDelete(ctx context.Context, resourceGroupName string, accountName string, options *AccountsClientBeginDeleteOptions) (*runtime.Poller[AccountsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, accountName, options)
@@ -415,7 +415,7 @@ func (client *AccountsClient) listBySubscriptionHandleResponse(resp *http.Respon
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - accountName - Trusted Signing account name.
 //   - properties - Parameters supplied to update the trusted signing account
-//   - options - AccountsClientBeginUpdateOptions contains the optional parameters for the AccountsClient.Update method.
+//   - options - AccountsClientBeginUpdateOptions contains the optional parameters for the AccountsClient.BeginUpdate method.
 func (client *AccountsClient) BeginUpdate(ctx context.Context, resourceGroupName string, accountName string, properties AccountPatch, options *AccountsClientBeginUpdateOptions) (*runtime.Poller[AccountsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, accountName, properties, options)

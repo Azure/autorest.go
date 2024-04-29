@@ -4,18 +4,18 @@
 
 package lrostdgroup
 
-// StandardClientCreateOrReplaceResponse contains the response from method StandardClient.CreateOrReplace.
+// StandardClientCreateOrReplaceResponse contains the response from method StandardClient.BeginCreateOrReplace.
 type StandardClientCreateOrReplaceResponse struct {
 	// Details about a user.
 	User
 }
 
-// StandardClientDeleteResponse contains the response from method StandardClient.Delete.
+// StandardClientDeleteResponse contains the response from method StandardClient.BeginDelete.
 type StandardClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
-// StandardClientExportResponse contains the response from method StandardClient.Export.
+// StandardClientExportResponse contains the response from method StandardClient.BeginExport.
 type StandardClientExportResponse struct {
 	// The exported user data.
 	ExportedUser

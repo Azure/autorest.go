@@ -43,7 +43,7 @@ func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential,
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - resource - Resource create parameters.
-//   - options - WatchersClientBeginCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate
+//   - options - WatchersClientBeginCreateOrUpdateOptions contains the optional parameters for the WatchersClient.BeginCreateOrUpdate
 //     method.
 func (client *WatchersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, watcherName string, resource Watcher, options *WatchersClientBeginCreateOrUpdateOptions) (*runtime.Poller[WatchersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -117,7 +117,7 @@ func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, r
 // BeginDelete - Delete a Watcher
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
-//   - options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.Delete method.
+//   - options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
 func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginDeleteOptions) (*runtime.Poller[WatchersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, watcherName, options)
@@ -358,7 +358,7 @@ func (client *WatchersClient) listBySubscriptionHandleResponse(resp *http.Respon
 // BeginStart - The action to start monitoring all targets configured for a database watcher.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
-//   - options - WatchersClientBeginStartOptions contains the optional parameters for the WatchersClient.Start method.
+//   - options - WatchersClientBeginStartOptions contains the optional parameters for the WatchersClient.BeginStart method.
 func (client *WatchersClient) BeginStart(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStartOptions) (*runtime.Poller[WatchersClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.start(ctx, resourceGroupName, watcherName, options)
@@ -427,7 +427,7 @@ func (client *WatchersClient) startCreateRequest(ctx context.Context, resourceGr
 // BeginStop - The action to stop monitoring all targets configured for a database watcher.
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
-//   - options - WatchersClientBeginStopOptions contains the optional parameters for the WatchersClient.Stop method.
+//   - options - WatchersClientBeginStopOptions contains the optional parameters for the WatchersClient.BeginStop method.
 func (client *WatchersClient) BeginStop(ctx context.Context, resourceGroupName string, watcherName string, options *WatchersClientBeginStopOptions) (*runtime.Poller[WatchersClientStopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.stop(ctx, resourceGroupName, watcherName, options)
@@ -497,7 +497,7 @@ func (client *WatchersClient) stopCreateRequest(ctx context.Context, resourceGro
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - properties - The resource properties to be updated.
-//   - options - WatchersClientBeginUpdateOptions contains the optional parameters for the WatchersClient.Update method.
+//   - options - WatchersClientBeginUpdateOptions contains the optional parameters for the WatchersClient.BeginUpdate method.
 func (client *WatchersClient) BeginUpdate(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*runtime.Poller[WatchersClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, watcherName, properties, options)

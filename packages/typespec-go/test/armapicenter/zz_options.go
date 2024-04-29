@@ -4,13 +4,13 @@
 
 package armapicenter
 
-// APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ExportSpecification
+// APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginExportSpecification
 // method.
 type APIDefinitionsClientBeginExportSpecificationOptions struct {
 	ResumeToken string
 }
 
-// APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.ImportSpecification
+// APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginImportSpecification
 // method.
 type APIDefinitionsClientBeginImportSpecificationOptions struct {
 	ResumeToken string
@@ -179,7 +179,7 @@ type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.ExportMetadataSchema
+// ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.BeginExportMetadataSchema
 // method.
 type ServicesClientBeginExportMetadataSchemaOptions struct {
 	ResumeToken string

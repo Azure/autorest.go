@@ -10,13 +10,13 @@ type AccountsClientCheckNameAvailabilityResponse struct {
 	CheckNameAvailabilityResult
 }
 
-// AccountsClientCreateResponse contains the response from method AccountsClient.Create.
+// AccountsClientCreateResponse contains the response from method AccountsClient.BeginCreate.
 type AccountsClientCreateResponse struct {
 	// Trusted signing account resource.
 	Account
 }
 
-// AccountsClientDeleteResponse contains the response from method AccountsClient.Delete.
+// AccountsClientDeleteResponse contains the response from method AccountsClient.BeginDelete.
 type AccountsClientDeleteResponse struct {
 	// placeholder for future response values
 }
@@ -39,19 +39,19 @@ type AccountsClientListBySubscriptionResponse struct {
 	AccountListResult
 }
 
-// AccountsClientUpdateResponse contains the response from method AccountsClient.Update.
+// AccountsClientUpdateResponse contains the response from method AccountsClient.BeginUpdate.
 type AccountsClientUpdateResponse struct {
 	// Trusted signing account resource.
 	Account
 }
 
-// CertificateProfilesClientCreateResponse contains the response from method CertificateProfilesClient.Create.
+// CertificateProfilesClientCreateResponse contains the response from method CertificateProfilesClient.BeginCreate.
 type CertificateProfilesClientCreateResponse struct {
 	// Certificate profile resource.
 	CertificateProfile
 }
 
-// CertificateProfilesClientDeleteResponse contains the response from method CertificateProfilesClient.Delete.
+// CertificateProfilesClientDeleteResponse contains the response from method CertificateProfilesClient.BeginDelete.
 type CertificateProfilesClientDeleteResponse struct {
 	// placeholder for future response values
 }

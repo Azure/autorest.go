@@ -217,7 +217,7 @@ func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *
 // BeginRestart - The operation to restart an Azure Large Instance (only for compute instances)
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.Restart
+//   - options - AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginRestart
 //     method.
 func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*runtime.Poller[AzureLargeInstancesClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -294,7 +294,7 @@ func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Contex
 // BeginShutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.Shutdown
+//   - options - AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.BeginShutdown
 //     method.
 func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*runtime.Poller[AzureLargeInstancesClientShutdownResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -364,7 +364,7 @@ func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Conte
 // BeginStart - The operation to start an Azure Large Instance (only for compute instances)
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.Start
+//   - options - AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginStart
 //     method.
 func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*runtime.Poller[AzureLargeInstancesClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
