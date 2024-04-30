@@ -170,8 +170,14 @@ function getDiscriminatorLiteral(discriminatorValue: string): go.LiteralValue {
 }
 
 export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.ModelField {
-  const annotations = new go.ModelFieldAnnotations(prop.required === true, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
-  const field = new go.ModelField(prop.language.go!.name, adaptPossibleType(prop.schema), prop.language.go!.byValue === true, prop.serializedName, annotations);
+  const fieldType = adaptPossibleType(prop.schema);
+  let required = prop.required === true;
+  if (go.isLiteralValue(fieldType)) {
+    // for OpenAPI, literal values are always considered required
+    required = true;
+  }
+  const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
+  const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, prop.serializedName, annotations);
   if (hasDescription(prop.language.go!)) {
     field.description = prop.language.go!.description;
   }
