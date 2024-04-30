@@ -69,7 +69,7 @@ const cadlRanch = {
   'visibilitygroup': ['type/model/visibility'],
   //'addlpropsgroup': ['type/property/additional-properties'], // requires union support
   'nullablegroup': ['type/property/nullable'],
-  //'optionalitygroup': ['type/property/optionality'], // requires union support
+  'optionalitygroup': ['type/property/optionality', 'slice-elements-byval=true'],
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support

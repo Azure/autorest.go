@@ -42,11 +42,12 @@ type Product struct {
 	// Field has constant value "constant", any specified value is ignored.
 	ConstString *string
 
+	// CONSTANT; Constant string as Enum
+	// Field has constant value "constant_string_as_enum", any specified value is ignored.
+	ConstStringAsEnum *string
+
 	// Non required int betwen 0 and 100 exclusive.
 	Capacity *int32
-
-	// Constant string as Enum
-	ConstStringAsEnum *string
 
 	// Non required array of unique items from 0 to 6 elements.
 	DisplayNames []*string

@@ -150,10 +150,13 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         descriptionMods.push('READ-ONLY');
       } else if (field.annotations.required && (!go.isLiteralValue(field.type) || model.usage === go.UsageFlags.Output)) {
         descriptionMods.push('REQUIRED');
-      } else if (field.annotations.required && go.isLiteralValue(field.type)) {
+      } else if (go.isLiteralValue(field.type)) {
+        if (!field.annotations.required) {
+          descriptionMods.push('FLAG');
+        }
         descriptionMods.push('CONSTANT');
       }
-      if (field.annotations.required && go.isLiteralValue(field.type) && model.usage !== go.UsageFlags.Output) {
+      if (go.isLiteralValue(field.type) && model.usage !== go.UsageFlags.Output) {
         // add a comment with the const value for const properties that are sent over the wire
         if (field.description) {
           field.description += '\n';
@@ -338,7 +341,12 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else if (go.isLiteralValue(field.type)) {
-      marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.type, true)}\n`;
+      const setter = `objectMap["${field.serializedName}"] = ${formatLiteralValue(field.type, true)}`;
+      if (!field.annotations.required) {
+        marshaller += `\tif ${receiver}.${field.name} != nil {\n\t\t${setter}\n\t}\n`;
+      } else {
+        marshaller += `\t${setter}\n`;
+      }
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", json.RawMessage(${receiver}.${field.name}))\n`;
       modelDef.SerDe.needsJSONPopulate = true;
