@@ -12,7 +12,7 @@ import (
 )
 
 func NewXMSClientRequestIDClient(options *azcore.ClientOptions) (*XMSClientRequestIDClient, error) {
-	internal, err := azcore.NewClient("clientreqidgroup", "v0.1.0", runtime.PipelineOptions{
+	internal, err := azcore.NewClient("xmsclientreqidgroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			newRequestIDPolicy(),
 		},
