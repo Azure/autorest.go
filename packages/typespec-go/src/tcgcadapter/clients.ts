@@ -419,12 +419,6 @@ export class clientAdapter {
       return respEnv;
     }
 
-    // workaround until https://github.com/Azure/typespec-azure/issues/124 is fixed
-    if (sdkMethod.kind === 'lro' && sdkResponseType.kind === 'model' && sdkResponseType.name.match(/OperationStatus/)) {
-      return respEnv;
-    }
-    // end workaround
-
     // for paged methods, tcgc models the method response type as an Array<T>.
     // however, we want the synthesized paged response envelope as that's what Go returns.
     if (sdkMethod.kind === 'paging') {
