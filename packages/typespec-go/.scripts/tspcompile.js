@@ -28,6 +28,7 @@ const cadlRanch = {
   'lrostdgroup': ['azure/core/lro/standard'],
   'corescalargroup': ['azure/core/scalar'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
+  'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
   'defaultgroup': ['client/structure/default/client.tsp'],
   'multiclientgroup': ['client/structure/multi-client/client.tsp'],
@@ -36,9 +37,10 @@ const cadlRanch = {
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
+  //'basicparamsgroup': ['parameters/basic'], // spread params support
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
-  //'spreadgroup': ['parameters/spread'], // needs more investigation
+  //'spreadgroup': ['parameters/spread'], // spread params support
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
@@ -73,6 +75,12 @@ const cadlRanch = {
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support
+  //'addedgroup': ['versioning/added'],
+  //'madeoptionalgroup': ['versioning/madeOptional'],
+  //'removedgroup': ['versioning/removed'],
+  //'renamedfromgroup': ['versioning/renamedFrom'],
+  //'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
+  //'typechangedfromgroup': ['versioning/typeChangedFrom']
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
