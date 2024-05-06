@@ -99,36 +99,38 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   }
 
   if (context.options['generate-fakes'] === true) {
-    const fakesDir = context.emitterOutputDir + '/fake';
-    await mkdir(fakesDir, {recursive: true});
     const serverContent = await generateServers(codeModel);
-    for (const op of serverContent.servers) {
-      let fileName = op.name.toLowerCase();
-      // op.name is the server name, e.g. FooServer.
-      // insert a _ before Server, i.e. Foo_Server
-      // if the name isn't simply Server.
-      if (fileName !== 'server') {
-        fileName = fileName.substring(0, fileName.length-6) + '_server';
+    if (serverContent.servers.length > 0) {
+      const fakesDir = context.emitterOutputDir + '/fake';
+      await mkdir(fakesDir, {recursive: true});
+      for (const op of serverContent.servers) {
+        let fileName = op.name.toLowerCase();
+        // op.name is the server name, e.g. FooServer.
+        // insert a _ before Server, i.e. Foo_Server
+        // if the name isn't simply Server.
+        if (fileName !== 'server') {
+          fileName = fileName.substring(0, fileName.length-6) + '_server';
+        }
+        writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }
-      writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
-    }
 
-    // TODO: skip server factory for now as we don't generate it (yet)
-    /*const serverFactory = generateServerFactory(codeModel);
-    if (serverFactory !== '') {
-      writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
-    }*/
+      // TODO: skip server factory for now as we don't generate it (yet)
+      /*const serverFactory = generateServerFactory(codeModel);
+      if (serverFactory !== '') {
+        writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
+      }*/
 
-    writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
+      writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
 
-    const timeHelpers = await generateTimeHelpers(codeModel, 'fake');
-    for (const helper of timeHelpers) {
-      writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
-    }
+      const timeHelpers = await generateTimeHelpers(codeModel, 'fake');
+      for (const helper of timeHelpers) {
+        writeFile(`${fakesDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
+      }
 
-    const polymorphics = await generatePolymorphicHelpers(codeModel, 'fake');
-    if (polymorphics.length > 0) {
-      writeFile(`${fakesDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
+      const polymorphics = await generatePolymorphicHelpers(codeModel, 'fake');
+      if (polymorphics.length > 0) {
+        writeFile(`${fakesDir}/${filePrefix}polymorphic_helpers.go`, polymorphics);
+      }
     }
   }
 }
