@@ -66,6 +66,54 @@ func (client *DurationPropertyClient) defaultHandleResponse(resp *http.Response)
 	return result, nil
 }
 
+//   - options - DurationPropertyClientFloat64SecondsOptions contains the optional parameters for the DurationPropertyClient.Float64Seconds
+//     method.
+func (client *DurationPropertyClient) Float64Seconds(ctx context.Context, body Float64SecondsDurationProperty, options *DurationPropertyClientFloat64SecondsOptions) (DurationPropertyClientFloat64SecondsResponse, error) {
+	var err error
+	const operationName = "DurationPropertyClient.Float64Seconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64SecondsCreateRequest(ctx, body, options)
+	if err != nil {
+		return DurationPropertyClientFloat64SecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationPropertyClientFloat64SecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationPropertyClientFloat64SecondsResponse{}, err
+	}
+	resp, err := client.float64SecondsHandleResponse(httpResp)
+	return resp, err
+}
+
+// float64SecondsCreateRequest creates the Float64Seconds request.
+func (client *DurationPropertyClient) float64SecondsCreateRequest(ctx context.Context, body Float64SecondsDurationProperty, options *DurationPropertyClientFloat64SecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/property/float64-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// float64SecondsHandleResponse handles the Float64Seconds response.
+func (client *DurationPropertyClient) float64SecondsHandleResponse(resp *http.Response) (DurationPropertyClientFloat64SecondsResponse, error) {
+	result := DurationPropertyClientFloat64SecondsResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64SecondsDurationProperty); err != nil {
+		return DurationPropertyClientFloat64SecondsResponse{}, err
+	}
+	return result, nil
+}
+
 //   - options - DurationPropertyClientFloatSecondsOptions contains the optional parameters for the DurationPropertyClient.FloatSeconds
 //     method.
 func (client *DurationPropertyClient) FloatSeconds(ctx context.Context, body FloatSecondsDurationProperty, options *DurationPropertyClientFloatSecondsOptions) (DurationPropertyClientFloatSecondsResponse, error) {

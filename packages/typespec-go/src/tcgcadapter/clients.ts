@@ -33,11 +33,10 @@ export class clientAdapter {
       throw new Error('single-client cannot be enabled when there are multiple clients');
     }
     for (const sdkClient of sdkPackage.clients) {
-      // workaround for https://github.com/Azure/typespec-azure/issues/782
       if (sdkClient.methods.length === 0) {
+        // skip generating empty clients
         continue;
       }
-      // end workaround
 
       // start with instantiable clients and recursively work down
       if (sdkClient.initialization.access === 'public') {

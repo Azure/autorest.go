@@ -53,6 +53,40 @@ func (client *DurationHeaderClient) defaultCreateRequest(ctx context.Context, du
 	return req, nil
 }
 
+//   - options - DurationHeaderClientFloat64SecondsOptions contains the optional parameters for the DurationHeaderClient.Float64Seconds
+//     method.
+func (client *DurationHeaderClient) Float64Seconds(ctx context.Context, duration float64, options *DurationHeaderClientFloat64SecondsOptions) (DurationHeaderClientFloat64SecondsResponse, error) {
+	var err error
+	const operationName = "DurationHeaderClient.Float64Seconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64SecondsCreateRequest(ctx, duration, options)
+	if err != nil {
+		return DurationHeaderClientFloat64SecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationHeaderClientFloat64SecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationHeaderClientFloat64SecondsResponse{}, err
+	}
+	return DurationHeaderClientFloat64SecondsResponse{}, nil
+}
+
+// float64SecondsCreateRequest creates the Float64Seconds request.
+func (client *DurationHeaderClient) float64SecondsCreateRequest(ctx context.Context, duration float64, options *DurationHeaderClientFloat64SecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/header/float64-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["duration"] = []string{strconv.FormatFloat(duration, 'f', -1, 64)}
+	return req, nil
+}
+
 //   - options - DurationHeaderClientFloatSecondsOptions contains the optional parameters for the DurationHeaderClient.FloatSeconds
 //     method.
 func (client *DurationHeaderClient) FloatSeconds(ctx context.Context, duration float32, options *DurationHeaderClientFloatSecondsOptions) (DurationHeaderClientFloatSecondsResponse, error) {

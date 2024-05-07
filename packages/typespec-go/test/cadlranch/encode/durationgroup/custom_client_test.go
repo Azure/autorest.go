@@ -23,6 +23,14 @@ func TestHeaderClientDefault(t *testing.T) {
 	require.Zero(t, resp)
 }
 
+func TestHeaderClientFloat64Seconds(t *testing.T) {
+	client, err := durationgroup.NewDurationClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewDurationHeaderClient().Float64Seconds(context.Background(), 35.621, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
 func TestHeaderClientFloatSeconds(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
@@ -64,6 +72,17 @@ func TestPropertyClientDefault(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, resp.Value)
 	require.EqualValues(t, "P40D", *resp.Value)
+}
+
+func TestPropertyClientFloat64Seconds(t *testing.T) {
+	client, err := durationgroup.NewDurationClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewDurationPropertyClient().Float64Seconds(context.Background(), durationgroup.Float64SecondsDurationProperty{
+		Value: to.Ptr(35.621),
+	}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, resp.Value)
+	require.EqualValues(t, float64(35.621), *resp.Value)
 }
 
 func TestPropertyClientFloatSeconds(t *testing.T) {
@@ -120,6 +139,14 @@ func TestQueryClientDefault(t *testing.T) {
 	client, err := durationgroup.NewDurationClient(nil)
 	require.NoError(t, err)
 	resp, err := client.NewDurationQueryClient().Default(context.Background(), "P40D", nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+}
+
+func TestQueryClientFloat64Seconds(t *testing.T) {
+	client, err := durationgroup.NewDurationClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewDurationQueryClient().Float64Seconds(context.Background(), 35.621, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

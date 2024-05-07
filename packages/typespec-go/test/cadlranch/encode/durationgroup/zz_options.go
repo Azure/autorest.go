@@ -9,6 +9,12 @@ type DurationHeaderClientDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
+// DurationHeaderClientFloat64SecondsOptions contains the optional parameters for the DurationHeaderClient.Float64Seconds
+// method.
+type DurationHeaderClientFloat64SecondsOptions struct {
+	// placeholder for future optional parameters
+}
+
 // DurationHeaderClientFloatSecondsOptions contains the optional parameters for the DurationHeaderClient.FloatSeconds method.
 type DurationHeaderClientFloatSecondsOptions struct {
 	// placeholder for future optional parameters
@@ -31,6 +37,12 @@ type DurationHeaderClientInt32SecondsOptions struct {
 
 // DurationPropertyClientDefaultOptions contains the optional parameters for the DurationPropertyClient.Default method.
 type DurationPropertyClientDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationPropertyClientFloat64SecondsOptions contains the optional parameters for the DurationPropertyClient.Float64Seconds
+// method.
+type DurationPropertyClientFloat64SecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -59,6 +71,11 @@ type DurationPropertyClientInt32SecondsOptions struct {
 
 // DurationQueryClientDefaultOptions contains the optional parameters for the DurationQueryClient.Default method.
 type DurationQueryClientDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DurationQueryClientFloat64SecondsOptions contains the optional parameters for the DurationQueryClient.Float64Seconds method.
+type DurationQueryClientFloat64SecondsOptions struct {
 	// placeholder for future optional parameters
 }
 
