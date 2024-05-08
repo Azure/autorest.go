@@ -729,8 +729,6 @@ export class typeAdapter {
     const recursiveAddReferencedType = function(type: tcgc.SdkType): void {
       switch (type.kind) {
         case 'array':
-          recursiveAddReferencedType(type.valueType);
-          break;
         case 'dict':
           recursiveAddReferencedType(type.valueType);
           break;
