@@ -21,6 +21,10 @@ type DurationPropertyServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	Default func(ctx context.Context, body durationgroup.DefaultDurationProperty, options *durationgroup.DurationPropertyClientDefaultOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientDefaultResponse], errResp azfake.ErrorResponder)
 
+	// Float64Seconds is the fake for method DurationPropertyClient.Float64Seconds
+	// HTTP status codes to indicate success: http.StatusOK
+	Float64Seconds func(ctx context.Context, body durationgroup.Float64SecondsDurationProperty, options *durationgroup.DurationPropertyClientFloat64SecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloat64SecondsResponse], errResp azfake.ErrorResponder)
+
 	// FloatSeconds is the fake for method DurationPropertyClient.FloatSeconds
 	// HTTP status codes to indicate success: http.StatusOK
 	FloatSeconds func(ctx context.Context, body durationgroup.FloatSecondsDurationProperty, options *durationgroup.DurationPropertyClientFloatSecondsOptions) (resp azfake.Responder[durationgroup.DurationPropertyClientFloatSecondsResponse], errResp azfake.ErrorResponder)
@@ -69,6 +73,8 @@ func (d *DurationPropertyServerTransport) dispatchToMethodFake(req *http.Request
 	switch method {
 	case "DurationPropertyClient.Default":
 		resp, err = d.dispatchDefault(req)
+	case "DurationPropertyClient.Float64Seconds":
+		resp, err = d.dispatchFloat64Seconds(req)
 	case "DurationPropertyClient.FloatSeconds":
 		resp, err = d.dispatchFloatSeconds(req)
 	case "DurationPropertyClient.FloatSecondsArray":
@@ -101,6 +107,29 @@ func (d *DurationPropertyServerTransport) dispatchDefault(req *http.Request) (*h
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).DefaultDurationProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationPropertyServerTransport) dispatchFloat64Seconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Float64Seconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Float64Seconds not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[durationgroup.Float64SecondsDurationProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Float64Seconds(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Float64SecondsDurationProperty, req)
 	if err != nil {
 		return nil, err
 	}

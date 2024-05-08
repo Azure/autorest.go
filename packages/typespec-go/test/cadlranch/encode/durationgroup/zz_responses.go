@@ -9,6 +9,11 @@ type DurationHeaderClientDefaultResponse struct {
 	// placeholder for future response values
 }
 
+// DurationHeaderClientFloat64SecondsResponse contains the response from method DurationHeaderClient.Float64Seconds.
+type DurationHeaderClientFloat64SecondsResponse struct {
+	// placeholder for future response values
+}
+
 // DurationHeaderClientFloatSecondsResponse contains the response from method DurationHeaderClient.FloatSeconds.
 type DurationHeaderClientFloatSecondsResponse struct {
 	// placeholder for future response values
@@ -34,6 +39,11 @@ type DurationPropertyClientDefaultResponse struct {
 	DefaultDurationProperty
 }
 
+// DurationPropertyClientFloat64SecondsResponse contains the response from method DurationPropertyClient.Float64Seconds.
+type DurationPropertyClientFloat64SecondsResponse struct {
+	Float64SecondsDurationProperty
+}
+
 // DurationPropertyClientFloatSecondsArrayResponse contains the response from method DurationPropertyClient.FloatSecondsArray.
 type DurationPropertyClientFloatSecondsArrayResponse struct {
 	FloatSecondsDurationArrayProperty
@@ -56,6 +66,11 @@ type DurationPropertyClientInt32SecondsResponse struct {
 
 // DurationQueryClientDefaultResponse contains the response from method DurationQueryClient.Default.
 type DurationQueryClientDefaultResponse struct {
+	// placeholder for future response values
+}
+
+// DurationQueryClientFloat64SecondsResponse contains the response from method DurationQueryClient.Float64Seconds.
+type DurationQueryClientFloat64SecondsResponse struct {
 	// placeholder for future response values
 }
 

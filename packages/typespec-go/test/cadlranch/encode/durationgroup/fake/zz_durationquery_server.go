@@ -23,6 +23,10 @@ type DurationQueryServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Default func(ctx context.Context, input string, options *durationgroup.DurationQueryClientDefaultOptions) (resp azfake.Responder[durationgroup.DurationQueryClientDefaultResponse], errResp azfake.ErrorResponder)
 
+	// Float64Seconds is the fake for method DurationQueryClient.Float64Seconds
+	// HTTP status codes to indicate success: http.StatusNoContent
+	Float64Seconds func(ctx context.Context, input float64, options *durationgroup.DurationQueryClientFloat64SecondsOptions) (resp azfake.Responder[durationgroup.DurationQueryClientFloat64SecondsResponse], errResp azfake.ErrorResponder)
+
 	// FloatSeconds is the fake for method DurationQueryClient.FloatSeconds
 	// HTTP status codes to indicate success: http.StatusNoContent
 	FloatSeconds func(ctx context.Context, input float32, options *durationgroup.DurationQueryClientFloatSecondsOptions) (resp azfake.Responder[durationgroup.DurationQueryClientFloatSecondsResponse], errResp azfake.ErrorResponder)
@@ -71,6 +75,8 @@ func (d *DurationQueryServerTransport) dispatchToMethodFake(req *http.Request, m
 	switch method {
 	case "DurationQueryClient.Default":
 		resp, err = d.dispatchDefault(req)
+	case "DurationQueryClient.Float64Seconds":
+		resp, err = d.dispatchFloat64Seconds(req)
 	case "DurationQueryClient.FloatSeconds":
 		resp, err = d.dispatchFloatSeconds(req)
 	case "DurationQueryClient.ISO8601":
@@ -96,6 +102,34 @@ func (d *DurationQueryServerTransport) dispatchDefault(req *http.Request) (*http
 		return nil, err
 	}
 	respr, errRespr := d.srv.Default(req.Context(), inputParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (d *DurationQueryServerTransport) dispatchFloat64Seconds(req *http.Request) (*http.Response, error) {
+	if d.srv.Float64Seconds == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Float64Seconds not implemented")}
+	}
+	qp := req.URL.Query()
+	inputUnescaped, err := url.QueryUnescape(qp.Get("input"))
+	if err != nil {
+		return nil, err
+	}
+	inputParam, err := strconv.ParseFloat(inputUnescaped, 64)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := d.srv.Float64Seconds(req.Context(), inputParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

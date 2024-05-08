@@ -56,6 +56,42 @@ func (client *DurationQueryClient) defaultCreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
+//   - options - DurationQueryClientFloat64SecondsOptions contains the optional parameters for the DurationQueryClient.Float64Seconds
+//     method.
+func (client *DurationQueryClient) Float64Seconds(ctx context.Context, input float64, options *DurationQueryClientFloat64SecondsOptions) (DurationQueryClientFloat64SecondsResponse, error) {
+	var err error
+	const operationName = "DurationQueryClient.Float64Seconds"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.float64SecondsCreateRequest(ctx, input, options)
+	if err != nil {
+		return DurationQueryClientFloat64SecondsResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return DurationQueryClientFloat64SecondsResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return DurationQueryClientFloat64SecondsResponse{}, err
+	}
+	return DurationQueryClientFloat64SecondsResponse{}, nil
+}
+
+// float64SecondsCreateRequest creates the Float64Seconds request.
+func (client *DurationQueryClient) float64SecondsCreateRequest(ctx context.Context, input float64, options *DurationQueryClientFloat64SecondsOptions) (*policy.Request, error) {
+	urlPath := "/encode/duration/query/float64-seconds"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("input", strconv.FormatFloat(input, 'f', -1, 64))
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, nil
+}
+
 //   - options - DurationQueryClientFloatSecondsOptions contains the optional parameters for the DurationQueryClient.FloatSeconds
 //     method.
 func (client *DurationQueryClient) FloatSeconds(ctx context.Context, input float32, options *DurationQueryClientFloatSecondsOptions) (DurationQueryClientFloatSecondsResponse, error) {
