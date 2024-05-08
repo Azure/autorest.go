@@ -6,22 +6,6 @@ package armdatabasewatcher
 
 import "time"
 
-// ArmResource - Common properties for all Azure Resource Manager resources.
-type ArmResource struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-}
-
-// ArmResourceBase - Base class used for type definitions
-type ArmResourceBase struct {
-}
-
 // Datastore - The properties of a data store.
 type Datastore struct {
 	// REQUIRED; The Kusto cluster URI.
@@ -106,18 +90,6 @@ type PagedOperation struct {
 
 	// The link to the next page of items
 	NextLink *string
-}
-
-// ProxyResourceBase - The base proxy resource.
-type ProxyResourceBase struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
 }
 
 // SQLDbElasticPoolTargetProperties - The properties specific to elastic pool in Azure SQL Database.
@@ -395,24 +367,6 @@ type TargetProperties struct {
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type TargetProperties.
 func (t *TargetProperties) GetTargetProperties() *TargetProperties { return t }
-
-// TrackedResourceBase - The resource model definition for an Azure Resource Manager tracked top level resource
-type TrackedResourceBase struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// Resource tags.
-	Tags map[string]*string
-}
 
 // UserAssignedIdentity - A managed identity assigned by the user.
 type UserAssignedIdentity struct {

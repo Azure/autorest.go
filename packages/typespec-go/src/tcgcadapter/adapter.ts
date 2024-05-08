@@ -44,7 +44,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options.stutter);
 
   const ta = new typeAdapter(codeModel);
-  ta.adaptTypes(sdkContext);
+  ta.adaptTypes(sdkContext, context.options['remove-unreferenced-types'] === true);
 
   const ca = new clientAdapter(ta, context.options);
   ca.adaptClients(sdkContext.experimental_sdkPackage);

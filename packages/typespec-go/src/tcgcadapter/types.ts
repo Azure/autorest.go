@@ -18,45 +18,32 @@ export class typeAdapter {
   // cache of previously created types/constant values
   private types: Map<string, go.PossibleType>;
   private constValues: Map<string, go.ConstantValue>;
+
+  // contains the names of referenced types
+  private unreferencedEnums: Set<string>;
+  private unreferencedModels: Set<string>;
   
   constructor(codeModel: go.CodeModel) {
     this.codeModel = codeModel;
     this.types = new Map<string, go.PossibleType>();
     this.constValues = new Map<string, go.ConstantValue>();
+    this.unreferencedEnums = new Set<string>();
+    this.unreferencedModels = new Set<string>();
   }
 
   // converts all model/enum SDK types to Go code model types
-  adaptTypes(sdkContext: tcgc.SdkContext) {
-    const isOperationStatusModel = function(name: string): boolean {
-      return name.match(/^(?:Arm)?OperationStatus/) !== null;
-    };
+  adaptTypes(sdkContext: tcgc.SdkContext, removeUnreferencedTypes: boolean) {
+    if (removeUnreferencedTypes) {
+      this.flagUnreferencedTypes(sdkContext);
+    }
 
     for (const enumType of sdkContext.experimental_sdkPackage.enums) {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
-      } else if (enumType.crossLanguageDefinitionId.match(/(?:Foundations|ResourceManager)\.(?:Resource)?ProvisioningState/)) {
-        // don't create constants for the LRO provisioning state if they aren't used
-        let found = false;
-        for (const model of sdkContext.experimental_sdkPackage.models) {
-          if (isOperationStatusModel(model.name)) {
-            // these types are discarded so exclude them from the check
-            continue;
-          }
-          for (const property of model.properties) {
-            if (property.type.kind === 'enum' && property.type.name === enumType.name) {
-              found = true;
-              break;
-            }
-          }
-          if (found) {
-            break;
-          }
-        }
-        if (!found) {
-          // enum isn't used, discard it
-          continue;
-        }
+      } else if (this.unreferencedEnums.has(enumType.name)) {
+        // skip unreferenced type
+        continue;
       }
       const constType = this.getConstantType(enumType);
       this.codeModel.constants.push(constType);
@@ -69,8 +56,8 @@ export class typeAdapter {
       if (this.isFoundationsError(modelType)) {
         // don't create a model as we use azcore.ResponseError instead
         continue;
-      } else if (isOperationStatusModel(modelType.name)) {
-        // don't create a model for the LRO polling status as they aren't used
+      } else if (this.unreferencedModels.has(modelType.name)) {
+        // skip unreferenced type
         continue;
       }
       if (modelType.discriminatedSubtypes) {
@@ -732,6 +719,77 @@ export class typeAdapter {
     }
   
     // TODO: tcgc doesn't support duration as a literal value
+  }
+
+  // updates this.unreferencedEnums and this.unreferencedModels
+  private flagUnreferencedTypes(sdkContext: tcgc.SdkContext): void {
+    const referencedEnums = new Set<string>();
+    const referencedModels = new Set<string>();
+
+    const recursiveAddReferencedType = function(type: tcgc.SdkType): void {
+      switch (type.kind) {
+        case 'array':
+          recursiveAddReferencedType(type.valueType);
+          break;
+        case 'dict':
+          recursiveAddReferencedType(type.valueType);
+          break;
+        case 'enum':
+          if (!referencedEnums.has(type.name)) {
+            referencedEnums.add(type.name);
+          }
+          break;
+        case 'enumvalue':
+          if (!referencedEnums.has(type.enumType.name)) {
+            referencedEnums.add(type.enumType.name);
+          }
+          break;
+        case 'model':
+          if (!referencedModels.has(type.name)) {
+            referencedModels.add(type.name);
+            const aggregateProps = aggregateProperties(type);
+            for (const prop of aggregateProps.props) {
+              recursiveAddReferencedType(prop.type);
+            }
+            if (type.discriminatedSubtypes) {
+              for (const subType of values(type.discriminatedSubtypes)) {
+                recursiveAddReferencedType(subType);
+              }
+            }
+          }
+          break;
+      }
+    };
+
+    // traverse all methods to find the set of referenced enums and models
+    for (const client of sdkContext.experimental_sdkPackage.clients) {
+      for (const method of client.methods) {
+        if (method.kind === 'clientaccessor') {
+          continue;
+        }
+
+        for (const param of method.parameters) {
+          recursiveAddReferencedType(param.type);
+        }
+
+        if (method.response.type) {
+          recursiveAddReferencedType(method.response.type);
+        }
+      }
+    }
+
+    // now that we have the referenced set, update the unreferenced set
+    for (const sdkEnum of sdkContext.experimental_sdkPackage.enums) {
+      if (!referencedEnums.has(sdkEnum.name)) {
+        this.unreferencedEnums.add(sdkEnum.name);
+      }
+    }
+
+    for (const model of sdkContext.experimental_sdkPackage.models) {
+      if (!referencedModels.has(model.name)) {
+        this.unreferencedModels.add(model.name);
+      }
+    }
   }
 }
 
