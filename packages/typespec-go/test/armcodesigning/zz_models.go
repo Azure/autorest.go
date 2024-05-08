@@ -72,22 +72,6 @@ type AccountSKU struct {
 	Name *SKUName
 }
 
-// ArmResource - Common properties for all Azure Resource Manager resources.
-type ArmResource struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-}
-
-// ArmResourceBase - Base class used for type definitions
-type ArmResourceBase struct {
-}
-
 // Certificate - Properties of the certificate.
 type Certificate struct {
 	// Certificate created date.
@@ -266,18 +250,6 @@ type PagedOperation struct {
 	NextLink *string
 }
 
-// ProxyResourceBase - The base proxy resource.
-type ProxyResourceBase struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-}
-
 // Revocation details of the certificate.
 type Revocation struct {
 	// The timestamp when the revocation is effective.
@@ -336,22 +308,4 @@ type SystemData struct {
 
 	// The type of identity that last modified the resource.
 	LastModifiedByType *CreatedByType
-}
-
-// TrackedResourceBase - The resource model definition for an Azure Resource Manager tracked top level resource
-type TrackedResourceBase struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// Resource tags.
-	Tags map[string]*string
 }

@@ -117,16 +117,16 @@ function should_generate(name) {
 }
 
 const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
-generate('armcodesigning', armcodesigning, 'test/armcodesigning');
+generate('armcodesigning', armcodesigning, 'test/armcodesigning', ['remove-unreferenced-types=true']);
 
 const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
-generate('armapicenter', armapicenter, 'test/armapicenter');
+generate('armapicenter', armapicenter, 'test/armapicenter', ['remove-unreferenced-types=true']);
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
+generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance', 'remove-unreferenced-types=true']);
 
 const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher');
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=true']);
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
