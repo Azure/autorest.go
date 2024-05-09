@@ -95,7 +95,7 @@ func (client *ExpressRoutePortAuthorizationsClient) createOrUpdate(ctx context.C
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ExpressRoutePortAuthorizationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, authorizationParameters ExpressRoutePortAuthorization, options *ExpressRoutePortAuthorizationsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortAuthorizationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, authorizationParameters ExpressRoutePortAuthorization, _ *ExpressRoutePortAuthorizationsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *ExpressRoutePortAuthorizationsClient) deleteOperation(ctx context.
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ExpressRoutePortAuthorizationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, options *ExpressRoutePortAuthorizationsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortAuthorizationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, _ *ExpressRoutePortAuthorizationsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -241,7 +241,7 @@ func (client *ExpressRoutePortAuthorizationsClient) Get(ctx context.Context, res
 }
 
 // getCreateRequest creates the Get request.
-func (client *ExpressRoutePortAuthorizationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, options *ExpressRoutePortAuthorizationsClientGetOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortAuthorizationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, authorizationName string, _ *ExpressRoutePortAuthorizationsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -310,7 +310,7 @@ func (client *ExpressRoutePortAuthorizationsClient) NewListPager(resourceGroupNa
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRoutePortAuthorizationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortAuthorizationsClientListOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortAuthorizationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, _ *ExpressRoutePortAuthorizationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

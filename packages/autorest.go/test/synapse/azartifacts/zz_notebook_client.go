@@ -131,7 +131,7 @@ func (client *NotebookClient) deleteNotebook(ctx context.Context, notebookName s
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookClientBeginDeleteNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, _ *NotebookClientBeginDeleteNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -229,7 +229,7 @@ func (client *NotebookClient) NewGetNotebookSummaryByWorkSpacePager(options *Not
 }
 
 // getNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
-func (client *NotebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
+func (client *NotebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, _ *NotebookClientGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooksSummary"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -278,7 +278,7 @@ func (client *NotebookClient) NewGetNotebooksByWorkspacePager(options *NotebookC
 }
 
 // getNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
-func (client *NotebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookClientGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
+func (client *NotebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, _ *NotebookClientGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -343,7 +343,7 @@ func (client *NotebookClient) renameNotebook(ctx context.Context, notebookName s
 }
 
 // renameNotebookCreateRequest creates the RenameNotebook request.
-func (client *NotebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookClientBeginRenameNotebookOptions) (*policy.Request, error) {
+func (client *NotebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, _ *NotebookClientBeginRenameNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")

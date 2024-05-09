@@ -42,7 +42,7 @@ func (client *NamingUnionEnumClient) UnionEnumMemberName(ctx context.Context, bo
 }
 
 // unionEnumMemberNameCreateRequest creates the UnionEnumMemberName request.
-func (client *NamingUnionEnumClient) unionEnumMemberNameCreateRequest(ctx context.Context, body ExtensibleEnum, options *NamingUnionEnumClientUnionEnumMemberNameOptions) (*policy.Request, error) {
+func (client *NamingUnionEnumClient) unionEnumMemberNameCreateRequest(ctx context.Context, body ExtensibleEnum, _ *NamingUnionEnumClientUnionEnumMemberNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/union-enum/union-enum-member-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -79,7 +79,7 @@ func (client *NamingUnionEnumClient) UnionEnumName(ctx context.Context, body Cli
 }
 
 // unionEnumNameCreateRequest creates the UnionEnumName request.
-func (client *NamingUnionEnumClient) unionEnumNameCreateRequest(ctx context.Context, body ClientExtensibleEnum, options *NamingUnionEnumClientUnionEnumNameOptions) (*policy.Request, error) {
+func (client *NamingUnionEnumClient) unionEnumNameCreateRequest(ctx context.Context, body ClientExtensibleEnum, _ *NamingUnionEnumClientUnionEnumNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/union-enum/union-enum-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

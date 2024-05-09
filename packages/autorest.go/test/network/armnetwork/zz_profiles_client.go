@@ -72,7 +72,7 @@ func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *ProfilesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, _ *ProfilesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -160,7 +160,7 @@ func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, _ *ProfilesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -281,7 +281,7 @@ func (client *ProfilesClient) NewListPager(resourceGroupName string, options *Pr
 }
 
 // listCreateRequest creates the List request.
-func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *ProfilesClientListOptions) (*policy.Request, error) {
+func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *ProfilesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -339,7 +339,7 @@ func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOpti
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options *ProfilesClientListAllOptions) (*policy.Request, error) {
+func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, _ *ProfilesClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -396,7 +396,7 @@ func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName 
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *ProfilesClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, _ *ProfilesClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

@@ -66,7 +66,7 @@ func (client *EventsClient) NewListPager(startDate string, endDate string, scope
 }
 
 // listCreateRequest creates the List request.
-func (client *EventsClient) listCreateRequest(ctx context.Context, startDate string, endDate string, scope string, options *EventsClientListOptions) (*policy.Request, error) {
+func (client *EventsClient) listCreateRequest(ctx context.Context, startDate string, endDate string, scope string, _ *EventsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/events"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

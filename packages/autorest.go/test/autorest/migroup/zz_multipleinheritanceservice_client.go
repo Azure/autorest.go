@@ -48,7 +48,7 @@ func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, opti
 }
 
 // getCatCreateRequest creates the GetCat request.
-func (client *MultipleInheritanceServiceClient) getCatCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) getCatCreateRequest(ctx context.Context, _ *MultipleInheritanceServiceClientGetCatOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/cat"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, o
 }
 
 // getFelineCreateRequest creates the GetFeline request.
-func (client *MultipleInheritanceServiceClient) getFelineCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) getFelineCreateRequest(ctx context.Context, _ *MultipleInheritanceServiceClientGetFelineOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/feline"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -144,7 +144,7 @@ func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, op
 }
 
 // getHorseCreateRequest creates the GetHorse request.
-func (client *MultipleInheritanceServiceClient) getHorseCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) getHorseCreateRequest(ctx context.Context, _ *MultipleInheritanceServiceClientGetHorseOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/horse"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -192,7 +192,7 @@ func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, o
 }
 
 // getKittenCreateRequest creates the GetKitten request.
-func (client *MultipleInheritanceServiceClient) getKittenCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) getKittenCreateRequest(ctx context.Context, _ *MultipleInheritanceServiceClientGetKittenOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/kitten"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -240,7 +240,7 @@ func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, opti
 }
 
 // getPetCreateRequest creates the GetPet request.
-func (client *MultipleInheritanceServiceClient) getPetCreateRequest(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) getPetCreateRequest(ctx context.Context, _ *MultipleInheritanceServiceClientGetPetOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/pet"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -289,7 +289,7 @@ func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat 
 }
 
 // putCatCreateRequest creates the PutCat request.
-func (client *MultipleInheritanceServiceClient) putCatCreateRequest(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) putCatCreateRequest(ctx context.Context, cat Cat, _ *MultipleInheritanceServiceClientPutCatOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/cat"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -341,7 +341,7 @@ func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, f
 }
 
 // putFelineCreateRequest creates the PutFeline request.
-func (client *MultipleInheritanceServiceClient) putFelineCreateRequest(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) putFelineCreateRequest(ctx context.Context, feline Feline, _ *MultipleInheritanceServiceClientPutFelineOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/feline"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -393,7 +393,7 @@ func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, ho
 }
 
 // putHorseCreateRequest creates the PutHorse request.
-func (client *MultipleInheritanceServiceClient) putHorseCreateRequest(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) putHorseCreateRequest(ctx context.Context, horse Horse, _ *MultipleInheritanceServiceClientPutHorseOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/horse"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -445,7 +445,7 @@ func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, k
 }
 
 // putKittenCreateRequest creates the PutKitten request.
-func (client *MultipleInheritanceServiceClient) putKittenCreateRequest(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) putKittenCreateRequest(ctx context.Context, kitten Kitten, _ *MultipleInheritanceServiceClientPutKittenOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/kitten"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -497,7 +497,7 @@ func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet 
 }
 
 // putPetCreateRequest creates the PutPet request.
-func (client *MultipleInheritanceServiceClient) putPetCreateRequest(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (*policy.Request, error) {
+func (client *MultipleInheritanceServiceClient) putPetCreateRequest(ctx context.Context, pet Pet, _ *MultipleInheritanceServiceClientPutPetOptions) (*policy.Request, error) {
 	urlPath := "/multipleInheritance/pet"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

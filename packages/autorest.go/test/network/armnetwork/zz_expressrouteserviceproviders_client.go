@@ -70,7 +70,7 @@ func (client *ExpressRouteServiceProvidersClient) NewListPager(options *ExpressR
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.Context, options *ExpressRouteServiceProvidersClientListOptions) (*policy.Request, error) {
+func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.Context, _ *ExpressRouteServiceProvidersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -368,7 +368,7 @@ function emitPagerDefinition(client: go.Client, method: go.PageableMethod, impor
     text += `\t\t\t\treturn client.${method.naming.requestMethod}(${reqParams})\n\t\t\t}, `;
     // nextPageMethod might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
     if (method.nextPageMethod) {
-      const nextOpParams = helpers.getCreateRequestParametersSig(method.nextPageMethod).split(',');
+      const nextOpParams = helpers.getCreateRequestParametersSig(method.nextPageMethod, false).split(',');
       // keep the parameter names from the name/type tuples and find nextLink param
       for (let i = 0; i < nextOpParams.length; ++i) {
         const paramName = nextOpParams[i].trim().split(' ')[0];
@@ -508,7 +508,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
 
   const returns = ['*policy.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${method.name} request.\n`;
-  text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method)}) (${returns.join(', ')}) {\n`;
+  text += `func (client *${client.name}) ${name}(${helpers.getCreateRequestParametersSig(method, true)}) (${returns.join(', ')}) {\n`;
 
   const hostParams = new Array<go.URIParameter>();
   for (const parameter of client.parameters) {

@@ -84,7 +84,7 @@ func (client *WorkspacesClient) createOrUpdate(ctx context.Context, resourceGrou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *WorkspacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, parameters Workspace, options *WorkspacesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, parameters Workspace, _ *WorkspacesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -154,7 +154,7 @@ func (client *WorkspacesClient) deleteOperation(ctx context.Context, resourceGro
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *WorkspacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -281,7 +281,7 @@ func (client *WorkspacesClient) Get(ctx context.Context, resourceGroupName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *WorkspacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientGetOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -459,7 +459,7 @@ func (client *WorkspacesClient) ListKeys(ctx context.Context, resourceGroupName 
 }
 
 // listKeysCreateRequest creates the ListKeys request.
-func (client *WorkspacesClient) listKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientListKeysOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) listKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientListKeysOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -520,7 +520,7 @@ func (client *WorkspacesClient) ListNotebookAccessToken(ctx context.Context, res
 }
 
 // listNotebookAccessTokenCreateRequest creates the ListNotebookAccessToken request.
-func (client *WorkspacesClient) listNotebookAccessTokenCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientListNotebookAccessTokenOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) listNotebookAccessTokenCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientListNotebookAccessTokenOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listNotebookAccessToken"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -581,7 +581,7 @@ func (client *WorkspacesClient) ListNotebookKeys(ctx context.Context, resourceGr
 }
 
 // listNotebookKeysCreateRequest creates the ListNotebookKeys request.
-func (client *WorkspacesClient) listNotebookKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientListNotebookKeysOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) listNotebookKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientListNotebookKeysOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listNotebookKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -643,7 +643,7 @@ func (client *WorkspacesClient) ListOutboundNetworkDependenciesEndpoints(ctx con
 }
 
 // listOutboundNetworkDependenciesEndpointsCreateRequest creates the ListOutboundNetworkDependenciesEndpoints request.
-func (client *WorkspacesClient) listOutboundNetworkDependenciesEndpointsCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientListOutboundNetworkDependenciesEndpointsOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) listOutboundNetworkDependenciesEndpointsCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientListOutboundNetworkDependenciesEndpointsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundNetworkDependenciesEndpoints"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -704,7 +704,7 @@ func (client *WorkspacesClient) ListStorageAccountKeys(ctx context.Context, reso
 }
 
 // listStorageAccountKeysCreateRequest creates the ListStorageAccountKeys request.
-func (client *WorkspacesClient) listStorageAccountKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientListStorageAccountKeysOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) listStorageAccountKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientListStorageAccountKeysOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/listStorageAccountKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -783,7 +783,7 @@ func (client *WorkspacesClient) prepareNotebook(ctx context.Context, resourceGro
 }
 
 // prepareNotebookCreateRequest creates the PrepareNotebook request.
-func (client *WorkspacesClient) prepareNotebookCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientBeginPrepareNotebookOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) prepareNotebookCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientBeginPrepareNotebookOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/prepareNotebook"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -853,7 +853,7 @@ func (client *WorkspacesClient) resyncKeys(ctx context.Context, resourceGroupNam
 }
 
 // resyncKeysCreateRequest creates the ResyncKeys request.
-func (client *WorkspacesClient) resyncKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspacesClientBeginResyncKeysOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) resyncKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspacesClientBeginResyncKeysOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/resyncKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -921,7 +921,7 @@ func (client *WorkspacesClient) update(ctx context.Context, resourceGroupName st
 }
 
 // updateCreateRequest creates the Update request.
-func (client *WorkspacesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, parameters WorkspaceUpdateParameters, options *WorkspacesClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, parameters WorkspaceUpdateParameters, _ *WorkspacesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

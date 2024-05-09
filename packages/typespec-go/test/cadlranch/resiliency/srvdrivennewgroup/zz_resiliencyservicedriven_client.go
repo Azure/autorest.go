@@ -58,7 +58,7 @@ func (client *ResiliencyServiceDrivenClient) AddOperation(ctx context.Context, o
 }
 
 // addOperationCreateRequest creates the AddOperation request.
-func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientAddOperationOptions) (*policy.Request, error) {
+func (client *ResiliencyServiceDrivenClient) addOperationCreateRequest(ctx context.Context, _ *ResiliencyServiceDrivenClientAddOperationOptions) (*policy.Request, error) {
 	host := "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)

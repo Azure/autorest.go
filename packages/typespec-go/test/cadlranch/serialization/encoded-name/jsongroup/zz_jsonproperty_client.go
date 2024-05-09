@@ -42,7 +42,7 @@ func (client *JSONPropertyClient) Get(ctx context.Context, options *JSONProperty
 }
 
 // getCreateRequest creates the Get request.
-func (client *JSONPropertyClient) getCreateRequest(ctx context.Context, options *JSONPropertyClientGetOptions) (*policy.Request, error) {
+func (client *JSONPropertyClient) getCreateRequest(ctx context.Context, _ *JSONPropertyClientGetOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *JSONPropertyClient) Send(ctx context.Context, jsonEncodedNameModel
 }
 
 // sendCreateRequest creates the Send request.
-func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (*policy.Request, error) {
+func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, _ *JSONPropertyClientSendOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

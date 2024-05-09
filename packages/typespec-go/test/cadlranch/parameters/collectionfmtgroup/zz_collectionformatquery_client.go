@@ -44,7 +44,7 @@ func (client *CollectionFormatQueryClient) CSV(ctx context.Context, colors []str
 }
 
 // csvCreateRequest creates the CSV request.
-func (client *CollectionFormatQueryClient) csvCreateRequest(ctx context.Context, colors []string, options *CollectionFormatQueryClientCSVOptions) (*policy.Request, error) {
+func (client *CollectionFormatQueryClient) csvCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatQueryClientCSVOptions) (*policy.Request, error) {
 	urlPath := "/parameters/collection-format/query/csv"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,7 +81,7 @@ func (client *CollectionFormatQueryClient) Multi(ctx context.Context, colors []s
 }
 
 // multiCreateRequest creates the Multi request.
-func (client *CollectionFormatQueryClient) multiCreateRequest(ctx context.Context, colors []string, options *CollectionFormatQueryClientMultiOptions) (*policy.Request, error) {
+func (client *CollectionFormatQueryClient) multiCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatQueryClientMultiOptions) (*policy.Request, error) {
 	urlPath := "/parameters/collection-format/query/multi"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -120,7 +120,7 @@ func (client *CollectionFormatQueryClient) Pipes(ctx context.Context, colors []s
 }
 
 // pipesCreateRequest creates the Pipes request.
-func (client *CollectionFormatQueryClient) pipesCreateRequest(ctx context.Context, colors []string, options *CollectionFormatQueryClientPipesOptions) (*policy.Request, error) {
+func (client *CollectionFormatQueryClient) pipesCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatQueryClientPipesOptions) (*policy.Request, error) {
 	urlPath := "/parameters/collection-format/query/pipes"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -157,7 +157,7 @@ func (client *CollectionFormatQueryClient) Ssv(ctx context.Context, colors []str
 }
 
 // ssvCreateRequest creates the Ssv request.
-func (client *CollectionFormatQueryClient) ssvCreateRequest(ctx context.Context, colors []string, options *CollectionFormatQueryClientSsvOptions) (*policy.Request, error) {
+func (client *CollectionFormatQueryClient) ssvCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatQueryClientSsvOptions) (*policy.Request, error) {
 	urlPath := "/parameters/collection-format/query/ssv"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -194,7 +194,7 @@ func (client *CollectionFormatQueryClient) Tsv(ctx context.Context, colors []str
 }
 
 // tsvCreateRequest creates the Tsv request.
-func (client *CollectionFormatQueryClient) tsvCreateRequest(ctx context.Context, colors []string, options *CollectionFormatQueryClientTsvOptions) (*policy.Request, error) {
+func (client *CollectionFormatQueryClient) tsvCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatQueryClientTsvOptions) (*policy.Request, error) {
 	urlPath := "/parameters/collection-format/query/tsv"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

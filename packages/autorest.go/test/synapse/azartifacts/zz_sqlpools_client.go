@@ -48,7 +48,7 @@ func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 }
 
 // getCreateRequest creates the Get request.
-func (client *SQLPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (*policy.Request, error) {
+func (client *SQLPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName string, _ *SQLPoolsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/sqlPools/{sqlPoolName}"
 	if sqlPoolName == "" {
 		return nil, errors.New("parameter sqlPoolName cannot be empty")
@@ -98,7 +98,7 @@ func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientL
 }
 
 // listCreateRequest creates the List request.
-func (client *SQLPoolsClient) listCreateRequest(ctx context.Context, options *SQLPoolsClientListOptions) (*policy.Request, error) {
+func (client *SQLPoolsClient) listCreateRequest(ctx context.Context, _ *SQLPoolsClientListOptions) (*policy.Request, error) {
 	urlPath := "/sqlPools"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

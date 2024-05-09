@@ -44,7 +44,7 @@ func (client *ValueTypesUnknownDictClient) Get(ctx context.Context, options *Val
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesUnknownDictClient) getCreateRequest(ctx context.Context, options *ValueTypesUnknownDictClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesUnknownDictClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnknownDictClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/dict"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ValueTypesUnknownDictClient) Put(ctx context.Context, body Unknown
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesUnknownDictClient) putCreateRequest(ctx context.Context, body UnknownDictProperty, options *ValueTypesUnknownDictClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesUnknownDictClient) putCreateRequest(ctx context.Context, body UnknownDictProperty, _ *ValueTypesUnknownDictClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/dict"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

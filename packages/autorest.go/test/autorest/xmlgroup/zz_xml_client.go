@@ -48,7 +48,7 @@ func (client *XMLClient) GetACLs(ctx context.Context, options *XMLClientGetACLsO
 }
 
 // getACLsCreateRequest creates the GetACLs request.
-func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLClientGetACLsOptions) (*policy.Request, error) {
+func (client *XMLClient) getACLsCreateRequest(ctx context.Context, _ *XMLClientGetACLsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *XMLClient) GetBytes(ctx context.Context, options *XMLClientGetByte
 }
 
 // getBytesCreateRequest creates the GetBytes request.
-func (client *XMLClient) getBytesCreateRequest(ctx context.Context, options *XMLClientGetBytesOptions) (*policy.Request, error) {
+func (client *XMLClient) getBytesCreateRequest(ctx context.Context, _ *XMLClientGetBytesOptions) (*policy.Request, error) {
 	urlPath := "/xml/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -147,7 +147,7 @@ func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *X
 }
 
 // getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
-func (client *XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Context, options *XMLClientGetComplexTypeRefNoMetaOptions) (*policy.Request, error) {
+func (client *XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Context, _ *XMLClientGetComplexTypeRefNoMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -195,7 +195,7 @@ func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options 
 }
 
 // getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
-func (client *XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Context, options *XMLClientGetComplexTypeRefWithMetaOptions) (*policy.Request, error) {
+func (client *XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Context, _ *XMLClientGetComplexTypeRefWithMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -243,7 +243,7 @@ func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLC
 }
 
 // getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
-func (client *XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, options *XMLClientGetEmptyChildElementOptions) (*policy.Request, error) {
+func (client *XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, _ *XMLClientGetEmptyChildElementOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-child-element"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -290,7 +290,7 @@ func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLClientGet
 }
 
 // getEmptyListCreateRequest creates the GetEmptyList request.
-func (client *XMLClient) getEmptyListCreateRequest(ctx context.Context, options *XMLClientGetEmptyListOptions) (*policy.Request, error) {
+func (client *XMLClient) getEmptyListCreateRequest(ctx context.Context, _ *XMLClientGetEmptyListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-list"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -337,7 +337,7 @@ func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLClien
 }
 
 // getEmptyRootListCreateRequest creates the GetEmptyRootList request.
-func (client *XMLClient) getEmptyRootListCreateRequest(ctx context.Context, options *XMLClientGetEmptyRootListOptions) (*policy.Request, error) {
+func (client *XMLClient) getEmptyRootListCreateRequest(ctx context.Context, _ *XMLClientGetEmptyRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -385,7 +385,7 @@ func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLC
 }
 
 // getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
-func (client *XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, options *XMLClientGetEmptyWrappedListsOptions) (*policy.Request, error) {
+func (client *XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, _ *XMLClientGetEmptyWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -432,7 +432,7 @@ func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLClientGetHe
 }
 
 // getHeadersCreateRequest creates the GetHeaders request.
-func (client *XMLClient) getHeadersCreateRequest(ctx context.Context, options *XMLClientGetHeadersOptions) (*policy.Request, error) {
+func (client *XMLClient) getHeadersCreateRequest(ctx context.Context, _ *XMLClientGetHeadersOptions) (*policy.Request, error) {
 	urlPath := "/xml/headers"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -478,7 +478,7 @@ func (client *XMLClient) GetRootList(ctx context.Context, options *XMLClientGetR
 }
 
 // getRootListCreateRequest creates the GetRootList request.
-func (client *XMLClient) getRootListCreateRequest(ctx context.Context, options *XMLClientGetRootListOptions) (*policy.Request, error) {
+func (client *XMLClient) getRootListCreateRequest(ctx context.Context, _ *XMLClientGetRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -526,7 +526,7 @@ func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XML
 }
 
 // getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
-func (client *XMLClient) getRootListSingleItemCreateRequest(ctx context.Context, options *XMLClientGetRootListSingleItemOptions) (*policy.Request, error) {
+func (client *XMLClient) getRootListSingleItemCreateRequest(ctx context.Context, _ *XMLClientGetRootListSingleItemOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -574,7 +574,7 @@ func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLC
 }
 
 // getServicePropertiesCreateRequest creates the GetServiceProperties request.
-func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, options *XMLClientGetServicePropertiesOptions) (*policy.Request, error) {
+func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, _ *XMLClientGetServicePropertiesOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -625,7 +625,7 @@ func (client *XMLClient) GetSimple(ctx context.Context, options *XMLClientGetSim
 }
 
 // getSimpleCreateRequest creates the GetSimple request.
-func (client *XMLClient) getSimpleCreateRequest(ctx context.Context, options *XMLClientGetSimpleOptions) (*policy.Request, error) {
+func (client *XMLClient) getSimpleCreateRequest(ctx context.Context, _ *XMLClientGetSimpleOptions) (*policy.Request, error) {
 	urlPath := "/xml/simple"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -672,7 +672,7 @@ func (client *XMLClient) GetURI(ctx context.Context, options *XMLClientGetURIOpt
 }
 
 // getURICreateRequest creates the GetURI request.
-func (client *XMLClient) getURICreateRequest(ctx context.Context, options *XMLClientGetURIOptions) (*policy.Request, error) {
+func (client *XMLClient) getURICreateRequest(ctx context.Context, _ *XMLClientGetURIOptions) (*policy.Request, error) {
 	urlPath := "/xml/url"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -719,7 +719,7 @@ func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLClient
 }
 
 // getWrappedListsCreateRequest creates the GetWrappedLists request.
-func (client *XMLClient) getWrappedListsCreateRequest(ctx context.Context, options *XMLClientGetWrappedListsOptions) (*policy.Request, error) {
+func (client *XMLClient) getWrappedListsCreateRequest(ctx context.Context, _ *XMLClientGetWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/wrapped-lists"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -767,7 +767,7 @@ func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLClientGetXM
 }
 
 // getXMsTextCreateRequest creates the GetXMsText request.
-func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, options *XMLClientGetXMsTextOptions) (*policy.Request, error) {
+func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, _ *XMLClientGetXMsTextOptions) (*policy.Request, error) {
 	urlPath := "/xml/x-ms-text"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -813,7 +813,7 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 }
 
 // jsonInputCreateRequest creates the JSONInput request.
-func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLClientJSONInputOptions) (*policy.Request, error) {
+func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties JSONInput, _ *XMLClientJSONInputOptions) (*policy.Request, error) {
 	urlPath := "/xml/jsoninput"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -853,7 +853,7 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLClientJSONO
 }
 
 // jsonOutputCreateRequest creates the JSONOutput request.
-func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, options *XMLClientJSONOutputOptions) (*policy.Request, error) {
+func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, _ *XMLClientJSONOutputOptions) (*policy.Request, error) {
 	urlPath := "/xml/jsonoutput"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -900,7 +900,7 @@ func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLClientListBl
 }
 
 // listBlobsCreateRequest creates the ListBlobs request.
-func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, options *XMLClientListBlobsOptions) (*policy.Request, error) {
+func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, _ *XMLClientListBlobsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -951,7 +951,7 @@ func (client *XMLClient) ListContainers(ctx context.Context, options *XMLClientL
 }
 
 // listContainersCreateRequest creates the ListContainers request.
-func (client *XMLClient) listContainersCreateRequest(ctx context.Context, options *XMLClientListContainersOptions) (*policy.Request, error) {
+func (client *XMLClient) listContainersCreateRequest(ctx context.Context, _ *XMLClientListContainersOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1000,7 +1000,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdenti
 }
 
 // putACLsCreateRequest creates the PutACLs request.
-func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []*SignedIdentifier, options *XMLClientPutACLsOptions) (*policy.Request, error) {
+func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []*SignedIdentifier, _ *XMLClientPutACLsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1047,7 +1047,7 @@ func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteP
 }
 
 // putBinaryCreateRequest creates the PutBinary request.
-func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow ModelWithByteProperty, options *XMLClientPutBinaryOptions) (*policy.Request, error) {
+func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow ModelWithByteProperty, _ *XMLClientPutBinaryOptions) (*policy.Request, error) {
 	urlPath := "/xml/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1088,7 +1088,7 @@ func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model Root
 }
 
 // putComplexTypeRefNoMetaCreateRequest creates the PutComplexTypeRefNoMeta request.
-func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Context, model RootWithRefAndNoMeta, options *XMLClientPutComplexTypeRefNoMetaOptions) (*policy.Request, error) {
+func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Context, model RootWithRefAndNoMeta, _ *XMLClientPutComplexTypeRefNoMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1128,7 +1128,7 @@ func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Ro
 }
 
 // putComplexTypeRefWithMetaCreateRequest creates the PutComplexTypeRefWithMeta request.
-func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Context, model RootWithRefAndMeta, options *XMLClientPutComplexTypeRefWithMetaOptions) (*policy.Request, error) {
+func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Context, model RootWithRefAndMeta, _ *XMLClientPutComplexTypeRefWithMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1168,7 +1168,7 @@ func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana
 }
 
 // putEmptyChildElementCreateRequest creates the PutEmptyChildElement request.
-func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, banana Banana, options *XMLClientPutEmptyChildElementOptions) (*policy.Request, error) {
+func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, banana Banana, _ *XMLClientPutEmptyChildElementOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-child-element"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1207,7 +1207,7 @@ func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, 
 }
 
 // putEmptyListCreateRequest creates the PutEmptyList request.
-func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLClientPutEmptyListOptions) (*policy.Request, error) {
+func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slideshow Slideshow, _ *XMLClientPutEmptyListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-list"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1246,7 +1246,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana
 }
 
 // putEmptyRootListCreateRequest creates the PutEmptyRootList request.
-func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLClientPutEmptyRootListOptions) (*policy.Request, error) {
+func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []*Banana, _ *XMLClientPutEmptyRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-root-list"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1290,7 +1290,7 @@ func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel A
 }
 
 // putEmptyWrappedListsCreateRequest creates the PutEmptyWrappedLists request.
-func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, appleBarrel AppleBarrel, options *XMLClientPutEmptyWrappedListsOptions) (*policy.Request, error) {
+func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, appleBarrel AppleBarrel, _ *XMLClientPutEmptyWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1329,7 +1329,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, opt
 }
 
 // putRootListCreateRequest creates the PutRootList request.
-func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListOptions) (*policy.Request, error) {
+func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas []*Banana, _ *XMLClientPutRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1373,7 +1373,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*B
 }
 
 // putRootListSingleItemCreateRequest creates the PutRootListSingleItem request.
-func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListSingleItemOptions) (*policy.Request, error) {
+func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []*Banana, _ *XMLClientPutRootListSingleItemOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list-single-item"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1417,7 +1417,7 @@ func (client *XMLClient) PutServiceProperties(ctx context.Context, properties St
 }
 
 // putServicePropertiesCreateRequest creates the PutServiceProperties request.
-func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, properties StorageServiceProperties, options *XMLClientPutServicePropertiesOptions) (*policy.Request, error) {
+func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, properties StorageServiceProperties, _ *XMLClientPutServicePropertiesOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1460,7 +1460,7 @@ func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opt
 }
 
 // putSimpleCreateRequest creates the PutSimple request.
-func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLClientPutSimpleOptions) (*policy.Request, error) {
+func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow Slideshow, _ *XMLClientPutSimpleOptions) (*policy.Request, error) {
 	urlPath := "/xml/simple"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1500,7 +1500,7 @@ func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty,
 }
 
 // putURICreateRequest creates the PutURI request.
-func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWithURLProperty, options *XMLClientPutURIOptions) (*policy.Request, error) {
+func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWithURLProperty, _ *XMLClientPutURIOptions) (*policy.Request, error) {
 	urlPath := "/xml/url"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1540,7 +1540,7 @@ func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists Apple
 }
 
 // putWrappedListsCreateRequest creates the PutWrappedLists request.
-func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrappedLists AppleBarrel, options *XMLClientPutWrappedListsOptions) (*policy.Request, error) {
+func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrappedLists AppleBarrel, _ *XMLClientPutWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/wrapped-lists"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

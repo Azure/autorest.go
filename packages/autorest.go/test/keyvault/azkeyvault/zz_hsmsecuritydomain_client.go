@@ -68,7 +68,7 @@ func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseUR
 }
 
 // downloadCreateRequest creates the Download request.
-func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*policy.Request, error) {
+func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, _ *HSMSecurityDomainClientBeginDownloadOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/securitydomain/download"
@@ -112,7 +112,7 @@ func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaul
 }
 
 // downloadPendingCreateRequest creates the DownloadPending request.
-func (client *HSMSecurityDomainClient) downloadPendingCreateRequest(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientDownloadPendingOptions) (*policy.Request, error) {
+func (client *HSMSecurityDomainClient) downloadPendingCreateRequest(ctx context.Context, vaultBaseURL string, _ *HSMSecurityDomainClientDownloadPendingOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/securitydomain/download/pending"
@@ -159,7 +159,7 @@ func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBas
 }
 
 // transferKeyCreateRequest creates the TransferKey request.
-func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientTransferKeyOptions) (*policy.Request, error) {
+func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Context, vaultBaseURL string, _ *HSMSecurityDomainClientTransferKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/securitydomain/upload"
@@ -228,7 +228,7 @@ func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL 
 }
 
 // uploadCreateRequest creates the Upload request.
-func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*policy.Request, error) {
+func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, _ *HSMSecurityDomainClientBeginUploadOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/securitydomain/upload"
@@ -269,7 +269,7 @@ func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultB
 }
 
 // uploadPendingCreateRequest creates the UploadPending request.
-func (client *HSMSecurityDomainClient) uploadPendingCreateRequest(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientUploadPendingOptions) (*policy.Request, error) {
+func (client *HSMSecurityDomainClient) uploadPendingCreateRequest(ctx context.Context, vaultBaseURL string, _ *HSMSecurityDomainClientUploadPendingOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/securitydomain/upload/pending"

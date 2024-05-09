@@ -73,7 +73,7 @@ func (client *CloudServiceOperatingSystemsClient) GetOSFamily(ctx context.Contex
 }
 
 // getOSFamilyCreateRequest creates the GetOSFamily request.
-func (client *CloudServiceOperatingSystemsClient) getOSFamilyCreateRequest(ctx context.Context, location string, osFamilyName string, options *CloudServiceOperatingSystemsClientGetOSFamilyOptions) (*policy.Request, error) {
+func (client *CloudServiceOperatingSystemsClient) getOSFamilyCreateRequest(ctx context.Context, location string, osFamilyName string, _ *CloudServiceOperatingSystemsClientGetOSFamilyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -139,7 +139,7 @@ func (client *CloudServiceOperatingSystemsClient) GetOSVersion(ctx context.Conte
 }
 
 // getOSVersionCreateRequest creates the GetOSVersion request.
-func (client *CloudServiceOperatingSystemsClient) getOSVersionCreateRequest(ctx context.Context, location string, osVersionName string, options *CloudServiceOperatingSystemsClientGetOSVersionOptions) (*policy.Request, error) {
+func (client *CloudServiceOperatingSystemsClient) getOSVersionCreateRequest(ctx context.Context, location string, osVersionName string, _ *CloudServiceOperatingSystemsClientGetOSVersionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -205,7 +205,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSFamiliesPager(locatio
 }
 
 // listOSFamiliesCreateRequest creates the ListOSFamilies request.
-func (client *CloudServiceOperatingSystemsClient) listOSFamiliesCreateRequest(ctx context.Context, location string, options *CloudServiceOperatingSystemsClientListOSFamiliesOptions) (*policy.Request, error) {
+func (client *CloudServiceOperatingSystemsClient) listOSFamiliesCreateRequest(ctx context.Context, location string, _ *CloudServiceOperatingSystemsClientListOSFamiliesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -267,7 +267,7 @@ func (client *CloudServiceOperatingSystemsClient) NewListOSVersionsPager(locatio
 }
 
 // listOSVersionsCreateRequest creates the ListOSVersions request.
-func (client *CloudServiceOperatingSystemsClient) listOSVersionsCreateRequest(ctx context.Context, location string, options *CloudServiceOperatingSystemsClientListOSVersionsOptions) (*policy.Request, error) {
+func (client *CloudServiceOperatingSystemsClient) listOSVersionsCreateRequest(ctx context.Context, location string, _ *CloudServiceOperatingSystemsClientListOSVersionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

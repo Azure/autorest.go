@@ -44,7 +44,7 @@ func (client *ValueTypesExtensibleEnumClient) Get(ctx context.Context, options *
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesExtensibleEnumClient) getCreateRequest(ctx context.Context, options *ValueTypesExtensibleEnumClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesExtensibleEnumClient) getCreateRequest(ctx context.Context, _ *ValueTypesExtensibleEnumClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/extensible-enum"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ValueTypesExtensibleEnumClient) Put(ctx context.Context, body Exte
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesExtensibleEnumClient) putCreateRequest(ctx context.Context, body ExtensibleEnumProperty, options *ValueTypesExtensibleEnumClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesExtensibleEnumClient) putCreateRequest(ctx context.Context, body ExtensibleEnumProperty, _ *ValueTypesExtensibleEnumClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/extensible-enum"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -132,7 +132,7 @@ func (client *WebCategoriesClient) NewListBySubscriptionPager(options *WebCatego
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *WebCategoriesClient) listBySubscriptionCreateRequest(ctx context.Context, options *WebCategoriesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *WebCategoriesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *WebCategoriesClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

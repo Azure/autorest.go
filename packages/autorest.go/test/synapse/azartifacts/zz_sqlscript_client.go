@@ -131,7 +131,7 @@ func (client *SQLScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // deleteSQLScriptCreateRequest creates the DeleteSQLScript request.
-func (client *SQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptClientBeginDeleteSQLScriptOptions) (*policy.Request, error) {
+func (client *SQLScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, _ *SQLScriptClientBeginDeleteSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
@@ -229,7 +229,7 @@ func (client *SQLScriptClient) NewGetSQLScriptsByWorkspacePager(options *SQLScri
 }
 
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
-func (client *SQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptClientGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
+func (client *SQLScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, _ *SQLScriptClientGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -294,7 +294,7 @@ func (client *SQLScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 }
 
 // renameSQLScriptCreateRequest creates the RenameSQLScript request.
-func (client *SQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptClientBeginRenameSQLScriptOptions) (*policy.Request, error) {
+func (client *SQLScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, _ *SQLScriptClientBeginRenameSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")

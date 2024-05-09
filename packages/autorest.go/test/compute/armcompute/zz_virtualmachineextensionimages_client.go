@@ -72,7 +72,7 @@ func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, loca
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesClientGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, version string, _ *VirtualMachineExtensionImagesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -144,7 +144,7 @@ func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context
 }
 
 // listTypesCreateRequest creates the ListTypes request.
-func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesClientListTypesOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, _ *VirtualMachineExtensionImagesClientListTypesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

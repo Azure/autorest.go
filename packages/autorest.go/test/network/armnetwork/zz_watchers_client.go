@@ -96,7 +96,7 @@ func (client *WatchersClient) checkConnectivity(ctx context.Context, resourceGro
 }
 
 // checkConnectivityCreateRequest creates the CheckConnectivity request.
-func (client *WatchersClient) checkConnectivityCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *WatchersClientBeginCheckConnectivityOptions) (*policy.Request, error) {
+func (client *WatchersClient) checkConnectivityCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, _ *WatchersClientBeginCheckConnectivityOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectivityCheck"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -155,7 +155,7 @@ func (client *WatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters Watcher, options *WatchersClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters Watcher, _ *WatchersClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -243,7 +243,7 @@ func (client *WatchersClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *WatchersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *WatchersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, _ *WatchersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -298,7 +298,7 @@ func (client *WatchersClient) Get(ctx context.Context, resourceGroupName string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientGetOptions) (*policy.Request, error) {
+func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, _ *WatchersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -387,7 +387,7 @@ func (client *WatchersClient) getAzureReachabilityReport(ctx context.Context, re
 }
 
 // getAzureReachabilityReportCreateRequest creates the GetAzureReachabilityReport request.
-func (client *WatchersClient) getAzureReachabilityReportCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *WatchersClientBeginGetAzureReachabilityReportOptions) (*policy.Request, error) {
+func (client *WatchersClient) getAzureReachabilityReportCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, _ *WatchersClientBeginGetAzureReachabilityReportOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/azureReachabilityReport"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -468,7 +468,7 @@ func (client *WatchersClient) getFlowLogStatus(ctx context.Context, resourceGrou
 }
 
 // getFlowLogStatusCreateRequest creates the GetFlowLogStatus request.
-func (client *WatchersClient) getFlowLogStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *WatchersClientBeginGetFlowLogStatusOptions) (*policy.Request, error) {
+func (client *WatchersClient) getFlowLogStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, _ *WatchersClientBeginGetFlowLogStatusOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryFlowLogStatus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -557,7 +557,7 @@ func (client *WatchersClient) getNetworkConfigurationDiagnostic(ctx context.Cont
 }
 
 // getNetworkConfigurationDiagnosticCreateRequest creates the GetNetworkConfigurationDiagnostic request.
-func (client *WatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *WatchersClientBeginGetNetworkConfigurationDiagnosticOptions) (*policy.Request, error) {
+func (client *WatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, _ *WatchersClientBeginGetNetworkConfigurationDiagnosticOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/networkConfigurationDiagnostic"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -638,7 +638,7 @@ func (client *WatchersClient) getNextHop(ctx context.Context, resourceGroupName 
 }
 
 // getNextHopCreateRequest creates the GetNextHop request.
-func (client *WatchersClient) getNextHopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *WatchersClientBeginGetNextHopOptions) (*policy.Request, error) {
+func (client *WatchersClient) getNextHopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, _ *WatchersClientBeginGetNextHopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/nextHop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -697,7 +697,7 @@ func (client *WatchersClient) GetTopology(ctx context.Context, resourceGroupName
 }
 
 // getTopologyCreateRequest creates the GetTopology request.
-func (client *WatchersClient) getTopologyCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *WatchersClientGetTopologyOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTopologyCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, _ *WatchersClientGetTopologyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/topology"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -787,7 +787,7 @@ func (client *WatchersClient) getTroubleshooting(ctx context.Context, resourceGr
 }
 
 // getTroubleshootingCreateRequest creates the GetTroubleshooting request.
-func (client *WatchersClient) getTroubleshootingCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTroubleshootingCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, _ *WatchersClientBeginGetTroubleshootingOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/troubleshoot"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -868,7 +868,7 @@ func (client *WatchersClient) getTroubleshootingResult(ctx context.Context, reso
 }
 
 // getTroubleshootingResultCreateRequest creates the GetTroubleshootingResult request.
-func (client *WatchersClient) getTroubleshootingResultCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingResultOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTroubleshootingResultCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, _ *WatchersClientBeginGetTroubleshootingResultOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryTroubleshootResult"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -949,7 +949,7 @@ func (client *WatchersClient) getVMSecurityRules(ctx context.Context, resourceGr
 }
 
 // getVMSecurityRulesCreateRequest creates the GetVMSecurityRules request.
-func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *WatchersClientBeginGetVMSecurityRulesOptions) (*policy.Request, error) {
+func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, _ *WatchersClientBeginGetVMSecurityRulesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/securityGroupView"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1007,7 +1007,7 @@ func (client *WatchersClient) NewListPager(resourceGroupName string, options *Wa
 }
 
 // listCreateRequest creates the List request.
-func (client *WatchersClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *WatchersClientListOptions) (*policy.Request, error) {
+func (client *WatchersClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *WatchersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1066,7 +1066,7 @@ func (client *WatchersClient) NewListAllPager(options *WatchersClientListAllOpti
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *WatchersClient) listAllCreateRequest(ctx context.Context, options *WatchersClientListAllOptions) (*policy.Request, error) {
+func (client *WatchersClient) listAllCreateRequest(ctx context.Context, _ *WatchersClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1147,7 +1147,7 @@ func (client *WatchersClient) listAvailableProviders(ctx context.Context, resour
 }
 
 // listAvailableProvidersCreateRequest creates the ListAvailableProviders request.
-func (client *WatchersClient) listAvailableProvidersCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *WatchersClientBeginListAvailableProvidersOptions) (*policy.Request, error) {
+func (client *WatchersClient) listAvailableProvidersCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, _ *WatchersClientBeginListAvailableProvidersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/availableProvidersList"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1228,7 +1228,7 @@ func (client *WatchersClient) setFlowLogConfiguration(ctx context.Context, resou
 }
 
 // setFlowLogConfigurationCreateRequest creates the SetFlowLogConfiguration request.
-func (client *WatchersClient) setFlowLogConfigurationCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *WatchersClientBeginSetFlowLogConfigurationOptions) (*policy.Request, error) {
+func (client *WatchersClient) setFlowLogConfigurationCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, _ *WatchersClientBeginSetFlowLogConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/configureFlowLog"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1287,7 +1287,7 @@ func (client *WatchersClient) UpdateTags(ctx context.Context, resourceGroupName 
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *WatchersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *WatchersClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *WatchersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, _ *WatchersClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1377,7 +1377,7 @@ func (client *WatchersClient) verifyIPFlow(ctx context.Context, resourceGroupNam
 }
 
 // verifyIPFlowCreateRequest creates the VerifyIPFlow request.
-func (client *WatchersClient) verifyIPFlowCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *WatchersClientBeginVerifyIPFlowOptions) (*policy.Request, error) {
+func (client *WatchersClient) verifyIPFlowCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, _ *WatchersClientBeginVerifyIPFlowOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/ipFlowVerify"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

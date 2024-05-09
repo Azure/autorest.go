@@ -71,7 +71,7 @@ func (client *AvailableServiceAliasesClient) NewListPager(location string, optio
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesClientListOptions) (*policy.Request, error) {
+func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Context, location string, _ *AvailableServiceAliasesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -132,7 +132,7 @@ func (client *AvailableServiceAliasesClient) NewListByResourceGroupPager(resourc
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, _ *AvailableServiceAliasesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

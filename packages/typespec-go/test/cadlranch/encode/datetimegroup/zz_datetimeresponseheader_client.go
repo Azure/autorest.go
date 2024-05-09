@@ -46,7 +46,7 @@ func (client *DatetimeResponseHeaderClient) Default(ctx context.Context, options
 }
 
 // defaultCreateRequest creates the Default request.
-func (client *DatetimeResponseHeaderClient) defaultCreateRequest(ctx context.Context, options *DatetimeResponseHeaderClientDefaultOptions) (*policy.Request, error) {
+func (client *DatetimeResponseHeaderClient) defaultCreateRequest(ctx context.Context, _ *DatetimeResponseHeaderClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/datetime/responseheader/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -93,7 +93,7 @@ func (client *DatetimeResponseHeaderClient) RFC3339(ctx context.Context, options
 }
 
 // rfc3339CreateRequest creates the RFC3339 request.
-func (client *DatetimeResponseHeaderClient) rfc3339CreateRequest(ctx context.Context, options *DatetimeResponseHeaderClientRFC3339Options) (*policy.Request, error) {
+func (client *DatetimeResponseHeaderClient) rfc3339CreateRequest(ctx context.Context, _ *DatetimeResponseHeaderClientRFC3339Options) (*policy.Request, error) {
 	urlPath := "/encode/datetime/responseheader/rfc3339"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -140,7 +140,7 @@ func (client *DatetimeResponseHeaderClient) RFC7231(ctx context.Context, options
 }
 
 // rfc7231CreateRequest creates the RFC7231 request.
-func (client *DatetimeResponseHeaderClient) rfc7231CreateRequest(ctx context.Context, options *DatetimeResponseHeaderClientRFC7231Options) (*policy.Request, error) {
+func (client *DatetimeResponseHeaderClient) rfc7231CreateRequest(ctx context.Context, _ *DatetimeResponseHeaderClientRFC7231Options) (*policy.Request, error) {
 	urlPath := "/encode/datetime/responseheader/rfc7231"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -187,7 +187,7 @@ func (client *DatetimeResponseHeaderClient) UnixTimestamp(ctx context.Context, o
 }
 
 // unixTimestampCreateRequest creates the UnixTimestamp request.
-func (client *DatetimeResponseHeaderClient) unixTimestampCreateRequest(ctx context.Context, options *DatetimeResponseHeaderClientUnixTimestampOptions) (*policy.Request, error) {
+func (client *DatetimeResponseHeaderClient) unixTimestampCreateRequest(ctx context.Context, _ *DatetimeResponseHeaderClientUnixTimestampOptions) (*policy.Request, error) {
 	urlPath := "/encode/datetime/responseheader/unix-timestamp"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

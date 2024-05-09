@@ -43,7 +43,7 @@ func (client *DurationHeaderClient) Default(ctx context.Context, duration string
 }
 
 // defaultCreateRequest creates the Default request.
-func (client *DurationHeaderClient) defaultCreateRequest(ctx context.Context, duration string, options *DurationHeaderClientDefaultOptions) (*policy.Request, error) {
+func (client *DurationHeaderClient) defaultCreateRequest(ctx context.Context, duration string, _ *DurationHeaderClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -77,7 +77,7 @@ func (client *DurationHeaderClient) Float64Seconds(ctx context.Context, duration
 }
 
 // float64SecondsCreateRequest creates the Float64Seconds request.
-func (client *DurationHeaderClient) float64SecondsCreateRequest(ctx context.Context, duration float64, options *DurationHeaderClientFloat64SecondsOptions) (*policy.Request, error) {
+func (client *DurationHeaderClient) float64SecondsCreateRequest(ctx context.Context, duration float64, _ *DurationHeaderClientFloat64SecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/float64-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -111,7 +111,7 @@ func (client *DurationHeaderClient) FloatSeconds(ctx context.Context, duration f
 }
 
 // floatSecondsCreateRequest creates the FloatSeconds request.
-func (client *DurationHeaderClient) floatSecondsCreateRequest(ctx context.Context, duration float32, options *DurationHeaderClientFloatSecondsOptions) (*policy.Request, error) {
+func (client *DurationHeaderClient) floatSecondsCreateRequest(ctx context.Context, duration float32, _ *DurationHeaderClientFloatSecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/float-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -144,7 +144,7 @@ func (client *DurationHeaderClient) ISO8601(ctx context.Context, duration string
 }
 
 // iso8601CreateRequest creates the ISO8601 request.
-func (client *DurationHeaderClient) iso8601CreateRequest(ctx context.Context, duration string, options *DurationHeaderClientISO8601Options) (*policy.Request, error) {
+func (client *DurationHeaderClient) iso8601CreateRequest(ctx context.Context, duration string, _ *DurationHeaderClientISO8601Options) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/iso8601"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -178,7 +178,7 @@ func (client *DurationHeaderClient) ISO8601Array(ctx context.Context, duration [
 }
 
 // iso8601ArrayCreateRequest creates the ISO8601Array request.
-func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Context, duration []string, options *DurationHeaderClientISO8601ArrayOptions) (*policy.Request, error) {
+func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Context, duration []string, _ *DurationHeaderClientISO8601ArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/iso8601-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -212,7 +212,7 @@ func (client *DurationHeaderClient) Int32Seconds(ctx context.Context, duration i
 }
 
 // int32SecondsCreateRequest creates the Int32Seconds request.
-func (client *DurationHeaderClient) int32SecondsCreateRequest(ctx context.Context, duration int32, options *DurationHeaderClientInt32SecondsOptions) (*policy.Request, error) {
+func (client *DurationHeaderClient) int32SecondsCreateRequest(ctx context.Context, duration int32, _ *DurationHeaderClientInt32SecondsOptions) (*policy.Request, error) {
 	urlPath := "/encode/duration/header/int32-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

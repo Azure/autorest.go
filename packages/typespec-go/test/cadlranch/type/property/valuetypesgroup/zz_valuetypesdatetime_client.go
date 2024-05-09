@@ -43,7 +43,7 @@ func (client *ValueTypesDatetimeClient) Get(ctx context.Context, options *ValueT
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesDatetimeClient) getCreateRequest(ctx context.Context, options *ValueTypesDatetimeClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesDatetimeClient) getCreateRequest(ctx context.Context, _ *ValueTypesDatetimeClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesDatetimeClient) Put(ctx context.Context, body DatetimePr
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesDatetimeClient) putCreateRequest(ctx context.Context, body DatetimeProperty, options *ValueTypesDatetimeClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesDatetimeClient) putCreateRequest(ctx context.Context, body DatetimeProperty, _ *ValueTypesDatetimeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

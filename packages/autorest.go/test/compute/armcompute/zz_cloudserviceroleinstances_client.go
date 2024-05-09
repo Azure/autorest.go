@@ -91,7 +91,7 @@ func (client *CloudServiceRoleInstancesClient) deleteOperation(ctx context.Conte
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *CloudServiceRoleInstancesClient) deleteCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) deleteCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")
@@ -221,7 +221,7 @@ func (client *CloudServiceRoleInstancesClient) GetInstanceView(ctx context.Conte
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
-func (client *CloudServiceRoleInstancesClient) getInstanceViewCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetInstanceViewOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) getInstanceViewCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientGetInstanceViewOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/instanceView"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")
@@ -288,7 +288,7 @@ func (client *CloudServiceRoleInstancesClient) GetRemoteDesktopFile(ctx context.
 }
 
 // getRemoteDesktopFileCreateRequest creates the GetRemoteDesktopFile request.
-func (client *CloudServiceRoleInstancesClient) getRemoteDesktopFileCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientGetRemoteDesktopFileOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) getRemoteDesktopFileCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientGetRemoteDesktopFileOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/remoteDesktopFile"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")
@@ -439,7 +439,7 @@ func (client *CloudServiceRoleInstancesClient) rebuild(ctx context.Context, role
 }
 
 // rebuildCreateRequest creates the Rebuild request.
-func (client *CloudServiceRoleInstancesClient) rebuildCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRebuildOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) rebuildCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientBeginRebuildOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/rebuild"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")
@@ -520,7 +520,7 @@ func (client *CloudServiceRoleInstancesClient) reimage(ctx context.Context, role
 }
 
 // reimageCreateRequest creates the Reimage request.
-func (client *CloudServiceRoleInstancesClient) reimageCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginReimageOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) reimageCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientBeginReimageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/reimage"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")
@@ -599,7 +599,7 @@ func (client *CloudServiceRoleInstancesClient) restart(ctx context.Context, role
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *CloudServiceRoleInstancesClient) restartCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRoleInstancesClientBeginRestartOptions) (*policy.Request, error) {
+func (client *CloudServiceRoleInstancesClient) restartCreateRequest(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRoleInstancesClientBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/restart"
 	if roleInstanceName == "" {
 		return nil, errors.New("parameter roleInstanceName cannot be empty")

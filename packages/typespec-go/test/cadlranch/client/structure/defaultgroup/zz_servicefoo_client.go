@@ -44,7 +44,7 @@ func (client *ServiceFooClient) Four(ctx context.Context, options *ServiceFooCli
 }
 
 // fourCreateRequest creates the Four request.
-func (client *ServiceFooClient) fourCreateRequest(ctx context.Context, options *ServiceFooClientFourOptions) (*policy.Request, error) {
+func (client *ServiceFooClient) fourCreateRequest(ctx context.Context, _ *ServiceFooClientFourOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -79,7 +79,7 @@ func (client *ServiceFooClient) Three(ctx context.Context, options *ServiceFooCl
 }
 
 // threeCreateRequest creates the Three request.
-func (client *ServiceFooClient) threeCreateRequest(ctx context.Context, options *ServiceFooClientThreeOptions) (*policy.Request, error) {
+func (client *ServiceFooClient) threeCreateRequest(ctx context.Context, _ *ServiceFooClientThreeOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

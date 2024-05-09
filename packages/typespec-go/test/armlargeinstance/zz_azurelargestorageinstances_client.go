@@ -68,7 +68,7 @@ func (client *AzureLargeStorageInstancesClient) Get(ctx context.Context, resourc
 }
 
 // getCreateRequest creates the Get request.
-func (client *AzureLargeStorageInstancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeStorageInstancesClientGetOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, _ *AzureLargeStorageInstancesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -132,7 +132,7 @@ func (client *AzureLargeStorageInstancesClient) NewListByResourceGroupPager(reso
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AzureLargeStorageInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *AzureLargeStorageInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *AzureLargeStorageInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -190,7 +190,7 @@ func (client *AzureLargeStorageInstancesClient) NewListBySubscriptionPager(optio
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AzureLargeStorageInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, options *AzureLargeStorageInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *AzureLargeStorageInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -246,7 +246,7 @@ func (client *AzureLargeStorageInstancesClient) Update(ctx context.Context, reso
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AzureLargeStorageInstancesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, options *AzureLargeStorageInstancesClientUpdateOptions) (*policy.Request, error) {
+func (client *AzureLargeStorageInstancesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, properties AzureLargeStorageInstanceTagsUpdate, _ *AzureLargeStorageInstancesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

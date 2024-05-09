@@ -72,7 +72,7 @@ func (client *ApplicationGatewayPrivateLinkResourcesClient) NewListPager(resourc
 }
 
 // listCreateRequest creates the List request.
-func (client *ApplicationGatewayPrivateLinkResourcesClient) listCreateRequest(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewayPrivateLinkResourcesClientListOptions) (*policy.Request, error) {
+func (client *ApplicationGatewayPrivateLinkResourcesClient) listCreateRequest(ctx context.Context, resourceGroupName string, applicationGatewayName string, _ *ApplicationGatewayPrivateLinkResourcesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateLinkResources"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

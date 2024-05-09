@@ -55,7 +55,7 @@ func (client *NamingClient) Client(ctx context.Context, clientNameModel ClientNa
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingClient) clientCreateRequest(ctx context.Context, clientNameModel ClientNameModel, options *NamingClientClientOptions) (*policy.Request, error) {
+func (client *NamingClient) clientCreateRequest(ctx context.Context, clientNameModel ClientNameModel, _ *NamingClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,7 +91,7 @@ func (client *NamingClient) ClientName(ctx context.Context, options *NamingClien
 }
 
 // clientNameCreateRequest creates the ClientName request.
-func (client *NamingClient) clientNameCreateRequest(ctx context.Context, options *NamingClientClientNameOptions) (*policy.Request, error) {
+func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *NamingClientClientNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/operation"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -124,7 +124,7 @@ func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clien
 }
 
 // compatibleWithEncodedNameCreateRequest creates the CompatibleWithEncodedName request.
-func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
+func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, _ *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/compatible-with-encoded-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -160,7 +160,7 @@ func (client *NamingClient) Language(ctx context.Context, languageClientNameMode
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingClient) languageCreateRequest(ctx context.Context, languageClientNameModel LanguageClientNameModel, options *NamingClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingClient) languageCreateRequest(ctx context.Context, languageClientNameModel LanguageClientNameModel, _ *NamingClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -196,7 +196,7 @@ func (client *NamingClient) Parameter(ctx context.Context, clientName string, op
 }
 
 // parameterCreateRequest creates the Parameter request.
-func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientName string, options *NamingClientParameterOptions) (*policy.Request, error) {
+func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientName string, _ *NamingClientParameterOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -231,7 +231,7 @@ func (client *NamingClient) Request(ctx context.Context, clientName string, opti
 }
 
 // requestCreateRequest creates the Request request.
-func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName string, options *NamingClientRequestOptions) (*policy.Request, error) {
+func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName string, _ *NamingClientRequestOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -265,7 +265,7 @@ func (client *NamingClient) Response(ctx context.Context, options *NamingClientR
 }
 
 // responseCreateRequest creates the Response request.
-func (client *NamingClient) responseCreateRequest(ctx context.Context, options *NamingClientResponseOptions) (*policy.Request, error) {
+func (client *NamingClient) responseCreateRequest(ctx context.Context, _ *NamingClientResponseOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/header"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

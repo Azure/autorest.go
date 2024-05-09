@@ -51,7 +51,7 @@ func (client *AccessRelativeModelInOperationClient) discriminator(ctx context.Co
 }
 
 // discriminatorCreateRequest creates the discriminator request.
-func (client *AccessRelativeModelInOperationClient) discriminatorCreateRequest(ctx context.Context, kind string, options *accessRelativeModelInOperationClientdiscriminatorOptions) (*policy.Request, error) {
+func (client *AccessRelativeModelInOperationClient) discriminatorCreateRequest(ctx context.Context, kind string, _ *accessRelativeModelInOperationClientdiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/relativeModelInOperation/discriminator"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -109,7 +109,7 @@ func (client *AccessRelativeModelInOperationClient) operation(ctx context.Contex
 }
 
 // operationCreateRequest creates the operation request.
-func (client *AccessRelativeModelInOperationClient) operationCreateRequest(ctx context.Context, name string, options *accessRelativeModelInOperationClientoperationOptions) (*policy.Request, error) {
+func (client *AccessRelativeModelInOperationClient) operationCreateRequest(ctx context.Context, name string, _ *accessRelativeModelInOperationClientoperationOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/relativeModelInOperation/operation"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

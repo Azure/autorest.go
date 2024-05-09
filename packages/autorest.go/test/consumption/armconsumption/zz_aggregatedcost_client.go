@@ -121,7 +121,7 @@ func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx con
 }
 
 // getForBillingPeriodByManagementGroupCreateRequest creates the GetForBillingPeriodByManagementGroup request.
-func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRequest(ctx context.Context, managementGroupID string, billingPeriodName string, options *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (*policy.Request, error) {
+func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRequest(ctx context.Context, managementGroupID string, billingPeriodName string, _ *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/Microsoft.Consumption/aggregatedCost"
 	if managementGroupID == "" {
 		return nil, errors.New("parameter managementGroupID cannot be empty")

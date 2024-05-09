@@ -49,7 +49,7 @@ func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body 
 }
 
 // requiredExplicitCreateRequest creates the RequiredExplicit request.
-func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredExplicitOptions) (*policy.Request, error) {
+func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.Context, body BodyModel, _ *BodyOptionalityClientRequiredExplicitOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/required-explicit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, bodyM
 }
 
 // requiredImplicitCreateRequest creates the RequiredImplicit request.
-func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.Context, bodyModel BodyModel, options *BodyOptionalityClientRequiredImplicitOptions) (*policy.Request, error) {
+func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.Context, bodyModel BodyModel, _ *BodyOptionalityClientRequiredImplicitOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/required-implicit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

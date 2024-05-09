@@ -73,7 +73,7 @@ func (client *SubscriptionNetworkManagerConnectionsClient) CreateOrUpdate(ctx co
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SubscriptionNetworkManagerConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, networkManagerConnectionName string, parameters ManagerConnection, options *SubscriptionNetworkManagerConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, networkManagerConnectionName string, parameters ManagerConnection, _ *SubscriptionNetworkManagerConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -135,7 +135,7 @@ func (client *SubscriptionNetworkManagerConnectionsClient) Delete(ctx context.Co
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SubscriptionNetworkManagerConnectionsClient) deleteCreateRequest(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientDeleteOptions) (*policy.Request, error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) deleteCreateRequest(ctx context.Context, networkManagerConnectionName string, _ *SubscriptionNetworkManagerConnectionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -186,7 +186,7 @@ func (client *SubscriptionNetworkManagerConnectionsClient) Get(ctx context.Conte
 }
 
 // getCreateRequest creates the Get request.
-func (client *SubscriptionNetworkManagerConnectionsClient) getCreateRequest(ctx context.Context, networkManagerConnectionName string, options *SubscriptionNetworkManagerConnectionsClientGetOptions) (*policy.Request, error) {
+func (client *SubscriptionNetworkManagerConnectionsClient) getCreateRequest(ctx context.Context, networkManagerConnectionName string, _ *SubscriptionNetworkManagerConnectionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

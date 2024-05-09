@@ -86,7 +86,7 @@ func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, device
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, _ *MonitoringConfigClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -160,7 +160,7 @@ func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, devic
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, _ *MonitoringConfigClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -214,7 +214,7 @@ func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string
 }
 
 // getCreateRequest creates the Get request.
-func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, _ *MonitoringConfigClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -280,7 +280,7 @@ func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName s
 }
 
 // listCreateRequest creates the List request.
-func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, _ *MonitoringConfigClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {

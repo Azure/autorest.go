@@ -48,7 +48,7 @@ func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *BigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (*policy.Request, error) {
+func (client *BigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, _ *BigDataPoolsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	if bigDataPoolName == "" {
 		return nil, errors.New("parameter bigDataPoolName cannot be empty")
@@ -98,7 +98,7 @@ func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 }
 
 // listCreateRequest creates the List request.
-func (client *BigDataPoolsClient) listCreateRequest(ctx context.Context, options *BigDataPoolsClientListOptions) (*policy.Request, error) {
+func (client *BigDataPoolsClient) listCreateRequest(ctx context.Context, _ *BigDataPoolsClientListOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

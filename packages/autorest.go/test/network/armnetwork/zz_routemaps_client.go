@@ -95,7 +95,7 @@ func (client *RouteMapsClient) createOrUpdate(ctx context.Context, resourceGroup
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RouteMapsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, options *RouteMapsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RouteMapsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, routeMapParameters RouteMap, _ *RouteMapsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -179,7 +179,7 @@ func (client *RouteMapsClient) deleteOperation(ctx context.Context, resourceGrou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RouteMapsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *RouteMapsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, _ *RouteMapsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -239,7 +239,7 @@ func (client *RouteMapsClient) Get(ctx context.Context, resourceGroupName string
 }
 
 // getCreateRequest creates the Get request.
-func (client *RouteMapsClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, options *RouteMapsClientGetOptions) (*policy.Request, error) {
+func (client *RouteMapsClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, routeMapName string, _ *RouteMapsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -307,7 +307,7 @@ func (client *RouteMapsClient) NewListPager(resourceGroupName string, virtualHub
 }
 
 // listCreateRequest creates the List request.
-func (client *RouteMapsClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, options *RouteMapsClientListOptions) (*policy.Request, error) {
+func (client *RouteMapsClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, _ *RouteMapsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

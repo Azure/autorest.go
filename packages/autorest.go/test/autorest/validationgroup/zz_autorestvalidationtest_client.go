@@ -52,7 +52,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 }
 
 // getWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
-func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, _ *AutoRestValidationTestClientGetWithConstantInPathOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -148,7 +148,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
-func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, body Product, options *AutoRestValidationTestClientValidationOfBodyOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, body Product, _ *AutoRestValidationTestClientValidationOfBodyOptions) (*policy.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -213,7 +213,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 }
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
-func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfMethodParametersOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRequest(ctx context.Context, resourceGroupName string, id int32, _ *AutoRestValidationTestClientValidationOfMethodParametersOptions) (*policy.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

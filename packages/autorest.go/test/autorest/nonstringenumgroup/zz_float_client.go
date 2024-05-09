@@ -47,7 +47,7 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptio
 }
 
 // getCreateRequest creates the Get request.
-func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatClientGetOptions) (*policy.Request, error) {
+func (client *FloatClient) getCreateRequest(ctx context.Context, _ *FloatClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,7 +95,7 @@ func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *Fl
 }
 
 // putCreateRequest creates the Put request.
-func (client *FloatClient) putCreateRequest(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (*policy.Request, error) {
+func (client *FloatClient) putCreateRequest(ctx context.Context, input FloatEnum, _ *FloatClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

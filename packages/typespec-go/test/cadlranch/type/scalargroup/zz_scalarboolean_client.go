@@ -43,7 +43,7 @@ func (client *ScalarBooleanClient) Get(ctx context.Context, options *ScalarBoole
 }
 
 // getCreateRequest creates the Get request.
-func (client *ScalarBooleanClient) getCreateRequest(ctx context.Context, options *ScalarBooleanClientGetOptions) (*policy.Request, error) {
+func (client *ScalarBooleanClient) getCreateRequest(ctx context.Context, _ *ScalarBooleanClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ScalarBooleanClient) Put(ctx context.Context, body bool, options *
 }
 
 // putCreateRequest creates the Put request.
-func (client *ScalarBooleanClient) putCreateRequest(ctx context.Context, body bool, options *ScalarBooleanClientPutOptions) (*policy.Request, error) {
+func (client *ScalarBooleanClient) putCreateRequest(ctx context.Context, body bool, _ *ScalarBooleanClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

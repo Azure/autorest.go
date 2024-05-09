@@ -72,7 +72,7 @@ func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locatio
 }
 
 // getCreateRequest creates the Get request.
-func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsClientGetOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Context, locationName string, _ *ExpressRoutePortsLocationsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -132,7 +132,7 @@ func (client *ExpressRoutePortsLocationsClient) NewListPager(options *ExpressRou
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsClientListOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Context, _ *ExpressRoutePortsLocationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

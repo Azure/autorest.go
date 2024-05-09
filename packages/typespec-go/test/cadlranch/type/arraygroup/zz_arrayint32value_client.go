@@ -42,7 +42,7 @@ func (client *ArrayInt32ValueClient) Get(ctx context.Context, options *ArrayInt3
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayInt32ValueClient) getCreateRequest(ctx context.Context, options *ArrayInt32ValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayInt32ValueClient) getCreateRequest(ctx context.Context, _ *ArrayInt32ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayInt32ValueClient) Put(ctx context.Context, body []int32, opti
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayInt32ValueClient) putCreateRequest(ctx context.Context, body []int32, options *ArrayInt32ValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayInt32ValueClient) putCreateRequest(ctx context.Context, body []int32, _ *ArrayInt32ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

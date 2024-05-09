@@ -47,7 +47,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexClientGetValidOptions) (*policy.Request, error) {
+func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, _ *FlattencomplexClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/flatten/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

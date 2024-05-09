@@ -140,7 +140,7 @@ func (client *DatastoresClient) Delete(ctx context.Context, resourceGroupName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DatastoresClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *DatastoresClientDeleteOptions) (*policy.Request, error) {
+func (client *DatastoresClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, _ *DatastoresClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -196,7 +196,7 @@ func (client *DatastoresClient) Get(ctx context.Context, resourceGroupName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *DatastoresClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *DatastoresClientGetOptions) (*policy.Request, error) {
+func (client *DatastoresClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, _ *DatastoresClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -344,7 +344,7 @@ func (client *DatastoresClient) ListSecrets(ctx context.Context, resourceGroupNa
 }
 
 // listSecretsCreateRequest creates the ListSecrets request.
-func (client *DatastoresClient) listSecretsCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *DatastoresClientListSecretsOptions) (*policy.Request, error) {
+func (client *DatastoresClient) listSecretsCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, _ *DatastoresClientListSecretsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}/listSecrets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

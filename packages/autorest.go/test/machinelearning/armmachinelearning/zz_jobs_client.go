@@ -67,7 +67,7 @@ func (client *JobsClient) Cancel(ctx context.Context, resourceGroupName string, 
 }
 
 // cancelCreateRequest creates the Cancel request.
-func (client *JobsClient) cancelCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *JobsClientCancelOptions) (*policy.Request, error) {
+func (client *JobsClient) cancelCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, _ *JobsClientCancelOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}/cancel"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -124,7 +124,7 @@ func (client *JobsClient) CreateOrUpdate(ctx context.Context, resourceGroupName 
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *JobsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, body JobBaseData, options *JobsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *JobsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, body JobBaseData, _ *JobsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -208,7 +208,7 @@ func (client *JobsClient) deleteOperation(ctx context.Context, resourceGroupName
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *JobsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *JobsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *JobsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, _ *JobsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -264,7 +264,7 @@ func (client *JobsClient) Get(ctx context.Context, resourceGroupName string, wor
 }
 
 // getCreateRequest creates the Get request.
-func (client *JobsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, options *JobsClientGetOptions) (*policy.Request, error) {
+func (client *JobsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, id string, _ *JobsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

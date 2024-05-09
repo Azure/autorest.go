@@ -52,7 +52,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 }
 
 // postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
-func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalNullOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx context.Context, subscriptionID string, _ *SubscriptionInMethodClientPostMethodLocalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/null/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -96,7 +96,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 }
 
 // postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
-func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx context.Context, subscriptionID string, _ *SubscriptionInMethodClientPostMethodLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -140,7 +140,7 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 }
 
 // postPathLocalValidCreateRequest creates the PostPathLocalValid request.
-func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostPathLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx context.Context, subscriptionID string, _ *SubscriptionInMethodClientPostPathLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -184,7 +184,7 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 }
 
 // postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
-func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostSwaggerLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionID string, _ *SubscriptionInMethodClientPostSwaggerLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

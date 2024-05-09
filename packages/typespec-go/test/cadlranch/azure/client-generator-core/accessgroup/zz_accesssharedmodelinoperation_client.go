@@ -43,7 +43,7 @@ func (client *AccessSharedModelInOperationClient) Public(ctx context.Context, na
 }
 
 // publicCreateRequest creates the Public request.
-func (client *AccessSharedModelInOperationClient) publicCreateRequest(ctx context.Context, name string, options *AccessSharedModelInOperationClientPublicOptions) (*policy.Request, error) {
+func (client *AccessSharedModelInOperationClient) publicCreateRequest(ctx context.Context, name string, _ *AccessSharedModelInOperationClientPublicOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/public"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,7 +90,7 @@ func (client *AccessSharedModelInOperationClient) internalMethod(ctx context.Con
 }
 
 // internalCreateRequest creates the internalMethod request.
-func (client *AccessSharedModelInOperationClient) internalCreateRequest(ctx context.Context, name string, options *accessSharedModelInOperationClientinternalMethodOptions) (*policy.Request, error) {
+func (client *AccessSharedModelInOperationClient) internalCreateRequest(ctx context.Context, name string, _ *accessSharedModelInOperationClientinternalMethodOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/internal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -43,7 +43,7 @@ func (client *DictionaryInt64ValueClient) Get(ctx context.Context, options *Dict
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryInt64ValueClient) getCreateRequest(ctx context.Context, options *DictionaryInt64ValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryInt64ValueClient) getCreateRequest(ctx context.Context, _ *DictionaryInt64ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/int64"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryInt64ValueClient) Put(ctx context.Context, body map[stri
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryInt64ValueClient) putCreateRequest(ctx context.Context, body map[string]*int64, options *DictionaryInt64ValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryInt64ValueClient) putCreateRequest(ctx context.Context, body map[string]*int64, _ *DictionaryInt64ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/int64"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

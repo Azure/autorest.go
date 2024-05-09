@@ -43,7 +43,7 @@ func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, anony
 }
 
 // anonymousModelCreateRequest creates the AnonymousModel request.
-func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, anonymousModelRequest AnonymousModelRequest, options *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, anonymousModelRequest AnonymousModelRequest, _ *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/anonymous-model"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *MultiPartFormDataClient) Basic(ctx context.Context, body MultiPart
 }
 
 // basicCreateRequest creates the Basic request.
-func (client *MultiPartFormDataClient) basicCreateRequest(ctx context.Context, body MultiPartRequest, options *MultiPartFormDataClientBasicOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) basicCreateRequest(ctx context.Context, body MultiPartRequest, _ *MultiPartFormDataClientBasicOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/mixed-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -126,7 +126,7 @@ func (client *MultiPartFormDataClient) BinaryArrayParts(ctx context.Context, bod
 }
 
 // binaryArrayPartsCreateRequest creates the BinaryArrayParts request.
-func (client *MultiPartFormDataClient) binaryArrayPartsCreateRequest(ctx context.Context, body BinaryArrayPartsRequest, options *MultiPartFormDataClientBinaryArrayPartsOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) binaryArrayPartsCreateRequest(ctx context.Context, body BinaryArrayPartsRequest, _ *MultiPartFormDataClientBinaryArrayPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/binary-array-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,7 +168,7 @@ func (client *MultiPartFormDataClient) CheckFileNameAndContentType(ctx context.C
 }
 
 // checkFileNameAndContentTypeCreateRequest creates the CheckFileNameAndContentType request.
-func (client *MultiPartFormDataClient) checkFileNameAndContentTypeCreateRequest(ctx context.Context, body MultiPartRequest, options *MultiPartFormDataClientCheckFileNameAndContentTypeOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) checkFileNameAndContentTypeCreateRequest(ctx context.Context, body MultiPartRequest, _ *MultiPartFormDataClientCheckFileNameAndContentTypeOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/check-filename-and-content-type"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -210,7 +210,7 @@ func (client *MultiPartFormDataClient) Complex(ctx context.Context, body Complex
 }
 
 // complexCreateRequest creates the Complex request.
-func (client *MultiPartFormDataClient) complexCreateRequest(ctx context.Context, body ComplexPartsRequest, options *MultiPartFormDataClientComplexOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) complexCreateRequest(ctx context.Context, body ComplexPartsRequest, _ *MultiPartFormDataClientComplexOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/complex-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -252,7 +252,7 @@ func (client *MultiPartFormDataClient) JSONArrayParts(ctx context.Context, body 
 }
 
 // jsonArrayPartsCreateRequest creates the JSONArrayParts request.
-func (client *MultiPartFormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, body JSONArrayPartsRequest, options *MultiPartFormDataClientJSONArrayPartsOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, body JSONArrayPartsRequest, _ *MultiPartFormDataClientJSONArrayPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/json-array-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -294,7 +294,7 @@ func (client *MultiPartFormDataClient) JSONPart(ctx context.Context, body JSONPa
 }
 
 // jsonPartCreateRequest creates the JSONPart request.
-func (client *MultiPartFormDataClient) jsonPartCreateRequest(ctx context.Context, body JSONPartRequest, options *MultiPartFormDataClientJSONPartOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) jsonPartCreateRequest(ctx context.Context, body JSONPartRequest, _ *MultiPartFormDataClientJSONPartOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/json-part"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -336,7 +336,7 @@ func (client *MultiPartFormDataClient) MultiBinaryParts(ctx context.Context, bod
 }
 
 // multiBinaryPartsCreateRequest creates the MultiBinaryParts request.
-func (client *MultiPartFormDataClient) multiBinaryPartsCreateRequest(ctx context.Context, body MultiBinaryPartsRequest, options *MultiPartFormDataClientMultiBinaryPartsOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) multiBinaryPartsCreateRequest(ctx context.Context, body MultiBinaryPartsRequest, _ *MultiPartFormDataClientMultiBinaryPartsOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/multi-binary-parts"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

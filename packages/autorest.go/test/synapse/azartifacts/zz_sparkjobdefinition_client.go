@@ -133,7 +133,7 @@ func (client *SparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Cont
 }
 
 // debugSparkJobDefinitionCreateRequest creates the DebugSparkJobDefinition request.
-func (client *SparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (*policy.Request, error) {
+func (client *SparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, _ *SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (*policy.Request, error) {
 	urlPath := "/debugSparkJobDefinition"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -191,7 +191,7 @@ func (client *SparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Con
 }
 
 // deleteSparkJobDefinitionCreateRequest creates the DeleteSparkJobDefinition request.
-func (client *SparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (*policy.Request, error) {
+func (client *SparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, _ *SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (*policy.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}"
 	if sparkJobDefinitionName == "" {
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
@@ -252,7 +252,7 @@ func (client *SparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Co
 }
 
 // executeSparkJobDefinitionCreateRequest creates the ExecuteSparkJobDefinition request.
-func (client *SparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (*policy.Request, error) {
+func (client *SparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, _ *SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (*policy.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/execute"
 	if sparkJobDefinitionName == "" {
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
@@ -351,7 +351,7 @@ func (client *SparkJobDefinitionClient) NewGetSparkJobDefinitionsByWorkspacePage
 }
 
 // getSparkJobDefinitionsByWorkspaceCreateRequest creates the GetSparkJobDefinitionsByWorkspace request.
-func (client *SparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateRequest(ctx context.Context, options *SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) (*policy.Request, error) {
+func (client *SparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateRequest(ctx context.Context, _ *SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sparkJobDefinitions"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -416,7 +416,7 @@ func (client *SparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Con
 }
 
 // renameSparkJobDefinitionCreateRequest creates the RenameSparkJobDefinition request.
-func (client *SparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (*policy.Request, error) {
+func (client *SparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, _ *SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (*policy.Request, error) {
 	urlPath := "/sparkJobDefinitions/{sparkJobDefinitionName}/rename"
 	if sparkJobDefinitionName == "" {
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")

@@ -254,7 +254,7 @@ func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Cont
 }
 
 // binaryBodyWithThreeContentTypesCreateRequest creates the BinaryBodyWithThreeContentTypes request.
-func (client *MediaTypesClient) binaryBodyWithThreeContentTypesCreateRequest(ctx context.Context, contentType ContentType2, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesCreateRequest(ctx context.Context, contentType ContentType2, message io.ReadSeekCloser, _ *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/binaryBodyThreeContentTypes"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -312,7 +312,7 @@ func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Contex
 }
 
 // binaryBodyWithTwoContentTypesCreateRequest creates the BinaryBodyWithTwoContentTypes request.
-func (client *MediaTypesClient) binaryBodyWithTwoContentTypesCreateRequest(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) binaryBodyWithTwoContentTypesCreateRequest(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, _ *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/binaryBodyTwoContentTypes"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -370,7 +370,7 @@ func (client *MediaTypesClient) BodyThreeTypes(ctx context.Context, message io.R
 }
 
 // bodyThreeTypesCreateRequest creates the BodyThreeTypes request.
-func (client *MediaTypesClient) bodyThreeTypesCreateRequest(ctx context.Context, message io.ReadSeekCloser, options *MediaTypesClientBodyThreeTypesOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) bodyThreeTypesCreateRequest(ctx context.Context, message io.ReadSeekCloser, _ *MediaTypesClientBodyThreeTypesOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -427,7 +427,7 @@ func (client *MediaTypesClient) BodyThreeTypesWithJSON(ctx context.Context, mess
 }
 
 // bodyThreeTypesWithJSONCreateRequest creates the BodyThreeTypesWithJSON request.
-func (client *MediaTypesClient) bodyThreeTypesWithJSONCreateRequest(ctx context.Context, message any, options *MediaTypesClientBodyThreeTypesWithJSONOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) bodyThreeTypesWithJSONCreateRequest(ctx context.Context, message any, _ *MediaTypesClientBodyThreeTypesWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -484,7 +484,7 @@ func (client *MediaTypesClient) BodyThreeTypesWithText(ctx context.Context, mess
 }
 
 // bodyThreeTypesWithTextCreateRequest creates the BodyThreeTypesWithText request.
-func (client *MediaTypesClient) bodyThreeTypesWithTextCreateRequest(ctx context.Context, message string, options *MediaTypesClientBodyThreeTypesWithTextOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) bodyThreeTypesWithTextCreateRequest(ctx context.Context, message string, _ *MediaTypesClientBodyThreeTypesWithTextOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/bodyThreeTypes"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -596,7 +596,7 @@ func (client *MediaTypesClient) PutTextAndJSONBody(ctx context.Context, contentT
 }
 
 // putTextAndJSONBodyCreateRequest creates the PutTextAndJSONBody request.
-func (client *MediaTypesClient) putTextAndJSONBodyCreateRequest(ctx context.Context, contentType ContentType3, message string, options *MediaTypesClientPutTextAndJSONBodyOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) putTextAndJSONBodyCreateRequest(ctx context.Context, contentType ContentType3, message string, _ *MediaTypesClientPutTextAndJSONBodyOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/textAndJson"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

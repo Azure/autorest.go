@@ -71,7 +71,7 @@ func (client *VirtualApplianceSKUsClient) Get(ctx context.Context, skuName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualApplianceSKUsClient) getCreateRequest(ctx context.Context, skuName string, options *VirtualApplianceSKUsClientGetOptions) (*policy.Request, error) {
+func (client *VirtualApplianceSKUsClient) getCreateRequest(ctx context.Context, skuName string, _ *VirtualApplianceSKUsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -130,7 +130,7 @@ func (client *VirtualApplianceSKUsClient) NewListPager(options *VirtualAppliance
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualApplianceSKUsClient) listCreateRequest(ctx context.Context, options *VirtualApplianceSKUsClientListOptions) (*policy.Request, error) {
+func (client *VirtualApplianceSKUsClient) listCreateRequest(ctx context.Context, _ *VirtualApplianceSKUsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

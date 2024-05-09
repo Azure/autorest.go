@@ -43,7 +43,7 @@ func (client *ScalarUnknownClient) Get(ctx context.Context, options *ScalarUnkno
 }
 
 // getCreateRequest creates the Get request.
-func (client *ScalarUnknownClient) getCreateRequest(ctx context.Context, options *ScalarUnknownClientGetOptions) (*policy.Request, error) {
+func (client *ScalarUnknownClient) getCreateRequest(ctx context.Context, _ *ScalarUnknownClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ScalarUnknownClient) Put(ctx context.Context, body any, options *S
 }
 
 // putCreateRequest creates the Put request.
-func (client *ScalarUnknownClient) putCreateRequest(ctx context.Context, body any, options *ScalarUnknownClientPutOptions) (*policy.Request, error) {
+func (client *ScalarUnknownClient) putCreateRequest(ctx context.Context, body any, _ *ScalarUnknownClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

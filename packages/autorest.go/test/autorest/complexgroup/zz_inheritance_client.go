@@ -47,7 +47,7 @@ func (client *InheritanceClient) GetValid(ctx context.Context, options *Inherita
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, options *InheritanceClientGetValidOptions) (*policy.Request, error) {
+func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, _ *InheritanceClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (*policy.Request, error) {
+func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, _ *InheritanceClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

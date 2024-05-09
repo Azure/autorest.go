@@ -48,7 +48,7 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTT
 }
 
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
-func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (*policy.Request, error) {
+func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, _ *HTTPFailureClientGetEmptyErrorOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/emptybody/error"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *H
 }
 
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
-func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (*policy.Request, error) {
+func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context, _ *HTTPFailureClientGetNoModelEmptyOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/nomodel/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -144,7 +144,7 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *H
 }
 
 // getNoModelErrorCreateRequest creates the GetNoModelError request.
-func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (*policy.Request, error) {
+func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context, _ *HTTPFailureClientGetNoModelErrorOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/nomodel/error"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

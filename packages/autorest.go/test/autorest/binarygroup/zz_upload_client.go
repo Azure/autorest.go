@@ -48,7 +48,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 }
 
 // binaryCreateRequest creates the Binary request.
-func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (*policy.Request, error) {
+func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, _ *UploadClientBinaryOptions) (*policy.Request, error) {
 	urlPath := "/binary/octet"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 }
 
 // fileCreateRequest creates the File request.
-func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (*policy.Request, error) {
+func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, _ *UploadClientFileOptions) (*policy.Request, error) {
 	urlPath := "/binary/file"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

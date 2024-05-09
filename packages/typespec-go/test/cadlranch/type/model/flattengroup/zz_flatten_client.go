@@ -42,7 +42,7 @@ func (client *FlattenClient) PutFlattenModel(ctx context.Context, input FlattenM
 }
 
 // putFlattenModelCreateRequest creates the PutFlattenModel request.
-func (client *FlattenClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, options *FlattenClientPutFlattenModelOptions) (*policy.Request, error) {
+func (client *FlattenClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, _ *FlattenClientPutFlattenModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/flatten/flattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,7 +90,7 @@ func (client *FlattenClient) PutNestedFlattenModel(ctx context.Context, input Ne
 }
 
 // putNestedFlattenModelCreateRequest creates the PutNestedFlattenModel request.
-func (client *FlattenClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, options *FlattenClientPutNestedFlattenModelOptions) (*policy.Request, error) {
+func (client *FlattenClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, _ *FlattenClientPutNestedFlattenModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/flatten/nestedFlattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

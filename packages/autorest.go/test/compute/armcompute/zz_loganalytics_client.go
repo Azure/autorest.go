@@ -95,7 +95,7 @@ func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Contex
 }
 
 // exportRequestRateByIntervalCreateRequest creates the ExportRequestRateByInterval request.
-func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*policy.Request, error) {
+func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx context.Context, location string, parameters RequestRateByIntervalInput, _ *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getRequestRateByInterval"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -172,7 +172,7 @@ func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, l
 }
 
 // exportThrottledRequestsCreateRequest creates the ExportThrottledRequests request.
-func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*policy.Request, error) {
+func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx context.Context, location string, parameters ThrottledRequestsInput, _ *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getThrottledRequests"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

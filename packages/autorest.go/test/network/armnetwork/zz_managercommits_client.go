@@ -94,7 +94,7 @@ func (client *ManagerCommitsClient) post(ctx context.Context, resourceGroupName 
 }
 
 // postCreateRequest creates the Post request.
-func (client *ManagerCommitsClient) postCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ManagerCommit, options *ManagerCommitsClientBeginPostOptions) (*policy.Request, error) {
+func (client *ManagerCommitsClient) postCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters ManagerCommit, _ *ManagerCommitsClientBeginPostOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/commit"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

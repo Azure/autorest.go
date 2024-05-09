@@ -66,7 +66,7 @@ func (client *KqlScriptClient) createOrUpdate(ctx context.Context, kqlScriptName
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, options *KqlScriptClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *KqlScriptClient) createOrUpdateCreateRequest(ctx context.Context, kqlScriptName string, kqlScript KqlScriptResource, _ *KqlScriptClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/kqlScripts/{kqlScriptName}"
 	if kqlScriptName == "" {
 		return nil, errors.New("parameter kqlScriptName cannot be empty")
@@ -128,7 +128,7 @@ func (client *KqlScriptClient) deleteByName(ctx context.Context, kqlScriptName s
 }
 
 // deleteByNameCreateRequest creates the DeleteByName request.
-func (client *KqlScriptClient) deleteByNameCreateRequest(ctx context.Context, kqlScriptName string, options *KqlScriptClientBeginDeleteByNameOptions) (*policy.Request, error) {
+func (client *KqlScriptClient) deleteByNameCreateRequest(ctx context.Context, kqlScriptName string, _ *KqlScriptClientBeginDeleteByNameOptions) (*policy.Request, error) {
 	urlPath := "/kqlScripts/{kqlScriptName}"
 	if kqlScriptName == "" {
 		return nil, errors.New("parameter kqlScriptName cannot be empty")
@@ -170,7 +170,7 @@ func (client *KqlScriptClient) GetByName(ctx context.Context, kqlScriptName stri
 }
 
 // getByNameCreateRequest creates the GetByName request.
-func (client *KqlScriptClient) getByNameCreateRequest(ctx context.Context, kqlScriptName string, options *KqlScriptClientGetByNameOptions) (*policy.Request, error) {
+func (client *KqlScriptClient) getByNameCreateRequest(ctx context.Context, kqlScriptName string, _ *KqlScriptClientGetByNameOptions) (*policy.Request, error) {
 	urlPath := "/kqlScripts/{kqlScriptName}"
 	if kqlScriptName == "" {
 		return nil, errors.New("parameter kqlScriptName cannot be empty")
@@ -238,7 +238,7 @@ func (client *KqlScriptClient) rename(ctx context.Context, kqlScriptName string,
 }
 
 // renameCreateRequest creates the Rename request.
-func (client *KqlScriptClient) renameCreateRequest(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, options *KqlScriptClientBeginRenameOptions) (*policy.Request, error) {
+func (client *KqlScriptClient) renameCreateRequest(ctx context.Context, kqlScriptName string, renameRequest ArtifactRenameRequest, _ *KqlScriptClientBeginRenameOptions) (*policy.Request, error) {
 	urlPath := "/kqlScripts/{kqlScriptName}/rename"
 	if kqlScriptName == "" {
 		return nil, errors.New("parameter kqlScriptName cannot be empty")

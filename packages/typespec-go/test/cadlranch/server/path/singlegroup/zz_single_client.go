@@ -43,7 +43,7 @@ func (client *SingleClient) MyOp(ctx context.Context, options *SingleClientMyOpO
 }
 
 // myOpCreateRequest creates the MyOp request.
-func (client *SingleClient) myOpCreateRequest(ctx context.Context, options *SingleClientMyOpOptions) (*policy.Request, error) {
+func (client *SingleClient) myOpCreateRequest(ctx context.Context, _ *SingleClientMyOpOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/path/single/myOp"

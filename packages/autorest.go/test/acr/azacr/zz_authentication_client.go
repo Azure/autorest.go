@@ -190,7 +190,7 @@ func (client *AuthenticationClient) GetAcrAccessTokenFromLogin(ctx context.Conte
 }
 
 // getAcrAccessTokenFromLoginCreateRequest creates the GetAcrAccessTokenFromLogin request.
-func (client *AuthenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx context.Context, service string, scope string, options *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (*policy.Request, error) {
+func (client *AuthenticationClient) getAcrAccessTokenFromLoginCreateRequest(ctx context.Context, service string, scope string, _ *AuthenticationClientGetAcrAccessTokenFromLoginOptions) (*policy.Request, error) {
 	urlPath := "/oauth2/token"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

@@ -42,7 +42,7 @@ func (client *ArrayFloat32ValueClient) Get(ctx context.Context, options *ArrayFl
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayFloat32ValueClient) getCreateRequest(ctx context.Context, options *ArrayFloat32ValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayFloat32ValueClient) getCreateRequest(ctx context.Context, _ *ArrayFloat32ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayFloat32ValueClient) Put(ctx context.Context, body []float32, 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayFloat32ValueClient) putCreateRequest(ctx context.Context, body []float32, options *ArrayFloat32ValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayFloat32ValueClient) putCreateRequest(ctx context.Context, body []float32, _ *ArrayFloat32ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

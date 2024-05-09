@@ -53,7 +53,7 @@ func (client *ServiceQuxClient) Eight(ctx context.Context, options *ServiceQuxCl
 }
 
 // eightCreateRequest creates the Eight request.
-func (client *ServiceQuxClient) eightCreateRequest(ctx context.Context, options *ServiceQuxClientEightOptions) (*policy.Request, error) {
+func (client *ServiceQuxClient) eightCreateRequest(ctx context.Context, _ *ServiceQuxClientEightOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

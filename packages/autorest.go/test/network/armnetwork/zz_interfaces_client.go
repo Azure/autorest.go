@@ -94,7 +94,7 @@ func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGrou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, _ *InterfacesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -173,7 +173,7 @@ func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGro
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *InterfacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *InterfacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, _ *InterfacesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -395,7 +395,7 @@ func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, reso
 }
 
 // getEffectiveRouteTableCreateRequest creates the GetEffectiveRouteTable request.
-func (client *InterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*policy.Request, error) {
+func (client *InterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, _ *InterfacesClientBeginGetEffectiveRouteTableOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -611,7 +611,7 @@ func (client *InterfacesClient) NewListPager(resourceGroupName string, options *
 }
 
 // listCreateRequest creates the List request.
-func (client *InterfacesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *InterfacesClientListOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *InterfacesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -669,7 +669,7 @@ func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAll
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *InterfacesClient) listAllCreateRequest(ctx context.Context, options *InterfacesClientListAllOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listAllCreateRequest(ctx context.Context, _ *InterfacesClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -726,7 +726,7 @@ func (client *InterfacesClient) NewListCloudServiceNetworkInterfacesPager(resour
 }
 
 // listCloudServiceNetworkInterfacesCreateRequest creates the ListCloudServiceNetworkInterfaces request.
-func (client *InterfacesClient) listCloudServiceNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, options *InterfacesClientListCloudServiceNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listCloudServiceNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, _ *InterfacesClientListCloudServiceNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -793,7 +793,7 @@ func (client *InterfacesClient) NewListCloudServiceRoleInstanceNetworkInterfaces
 }
 
 // listCloudServiceRoleInstanceNetworkInterfacesCreateRequest creates the ListCloudServiceRoleInstanceNetworkInterfaces request.
-func (client *InterfacesClient) listCloudServiceRoleInstanceNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, options *InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listCloudServiceRoleInstanceNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, roleInstanceName string, _ *InterfacesClientListCloudServiceRoleInstanceNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -883,7 +883,7 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.C
 }
 
 // listEffectiveNetworkSecurityGroupsCreateRequest creates the ListEffectiveNetworkSecurityGroups request.
-func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, _ *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1018,7 +1018,7 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPa
 }
 
 // listVirtualMachineScaleSetNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetNetworkInterfaces request.
-func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, options *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, _ *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1085,7 +1085,7 @@ func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfaces
 }
 
 // listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetVMNetworkInterfaces request.
-func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, _ *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1154,7 +1154,7 @@ func (client *InterfacesClient) UpdateTags(ctx context.Context, resourceGroupNam
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *InterfacesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *InterfacesClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *InterfacesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, _ *InterfacesClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

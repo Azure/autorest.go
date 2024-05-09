@@ -95,7 +95,7 @@ func (client *ConfigurationPolicyGroupsClient) createOrUpdate(ctx context.Contex
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ConfigurationPolicyGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, options *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ConfigurationPolicyGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, vpnServerConfigurationPolicyGroupParameters VPNServerConfigurationPolicyGroup, _ *ConfigurationPolicyGroupsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -180,7 +180,7 @@ func (client *ConfigurationPolicyGroupsClient) deleteOperation(ctx context.Conte
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ConfigurationPolicyGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ConfigurationPolicyGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, _ *ConfigurationPolicyGroupsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -241,7 +241,7 @@ func (client *ConfigurationPolicyGroupsClient) Get(ctx context.Context, resource
 }
 
 // getCreateRequest creates the Get request.
-func (client *ConfigurationPolicyGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, options *ConfigurationPolicyGroupsClientGetOptions) (*policy.Request, error) {
+func (client *ConfigurationPolicyGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, configurationPolicyGroupName string, _ *ConfigurationPolicyGroupsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -310,7 +310,7 @@ func (client *ConfigurationPolicyGroupsClient) NewListByVPNServerConfigurationPa
 }
 
 // listByVPNServerConfigurationCreateRequest creates the ListByVPNServerConfiguration request.
-func (client *ConfigurationPolicyGroupsClient) listByVPNServerConfigurationCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *ConfigurationPolicyGroupsClientListByVPNServerConfigurationOptions) (*policy.Request, error) {
+func (client *ConfigurationPolicyGroupsClient) listByVPNServerConfigurationCreateRequest(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, _ *ConfigurationPolicyGroupsClientListByVPNServerConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

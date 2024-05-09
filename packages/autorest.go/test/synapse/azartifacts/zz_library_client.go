@@ -117,7 +117,7 @@ func (client *LibraryClient) create(ctx context.Context, libraryName string, opt
 }
 
 // createCreateRequest creates the Create request.
-func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginCreateOptions) (*policy.Request, error) {
+func (client *LibraryClient) createCreateRequest(ctx context.Context, libraryName string, _ *LibraryClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -175,7 +175,7 @@ func (client *LibraryClient) deleteOperation(ctx context.Context, libraryName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *LibraryClient) deleteCreateRequest(ctx context.Context, libraryName string, _ *LibraryClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -233,7 +233,7 @@ func (client *LibraryClient) flush(ctx context.Context, libraryName string, opti
 }
 
 // flushCreateRequest creates the Flush request.
-func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName string, options *LibraryClientBeginFlushOptions) (*policy.Request, error) {
+func (client *LibraryClient) flushCreateRequest(ctx context.Context, libraryName string, _ *LibraryClientBeginFlushOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}/flush"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -275,7 +275,7 @@ func (client *LibraryClient) Get(ctx context.Context, libraryName string, option
 }
 
 // getCreateRequest creates the Get request.
-func (client *LibraryClient) getCreateRequest(ctx context.Context, libraryName string, options *LibraryClientGetOptions) (*policy.Request, error) {
+func (client *LibraryClient) getCreateRequest(ctx context.Context, libraryName string, _ *LibraryClientGetOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")
@@ -327,7 +327,7 @@ func (client *LibraryClient) GetOperationResult(ctx context.Context, operationID
 }
 
 // getOperationResultCreateRequest creates the GetOperationResult request.
-func (client *LibraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, options *LibraryClientGetOperationResultOptions) (*policy.Request, error) {
+func (client *LibraryClient) getOperationResultCreateRequest(ctx context.Context, operationID string, _ *LibraryClientGetOperationResultOptions) (*policy.Request, error) {
 	urlPath := "/libraryOperationResults/{operationId}"
 	if operationID == "" {
 		return nil, errors.New("parameter operationID cannot be empty")
@@ -392,7 +392,7 @@ func (client *LibraryClient) NewListPager(options *LibraryClientListOptions) *ru
 }
 
 // listCreateRequest creates the List request.
-func (client *LibraryClient) listCreateRequest(ctx context.Context, options *LibraryClientListOptions) (*policy.Request, error) {
+func (client *LibraryClient) listCreateRequest(ctx context.Context, _ *LibraryClientListOptions) (*policy.Request, error) {
 	urlPath := "/libraries"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

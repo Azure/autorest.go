@@ -44,7 +44,7 @@ func (client *ValueTypesUnionStringLiteralClient) Get(ctx context.Context, optio
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesUnionStringLiteralClient) getCreateRequest(ctx context.Context, options *ValueTypesUnionStringLiteralClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesUnionStringLiteralClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnionStringLiteralClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union/string/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ValueTypesUnionStringLiteralClient) Put(ctx context.Context, body 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesUnionStringLiteralClient) putCreateRequest(ctx context.Context, body UnionStringLiteralProperty, options *ValueTypesUnionStringLiteralClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesUnionStringLiteralClient) putCreateRequest(ctx context.Context, body UnionStringLiteralProperty, _ *ValueTypesUnionStringLiteralClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/union/string/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

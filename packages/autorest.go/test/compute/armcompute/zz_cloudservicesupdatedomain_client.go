@@ -76,7 +76,7 @@ func (client *CloudServicesUpdateDomainClient) GetUpdateDomain(ctx context.Conte
 }
 
 // getUpdateDomainCreateRequest creates the GetUpdateDomain request.
-func (client *CloudServicesUpdateDomainClient) getUpdateDomainCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, options *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (*policy.Request, error) {
+func (client *CloudServicesUpdateDomainClient) getUpdateDomainCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, _ *CloudServicesUpdateDomainClientGetUpdateDomainOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,7 +142,7 @@ func (client *CloudServicesUpdateDomainClient) NewListUpdateDomainsPager(resourc
 }
 
 // listUpdateDomainsCreateRequest creates the ListUpdateDomains request.
-func (client *CloudServicesUpdateDomainClient) listUpdateDomainsCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServicesUpdateDomainClientListUpdateDomainsOptions) (*policy.Request, error) {
+func (client *CloudServicesUpdateDomainClient) listUpdateDomainsCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, _ *CloudServicesUpdateDomainClientListUpdateDomainsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -230,7 +230,7 @@ func (client *CloudServicesUpdateDomainClient) walkUpdateDomain(ctx context.Cont
 }
 
 // walkUpdateDomainCreateRequest creates the WalkUpdateDomain request.
-func (client *CloudServicesUpdateDomainClient) walkUpdateDomainCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, options *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*policy.Request, error) {
+func (client *CloudServicesUpdateDomainClient) walkUpdateDomainCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters UpdateDomain, _ *CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

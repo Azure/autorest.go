@@ -72,7 +72,7 @@ func (client *AvailableResourceGroupDelegationsClient) NewListPager(location str
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsClientListOptions) (*policy.Request, error) {
+func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, _ *AvailableResourceGroupDelegationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

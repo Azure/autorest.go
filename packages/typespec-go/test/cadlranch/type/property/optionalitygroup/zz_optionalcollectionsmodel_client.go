@@ -44,7 +44,7 @@ func (client *OptionalCollectionsModelClient) GetAll(ctx context.Context, option
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalCollectionsModelClient) getAllCreateRequest(ctx context.Context, options *OptionalCollectionsModelClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalCollectionsModelClient) getAllCreateRequest(ctx context.Context, _ *OptionalCollectionsModelClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/collections/model/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *OptionalCollectionsModelClient) GetDefault(ctx context.Context, op
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalCollectionsModelClient) getDefaultCreateRequest(ctx context.Context, options *OptionalCollectionsModelClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalCollectionsModelClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalCollectionsModelClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/collections/model/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *OptionalCollectionsModelClient) PutAll(ctx context.Context, body C
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalCollectionsModelClient) putAllCreateRequest(ctx context.Context, body CollectionsModelProperty, options *OptionalCollectionsModelClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalCollectionsModelClient) putAllCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *OptionalCollectionsModelClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/collections/model/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,7 +171,7 @@ func (client *OptionalCollectionsModelClient) PutDefault(ctx context.Context, bo
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalCollectionsModelClient) putDefaultCreateRequest(ctx context.Context, body CollectionsModelProperty, options *OptionalCollectionsModelClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalCollectionsModelClient) putDefaultCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *OptionalCollectionsModelClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/collections/model/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

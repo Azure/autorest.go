@@ -95,7 +95,7 @@ func (client *PipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
-func (client *PipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunClientGetPipelineRunOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, _ *PipelineRunClientGetPipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	if runID == "" {
 		return nil, errors.New("parameter runID cannot be empty")
@@ -149,7 +149,7 @@ func (client *PipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
-func (client *PipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunClientQueryActivityRunsOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, _ *PipelineRunClientQueryActivityRunsOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -208,7 +208,7 @@ func (client *PipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
-func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, _ *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryPipelineRuns"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

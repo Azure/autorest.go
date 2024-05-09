@@ -91,7 +91,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 }
 
 // get501CreateRequest creates the Get501 request.
-func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureClientGet501Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, _ *HTTPServerFailureClientGet501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 }
 
 // head501CreateRequest creates the Head501 request.
-func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureClientHead501Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, _ *HTTPServerFailureClientHead501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {

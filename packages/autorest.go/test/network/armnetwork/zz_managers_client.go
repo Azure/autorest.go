@@ -73,7 +73,7 @@ func (client *ManagersClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ManagersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters Manager, options *ManagersClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ManagersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters Manager, _ *ManagersClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -219,7 +219,7 @@ func (client *ManagersClient) Get(ctx context.Context, resourceGroupName string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *ManagersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, options *ManagersClientGetOptions) (*policy.Request, error) {
+func (client *ManagersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, _ *ManagersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -410,7 +410,7 @@ func (client *ManagersClient) Patch(ctx context.Context, resourceGroupName strin
 }
 
 // patchCreateRequest creates the Patch request.
-func (client *ManagersClient) patchCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters PatchObject, options *ManagersClientPatchOptions) (*policy.Request, error) {
+func (client *ManagersClient) patchCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, parameters PatchObject, _ *ManagersClientPatchOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

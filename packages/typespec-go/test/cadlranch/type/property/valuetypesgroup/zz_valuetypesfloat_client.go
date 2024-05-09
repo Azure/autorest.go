@@ -43,7 +43,7 @@ func (client *ValueTypesFloatClient) Get(ctx context.Context, options *ValueType
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesFloatClient) getCreateRequest(ctx context.Context, options *ValueTypesFloatClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesFloatClient) getCreateRequest(ctx context.Context, _ *ValueTypesFloatClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/float"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesFloatClient) Put(ctx context.Context, body FloatProperty
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesFloatClient) putCreateRequest(ctx context.Context, body FloatProperty, options *ValueTypesFloatClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesFloatClient) putCreateRequest(ctx context.Context, body FloatProperty, _ *ValueTypesFloatClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/float"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

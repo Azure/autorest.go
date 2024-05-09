@@ -43,7 +43,7 @@ func (client *ValueTypesModelClient) Get(ctx context.Context, options *ValueType
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesModelClient) getCreateRequest(ctx context.Context, options *ValueTypesModelClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesModelClient) getCreateRequest(ctx context.Context, _ *ValueTypesModelClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesModelClient) Put(ctx context.Context, body ModelProperty
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesModelClient) putCreateRequest(ctx context.Context, body ModelProperty, options *ValueTypesModelClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesModelClient) putCreateRequest(ctx context.Context, body ModelProperty, _ *ValueTypesModelClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

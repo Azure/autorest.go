@@ -42,7 +42,7 @@ func (client *BytesRequestBodyClient) Base64(ctx context.Context, value []byte, 
 }
 
 // base64CreateRequest creates the Base64 request.
-func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64Options) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientBase64Options) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/base64"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -79,7 +79,7 @@ func (client *BytesRequestBodyClient) Base64URL(ctx context.Context, value []byt
 }
 
 // base64URLCreateRequest creates the Base64URL request.
-func (client *BytesRequestBodyClient) base64URLCreateRequest(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64URLOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) base64URLCreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -116,7 +116,7 @@ func (client *BytesRequestBodyClient) CustomContentType(ctx context.Context, val
 }
 
 // customContentTypeCreateRequest creates the CustomContentType request.
-func (client *BytesRequestBodyClient) customContentTypeCreateRequest(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientCustomContentTypeOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) customContentTypeCreateRequest(ctx context.Context, value io.ReadSeekCloser, _ *BytesRequestBodyClientCustomContentTypeOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/custom-content-type"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -153,7 +153,7 @@ func (client *BytesRequestBodyClient) Default(ctx context.Context, value []byte,
 }
 
 // defaultCreateRequest creates the Default request.
-func (client *BytesRequestBodyClient) defaultCreateRequest(ctx context.Context, value []byte, options *BytesRequestBodyClientDefaultOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) defaultCreateRequest(ctx context.Context, value []byte, _ *BytesRequestBodyClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -190,7 +190,7 @@ func (client *BytesRequestBodyClient) OctetStream(ctx context.Context, value io.
 }
 
 // octetStreamCreateRequest creates the OctetStream request.
-func (client *BytesRequestBodyClient) octetStreamCreateRequest(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientOctetStreamOptions) (*policy.Request, error) {
+func (client *BytesRequestBodyClient) octetStreamCreateRequest(ctx context.Context, value io.ReadSeekCloser, _ *BytesRequestBodyClientOctetStreamOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/body/request/octet-stream"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

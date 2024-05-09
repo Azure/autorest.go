@@ -48,7 +48,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (*policy.Request, error) {
+func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Context, _ *PolymorphicrecursiveClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -102,7 +102,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursiveClientPutValidOptions) (*policy.Request, error) {
+func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, _ *PolymorphicrecursiveClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

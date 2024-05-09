@@ -73,7 +73,7 @@ func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceG
 }
 
 // listCreateRequest creates the List request.
-func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksClientListOptions) (*policy.Request, error) {
+func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, _ *ResourceNavigationLinksClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

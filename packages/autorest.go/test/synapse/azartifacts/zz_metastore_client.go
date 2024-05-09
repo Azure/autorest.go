@@ -46,7 +46,7 @@ func (client *MetastoreClient) Delete(ctx context.Context, id string, options *M
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id string, options *MetastoreClientDeleteOptions) (*policy.Request, error) {
+func (client *MetastoreClient) deleteCreateRequest(ctx context.Context, id string, _ *MetastoreClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/metastore/databases/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -88,7 +88,7 @@ func (client *MetastoreClient) GetDatabaseOperations(ctx context.Context, id str
 }
 
 // getDatabaseOperationsCreateRequest creates the GetDatabaseOperations request.
-func (client *MetastoreClient) getDatabaseOperationsCreateRequest(ctx context.Context, id string, options *MetastoreClientGetDatabaseOperationsOptions) (*policy.Request, error) {
+func (client *MetastoreClient) getDatabaseOperationsCreateRequest(ctx context.Context, id string, _ *MetastoreClientGetDatabaseOperationsOptions) (*policy.Request, error) {
 	urlPath := "/metastore/create-database-operations/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -141,7 +141,7 @@ func (client *MetastoreClient) Register(ctx context.Context, id string, register
 }
 
 // registerCreateRequest creates the Register request.
-func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id string, registerBody MetastoreRegisterObject, options *MetastoreClientRegisterOptions) (*policy.Request, error) {
+func (client *MetastoreClient) registerCreateRequest(ctx context.Context, id string, registerBody MetastoreRegisterObject, _ *MetastoreClientRegisterOptions) (*policy.Request, error) {
 	urlPath := "/metastore/create-database-operations/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -196,7 +196,7 @@ func (client *MetastoreClient) Update(ctx context.Context, id string, updateBody
 }
 
 // updateCreateRequest creates the Update request.
-func (client *MetastoreClient) updateCreateRequest(ctx context.Context, id string, updateBody MetastoreUpdateObject, options *MetastoreClientUpdateOptions) (*policy.Request, error) {
+func (client *MetastoreClient) updateCreateRequest(ctx context.Context, id string, updateBody MetastoreUpdateObject, _ *MetastoreClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/metastore/update-database-operations/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")

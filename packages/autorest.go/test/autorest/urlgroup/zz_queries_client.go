@@ -356,7 +356,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClie
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
-func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options *QueriesClientByteEmptyOptions) (*policy.Request, error) {
+func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, _ *QueriesClientByteEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -564,7 +564,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
-func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, options *QueriesClientDateTimeValidOptions) (*policy.Request, error) {
+func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, _ *QueriesClientDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/datetime/2012-01-01T01%3A01%3A01Z"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -604,7 +604,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClie
 }
 
 // dateValidCreateRequest creates the DateValid request.
-func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options *QueriesClientDateValidOptions) (*policy.Request, error) {
+func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, _ *QueriesClientDateValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/date/2012-01-01"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -645,7 +645,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
-func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
+func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Context, _ *QueriesClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/-9999999.999"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -686,7 +686,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
-func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
+func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Context, _ *QueriesClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/9999999.999"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -895,7 +895,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
-func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (*policy.Request, error) {
+func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Context, _ *QueriesClientFloatScientificNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/-1.034E-20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -936,7 +936,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
-func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (*policy.Request, error) {
+func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Context, _ *QueriesClientFloatScientificPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/1.034E+20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -976,7 +976,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
-func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (*policy.Request, error) {
+func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, _ *QueriesClientGetBooleanFalseOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1058,7 +1058,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
-func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (*policy.Request, error) {
+func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, _ *QueriesClientGetBooleanTrueOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/true"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1099,7 +1099,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
-func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
+func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, _ *QueriesClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/-1000000"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1182,7 +1182,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
-func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (*policy.Request, error) {
+func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, _ *QueriesClientGetIntOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/1000000"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1265,7 +1265,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
-func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (*policy.Request, error) {
+func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Context, _ *QueriesClientGetNegativeTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/-10000000000"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1305,7 +1305,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
-func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, options *QueriesClientGetTenBillionOptions) (*policy.Request, error) {
+func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, _ *QueriesClientGetTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/10000000000"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1345,7 +1345,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesCl
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
-func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, options *QueriesClientStringEmptyOptions) (*policy.Request, error) {
+func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, _ *QueriesClientStringEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1428,7 +1428,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
-func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (*policy.Request, error) {
+func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, _ *QueriesClientStringURLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1468,7 +1468,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
-func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, options *QueriesClientStringUnicodeOptions) (*policy.Request, error) {
+func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, _ *QueriesClientStringUnicodeOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/unicode/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

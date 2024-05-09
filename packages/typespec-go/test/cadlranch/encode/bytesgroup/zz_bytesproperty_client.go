@@ -42,7 +42,7 @@ func (client *BytesPropertyClient) Base64(ctx context.Context, body Base64BytesP
 }
 
 // base64CreateRequest creates the Base64 request.
-func (client *BytesPropertyClient) base64CreateRequest(ctx context.Context, body Base64BytesProperty, options *BytesPropertyClientBase64Options) (*policy.Request, error) {
+func (client *BytesPropertyClient) base64CreateRequest(ctx context.Context, body Base64BytesProperty, _ *BytesPropertyClientBase64Options) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/base64"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *BytesPropertyClient) Base64URL(ctx context.Context, body Base64URL
 }
 
 // base64URLCreateRequest creates the Base64URL request.
-func (client *BytesPropertyClient) base64URLCreateRequest(ctx context.Context, body Base64URLBytesProperty, options *BytesPropertyClientBase64URLOptions) (*policy.Request, error) {
+func (client *BytesPropertyClient) base64URLCreateRequest(ctx context.Context, body Base64URLBytesProperty, _ *BytesPropertyClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,7 +137,7 @@ func (client *BytesPropertyClient) Base64URLArray(ctx context.Context, body Base
 }
 
 // base64URLArrayCreateRequest creates the Base64URLArray request.
-func (client *BytesPropertyClient) base64URLArrayCreateRequest(ctx context.Context, body Base64URLArrayBytesProperty, options *BytesPropertyClientBase64URLArrayOptions) (*policy.Request, error) {
+func (client *BytesPropertyClient) base64URLArrayCreateRequest(ctx context.Context, body Base64URLArrayBytesProperty, _ *BytesPropertyClientBase64URLArrayOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/base64url-array"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -184,7 +184,7 @@ func (client *BytesPropertyClient) Default(ctx context.Context, body DefaultByte
 }
 
 // defaultCreateRequest creates the Default request.
-func (client *BytesPropertyClient) defaultCreateRequest(ctx context.Context, body DefaultBytesProperty, options *BytesPropertyClientDefaultOptions) (*policy.Request, error) {
+func (client *BytesPropertyClient) defaultCreateRequest(ctx context.Context, body DefaultBytesProperty, _ *BytesPropertyClientDefaultOptions) (*policy.Request, error) {
 	urlPath := "/encode/bytes/property/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

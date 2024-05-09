@@ -131,7 +131,7 @@ func (client *SparkConfigurationClient) deleteSparkConfiguration(ctx context.Con
 }
 
 // deleteSparkConfigurationCreateRequest creates the DeleteSparkConfiguration request.
-func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ctx context.Context, sparkConfigurationName string, options *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*policy.Request, error) {
+func (client *SparkConfigurationClient) deleteSparkConfigurationCreateRequest(ctx context.Context, sparkConfigurationName string, _ *SparkConfigurationClientBeginDeleteSparkConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/sparkconfigurations/{sparkConfigurationName}"
 	if sparkConfigurationName == "" {
 		return nil, errors.New("parameter sparkConfigurationName cannot be empty")
@@ -230,7 +230,7 @@ func (client *SparkConfigurationClient) NewGetSparkConfigurationsByWorkspacePage
 }
 
 // getSparkConfigurationsByWorkspaceCreateRequest creates the GetSparkConfigurationsByWorkspace request.
-func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceCreateRequest(ctx context.Context, options *SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions) (*policy.Request, error) {
+func (client *SparkConfigurationClient) getSparkConfigurationsByWorkspaceCreateRequest(ctx context.Context, _ *SparkConfigurationClientGetSparkConfigurationsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sparkconfigurations"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -295,7 +295,7 @@ func (client *SparkConfigurationClient) renameSparkConfiguration(ctx context.Con
 }
 
 // renameSparkConfigurationCreateRequest creates the RenameSparkConfiguration request.
-func (client *SparkConfigurationClient) renameSparkConfigurationCreateRequest(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, options *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*policy.Request, error) {
+func (client *SparkConfigurationClient) renameSparkConfigurationCreateRequest(ctx context.Context, sparkConfigurationName string, request ArtifactRenameRequest, _ *SparkConfigurationClientBeginRenameSparkConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/sparkconfigurations/{sparkConfigurationName}/rename"
 	if sparkConfigurationName == "" {
 		return nil, errors.New("parameter sparkConfigurationName cannot be empty")

@@ -69,7 +69,7 @@ func (client *WorkspaceFeaturesClient) NewListPager(resourceGroupName string, wo
 }
 
 // listCreateRequest creates the List request.
-func (client *WorkspaceFeaturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *WorkspaceFeaturesClientListOptions) (*policy.Request, error) {
+func (client *WorkspaceFeaturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *WorkspaceFeaturesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/features"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

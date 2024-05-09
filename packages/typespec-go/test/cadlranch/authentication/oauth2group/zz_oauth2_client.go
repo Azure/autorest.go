@@ -42,7 +42,7 @@ func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientIn
 }
 
 // invalidCreateRequest creates the Invalid request.
-func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, options *OAuth2ClientInvalidOptions) (*policy.Request, error) {
+func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, _ *OAuth2ClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/oauth2/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -76,7 +76,7 @@ func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientVali
 }
 
 // validCreateRequest creates the Valid request.
-func (client *OAuth2Client) validCreateRequest(ctx context.Context, options *OAuth2ClientValidOptions) (*policy.Request, error) {
+func (client *OAuth2Client) validCreateRequest(ctx context.Context, _ *OAuth2ClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/oauth2/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -43,7 +43,7 @@ func (client *DictionaryNullableFloatValueClient) Get(ctx context.Context, optio
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryNullableFloatValueClient) getCreateRequest(ctx context.Context, options *DictionaryNullableFloatValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryNullableFloatValueClient) getCreateRequest(ctx context.Context, _ *DictionaryNullableFloatValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryNullableFloatValueClient) Put(ctx context.Context, body 
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryNullableFloatValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, options *DictionaryNullableFloatValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryNullableFloatValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, _ *DictionaryNullableFloatValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

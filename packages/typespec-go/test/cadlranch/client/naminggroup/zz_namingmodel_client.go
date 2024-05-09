@@ -41,7 +41,7 @@ func (client *NamingModelClient) Client(ctx context.Context, clientModel ClientM
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingModelClient) clientCreateRequest(ctx context.Context, clientModel ClientModel, options *NamingModelClientClientOptions) (*policy.Request, error) {
+func (client *NamingModelClient) clientCreateRequest(ctx context.Context, clientModel ClientModel, _ *NamingModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -77,7 +77,7 @@ func (client *NamingModelClient) Language(ctx context.Context, goModel GoModel, 
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingModelClient) languageCreateRequest(ctx context.Context, goModel GoModel, options *NamingModelClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingModelClient) languageCreateRequest(ctx context.Context, goModel GoModel, _ *NamingModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

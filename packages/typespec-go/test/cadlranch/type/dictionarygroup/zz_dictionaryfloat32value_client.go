@@ -43,7 +43,7 @@ func (client *DictionaryFloat32ValueClient) Get(ctx context.Context, options *Di
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryFloat32ValueClient) getCreateRequest(ctx context.Context, options *DictionaryFloat32ValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryFloat32ValueClient) getCreateRequest(ctx context.Context, _ *DictionaryFloat32ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryFloat32ValueClient) Put(ctx context.Context, body map[st
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryFloat32ValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, options *DictionaryFloat32ValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryFloat32ValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, _ *DictionaryFloat32ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

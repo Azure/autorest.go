@@ -69,7 +69,7 @@ func (client *MetadataSchemasClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *MetadataSchemasClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, payload MetadataSchema, options *MetadataSchemasClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *MetadataSchemasClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, payload MetadataSchema, _ *MetadataSchemasClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -141,7 +141,7 @@ func (client *MetadataSchemasClient) Delete(ctx context.Context, resourceGroupNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *MetadataSchemasClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *MetadataSchemasClientDeleteOptions) (*policy.Request, error) {
+func (client *MetadataSchemasClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, _ *MetadataSchemasClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -198,7 +198,7 @@ func (client *MetadataSchemasClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // getCreateRequest creates the Get request.
-func (client *MetadataSchemasClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *MetadataSchemasClientGetOptions) (*policy.Request, error) {
+func (client *MetadataSchemasClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, _ *MetadataSchemasClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -266,7 +266,7 @@ func (client *MetadataSchemasClient) Head(ctx context.Context, resourceGroupName
 }
 
 // headCreateRequest creates the Head request.
-func (client *MetadataSchemasClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, options *MetadataSchemasClientHeadOptions) (*policy.Request, error) {
+func (client *MetadataSchemasClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, metadataSchemaName string, _ *MetadataSchemasClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

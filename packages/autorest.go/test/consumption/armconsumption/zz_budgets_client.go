@@ -74,7 +74,7 @@ func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, b
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, scope string, budgetName string, parameters Budget, _ *BudgetsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -137,7 +137,7 @@ func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetNam
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (*policy.Request, error) {
+func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope string, budgetName string, _ *BudgetsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -189,7 +189,7 @@ func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName s
 }
 
 // getCreateRequest creates the Get request.
-func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (*policy.Request, error) {
+func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string, budgetName string, _ *BudgetsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -251,7 +251,7 @@ func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientLi
 }
 
 // listCreateRequest creates the List request.
-func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, options *BudgetsClientListOptions) (*policy.Request, error) {
+func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, _ *BudgetsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

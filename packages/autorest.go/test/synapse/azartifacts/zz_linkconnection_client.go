@@ -50,7 +50,7 @@ func (client *LinkConnectionClient) CreateOrUpdate(ctx context.Context, linkConn
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *LinkConnectionClient) createOrUpdateCreateRequest(ctx context.Context, linkConnectionName string, linkConnection LinkConnectionResource, options *LinkConnectionClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) createOrUpdateCreateRequest(ctx context.Context, linkConnectionName string, linkConnection LinkConnectionResource, _ *LinkConnectionClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -103,7 +103,7 @@ func (client *LinkConnectionClient) Delete(ctx context.Context, linkConnectionNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientDeleteOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) deleteCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -146,7 +146,7 @@ func (client *LinkConnectionClient) EditTables(ctx context.Context, linkConnecti
 }
 
 // editTablesCreateRequest creates the EditTables request.
-func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context, linkConnectionName string, editTablesRequest EditTablesRequest, options *LinkConnectionClientEditTablesOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) editTablesCreateRequest(ctx context.Context, linkConnectionName string, editTablesRequest EditTablesRequest, _ *LinkConnectionClientEditTablesOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/edittables"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -191,7 +191,7 @@ func (client *LinkConnectionClient) Get(ctx context.Context, linkConnectionName 
 }
 
 // getCreateRequest creates the Get request.
-func (client *LinkConnectionClient) getCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) getCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientGetOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -243,7 +243,7 @@ func (client *LinkConnectionClient) GetDetailedStatus(ctx context.Context, linkC
 }
 
 // getDetailedStatusCreateRequest creates the GetDetailedStatus request.
-func (client *LinkConnectionClient) getDetailedStatusCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientGetDetailedStatusOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) getDetailedStatusCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientGetDetailedStatusOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/detailedstatus"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -296,7 +296,7 @@ func (client *LinkConnectionClient) NewListByWorkspacePager(options *LinkConnect
 }
 
 // listByWorkspaceCreateRequest creates the ListByWorkspace request.
-func (client *LinkConnectionClient) listByWorkspaceCreateRequest(ctx context.Context, options *LinkConnectionClientListByWorkspaceOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) listByWorkspaceCreateRequest(ctx context.Context, _ *LinkConnectionClientListByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -344,7 +344,7 @@ func (client *LinkConnectionClient) ListLinkTables(ctx context.Context, linkConn
 }
 
 // listLinkTablesCreateRequest creates the ListLinkTables request.
-func (client *LinkConnectionClient) listLinkTablesCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientListLinkTablesOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) listLinkTablesCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientListLinkTablesOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/linktables"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -394,7 +394,7 @@ func (client *LinkConnectionClient) Pause(ctx context.Context, linkConnectionNam
 }
 
 // pauseCreateRequest creates the Pause request.
-func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientPauseOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) pauseCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientPauseOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/pause"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -438,7 +438,7 @@ func (client *LinkConnectionClient) QueryTableStatus(ctx context.Context, linkCo
 }
 
 // queryTableStatusCreateRequest creates the QueryTableStatus request.
-func (client *LinkConnectionClient) queryTableStatusCreateRequest(ctx context.Context, linkConnectionName string, queryTableStatusRequest QueryTableStatusRequest, options *LinkConnectionClientQueryTableStatusOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) queryTableStatusCreateRequest(ctx context.Context, linkConnectionName string, queryTableStatusRequest QueryTableStatusRequest, _ *LinkConnectionClientQueryTableStatusOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/querytablestatus"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -491,7 +491,7 @@ func (client *LinkConnectionClient) Resume(ctx context.Context, linkConnectionNa
 }
 
 // resumeCreateRequest creates the Resume request.
-func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientResumeOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) resumeCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientResumeOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/resume"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -532,7 +532,7 @@ func (client *LinkConnectionClient) Start(ctx context.Context, linkConnectionNam
 }
 
 // startCreateRequest creates the Start request.
-func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStartOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) startCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientStartOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/start"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -573,7 +573,7 @@ func (client *LinkConnectionClient) Stop(ctx context.Context, linkConnectionName
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkConnectionName string, options *LinkConnectionClientStopOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) stopCreateRequest(ctx context.Context, linkConnectionName string, _ *LinkConnectionClientStopOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/stop"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")
@@ -616,7 +616,7 @@ func (client *LinkConnectionClient) UpdateLandingZoneCredential(ctx context.Cont
 }
 
 // updateLandingZoneCredentialCreateRequest creates the UpdateLandingZoneCredential request.
-func (client *LinkConnectionClient) updateLandingZoneCredentialCreateRequest(ctx context.Context, linkConnectionName string, updateLandingZoneCredentialRequest UpdateLandingZoneCredential, options *LinkConnectionClientUpdateLandingZoneCredentialOptions) (*policy.Request, error) {
+func (client *LinkConnectionClient) updateLandingZoneCredentialCreateRequest(ctx context.Context, linkConnectionName string, updateLandingZoneCredentialRequest UpdateLandingZoneCredential, _ *LinkConnectionClientUpdateLandingZoneCredentialOptions) (*policy.Request, error) {
 	urlPath := "/linkconnections/{linkConnectionName}/updateLandingZoneCredential"
 	if linkConnectionName == "" {
 		return nil, errors.New("parameter linkConnectionName cannot be empty")

@@ -44,7 +44,7 @@ func (client *OptionalIntLiteralClient) GetAll(ctx context.Context, options *Opt
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalIntLiteralClient) getAllCreateRequest(ctx context.Context, options *OptionalIntLiteralClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalIntLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalIntLiteralClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *OptionalIntLiteralClient) GetDefault(ctx context.Context, options 
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalIntLiteralClient) getDefaultCreateRequest(ctx context.Context, options *OptionalIntLiteralClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalIntLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalIntLiteralClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *OptionalIntLiteralClient) PutAll(ctx context.Context, body IntLite
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalIntLiteralClient) putAllCreateRequest(ctx context.Context, body IntLiteralProperty, options *OptionalIntLiteralClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalIntLiteralClient) putAllCreateRequest(ctx context.Context, body IntLiteralProperty, _ *OptionalIntLiteralClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,7 +171,7 @@ func (client *OptionalIntLiteralClient) PutDefault(ctx context.Context, body Int
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalIntLiteralClient) putDefaultCreateRequest(ctx context.Context, body IntLiteralProperty, options *OptionalIntLiteralClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalIntLiteralClient) putDefaultCreateRequest(ctx context.Context, body IntLiteralProperty, _ *OptionalIntLiteralClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/int/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -179,7 +179,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 }
 
 // get400CreateRequest creates the Get400 request.
-func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -217,7 +217,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 }
 
 // get402CreateRequest creates the Get402 request.
-func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet402Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet402Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/402"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -255,7 +255,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 }
 
 // get403CreateRequest creates the Get403 request.
-func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet403Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -293,7 +293,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 }
 
 // get411CreateRequest creates the Get411 request.
-func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet411Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet411Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/411"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -331,7 +331,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 }
 
 // get412CreateRequest creates the Get412 request.
-func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet412Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -369,7 +369,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 }
 
 // get416CreateRequest creates the Get416 request.
-func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet416Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, _ *HTTPClientFailureClientGet416Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/416"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -406,7 +406,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 }
 
 // head400CreateRequest creates the Head400 request.
-func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, _ *HTTPClientFailureClientHead400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -443,7 +443,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 }
 
 // head401CreateRequest creates the Head401 request.
-func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead401Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, _ *HTTPClientFailureClientHead401Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/401"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -480,7 +480,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 }
 
 // head410CreateRequest creates the Head410 request.
-func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead410Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, _ *HTTPClientFailureClientHead410Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/410"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -517,7 +517,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 }
 
 // head429CreateRequest creates the Head429 request.
-func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead429Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, _ *HTTPClientFailureClientHead429Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/429"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -555,7 +555,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 }
 
 // options400CreateRequest creates the Options400 request.
-func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, _ *HTTPClientFailureClientOptions400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -593,7 +593,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 }
 
 // options403CreateRequest creates the Options403 request.
-func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, _ *HTTPClientFailureClientOptions403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -631,7 +631,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 }
 
 // options412CreateRequest creates the Options412 request.
-func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, _ *HTTPClientFailureClientOptions412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -669,7 +669,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 }
 
 // patch400CreateRequest creates the Patch400 request.
-func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPatch400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -710,7 +710,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 }
 
 // patch405CreateRequest creates the Patch405 request.
-func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPatch405Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/405"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -751,7 +751,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 }
 
 // patch414CreateRequest creates the Patch414 request.
-func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPatch414Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/414"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -924,7 +924,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 }
 
 // put400CreateRequest creates the Put400 request.
-func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPut400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -965,7 +965,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 }
 
 // put404CreateRequest creates the Put404 request.
-func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut404Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPut404Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/404"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1006,7 +1006,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 }
 
 // put409CreateRequest creates the Put409 request.
-func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut409Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPut409Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/409"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1047,7 +1047,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 }
 
 // put413CreateRequest creates the Put413 request.
-func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut413Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, _ *HTTPClientFailureClientPut413Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/413"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

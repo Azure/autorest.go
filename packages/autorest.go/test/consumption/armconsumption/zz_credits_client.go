@@ -62,7 +62,7 @@ func (client *CreditsClient) Get(ctx context.Context, scope string, options *Cre
 }
 
 // getCreateRequest creates the Get request.
-func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string, options *CreditsClientGetOptions) (*policy.Request, error) {
+func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string, _ *CreditsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/credits/balanceSummary"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

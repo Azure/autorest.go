@@ -70,7 +70,7 @@ func (client *CloudServiceRolesClient) Get(ctx context.Context, roleName string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *CloudServiceRolesClient) getCreateRequest(ctx context.Context, roleName string, resourceGroupName string, cloudServiceName string, options *CloudServiceRolesClientGetOptions) (*policy.Request, error) {
+func (client *CloudServiceRolesClient) getCreateRequest(ctx context.Context, roleName string, resourceGroupName string, cloudServiceName string, _ *CloudServiceRolesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}"
 	if roleName == "" {
 		return nil, errors.New("parameter roleName cannot be empty")
@@ -138,7 +138,7 @@ func (client *CloudServiceRolesClient) NewListPager(resourceGroupName string, cl
 }
 
 // listCreateRequest creates the List request.
-func (client *CloudServiceRolesClient) listCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, options *CloudServiceRolesClientListOptions) (*policy.Request, error) {
+func (client *CloudServiceRolesClient) listCreateRequest(ctx context.Context, resourceGroupName string, cloudServiceName string, _ *CloudServiceRolesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

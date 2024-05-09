@@ -50,7 +50,7 @@ func (client *SessionClient) CancelSparkSession(ctx context.Context, sessionID i
 }
 
 // cancelSparkSessionCreateRequest creates the CancelSparkSession request.
-func (client *SessionClient) cancelSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SessionClientCancelSparkSessionOptions) (*policy.Request, error) {
+func (client *SessionClient) cancelSparkSessionCreateRequest(ctx context.Context, sessionID int32, _ *SessionClientCancelSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)
@@ -89,7 +89,7 @@ func (client *SessionClient) CancelSparkStatement(ctx context.Context, sessionID
 }
 
 // cancelSparkStatementCreateRequest creates the CancelSparkStatement request.
-func (client *SessionClient) cancelSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SessionClientCancelSparkStatementOptions) (*policy.Request, error) {
+func (client *SessionClient) cancelSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, _ *SessionClientCancelSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)
@@ -194,7 +194,7 @@ func (client *SessionClient) CreateSparkStatement(ctx context.Context, sessionID
 }
 
 // createSparkStatementCreateRequest creates the CreateSparkStatement request.
-func (client *SessionClient) createSparkStatementCreateRequest(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, options *SessionClientCreateSparkStatementOptions) (*policy.Request, error) {
+func (client *SessionClient) createSparkStatementCreateRequest(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, _ *SessionClientCreateSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)
@@ -355,7 +355,7 @@ func (client *SessionClient) GetSparkStatement(ctx context.Context, sessionID in
 }
 
 // getSparkStatementCreateRequest creates the GetSparkStatement request.
-func (client *SessionClient) getSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SessionClientGetSparkStatementOptions) (*policy.Request, error) {
+func (client *SessionClient) getSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, _ *SessionClientGetSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)
@@ -404,7 +404,7 @@ func (client *SessionClient) GetSparkStatements(ctx context.Context, sessionID i
 }
 
 // getSparkStatementsCreateRequest creates the GetSparkStatements request.
-func (client *SessionClient) getSparkStatementsCreateRequest(ctx context.Context, sessionID int32, options *SessionClientGetSparkStatementsOptions) (*policy.Request, error) {
+func (client *SessionClient) getSparkStatementsCreateRequest(ctx context.Context, sessionID int32, _ *SessionClientGetSparkStatementsOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)
@@ -451,7 +451,7 @@ func (client *SessionClient) ResetSparkSessionTimeout(ctx context.Context, sessi
 }
 
 // resetSparkSessionTimeoutCreateRequest creates the ResetSparkSessionTimeout request.
-func (client *SessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionID int32, options *SessionClientResetSparkSessionTimeoutOptions) (*policy.Request, error) {
+func (client *SessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionID int32, _ *SessionClientResetSparkSessionTimeoutOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)

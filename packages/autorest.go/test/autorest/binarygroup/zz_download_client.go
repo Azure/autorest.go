@@ -46,7 +46,7 @@ func (client *DownloadClient) ErrorStream(ctx context.Context, options *Download
 }
 
 // errorStreamCreateRequest creates the ErrorStream request.
-func (client *DownloadClient) errorStreamCreateRequest(ctx context.Context, options *DownloadClientErrorStreamOptions) (*policy.Request, error) {
+func (client *DownloadClient) errorStreamCreateRequest(ctx context.Context, _ *DownloadClientErrorStreamOptions) (*policy.Request, error) {
 	urlPath := "/binary/error"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

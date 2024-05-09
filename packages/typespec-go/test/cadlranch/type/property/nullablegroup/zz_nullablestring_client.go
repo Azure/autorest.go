@@ -44,7 +44,7 @@ func (client *NullableStringClient) GetNonNull(ctx context.Context, options *Nul
 }
 
 // getNonNullCreateRequest creates the GetNonNull request.
-func (client *NullableStringClient) getNonNullCreateRequest(ctx context.Context, options *NullableStringClientGetNonNullOptions) (*policy.Request, error) {
+func (client *NullableStringClient) getNonNullCreateRequest(ctx context.Context, _ *NullableStringClientGetNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *NullableStringClient) GetNull(ctx context.Context, options *Nullab
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *NullableStringClient) getNullCreateRequest(ctx context.Context, options *NullableStringClientGetNullOptions) (*policy.Request, error) {
+func (client *NullableStringClient) getNullCreateRequest(ctx context.Context, _ *NullableStringClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -132,7 +132,7 @@ func (client *NullableStringClient) PatchNonNull(ctx context.Context, body Strin
 }
 
 // patchNonNullCreateRequest creates the PatchNonNull request.
-func (client *NullableStringClient) patchNonNullCreateRequest(ctx context.Context, body StringProperty, options *NullableStringClientPatchNonNullOptions) (*policy.Request, error) {
+func (client *NullableStringClient) patchNonNullCreateRequest(ctx context.Context, body StringProperty, _ *NullableStringClientPatchNonNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -170,7 +170,7 @@ func (client *NullableStringClient) PatchNull(ctx context.Context, body StringPr
 }
 
 // patchNullCreateRequest creates the PatchNull request.
-func (client *NullableStringClient) patchNullCreateRequest(ctx context.Context, body StringProperty, options *NullableStringClientPatchNullOptions) (*policy.Request, error) {
+func (client *NullableStringClient) patchNullCreateRequest(ctx context.Context, body StringProperty, _ *NullableStringClientPatchNullOptions) (*policy.Request, error) {
 	urlPath := "/type/property/nullable/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {

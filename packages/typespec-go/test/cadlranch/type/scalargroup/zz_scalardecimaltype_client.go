@@ -43,7 +43,7 @@ func (client *ScalarDecimalTypeClient) RequestBody(ctx context.Context, body flo
 }
 
 // requestBodyCreateRequest creates the RequestBody request.
-func (client *ScalarDecimalTypeClient) requestBodyCreateRequest(ctx context.Context, body float64, options *ScalarDecimalTypeClientRequestBodyOptions) (*policy.Request, error) {
+func (client *ScalarDecimalTypeClient) requestBodyCreateRequest(ctx context.Context, body float64, _ *ScalarDecimalTypeClientRequestBodyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal/resquest_body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -80,7 +80,7 @@ func (client *ScalarDecimalTypeClient) RequestParameter(ctx context.Context, val
 }
 
 // requestParameterCreateRequest creates the RequestParameter request.
-func (client *ScalarDecimalTypeClient) requestParameterCreateRequest(ctx context.Context, value float64, options *ScalarDecimalTypeClientRequestParameterOptions) (*policy.Request, error) {
+func (client *ScalarDecimalTypeClient) requestParameterCreateRequest(ctx context.Context, value float64, _ *ScalarDecimalTypeClientRequestParameterOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal/request_parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,7 +117,7 @@ func (client *ScalarDecimalTypeClient) ResponseBody(ctx context.Context, options
 }
 
 // responseBodyCreateRequest creates the ResponseBody request.
-func (client *ScalarDecimalTypeClient) responseBodyCreateRequest(ctx context.Context, options *ScalarDecimalTypeClientResponseBodyOptions) (*policy.Request, error) {
+func (client *ScalarDecimalTypeClient) responseBodyCreateRequest(ctx context.Context, _ *ScalarDecimalTypeClientResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal/response_body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

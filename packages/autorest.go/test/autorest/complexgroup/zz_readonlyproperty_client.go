@@ -48,7 +48,7 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *Rea
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (*policy.Request, error) {
+func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, _ *ReadonlypropertyClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,7 +95,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (*policy.Request, error) {
+func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, _ *ReadonlypropertyClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

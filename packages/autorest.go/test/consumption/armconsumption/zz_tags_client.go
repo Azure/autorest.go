@@ -66,7 +66,7 @@ func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsCl
 }
 
 // getCreateRequest creates the Get request.
-func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, options *TagsClientGetOptions) (*policy.Request, error) {
+func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, _ *TagsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/tags"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

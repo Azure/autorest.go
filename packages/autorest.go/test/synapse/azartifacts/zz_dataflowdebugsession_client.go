@@ -46,7 +46,7 @@ func (client *DataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reque
 }
 
 // addDataFlowCreateRequest creates the AddDataFlow request.
-func (client *DataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionClientAddDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.Context, request DataFlowDebugPackage, _ *DataFlowDebugSessionClientAddDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/addDataFlowToDebugSession"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -113,7 +113,7 @@ func (client *DataFlowDebugSessionClient) createDataFlowDebugSession(ctx context
 }
 
 // createDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
-func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateRequest(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*policy.Request, error) {
+func (client *DataFlowDebugSessionClient) createDataFlowDebugSessionCreateRequest(ctx context.Context, request CreateDataFlowDebugSessionRequest, _ *DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*policy.Request, error) {
 	urlPath := "/createDataFlowDebugSession"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -154,7 +154,7 @@ func (client *DataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 }
 
 // deleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
-func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateRequest(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions) (*policy.Request, error) {
+func (client *DataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateRequest(ctx context.Context, request DeleteDataFlowDebugSessionRequest, _ *DataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions) (*policy.Request, error) {
 	urlPath := "/deleteDataFlowDebugSession"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -212,7 +212,7 @@ func (client *DataFlowDebugSessionClient) executeCommand(ctx context.Context, re
 }
 
 // executeCommandCreateRequest creates the ExecuteCommand request.
-func (client *DataFlowDebugSessionClient) executeCommandCreateRequest(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*policy.Request, error) {
+func (client *DataFlowDebugSessionClient) executeCommandCreateRequest(ctx context.Context, request DataFlowDebugCommandRequest, _ *DataFlowDebugSessionClientBeginExecuteCommandOptions) (*policy.Request, error) {
 	urlPath := "/executeDataFlowDebugCommand"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -255,7 +255,7 @@ func (client *DataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspa
 }
 
 // queryDataFlowDebugSessionsByWorkspaceCreateRequest creates the QueryDataFlowDebugSessionsByWorkspace request.
-func (client *DataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) (*policy.Request, error) {
+func (client *DataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx context.Context, _ *DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryDataFlowDebugSessions"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

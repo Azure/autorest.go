@@ -42,7 +42,7 @@ func (client *ArrayDurationValueClient) Get(ctx context.Context, options *ArrayD
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayDurationValueClient) getCreateRequest(ctx context.Context, options *ArrayDurationValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayDurationValueClient) getCreateRequest(ctx context.Context, _ *ArrayDurationValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayDurationValueClient) Put(ctx context.Context, body []string, 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayDurationValueClient) putCreateRequest(ctx context.Context, body []string, options *ArrayDurationValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayDurationValueClient) putCreateRequest(ctx context.Context, body []string, _ *ArrayDurationValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

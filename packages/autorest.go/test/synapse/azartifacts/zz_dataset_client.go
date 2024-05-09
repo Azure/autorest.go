@@ -131,7 +131,7 @@ func (client *DatasetClient) deleteDataset(ctx context.Context, datasetName stri
 }
 
 // deleteDatasetCreateRequest creates the DeleteDataset request.
-func (client *DatasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, _ *DatasetClientBeginDeleteDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
@@ -229,7 +229,7 @@ func (client *DatasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClie
 }
 
 // getDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
-func (client *DatasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetClientGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
+func (client *DatasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, _ *DatasetClientGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/datasets"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -294,7 +294,7 @@ func (client *DatasetClient) renameDataset(ctx context.Context, datasetName stri
 }
 
 // renameDatasetCreateRequest creates the RenameDataset request.
-func (client *DatasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, _ *DatasetClientBeginRenameDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")

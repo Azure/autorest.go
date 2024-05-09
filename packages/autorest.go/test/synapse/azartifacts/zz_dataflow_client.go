@@ -131,7 +131,7 @@ func (client *DataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 }
 
 // deleteDataFlowCreateRequest creates the DeleteDataFlow request.
-func (client *DataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, _ *DataFlowClientBeginDeleteDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")
@@ -229,7 +229,7 @@ func (client *DataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowC
 }
 
 // getDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
-func (client *DataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowClientGetDataFlowsByWorkspaceOptions) (*policy.Request, error) {
+func (client *DataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, _ *DataFlowClientGetDataFlowsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/dataflows"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -294,7 +294,7 @@ func (client *DataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 }
 
 // renameDataFlowCreateRequest creates the RenameDataFlow request.
-func (client *DataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, _ *DataFlowClientBeginRenameDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")

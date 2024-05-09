@@ -75,7 +75,7 @@ func (client *ScopeConnectionsClient) CreateOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ScopeConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, parameters ScopeConnection, options *ScopeConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ScopeConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, parameters ScopeConnection, _ *ScopeConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -146,7 +146,7 @@ func (client *ScopeConnectionsClient) Delete(ctx context.Context, resourceGroupN
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ScopeConnectionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientDeleteOptions) (*policy.Request, error) {
+func (client *ScopeConnectionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, _ *ScopeConnectionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -206,7 +206,7 @@ func (client *ScopeConnectionsClient) Get(ctx context.Context, resourceGroupName
 }
 
 // getCreateRequest creates the Get request.
-func (client *ScopeConnectionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, options *ScopeConnectionsClientGetOptions) (*policy.Request, error) {
+func (client *ScopeConnectionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, scopeConnectionName string, _ *ScopeConnectionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -45,7 +45,7 @@ func (client *TwoOperationGroupGroup1Client) Four(ctx context.Context, options *
 }
 
 // fourCreateRequest creates the Four request.
-func (client *TwoOperationGroupGroup1Client) fourCreateRequest(ctx context.Context, options *TwoOperationGroupGroup1ClientFourOptions) (*policy.Request, error) {
+func (client *TwoOperationGroupGroup1Client) fourCreateRequest(ctx context.Context, _ *TwoOperationGroupGroup1ClientFourOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -81,7 +81,7 @@ func (client *TwoOperationGroupGroup1Client) One(ctx context.Context, options *T
 }
 
 // oneCreateRequest creates the One request.
-func (client *TwoOperationGroupGroup1Client) oneCreateRequest(ctx context.Context, options *TwoOperationGroupGroup1ClientOneOptions) (*policy.Request, error) {
+func (client *TwoOperationGroupGroup1Client) oneCreateRequest(ctx context.Context, _ *TwoOperationGroupGroup1ClientOneOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -117,7 +117,7 @@ func (client *TwoOperationGroupGroup1Client) Three(ctx context.Context, options 
 }
 
 // threeCreateRequest creates the Three request.
-func (client *TwoOperationGroupGroup1Client) threeCreateRequest(ctx context.Context, options *TwoOperationGroupGroup1ClientThreeOptions) (*policy.Request, error) {
+func (client *TwoOperationGroupGroup1Client) threeCreateRequest(ctx context.Context, _ *TwoOperationGroupGroup1ClientThreeOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

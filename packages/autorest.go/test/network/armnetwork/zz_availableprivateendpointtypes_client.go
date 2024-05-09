@@ -72,7 +72,7 @@ func (client *AvailablePrivateEndpointTypesClient) NewListPager(location string,
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.Context, location string, options *AvailablePrivateEndpointTypesClientListOptions) (*policy.Request, error) {
+func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.Context, location string, _ *AvailablePrivateEndpointTypesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -134,7 +134,7 @@ func (client *AvailablePrivateEndpointTypesClient) NewListByResourceGroupPager(l
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, _ *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

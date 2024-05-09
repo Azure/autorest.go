@@ -131,7 +131,7 @@ func (client *LinkedServiceClient) deleteLinkedService(ctx context.Context, link
 }
 
 // deleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
-func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, _ *LinkedServiceClientBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -230,7 +230,7 @@ func (client *LinkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 }
 
 // getLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
-func (client *LinkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, _ *LinkedServiceClientGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -295,7 +295,7 @@ func (client *LinkedServiceClient) renameLinkedService(ctx context.Context, link
 }
 
 // renameLinkedServiceCreateRequest creates the RenameLinkedService request.
-func (client *LinkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceClientBeginRenameLinkedServiceOptions) (*policy.Request, error) {
+func (client *LinkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, _ *LinkedServiceClientBeginRenameLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}/rename"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")

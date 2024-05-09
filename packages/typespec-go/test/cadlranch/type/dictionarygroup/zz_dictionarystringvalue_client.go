@@ -43,7 +43,7 @@ func (client *DictionaryStringValueClient) Get(ctx context.Context, options *Dic
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryStringValueClient) getCreateRequest(ctx context.Context, options *DictionaryStringValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryStringValueClient) getCreateRequest(ctx context.Context, _ *DictionaryStringValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryStringValueClient) Put(ctx context.Context, body map[str
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryStringValueClient) putCreateRequest(ctx context.Context, body map[string]*string, options *DictionaryStringValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryStringValueClient) putCreateRequest(ctx context.Context, body map[string]*string, _ *DictionaryStringValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

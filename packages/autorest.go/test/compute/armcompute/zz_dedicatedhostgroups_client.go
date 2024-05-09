@@ -74,7 +74,7 @@ func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, res
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, _ *DedicatedHostGroupsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -141,7 +141,7 @@ func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGro
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientDeleteOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, _ *DedicatedHostGroupsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -264,7 +264,7 @@ func (client *DedicatedHostGroupsClient) NewListByResourceGroupPager(resourceGro
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DedicatedHostGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *DedicatedHostGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -324,7 +324,7 @@ func (client *DedicatedHostGroupsClient) NewListBySubscriptionPager(options *Ded
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, options *DedicatedHostGroupsClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, _ *DedicatedHostGroupsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -382,7 +382,7 @@ func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGro
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsClientUpdateOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, _ *DedicatedHostGroupsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

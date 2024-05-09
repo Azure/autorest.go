@@ -42,7 +42,7 @@ func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientIn
 }
 
 // invalidCreateRequest creates the Invalid request.
-func (client *CustomClient) invalidCreateRequest(ctx context.Context, options *CustomClientInvalidOptions) (*policy.Request, error) {
+func (client *CustomClient) invalidCreateRequest(ctx context.Context, _ *CustomClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/http/custom/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -76,7 +76,7 @@ func (client *CustomClient) Valid(ctx context.Context, options *CustomClientVali
 }
 
 // validCreateRequest creates the Valid request.
-func (client *CustomClient) validCreateRequest(ctx context.Context, options *CustomClientValidOptions) (*policy.Request, error) {
+func (client *CustomClient) validCreateRequest(ctx context.Context, _ *CustomClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/http/custom/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

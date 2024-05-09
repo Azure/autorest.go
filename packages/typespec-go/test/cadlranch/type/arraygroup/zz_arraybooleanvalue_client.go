@@ -42,7 +42,7 @@ func (client *ArrayBooleanValueClient) Get(ctx context.Context, options *ArrayBo
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayBooleanValueClient) getCreateRequest(ctx context.Context, options *ArrayBooleanValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayBooleanValueClient) getCreateRequest(ctx context.Context, _ *ArrayBooleanValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayBooleanValueClient) Put(ctx context.Context, body []bool, opt
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayBooleanValueClient) putCreateRequest(ctx context.Context, body []bool, options *ArrayBooleanValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayBooleanValueClient) putCreateRequest(ctx context.Context, body []bool, _ *ArrayBooleanValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

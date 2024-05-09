@@ -43,7 +43,7 @@ func (client *ContentNegotiationDifferentBodyClient) GetAvatarAsJSON(ctx context
 }
 
 // getAvatarAsJSONCreateRequest creates the GetAvatarAsJSON request.
-func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONCreateRequest(ctx context.Context, options *ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions) (*policy.Request, error) {
+func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONCreateRequest(ctx context.Context, _ *ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions) (*policy.Request, error) {
 	urlPath := "/content-negotiation/different-body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *ContentNegotiationDifferentBodyClient) GetAvatarAsPNG(ctx context.
 }
 
 // getAvatarAsPNGCreateRequest creates the GetAvatarAsPNG request.
-func (client *ContentNegotiationDifferentBodyClient) getAvatarAsPNGCreateRequest(ctx context.Context, options *ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions) (*policy.Request, error) {
+func (client *ContentNegotiationDifferentBodyClient) getAvatarAsPNGCreateRequest(ctx context.Context, _ *ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions) (*policy.Request, error) {
 	urlPath := "/content-negotiation/different-body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

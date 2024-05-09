@@ -43,7 +43,7 @@ func (client *ValueTypesBytesClient) Get(ctx context.Context, options *ValueType
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesBytesClient) getCreateRequest(ctx context.Context, options *ValueTypesBytesClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesBytesClient) getCreateRequest(ctx context.Context, _ *ValueTypesBytesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesBytesClient) Put(ctx context.Context, body BytesProperty
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesBytesClient) putCreateRequest(ctx context.Context, body BytesProperty, options *ValueTypesBytesClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesBytesClient) putCreateRequest(ctx context.Context, body BytesProperty, _ *ValueTypesBytesClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

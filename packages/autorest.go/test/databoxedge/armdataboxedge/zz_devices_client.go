@@ -68,7 +68,7 @@ func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName stri
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, _ *DevicesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -147,7 +147,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context,
 }
 
 // createOrUpdateSecuritySettingsCreateRequest creates the CreateOrUpdateSecuritySettings request.
-func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*policy.Request, error) {
+func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, _ *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -215,7 +215,7 @@ func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName str
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -281,7 +281,7 @@ func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName str
 }
 
 // downloadUpdatesCreateRequest creates the DownloadUpdates request.
-func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*policy.Request, error) {
+func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientBeginDownloadUpdatesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/downloadUpdates"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -331,7 +331,7 @@ func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName
 }
 
 // generateCertificateCreateRequest creates the GenerateCertificate request.
-func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGenerateCertificateOptions) (*policy.Request, error) {
+func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientGenerateCertificateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/generateCertificate"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -389,7 +389,7 @@ func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourc
 }
 
 // getCreateRequest creates the Get request.
-func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetOptions) (*policy.Request, error) {
+func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -448,7 +448,7 @@ func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceN
 }
 
 // getExtendedInformationCreateRequest creates the GetExtendedInformation request.
-func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetExtendedInformationOptions) (*policy.Request, error) {
+func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientGetExtendedInformationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/getExtendedInformation"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -507,7 +507,7 @@ func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName 
 }
 
 // getNetworkSettingsCreateRequest creates the GetNetworkSettings request.
-func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetNetworkSettingsOptions) (*policy.Request, error) {
+func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientGetNetworkSettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -567,7 +567,7 @@ func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName st
 }
 
 // getUpdateSummaryCreateRequest creates the GetUpdateSummary request.
-func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientGetUpdateSummaryOptions) (*policy.Request, error) {
+func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientGetUpdateSummaryOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -642,7 +642,7 @@ func (client *DevicesClient) installUpdates(ctx context.Context, deviceName stri
 }
 
 // installUpdatesCreateRequest creates the InstallUpdates request.
-func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*policy.Request, error) {
+func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientBeginInstallUpdatesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/installUpdates"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -827,7 +827,7 @@ func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName stri
 }
 
 // scanForUpdatesCreateRequest creates the ScanForUpdates request.
-func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*policy.Request, error) {
+func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *DevicesClientBeginScanForUpdatesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/scanForUpdates"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -877,7 +877,7 @@ func (client *DevicesClient) Update(ctx context.Context, deviceName string, reso
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesClientUpdateOptions) (*policy.Request, error) {
+func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, _ *DevicesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -940,7 +940,7 @@ func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, devi
 }
 
 // updateExtendedInformationCreateRequest creates the UpdateExtendedInformation request.
-func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesClientUpdateExtendedInformationOptions) (*policy.Request, error) {
+func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, _ *DevicesClientUpdateExtendedInformationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -1003,7 +1003,7 @@ func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName s
 }
 
 // uploadCertificateCreateRequest creates the UploadCertificate request.
-func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, options *DevicesClientUploadCertificateOptions) (*policy.Request, error) {
+func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, _ *DevicesClientUploadCertificateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/uploadCertificate"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
