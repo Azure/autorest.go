@@ -741,12 +741,34 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     }
   }
 
+  const partialBodyParams = values(method.parameters).where((param: go.Parameter) => { return go.isPartialBodyParameter(param); }).toArray();
   const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each); }).first();
   const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
     return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
   };
 
-  if (!bodyParam) {
+  if (partialBodyParams.length > 0) {
+    // partial body params are discrete params that are all fields within an internal struct.
+    // define and instantiate an instance of the wire type, using the values from each param.
+    text += '\tbody := struct {\n';
+    for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+      let star = '*';
+      if (go.isRequiredParameter(partialBodyParam)) {
+        star = '';
+      }
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${star}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+    }
+    text += '\t}{\n';
+    for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+      let addr = '&';
+      if (go.isRequiredParameter(partialBodyParam)) {
+        addr = '';
+      }
+      text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${addr}${uncapitalize(partialBodyParam.name)},\n`;
+    }
+    text += '\t}\n\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
+    text += '\treturn req, nil\n';
+  } else if (!bodyParam) {
     text += '\treturn req, nil\n';
   } else if (bodyParam.bodyFormat === 'JSON' || bodyParam.bodyFormat === 'XML') {
     // default to the body param name

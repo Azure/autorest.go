@@ -21,11 +21,7 @@ func TestFormDataClient_AnonymousModel(t *testing.T) {
 	jpgFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer jpgFile.Close()
-	resp, err := client.NewMultiPartFormDataClient().AnonymousModel(context.Background(), multipartgroup.AnonymousModelRequest{
-		ProfileImage: streaming.MultipartContent{
-			Body: jpgFile,
-		},
-	}, nil)
+	resp, err := client.NewMultiPartFormDataClient().AnonymousModel(context.Background(), jpgFile, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

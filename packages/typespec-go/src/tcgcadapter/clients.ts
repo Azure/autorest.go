@@ -238,9 +238,67 @@ export class clientAdapter {
       }
     }
 
-    for (const param of sdkMethod.operation.parameters) {
-      const adaptedParam = this.adaptMethodParameter(param, optionalGroup);
+    // stuff all of the operation parameters into one array for easy traversal
+    type OperationParamType = tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter;
+    const allOpParams = new Array<OperationParamType>();
+    allOpParams.push(...sdkMethod.operation.parameters);
+    if (sdkMethod.operation.bodyParam) {
+      allOpParams.push(sdkMethod.operation.bodyParam);
+    }
+
+    // we must enumerate parameters, not operation.parameters, as it
+    // contains the params in tsp order as well as any spread params.
+    for (const param of sdkMethod.parameters) {
+      // we need to translate from the method param to its underlying operation param.
+      // most params have a one-to-one mapping. however, for spread params, there will
+      // be a many-to-one mapping. i.e. multiple params will map to the same underlying
+      // operation param. each param corresponds to a field within the operation param.
+      const opParam = values(allOpParams).where((opParam: OperationParamType) => {
+        return values(opParam.correspondingMethodParams).where((methodParam: tcgc.SdkModelPropertyType) => {
+          return methodParam.name === param.name;
+        }).any();
+      }).first();
+
+      if (!opParam) {
+        throw new Error(`didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`);
+      }
+
+      let adaptedParam: go.Parameter;
+      if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
+        const goParamType = this.adaptParameterType(opParam);
+        const byVal = isTypePassedByValue(opParam.type);
+        // find the corresponding field within the model param so we can get the serialized named
+        let serializedName: string | undefined;
+        for (const property of opParam.type.properties) {
+          if (property.name === param.name) {
+            serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializedName;
+            break;
+          }
+        }
+        if (!serializedName) {
+          throw new Error(`didn't find body model property for spread parameter ${param.name}`);
+        }
+        const contentType = this.adaptContentType(opParam.defaultContentType);
+        switch (contentType) {
+          case 'JSON':
+          case 'XML':
+            adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), goParamType, byVal);
+            break;
+          case 'binary':
+            if (opParam.defaultContentType.match(/multipart/i)) {
+              adaptedParam = new go.MultipartFormBodyParameter(param.name, this.ta.getReadSeekCloser(false), goParamType, byVal);
+            } else {
+              adaptedParam = new go.BodyParameter(param.name, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), goParamType, byVal);
+            }
+            break;
+          default:
+            throw new Error(`unhandled spread param content type ${contentType}`);
+        }
+      } else {
+        adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
+      }
       method.parameters.push(adaptedParam);
+
       // we must check via param name and not reference equality. this is because a client param
       // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
       // in one method and a query param in another.
@@ -249,12 +307,6 @@ export class clientAdapter {
       })) {
         method.client.parameters.push(adaptedParam);
       }
-    }
-
-    // we add the body param after any required params. this way,
-    // if the body param is required it shows up last in the list.
-    if (sdkMethod.operation.bodyParam) {
-      method.parameters.push(this.adaptMethodParameter(sdkMethod.operation.bodyParam, optionalGroup));
     }
   }
 

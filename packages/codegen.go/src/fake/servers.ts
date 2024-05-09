@@ -393,7 +393,11 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   if (values(method.parameters).where((each: go.Parameter) => { return go.isQueryParameter(each) && each.location === 'method' && !go.isLiteralParameter(each); }).any()) {
     content += '\tqp := req.URL.Query()\n';
   }
-  const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each); }).first();
+
+  const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => {
+    return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each) || go.isPartialBodyParameter(each);
+  }).first();
+
   if (!bodyParam) {
     // no body, just headers and/or query params
   } else if (go.isMultipartFormBodyParameter(bodyParam)) {
@@ -623,8 +627,33 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     }
   }
 
+  const partialBodyParams = values(method.parameters).where((param: go.Parameter) => { return go.isPartialBodyParameter(param); }).toArray();
+  if (partialBodyParams.length > 0) {
+    // construct the partial body params type and unmarshal it
+    content += '\ttype partialBodyParams struct {\n';
+    for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+      let star = '*';
+      if (go.isRequiredParameter(partialBodyParam)) {
+        star = '';
+      }
+      content += `\t\t${capitalize(partialBodyParam.name)} ${star}${go.getTypeDeclaration(partialBodyParam.type)} \`json:"${partialBodyParam.serializedName}"\`\n`;
+    }
+    content += '\t}\n';
+    content += `\tbody, err := server.UnmarshalRequestAs${(<Array<go.PartialBodyParameter>>partialBodyParams)[0].format}[partialBodyParams](req)\n`;
+    content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n';
+  }
+
   const result = parseHeaderPathQueryParams(clientPkg, method, imports);
   content += result.content;
+
+  // translate each partial body param to its field within the unmarshalled body
+  for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+    let star = '*';
+    if (go.isRequiredParameter(partialBodyParam)) {
+      star = '';
+    }
+    result.params.set(partialBodyParam.name, `${star}body.${capitalize(partialBodyParam.name)}`);
+  }
 
   const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, result.params, imports)})`;
   if (go.isPageableMethod(method) && !go.isLROMethod(method)) {
@@ -1139,7 +1168,7 @@ function populateApiParams(clientPkg: string, method: go.Method, paramValues: Ma
 // getRawParamValue returns the "raw" value for the specified parameter.
 // depending on the type, the value might require parsing before it can be passed to the fake.
 function getRawParamValue(param: go.Parameter): string {
-  if (go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param)) {
+  if (go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param) || go.isPartialBodyParameter(param)) {
     // multipart form data values have been read and assigned
     // to local params with the same name. must check this first
     // as it's a superset of other cases that follow.
