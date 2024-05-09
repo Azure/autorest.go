@@ -21,6 +21,7 @@ type SpreadModelClient struct {
 	internal *azcore.Client
 }
 
+//   - bodyParameter - This is a simple model.
 //   - options - SpreadModelClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadModelClient.SpreadAsRequestBody
 //     method.
 func (client *SpreadModelClient) SpreadAsRequestBody(ctx context.Context, bodyParameter BodyParameter, options *SpreadModelClientSpreadAsRequestBodyOptions) (SpreadModelClientSpreadAsRequestBodyResponse, error) {
@@ -100,6 +101,7 @@ func (client *SpreadModelClient) spreadCompositeRequestCreateRequest(ctx context
 	return req, nil
 }
 
+//   - compositeRequestMix - This is a model with non-body http request decorator.
 //   - options - SpreadModelClientSpreadCompositeRequestMixOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequestMix
 //     method.
 func (client *SpreadModelClient) SpreadCompositeRequestMix(ctx context.Context, name string, testHeader string, compositeRequestMix CompositeRequestMix, options *SpreadModelClientSpreadCompositeRequestMixOptions) (SpreadModelClientSpreadCompositeRequestMixResponse, error) {

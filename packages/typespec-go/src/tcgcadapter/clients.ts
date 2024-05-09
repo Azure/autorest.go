@@ -298,6 +298,8 @@ export class clientAdapter {
       } else {
         adaptedParam = this.adaptMethodParameter(opParam, optionalGroup);
       }
+
+      adaptedParam.description = param.description;
       method.parameters.push(adaptedParam);
 
       // we must check via param name and not reference equality. this is because a client param
@@ -404,8 +406,6 @@ export class clientAdapter {
         adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramType, byVal, location);
       }
     }
-
-    adaptedParam.description = param.description;
 
     if (adaptedParam.location === 'client') {
       // track client parameter for later use

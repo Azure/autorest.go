@@ -19,6 +19,7 @@ type RPCClient struct {
 }
 
 // BeginLongRunningRPC - Generate data.
+//   - generationOptions - Options for the generation.
 //   - options - RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.BeginLongRunningRPC method.
 func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
 	if options == nil || options.ResumeToken == "" {
