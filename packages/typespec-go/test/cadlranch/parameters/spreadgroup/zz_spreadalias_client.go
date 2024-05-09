@@ -45,7 +45,7 @@ func (client *SpreadAliasClient) SpreadAsRequestBody(ctx context.Context, name s
 }
 
 // spreadAsRequestBodyCreateRequest creates the SpreadAsRequestBody request.
-func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, options *SpreadAliasClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
+func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, _ *SpreadAliasClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/alias/request-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *SpreadAliasClient) SpreadAsRequestParameter(ctx context.Context, i
 }
 
 // spreadAsRequestParameterCreateRequest creates the SpreadAsRequestParameter request.
-func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx context.Context, id string, xMSTestHeader string, name string, options *SpreadAliasClientSpreadAsRequestParameterOptions) (*policy.Request, error) {
+func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx context.Context, id string, xMSTestHeader string, name string, _ *SpreadAliasClientSpreadAsRequestParameterOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/alias/request-parameter/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -134,7 +134,7 @@ func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Contex
 }
 
 // spreadWithMultipleParametersCreateRequest creates the SpreadWithMultipleParameters request.
-func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx context.Context, id string, xMSTestHeader string, prop1 string, prop2 string, prop3 string, prop4 string, prop5 string, prop6 string, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (*policy.Request, error) {
+func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx context.Context, id string, xMSTestHeader string, prop1 string, prop2 string, prop3 string, prop4 string, prop5 string, prop6 string, _ *SpreadAliasClientSpreadWithMultipleParametersOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/alias/multiple-parameters/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
