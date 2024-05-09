@@ -267,23 +267,24 @@ export class clientAdapter {
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const goParamType = this.adaptParameterType(opParam);
         const byVal = isTypePassedByValue(opParam.type);
-        // find the corresponding field within the model param so we can get the serialized named
-        let serializedName: string | undefined;
-        for (const property of opParam.type.properties) {
-          if (property.name === param.name) {
-            serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializedName;
-            break;
-          }
-        }
-        if (!serializedName) {
-          throw new Error(`didn't find body model property for spread parameter ${param.name}`);
-        }
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
           case 'JSON':
-          case 'XML':
+          case 'XML': {
+            // find the corresponding field within the model param so we can get the serialized named
+            let serializedName: string | undefined;
+            for (const property of opParam.type.properties) {
+              if (property.name === param.name) {
+                serializedName = (<tcgc.SdkBodyModelPropertyType>property).serializedName;
+                break;
+              }
+            }
+            if (!serializedName) {
+              throw new Error(`didn't find body model property for spread parameter ${param.name}`);
+            }
             adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), goParamType, byVal);
             break;
+          }
           case 'binary':
             if (opParam.defaultContentType.match(/multipart/i)) {
               adaptedParam = new go.MultipartFormBodyParameter(param.name, this.ta.getReadSeekCloser(false), goParamType, byVal);
