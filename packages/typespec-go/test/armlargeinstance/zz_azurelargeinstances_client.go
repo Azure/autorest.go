@@ -67,7 +67,7 @@ func (client *AzureLargeInstancesClient) Get(ctx context.Context, resourceGroupN
 }
 
 // getCreateRequest creates the Get request.
-func (client *AzureLargeInstancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientGetOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -130,7 +130,7 @@ func (client *AzureLargeInstancesClient) NewListByResourceGroupPager(resourceGro
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AzureLargeInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *AzureLargeInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *AzureLargeInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -188,7 +188,7 @@ func (client *AzureLargeInstancesClient) NewListBySubscriptionPager(options *Azu
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AzureLargeInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, options *AzureLargeInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *AzureLargeInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -336,7 +336,7 @@ func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, resourceG
 }
 
 // shutdownCreateRequest creates the Shutdown request.
-func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientBeginShutdownOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -406,7 +406,7 @@ func (client *AzureLargeInstancesClient) start(ctx context.Context, resourceGrou
 }
 
 // startCreateRequest creates the Start request.
-func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -461,7 +461,7 @@ func (client *AzureLargeInstancesClient) Update(ctx context.Context, resourceGro
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (*policy.Request, error) {
+func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, _ *AzureLargeInstancesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

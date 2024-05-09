@@ -52,7 +52,7 @@ func (client *ContainerRegistryClient) CheckDockerV2Support(ctx context.Context,
 }
 
 // checkDockerV2SupportCreateRequest creates the CheckDockerV2Support request.
-func (client *ContainerRegistryClient) checkDockerV2SupportCreateRequest(ctx context.Context, options *ContainerRegistryClientCheckDockerV2SupportOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) checkDockerV2SupportCreateRequest(ctx context.Context, _ *ContainerRegistryClientCheckDockerV2SupportOptions) (*policy.Request, error) {
 	urlPath := "/v2/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -94,7 +94,7 @@ func (client *ContainerRegistryClient) CreateManifest(ctx context.Context, name 
 }
 
 // createManifestCreateRequest creates the CreateManifest request.
-func (client *ContainerRegistryClient) createManifestCreateRequest(ctx context.Context, name string, reference string, payload Manifest, options *ContainerRegistryClientCreateManifestOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) createManifestCreateRequest(ctx context.Context, name string, reference string, payload Manifest, _ *ContainerRegistryClientCreateManifestOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/manifests/{reference}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -169,7 +169,7 @@ func (client *ContainerRegistryClient) DeleteManifest(ctx context.Context, name 
 }
 
 // deleteManifestCreateRequest creates the DeleteManifest request.
-func (client *ContainerRegistryClient) deleteManifestCreateRequest(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteManifestOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) deleteManifestCreateRequest(ctx context.Context, name string, reference string, _ *ContainerRegistryClientDeleteManifestOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/manifests/{reference}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -217,7 +217,7 @@ func (client *ContainerRegistryClient) DeleteRepository(ctx context.Context, nam
 }
 
 // deleteRepositoryCreateRequest creates the DeleteRepository request.
-func (client *ContainerRegistryClient) deleteRepositoryCreateRequest(ctx context.Context, name string, options *ContainerRegistryClientDeleteRepositoryOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) deleteRepositoryCreateRequest(ctx context.Context, name string, _ *ContainerRegistryClientDeleteRepositoryOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -273,7 +273,7 @@ func (client *ContainerRegistryClient) DeleteTag(ctx context.Context, name strin
 }
 
 // deleteTagCreateRequest creates the DeleteTag request.
-func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Context, name string, reference string, options *ContainerRegistryClientDeleteTagOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) deleteTagCreateRequest(ctx context.Context, name string, reference string, _ *ContainerRegistryClientDeleteTagOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}/_tags/{reference}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -386,7 +386,7 @@ func (client *ContainerRegistryClient) GetManifestProperties(ctx context.Context
 }
 
 // getManifestPropertiesCreateRequest creates the GetManifestProperties request.
-func (client *ContainerRegistryClient) getManifestPropertiesCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryClientGetManifestPropertiesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) getManifestPropertiesCreateRequest(ctx context.Context, name string, digest string, _ *ContainerRegistryClientGetManifestPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}/_manifests/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -514,7 +514,7 @@ func (client *ContainerRegistryClient) GetProperties(ctx context.Context, name s
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *ContainerRegistryClient) getPropertiesCreateRequest(ctx context.Context, name string, options *ContainerRegistryClientGetPropertiesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) getPropertiesCreateRequest(ctx context.Context, name string, _ *ContainerRegistryClientGetPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -631,7 +631,7 @@ func (client *ContainerRegistryClient) GetTagProperties(ctx context.Context, nam
 }
 
 // getTagPropertiesCreateRequest creates the GetTagProperties request.
-func (client *ContainerRegistryClient) getTagPropertiesCreateRequest(ctx context.Context, name string, reference string, options *ContainerRegistryClientGetTagPropertiesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) getTagPropertiesCreateRequest(ctx context.Context, name string, reference string, _ *ContainerRegistryClientGetTagPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}/_tags/{reference}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -764,7 +764,7 @@ func (client *ContainerRegistryClient) UpdateManifestProperties(ctx context.Cont
 }
 
 // updateManifestPropertiesCreateRequest creates the UpdateManifestProperties request.
-func (client *ContainerRegistryClient) updateManifestPropertiesCreateRequest(ctx context.Context, name string, digest string, value ManifestWriteableProperties, options *ContainerRegistryClientUpdateManifestPropertiesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) updateManifestPropertiesCreateRequest(ctx context.Context, name string, digest string, value ManifestWriteableProperties, _ *ContainerRegistryClientUpdateManifestPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}/_manifests/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -828,7 +828,7 @@ func (client *ContainerRegistryClient) UpdateProperties(ctx context.Context, nam
 }
 
 // updatePropertiesCreateRequest creates the UpdateProperties request.
-func (client *ContainerRegistryClient) updatePropertiesCreateRequest(ctx context.Context, name string, value RepositoryWriteableProperties, options *ContainerRegistryClientUpdatePropertiesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) updatePropertiesCreateRequest(ctx context.Context, name string, value RepositoryWriteableProperties, _ *ContainerRegistryClientUpdatePropertiesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -889,7 +889,7 @@ func (client *ContainerRegistryClient) UpdateTagAttributes(ctx context.Context, 
 }
 
 // updateTagAttributesCreateRequest creates the UpdateTagAttributes request.
-func (client *ContainerRegistryClient) updateTagAttributesCreateRequest(ctx context.Context, name string, reference string, value TagWriteableProperties, options *ContainerRegistryClientUpdateTagAttributesOptions) (*policy.Request, error) {
+func (client *ContainerRegistryClient) updateTagAttributesCreateRequest(ctx context.Context, name string, reference string, value TagWriteableProperties, _ *ContainerRegistryClientUpdateTagAttributesOptions) (*policy.Request, error) {
 	urlPath := "/acr/v1/{name}/_tags/{reference}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")

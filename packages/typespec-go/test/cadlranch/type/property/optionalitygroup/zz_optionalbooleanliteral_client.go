@@ -44,7 +44,7 @@ func (client *OptionalBooleanLiteralClient) GetAll(ctx context.Context, options 
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalBooleanLiteralClient) getAllCreateRequest(ctx context.Context, options *OptionalBooleanLiteralClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalBooleanLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalBooleanLiteralClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/boolean/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *OptionalBooleanLiteralClient) GetDefault(ctx context.Context, opti
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalBooleanLiteralClient) getDefaultCreateRequest(ctx context.Context, options *OptionalBooleanLiteralClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalBooleanLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalBooleanLiteralClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/boolean/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *OptionalBooleanLiteralClient) PutAll(ctx context.Context, body Boo
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalBooleanLiteralClient) putAllCreateRequest(ctx context.Context, body BooleanLiteralProperty, options *OptionalBooleanLiteralClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalBooleanLiteralClient) putAllCreateRequest(ctx context.Context, body BooleanLiteralProperty, _ *OptionalBooleanLiteralClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/boolean/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,7 +171,7 @@ func (client *OptionalBooleanLiteralClient) PutDefault(ctx context.Context, body
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalBooleanLiteralClient) putDefaultCreateRequest(ctx context.Context, body BooleanLiteralProperty, options *OptionalBooleanLiteralClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalBooleanLiteralClient) putDefaultCreateRequest(ctx context.Context, body BooleanLiteralProperty, _ *OptionalBooleanLiteralClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/boolean/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

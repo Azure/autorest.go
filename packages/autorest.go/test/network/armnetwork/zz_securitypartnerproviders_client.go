@@ -94,7 +94,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, _ *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Contex
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, _ *SecurityPartnerProvidersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -230,7 +230,7 @@ func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceG
 }
 
 // getCreateRequest creates the Get request.
-func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientGetOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, _ *SecurityPartnerProvidersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -293,7 +293,7 @@ func (client *SecurityPartnerProvidersClient) NewListPager(options *SecurityPart
 }
 
 // listCreateRequest creates the List request.
-func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Context, options *SecurityPartnerProvidersClientListOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Context, _ *SecurityPartnerProvidersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -349,7 +349,7 @@ func (client *SecurityPartnerProvidersClient) NewListByResourceGroupPager(resour
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *SecurityPartnerProvidersClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -411,7 +411,7 @@ func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, re
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, _ *SecurityPartnerProvidersClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

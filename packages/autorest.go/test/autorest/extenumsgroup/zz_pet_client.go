@@ -104,7 +104,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 }
 
 // getByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (*policy.Request, error) {
+func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, _ *PetClientGetByPetIDOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	if petID == "" {
 		return nil, errors.New("parameter petID cannot be empty")

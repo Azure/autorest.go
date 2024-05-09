@@ -44,7 +44,7 @@ func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClient
 }
 
 // getCreateRequest creates the Get request.
-func (client *WorkspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceClientGetOptions) (*policy.Request, error) {
+func (client *WorkspaceClient) getCreateRequest(ctx context.Context, _ *WorkspaceClientGetOptions) (*policy.Request, error) {
 	urlPath := "/workspace"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

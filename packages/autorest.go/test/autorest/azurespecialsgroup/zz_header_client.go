@@ -49,7 +49,7 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 }
 
 // customNamedRequestIDCreateRequest creates the CustomNamedRequestID request.
-func (client *HeaderClient) customNamedRequestIDCreateRequest(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDOptions) (*policy.Request, error) {
+func (client *HeaderClient) customNamedRequestIDCreateRequest(ctx context.Context, fooClientRequestID string, _ *HeaderClientCustomNamedRequestIDOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestId"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -98,7 +98,7 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 }
 
 // customNamedRequestIDHeadCreateRequest creates the CustomNamedRequestIDHead request.
-func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDHeadOptions) (*policy.Request, error) {
+func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Context, fooClientRequestID string, _ *HeaderClientCustomNamedRequestIDHeadOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdHead"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -150,7 +150,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 }
 
 // customNamedRequestIDParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.
-func (client *HeaderClient) customNamedRequestIDParamGroupingCreateRequest(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, options *HeaderClientCustomNamedRequestIDParamGroupingOptions) (*policy.Request, error) {
+func (client *HeaderClient) customNamedRequestIDParamGroupingCreateRequest(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, _ *HeaderClientCustomNamedRequestIDParamGroupingOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdParamGrouping"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

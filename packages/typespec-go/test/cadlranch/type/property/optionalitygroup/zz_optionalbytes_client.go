@@ -43,7 +43,7 @@ func (client *OptionalBytesClient) GetAll(ctx context.Context, options *Optional
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalBytesClient) getAllCreateRequest(ctx context.Context, options *OptionalBytesClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalBytesClient) getAllCreateRequest(ctx context.Context, _ *OptionalBytesClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/bytes/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *OptionalBytesClient) GetDefault(ctx context.Context, options *Opti
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalBytesClient) getDefaultCreateRequest(ctx context.Context, options *OptionalBytesClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalBytesClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalBytesClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/bytes/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *OptionalBytesClient) PutAll(ctx context.Context, body BytesPropert
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalBytesClient) putAllCreateRequest(ctx context.Context, body BytesProperty, options *OptionalBytesClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalBytesClient) putAllCreateRequest(ctx context.Context, body BytesProperty, _ *OptionalBytesClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/bytes/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -169,7 +169,7 @@ func (client *OptionalBytesClient) PutDefault(ctx context.Context, body BytesPro
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalBytesClient) putDefaultCreateRequest(ctx context.Context, body BytesProperty, options *OptionalBytesClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalBytesClient) putDefaultCreateRequest(ctx context.Context, body BytesProperty, _ *OptionalBytesClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/bytes/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

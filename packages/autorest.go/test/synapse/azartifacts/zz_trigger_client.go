@@ -131,7 +131,7 @@ func (client *TriggerClient) deleteTrigger(ctx context.Context, triggerName stri
 }
 
 // deleteTriggerCreateRequest creates the DeleteTrigger request.
-func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginDeleteTriggerOptions) (*policy.Request, error) {
+func (client *TriggerClient) deleteTriggerCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientBeginDeleteTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -174,7 +174,7 @@ func (client *TriggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 }
 
 // getEventSubscriptionStatusCreateRequest creates the GetEventSubscriptionStatus request.
-func (client *TriggerClient) getEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string, options *TriggerClientGetEventSubscriptionStatusOptions) (*policy.Request, error) {
+func (client *TriggerClient) getEventSubscriptionStatusCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientGetEventSubscriptionStatusOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/getEventSubscriptionStatus"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -281,7 +281,7 @@ func (client *TriggerClient) NewGetTriggersByWorkspacePager(options *TriggerClie
 }
 
 // getTriggersByWorkspaceCreateRequest creates the GetTriggersByWorkspace request.
-func (client *TriggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Context, options *TriggerClientGetTriggersByWorkspaceOptions) (*policy.Request, error) {
+func (client *TriggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Context, _ *TriggerClientGetTriggersByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/triggers"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -345,7 +345,7 @@ func (client *TriggerClient) startTrigger(ctx context.Context, triggerName strin
 }
 
 // startTriggerCreateRequest creates the StartTrigger request.
-func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStartTriggerOptions) (*policy.Request, error) {
+func (client *TriggerClient) startTriggerCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientBeginStartTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/start"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -404,7 +404,7 @@ func (client *TriggerClient) stopTrigger(ctx context.Context, triggerName string
 }
 
 // stopTriggerCreateRequest creates the StopTrigger request.
-func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginStopTriggerOptions) (*policy.Request, error) {
+func (client *TriggerClient) stopTriggerCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientBeginStopTriggerOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/stop"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -463,7 +463,7 @@ func (client *TriggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 }
 
 // subscribeTriggerToEventsCreateRequest creates the SubscribeTriggerToEvents request.
-func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginSubscribeTriggerToEventsOptions) (*policy.Request, error) {
+func (client *TriggerClient) subscribeTriggerToEventsCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientBeginSubscribeTriggerToEventsOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/subscribeToEvents"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -522,7 +522,7 @@ func (client *TriggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 }
 
 // unsubscribeTriggerFromEventsCreateRequest creates the UnsubscribeTriggerFromEvents request.
-func (client *TriggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, options *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*policy.Request, error) {
+func (client *TriggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx context.Context, triggerName string, _ *TriggerClientBeginUnsubscribeTriggerFromEventsOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/unsubscribeFromEvents"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")

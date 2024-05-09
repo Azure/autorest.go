@@ -139,7 +139,7 @@ func (client *ServiceClient) GetAccountInfo(ctx context.Context, restype Enum8, 
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *ServiceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (*policy.Request, error) {
+func (client *ServiceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, _ *ServiceClientGetAccountInfoOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err

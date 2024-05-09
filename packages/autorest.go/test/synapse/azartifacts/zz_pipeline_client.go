@@ -199,7 +199,7 @@ func (client *PipelineClient) deletePipeline(ctx context.Context, pipelineName s
 }
 
 // deletePipelineCreateRequest creates the DeletePipeline request.
-func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, _ *PipelineClientBeginDeletePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -297,7 +297,7 @@ func (client *PipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineC
 }
 
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *PipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineClientGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
+func (client *PipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, _ *PipelineClientGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/pipelines"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -362,7 +362,7 @@ func (client *PipelineClient) renamePipeline(ctx context.Context, pipelineName s
 }
 
 // renamePipelineCreateRequest creates the RenamePipeline request.
-func (client *PipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*policy.Request, error) {
+func (client *PipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, _ *PipelineClientBeginRenamePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")

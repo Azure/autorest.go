@@ -52,7 +52,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 }
 
 // postMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, _ *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -98,7 +98,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 }
 
 // postMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest(ctx context.Context, _ *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/null/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -141,7 +141,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 }
 
 // postMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateRequest(ctx context.Context, _ *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -184,7 +184,7 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 }
 
 // postPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(ctx context.Context, _ *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -227,7 +227,7 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 }
 
 // postSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateRequest(ctx context.Context, _ *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

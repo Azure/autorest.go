@@ -55,7 +55,7 @@ func (client *ContainerRegistryBlobClient) CancelUpload(ctx context.Context, loc
 }
 
 // cancelUploadCreateRequest creates the CancelUpload request.
-func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientCancelUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) cancelUploadCreateRequest(ctx context.Context, location string, _ *ContainerRegistryBlobClientCancelUploadOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
@@ -97,7 +97,7 @@ func (client *ContainerRegistryBlobClient) CheckBlobExists(ctx context.Context, 
 }
 
 // checkBlobExistsCreateRequest creates the CheckBlobExists request.
-func (client *ContainerRegistryBlobClient) checkBlobExistsCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientCheckBlobExistsOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) checkBlobExistsCreateRequest(ctx context.Context, name string, digest string, _ *ContainerRegistryBlobClientCheckBlobExistsOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -163,7 +163,7 @@ func (client *ContainerRegistryBlobClient) CheckChunkExists(ctx context.Context,
 }
 
 // checkChunkExistsCreateRequest creates the CheckChunkExists request.
-func (client *ContainerRegistryBlobClient) checkChunkExistsCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientCheckChunkExistsOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) checkChunkExistsCreateRequest(ctx context.Context, name string, digest string, rangeParam string, _ *ContainerRegistryBlobClientCheckChunkExistsOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -231,7 +231,7 @@ func (client *ContainerRegistryBlobClient) CompleteUpload(ctx context.Context, d
 }
 
 // completeUploadCreateRequest creates the CompleteUpload request.
-func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) completeUploadCreateRequest(ctx context.Context, digest string, location string, value io.ReadSeekCloser, _ *ContainerRegistryBlobClientCompleteUploadOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
@@ -294,7 +294,7 @@ func (client *ContainerRegistryBlobClient) DeleteBlob(ctx context.Context, name 
 }
 
 // deleteBlobCreateRequest creates the DeleteBlob request.
-func (client *ContainerRegistryBlobClient) deleteBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientDeleteBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) deleteBlobCreateRequest(ctx context.Context, name string, digest string, _ *ContainerRegistryBlobClientDeleteBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -353,7 +353,7 @@ func (client *ContainerRegistryBlobClient) GetBlob(ctx context.Context, name str
 }
 
 // getBlobCreateRequest creates the GetBlob request.
-func (client *ContainerRegistryBlobClient) getBlobCreateRequest(ctx context.Context, name string, digest string, options *ContainerRegistryBlobClientGetBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getBlobCreateRequest(ctx context.Context, name string, digest string, _ *ContainerRegistryBlobClientGetBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -422,7 +422,7 @@ func (client *ContainerRegistryBlobClient) GetChunk(ctx context.Context, name st
 }
 
 // getChunkCreateRequest creates the GetChunk request.
-func (client *ContainerRegistryBlobClient) getChunkCreateRequest(ctx context.Context, name string, digest string, rangeParam string, options *ContainerRegistryBlobClientGetChunkOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getChunkCreateRequest(ctx context.Context, name string, digest string, rangeParam string, _ *ContainerRegistryBlobClientGetChunkOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/{digest}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -489,7 +489,7 @@ func (client *ContainerRegistryBlobClient) GetUploadStatus(ctx context.Context, 
 }
 
 // getUploadStatusCreateRequest creates the GetUploadStatus request.
-func (client *ContainerRegistryBlobClient) getUploadStatusCreateRequest(ctx context.Context, location string, options *ContainerRegistryBlobClientGetUploadStatusOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) getUploadStatusCreateRequest(ctx context.Context, location string, _ *ContainerRegistryBlobClientGetUploadStatusOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
@@ -544,7 +544,7 @@ func (client *ContainerRegistryBlobClient) MountBlob(ctx context.Context, name s
 }
 
 // mountBlobCreateRequest creates the MountBlob request.
-func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Context, name string, from string, mount string, options *ContainerRegistryBlobClientMountBlobOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) mountBlobCreateRequest(ctx context.Context, name string, from string, mount string, _ *ContainerRegistryBlobClientMountBlobOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/uploads/"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -607,7 +607,7 @@ func (client *ContainerRegistryBlobClient) StartUpload(ctx context.Context, name
 }
 
 // startUploadCreateRequest creates the StartUpload request.
-func (client *ContainerRegistryBlobClient) startUploadCreateRequest(ctx context.Context, name string, options *ContainerRegistryBlobClientStartUploadOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) startUploadCreateRequest(ctx context.Context, name string, _ *ContainerRegistryBlobClientStartUploadOptions) (*policy.Request, error) {
 	urlPath := "/v2/{name}/blobs/uploads/"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -667,7 +667,7 @@ func (client *ContainerRegistryBlobClient) UploadChunk(ctx context.Context, loca
 }
 
 // uploadChunkCreateRequest creates the UploadChunk request.
-func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.Context, location string, value io.ReadSeekCloser, options *ContainerRegistryBlobClientUploadChunkOptions) (*policy.Request, error) {
+func (client *ContainerRegistryBlobClient) uploadChunkCreateRequest(ctx context.Context, location string, value io.ReadSeekCloser, _ *ContainerRegistryBlobClientUploadChunkOptions) (*policy.Request, error) {
 	urlPath := "/{nextBlobUuidLink}"
 	urlPath = strings.ReplaceAll(urlPath, "{nextBlobUuidLink}", location)
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.endpoint, urlPath))

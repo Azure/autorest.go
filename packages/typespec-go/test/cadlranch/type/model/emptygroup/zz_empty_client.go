@@ -42,7 +42,7 @@ func (client *EmptyClient) GetEmpty(ctx context.Context, options *GetEmptyOption
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, options *GetEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, _ *GetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -85,7 +85,7 @@ func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInp
 }
 
 // postRoundTripEmptyCreateRequest creates the PostRoundTripEmpty request.
-func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, body EmptyInputOutput, options *PostRoundTripEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, body EmptyInputOutput, _ *PostRoundTripEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/round-trip"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, optio
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *EmptyClient) putEmptyCreateRequest(ctx context.Context, input EmptyInput, options *PutEmptyOptions) (*policy.Request, error) {
+func (client *EmptyClient) putEmptyCreateRequest(ctx context.Context, input EmptyInput, _ *PutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

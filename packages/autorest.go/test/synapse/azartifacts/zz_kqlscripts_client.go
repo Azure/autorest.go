@@ -46,7 +46,7 @@ func (client *KqlScriptsClient) NewGetAllPager(options *KqlScriptsClientGetAllOp
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *KqlScriptsClient) getAllCreateRequest(ctx context.Context, options *KqlScriptsClientGetAllOptions) (*policy.Request, error) {
+func (client *KqlScriptsClient) getAllCreateRequest(ctx context.Context, _ *KqlScriptsClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/kqlScripts"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

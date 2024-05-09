@@ -77,7 +77,7 @@ func (client *VirtualMachineImagesEdgeZoneClient) Get(ctx context.Context, locat
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineImagesEdgeZoneClient) getCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesEdgeZoneClientGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) getCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, offer string, skus string, version string, _ *VirtualMachineImagesEdgeZoneClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -248,7 +248,7 @@ func (client *VirtualMachineImagesEdgeZoneClient) ListOffers(ctx context.Context
 }
 
 // listOffersCreateRequest creates the ListOffers request.
-func (client *VirtualMachineImagesEdgeZoneClient) listOffersCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, options *VirtualMachineImagesEdgeZoneClientListOffersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) listOffersCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, _ *VirtualMachineImagesEdgeZoneClientListOffersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -317,7 +317,7 @@ func (client *VirtualMachineImagesEdgeZoneClient) ListPublishers(ctx context.Con
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
-func (client *VirtualMachineImagesEdgeZoneClient) listPublishersCreateRequest(ctx context.Context, location string, edgeZone string, options *VirtualMachineImagesEdgeZoneClientListPublishersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) listPublishersCreateRequest(ctx context.Context, location string, edgeZone string, _ *VirtualMachineImagesEdgeZoneClientListPublishersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -384,7 +384,7 @@ func (client *VirtualMachineImagesEdgeZoneClient) ListSKUs(ctx context.Context, 
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesEdgeZoneClient) listSKUsCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, offer string, options *VirtualMachineImagesEdgeZoneClientListSKUsOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesEdgeZoneClient) listSKUsCreateRequest(ctx context.Context, location string, edgeZone string, publisherName string, offer string, _ *VirtualMachineImagesEdgeZoneClientListSKUsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

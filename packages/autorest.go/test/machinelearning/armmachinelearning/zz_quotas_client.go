@@ -67,7 +67,7 @@ func (client *QuotasClient) NewListPager(location string, options *QuotasClientL
 }
 
 // listCreateRequest creates the List request.
-func (client *QuotasClient) listCreateRequest(ctx context.Context, location string, options *QuotasClientListOptions) (*policy.Request, error) {
+func (client *QuotasClient) listCreateRequest(ctx context.Context, location string, _ *QuotasClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotas"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -123,7 +123,7 @@ func (client *QuotasClient) Update(ctx context.Context, location string, paramet
 }
 
 // updateCreateRequest creates the Update request.
-func (client *QuotasClient) updateCreateRequest(ctx context.Context, location string, parameters QuotaUpdateParameters, options *QuotasClientUpdateOptions) (*policy.Request, error) {
+func (client *QuotasClient) updateCreateRequest(ctx context.Context, location string, parameters QuotaUpdateParameters, _ *QuotasClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/updateQuotas"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

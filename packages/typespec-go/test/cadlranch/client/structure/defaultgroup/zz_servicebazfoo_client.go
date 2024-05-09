@@ -44,7 +44,7 @@ func (client *ServiceBazFooClient) Seven(ctx context.Context, options *ServiceBa
 }
 
 // sevenCreateRequest creates the Seven request.
-func (client *ServiceBazFooClient) sevenCreateRequest(ctx context.Context, options *ServiceBazFooClientSevenOptions) (*policy.Request, error) {
+func (client *ServiceBazFooClient) sevenCreateRequest(ctx context.Context, _ *ServiceBazFooClientSevenOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

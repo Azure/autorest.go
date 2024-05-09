@@ -72,7 +72,7 @@ func (client *ServiceTagsClient) List(ctx context.Context, location string, opti
 }
 
 // listCreateRequest creates the List request.
-func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location string, options *ServiceTagsClientListOptions) (*policy.Request, error) {
+func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location string, _ *ServiceTagsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

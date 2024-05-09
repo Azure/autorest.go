@@ -41,7 +41,7 @@ func (client *UsageClient) Input(ctx context.Context, input InputRecord, options
 }
 
 // inputCreateRequest creates the Input request.
-func (client *UsageClient) inputCreateRequest(ctx context.Context, input InputRecord, options *UsageClientInputOptions) (*policy.Request, error) {
+func (client *UsageClient) inputCreateRequest(ctx context.Context, input InputRecord, _ *UsageClientInputOptions) (*policy.Request, error) {
 	urlPath := "/type/model/usage/input"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -78,7 +78,7 @@ func (client *UsageClient) InputAndOutput(ctx context.Context, body InputOutputR
 }
 
 // inputAndOutputCreateRequest creates the InputAndOutput request.
-func (client *UsageClient) inputAndOutputCreateRequest(ctx context.Context, body InputOutputRecord, options *UsageClientInputAndOutputOptions) (*policy.Request, error) {
+func (client *UsageClient) inputAndOutputCreateRequest(ctx context.Context, body InputOutputRecord, _ *UsageClientInputAndOutputOptions) (*policy.Request, error) {
 	urlPath := "/type/model/usage/input-output"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -125,7 +125,7 @@ func (client *UsageClient) Output(ctx context.Context, options *UsageClientOutpu
 }
 
 // outputCreateRequest creates the Output request.
-func (client *UsageClient) outputCreateRequest(ctx context.Context, options *UsageClientOutputOptions) (*policy.Request, error) {
+func (client *UsageClient) outputCreateRequest(ctx context.Context, _ *UsageClientOutputOptions) (*policy.Request, error) {
 	urlPath := "/type/model/usage/output"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

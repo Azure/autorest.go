@@ -42,7 +42,7 @@ func (client *APIKeyClient) Invalid(ctx context.Context, options *APIKeyClientIn
 }
 
 // invalidCreateRequest creates the Invalid request.
-func (client *APIKeyClient) invalidCreateRequest(ctx context.Context, options *APIKeyClientInvalidOptions) (*policy.Request, error) {
+func (client *APIKeyClient) invalidCreateRequest(ctx context.Context, _ *APIKeyClientInvalidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/api-key/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -76,7 +76,7 @@ func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientVali
 }
 
 // validCreateRequest creates the Valid request.
-func (client *APIKeyClient) validCreateRequest(ctx context.Context, options *APIKeyClientValidOptions) (*policy.Request, error) {
+func (client *APIKeyClient) validCreateRequest(ctx context.Context, _ *APIKeyClientValidOptions) (*policy.Request, error) {
 	urlPath := "/authentication/api-key/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

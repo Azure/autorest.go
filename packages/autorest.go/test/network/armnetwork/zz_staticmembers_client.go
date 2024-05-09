@@ -76,7 +76,7 @@ func (client *StaticMembersClient) CreateOrUpdate(ctx context.Context, resourceG
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *StaticMembersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, parameters StaticMember, options *StaticMembersClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *StaticMembersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, parameters StaticMember, _ *StaticMembersClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -152,7 +152,7 @@ func (client *StaticMembersClient) Delete(ctx context.Context, resourceGroupName
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *StaticMembersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientDeleteOptions) (*policy.Request, error) {
+func (client *StaticMembersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, _ *StaticMembersClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -217,7 +217,7 @@ func (client *StaticMembersClient) Get(ctx context.Context, resourceGroupName st
 }
 
 // getCreateRequest creates the Get request.
-func (client *StaticMembersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, options *StaticMembersClientGetOptions) (*policy.Request, error) {
+func (client *StaticMembersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, staticMemberName string, _ *StaticMembersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

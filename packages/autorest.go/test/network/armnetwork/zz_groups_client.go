@@ -236,7 +236,7 @@ func (client *GroupsClient) Get(ctx context.Context, resourceGroupName string, n
 }
 
 // getCreateRequest creates the Get request.
-func (client *GroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, options *GroupsClientGetOptions) (*policy.Request, error) {
+func (client *GroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, networkGroupName string, _ *GroupsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

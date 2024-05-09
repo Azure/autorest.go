@@ -46,7 +46,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClien
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesClientGetEmptyFileOptions) (*policy.Request, error) {
+func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, _ *FilesClientGetEmptyFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetF
 }
 
 // getFileCreateRequest creates the GetFile request.
-func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesClientGetFileOptions) (*policy.Request, error) {
+func (client *FilesClient) getFileCreateRequest(ctx context.Context, _ *FilesClientGetFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/nonempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -122,7 +122,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClien
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.
-func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesClientGetFileLargeOptions) (*policy.Request, error) {
+func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, _ *FilesClientGetFileLargeOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/verylarge"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

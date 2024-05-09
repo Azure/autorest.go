@@ -95,7 +95,7 @@ func (client *DiskAccessesClient) createOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DiskAccessesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccess, options *DiskAccessesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccess, _ *DiskAccessesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -176,7 +176,7 @@ func (client *DiskAccessesClient) deleteOperation(ctx context.Context, resourceG
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DiskAccessesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, options *DiskAccessesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, _ *DiskAccessesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -255,7 +255,7 @@ func (client *DiskAccessesClient) deleteAPrivateEndpointConnection(ctx context.C
 }
 
 // deleteAPrivateEndpointConnectionCreateRequest creates the DeleteAPrivateEndpointConnection request.
-func (client *DiskAccessesClient) deleteAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *DiskAccessesClientBeginDeleteAPrivateEndpointConnectionOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) deleteAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, _ *DiskAccessesClientBeginDeleteAPrivateEndpointConnectionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -316,7 +316,7 @@ func (client *DiskAccessesClient) Get(ctx context.Context, resourceGroupName str
 }
 
 // getCreateRequest creates the Get request.
-func (client *DiskAccessesClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, options *DiskAccessesClientGetOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, _ *DiskAccessesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -384,7 +384,7 @@ func (client *DiskAccessesClient) GetAPrivateEndpointConnection(ctx context.Cont
 }
 
 // getAPrivateEndpointConnectionCreateRequest creates the GetAPrivateEndpointConnection request.
-func (client *DiskAccessesClient) getAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, options *DiskAccessesClientGetAPrivateEndpointConnectionOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) getAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, _ *DiskAccessesClientGetAPrivateEndpointConnectionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -455,7 +455,7 @@ func (client *DiskAccessesClient) GetPrivateLinkResources(ctx context.Context, r
 }
 
 // getPrivateLinkResourcesCreateRequest creates the GetPrivateLinkResources request.
-func (client *DiskAccessesClient) getPrivateLinkResourcesCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, options *DiskAccessesClientGetPrivateLinkResourcesOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) getPrivateLinkResourcesCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, _ *DiskAccessesClientGetPrivateLinkResourcesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateLinkResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -517,7 +517,7 @@ func (client *DiskAccessesClient) NewListPager(options *DiskAccessesClientListOp
 }
 
 // listCreateRequest creates the List request.
-func (client *DiskAccessesClient) listCreateRequest(ctx context.Context, options *DiskAccessesClientListOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) listCreateRequest(ctx context.Context, _ *DiskAccessesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -573,7 +573,7 @@ func (client *DiskAccessesClient) NewListByResourceGroupPager(resourceGroupName 
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DiskAccessesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DiskAccessesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *DiskAccessesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -636,7 +636,7 @@ func (client *DiskAccessesClient) NewListPrivateEndpointConnectionsPager(resourc
 }
 
 // listPrivateEndpointConnectionsCreateRequest creates the ListPrivateEndpointConnections request.
-func (client *DiskAccessesClient) listPrivateEndpointConnectionsCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, options *DiskAccessesClientListPrivateEndpointConnectionsOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) listPrivateEndpointConnectionsCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, _ *DiskAccessesClientListPrivateEndpointConnectionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -724,7 +724,7 @@ func (client *DiskAccessesClient) update(ctx context.Context, resourceGroupName 
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DiskAccessesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccessUpdate, options *DiskAccessesClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, diskAccess DiskAccessUpdate, _ *DiskAccessesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -810,7 +810,7 @@ func (client *DiskAccessesClient) updateAPrivateEndpointConnection(ctx context.C
 }
 
 // updateAPrivateEndpointConnectionCreateRequest creates the UpdateAPrivateEndpointConnection request.
-func (client *DiskAccessesClient) updateAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, privateEndpointConnection PrivateEndpointConnection, options *DiskAccessesClientBeginUpdateAPrivateEndpointConnectionOptions) (*policy.Request, error) {
+func (client *DiskAccessesClient) updateAPrivateEndpointConnectionCreateRequest(ctx context.Context, resourceGroupName string, diskAccessName string, privateEndpointConnectionName string, privateEndpointConnection PrivateEndpointConnection, _ *DiskAccessesClientBeginUpdateAPrivateEndpointConnectionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

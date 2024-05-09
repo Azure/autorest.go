@@ -71,7 +71,7 @@ func (client *EnvironmentVersionsClient) CreateOrUpdate(ctx context.Context, res
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *EnvironmentVersionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body EnvironmentVersionData, options *EnvironmentVersionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *EnvironmentVersionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body EnvironmentVersionData, _ *EnvironmentVersionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -144,7 +144,7 @@ func (client *EnvironmentVersionsClient) Delete(ctx context.Context, resourceGro
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *EnvironmentVersionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *EnvironmentVersionsClientDeleteOptions) (*policy.Request, error) {
+func (client *EnvironmentVersionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, _ *EnvironmentVersionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -205,7 +205,7 @@ func (client *EnvironmentVersionsClient) Get(ctx context.Context, resourceGroupN
 }
 
 // getCreateRequest creates the Get request.
-func (client *EnvironmentVersionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, options *EnvironmentVersionsClientGetOptions) (*policy.Request, error) {
+func (client *EnvironmentVersionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, _ *EnvironmentVersionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

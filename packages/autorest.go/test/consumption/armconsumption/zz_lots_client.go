@@ -64,7 +64,7 @@ func (client *LotsClient) NewListPager(scope string, options *LotsClientListOpti
 }
 
 // listCreateRequest creates the List request.
-func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, options *LotsClientListOptions) (*policy.Request, error) {
+func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, _ *LotsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/lots"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

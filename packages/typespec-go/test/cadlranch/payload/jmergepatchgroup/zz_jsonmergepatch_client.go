@@ -44,7 +44,7 @@ func (client *JSONMergePatchClient) CreateResource(ctx context.Context, body Res
 }
 
 // createResourceCreateRequest creates the CreateResource request.
-func (client *JSONMergePatchClient) createResourceCreateRequest(ctx context.Context, body Resource, options *JSONMergePatchClientCreateResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) createResourceCreateRequest(ctx context.Context, body Resource, _ *JSONMergePatchClientCreateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/create/resource"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -145,7 +145,7 @@ func (client *JSONMergePatchClient) UpdateResource(ctx context.Context, body Res
 }
 
 // updateResourceCreateRequest creates the UpdateResource request.
-func (client *JSONMergePatchClient) updateResourceCreateRequest(ctx context.Context, body ResourcePatch, options *JSONMergePatchClientUpdateResourceOptions) (*policy.Request, error) {
+func (client *JSONMergePatchClient) updateResourceCreateRequest(ctx context.Context, body ResourcePatch, _ *JSONMergePatchClientUpdateResourceOptions) (*policy.Request, error) {
 	urlPath := "/json-merge-patch/update/resource"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {

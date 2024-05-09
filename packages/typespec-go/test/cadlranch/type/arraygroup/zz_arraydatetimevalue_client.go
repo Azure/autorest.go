@@ -43,7 +43,7 @@ func (client *ArrayDatetimeValueClient) Get(ctx context.Context, options *ArrayD
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayDatetimeValueClient) getCreateRequest(ctx context.Context, options *ArrayDatetimeValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayDatetimeValueClient) getCreateRequest(ctx context.Context, _ *ArrayDatetimeValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,7 +91,7 @@ func (client *ArrayDatetimeValueClient) Put(ctx context.Context, body []time.Tim
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayDatetimeValueClient) putCreateRequest(ctx context.Context, body []time.Time, options *ArrayDatetimeValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayDatetimeValueClient) putCreateRequest(ctx context.Context, body []time.Time, _ *ArrayDatetimeValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

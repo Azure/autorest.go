@@ -86,7 +86,7 @@ func (client *CertificateProfilesClient) create(ctx context.Context, resourceGro
 }
 
 // createCreateRequest creates the Create request.
-func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, options *CertificateProfilesClientBeginCreateOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) createCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, resource CertificateProfile, _ *CertificateProfilesClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -165,7 +165,7 @@ func (client *CertificateProfilesClient) deleteOperation(ctx context.Context, re
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *CertificateProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, _ *CertificateProfilesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -222,7 +222,7 @@ func (client *CertificateProfilesClient) Get(ctx context.Context, resourceGroupN
 }
 
 // getCreateRequest creates the Get request.
-func (client *CertificateProfilesClient) getCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, options *CertificateProfilesClientGetOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) getCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, _ *CertificateProfilesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -289,7 +289,7 @@ func (client *CertificateProfilesClient) NewListByCodeSigningAccountPager(resour
 }
 
 // listByCodeSigningAccountCreateRequest creates the ListByCodeSigningAccount request.
-func (client *CertificateProfilesClient) listByCodeSigningAccountCreateRequest(ctx context.Context, resourceGroupName string, accountName string, options *CertificateProfilesClientListByCodeSigningAccountOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) listByCodeSigningAccountCreateRequest(ctx context.Context, resourceGroupName string, accountName string, _ *CertificateProfilesClientListByCodeSigningAccountOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -352,7 +352,7 @@ func (client *CertificateProfilesClient) RevokeCertificate(ctx context.Context, 
 }
 
 // revokeCertificateCreateRequest creates the RevokeCertificate request.
-func (client *CertificateProfilesClient) revokeCertificateCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, body RevokeCertificate, options *CertificateProfilesClientRevokeCertificateOptions) (*policy.Request, error) {
+func (client *CertificateProfilesClient) revokeCertificateCreateRequest(ctx context.Context, resourceGroupName string, accountName string, profileName string, body RevokeCertificate, _ *CertificateProfilesClientRevokeCertificateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}/revokeCertificate"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

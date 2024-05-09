@@ -44,7 +44,7 @@ func (client *OptionalRequiredAndOptionalClient) GetAll(ctx context.Context, opt
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalRequiredAndOptionalClient) getAllCreateRequest(ctx context.Context, options *OptionalRequiredAndOptionalClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalRequiredAndOptionalClient) getAllCreateRequest(ctx context.Context, _ *OptionalRequiredAndOptionalClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/requiredAndOptional/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *OptionalRequiredAndOptionalClient) GetRequiredOnly(ctx context.Con
 }
 
 // getRequiredOnlyCreateRequest creates the GetRequiredOnly request.
-func (client *OptionalRequiredAndOptionalClient) getRequiredOnlyCreateRequest(ctx context.Context, options *OptionalRequiredAndOptionalClientGetRequiredOnlyOptions) (*policy.Request, error) {
+func (client *OptionalRequiredAndOptionalClient) getRequiredOnlyCreateRequest(ctx context.Context, _ *OptionalRequiredAndOptionalClientGetRequiredOnlyOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/requiredAndOptional/requiredOnly"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *OptionalRequiredAndOptionalClient) PutAll(ctx context.Context, bod
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalRequiredAndOptionalClient) putAllCreateRequest(ctx context.Context, body RequiredAndOptionalProperty, options *OptionalRequiredAndOptionalClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalRequiredAndOptionalClient) putAllCreateRequest(ctx context.Context, body RequiredAndOptionalProperty, _ *OptionalRequiredAndOptionalClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/requiredAndOptional/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,7 +171,7 @@ func (client *OptionalRequiredAndOptionalClient) PutRequiredOnly(ctx context.Con
 }
 
 // putRequiredOnlyCreateRequest creates the PutRequiredOnly request.
-func (client *OptionalRequiredAndOptionalClient) putRequiredOnlyCreateRequest(ctx context.Context, body RequiredAndOptionalProperty, options *OptionalRequiredAndOptionalClientPutRequiredOnlyOptions) (*policy.Request, error) {
+func (client *OptionalRequiredAndOptionalClient) putRequiredOnlyCreateRequest(ctx context.Context, body RequiredAndOptionalProperty, _ *OptionalRequiredAndOptionalClientPutRequiredOnlyOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/requiredAndOptional/requiredOnly"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

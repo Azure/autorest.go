@@ -1343,7 +1343,7 @@ func (client *Client) GetAccountInfo(ctx context.Context, containerName string, 
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *Client) getAccountInfoCreateRequest(ctx context.Context, containerName string, blob string, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (*policy.Request, error) {
+func (client *Client) getAccountInfoCreateRequest(ctx context.Context, containerName string, blob string, restype Enum8, comp Enum1, _ *ClientGetAccountInfoOptions) (*policy.Request, error) {
 	urlPath := "/{containerName}/{blob}"
 	if containerName == "" {
 		return nil, errors.New("parameter containerName cannot be empty")

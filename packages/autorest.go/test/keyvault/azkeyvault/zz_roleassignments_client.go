@@ -50,7 +50,7 @@ func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL st
 }
 
 // createCreateRequest creates the Create request.
-func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, _ *RoleAssignmentsClientCreateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
@@ -109,7 +109,7 @@ func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, _ *RoleAssignmentsClientDeleteOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
@@ -165,7 +165,7 @@ func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, _ *RoleAssignmentsClientGetOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"

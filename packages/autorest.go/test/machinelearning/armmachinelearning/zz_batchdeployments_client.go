@@ -87,7 +87,7 @@ func (client *BatchDeploymentsClient) createOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BatchDeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body BatchDeploymentData, options *BatchDeploymentsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BatchDeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body BatchDeploymentData, _ *BatchDeploymentsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -168,7 +168,7 @@ func (client *BatchDeploymentsClient) deleteOperation(ctx context.Context, resou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BatchDeploymentsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *BatchDeploymentsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *BatchDeploymentsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, _ *BatchDeploymentsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -229,7 +229,7 @@ func (client *BatchDeploymentsClient) Get(ctx context.Context, resourceGroupName
 }
 
 // getCreateRequest creates the Get request.
-func (client *BatchDeploymentsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, options *BatchDeploymentsClientGetOptions) (*policy.Request, error) {
+func (client *BatchDeploymentsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, _ *BatchDeploymentsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -394,7 +394,7 @@ func (client *BatchDeploymentsClient) update(ctx context.Context, resourceGroupN
 }
 
 // updateCreateRequest creates the Update request.
-func (client *BatchDeploymentsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body PartialBatchDeploymentPartialTrackedResource, options *BatchDeploymentsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *BatchDeploymentsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body PartialBatchDeploymentPartialTrackedResource, _ *BatchDeploymentsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

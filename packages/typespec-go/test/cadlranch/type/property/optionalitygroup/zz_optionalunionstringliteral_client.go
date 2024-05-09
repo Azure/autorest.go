@@ -44,7 +44,7 @@ func (client *OptionalUnionStringLiteralClient) GetAll(ctx context.Context, opti
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalUnionStringLiteralClient) getAllCreateRequest(ctx context.Context, options *OptionalUnionStringLiteralClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalUnionStringLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalUnionStringLiteralClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/union/string/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *OptionalUnionStringLiteralClient) GetDefault(ctx context.Context, 
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalUnionStringLiteralClient) getDefaultCreateRequest(ctx context.Context, options *OptionalUnionStringLiteralClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalUnionStringLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalUnionStringLiteralClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/union/string/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *OptionalUnionStringLiteralClient) PutAll(ctx context.Context, body
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalUnionStringLiteralClient) putAllCreateRequest(ctx context.Context, body UnionStringLiteralProperty, options *OptionalUnionStringLiteralClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalUnionStringLiteralClient) putAllCreateRequest(ctx context.Context, body UnionStringLiteralProperty, _ *OptionalUnionStringLiteralClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/union/string/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,7 +171,7 @@ func (client *OptionalUnionStringLiteralClient) PutDefault(ctx context.Context, 
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalUnionStringLiteralClient) putDefaultCreateRequest(ctx context.Context, body UnionStringLiteralProperty, options *OptionalUnionStringLiteralClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalUnionStringLiteralClient) putDefaultCreateRequest(ctx context.Context, body UnionStringLiteralProperty, _ *OptionalUnionStringLiteralClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/union/string/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

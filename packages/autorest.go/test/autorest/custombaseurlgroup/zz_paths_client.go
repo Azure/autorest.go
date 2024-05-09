@@ -49,7 +49,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, options *PathsClientGetEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, _ *PathsClientGetEmptyOptions) (*policy.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)

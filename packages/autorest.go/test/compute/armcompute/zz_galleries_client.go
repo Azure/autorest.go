@@ -94,7 +94,7 @@ func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroup
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, _ *GalleriesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -172,7 +172,7 @@ func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGrou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *GalleriesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *GalleriesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, _ *GalleriesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -295,7 +295,7 @@ func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions)
 }
 
 // listCreateRequest creates the List request.
-func (client *GalleriesClient) listCreateRequest(ctx context.Context, options *GalleriesClientListOptions) (*policy.Request, error) {
+func (client *GalleriesClient) listCreateRequest(ctx context.Context, _ *GalleriesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -351,7 +351,7 @@ func (client *GalleriesClient) NewListByResourceGroupPager(resourceGroupName str
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *GalleriesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *GalleriesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *GalleriesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *GalleriesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -433,7 +433,7 @@ func (client *GalleriesClient) update(ctx context.Context, resourceGroupName str
 }
 
 // updateCreateRequest creates the Update request.
-func (client *GalleriesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *GalleriesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, _ *GalleriesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

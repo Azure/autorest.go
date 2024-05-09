@@ -51,7 +51,7 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string, opt
 }
 
 // doSomethingCreateRequest creates the DoSomething request.
-func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (*policy.Request, error) {
+func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, _ *PetClientDoSomethingOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
 	if whatAction == "" {
 		return nil, errors.New("parameter whatAction cannot be empty")
@@ -103,7 +103,7 @@ func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *
 }
 
 // getPetByIDCreateRequest creates the GetPetByID request.
-func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (*policy.Request, error) {
+func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, _ *PetClientGetPetByIDOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
 	if petID == "" {
 		return nil, errors.New("parameter petID cannot be empty")

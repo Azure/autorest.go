@@ -72,7 +72,7 @@ func (client *VirtualMachineSizesClient) NewListPager(location string, options *
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineSizesClientListOptions) (*policy.Request, error) {
+func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, location string, _ *VirtualMachineSizesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

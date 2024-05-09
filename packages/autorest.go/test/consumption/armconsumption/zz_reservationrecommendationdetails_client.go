@@ -72,7 +72,7 @@ func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, b
 }
 
 // getCreateRequest creates the Get request.
-func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (*policy.Request, error) {
+func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, _ *ReservationRecommendationDetailsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{billingScope}/providers/Microsoft.Consumption/reservationRecommendationDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{billingScope}", billingScope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))

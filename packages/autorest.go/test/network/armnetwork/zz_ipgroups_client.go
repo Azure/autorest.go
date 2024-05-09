@@ -94,7 +94,7 @@ func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, _ *IPGroupsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -173,7 +173,7 @@ func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, _ *IPGroupsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -293,7 +293,7 @@ func (client *IPGroupsClient) NewListPager(options *IPGroupsClientListOptions) *
 }
 
 // listCreateRequest creates the List request.
-func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IPGroupsClientListOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) listCreateRequest(ctx context.Context, _ *IPGroupsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -349,7 +349,7 @@ func (client *IPGroupsClient) NewListByResourceGroupPager(resourceGroupName stri
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *IPGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -410,7 +410,7 @@ func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupNam
 }
 
 // updateGroupsCreateRequest creates the UpdateGroups request.
-func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsClientUpdateGroupsOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, _ *IPGroupsClientUpdateGroupsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

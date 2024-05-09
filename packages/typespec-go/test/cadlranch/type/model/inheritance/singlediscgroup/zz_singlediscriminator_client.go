@@ -43,7 +43,7 @@ func (client *SingleDiscriminatorClient) GetLegacyModel(ctx context.Context, opt
 }
 
 // getLegacyModelCreateRequest creates the GetLegacyModel request.
-func (client *SingleDiscriminatorClient) getLegacyModelCreateRequest(ctx context.Context, options *SingleDiscriminatorClientGetLegacyModelOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) getLegacyModelCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetLegacyModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/legacy-model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *SingleDiscriminatorClient) GetMissingDiscriminator(ctx context.Con
 }
 
 // getMissingDiscriminatorCreateRequest creates the GetMissingDiscriminator request.
-func (client *SingleDiscriminatorClient) getMissingDiscriminatorCreateRequest(ctx context.Context, options *SingleDiscriminatorClientGetMissingDiscriminatorOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) getMissingDiscriminatorCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetMissingDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/missingdiscriminator"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *SingleDiscriminatorClient) GetModel(ctx context.Context, options *
 }
 
 // getModelCreateRequest creates the GetModel request.
-func (client *SingleDiscriminatorClient) getModelCreateRequest(ctx context.Context, options *SingleDiscriminatorClientGetModelOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) getModelCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -175,7 +175,7 @@ func (client *SingleDiscriminatorClient) GetRecursiveModel(ctx context.Context, 
 }
 
 // getRecursiveModelCreateRequest creates the GetRecursiveModel request.
-func (client *SingleDiscriminatorClient) getRecursiveModelCreateRequest(ctx context.Context, options *SingleDiscriminatorClientGetRecursiveModelOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) getRecursiveModelCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetRecursiveModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/recursivemodel"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,7 +219,7 @@ func (client *SingleDiscriminatorClient) GetWrongDiscriminator(ctx context.Conte
 }
 
 // getWrongDiscriminatorCreateRequest creates the GetWrongDiscriminator request.
-func (client *SingleDiscriminatorClient) getWrongDiscriminatorCreateRequest(ctx context.Context, options *SingleDiscriminatorClientGetWrongDiscriminatorOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) getWrongDiscriminatorCreateRequest(ctx context.Context, _ *SingleDiscriminatorClientGetWrongDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/wrongdiscriminator"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -262,7 +262,7 @@ func (client *SingleDiscriminatorClient) PutModel(ctx context.Context, input Bir
 }
 
 // putModelCreateRequest creates the PutModel request.
-func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutModelOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) putModelCreateRequest(ctx context.Context, input BirdClassification, _ *SingleDiscriminatorClientPutModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -299,7 +299,7 @@ func (client *SingleDiscriminatorClient) PutRecursiveModel(ctx context.Context, 
 }
 
 // putRecursiveModelCreateRequest creates the PutRecursiveModel request.
-func (client *SingleDiscriminatorClient) putRecursiveModelCreateRequest(ctx context.Context, input BirdClassification, options *SingleDiscriminatorClientPutRecursiveModelOptions) (*policy.Request, error) {
+func (client *SingleDiscriminatorClient) putRecursiveModelCreateRequest(ctx context.Context, input BirdClassification, _ *SingleDiscriminatorClientPutRecursiveModelOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/single-discriminator/recursivemodel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

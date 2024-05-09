@@ -47,7 +47,7 @@ func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFa
 }
 
 // getFalseCreateRequest creates the GetFalse request.
-func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *BoolClientGetFalseOptions) (*policy.Request, error) {
+func (client *BoolClient) getFalseCreateRequest(ctx context.Context, _ *BoolClientGetFalseOptions) (*policy.Request, error) {
 	urlPath := "/bool/false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -94,7 +94,7 @@ func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGet
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *BoolClientGetInvalidOptions) (*policy.Request, error) {
+func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, _ *BoolClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/bool/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -141,7 +141,7 @@ func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNul
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *BoolClientGetNullOptions) (*policy.Request, error) {
+func (client *BoolClient) getNullCreateRequest(ctx context.Context, _ *BoolClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/bool/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -188,7 +188,7 @@ func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTru
 }
 
 // getTrueCreateRequest creates the GetTrue request.
-func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *BoolClientGetTrueOptions) (*policy.Request, error) {
+func (client *BoolClient) getTrueCreateRequest(ctx context.Context, _ *BoolClientGetTrueOptions) (*policy.Request, error) {
 	urlPath := "/bool/true"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -234,7 +234,7 @@ func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFa
 }
 
 // putFalseCreateRequest creates the PutFalse request.
-func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *BoolClientPutFalseOptions) (*policy.Request, error) {
+func (client *BoolClient) putFalseCreateRequest(ctx context.Context, _ *BoolClientPutFalseOptions) (*policy.Request, error) {
 	urlPath := "/bool/false"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -274,7 +274,7 @@ func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTru
 }
 
 // putTrueCreateRequest creates the PutTrue request.
-func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *BoolClientPutTrueOptions) (*policy.Request, error) {
+func (client *BoolClient) putTrueCreateRequest(ctx context.Context, _ *BoolClientPutTrueOptions) (*policy.Request, error) {
 	urlPath := "/bool/true"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

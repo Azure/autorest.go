@@ -526,7 +526,7 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 }
 
 // postRequiredArrayHeaderCreateRequest creates the PostRequiredArrayHeader request.
-func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.Context, headerParameter []string, options *ExplicitClientPostRequiredArrayHeaderOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.Context, headerParameter []string, _ *ExplicitClientPostRequiredArrayHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/array/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -566,7 +566,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 }
 
 // postRequiredArrayParameterCreateRequest creates the PostRequiredArrayParameter request.
-func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx context.Context, bodyParameter []*string, options *ExplicitClientPostRequiredArrayParameterOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx context.Context, bodyParameter []*string, _ *ExplicitClientPostRequiredArrayParameterOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/array/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -608,7 +608,7 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 }
 
 // postRequiredArrayPropertyCreateRequest creates the PostRequiredArrayProperty request.
-func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitClientPostRequiredArrayPropertyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context.Context, bodyParameter ArrayWrapper, _ *ExplicitClientPostRequiredArrayPropertyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/array/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -650,7 +650,7 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 }
 
 // postRequiredClassParameterCreateRequest creates the PostRequiredClassParameter request.
-func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx context.Context, bodyParameter Product, options *ExplicitClientPostRequiredClassParameterOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx context.Context, bodyParameter Product, _ *ExplicitClientPostRequiredClassParameterOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/class/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -692,7 +692,7 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 }
 
 // postRequiredClassPropertyCreateRequest creates the PostRequiredClassProperty request.
-func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitClientPostRequiredClassPropertyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context.Context, bodyParameter ClassWrapper, _ *ExplicitClientPostRequiredClassPropertyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/class/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -734,7 +734,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 }
 
 // postRequiredIntegerHeaderCreateRequest creates the PostRequiredIntegerHeader request.
-func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context.Context, headerParameter int32, options *ExplicitClientPostRequiredIntegerHeaderOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context.Context, headerParameter int32, _ *ExplicitClientPostRequiredIntegerHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/integer/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -774,7 +774,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 }
 
 // postRequiredIntegerParameterCreateRequest creates the PostRequiredIntegerParameter request.
-func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx context.Context, bodyParameter int32, options *ExplicitClientPostRequiredIntegerParameterOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx context.Context, bodyParameter int32, _ *ExplicitClientPostRequiredIntegerParameterOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/integer/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -816,7 +816,7 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 }
 
 // postRequiredIntegerPropertyCreateRequest creates the PostRequiredIntegerProperty request.
-func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx context.Context, bodyParameter IntWrapper, options *ExplicitClientPostRequiredIntegerPropertyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx context.Context, bodyParameter IntWrapper, _ *ExplicitClientPostRequiredIntegerPropertyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/integer/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -858,7 +858,7 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 }
 
 // postRequiredStringHeaderCreateRequest creates the PostRequiredStringHeader request.
-func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.Context, headerParameter string, options *ExplicitClientPostRequiredStringHeaderOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.Context, headerParameter string, _ *ExplicitClientPostRequiredStringHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/string/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -898,7 +898,7 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 }
 
 // postRequiredStringParameterCreateRequest creates the PostRequiredStringParameter request.
-func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx context.Context, bodyParameter string, _ *ExplicitClientPostRequiredStringParameterOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/string/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -940,7 +940,7 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 }
 
 // postRequiredStringPropertyCreateRequest creates the PostRequiredStringProperty request.
-func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx context.Context, bodyParameter StringWrapper, options *ExplicitClientPostRequiredStringPropertyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx context.Context, bodyParameter StringWrapper, _ *ExplicitClientPostRequiredStringPropertyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/string/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1025,7 +1025,7 @@ func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyPar
 }
 
 // putRequiredBinaryBodyCreateRequest creates the PutRequiredBinaryBody request.
-func (client *ExplicitClient) putRequiredBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyOptions) (*policy.Request, error) {
+func (client *ExplicitClient) putRequiredBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, _ *ExplicitClientPutRequiredBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/explicit/required/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

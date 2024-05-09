@@ -92,7 +92,7 @@ func (client *VipSwapClient) create(ctx context.Context, groupName string, resou
 }
 
 // createCreateRequest creates the Create request.
-func (client *VipSwapClient) createCreateRequest(ctx context.Context, groupName string, resourceName string, parameters SwapResource, options *VipSwapClientBeginCreateOptions) (*policy.Request, error) {
+func (client *VipSwapClient) createCreateRequest(ctx context.Context, groupName string, resourceName string, parameters SwapResource, _ *VipSwapClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}"
 	if groupName == "" {
 		return nil, errors.New("parameter groupName cannot be empty")
@@ -152,7 +152,7 @@ func (client *VipSwapClient) Get(ctx context.Context, groupName string, resource
 }
 
 // getCreateRequest creates the Get request.
-func (client *VipSwapClient) getCreateRequest(ctx context.Context, groupName string, resourceName string, options *VipSwapClientGetOptions) (*policy.Request, error) {
+func (client *VipSwapClient) getCreateRequest(ctx context.Context, groupName string, resourceName string, _ *VipSwapClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}"
 	if groupName == "" {
 		return nil, errors.New("parameter groupName cannot be empty")
@@ -218,7 +218,7 @@ func (client *VipSwapClient) List(ctx context.Context, groupName string, resourc
 }
 
 // listCreateRequest creates the List request.
-func (client *VipSwapClient) listCreateRequest(ctx context.Context, groupName string, resourceName string, options *VipSwapClientListOptions) (*policy.Request, error) {
+func (client *VipSwapClient) listCreateRequest(ctx context.Context, groupName string, resourceName string, _ *VipSwapClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots"
 	if groupName == "" {
 		return nil, errors.New("parameter groupName cannot be empty")

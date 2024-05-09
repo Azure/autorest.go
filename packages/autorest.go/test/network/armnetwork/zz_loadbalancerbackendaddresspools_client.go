@@ -95,7 +95,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) createOrUpdate(ctx context.
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *LoadBalancerBackendAddressPoolsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, parameters BackendAddressPool, options *LoadBalancerBackendAddressPoolsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *LoadBalancerBackendAddressPoolsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, parameters BackendAddressPool, _ *LoadBalancerBackendAddressPoolsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) deleteOperation(ctx context
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *LoadBalancerBackendAddressPoolsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *LoadBalancerBackendAddressPoolsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, _ *LoadBalancerBackendAddressPoolsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -241,7 +241,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, re
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsClientGetOptions) (*policy.Request, error) {
+func (client *LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, _ *LoadBalancerBackendAddressPoolsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -310,7 +310,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) NewListPager(resourceGroupN
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsClientListOptions) (*policy.Request, error) {
+func (client *LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, _ *LoadBalancerBackendAddressPoolsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

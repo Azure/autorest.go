@@ -70,7 +70,7 @@ func (client *AzureFirewallFqdnTagsClient) NewListAllPager(options *AzureFirewal
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsClientListAllOptions) (*policy.Request, error) {
+func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, _ *AzureFirewallFqdnTagsClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

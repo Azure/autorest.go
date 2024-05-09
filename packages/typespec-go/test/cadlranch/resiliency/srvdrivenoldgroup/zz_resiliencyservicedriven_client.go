@@ -49,7 +49,7 @@ func (client *ResiliencyServiceDrivenClient) FromNone(ctx context.Context, optio
 }
 
 // fromNoneCreateRequest creates the FromNone request.
-func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.Context, options *ResiliencyServiceDrivenClientFromNoneOptions) (*policy.Request, error) {
+func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.Context, _ *ResiliencyServiceDrivenClientFromNoneOptions) (*policy.Request, error) {
 	host := "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)
@@ -133,7 +133,7 @@ func (client *ResiliencyServiceDrivenClient) FromOneRequired(ctx context.Context
 }
 
 // fromOneRequiredCreateRequest creates the FromOneRequired request.
-func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx context.Context, parameter string, options *ResiliencyServiceDrivenClientFromOneRequiredOptions) (*policy.Request, error) {
+func (client *ResiliencyServiceDrivenClient) fromOneRequiredCreateRequest(ctx context.Context, parameter string, _ *ResiliencyServiceDrivenClientFromOneRequiredOptions) (*policy.Request, error) {
 	host := "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{serviceDeploymentVersion}", client.serviceDeploymentVersion)

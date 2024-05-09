@@ -95,7 +95,7 @@ func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupNam
 }
 
 // createCreateRequest creates the Create request.
-func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, _ *PacketCapturesClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *PacketCapturesClient) deleteOperation(ctx context.Context, resourc
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, _ *PacketCapturesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -240,7 +240,7 @@ func (client *PacketCapturesClient) Get(ctx context.Context, resourceGroupName s
 }
 
 // getCreateRequest creates the Get request.
-func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientGetOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, _ *PacketCapturesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -331,7 +331,7 @@ func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroup
 }
 
 // getStatusCreateRequest creates the GetStatus request.
-func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, _ *PacketCapturesClientBeginGetStatusOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/queryStatus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -391,7 +391,7 @@ func (client *PacketCapturesClient) NewListPager(resourceGroupName string, netwo
 }
 
 // listCreateRequest creates the List request.
-func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, _ *PacketCapturesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -478,7 +478,7 @@ func (client *PacketCapturesClient) stop(ctx context.Context, resourceGroupName 
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *PacketCapturesClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, _ *PacketCapturesClientBeginStopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/stop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

@@ -94,7 +94,7 @@ func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceG
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, _ *IPAllocationsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *IPAllocationsClient) deleteOperation(ctx context.Context, resource
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *IPAllocationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *IPAllocationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, _ *IPAllocationsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -294,7 +294,7 @@ func (client *IPAllocationsClient) NewListPager(options *IPAllocationsClientList
 }
 
 // listCreateRequest creates the List request.
-func (client *IPAllocationsClient) listCreateRequest(ctx context.Context, options *IPAllocationsClientListOptions) (*policy.Request, error) {
+func (client *IPAllocationsClient) listCreateRequest(ctx context.Context, _ *IPAllocationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -350,7 +350,7 @@ func (client *IPAllocationsClient) NewListByResourceGroupPager(resourceGroupName
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPAllocationsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *IPAllocationsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -412,7 +412,7 @@ func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroup
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, _ *IPAllocationsClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

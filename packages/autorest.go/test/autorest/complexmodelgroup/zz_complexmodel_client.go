@@ -53,7 +53,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID str
 }
 
 // createCreateRequest creates the Create request.
-func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (*policy.Request, error) {
+func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, _ *ComplexModelClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -117,7 +117,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 }
 
 // listCreateRequest creates the List request.
-func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (*policy.Request, error) {
+func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *ComplexModelClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape("123456"))
 	if resourceGroupName == "" {
@@ -175,7 +175,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID str
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (*policy.Request, error) {
+func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, _ *ComplexModelClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/Microsoft.Cache/Redis"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

@@ -52,7 +52,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 }
 
 // arrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
-func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (*policy.Request, error) {
+func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, _ *PathsClientArrayCSVInPathOptions) (*policy.Request, error) {
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -91,7 +91,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, 
 }
 
 // base64URLCreateRequest creates the Base64URL request.
-func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (*policy.Request, error) {
+func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URLPath []byte, _ *PathsClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64URLPath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -129,7 +129,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientBy
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
-func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *PathsClientByteEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, _ *PathsClientByteEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/empty/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(""))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -168,7 +168,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
-func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (*policy.Request, error) {
+func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, bytePath []byte, _ *PathsClientByteMultiByteOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/multibyte/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -207,7 +207,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 }
 
 // byteNullCreateRequest creates the ByteNull request.
-func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (*policy.Request, error) {
+func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath []byte, _ *PathsClientByteNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/null/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -246,7 +246,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 }
 
 // dateNullCreateRequest creates the DateNull request.
-func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (*policy.Request, error) {
+func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, _ *PathsClientDateNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/null/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format("2006-01-02")))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -285,7 +285,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
-func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (*policy.Request, error) {
+func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, _ *PathsClientDateTimeNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/datetime/null/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339Nano)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -323,7 +323,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClie
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
-func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, options *PathsClientDateTimeValidOptions) (*policy.Request, error) {
+func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, _ *PathsClientDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape("2012-01-01T01:01:01Z"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -361,7 +361,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDa
 }
 
 // dateValidCreateRequest creates the DateValid request.
-func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *PathsClientDateValidOptions) (*policy.Request, error) {
+func (client *PathsClient) dateValidCreateRequest(ctx context.Context, _ *PathsClientDateValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/2012-01-01/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape("2012-01-01"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -400,7 +400,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
-func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
+func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Context, _ *PathsClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
 	urlPath := "/paths/double/-9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("-9999999.999"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -439,7 +439,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
-func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
+func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Context, _ *PathsClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
 	urlPath := "/paths/double/9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("9999999.999"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -478,7 +478,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 }
 
 // enumNullCreateRequest creates the EnumNull request.
-func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (*policy.Request, error) {
+func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath URIColor, _ *PathsClientEnumNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/null/{enumPath}"
 	if enumPath == "" {
 		return nil, errors.New("parameter enumPath cannot be empty")
@@ -520,7 +520,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 }
 
 // enumValidCreateRequest creates the EnumValid request.
-func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (*policy.Request, error) {
+func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath URIColor, _ *PathsClientEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/enum/green%20color/{enumPath}"
 	if enumPath == "" {
 		return nil, errors.New("parameter enumPath cannot be empty")
@@ -562,7 +562,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
-func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (*policy.Request, error) {
+func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Context, _ *PathsClientFloatScientificNegativeOptions) (*policy.Request, error) {
 	urlPath := "/paths/float/-1.034E-20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("-1.034e-20"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -601,7 +601,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
-func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (*policy.Request, error) {
+func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Context, _ *PathsClientFloatScientificPositiveOptions) (*policy.Request, error) {
 	urlPath := "/paths/float/1.034E+20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("103400000000000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -639,7 +639,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsCl
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
-func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (*policy.Request, error) {
+func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, _ *PathsClientGetBooleanFalseOptions) (*policy.Request, error) {
 	urlPath := "/paths/bool/false/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("false"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -677,7 +677,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsCli
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
-func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (*policy.Request, error) {
+func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, _ *PathsClientGetBooleanTrueOptions) (*policy.Request, error) {
 	urlPath := "/paths/bool/true/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("true"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -716,7 +716,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
-func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, _ *PathsClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/-1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("-1000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -754,7 +754,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsC
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
-func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, _ *PathsClientGetIntOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("1000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -793,7 +793,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
-func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Context, _ *PathsClientGetNegativeTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/long/-10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("-10000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -831,7 +831,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClie
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
-func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, options *PathsClientGetTenBillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, _ *PathsClientGetTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/long/10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("10000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -869,7 +869,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClient
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
-func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options *PathsClientStringEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, _ *PathsClientStringEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/empty/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(""))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -908,7 +908,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 }
 
 // stringNullCreateRequest creates the StringNull request.
-func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (*policy.Request, error) {
+func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPath string, _ *PathsClientStringNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/null/{stringPath}"
 	if stringPath == "" {
 		return nil, errors.New("parameter stringPath cannot be empty")
@@ -949,7 +949,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsC
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
-func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, options *PathsClientStringURLEncodedOptions) (*policy.Request, error) {
+func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, _ *PathsClientStringURLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -988,7 +988,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 }
 
 // stringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
-func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (*policy.Request, error) {
+func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context, _ *PathsClientStringURLNonEncodedOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", "begin!*'();:@&=+$,end")
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1026,7 +1026,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClie
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
-func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, options *PathsClientStringUnicodeOptions) (*policy.Request, error) {
+func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, _ *PathsClientStringUnicodeOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/unicode/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("啊齄丂狛狜隣郎隣兀﨩"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1065,7 +1065,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time
 }
 
 // unixTimeURLCreateRequest creates the UnixTimeURL request.
-func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (*policy.Request, error) {
+func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, _ *PathsClientUnixTimeURLOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeURLPath).String()))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))

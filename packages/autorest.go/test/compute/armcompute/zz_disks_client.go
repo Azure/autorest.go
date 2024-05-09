@@ -95,7 +95,7 @@ func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskName string, disk Disk, _ *DisksClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -175,7 +175,7 @@ func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupNam
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskName string, _ *DisksClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -231,7 +231,7 @@ func (client *DisksClient) Get(ctx context.Context, resourceGroupName string, di
 }
 
 // getCreateRequest creates the Get request.
-func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientGetOptions) (*policy.Request, error) {
+func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskName string, _ *DisksClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -319,7 +319,7 @@ func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName st
 }
 
 // grantAccessCreateRequest creates the GrantAccess request.
-func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*policy.Request, error) {
+func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, _ *DisksClientBeginGrantAccessOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}/beginGetAccess"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -375,7 +375,7 @@ func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtim
 }
 
 // listCreateRequest creates the List request.
-func (client *DisksClient) listCreateRequest(ctx context.Context, options *DisksClientListOptions) (*policy.Request, error) {
+func (client *DisksClient) listCreateRequest(ctx context.Context, _ *DisksClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -431,7 +431,7 @@ func (client *DisksClient) NewListByResourceGroupPager(resourceGroupName string,
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DisksClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *DisksClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -514,7 +514,7 @@ func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName s
 }
 
 // revokeAccessCreateRequest creates the RevokeAccess request.
-func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*policy.Request, error) {
+func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resourceGroupName string, diskName string, _ *DisksClientBeginRevokeAccessOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}/endGetAccess"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -591,7 +591,7 @@ func (client *DisksClient) update(ctx context.Context, resourceGroupName string,
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, _ *DisksClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

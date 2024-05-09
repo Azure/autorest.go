@@ -94,7 +94,7 @@ func (client *BastionHostsClient) createOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, _ *BastionHostsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *BastionHostsClient) deleteOperation(ctx context.Context, resourceG
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BastionHostsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, _ *BastionHostsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -229,7 +229,7 @@ func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName str
 }
 
 // getCreateRequest creates the Get request.
-func (client *BastionHostsClient) getCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientGetOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) getCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, _ *BastionHostsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -291,7 +291,7 @@ func (client *BastionHostsClient) NewListPager(options *BastionHostsClientListOp
 }
 
 // listCreateRequest creates the List request.
-func (client *BastionHostsClient) listCreateRequest(ctx context.Context, options *BastionHostsClientListOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) listCreateRequest(ctx context.Context, _ *BastionHostsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -347,7 +347,7 @@ func (client *BastionHostsClient) NewListByResourceGroupPager(resourceGroupName 
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *BastionHostsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *BastionHostsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *BastionHostsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -430,7 +430,7 @@ func (client *BastionHostsClient) updateTags(ctx context.Context, resourceGroupN
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *BastionHostsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, parameters TagsObject, options *BastionHostsClientBeginUpdateTagsOptions) (*policy.Request, error) {
+func (client *BastionHostsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, parameters TagsObject, _ *BastionHostsClientBeginUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

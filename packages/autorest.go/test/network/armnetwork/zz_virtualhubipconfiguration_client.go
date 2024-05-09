@@ -95,7 +95,7 @@ func (client *VirtualHubIPConfigurationClient) createOrUpdate(ctx context.Contex
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualHubIPConfigurationClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, options *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualHubIPConfigurationClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, parameters HubIPConfiguration, _ *VirtualHubIPConfigurationClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -180,7 +180,7 @@ func (client *VirtualHubIPConfigurationClient) deleteOperation(ctx context.Conte
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualHubIPConfigurationClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualHubIPConfigurationClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, _ *VirtualHubIPConfigurationClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -241,7 +241,7 @@ func (client *VirtualHubIPConfigurationClient) Get(ctx context.Context, resource
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualHubIPConfigurationClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, options *VirtualHubIPConfigurationClientGetOptions) (*policy.Request, error) {
+func (client *VirtualHubIPConfigurationClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, ipConfigName string, _ *VirtualHubIPConfigurationClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -310,7 +310,7 @@ func (client *VirtualHubIPConfigurationClient) NewListPager(resourceGroupName st
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualHubIPConfigurationClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubIPConfigurationClientListOptions) (*policy.Request, error) {
+func (client *VirtualHubIPConfigurationClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, _ *VirtualHubIPConfigurationClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -95,7 +95,7 @@ func (client *RouteFilterRulesClient) createOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, _ *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *RouteFilterRulesClient) deleteOperation(ctx context.Context, resou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RouteFilterRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *RouteFilterRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, _ *RouteFilterRulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -240,7 +240,7 @@ func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName
 }
 
 // getCreateRequest creates the Get request.
-func (client *RouteFilterRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientGetOptions) (*policy.Request, error) {
+func (client *RouteFilterRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, _ *RouteFilterRulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -309,7 +309,7 @@ func (client *RouteFilterRulesClient) NewListByRouteFilterPager(resourceGroupNam
 }
 
 // listByRouteFilterCreateRequest creates the ListByRouteFilter request.
-func (client *RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFilterRulesClientListByRouteFilterOptions) (*policy.Request, error) {
+func (client *RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, _ *RouteFilterRulesClientListByRouteFilterOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

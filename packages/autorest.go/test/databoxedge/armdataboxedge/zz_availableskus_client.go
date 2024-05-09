@@ -67,7 +67,7 @@ func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientList
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, options *AvailableSKUsClientListOptions) (*policy.Request, error) {
+func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, _ *AvailableSKUsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

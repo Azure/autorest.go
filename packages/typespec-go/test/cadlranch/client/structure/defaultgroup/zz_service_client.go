@@ -87,7 +87,7 @@ func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneO
 }
 
 // oneCreateRequest creates the One request.
-func (client *ServiceClient) oneCreateRequest(ctx context.Context, options *ServiceClientOneOptions) (*policy.Request, error) {
+func (client *ServiceClient) oneCreateRequest(ctx context.Context, _ *ServiceClientOneOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -122,7 +122,7 @@ func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoO
 }
 
 // twoCreateRequest creates the Two request.
-func (client *ServiceClient) twoCreateRequest(ctx context.Context, options *ServiceClientTwoOptions) (*policy.Request, error) {
+func (client *ServiceClient) twoCreateRequest(ctx context.Context, _ *ServiceClientTwoOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

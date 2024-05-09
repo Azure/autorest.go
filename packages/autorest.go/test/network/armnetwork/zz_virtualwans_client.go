@@ -94,7 +94,7 @@ func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGro
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, _ *VirtualWansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -173,7 +173,7 @@ func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGr
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualWansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, _ *VirtualWansClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -228,7 +228,7 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientGetOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, _ *VirtualWansClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -290,7 +290,7 @@ func (client *VirtualWansClient) NewListPager(options *VirtualWansClientListOpti
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options *VirtualWansClientListOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) listCreateRequest(ctx context.Context, _ *VirtualWansClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -346,7 +346,7 @@ func (client *VirtualWansClient) NewListByResourceGroupPager(resourceGroupName s
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *VirtualWansClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -407,7 +407,7 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, _ *VirtualWansClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

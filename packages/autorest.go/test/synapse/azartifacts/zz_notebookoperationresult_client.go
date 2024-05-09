@@ -48,7 +48,7 @@ func (client *NotebookOperationResultClient) Get(ctx context.Context, operationI
 }
 
 // getCreateRequest creates the Get request.
-func (client *NotebookOperationResultClient) getCreateRequest(ctx context.Context, operationID string, options *NotebookOperationResultClientGetOptions) (*policy.Request, error) {
+func (client *NotebookOperationResultClient) getCreateRequest(ctx context.Context, operationID string, _ *NotebookOperationResultClientGetOptions) (*policy.Request, error) {
 	urlPath := "/notebookOperationResults/{operationId}"
 	if operationID == "" {
 		return nil, errors.New("parameter operationID cannot be empty")

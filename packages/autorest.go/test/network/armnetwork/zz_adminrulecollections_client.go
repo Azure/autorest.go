@@ -76,7 +76,7 @@ func (client *AdminRuleCollectionsClient) CreateOrUpdate(ctx context.Context, re
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *AdminRuleCollectionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleCollection AdminRuleCollection, options *AdminRuleCollectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *AdminRuleCollectionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, ruleCollection AdminRuleCollection, _ *AdminRuleCollectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -244,7 +244,7 @@ func (client *AdminRuleCollectionsClient) Get(ctx context.Context, resourceGroup
 }
 
 // getCreateRequest creates the Get request.
-func (client *AdminRuleCollectionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, options *AdminRuleCollectionsClientGetOptions) (*policy.Request, error) {
+func (client *AdminRuleCollectionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkManagerName string, configurationName string, ruleCollectionName string, _ *AdminRuleCollectionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

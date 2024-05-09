@@ -52,7 +52,7 @@ func (client *ParameterGroupingClient) GroupWithConstant(ctx context.Context, gr
 }
 
 // groupWithConstantCreateRequest creates the GroupWithConstant request.
-func (client *ParameterGroupingClient) groupWithConstantCreateRequest(ctx context.Context, grouper *Grouper, options *ParameterGroupingClientGroupWithConstantOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) groupWithConstantCreateRequest(ctx context.Context, grouper *Grouper, _ *ParameterGroupingClientGroupWithConstantOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/groupWithConstant"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -100,7 +100,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 }
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
-func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *ParameterGroupingClientPostMultiParamGroupsSecondParamGroup, options *ParameterGroupingClientPostMultiParamGroupsOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *ParameterGroupingClientPostMultiParamGroupsSecondParamGroup, _ *ParameterGroupingClientPostMultiParamGroupsOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -154,7 +154,7 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, paramet
 }
 
 // postOptionalCreateRequest creates the PostOptional request.
-func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, parameterGroupingClientPostOptionalParameters *ParameterGroupingClientPostOptionalParameters, options *ParameterGroupingClientPostOptionalOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, parameterGroupingClientPostOptionalParameters *ParameterGroupingClientPostOptionalParameters, _ *ParameterGroupingClientPostOptionalOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postOptional"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -202,7 +202,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 }
 
 // postRequiredCreateRequest creates the PostRequired request.
-func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters, options *ParameterGroupingClientPostRequiredOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters, _ *ParameterGroupingClientPostRequiredOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	if parameterGroupingClientPostRequiredParameters.Path == "" {
 		return nil, errors.New("parameter parameterGroupingClientPostRequiredParameters.Path cannot be empty")
@@ -257,7 +257,7 @@ func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, pa
 }
 
 // postReservedWordsCreateRequest creates the PostReservedWords request.
-func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx context.Context, parameterGroupingClientPostReservedWordsParameters *ParameterGroupingClientPostReservedWordsParameters, options *ParameterGroupingClientPostReservedWordsOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx context.Context, parameterGroupingClientPostReservedWordsParameters *ParameterGroupingClientPostReservedWordsParameters, _ *ParameterGroupingClientPostReservedWordsOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postReservedWords"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -305,7 +305,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 }
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.
-func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, options *ParameterGroupingClientPostSharedParameterGroupObjectOptions) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, _ *ParameterGroupingClientPostSharedParameterGroupObjectOptions) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/sharedParameterGroupObject"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

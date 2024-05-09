@@ -42,7 +42,7 @@ func (client *RecursiveClient) Get(ctx context.Context, options *RecursiveClient
 }
 
 // getCreateRequest creates the Get request.
-func (client *RecursiveClient) getCreateRequest(ctx context.Context, options *RecursiveClientGetOptions) (*policy.Request, error) {
+func (client *RecursiveClient) getCreateRequest(ctx context.Context, _ *RecursiveClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *RecursiveClient) Put(ctx context.Context, input Extension, options
 }
 
 // putCreateRequest creates the Put request.
-func (client *RecursiveClient) putCreateRequest(ctx context.Context, input Extension, options *RecursiveClientPutOptions) (*policy.Request, error) {
+func (client *RecursiveClient) putCreateRequest(ctx context.Context, input Extension, _ *RecursiveClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/model/inheritance/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

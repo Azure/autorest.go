@@ -94,7 +94,7 @@ func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, res
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, _ *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, re
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, _ *DdosProtectionPlansClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -229,7 +229,7 @@ func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupN
 }
 
 // getCreateRequest creates the Get request.
-func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientGetOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, _ *DdosProtectionPlansClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -292,7 +292,7 @@ func (client *DdosProtectionPlansClient) NewListPager(options *DdosProtectionPla
 }
 
 // listCreateRequest creates the List request.
-func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, options *DdosProtectionPlansClientListOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, _ *DdosProtectionPlansClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -348,7 +348,7 @@ func (client *DdosProtectionPlansClient) NewListByResourceGroupPager(resourceGro
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *DdosProtectionPlansClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -410,7 +410,7 @@ func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourc
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, _ *DdosProtectionPlansClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

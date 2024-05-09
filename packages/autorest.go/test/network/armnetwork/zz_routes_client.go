@@ -95,7 +95,7 @@ func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupNam
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, _ *RoutesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -179,7 +179,7 @@ func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, _ *RoutesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -239,7 +239,7 @@ func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, r
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientGetOptions) (*policy.Request, error) {
+func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, _ *RoutesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -307,7 +307,7 @@ func (client *RoutesClient) NewListPager(resourceGroupName string, routeTableNam
 }
 
 // listCreateRequest creates the List request.
-func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, options *RoutesClientListOptions) (*policy.Request, error) {
+func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, _ *RoutesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

@@ -43,7 +43,7 @@ func (client *DictionaryUnknownValueClient) Get(ctx context.Context, options *Di
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryUnknownValueClient) getCreateRequest(ctx context.Context, options *DictionaryUnknownValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryUnknownValueClient) getCreateRequest(ctx context.Context, _ *DictionaryUnknownValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryUnknownValueClient) Put(ctx context.Context, body map[st
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryUnknownValueClient) putCreateRequest(ctx context.Context, body map[string]any, options *DictionaryUnknownValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryUnknownValueClient) putCreateRequest(ctx context.Context, body map[string]any, _ *DictionaryUnknownValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

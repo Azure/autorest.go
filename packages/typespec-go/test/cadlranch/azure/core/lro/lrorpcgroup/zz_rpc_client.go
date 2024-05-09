@@ -60,7 +60,7 @@ func (client *RPCClient) longRunningRPC(ctx context.Context, generationOptions G
 }
 
 // longRunningRPCCreateRequest creates the LongRunningRPC request.
-func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
+func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, generationOptions GenerationOptions, _ *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/rpc/generations:submit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -70,7 +70,7 @@ func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *L
 }
 
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
-func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*policy.Request, error) {
+func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Context, _ *LRORetrysClientBeginDelete202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/delete/202/retry/200"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 }
 
 // deleteAsyncRelativeRetrySucceededCreateRequest creates the DeleteAsyncRelativeRetrySucceeded request.
-func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
+func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, _ *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/deleteasync/retry/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -196,7 +196,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 }
 
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
-func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
+func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, _ *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -396,7 +396,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, p
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
+func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, _ *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -463,7 +463,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 }
 
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
-func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
+func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, product Product, _ *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

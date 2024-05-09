@@ -42,7 +42,7 @@ func (client *SpecialWordsParametersClient) WithAnd(ctx context.Context, and str
 }
 
 // withAndCreateRequest creates the WithAnd request.
-func (client *SpecialWordsParametersClient) withAndCreateRequest(ctx context.Context, and string, options *SpecialWordsParametersClientWithAndOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withAndCreateRequest(ctx context.Context, and string, _ *SpecialWordsParametersClientWithAndOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/and"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -78,7 +78,7 @@ func (client *SpecialWordsParametersClient) WithAs(ctx context.Context, as strin
 }
 
 // withAsCreateRequest creates the WithAs request.
-func (client *SpecialWordsParametersClient) withAsCreateRequest(ctx context.Context, as string, options *SpecialWordsParametersClientWithAsOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withAsCreateRequest(ctx context.Context, as string, _ *SpecialWordsParametersClientWithAsOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/as"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -114,7 +114,7 @@ func (client *SpecialWordsParametersClient) WithAssert(ctx context.Context, asse
 }
 
 // withAssertCreateRequest creates the WithAssert request.
-func (client *SpecialWordsParametersClient) withAssertCreateRequest(ctx context.Context, assert string, options *SpecialWordsParametersClientWithAssertOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withAssertCreateRequest(ctx context.Context, assert string, _ *SpecialWordsParametersClientWithAssertOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/assert"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -150,7 +150,7 @@ func (client *SpecialWordsParametersClient) WithAsync(ctx context.Context, async
 }
 
 // withAsyncCreateRequest creates the WithAsync request.
-func (client *SpecialWordsParametersClient) withAsyncCreateRequest(ctx context.Context, async string, options *SpecialWordsParametersClientWithAsyncOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withAsyncCreateRequest(ctx context.Context, async string, _ *SpecialWordsParametersClientWithAsyncOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/async"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -186,7 +186,7 @@ func (client *SpecialWordsParametersClient) WithAwait(ctx context.Context, await
 }
 
 // withAwaitCreateRequest creates the WithAwait request.
-func (client *SpecialWordsParametersClient) withAwaitCreateRequest(ctx context.Context, await string, options *SpecialWordsParametersClientWithAwaitOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withAwaitCreateRequest(ctx context.Context, await string, _ *SpecialWordsParametersClientWithAwaitOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/await"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -222,7 +222,7 @@ func (client *SpecialWordsParametersClient) WithBreak(ctx context.Context, break
 }
 
 // withBreakCreateRequest creates the WithBreak request.
-func (client *SpecialWordsParametersClient) withBreakCreateRequest(ctx context.Context, breakParam string, options *SpecialWordsParametersClientWithBreakOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withBreakCreateRequest(ctx context.Context, breakParam string, _ *SpecialWordsParametersClientWithBreakOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/break"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -258,7 +258,7 @@ func (client *SpecialWordsParametersClient) WithCancellationToken(ctx context.Co
 }
 
 // withCancellationTokenCreateRequest creates the WithCancellationToken request.
-func (client *SpecialWordsParametersClient) withCancellationTokenCreateRequest(ctx context.Context, cancellationToken string, options *SpecialWordsParametersClientWithCancellationTokenOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withCancellationTokenCreateRequest(ctx context.Context, cancellationToken string, _ *SpecialWordsParametersClientWithCancellationTokenOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/cancellationToken"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -294,7 +294,7 @@ func (client *SpecialWordsParametersClient) WithClass(ctx context.Context, class
 }
 
 // withClassCreateRequest creates the WithClass request.
-func (client *SpecialWordsParametersClient) withClassCreateRequest(ctx context.Context, class string, options *SpecialWordsParametersClientWithClassOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withClassCreateRequest(ctx context.Context, class string, _ *SpecialWordsParametersClientWithClassOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/class"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -330,7 +330,7 @@ func (client *SpecialWordsParametersClient) WithConstructor(ctx context.Context,
 }
 
 // withConstructorCreateRequest creates the WithConstructor request.
-func (client *SpecialWordsParametersClient) withConstructorCreateRequest(ctx context.Context, constructor string, options *SpecialWordsParametersClientWithConstructorOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withConstructorCreateRequest(ctx context.Context, constructor string, _ *SpecialWordsParametersClientWithConstructorOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/constructor"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -366,7 +366,7 @@ func (client *SpecialWordsParametersClient) WithContinue(ctx context.Context, co
 }
 
 // withContinueCreateRequest creates the WithContinue request.
-func (client *SpecialWordsParametersClient) withContinueCreateRequest(ctx context.Context, continueParam string, options *SpecialWordsParametersClientWithContinueOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withContinueCreateRequest(ctx context.Context, continueParam string, _ *SpecialWordsParametersClientWithContinueOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/continue"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -402,7 +402,7 @@ func (client *SpecialWordsParametersClient) WithDef(ctx context.Context, def str
 }
 
 // withDefCreateRequest creates the WithDef request.
-func (client *SpecialWordsParametersClient) withDefCreateRequest(ctx context.Context, def string, options *SpecialWordsParametersClientWithDefOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withDefCreateRequest(ctx context.Context, def string, _ *SpecialWordsParametersClientWithDefOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/def"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -438,7 +438,7 @@ func (client *SpecialWordsParametersClient) WithDel(ctx context.Context, del str
 }
 
 // withDelCreateRequest creates the WithDel request.
-func (client *SpecialWordsParametersClient) withDelCreateRequest(ctx context.Context, del string, options *SpecialWordsParametersClientWithDelOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withDelCreateRequest(ctx context.Context, del string, _ *SpecialWordsParametersClientWithDelOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/del"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -474,7 +474,7 @@ func (client *SpecialWordsParametersClient) WithElif(ctx context.Context, elif s
 }
 
 // withElifCreateRequest creates the WithElif request.
-func (client *SpecialWordsParametersClient) withElifCreateRequest(ctx context.Context, elif string, options *SpecialWordsParametersClientWithElifOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withElifCreateRequest(ctx context.Context, elif string, _ *SpecialWordsParametersClientWithElifOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/elif"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -510,7 +510,7 @@ func (client *SpecialWordsParametersClient) WithElse(ctx context.Context, elsePa
 }
 
 // withElseCreateRequest creates the WithElse request.
-func (client *SpecialWordsParametersClient) withElseCreateRequest(ctx context.Context, elseParam string, options *SpecialWordsParametersClientWithElseOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withElseCreateRequest(ctx context.Context, elseParam string, _ *SpecialWordsParametersClientWithElseOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/else"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -546,7 +546,7 @@ func (client *SpecialWordsParametersClient) WithExcept(ctx context.Context, exce
 }
 
 // withExceptCreateRequest creates the WithExcept request.
-func (client *SpecialWordsParametersClient) withExceptCreateRequest(ctx context.Context, except string, options *SpecialWordsParametersClientWithExceptOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withExceptCreateRequest(ctx context.Context, except string, _ *SpecialWordsParametersClientWithExceptOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/except"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -582,7 +582,7 @@ func (client *SpecialWordsParametersClient) WithExec(ctx context.Context, execPa
 }
 
 // withExecCreateRequest creates the WithExec request.
-func (client *SpecialWordsParametersClient) withExecCreateRequest(ctx context.Context, execParam string, options *SpecialWordsParametersClientWithExecOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withExecCreateRequest(ctx context.Context, execParam string, _ *SpecialWordsParametersClientWithExecOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/exec"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -618,7 +618,7 @@ func (client *SpecialWordsParametersClient) WithFinally(ctx context.Context, fin
 }
 
 // withFinallyCreateRequest creates the WithFinally request.
-func (client *SpecialWordsParametersClient) withFinallyCreateRequest(ctx context.Context, finally string, options *SpecialWordsParametersClientWithFinallyOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withFinallyCreateRequest(ctx context.Context, finally string, _ *SpecialWordsParametersClientWithFinallyOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/finally"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -654,7 +654,7 @@ func (client *SpecialWordsParametersClient) WithFor(ctx context.Context, forPara
 }
 
 // withForCreateRequest creates the WithFor request.
-func (client *SpecialWordsParametersClient) withForCreateRequest(ctx context.Context, forParam string, options *SpecialWordsParametersClientWithForOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withForCreateRequest(ctx context.Context, forParam string, _ *SpecialWordsParametersClientWithForOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/for"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -690,7 +690,7 @@ func (client *SpecialWordsParametersClient) WithFrom(ctx context.Context, from s
 }
 
 // withFromCreateRequest creates the WithFrom request.
-func (client *SpecialWordsParametersClient) withFromCreateRequest(ctx context.Context, from string, options *SpecialWordsParametersClientWithFromOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withFromCreateRequest(ctx context.Context, from string, _ *SpecialWordsParametersClientWithFromOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/from"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -726,7 +726,7 @@ func (client *SpecialWordsParametersClient) WithGlobal(ctx context.Context, glob
 }
 
 // withGlobalCreateRequest creates the WithGlobal request.
-func (client *SpecialWordsParametersClient) withGlobalCreateRequest(ctx context.Context, global string, options *SpecialWordsParametersClientWithGlobalOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withGlobalCreateRequest(ctx context.Context, global string, _ *SpecialWordsParametersClientWithGlobalOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/global"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -762,7 +762,7 @@ func (client *SpecialWordsParametersClient) WithIf(ctx context.Context, ifParam 
 }
 
 // withIfCreateRequest creates the WithIf request.
-func (client *SpecialWordsParametersClient) withIfCreateRequest(ctx context.Context, ifParam string, options *SpecialWordsParametersClientWithIfOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withIfCreateRequest(ctx context.Context, ifParam string, _ *SpecialWordsParametersClientWithIfOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/if"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -798,7 +798,7 @@ func (client *SpecialWordsParametersClient) WithImport(ctx context.Context, impo
 }
 
 // withImportCreateRequest creates the WithImport request.
-func (client *SpecialWordsParametersClient) withImportCreateRequest(ctx context.Context, importParam string, options *SpecialWordsParametersClientWithImportOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withImportCreateRequest(ctx context.Context, importParam string, _ *SpecialWordsParametersClientWithImportOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/import"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -834,7 +834,7 @@ func (client *SpecialWordsParametersClient) WithIn(ctx context.Context, in strin
 }
 
 // withInCreateRequest creates the WithIn request.
-func (client *SpecialWordsParametersClient) withInCreateRequest(ctx context.Context, in string, options *SpecialWordsParametersClientWithInOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withInCreateRequest(ctx context.Context, in string, _ *SpecialWordsParametersClientWithInOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/in"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -870,7 +870,7 @@ func (client *SpecialWordsParametersClient) WithIs(ctx context.Context, is strin
 }
 
 // withIsCreateRequest creates the WithIs request.
-func (client *SpecialWordsParametersClient) withIsCreateRequest(ctx context.Context, is string, options *SpecialWordsParametersClientWithIsOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withIsCreateRequest(ctx context.Context, is string, _ *SpecialWordsParametersClientWithIsOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/is"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -906,7 +906,7 @@ func (client *SpecialWordsParametersClient) WithLambda(ctx context.Context, lamb
 }
 
 // withLambdaCreateRequest creates the WithLambda request.
-func (client *SpecialWordsParametersClient) withLambdaCreateRequest(ctx context.Context, lambda string, options *SpecialWordsParametersClientWithLambdaOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withLambdaCreateRequest(ctx context.Context, lambda string, _ *SpecialWordsParametersClientWithLambdaOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/lambda"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -942,7 +942,7 @@ func (client *SpecialWordsParametersClient) WithNot(ctx context.Context, not str
 }
 
 // withNotCreateRequest creates the WithNot request.
-func (client *SpecialWordsParametersClient) withNotCreateRequest(ctx context.Context, not string, options *SpecialWordsParametersClientWithNotOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withNotCreateRequest(ctx context.Context, not string, _ *SpecialWordsParametersClientWithNotOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/not"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -978,7 +978,7 @@ func (client *SpecialWordsParametersClient) WithOr(ctx context.Context, or strin
 }
 
 // withOrCreateRequest creates the WithOr request.
-func (client *SpecialWordsParametersClient) withOrCreateRequest(ctx context.Context, or string, options *SpecialWordsParametersClientWithOrOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withOrCreateRequest(ctx context.Context, or string, _ *SpecialWordsParametersClientWithOrOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/or"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1014,7 +1014,7 @@ func (client *SpecialWordsParametersClient) WithPass(ctx context.Context, pass s
 }
 
 // withPassCreateRequest creates the WithPass request.
-func (client *SpecialWordsParametersClient) withPassCreateRequest(ctx context.Context, pass string, options *SpecialWordsParametersClientWithPassOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withPassCreateRequest(ctx context.Context, pass string, _ *SpecialWordsParametersClientWithPassOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/pass"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1050,7 +1050,7 @@ func (client *SpecialWordsParametersClient) WithRaise(ctx context.Context, raise
 }
 
 // withRaiseCreateRequest creates the WithRaise request.
-func (client *SpecialWordsParametersClient) withRaiseCreateRequest(ctx context.Context, raise string, options *SpecialWordsParametersClientWithRaiseOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withRaiseCreateRequest(ctx context.Context, raise string, _ *SpecialWordsParametersClientWithRaiseOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/raise"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1086,7 +1086,7 @@ func (client *SpecialWordsParametersClient) WithReturn(ctx context.Context, retu
 }
 
 // withReturnCreateRequest creates the WithReturn request.
-func (client *SpecialWordsParametersClient) withReturnCreateRequest(ctx context.Context, returnParam string, options *SpecialWordsParametersClientWithReturnOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withReturnCreateRequest(ctx context.Context, returnParam string, _ *SpecialWordsParametersClientWithReturnOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/return"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1122,7 +1122,7 @@ func (client *SpecialWordsParametersClient) WithTry(ctx context.Context, try str
 }
 
 // withTryCreateRequest creates the WithTry request.
-func (client *SpecialWordsParametersClient) withTryCreateRequest(ctx context.Context, try string, options *SpecialWordsParametersClientWithTryOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withTryCreateRequest(ctx context.Context, try string, _ *SpecialWordsParametersClientWithTryOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/try"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1158,7 +1158,7 @@ func (client *SpecialWordsParametersClient) WithWhile(ctx context.Context, while
 }
 
 // withWhileCreateRequest creates the WithWhile request.
-func (client *SpecialWordsParametersClient) withWhileCreateRequest(ctx context.Context, while string, options *SpecialWordsParametersClientWithWhileOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withWhileCreateRequest(ctx context.Context, while string, _ *SpecialWordsParametersClientWithWhileOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/while"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1194,7 +1194,7 @@ func (client *SpecialWordsParametersClient) WithWith(ctx context.Context, with s
 }
 
 // withWithCreateRequest creates the WithWith request.
-func (client *SpecialWordsParametersClient) withWithCreateRequest(ctx context.Context, with string, options *SpecialWordsParametersClientWithWithOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withWithCreateRequest(ctx context.Context, with string, _ *SpecialWordsParametersClientWithWithOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/with"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1230,7 +1230,7 @@ func (client *SpecialWordsParametersClient) WithYield(ctx context.Context, yield
 }
 
 // withYieldCreateRequest creates the WithYield request.
-func (client *SpecialWordsParametersClient) withYieldCreateRequest(ctx context.Context, yield string, options *SpecialWordsParametersClientWithYieldOptions) (*policy.Request, error) {
+func (client *SpecialWordsParametersClient) withYieldCreateRequest(ctx context.Context, yield string, _ *SpecialWordsParametersClientWithYieldOptions) (*policy.Request, error) {
 	urlPath := "/special-words/parameters/yield"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

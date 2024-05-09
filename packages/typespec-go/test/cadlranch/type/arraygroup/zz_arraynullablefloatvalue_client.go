@@ -43,7 +43,7 @@ func (client *ArrayNullableFloatValueClient) Get(ctx context.Context, options *A
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayNullableFloatValueClient) getCreateRequest(ctx context.Context, options *ArrayNullableFloatValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayNullableFloatValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableFloatValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *ArrayNullableFloatValueClient) Put(ctx context.Context, body []*fl
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayNullableFloatValueClient) putCreateRequest(ctx context.Context, body []*float32, options *ArrayNullableFloatValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayNullableFloatValueClient) putCreateRequest(ctx context.Context, body []*float32, _ *ArrayNullableFloatValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

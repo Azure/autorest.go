@@ -72,7 +72,7 @@ func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName
 }
 
 // createCreateRequest creates the Create request.
-func (client *SSHPublicKeysClient) createCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) createCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, _ *SSHPublicKeysClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -138,7 +138,7 @@ func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, _ *SSHPublicKeysClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -196,7 +196,7 @@ func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resource
 }
 
 // generateKeyPairCreateRequest creates the GenerateKeyPair request.
-func (client *SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, _ *SSHPublicKeysClientGenerateKeyPairOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}/generateKeyPair"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -260,7 +260,7 @@ func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName st
 }
 
 // getCreateRequest creates the Get request.
-func (client *SSHPublicKeysClient) getCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) getCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, _ *SSHPublicKeysClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -325,7 +325,7 @@ func (client *SSHPublicKeysClient) NewListByResourceGroupPager(resourceGroupName
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SSHPublicKeysClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *SSHPublicKeysClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -385,7 +385,7 @@ func (client *SSHPublicKeysClient) NewListBySubscriptionPager(options *SSHPublic
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.Context, options *SSHPublicKeysClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.Context, _ *SSHPublicKeysClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -442,7 +442,7 @@ func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName
 }
 
 // updateCreateRequest creates the Update request.
-func (client *SSHPublicKeysClient) updateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) updateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, _ *SSHPublicKeysClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

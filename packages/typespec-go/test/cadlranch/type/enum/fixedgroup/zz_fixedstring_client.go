@@ -44,7 +44,7 @@ func (client *FixedStringClient) GetKnownValue(ctx context.Context, options *Fix
 }
 
 // getKnownValueCreateRequest creates the GetKnownValue request.
-func (client *FixedStringClient) getKnownValueCreateRequest(ctx context.Context, options *FixedStringClientGetKnownValueOptions) (*policy.Request, error) {
+func (client *FixedStringClient) getKnownValueCreateRequest(ctx context.Context, _ *FixedStringClientGetKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *FixedStringClient) PutKnownValue(ctx context.Context, body DaysOfW
 }
 
 // putKnownValueCreateRequest creates the PutKnownValue request.
-func (client *FixedStringClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *FixedStringClientPutKnownValueOptions) (*policy.Request, error) {
+func (client *FixedStringClient) putKnownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, _ *FixedStringClientPutKnownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/known-value"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *FixedStringClient) PutUnknownValue(ctx context.Context, body DaysO
 }
 
 // putUnknownValueCreateRequest creates the PutUnknownValue request.
-func (client *FixedStringClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, options *FixedStringClientPutUnknownValueOptions) (*policy.Request, error) {
+func (client *FixedStringClient) putUnknownValueCreateRequest(ctx context.Context, body DaysOfWeekEnum, _ *FixedStringClientPutUnknownValueOptions) (*policy.Request, error) {
 	urlPath := "/type/enum/fixed/string/unknown-value"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

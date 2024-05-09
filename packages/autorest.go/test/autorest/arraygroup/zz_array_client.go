@@ -48,7 +48,7 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClie
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetArrayEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,7 +95,7 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *Array
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetArrayItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -142,7 +142,7 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayC
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, _ *ArrayClientGetArrayItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -189,7 +189,7 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClien
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
-func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, options *ArrayClientGetArrayNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, _ *ArrayClientGetArrayNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -236,7 +236,7 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClie
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
-func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, options *ArrayClientGetArrayValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, _ *ArrayClientGetArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -284,7 +284,7 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClien
 }
 
 // getBase64URLCreateRequest creates the GetBase64URL request.
-func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayClientGetBase64URLOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, _ *ArrayClientGetBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/base64url/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -332,7 +332,7 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *A
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetBooleanInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.null.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -380,7 +380,7 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options 
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, _ *ArrayClientGetBooleanInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.boolean.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -427,7 +427,7 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayCli
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, _ *ArrayClientGetBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -475,7 +475,7 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *Arra
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetByteInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -522,7 +522,7 @@ func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClien
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
-func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, options *ArrayClientGetByteValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, _ *ArrayClientGetByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -569,7 +569,7 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayCl
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetComplexEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -618,7 +618,7 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *Arr
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetComplexItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -667,7 +667,7 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *Arra
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, _ *ArrayClientGetComplexItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -714,7 +714,7 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayCli
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
-func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, options *ArrayClientGetComplexNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, _ *ArrayClientGetComplexNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -762,7 +762,7 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayCl
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
-func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, options *ArrayClientGetComplexValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, _ *ArrayClientGetComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -810,7 +810,7 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *Arr
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, _ *ArrayClientGetDateInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -864,7 +864,7 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *Arra
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetDateInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -918,7 +918,7 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options 
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, _ *ArrayClientGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -972,7 +972,7 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetDateTimeInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1027,7 +1027,7 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options 
 }
 
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, _ *ArrayClientGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1080,7 +1080,7 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayC
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, _ *ArrayClientGetDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1133,7 +1133,7 @@ func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClien
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
-func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, options *ArrayClientGetDateValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, _ *ArrayClientGetDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1187,7 +1187,7 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *Arra
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetDictionaryEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1236,7 +1236,7 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetDictionaryItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1285,7 +1285,7 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *A
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, _ *ArrayClientGetDictionaryItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1332,7 +1332,7 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *Array
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, _ *ArrayClientGetDictionaryNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1381,7 +1381,7 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *Arra
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, _ *ArrayClientGetDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1429,7 +1429,7 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *Ar
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetDoubleInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1477,7 +1477,7 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, _ *ArrayClientGetDoubleInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1524,7 +1524,7 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayCli
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, _ *ArrayClientGetDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1571,7 +1571,7 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayC
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
-func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, options *ArrayClientGetDurationValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, _ *ArrayClientGetDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1618,7 +1618,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGet
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayClientGetEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, _ *ArrayClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1665,7 +1665,7 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClien
 }
 
 // getEnumValidCreateRequest creates the GetEnumValid request.
-func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, options *ArrayClientGetEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, _ *ArrayClientGetEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1713,7 +1713,7 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *Arr
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetFloatInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1761,7 +1761,7 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *A
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, _ *ArrayClientGetFloatInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1808,7 +1808,7 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClie
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
-func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, options *ArrayClientGetFloatValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, _ *ArrayClientGetFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1855,7 +1855,7 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *Array
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetIntInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1903,7 +1903,7 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *Arr
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, _ *ArrayClientGetIntInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1950,7 +1950,7 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayCl
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, _ *ArrayClientGetIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1997,7 +1997,7 @@ func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientG
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options *ArrayClientGetInvalidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, _ *ArrayClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2045,7 +2045,7 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *Arra
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, _ *ArrayClientGetLongInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2093,7 +2093,7 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *Ar
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, _ *ArrayClientGetLongInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2140,7 +2140,7 @@ func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClien
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
-func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, options *ArrayClientGetLongValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, _ *ArrayClientGetLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2187,7 +2187,7 @@ func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetN
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *ArrayClientGetNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getNullCreateRequest(ctx context.Context, _ *ArrayClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/array/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2235,7 +2235,7 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *Arra
 }
 
 // getStringEnumValidCreateRequest creates the GetStringEnumValid request.
-func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, _ *ArrayClientGetStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2282,7 +2282,7 @@ func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayCli
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
-func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, options *ArrayClientGetStringValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, _ *ArrayClientGetStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2330,7 +2330,7 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *Ar
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, _ *ArrayClientGetStringWithInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.123.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2377,7 +2377,7 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *Array
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, _ *ArrayClientGetStringWithNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.null.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2425,7 +2425,7 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arr
 }
 
 // getUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
-func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, _ *ArrayClientGetUUIDInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2472,7 +2472,7 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClien
 }
 
 // getUUIDValidCreateRequest creates the GetUUIDValid request.
-func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, _ *ArrayClientGetUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2518,7 +2518,7 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*str
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
-func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, _ *ArrayClientPutArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2558,7 +2558,7 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (*policy.Request, error) {
+func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, _ *ArrayClientPutBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2599,7 +2599,7 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte,
 }
 
 // putByteValidCreateRequest creates the PutByteValid request.
-func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, _ *ArrayClientPutByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2640,7 +2640,7 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Pro
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
-func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, _ *ArrayClientPutComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2682,7 +2682,7 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, _ *ArrayClientPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2726,7 +2726,7 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*ti
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, _ *ArrayClientPutDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2766,7 +2766,7 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.T
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
-func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, _ *ArrayClientPutDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2812,7 +2812,7 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, _ *ArrayClientPutDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2852,7 +2852,7 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*floa
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, _ *ArrayClientPutDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2892,7 +2892,7 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*st
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, _ *ArrayClientPutDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2932,7 +2932,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, op
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, _ *ArrayClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2972,7 +2972,7 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnu
 }
 
 // putEnumValidCreateRequest creates the PutEnumValid request.
-func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, _ *ArrayClientPutEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3012,7 +3012,7 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
-func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, _ *ArrayClientPutFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3052,7 +3052,7 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, _ *ArrayClientPutIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3092,7 +3092,7 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64,
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
-func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, _ *ArrayClientPutLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3133,7 +3133,7 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*
 }
 
 // putStringEnumValidCreateRequest creates the PutStringEnumValid request.
-func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, _ *ArrayClientPutStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3173,7 +3173,7 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*stri
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
-func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, _ *ArrayClientPutStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3213,7 +3213,7 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string
 }
 
 // putUUIDValidCreateRequest creates the PutUUIDValid request.
-func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, _ *ArrayClientPutUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -67,7 +67,7 @@ func (client *PrivateLinkResourcesClient) List(ctx context.Context, resourceGrou
 }
 
 // listCreateRequest creates the List request.
-func (client *PrivateLinkResourcesClient) listCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, options *PrivateLinkResourcesClientListOptions) (*policy.Request, error) {
+func (client *PrivateLinkResourcesClient) listCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, _ *PrivateLinkResourcesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/privateLinkResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

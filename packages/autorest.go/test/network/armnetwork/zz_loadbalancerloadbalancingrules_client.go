@@ -73,7 +73,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, res
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesClientGetOptions) (*policy.Request, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, _ *LoadBalancerLoadBalancingRulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,7 +142,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) NewListPager(resourceGroupNa
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesClientListOptions) (*policy.Request, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, _ *LoadBalancerLoadBalancingRulesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

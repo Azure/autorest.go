@@ -87,7 +87,7 @@ func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName strin
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, _ *AddonsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -165,7 +165,7 @@ func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, _ *AddonsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -224,7 +224,7 @@ func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName
 }
 
 // getCreateRequest creates the Get request.
-func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (*policy.Request, error) {
+func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, _ *AddonsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {
@@ -293,7 +293,7 @@ func (client *AddonsClient) NewListByRolePager(deviceName string, roleName strin
 }
 
 // listByRoleCreateRequest creates the ListByRole request.
-func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *AddonsClientListByRoleOptions) (*policy.Request, error) {
+func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, _ *AddonsClientListByRoleOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if roleName == "" {

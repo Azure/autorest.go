@@ -95,7 +95,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, _ *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx contex
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, _ *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -241,7 +241,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, r
 }
 
 // getCreateRequest creates the Get request.
-func (client *ServiceEndpointPolicyDefinitionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientGetOptions) (*policy.Request, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, _ *ServiceEndpointPolicyDefinitionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions/{serviceEndpointPolicyDefinitionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -310,7 +310,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) NewListByResourceGroupPage
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, _ *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}/serviceEndpointPolicyDefinitions"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

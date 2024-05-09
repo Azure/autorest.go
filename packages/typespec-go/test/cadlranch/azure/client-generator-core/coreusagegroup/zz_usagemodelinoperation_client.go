@@ -48,7 +48,7 @@ func (client *UsageModelInOperationClient) InputToInputOutput(ctx context.Contex
 }
 
 // inputToInputOutputCreateRequest creates the InputToInputOutput request.
-func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, options *UsageModelInOperationClientInputToInputOutputOptions) (*policy.Request, error) {
+func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, _ *UsageModelInOperationClientInputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/inputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,7 +92,7 @@ func (client *UsageModelInOperationClient) OutputToInputOutput(ctx context.Conte
 }
 
 // outputToInputOutputCreateRequest creates the OutputToInputOutput request.
-func (client *UsageModelInOperationClient) outputToInputOutputCreateRequest(ctx context.Context, options *UsageModelInOperationClientOutputToInputOutputOptions) (*policy.Request, error) {
+func (client *UsageModelInOperationClient) outputToInputOutputCreateRequest(ctx context.Context, _ *UsageModelInOperationClientOutputToInputOutputOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/usage/outputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

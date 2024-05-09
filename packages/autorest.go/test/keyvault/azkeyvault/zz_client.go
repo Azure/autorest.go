@@ -50,7 +50,7 @@ func (client *Client) BackupCertificate(ctx context.Context, vaultBaseURL string
 }
 
 // backupCertificateCreateRequest creates the BackupCertificate request.
-func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientBackupCertificateOptions) (*policy.Request, error) {
+func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientBackupCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/backup"
@@ -113,7 +113,7 @@ func (client *Client) BackupKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // backupKeyCreateRequest creates the BackupKey request.
-func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBackupKeyOptions) (*policy.Request, error) {
+func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, _ *ClientBackupKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/backup"
@@ -168,7 +168,7 @@ func (client *Client) BackupSecret(ctx context.Context, vaultBaseURL string, sec
 }
 
 // backupSecretCreateRequest creates the BackupSecret request.
-func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *ClientBackupSecretOptions) (*policy.Request, error) {
+func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, _ *ClientBackupSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/backup"
@@ -223,7 +223,7 @@ func (client *Client) BackupStorageAccount(ctx context.Context, vaultBaseURL str
 }
 
 // backupStorageAccountCreateRequest creates the BackupStorageAccount request.
-func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientBackupStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientBackupStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/backup"
@@ -279,7 +279,7 @@ func (client *Client) CreateCertificate(ctx context.Context, vaultBaseURL string
 }
 
 // createCertificateCreateRequest creates the CreateCertificate request.
-func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *ClientCreateCertificateOptions) (*policy.Request, error) {
+func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, _ *ClientCreateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/create"
@@ -339,7 +339,7 @@ func (client *Client) CreateKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // createKeyCreateRequest creates the CreateKey request.
-func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *ClientCreateKeyOptions) (*policy.Request, error) {
+func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, _ *ClientCreateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/create"
@@ -402,7 +402,7 @@ func (client *Client) Decrypt(ctx context.Context, vaultBaseURL string, keyName 
 }
 
 // decryptCreateRequest creates the Decrypt request.
-func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientDecryptOptions) (*policy.Request, error) {
+func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *ClientDecryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/decrypt"
@@ -465,7 +465,7 @@ func (client *Client) DeleteCertificate(ctx context.Context, vaultBaseURL string
 }
 
 // deleteCertificateCreateRequest creates the DeleteCertificate request.
-func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientDeleteCertificateOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientDeleteCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}"
@@ -520,7 +520,7 @@ func (client *Client) DeleteCertificateContacts(ctx context.Context, vaultBaseUR
 }
 
 // deleteCertificateContactsCreateRequest creates the DeleteCertificateContacts request.
-func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *ClientDeleteCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, _ *ClientDeleteCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -572,7 +572,7 @@ func (client *Client) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL 
 }
 
 // deleteCertificateIssuerCreateRequest creates the DeleteCertificateIssuer request.
-func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *ClientDeleteCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, _ *ClientDeleteCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -628,7 +628,7 @@ func (client *Client) DeleteCertificateOperation(ctx context.Context, vaultBaseU
 }
 
 // deleteCertificateOperationCreateRequest creates the DeleteCertificateOperation request.
-func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientDeleteCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientDeleteCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -684,7 +684,7 @@ func (client *Client) DeleteKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // deleteKeyCreateRequest creates the DeleteKey request.
-func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientDeleteKeyOptions) (*policy.Request, error) {
+func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, _ *ClientDeleteKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -740,7 +740,7 @@ func (client *Client) DeleteSasDefinition(ctx context.Context, vaultBaseURL stri
 }
 
 // deleteSasDefinitionCreateRequest creates the DeleteSasDefinition request.
-func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientDeleteSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, _ *ClientDeleteSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -799,7 +799,7 @@ func (client *Client) DeleteSecret(ctx context.Context, vaultBaseURL string, sec
 }
 
 // deleteSecretCreateRequest creates the DeleteSecret request.
-func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *ClientDeleteSecretOptions) (*policy.Request, error) {
+func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, _ *ClientDeleteSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -853,7 +853,7 @@ func (client *Client) DeleteStorageAccount(ctx context.Context, vaultBaseURL str
 }
 
 // deleteStorageAccountCreateRequest creates the DeleteStorageAccount request.
-func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientDeleteStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientDeleteStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -915,7 +915,7 @@ func (client *Client) Encrypt(ctx context.Context, vaultBaseURL string, keyName 
 }
 
 // encryptCreateRequest creates the Encrypt request.
-func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientEncryptOptions) (*policy.Request, error) {
+func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *ClientEncryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/encrypt"
@@ -1042,7 +1042,7 @@ func (client *Client) FullBackupStatus(ctx context.Context, vaultBaseURL string,
 }
 
 // fullBackupStatusCreateRequest creates the FullBackupStatus request.
-func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *ClientFullBackupStatusOptions) (*policy.Request, error) {
+func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, _ *ClientFullBackupStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/backup/{jobId}/pending"
@@ -1117,7 +1117,7 @@ func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL str
 }
 
 // fullRestoreOperationCreateRequest creates the FullRestoreOperation request.
-func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, _ *ClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore"
@@ -1163,7 +1163,7 @@ func (client *Client) GetCertificate(ctx context.Context, vaultBaseURL string, c
 }
 
 // getCertificateCreateRequest creates the GetCertificate request.
-func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *ClientGetCertificateOptions) (*policy.Request, error) {
+func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, _ *ClientGetCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -1221,7 +1221,7 @@ func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL s
 }
 
 // getCertificateContactsCreateRequest creates the GetCertificateContacts request.
-func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *ClientGetCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, _ *ClientGetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -1272,7 +1272,7 @@ func (client *Client) GetCertificateIssuer(ctx context.Context, vaultBaseURL str
 }
 
 // getCertificateIssuerCreateRequest creates the GetCertificateIssuer request.
-func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *ClientGetCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, _ *ClientGetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -1384,7 +1384,7 @@ func (client *Client) GetCertificateOperation(ctx context.Context, vaultBaseURL 
 }
 
 // getCertificateOperationCreateRequest creates the GetCertificateOperation request.
-func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientGetCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -1439,7 +1439,7 @@ func (client *Client) GetCertificatePolicy(ctx context.Context, vaultBaseURL str
 }
 
 // getCertificatePolicyCreateRequest creates the GetCertificatePolicy request.
-func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetCertificatePolicyOptions) (*policy.Request, error) {
+func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientGetCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -1614,7 +1614,7 @@ func (client *Client) GetDeletedCertificate(ctx context.Context, vaultBaseURL st
 }
 
 // getDeletedCertificateCreateRequest creates the GetDeletedCertificate request.
-func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientGetDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientGetDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -1731,7 +1731,7 @@ func (client *Client) GetDeletedKey(ctx context.Context, vaultBaseURL string, ke
 }
 
 // getDeletedKeyCreateRequest creates the GetDeletedKey request.
-func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientGetDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, _ *ClientGetDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -1846,7 +1846,7 @@ func (client *Client) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL 
 }
 
 // getDeletedSasDefinitionCreateRequest creates the GetDeletedSasDefinition request.
-func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientGetDeletedSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, _ *ClientGetDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}"
@@ -1966,7 +1966,7 @@ func (client *Client) GetDeletedSecret(ctx context.Context, vaultBaseURL string,
 }
 
 // getDeletedSecretCreateRequest creates the GetDeletedSecret request.
-func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *ClientGetDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, _ *ClientGetDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -2077,7 +2077,7 @@ func (client *Client) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL
 }
 
 // getDeletedStorageAccountCreateRequest creates the GetDeletedStorageAccount request.
-func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientGetDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientGetDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -2190,7 +2190,7 @@ func (client *Client) GetKey(ctx context.Context, vaultBaseURL string, keyName s
 }
 
 // getKeyCreateRequest creates the GetKey request.
-func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *ClientGetKeyOptions) (*policy.Request, error) {
+func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, _ *ClientGetKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -2367,7 +2367,7 @@ func (client *Client) GetSasDefinition(ctx context.Context, vaultBaseURL string,
 }
 
 // getSasDefinitionCreateRequest creates the GetSasDefinition request.
-func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientGetSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, _ *ClientGetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -2488,7 +2488,7 @@ func (client *Client) GetSecret(ctx context.Context, vaultBaseURL string, secret
 }
 
 // getSecretCreateRequest creates the GetSecret request.
-func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *ClientGetSecretOptions) (*policy.Request, error) {
+func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, _ *ClientGetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -2662,7 +2662,7 @@ func (client *Client) GetStorageAccount(ctx context.Context, vaultBaseURL string
 }
 
 // getStorageAccountCreateRequest creates the GetStorageAccount request.
-func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientGetStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientGetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -2774,7 +2774,7 @@ func (client *Client) ImportCertificate(ctx context.Context, vaultBaseURL string
 }
 
 // importCertificateCreateRequest creates the ImportCertificate request.
-func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *ClientImportCertificateOptions) (*policy.Request, error) {
+func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, _ *ClientImportCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/import"
@@ -2834,7 +2834,7 @@ func (client *Client) ImportKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // importKeyCreateRequest creates the ImportKey request.
-func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *ClientImportKeyOptions) (*policy.Request, error) {
+func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, _ *ClientImportKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -2894,7 +2894,7 @@ func (client *Client) MergeCertificate(ctx context.Context, vaultBaseURL string,
 }
 
 // mergeCertificateCreateRequest creates the MergeCertificate request.
-func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *ClientMergeCertificateOptions) (*policy.Request, error) {
+func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, _ *ClientMergeCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending/merge"
@@ -2953,7 +2953,7 @@ func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL 
 }
 
 // purgeDeletedCertificateCreateRequest creates the PurgeDeletedCertificate request.
-func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientPurgeDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientPurgeDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -2999,7 +2999,7 @@ func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, 
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
-func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientPurgeDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, _ *ClientPurgeDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -3045,7 +3045,7 @@ func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL strin
 }
 
 // purgeDeletedSecretCreateRequest creates the PurgeDeletedSecret request.
-func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *ClientPurgeDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, _ *ClientPurgeDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -3092,7 +3092,7 @@ func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseU
 }
 
 // purgeDeletedStorageAccountCreateRequest creates the PurgeDeletedStorageAccount request.
-func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientPurgeDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientPurgeDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -3140,7 +3140,7 @@ func (client *Client) RecoverDeletedCertificate(ctx context.Context, vaultBaseUR
 }
 
 // recoverDeletedCertificateCreateRequest creates the RecoverDeletedCertificate request.
-func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *ClientRecoverDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, _ *ClientRecoverDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}/recover"
@@ -3197,7 +3197,7 @@ func (client *Client) RecoverDeletedKey(ctx context.Context, vaultBaseURL string
 }
 
 // recoverDeletedKeyCreateRequest creates the RecoverDeletedKey request.
-func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientRecoverDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, _ *ClientRecoverDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}/recover"
@@ -3254,7 +3254,7 @@ func (client *Client) RecoverDeletedSasDefinition(ctx context.Context, vaultBase
 }
 
 // recoverDeletedSasDefinitionCreateRequest creates the RecoverDeletedSasDefinition request.
-func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *ClientRecoverDeletedSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, _ *ClientRecoverDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}/recover"
@@ -3313,7 +3313,7 @@ func (client *Client) RecoverDeletedSecret(ctx context.Context, vaultBaseURL str
 }
 
 // recoverDeletedSecretCreateRequest creates the RecoverDeletedSecret request.
-func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *ClientRecoverDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, _ *ClientRecoverDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}/recover"
@@ -3369,7 +3369,7 @@ func (client *Client) RecoverDeletedStorageAccount(ctx context.Context, vaultBas
 }
 
 // recoverDeletedStorageAccountCreateRequest creates the RecoverDeletedStorageAccount request.
-func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *ClientRecoverDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, _ *ClientRecoverDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/recover"
@@ -3426,7 +3426,7 @@ func (client *Client) RegenerateStorageAccountKey(ctx context.Context, vaultBase
 }
 
 // regenerateStorageAccountKeyCreateRequest creates the RegenerateStorageAccountKey request.
-func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *ClientRegenerateStorageAccountKeyOptions) (*policy.Request, error) {
+func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, _ *ClientRegenerateStorageAccountKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/regeneratekey"
@@ -3484,7 +3484,7 @@ func (client *Client) RestoreCertificate(ctx context.Context, vaultBaseURL strin
 }
 
 // restoreCertificateCreateRequest creates the RestoreCertificate request.
-func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *ClientRestoreCertificateOptions) (*policy.Request, error) {
+func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, _ *ClientRestoreCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/restore"
@@ -3545,7 +3545,7 @@ func (client *Client) RestoreKey(ctx context.Context, vaultBaseURL string, param
 }
 
 // restoreKeyCreateRequest creates the RestoreKey request.
-func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *ClientRestoreKeyOptions) (*policy.Request, error) {
+func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, _ *ClientRestoreKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/restore"
@@ -3599,7 +3599,7 @@ func (client *Client) RestoreSecret(ctx context.Context, vaultBaseURL string, pa
 }
 
 // restoreSecretCreateRequest creates the RestoreSecret request.
-func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *ClientRestoreSecretOptions) (*policy.Request, error) {
+func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, _ *ClientRestoreSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/restore"
@@ -3652,7 +3652,7 @@ func (client *Client) RestoreStatus(ctx context.Context, vaultBaseURL string, jo
 }
 
 // restoreStatusCreateRequest creates the RestoreStatus request.
-func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *ClientRestoreStatusOptions) (*policy.Request, error) {
+func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, _ *ClientRestoreStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore/{jobId}/pending"
@@ -3706,7 +3706,7 @@ func (client *Client) RestoreStorageAccount(ctx context.Context, vaultBaseURL st
 }
 
 // restoreStorageAccountCreateRequest creates the RestoreStorageAccount request.
-func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *ClientRestoreStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, _ *ClientRestoreStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/restore"
@@ -3781,7 +3781,7 @@ func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBas
 }
 
 // selectiveKeyRestoreOperationCreateRequest creates the SelectiveKeyRestoreOperation request.
-func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, _ *ClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{keyName}/restore"
@@ -3830,7 +3830,7 @@ func (client *Client) SetCertificateContacts(ctx context.Context, vaultBaseURL s
 }
 
 // setCertificateContactsCreateRequest creates the SetCertificateContacts request.
-func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, options *ClientSetCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, _ *ClientSetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -3885,7 +3885,7 @@ func (client *Client) SetCertificateIssuer(ctx context.Context, vaultBaseURL str
 }
 
 // setCertificateIssuerCreateRequest creates the SetCertificateIssuer request.
-func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *ClientSetCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, _ *ClientSetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -3945,7 +3945,7 @@ func (client *Client) SetSasDefinition(ctx context.Context, vaultBaseURL string,
 }
 
 // setSasDefinitionCreateRequest creates the SetSasDefinition request.
-func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *ClientSetSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, _ *ClientSetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -4008,7 +4008,7 @@ func (client *Client) SetSecret(ctx context.Context, vaultBaseURL string, secret
 }
 
 // setSecretCreateRequest creates the SetSecret request.
-func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *ClientSetSecretOptions) (*policy.Request, error) {
+func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, _ *ClientSetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -4066,7 +4066,7 @@ func (client *Client) SetStorageAccount(ctx context.Context, vaultBaseURL string
 }
 
 // setStorageAccountCreateRequest creates the SetStorageAccount request.
-func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *ClientSetStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, _ *ClientSetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -4126,7 +4126,7 @@ func (client *Client) Sign(ctx context.Context, vaultBaseURL string, keyName str
 }
 
 // signCreateRequest creates the Sign request.
-func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *ClientSignOptions) (*policy.Request, error) {
+func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, _ *ClientSignOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/sign"
@@ -4192,7 +4192,7 @@ func (client *Client) UnwrapKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // unwrapKeyCreateRequest creates the UnwrapKey request.
-func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientUnwrapKeyOptions) (*policy.Request, error) {
+func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *ClientUnwrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/unwrapkey"
@@ -4257,7 +4257,7 @@ func (client *Client) UpdateCertificate(ctx context.Context, vaultBaseURL string
 }
 
 // updateCertificateCreateRequest creates the UpdateCertificate request.
-func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *ClientUpdateCertificateOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, _ *ClientUpdateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -4321,7 +4321,7 @@ func (client *Client) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL 
 }
 
 // updateCertificateIssuerCreateRequest creates the UpdateCertificateIssuer request.
-func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *ClientUpdateCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, _ *ClientUpdateCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -4381,7 +4381,7 @@ func (client *Client) UpdateCertificateOperation(ctx context.Context, vaultBaseU
 }
 
 // updateCertificateOperationCreateRequest creates the UpdateCertificateOperation request.
-func (client *Client) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *ClientUpdateCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, _ *ClientUpdateCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -4441,7 +4441,7 @@ func (client *Client) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL 
 }
 
 // updateCertificatePolicyCreateRequest creates the UpdateCertificatePolicy request.
-func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *ClientUpdateCertificatePolicyOptions) (*policy.Request, error) {
+func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, _ *ClientUpdateCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -4501,7 +4501,7 @@ func (client *Client) UpdateKey(ctx context.Context, vaultBaseURL string, keyNam
 }
 
 // updateKeyCreateRequest creates the UpdateKey request.
-func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *ClientUpdateKeyOptions) (*policy.Request, error) {
+func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, _ *ClientUpdateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -4565,7 +4565,7 @@ func (client *Client) UpdateSasDefinition(ctx context.Context, vaultBaseURL stri
 }
 
 // updateSasDefinitionCreateRequest creates the UpdateSasDefinition request.
-func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *ClientUpdateSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, _ *ClientUpdateSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -4630,7 +4630,7 @@ func (client *Client) UpdateSecret(ctx context.Context, vaultBaseURL string, sec
 }
 
 // updateSecretCreateRequest creates the UpdateSecret request.
-func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *ClientUpdateSecretOptions) (*policy.Request, error) {
+func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, _ *ClientUpdateSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -4693,7 +4693,7 @@ func (client *Client) UpdateStorageAccount(ctx context.Context, vaultBaseURL str
 }
 
 // updateStorageAccountCreateRequest creates the UpdateStorageAccount request.
-func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *ClientUpdateStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, _ *ClientUpdateStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -4756,7 +4756,7 @@ func (client *Client) Verify(ctx context.Context, vaultBaseURL string, keyName s
 }
 
 // verifyCreateRequest creates the Verify request.
-func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *ClientVerifyOptions) (*policy.Request, error) {
+func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, _ *ClientVerifyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/verify"
@@ -4824,7 +4824,7 @@ func (client *Client) WrapKey(ctx context.Context, vaultBaseURL string, keyName 
 }
 
 // wrapKeyCreateRequest creates the WrapKey request.
-func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *ClientWrapKeyOptions) (*policy.Request, error) {
+func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, _ *ClientWrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/wrapkey"

@@ -44,7 +44,7 @@ func (client *ClientAClient) RenamedFive(ctx context.Context, options *ClientACl
 }
 
 // renamedFiveCreateRequest creates the RenamedFive request.
-func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, options *ClientAClientRenamedFiveOptions) (*policy.Request, error) {
+func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, _ *ClientAClientRenamedFiveOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -79,7 +79,7 @@ func (client *ClientAClient) RenamedOne(ctx context.Context, options *ClientACli
 }
 
 // renamedOneCreateRequest creates the RenamedOne request.
-func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, options *ClientAClientRenamedOneOptions) (*policy.Request, error) {
+func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, _ *ClientAClientRenamedOneOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))
@@ -114,7 +114,7 @@ func (client *ClientAClient) RenamedThree(ctx context.Context, options *ClientAC
 }
 
 // renamedThreeCreateRequest creates the RenamedThree request.
-func (client *ClientAClient) renamedThreeCreateRequest(ctx context.Context, options *ClientAClientRenamedThreeOptions) (*policy.Request, error) {
+func (client *ClientAClient) renamedThreeCreateRequest(ctx context.Context, _ *ClientAClientRenamedThreeOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

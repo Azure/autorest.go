@@ -44,7 +44,7 @@ func (client *ValueTypesUnknownIntClient) Get(ctx context.Context, options *Valu
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesUnknownIntClient) getCreateRequest(ctx context.Context, options *ValueTypesUnknownIntClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesUnknownIntClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnknownIntClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/int"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ValueTypesUnknownIntClient) Put(ctx context.Context, body UnknownI
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesUnknownIntClient) putCreateRequest(ctx context.Context, body UnknownIntProperty, options *ValueTypesUnknownIntClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesUnknownIntClient) putCreateRequest(ctx context.Context, body UnknownIntProperty, _ *ValueTypesUnknownIntClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/unknown/int"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

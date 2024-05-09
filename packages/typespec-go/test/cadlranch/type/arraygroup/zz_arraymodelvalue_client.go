@@ -42,7 +42,7 @@ func (client *ArrayModelValueClient) Get(ctx context.Context, options *ArrayMode
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayModelValueClient) getCreateRequest(ctx context.Context, options *ArrayModelValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayModelValueClient) getCreateRequest(ctx context.Context, _ *ArrayModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayModelValueClient) Put(ctx context.Context, body []InnerModel,
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayModelValueClient) putCreateRequest(ctx context.Context, body []InnerModel, options *ArrayModelValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayModelValueClient) putCreateRequest(ctx context.Context, body []InnerModel, _ *ArrayModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

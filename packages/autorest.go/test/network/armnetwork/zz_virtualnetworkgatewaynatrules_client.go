@@ -97,7 +97,7 @@ func (client *VirtualNetworkGatewayNatRulesClient) createOrUpdate(ctx context.Co
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualNetworkGatewayNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, natRuleParameters VirtualNetworkGatewayNatRule, options *VirtualNetworkGatewayNatRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewayNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, natRuleParameters VirtualNetworkGatewayNatRule, _ *VirtualNetworkGatewayNatRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -182,7 +182,7 @@ func (client *VirtualNetworkGatewayNatRulesClient) deleteOperation(ctx context.C
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualNetworkGatewayNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, options *VirtualNetworkGatewayNatRulesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewayNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, _ *VirtualNetworkGatewayNatRulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -243,7 +243,7 @@ func (client *VirtualNetworkGatewayNatRulesClient) Get(ctx context.Context, reso
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualNetworkGatewayNatRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, options *VirtualNetworkGatewayNatRulesClientGetOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewayNatRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, natRuleName string, _ *VirtualNetworkGatewayNatRulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -312,7 +312,7 @@ func (client *VirtualNetworkGatewayNatRulesClient) NewListByVirtualNetworkGatewa
 }
 
 // listByVirtualNetworkGatewayCreateRequest creates the ListByVirtualNetworkGateway request.
-func (client *VirtualNetworkGatewayNatRulesClient) listByVirtualNetworkGatewayCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewayNatRulesClientListByVirtualNetworkGatewayOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewayNatRulesClient) listByVirtualNetworkGatewayCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewayNatRulesClientListByVirtualNetworkGatewayOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

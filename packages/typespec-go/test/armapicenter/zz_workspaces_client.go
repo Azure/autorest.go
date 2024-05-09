@@ -69,7 +69,7 @@ func (client *WorkspacesClient) CreateOrUpdate(ctx context.Context, resourceGrou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *WorkspacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, payload Workspace, options *WorkspacesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, payload Workspace, _ *WorkspacesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -141,7 +141,7 @@ func (client *WorkspacesClient) Delete(ctx context.Context, resourceGroupName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *WorkspacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientDeleteOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, _ *WorkspacesClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -198,7 +198,7 @@ func (client *WorkspacesClient) Get(ctx context.Context, resourceGroupName strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *WorkspacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientGetOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, _ *WorkspacesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -266,7 +266,7 @@ func (client *WorkspacesClient) Head(ctx context.Context, resourceGroupName stri
 }
 
 // headCreateRequest creates the Head request.
-func (client *WorkspacesClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, options *WorkspacesClientHeadOptions) (*policy.Request, error) {
+func (client *WorkspacesClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, _ *WorkspacesClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

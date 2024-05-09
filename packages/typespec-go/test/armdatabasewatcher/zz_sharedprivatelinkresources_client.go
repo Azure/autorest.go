@@ -86,7 +86,7 @@ func (client *SharedPrivateLinkResourcesClient) create(ctx context.Context, reso
 }
 
 // createCreateRequest creates the Create request.
-func (client *SharedPrivateLinkResourcesClient) createCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, resource SharedPrivateLinkResource, options *SharedPrivateLinkResourcesClientBeginCreateOptions) (*policy.Request, error) {
+func (client *SharedPrivateLinkResourcesClient) createCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, resource SharedPrivateLinkResource, _ *SharedPrivateLinkResourcesClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -165,7 +165,7 @@ func (client *SharedPrivateLinkResourcesClient) deleteOperation(ctx context.Cont
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SharedPrivateLinkResourcesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, options *SharedPrivateLinkResourcesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *SharedPrivateLinkResourcesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, _ *SharedPrivateLinkResourcesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -223,7 +223,7 @@ func (client *SharedPrivateLinkResourcesClient) Get(ctx context.Context, resourc
 }
 
 // getCreateRequest creates the Get request.
-func (client *SharedPrivateLinkResourcesClient) getCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, options *SharedPrivateLinkResourcesClientGetOptions) (*policy.Request, error) {
+func (client *SharedPrivateLinkResourcesClient) getCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, _ *SharedPrivateLinkResourcesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -290,7 +290,7 @@ func (client *SharedPrivateLinkResourcesClient) NewListByWatcherPager(resourceGr
 }
 
 // listByWatcherCreateRequest creates the ListByWatcher request.
-func (client *SharedPrivateLinkResourcesClient) listByWatcherCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, options *SharedPrivateLinkResourcesClientListByWatcherOptions) (*policy.Request, error) {
+func (client *SharedPrivateLinkResourcesClient) listByWatcherCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, _ *SharedPrivateLinkResourcesClientListByWatcherOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

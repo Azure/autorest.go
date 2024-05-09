@@ -71,7 +71,7 @@ func (client *DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGro
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, options *DeploymentsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, payload Deployment, _ *DeploymentsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -153,7 +153,7 @@ func (client *DeploymentsClient) Delete(ctx context.Context, resourceGroupName s
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientDeleteOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, _ *DeploymentsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -220,7 +220,7 @@ func (client *DeploymentsClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // getCreateRequest creates the Get request.
-func (client *DeploymentsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientGetOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, _ *DeploymentsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -298,7 +298,7 @@ func (client *DeploymentsClient) Head(ctx context.Context, resourceGroupName str
 }
 
 // headCreateRequest creates the Head request.
-func (client *DeploymentsClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, options *DeploymentsClientHeadOptions) (*policy.Request, error) {
+func (client *DeploymentsClient) headCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, deploymentName string, _ *DeploymentsClientHeadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

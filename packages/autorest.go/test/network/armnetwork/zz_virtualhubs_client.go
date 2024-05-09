@@ -94,7 +94,7 @@ func (client *VirtualHubsClient) createOrUpdate(ctx context.Context, resourceGro
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, _ *VirtualHubsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -173,7 +173,7 @@ func (client *VirtualHubsClient) deleteOperation(ctx context.Context, resourceGr
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualHubsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, _ *VirtualHubsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -228,7 +228,7 @@ func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName stri
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientGetOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, _ *VirtualHubsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -400,7 +400,7 @@ func (client *VirtualHubsClient) getInboundRoutes(ctx context.Context, resourceG
 }
 
 // getInboundRoutesCreateRequest creates the GetInboundRoutes request.
-func (client *VirtualHubsClient) getInboundRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters GetInboundRoutesParameters, options *VirtualHubsClientBeginGetInboundRoutesOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) getInboundRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters GetInboundRoutesParameters, _ *VirtualHubsClientBeginGetInboundRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/inboundRoutes"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -481,7 +481,7 @@ func (client *VirtualHubsClient) getOutboundRoutes(ctx context.Context, resource
 }
 
 // getOutboundRoutesCreateRequest creates the GetOutboundRoutes request.
-func (client *VirtualHubsClient) getOutboundRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters GetOutboundRoutesParameters, options *VirtualHubsClientBeginGetOutboundRoutesOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) getOutboundRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters GetOutboundRoutesParameters, _ *VirtualHubsClientBeginGetOutboundRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/outboundRoutes"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -537,7 +537,7 @@ func (client *VirtualHubsClient) NewListPager(options *VirtualHubsClientListOpti
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, options *VirtualHubsClientListOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, _ *VirtualHubsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -593,7 +593,7 @@ func (client *VirtualHubsClient) NewListByResourceGroupPager(resourceGroupName s
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualHubsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *VirtualHubsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -654,7 +654,7 @@ func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupNa
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, _ *VirtualHubsClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

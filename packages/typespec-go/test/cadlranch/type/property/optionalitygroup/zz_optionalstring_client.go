@@ -43,7 +43,7 @@ func (client *OptionalStringClient) GetAll(ctx context.Context, options *Optiona
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalStringClient) getAllCreateRequest(ctx context.Context, options *OptionalStringClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalStringClient) getAllCreateRequest(ctx context.Context, _ *OptionalStringClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/string/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *OptionalStringClient) GetDefault(ctx context.Context, options *Opt
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalStringClient) getDefaultCreateRequest(ctx context.Context, options *OptionalStringClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalStringClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalStringClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/string/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *OptionalStringClient) PutAll(ctx context.Context, body StringPrope
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalStringClient) putAllCreateRequest(ctx context.Context, body StringProperty, options *OptionalStringClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalStringClient) putAllCreateRequest(ctx context.Context, body StringProperty, _ *OptionalStringClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/string/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -169,7 +169,7 @@ func (client *OptionalStringClient) PutDefault(ctx context.Context, body StringP
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalStringClient) putDefaultCreateRequest(ctx context.Context, body StringProperty, options *OptionalStringClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalStringClient) putDefaultCreateRequest(ctx context.Context, body StringProperty, _ *OptionalStringClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/string/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

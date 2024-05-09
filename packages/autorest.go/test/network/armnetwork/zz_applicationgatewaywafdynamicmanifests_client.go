@@ -71,7 +71,7 @@ func (client *ApplicationGatewayWafDynamicManifestsClient) NewGetPager(location 
 }
 
 // getCreateRequest creates the Get request.
-func (client *ApplicationGatewayWafDynamicManifestsClient) getCreateRequest(ctx context.Context, location string, options *ApplicationGatewayWafDynamicManifestsClientGetOptions) (*policy.Request, error) {
+func (client *ApplicationGatewayWafDynamicManifestsClient) getCreateRequest(ctx context.Context, location string, _ *ApplicationGatewayWafDynamicManifestsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

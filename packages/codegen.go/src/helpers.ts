@@ -98,7 +98,13 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(methodParam.name)} ${formatParameterTypeName(methodParam)}`);
+    let paramName = uncapitalize(methodParam.name);
+    // when creating the method sig for fooCreateRequest, if the options type is empty
+    // or only contains the ResumeToken param use _ for the param name to quiet the linter
+    if (isParameterGroup(methodParam) && (methodParam.params.length === 0 || (methodParam.params.length === 1 && go.isResumeTokenParameter(methodParam.params[0])))) {
+      paramName = '_';
+    }
+    params.push(`${paramName} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -106,13 +112,14 @@ export function getCreateRequestParametersSig(method: go.Method | go.NextPageMet
 // returns the parameter names for an operation (excludes the param types).
 // e.g. "i, s"
 export function getCreateRequestParameters(method: go.Method): string {
-  // split param list into individual params
-  const reqParams = getCreateRequestParametersSig(method).split(',');
-  // keep the parameter names from the name/type tuples
-  for (let i = 0; i < reqParams.length; ++i) {
-    reqParams[i] = reqParams[i].trim().split(' ')[0];
+  // NOTE: keep in sync with getCreateRequestParametersSig
+  const methodParams = getMethodParameters(method);
+  const params = new Array<string>();
+  params.push('ctx');
+  for (const methodParam of values(methodParams)) {
+    params.push(uncapitalize(methodParam.name));
   }
-  return reqParams.join(', ');
+  return params.join(', ');
 }
 
 // returns the complete collection of method parameters

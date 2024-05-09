@@ -68,7 +68,7 @@ func (client *AlertsClient) Get(ctx context.Context, deviceName string, name str
 }
 
 // getCreateRequest creates the Get request.
-func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *AlertsClientGetOptions) (*policy.Request, error) {
+func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *AlertsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -133,7 +133,7 @@ func (client *AlertsClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *AlertsClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *AlertsClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {

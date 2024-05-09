@@ -752,7 +752,7 @@ func (client *ContainerClient) GetAccountInfo(ctx context.Context, containerName
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *ContainerClient) getAccountInfoCreateRequest(ctx context.Context, containerName string, restype Enum8, comp Enum1, options *ContainerClientGetAccountInfoOptions) (*policy.Request, error) {
+func (client *ContainerClient) getAccountInfoCreateRequest(ctx context.Context, containerName string, restype Enum8, comp Enum1, _ *ContainerClientGetAccountInfoOptions) (*policy.Request, error) {
 	urlPath := "/{containerName}"
 	if containerName == "" {
 		return nil, errors.New("parameter containerName cannot be empty")

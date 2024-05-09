@@ -95,7 +95,7 @@ func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, _ *InboundNatRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *InboundNatRulesClient) deleteOperation(ctx context.Context, resour
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *InboundNatRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, _ *InboundNatRulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -312,7 +312,7 @@ func (client *InboundNatRulesClient) NewListPager(resourceGroupName string, load
 }
 
 // listCreateRequest creates the List request.
-func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *InboundNatRulesClientListOptions) (*policy.Request, error) {
+func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, _ *InboundNatRulesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

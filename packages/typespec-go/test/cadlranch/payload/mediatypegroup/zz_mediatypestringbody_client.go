@@ -45,7 +45,7 @@ func (client *MediaTypeStringBodyClient) GetAsJSON(ctx context.Context, options 
 }
 
 // getAsJSONCreateRequest creates the GetAsJSON request.
-func (client *MediaTypeStringBodyClient) getAsJSONCreateRequest(ctx context.Context, options *MediaTypeStringBodyClientGetAsJSONOptions) (*policy.Request, error) {
+func (client *MediaTypeStringBodyClient) getAsJSONCreateRequest(ctx context.Context, _ *MediaTypeStringBodyClientGetAsJSONOptions) (*policy.Request, error) {
 	urlPath := "/payload/media-type/string-body/getAsJson"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *MediaTypeStringBodyClient) GetAsText(ctx context.Context, options 
 }
 
 // getAsTextCreateRequest creates the GetAsText request.
-func (client *MediaTypeStringBodyClient) getAsTextCreateRequest(ctx context.Context, options *MediaTypeStringBodyClientGetAsTextOptions) (*policy.Request, error) {
+func (client *MediaTypeStringBodyClient) getAsTextCreateRequest(ctx context.Context, _ *MediaTypeStringBodyClientGetAsTextOptions) (*policy.Request, error) {
 	urlPath := "/payload/media-type/string-body/getAsText"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -135,7 +135,7 @@ func (client *MediaTypeStringBodyClient) SendAsJSON(ctx context.Context, textPar
 }
 
 // sendAsJSONCreateRequest creates the SendAsJSON request.
-func (client *MediaTypeStringBodyClient) sendAsJSONCreateRequest(ctx context.Context, textParam string, options *MediaTypeStringBodyClientSendAsJSONOptions) (*policy.Request, error) {
+func (client *MediaTypeStringBodyClient) sendAsJSONCreateRequest(ctx context.Context, textParam string, _ *MediaTypeStringBodyClientSendAsJSONOptions) (*policy.Request, error) {
 	urlPath := "/payload/media-type/string-body/sendAsJson"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -172,7 +172,7 @@ func (client *MediaTypeStringBodyClient) SendAsText(ctx context.Context, textPar
 }
 
 // sendAsTextCreateRequest creates the SendAsText request.
-func (client *MediaTypeStringBodyClient) sendAsTextCreateRequest(ctx context.Context, textParam string, options *MediaTypeStringBodyClientSendAsTextOptions) (*policy.Request, error) {
+func (client *MediaTypeStringBodyClient) sendAsTextCreateRequest(ctx context.Context, textParam string, _ *MediaTypeStringBodyClientSendAsTextOptions) (*policy.Request, error) {
 	urlPath := "/payload/media-type/string-body/sendAsText"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

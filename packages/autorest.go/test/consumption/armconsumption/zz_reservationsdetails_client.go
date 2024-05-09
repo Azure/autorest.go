@@ -136,7 +136,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderPager(reservat
 }
 
 // listByReservationOrderCreateRequest creates the ListByReservationOrder request.
-func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, filter string, options *ReservationsDetailsClientListByReservationOrderOptions) (*policy.Request, error) {
+func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, filter string, _ *ReservationsDetailsClientListByReservationOrderOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
@@ -194,7 +194,7 @@ func (client *ReservationsDetailsClient) NewListByReservationOrderAndReservation
 }
 
 // listByReservationOrderAndReservationCreateRequest creates the ListByReservationOrderAndReservation request.
-func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsClientListByReservationOrderAndReservationOptions) (*policy.Request, error) {
+func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, filter string, _ *ReservationsDetailsClientListByReservationOrderAndReservationOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")

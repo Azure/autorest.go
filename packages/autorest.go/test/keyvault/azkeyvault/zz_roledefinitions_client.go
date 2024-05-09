@@ -51,7 +51,7 @@ func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBa
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, _ *RoleDefinitionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"
@@ -110,7 +110,7 @@ func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientDeleteOptions) (*policy.Request, error) {
+func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, _ *RoleDefinitionsClientDeleteOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"
@@ -166,7 +166,7 @@ func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL strin
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientGetOptions) (*policy.Request, error) {
+func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, _ *RoleDefinitionsClientGetOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"

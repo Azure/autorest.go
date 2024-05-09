@@ -353,7 +353,7 @@ func (client *Client) listLRO(ctx context.Context, options *BeginListLROOptions)
 }
 
 // listLROCreateRequest creates the ListLRO request.
-func (client *Client) listLROCreateRequest(ctx context.Context, options *BeginListLROOptions) (*policy.Request, error) {
+func (client *Client) listLROCreateRequest(ctx context.Context, _ *BeginListLROOptions) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/paged"
@@ -403,7 +403,7 @@ func (client *Client) NewListWithSharedNextOnePager(options *ListWithSharedNextO
 }
 
 // listWithSharedNextOneCreateRequest creates the ListWithSharedNextOne request.
-func (client *Client) listWithSharedNextOneCreateRequest(ctx context.Context, options *ListWithSharedNextOneOptions) (*policy.Request, error) {
+func (client *Client) listWithSharedNextOneCreateRequest(ctx context.Context, _ *ListWithSharedNextOneOptions) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNextOne"
@@ -453,7 +453,7 @@ func (client *Client) NewListWithSharedNextTwoPager(options *ListWithSharedNextT
 }
 
 // listWithSharedNextTwoCreateRequest creates the ListWithSharedNextTwo request.
-func (client *Client) listWithSharedNextTwoCreateRequest(ctx context.Context, options *ListWithSharedNextTwoOptions) (*policy.Request, error) {
+func (client *Client) listWithSharedNextTwoCreateRequest(ctx context.Context, _ *ListWithSharedNextTwoOptions) (*policy.Request, error) {
 	host := "https://{geography}.atlas.microsoft.com"
 	host = strings.ReplaceAll(host, "{geography}", string(client.geography))
 	urlPath := "/listWithSharedNextTwo"

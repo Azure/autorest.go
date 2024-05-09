@@ -70,7 +70,7 @@ func (client *BgpServiceCommunitiesClient) NewListPager(options *BgpServiceCommu
 }
 
 // listCreateRequest creates the List request.
-func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context, options *BgpServiceCommunitiesClientListOptions) (*policy.Request, error) {
+func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context, _ *BgpServiceCommunitiesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -90,7 +90,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 }
 
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
-func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (*policy.Request, error) {
+func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx context.Context, _ *APIVersionLocalClientGetMethodLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 }
 
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
-func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (*policy.Request, error) {
+func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.Context, _ *APIVersionLocalClientGetPathLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -172,7 +172,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 }
 
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.
-func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (*policy.Request, error) {
+func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx context.Context, _ *APIVersionLocalClientGetSwaggerLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

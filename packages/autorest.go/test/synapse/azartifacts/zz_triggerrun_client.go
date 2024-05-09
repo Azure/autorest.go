@@ -49,7 +49,7 @@ func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
-func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (*policy.Request, error) {
+func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, _ *TriggerRunClientCancelTriggerInstanceOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/cancel"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")
@@ -96,7 +96,7 @@ func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 }
 
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
-func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (*policy.Request, error) {
+func (client *TriggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, _ *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryTriggerRuns"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -147,7 +147,7 @@ func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.
-func (client *TriggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (*policy.Request, error) {
+func (client *TriggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Context, triggerName string, runID string, _ *TriggerRunClientRerunTriggerInstanceOptions) (*policy.Request, error) {
 	urlPath := "/triggers/{triggerName}/triggerRuns/{runId}/rerun"
 	if triggerName == "" {
 		return nil, errors.New("parameter triggerName cannot be empty")

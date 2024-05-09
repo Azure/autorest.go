@@ -43,7 +43,7 @@ func (client *ValueTypesDecimalClient) Get(ctx context.Context, options *ValueTy
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesDecimalClient) getCreateRequest(ctx context.Context, options *ValueTypesDecimalClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesDecimalClient) getCreateRequest(ctx context.Context, _ *ValueTypesDecimalClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/decimal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesDecimalClient) Put(ctx context.Context, body DecimalProp
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesDecimalClient) putCreateRequest(ctx context.Context, body DecimalProperty, options *ValueTypesDecimalClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesDecimalClient) putCreateRequest(ctx context.Context, body DecimalProperty, _ *ValueTypesDecimalClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/decimal"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -72,7 +72,7 @@ func (client *VirtualHubBgpConnectionsClient) NewListPager(resourceGroupName str
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualHubBgpConnectionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubBgpConnectionsClientListOptions) (*policy.Request, error) {
+func (client *VirtualHubBgpConnectionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualHubName string, _ *VirtualHubBgpConnectionsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -159,7 +159,7 @@ func (client *VirtualHubBgpConnectionsClient) listAdvertisedRoutes(ctx context.C
 }
 
 // listAdvertisedRoutesCreateRequest creates the ListAdvertisedRoutes request.
-func (client *VirtualHubBgpConnectionsClient) listAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, hubName string, connectionName string, options *VirtualHubBgpConnectionsClientBeginListAdvertisedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualHubBgpConnectionsClient) listAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, hubName string, connectionName string, _ *VirtualHubBgpConnectionsClientBeginListAdvertisedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/advertisedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -241,7 +241,7 @@ func (client *VirtualHubBgpConnectionsClient) listLearnedRoutes(ctx context.Cont
 }
 
 // listLearnedRoutesCreateRequest creates the ListLearnedRoutes request.
-func (client *VirtualHubBgpConnectionsClient) listLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, hubName string, connectionName string, options *VirtualHubBgpConnectionsClientBeginListLearnedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualHubBgpConnectionsClient) listLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, hubName string, connectionName string, _ *VirtualHubBgpConnectionsClientBeginListLearnedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{hubName}/bgpConnections/{connectionName}/learnedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

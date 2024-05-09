@@ -43,7 +43,7 @@ func (client *ScalarDecimal128TypeClient) RequestBody(ctx context.Context, body 
 }
 
 // requestBodyCreateRequest creates the RequestBody request.
-func (client *ScalarDecimal128TypeClient) requestBodyCreateRequest(ctx context.Context, body float64, options *ScalarDecimal128TypeClientRequestBodyOptions) (*policy.Request, error) {
+func (client *ScalarDecimal128TypeClient) requestBodyCreateRequest(ctx context.Context, body float64, _ *ScalarDecimal128TypeClientRequestBodyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal128/resquest_body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -80,7 +80,7 @@ func (client *ScalarDecimal128TypeClient) RequestParameter(ctx context.Context, 
 }
 
 // requestParameterCreateRequest creates the RequestParameter request.
-func (client *ScalarDecimal128TypeClient) requestParameterCreateRequest(ctx context.Context, value float64, options *ScalarDecimal128TypeClientRequestParameterOptions) (*policy.Request, error) {
+func (client *ScalarDecimal128TypeClient) requestParameterCreateRequest(ctx context.Context, value float64, _ *ScalarDecimal128TypeClientRequestParameterOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal128/request_parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,7 +117,7 @@ func (client *ScalarDecimal128TypeClient) ResponseBody(ctx context.Context, opti
 }
 
 // responseBodyCreateRequest creates the ResponseBody request.
-func (client *ScalarDecimal128TypeClient) responseBodyCreateRequest(ctx context.Context, options *ScalarDecimal128TypeClientResponseBodyOptions) (*policy.Request, error) {
+func (client *ScalarDecimal128TypeClient) responseBodyCreateRequest(ctx context.Context, _ *ScalarDecimal128TypeClientResponseBodyOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/decimal128/response_body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

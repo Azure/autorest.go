@@ -43,7 +43,7 @@ func (client *DictionaryRecursiveModelValueClient) Get(ctx context.Context, opti
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryRecursiveModelValueClient) getCreateRequest(ctx context.Context, options *DictionaryRecursiveModelValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryRecursiveModelValueClient) getCreateRequest(ctx context.Context, _ *DictionaryRecursiveModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryRecursiveModelValueClient) Put(ctx context.Context, body
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryRecursiveModelValueClient) putCreateRequest(ctx context.Context, body map[string]*InnerModel, options *DictionaryRecursiveModelValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryRecursiveModelValueClient) putCreateRequest(ctx context.Context, body map[string]*InnerModel, _ *DictionaryRecursiveModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -43,7 +43,7 @@ func (client *DictionaryModelValueClient) Get(ctx context.Context, options *Dict
 }
 
 // getCreateRequest creates the Get request.
-func (client *DictionaryModelValueClient) getCreateRequest(ctx context.Context, options *DictionaryModelValueClientGetOptions) (*policy.Request, error) {
+func (client *DictionaryModelValueClient) getCreateRequest(ctx context.Context, _ *DictionaryModelValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *DictionaryModelValueClient) Put(ctx context.Context, body map[stri
 }
 
 // putCreateRequest creates the Put request.
-func (client *DictionaryModelValueClient) putCreateRequest(ctx context.Context, body map[string]*InnerModel, options *DictionaryModelValueClientPutOptions) (*policy.Request, error) {
+func (client *DictionaryModelValueClient) putCreateRequest(ctx context.Context, body map[string]*InnerModel, _ *DictionaryModelValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/dictionary/model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

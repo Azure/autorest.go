@@ -95,7 +95,7 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdate(ctx context.Cont
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, _ *ExpressRouteCircuitPeeringsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,7 +180,7 @@ func (client *ExpressRouteCircuitPeeringsClient) deleteOperation(ctx context.Con
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ExpressRouteCircuitPeeringsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ExpressRouteCircuitPeeringsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, _ *ExpressRouteCircuitPeeringsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -241,7 +241,7 @@ func (client *ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resour
 }
 
 // getCreateRequest creates the Get request.
-func (client *ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsClientGetOptions) (*policy.Request, error) {
+func (client *ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, _ *ExpressRouteCircuitPeeringsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -310,7 +310,7 @@ func (client *ExpressRouteCircuitPeeringsClient) NewListPager(resourceGroupName 
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsClientListOptions) (*policy.Request, error) {
+func (client *ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.Context, resourceGroupName string, circuitName string, _ *ExpressRouteCircuitPeeringsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

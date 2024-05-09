@@ -72,7 +72,7 @@ func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNa
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesClientGetOptions) (*policy.Request, error) {
+func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, _ *LoadBalancerProbesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -141,7 +141,7 @@ func (client *LoadBalancerProbesClient) NewListPager(resourceGroupName string, l
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesClientListOptions) (*policy.Request, error) {
+func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, _ *LoadBalancerProbesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

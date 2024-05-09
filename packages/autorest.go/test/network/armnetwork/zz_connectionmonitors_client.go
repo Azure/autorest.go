@@ -183,7 +183,7 @@ func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, res
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, _ *ConnectionMonitorsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -243,7 +243,7 @@ func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupNa
 }
 
 // getCreateRequest creates the Get request.
-func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, _ *ConnectionMonitorsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -313,7 +313,7 @@ func (client *ConnectionMonitorsClient) NewListPager(resourceGroupName string, n
 }
 
 // listCreateRequest creates the List request.
-func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, _ *ConnectionMonitorsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -400,7 +400,7 @@ func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroup
 }
 
 // queryCreateRequest creates the Query request.
-func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, _ *ConnectionMonitorsClientBeginQueryOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -482,7 +482,7 @@ func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroup
 }
 
 // startCreateRequest creates the Start request.
-func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, _ *ConnectionMonitorsClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -564,7 +564,7 @@ func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupN
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, _ *ConnectionMonitorsClientBeginStopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -626,7 +626,7 @@ func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resource
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, _ *ConnectionMonitorsClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

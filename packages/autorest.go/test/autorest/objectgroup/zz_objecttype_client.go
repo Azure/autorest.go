@@ -49,7 +49,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 }
 
 // getCreateRequest creates the Get request.
-func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *ObjectTypeClientGetOptions) (*policy.Request, error) {
+func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, _ *ObjectTypeClientGetOptions) (*policy.Request, error) {
 	urlPath := "/objectType/get"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -98,7 +98,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject []byte, optio
 }
 
 // putCreateRequest creates the Put request.
-func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject []byte, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
+func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject []byte, _ *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

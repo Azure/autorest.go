@@ -48,7 +48,7 @@ func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRun
 }
 
 // getCreateRequest creates the Get request.
-func (client *IntegrationRuntimesClient) getCreateRequest(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (*policy.Request, error) {
+func (client *IntegrationRuntimesClient) getCreateRequest(ctx context.Context, integrationRuntimeName string, _ *IntegrationRuntimesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/integrationRuntimes/{integrationRuntimeName}"
 	if integrationRuntimeName == "" {
 		return nil, errors.New("parameter integrationRuntimeName cannot be empty")
@@ -99,7 +99,7 @@ func (client *IntegrationRuntimesClient) List(ctx context.Context, options *Inte
 }
 
 // listCreateRequest creates the List request.
-func (client *IntegrationRuntimesClient) listCreateRequest(ctx context.Context, options *IntegrationRuntimesClientListOptions) (*policy.Request, error) {
+func (client *IntegrationRuntimesClient) listCreateRequest(ctx context.Context, _ *IntegrationRuntimesClientListOptions) (*policy.Request, error) {
 	urlPath := "/integrationRuntimes"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {

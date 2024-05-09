@@ -47,7 +47,7 @@ func (client *MultipleClient) NoOperationParams(ctx context.Context, options *Mu
 }
 
 // noOperationParamsCreateRequest creates the NoOperationParams request.
-func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context, options *MultipleClientNoOperationParamsOptions) (*policy.Request, error) {
+func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context, _ *MultipleClientNoOperationParamsOptions) (*policy.Request, error) {
 	host := "{endpoint}/server/path/multiple/{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{apiVersion}", string(client.apiVersion))
@@ -82,7 +82,7 @@ func (client *MultipleClient) WithOperationPathParam(ctx context.Context, keywor
 }
 
 // withOperationPathParamCreateRequest creates the WithOperationPathParam request.
-func (client *MultipleClient) withOperationPathParamCreateRequest(ctx context.Context, keyword string, options *MultipleClientWithOperationPathParamOptions) (*policy.Request, error) {
+func (client *MultipleClient) withOperationPathParamCreateRequest(ctx context.Context, keyword string, _ *MultipleClientWithOperationPathParamOptions) (*policy.Request, error) {
 	host := "{endpoint}/server/path/multiple/{apiVersion}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{apiVersion}", string(client.apiVersion))

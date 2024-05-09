@@ -71,7 +71,7 @@ func (client *AvailableEndpointServicesClient) NewListPager(location string, opt
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesClientListOptions) (*policy.Request, error) {
+func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, _ *AvailableEndpointServicesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

@@ -43,7 +43,7 @@ func (client *ScalarStringClient) Get(ctx context.Context, options *ScalarString
 }
 
 // getCreateRequest creates the Get request.
-func (client *ScalarStringClient) getCreateRequest(ctx context.Context, options *ScalarStringClientGetOptions) (*policy.Request, error) {
+func (client *ScalarStringClient) getCreateRequest(ctx context.Context, _ *ScalarStringClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ScalarStringClient) Put(ctx context.Context, body string, options 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ScalarStringClient) putCreateRequest(ctx context.Context, body string, options *ScalarStringClientPutOptions) (*policy.Request, error) {
+func (client *ScalarStringClient) putCreateRequest(ctx context.Context, body string, _ *ScalarStringClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/scalar/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

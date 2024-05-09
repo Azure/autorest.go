@@ -67,7 +67,7 @@ func (client *ServicesClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ServicesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, resource Service, options *ServicesClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ServicesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, resource Service, _ *ServicesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -131,7 +131,7 @@ func (client *ServicesClient) Delete(ctx context.Context, resourceGroupName stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ServicesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *ServicesClientDeleteOptions) (*policy.Request, error) {
+func (client *ServicesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, _ *ServicesClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -202,7 +202,7 @@ func (client *ServicesClient) exportMetadataSchema(ctx context.Context, resource
 }
 
 // exportMetadataSchemaCreateRequest creates the ExportMetadataSchema request.
-func (client *ServicesClient) exportMetadataSchemaCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload MetadataSchemaExportRequest, options *ServicesClientBeginExportMetadataSchemaOptions) (*policy.Request, error) {
+func (client *ServicesClient) exportMetadataSchemaCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload MetadataSchemaExportRequest, _ *ServicesClientBeginExportMetadataSchemaOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/exportMetadataSchema"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -258,7 +258,7 @@ func (client *ServicesClient) Get(ctx context.Context, resourceGroupName string,
 }
 
 // getCreateRequest creates the Get request.
-func (client *ServicesClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, options *ServicesClientGetOptions) (*policy.Request, error) {
+func (client *ServicesClient) getCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, _ *ServicesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -320,7 +320,7 @@ func (client *ServicesClient) NewListByResourceGroupPager(resourceGroupName stri
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ServicesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ServicesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *ServicesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *ServicesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -377,7 +377,7 @@ func (client *ServicesClient) NewListBySubscriptionPager(options *ServicesClient
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *ServicesClient) listBySubscriptionCreateRequest(ctx context.Context, options *ServicesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *ServicesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *ServicesClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.ApiCenter/services"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -431,7 +431,7 @@ func (client *ServicesClient) Update(ctx context.Context, resourceGroupName stri
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ServicesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload ServiceUpdate, options *ServicesClientUpdateOptions) (*policy.Request, error) {
+func (client *ServicesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload ServiceUpdate, _ *ServicesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

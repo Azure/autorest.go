@@ -43,7 +43,7 @@ func (client *ValueTypesDurationClient) Get(ctx context.Context, options *ValueT
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesDurationClient) getCreateRequest(ctx context.Context, options *ValueTypesDurationClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesDurationClient) getCreateRequest(ctx context.Context, _ *ValueTypesDurationClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesDurationClient) Put(ctx context.Context, body DurationPr
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesDurationClient) putCreateRequest(ctx context.Context, body DurationProperty, options *ValueTypesDurationClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesDurationClient) putCreateRequest(ctx context.Context, body DurationProperty, _ *ValueTypesDurationClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

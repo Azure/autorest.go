@@ -44,7 +44,7 @@ func (client *ValueTypesCollectionsStringClient) Get(ctx context.Context, option
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesCollectionsStringClient) getCreateRequest(ctx context.Context, options *ValueTypesCollectionsStringClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesCollectionsStringClient) getCreateRequest(ctx context.Context, _ *ValueTypesCollectionsStringClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/collections/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ValueTypesCollectionsStringClient) Put(ctx context.Context, body C
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesCollectionsStringClient) putCreateRequest(ctx context.Context, body CollectionsStringProperty, options *ValueTypesCollectionsStringClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesCollectionsStringClient) putCreateRequest(ctx context.Context, body CollectionsStringProperty, _ *ValueTypesCollectionsStringClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/collections/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -48,7 +48,7 @@ func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParame
 }
 
 // createAPInPropertiesCreateRequest creates the CreateAPInProperties request.
-func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context, createParameters PetAPInProperties, options *PetsClientCreateAPInPropertiesOptions) (*policy.Request, error) {
+func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context, createParameters PetAPInProperties, _ *PetsClientCreateAPInPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/in/properties"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, 
 }
 
 // createAPInPropertiesWithAPStringCreateRequest creates the CreateAPInPropertiesWithAPString request.
-func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsClientCreateAPInPropertiesWithAPStringOptions) (*policy.Request, error) {
+func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx context.Context, createParameters PetAPInPropertiesWithAPString, _ *PetsClientCreateAPInPropertiesWithAPStringOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -149,7 +149,7 @@ func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters P
 }
 
 // createAPObjectCreateRequest creates the CreateAPObject request.
-func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, createParameters PetAPObject, options *PetsClientCreateAPObjectOptions) (*policy.Request, error) {
+func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, createParameters PetAPObject, _ *PetsClientCreateAPObjectOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/type/object"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -199,7 +199,7 @@ func (client *PetsClient) CreateAPString(ctx context.Context, createParameters P
 }
 
 // createAPStringCreateRequest creates the CreateAPString request.
-func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, createParameters PetAPString, options *PetsClientCreateAPStringOptions) (*policy.Request, error) {
+func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, createParameters PetAPString, _ *PetsClientCreateAPStringOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/type/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -249,7 +249,7 @@ func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters Pet
 }
 
 // createAPTrueCreateRequest creates the CreateAPTrue request.
-func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createParameters PetAPTrue, options *PetsClientCreateAPTrueOptions) (*policy.Request, error) {
+func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createParameters PetAPTrue, _ *PetsClientCreateAPTrueOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/true"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -299,7 +299,7 @@ func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters 
 }
 
 // createCatAPTrueCreateRequest creates the CreateCatAPTrue request.
-func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, createParameters CatAPTrue, options *PetsClientCreateCatAPTrueOptions) (*policy.Request, error) {
+func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, createParameters CatAPTrue, _ *PetsClientCreateCatAPTrueOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/true-subclass"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

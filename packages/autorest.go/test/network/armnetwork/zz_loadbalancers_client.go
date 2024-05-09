@@ -94,7 +94,7 @@ func (client *LoadBalancersClient) createOrUpdate(ctx context.Context, resourceG
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, _ *LoadBalancersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *LoadBalancersClient) deleteOperation(ctx context.Context, resource
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *LoadBalancersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, _ *LoadBalancersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -295,7 +295,7 @@ func (client *LoadBalancersClient) NewListPager(resourceGroupName string, option
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *LoadBalancersClientListOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *LoadBalancersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -354,7 +354,7 @@ func (client *LoadBalancersClient) NewListAllPager(options *LoadBalancersClientL
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *LoadBalancersClient) listAllCreateRequest(ctx context.Context, options *LoadBalancersClientListAllOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) listAllCreateRequest(ctx context.Context, _ *LoadBalancersClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -434,7 +434,7 @@ func (client *LoadBalancersClient) listInboundNatRulePortMappings(ctx context.Co
 }
 
 // listInboundNatRulePortMappingsCreateRequest creates the ListInboundNatRulePortMappings request.
-func (client *LoadBalancersClient) listInboundNatRulePortMappingsCreateRequest(ctx context.Context, groupName string, loadBalancerName string, backendPoolName string, parameters QueryInboundNatRulePortMappingRequest, options *LoadBalancersClientBeginListInboundNatRulePortMappingsOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) listInboundNatRulePortMappingsCreateRequest(ctx context.Context, groupName string, loadBalancerName string, backendPoolName string, parameters QueryInboundNatRulePortMappingRequest, _ *LoadBalancersClientBeginListInboundNatRulePortMappingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendPoolName}/queryInboundNatRulePortMapping"
 	if groupName == "" {
 		return nil, errors.New("parameter groupName cannot be empty")
@@ -518,7 +518,7 @@ func (client *LoadBalancersClient) swapPublicIPAddresses(ctx context.Context, lo
 }
 
 // swapPublicIPAddressesCreateRequest creates the SwapPublicIPAddresses request.
-func (client *LoadBalancersClient) swapPublicIPAddressesCreateRequest(ctx context.Context, location string, parameters LoadBalancerVipSwapRequest, options *LoadBalancersClientBeginSwapPublicIPAddressesOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) swapPublicIPAddressesCreateRequest(ctx context.Context, location string, parameters LoadBalancerVipSwapRequest, _ *LoadBalancersClientBeginSwapPublicIPAddressesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -574,7 +574,7 @@ func (client *LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroup
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters TagsObject, options *LoadBalancersClientUpdateTagsOptions) (*policy.Request, error) {
+func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters TagsObject, _ *LoadBalancersClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

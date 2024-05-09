@@ -72,7 +72,7 @@ func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) Get(ctx contex
 }
 
 // getCreateRequest creates the Get request.
-func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) getCreateRequest(ctx context.Context, location string, options *ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions) (*policy.Request, error) {
+func (client *ApplicationGatewayWafDynamicManifestsDefaultClient) getCreateRequest(ctx context.Context, location string, _ *ApplicationGatewayWafDynamicManifestsDefaultClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

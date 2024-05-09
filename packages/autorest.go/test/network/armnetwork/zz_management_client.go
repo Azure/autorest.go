@@ -73,7 +73,7 @@ func (client *ManagementClient) CheckDNSNameAvailability(ctx context.Context, lo
 }
 
 // checkDNSNameAvailabilityCreateRequest creates the CheckDNSNameAvailability request.
-func (client *ManagementClient) checkDNSNameAvailabilityCreateRequest(ctx context.Context, location string, domainNameLabel string, options *ManagementClientCheckDNSNameAvailabilityOptions) (*policy.Request, error) {
+func (client *ManagementClient) checkDNSNameAvailabilityCreateRequest(ctx context.Context, location string, domainNameLabel string, _ *ManagementClientCheckDNSNameAvailabilityOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -157,7 +157,7 @@ func (client *ManagementClient) deleteBastionShareableLink(ctx context.Context, 
 }
 
 // deleteBastionShareableLinkCreateRequest creates the DeleteBastionShareableLink request.
-func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*policy.Request, error) {
+func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, _ *ManagementClientBeginDeleteBastionShareableLinkOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/deleteShareableLinks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -217,7 +217,7 @@ func (client *ManagementClient) NewDisconnectActiveSessionsPager(resourceGroupNa
 }
 
 // disconnectActiveSessionsCreateRequest creates the DisconnectActiveSessions request.
-func (client *ManagementClient) disconnectActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *ManagementClientDisconnectActiveSessionsOptions) (*policy.Request, error) {
+func (client *ManagementClient) disconnectActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, _ *ManagementClientDisconnectActiveSessionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -284,7 +284,7 @@ func (client *ManagementClient) ExpressRouteProviderPort(ctx context.Context, pr
 }
 
 // expressRouteProviderPortCreateRequest creates the ExpressRouteProviderPort request.
-func (client *ManagementClient) expressRouteProviderPortCreateRequest(ctx context.Context, providerport string, options *ManagementClientExpressRouteProviderPortOptions) (*policy.Request, error) {
+func (client *ManagementClient) expressRouteProviderPortCreateRequest(ctx context.Context, providerport string, _ *ManagementClientExpressRouteProviderPortOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}"
 	if providerport == "" {
 		return nil, errors.New("parameter providerport cannot be empty")
@@ -369,7 +369,7 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 }
 
 // generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest creates the Generatevirtualwanvpnserverconfigurationvpnprofile request.
-func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*policy.Request, error) {
+func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, _ *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -465,7 +465,7 @@ func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceG
 }
 
 // getActiveSessionsCreateRequest creates the GetActiveSessions request.
-func (client *ManagementClient) getActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*policy.Request, error) {
+func (client *ManagementClient) getActiveSessionsCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, _ *ManagementClientBeginGetActiveSessionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getActiveSessions"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -531,7 +531,7 @@ func (client *ManagementClient) NewGetBastionShareableLinkPager(resourceGroupNam
 }
 
 // getBastionShareableLinkCreateRequest creates the GetBastionShareableLink request.
-func (client *ManagementClient) getBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientGetBastionShareableLinkOptions) (*policy.Request, error) {
+func (client *ManagementClient) getBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, _ *ManagementClientGetBastionShareableLinkOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getShareableLinks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -926,7 +926,7 @@ func (client *ManagementClient) putBastionShareableLink(ctx context.Context, res
 }
 
 // putBastionShareableLinkCreateRequest creates the PutBastionShareableLink request.
-func (client *ManagementClient) putBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*policy.Request, error) {
+func (client *ManagementClient) putBastionShareableLinkCreateRequest(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, _ *ManagementClientBeginPutBastionShareableLinkOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/createShareableLinks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -994,7 +994,7 @@ func (client *ManagementClient) SupportedSecurityProviders(ctx context.Context, 
 }
 
 // supportedSecurityProvidersCreateRequest creates the SupportedSecurityProviders request.
-func (client *ManagementClient) supportedSecurityProvidersCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *ManagementClientSupportedSecurityProvidersOptions) (*policy.Request, error) {
+func (client *ManagementClient) supportedSecurityProvidersCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, _ *ManagementClientSupportedSecurityProvidersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -44,7 +44,7 @@ func (client *ServiceQuxBarClient) Nine(ctx context.Context, options *ServiceQux
 }
 
 // nineCreateRequest creates the Nine request.
-func (client *ServiceQuxBarClient) nineCreateRequest(ctx context.Context, options *ServiceQuxBarClientNineOptions) (*policy.Request, error) {
+func (client *ServiceQuxBarClient) nineCreateRequest(ctx context.Context, _ *ServiceQuxBarClientNineOptions) (*policy.Request, error) {
 	host := "{endpoint}/client/structure/{client}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{client}", string(client.client))

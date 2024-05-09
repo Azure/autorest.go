@@ -76,7 +76,7 @@ func (client *VirtualMachineImagesClient) Get(ctx context.Context, location stri
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, _ *VirtualMachineImagesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -237,7 +237,7 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 }
 
 // listOffersCreateRequest creates the ListOffers request.
-func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, _ *VirtualMachineImagesClientListOffersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -301,7 +301,7 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
-func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, _ *VirtualMachineImagesClientListPublishersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -363,7 +363,7 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, _ *VirtualMachineImagesClientListSKUsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

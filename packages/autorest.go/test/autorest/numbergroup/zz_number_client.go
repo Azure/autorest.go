@@ -47,7 +47,7 @@ func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberCl
 }
 
 // getBigDecimalCreateRequest creates the GetBigDecimal request.
-func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, _ *NumberClientGetBigDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,7 +95,7 @@ func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, op
 }
 
 // getBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
-func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx context.Context, _ *NumberClientGetBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -143,7 +143,7 @@ func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, op
 }
 
 // getBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
-func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx context.Context, _ *NumberClientGetBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -190,7 +190,7 @@ func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberCli
 }
 
 // getBigDoubleCreateRequest creates the GetBigDouble request.
-func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, options *NumberClientGetBigDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, _ *NumberClientGetBigDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -238,7 +238,7 @@ func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, opt
 }
 
 // getBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
-func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context.Context, _ *NumberClientGetBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -286,7 +286,7 @@ func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, opt
 }
 
 // getBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
-func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context.Context, _ *NumberClientGetBigDoublePositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -333,7 +333,7 @@ func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClie
 }
 
 // getBigFloatCreateRequest creates the GetBigFloat request.
-func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, options *NumberClientGetBigFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, _ *NumberClientGetBigFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -381,7 +381,7 @@ func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *Numb
 }
 
 // getInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
-func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, _ *NumberClientGetInvalidDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/invaliddecimal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -428,7 +428,7 @@ func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *Numbe
 }
 
 // getInvalidDoubleCreateRequest creates the GetInvalidDouble request.
-func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, _ *NumberClientGetInvalidDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/invaliddouble"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -475,7 +475,7 @@ func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *Number
 }
 
 // getInvalidFloatCreateRequest creates the GetInvalidFloat request.
-func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, _ *NumberClientGetInvalidFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/invalidfloat"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -522,7 +522,7 @@ func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGe
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *NumberClientGetNullOptions) (*policy.Request, error) {
+func (client *NumberClient) getNullCreateRequest(ctx context.Context, _ *NumberClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/number/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -569,7 +569,7 @@ func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *Number
 }
 
 // getSmallDecimalCreateRequest creates the GetSmallDecimal request.
-func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, _ *NumberClientGetSmallDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -616,7 +616,7 @@ func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberC
 }
 
 // getSmallDoubleCreateRequest creates the GetSmallDouble request.
-func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, _ *NumberClientGetSmallDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -663,7 +663,7 @@ func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberCl
 }
 
 // getSmallFloatCreateRequest creates the GetSmallFloat request.
-func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, options *NumberClientGetSmallFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, _ *NumberClientGetSmallFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -710,7 +710,7 @@ func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float6
 }
 
 // putBigDecimalCreateRequest creates the PutBigDecimal request.
-func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numberBody float64, _ *NumberClientPutBigDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -751,7 +751,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, op
 }
 
 // putBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
-func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx context.Context, _ *NumberClientPutBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -792,7 +792,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, op
 }
 
 // putBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
-func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx context.Context, _ *NumberClientPutBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -833,7 +833,7 @@ func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64
 }
 
 // putBigDoubleCreateRequest creates the PutBigDouble request.
-func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numberBody float64, _ *NumberClientPutBigDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -874,7 +874,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, opt
 }
 
 // putBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
-func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context.Context, _ *NumberClientPutBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -915,7 +915,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, opt
 }
 
 // putBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
-func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context.Context, _ *NumberClientPutBigDoublePositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -956,7 +956,7 @@ func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32,
 }
 
 // putBigFloatCreateRequest creates the PutBigFloat request.
-func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, numberBody float32, _ *NumberClientPutBigFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -997,7 +997,7 @@ func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody floa
 }
 
 // putSmallDecimalCreateRequest creates the PutSmallDecimal request.
-func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, numberBody float64, _ *NumberClientPutSmallDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1038,7 +1038,7 @@ func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float
 }
 
 // putSmallDoubleCreateRequest creates the PutSmallDouble request.
-func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, numberBody float64, _ *NumberClientPutSmallDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1079,7 +1079,7 @@ func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float3
 }
 
 // putSmallFloatCreateRequest creates the PutSmallFloat request.
-func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numberBody float32, _ *NumberClientPutSmallFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -86,7 +86,7 @@ func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, devi
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, _ *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -160,7 +160,7 @@ func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, dev
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *BandwidthSchedulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -214,7 +214,7 @@ func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName stri
 }
 
 // getCreateRequest creates the Get request.
-func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientGetOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *BandwidthSchedulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -279,7 +279,7 @@ func (client *BandwidthSchedulesClient) NewListByDataBoxEdgeDevicePager(deviceNa
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {

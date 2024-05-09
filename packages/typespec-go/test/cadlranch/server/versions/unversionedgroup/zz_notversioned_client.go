@@ -47,7 +47,7 @@ func (client *NotVersionedClient) WithPathAPIVersion(ctx context.Context, option
 }
 
 // withPathAPIVersionCreateRequest creates the WithPathAPIVersion request.
-func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, options *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
+func (client *NotVersionedClient) withPathAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithPathAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-path-api-version/{apiVersion}"
@@ -86,7 +86,7 @@ func (client *NotVersionedClient) WithQueryAPIVersion(ctx context.Context, optio
 }
 
 // withQueryAPIVersionCreateRequest creates the WithQueryAPIVersion request.
-func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, options *NotVersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
+func (client *NotVersionedClient) withQueryAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithQueryAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/with-query-api-version"
@@ -124,7 +124,7 @@ func (client *NotVersionedClient) WithoutAPIVersion(ctx context.Context, options
 }
 
 // withoutAPIVersionCreateRequest creates the WithoutAPIVersion request.
-func (client *NotVersionedClient) withoutAPIVersionCreateRequest(ctx context.Context, options *NotVersionedClientWithoutAPIVersionOptions) (*policy.Request, error) {
+func (client *NotVersionedClient) withoutAPIVersionCreateRequest(ctx context.Context, _ *NotVersionedClientWithoutAPIVersionOptions) (*policy.Request, error) {
 	host := "{endpoint}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/server/versions/not-versioned/without-api-version"

@@ -71,7 +71,7 @@ func (client *SharedGalleriesClient) Get(ctx context.Context, location string, g
 }
 
 // getCreateRequest creates the Get request.
-func (client *SharedGalleriesClient) getCreateRequest(ctx context.Context, location string, galleryUniqueName string, options *SharedGalleriesClientGetOptions) (*policy.Request, error) {
+func (client *SharedGalleriesClient) getCreateRequest(ctx context.Context, location string, galleryUniqueName string, _ *SharedGalleriesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

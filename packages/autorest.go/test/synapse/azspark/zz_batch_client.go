@@ -50,7 +50,7 @@ func (client *BatchClient) CancelSparkBatchJob(ctx context.Context, batchID int3
 }
 
 // cancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
-func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *BatchClientCancelSparkBatchJobOptions) (*policy.Request, error) {
+func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchID int32, _ *BatchClientCancelSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{livyApiVersion}", client.livyAPIVersion)
 	urlPath = strings.ReplaceAll(urlPath, "{sparkPoolName}", client.sparkPoolName)

@@ -86,7 +86,7 @@ func (client *BatchEndpointsClient) createOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BatchEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body BatchEndpointData, options *BatchEndpointsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BatchEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body BatchEndpointData, _ *BatchEndpointsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -162,7 +162,7 @@ func (client *BatchEndpointsClient) deleteOperation(ctx context.Context, resourc
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BatchEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *BatchEndpointsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *BatchEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, _ *BatchEndpointsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -218,7 +218,7 @@ func (client *BatchEndpointsClient) Get(ctx context.Context, resourceGroupName s
 }
 
 // getCreateRequest creates the Get request.
-func (client *BatchEndpointsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *BatchEndpointsClientGetOptions) (*policy.Request, error) {
+func (client *BatchEndpointsClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, _ *BatchEndpointsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -351,7 +351,7 @@ func (client *BatchEndpointsClient) ListKeys(ctx context.Context, resourceGroupN
 }
 
 // listKeysCreateRequest creates the ListKeys request.
-func (client *BatchEndpointsClient) listKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, options *BatchEndpointsClientListKeysOptions) (*policy.Request, error) {
+func (client *BatchEndpointsClient) listKeysCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, _ *BatchEndpointsClientListKeysOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/listkeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -434,7 +434,7 @@ func (client *BatchEndpointsClient) update(ctx context.Context, resourceGroupNam
 }
 
 // updateCreateRequest creates the Update request.
-func (client *BatchEndpointsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body PartialBatchEndpointPartialTrackedResource, options *BatchEndpointsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *BatchEndpointsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body PartialBatchEndpointPartialTrackedResource, _ *BatchEndpointsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -60,7 +60,7 @@ func (client *OperationsClient) NewListPager(options *OperationsClientListOption
 }
 
 // listCreateRequest creates the List request.
-func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsClientListOptions) (*policy.Request, error) {
+func (client *OperationsClient) listCreateRequest(ctx context.Context, _ *OperationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Consumption/operations"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
 	if err != nil {

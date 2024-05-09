@@ -211,7 +211,7 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Con
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
+func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, _ *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/customheader/put/201/creating/succeeded/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -278,7 +278,7 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context
 }
 
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
-func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
+func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, product Product, _ *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/customheader/putasync/retry/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -43,7 +43,7 @@ func (client *ValueTypesNeverClient) Get(ctx context.Context, options *ValueType
 }
 
 // getCreateRequest creates the Get request.
-func (client *ValueTypesNeverClient) getCreateRequest(ctx context.Context, options *ValueTypesNeverClientGetOptions) (*policy.Request, error) {
+func (client *ValueTypesNeverClient) getCreateRequest(ctx context.Context, _ *ValueTypesNeverClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/never"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ValueTypesNeverClient) Put(ctx context.Context, body NeverProperty
 }
 
 // putCreateRequest creates the Put request.
-func (client *ValueTypesNeverClient) putCreateRequest(ctx context.Context, body NeverProperty, options *ValueTypesNeverClientPutOptions) (*policy.Request, error) {
+func (client *ValueTypesNeverClient) putCreateRequest(ctx context.Context, body NeverProperty, _ *ValueTypesNeverClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/property/value-types/never"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

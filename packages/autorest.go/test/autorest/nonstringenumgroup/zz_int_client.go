@@ -47,7 +47,7 @@ func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) 
 }
 
 // getCreateRequest creates the Get request.
-func (client *IntClient) getCreateRequest(ctx context.Context, options *IntClientGetOptions) (*policy.Request, error) {
+func (client *IntClient) getCreateRequest(ctx context.Context, _ *IntClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/get"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,7 +95,7 @@ func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntCli
 }
 
 // putCreateRequest creates the Put request.
-func (client *IntClient) putCreateRequest(ctx context.Context, input IntEnum, options *IntClientPutOptions) (*policy.Request, error) {
+func (client *IntClient) putCreateRequest(ctx context.Context, input IntEnum, _ *IntClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

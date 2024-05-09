@@ -43,7 +43,7 @@ func (client *AccessPublicOperationClient) NoDecoratorInPublic(ctx context.Conte
 }
 
 // noDecoratorInPublicCreateRequest creates the NoDecoratorInPublic request.
-func (client *AccessPublicOperationClient) noDecoratorInPublicCreateRequest(ctx context.Context, name string, options *AccessPublicOperationClientNoDecoratorInPublicOptions) (*policy.Request, error) {
+func (client *AccessPublicOperationClient) noDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientNoDecoratorInPublicOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/publicOperation/noDecoratorInPublic"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,7 +90,7 @@ func (client *AccessPublicOperationClient) PublicDecoratorInPublic(ctx context.C
 }
 
 // publicDecoratorInPublicCreateRequest creates the PublicDecoratorInPublic request.
-func (client *AccessPublicOperationClient) publicDecoratorInPublicCreateRequest(ctx context.Context, name string, options *AccessPublicOperationClientPublicDecoratorInPublicOptions) (*policy.Request, error) {
+func (client *AccessPublicOperationClient) publicDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientPublicDecoratorInPublicOptions) (*policy.Request, error) {
 	urlPath := "/azure/client-generator-core/access/publicOperation/publicDecoratorInPublic"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

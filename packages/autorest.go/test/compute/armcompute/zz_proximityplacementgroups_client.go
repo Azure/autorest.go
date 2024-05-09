@@ -73,7 +73,7 @@ func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ProximityPlacementGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ProximityPlacementGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, _ *ProximityPlacementGroupsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -140,7 +140,7 @@ func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resour
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsClientDeleteOptions) (*policy.Request, error) {
+func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, _ *ProximityPlacementGroupsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -263,7 +263,7 @@ func (client *ProximityPlacementGroupsClient) NewListByResourceGroupPager(resour
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ProximityPlacementGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ProximityPlacementGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *ProximityPlacementGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *ProximityPlacementGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -322,7 +322,7 @@ func (client *ProximityPlacementGroupsClient) NewListBySubscriptionPager(options
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *ProximityPlacementGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, options *ProximityPlacementGroupsClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *ProximityPlacementGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, _ *ProximityPlacementGroupsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -380,7 +380,7 @@ func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resour
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsClientUpdateOptions) (*policy.Request, error) {
+func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, _ *ProximityPlacementGroupsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

@@ -54,7 +54,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 }
 
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
-func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, _ *ImplicitClientGetOptionalGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,7 +97,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 }
 
 // getRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
-func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, _ *ImplicitClientGetRequiredGlobalPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	if client.requiredGlobalPath == "" {
 		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
@@ -139,7 +139,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 }
 
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
-func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, _ *ImplicitClientGetRequiredGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/query"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -180,7 +180,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 }
 
 // getRequiredPathCreateRequest creates the GetRequiredPath request.
-func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, _ *ImplicitClientGetRequiredPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	if pathParameter == "" {
 		return nil, errors.New("parameter pathParameter cannot be empty")

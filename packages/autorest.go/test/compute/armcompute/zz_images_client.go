@@ -93,7 +93,7 @@ func (client *ImagesClient) createOrUpdate(ctx context.Context, resourceGroupNam
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters Image, _ *ImagesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -171,7 +171,7 @@ func (client *ImagesClient) deleteOperation(ctx context.Context, resourceGroupNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ImagesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *ImagesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, imageName string, _ *ImagesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -292,7 +292,7 @@ func (client *ImagesClient) NewListPager(options *ImagesClientListOptions) *runt
 }
 
 // listCreateRequest creates the List request.
-func (client *ImagesClient) listCreateRequest(ctx context.Context, options *ImagesClientListOptions) (*policy.Request, error) {
+func (client *ImagesClient) listCreateRequest(ctx context.Context, _ *ImagesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/images"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -348,7 +348,7 @@ func (client *ImagesClient) NewListByResourceGroupPager(resourceGroupName string
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ImagesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *ImagesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -429,7 +429,7 @@ func (client *ImagesClient) update(ctx context.Context, resourceGroupName string
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ImagesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *ImagesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, _ *ImagesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

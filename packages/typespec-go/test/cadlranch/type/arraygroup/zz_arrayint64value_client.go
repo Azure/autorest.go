@@ -42,7 +42,7 @@ func (client *ArrayInt64ValueClient) Get(ctx context.Context, options *ArrayInt6
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayInt64ValueClient) getCreateRequest(ctx context.Context, options *ArrayInt64ValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayInt64ValueClient) getCreateRequest(ctx context.Context, _ *ArrayInt64ValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int64"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayInt64ValueClient) Put(ctx context.Context, body []int64, opti
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayInt64ValueClient) putCreateRequest(ctx context.Context, body []int64, options *ArrayInt64ValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayInt64ValueClient) putCreateRequest(ctx context.Context, body []int64, _ *ArrayInt64ValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/int64"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

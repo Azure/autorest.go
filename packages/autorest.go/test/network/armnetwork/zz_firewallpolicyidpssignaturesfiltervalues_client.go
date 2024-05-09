@@ -72,7 +72,7 @@ func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) List(ctx context.C
 }
 
 // listCreateRequest creates the List request.
-func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) listCreateRequest(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignatureOverridesFilterValuesQuery, options *FirewallPolicyIdpsSignaturesFilterValuesClientListOptions) (*policy.Request, error) {
+func (client *FirewallPolicyIdpsSignaturesFilterValuesClient) listCreateRequest(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters SignatureOverridesFilterValuesQuery, _ *FirewallPolicyIdpsSignaturesFilterValuesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/listIdpsFilterOptions"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

@@ -72,7 +72,7 @@ func (client *InterfaceLoadBalancersClient) NewListPager(resourceGroupName strin
 }
 
 // listCreateRequest creates the List request.
-func (client *InterfaceLoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfaceLoadBalancersClientListOptions) (*policy.Request, error) {
+func (client *InterfaceLoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, _ *InterfaceLoadBalancersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

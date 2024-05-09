@@ -71,7 +71,7 @@ func (client *UsageClient) NewListPager(location string, options *UsageClientLis
 }
 
 // listCreateRequest creates the List request.
-func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageClientListOptions) (*policy.Request, error) {
+func (client *UsageClient) listCreateRequest(ctx context.Context, location string, _ *UsageClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

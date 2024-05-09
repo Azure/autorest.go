@@ -94,7 +94,7 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, 
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, _ *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *VirtualNetworkGatewaysClient) deleteOperation(ctx context.Context,
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -254,7 +254,7 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 }
 
 // disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest creates the DisconnectVirtualNetworkGatewayVPNConnections request.
-func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, _ *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -337,7 +337,7 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Conte
 }
 
 // generateVPNProfileCreateRequest creates the GenerateVPNProfile request.
-func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, _ *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -420,7 +420,7 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context
 }
 
 // generatevpnclientpackageCreateRequest creates the Generatevpnclientpackage request.
-func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, _ *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -479,7 +479,7 @@ func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGro
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientGetOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -568,7 +568,7 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Cont
 }
 
 // getAdvertisedRoutesCreateRequest creates the GetAdvertisedRoutes request.
-func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, _ *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -728,7 +728,7 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context
 }
 
 // getLearnedRoutesCreateRequest creates the GetLearnedRoutes request.
-func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -807,7 +807,7 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.
 }
 
 // getVPNProfilePackageURLCreateRequest creates the GetVPNProfilePackageURL request.
-func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -886,7 +886,7 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx con
 }
 
 // getVpnclientConnectionHealthCreateRequest creates the GetVpnclientConnectionHealth request.
-func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -967,7 +967,7 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx cont
 }
 
 // getVpnclientIPSecParametersCreateRequest creates the GetVpnclientIPSecParameters request.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1022,7 +1022,7 @@ func (client *VirtualNetworkGatewaysClient) NewListPager(resourceGroupName strin
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualNetworkGatewaysClientListOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *VirtualNetworkGatewaysClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1083,7 +1083,7 @@ func (client *VirtualNetworkGatewaysClient) NewListConnectionsPager(resourceGrou
 }
 
 // listConnectionsCreateRequest creates the ListConnections request.
-func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientListConnectionsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientListConnectionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1250,7 +1250,7 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.
 }
 
 // resetVPNClientSharedKeyCreateRequest creates the ResetVPNClientSharedKey request.
-func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1331,7 +1331,7 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx cont
 }
 
 // setVpnclientIPSecParametersCreateRequest creates the SetVpnclientIPSecParameters request.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, _ *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1495,7 +1495,7 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Contex
 }
 
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.
-func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, _ *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1554,7 +1554,7 @@ func (client *VirtualNetworkGatewaysClient) SupportedVPNDevices(ctx context.Cont
 }
 
 // supportedVPNDevicesCreateRequest creates the SupportedVPNDevices request.
-func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientSupportedVPNDevicesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, _ *VirtualNetworkGatewaysClientSupportedVPNDevicesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1641,7 +1641,7 @@ func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, reso
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, _ *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1702,7 +1702,7 @@ func (client *VirtualNetworkGatewaysClient) VPNDeviceConfigurationScript(ctx con
 }
 
 // vpnDeviceConfigurationScriptCreateRequest creates the VPNDeviceConfigurationScript request.
-func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, _ *VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

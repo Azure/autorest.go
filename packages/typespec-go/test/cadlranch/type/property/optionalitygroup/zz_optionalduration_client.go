@@ -43,7 +43,7 @@ func (client *OptionalDurationClient) GetAll(ctx context.Context, options *Optio
 }
 
 // getAllCreateRequest creates the GetAll request.
-func (client *OptionalDurationClient) getAllCreateRequest(ctx context.Context, options *OptionalDurationClientGetAllOptions) (*policy.Request, error) {
+func (client *OptionalDurationClient) getAllCreateRequest(ctx context.Context, _ *OptionalDurationClientGetAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/duration/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *OptionalDurationClient) GetDefault(ctx context.Context, options *O
 }
 
 // getDefaultCreateRequest creates the GetDefault request.
-func (client *OptionalDurationClient) getDefaultCreateRequest(ctx context.Context, options *OptionalDurationClientGetDefaultOptions) (*policy.Request, error) {
+func (client *OptionalDurationClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalDurationClientGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/duration/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *OptionalDurationClient) PutAll(ctx context.Context, body DurationP
 }
 
 // putAllCreateRequest creates the PutAll request.
-func (client *OptionalDurationClient) putAllCreateRequest(ctx context.Context, body DurationProperty, options *OptionalDurationClientPutAllOptions) (*policy.Request, error) {
+func (client *OptionalDurationClient) putAllCreateRequest(ctx context.Context, body DurationProperty, _ *OptionalDurationClientPutAllOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/duration/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -169,7 +169,7 @@ func (client *OptionalDurationClient) PutDefault(ctx context.Context, body Durat
 }
 
 // putDefaultCreateRequest creates the PutDefault request.
-func (client *OptionalDurationClient) putDefaultCreateRequest(ctx context.Context, body DurationProperty, options *OptionalDurationClientPutDefaultOptions) (*policy.Request, error) {
+func (client *OptionalDurationClient) putDefaultCreateRequest(ctx context.Context, body DurationProperty, _ *OptionalDurationClientPutDefaultOptions) (*policy.Request, error) {
 	urlPath := "/type/property/optional/duration/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -94,7 +94,7 @@ func (client *VirtualMachinesClient) assessPatches(ctx context.Context, resource
 }
 
 // assessPatchesCreateRequest creates the AssessPatches request.
-func (client *VirtualMachinesClient) assessPatchesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginAssessPatchesOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) assessPatchesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginAssessPatchesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/assessPatches"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupN
 }
 
 // captureCreateRequest creates the Capture request.
-func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, _ *VirtualMachinesClientBeginCaptureOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -255,7 +255,7 @@ func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, 
 }
 
 // convertToManagedDisksCreateRequest creates the ConvertToManagedDisks request.
-func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -334,7 +334,7 @@ func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, _ *VirtualMachinesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -556,7 +556,7 @@ func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGro
 }
 
 // generalizeCreateRequest creates the Generalize request.
-func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGeneralizeOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientGeneralizeOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -701,7 +701,7 @@ func (client *VirtualMachinesClient) installPatches(ctx context.Context, resourc
 }
 
 // installPatchesCreateRequest creates the InstallPatches request.
-func (client *VirtualMachinesClient) installPatchesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput VirtualMachineInstallPatchesParameters, options *VirtualMachinesClientBeginInstallPatchesOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) installPatchesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, installPatchesInput VirtualMachineInstallPatchesParameters, _ *VirtualMachinesClientBeginInstallPatchesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/installPatches"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -760,7 +760,7 @@ func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceG
 }
 
 // instanceViewCreateRequest creates the InstanceView request.
-func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientInstanceViewOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientInstanceViewOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -952,7 +952,7 @@ func (client *VirtualMachinesClient) NewListAvailableSizesPager(resourceGroupNam
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
-func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientListAvailableSizesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1016,7 +1016,7 @@ func (client *VirtualMachinesClient) NewListByLocationPager(location string, opt
 }
 
 // listByLocationCreateRequest creates the ListByLocation request.
-func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Context, location string, options *VirtualMachinesClientListByLocationOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Context, location string, _ *VirtualMachinesClientListByLocationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -1097,7 +1097,7 @@ func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, res
 }
 
 // performMaintenanceCreateRequest creates the PerformMaintenance request.
-func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginPerformMaintenanceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1254,7 +1254,7 @@ func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupN
 }
 
 // reapplyCreateRequest creates the Reapply request.
-func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginReapplyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1330,7 +1330,7 @@ func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroup
 }
 
 // redeployCreateRequest creates the Redeploy request.
-func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginRedeployOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1488,7 +1488,7 @@ func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupN
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1634,7 +1634,7 @@ func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGro
 }
 
 // runCommandCreateRequest creates the RunCommand request.
-func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, _ *VirtualMachinesClientBeginRunCommandOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1692,7 +1692,7 @@ func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resou
 }
 
 // simulateEvictionCreateRequest creates the SimulateEviction request.
-func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientSimulateEvictionOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientSimulateEvictionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1768,7 +1768,7 @@ func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupNam
 }
 
 // startCreateRequest creates the Start request.
-func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmName string, _ *VirtualMachinesClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1845,7 +1845,7 @@ func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupNa
 }
 
 // updateCreateRequest creates the Update request.
-func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, _ *VirtualMachinesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

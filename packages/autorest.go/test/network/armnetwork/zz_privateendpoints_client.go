@@ -94,7 +94,7 @@ func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, _ *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -174,7 +174,7 @@ func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, _ *PrivateEndpointsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -296,7 +296,7 @@ func (client *PrivateEndpointsClient) NewListPager(resourceGroupName string, opt
 }
 
 // listCreateRequest creates the List request.
-func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateEndpointsClientListOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, resourceGroupName string, _ *PrivateEndpointsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -355,7 +355,7 @@ func (client *PrivateEndpointsClient) NewListBySubscriptionPager(options *Privat
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx context.Context, options *PrivateEndpointsClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx context.Context, _ *PrivateEndpointsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

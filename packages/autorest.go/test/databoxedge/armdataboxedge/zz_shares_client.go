@@ -86,7 +86,7 @@ func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName strin
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, _ *SharesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -159,7 +159,7 @@ func (client *SharesClient) deleteOperation(ctx context.Context, deviceName stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*policy.Request, error) {
+func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *SharesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -213,7 +213,7 @@ func (client *SharesClient) Get(ctx context.Context, deviceName string, name str
 }
 
 // getCreateRequest creates the Get request.
-func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (*policy.Request, error) {
+func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *SharesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
@@ -278,7 +278,7 @@ func (client *SharesClient) NewListByDataBoxEdgeDevicePager(deviceName string, r
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *SharesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, _ *SharesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
@@ -353,7 +353,7 @@ func (client *SharesClient) refresh(ctx context.Context, deviceName string, name
 }
 
 // refreshCreateRequest creates the Refresh request.
-func (client *SharesClient) refreshCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*policy.Request, error) {
+func (client *SharesClient) refreshCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, _ *SharesClientBeginRefreshOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}/refresh"
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {

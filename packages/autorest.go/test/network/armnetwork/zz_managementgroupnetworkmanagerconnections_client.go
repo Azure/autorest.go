@@ -70,7 +70,7 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) CreateOrUpdate(ctx
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ManagementGroupNetworkManagerConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, parameters ManagerConnection, options *ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) createOrUpdateCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, parameters ManagerConnection, _ *ManagementGroupNetworkManagerConnectionsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if managementGroupID == "" {
 		return nil, errors.New("parameter managementGroupID cannot be empty")
@@ -133,7 +133,7 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) Delete(ctx context
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ManagementGroupNetworkManagerConnectionsClient) deleteCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientDeleteOptions) (*policy.Request, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) deleteCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, _ *ManagementGroupNetworkManagerConnectionsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if managementGroupID == "" {
 		return nil, errors.New("parameter managementGroupID cannot be empty")
@@ -185,7 +185,7 @@ func (client *ManagementGroupNetworkManagerConnectionsClient) Get(ctx context.Co
 }
 
 // getCreateRequest creates the Get request.
-func (client *ManagementGroupNetworkManagerConnectionsClient) getCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, options *ManagementGroupNetworkManagerConnectionsClientGetOptions) (*policy.Request, error) {
+func (client *ManagementGroupNetworkManagerConnectionsClient) getCreateRequest(ctx context.Context, managementGroupID string, networkManagerConnectionName string, _ *ManagementGroupNetworkManagerConnectionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}"
 	if managementGroupID == "" {
 		return nil, errors.New("parameter managementGroupID cannot be empty")

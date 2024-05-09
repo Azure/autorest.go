@@ -42,7 +42,7 @@ func (client *ArrayUnknownValueClient) Get(ctx context.Context, options *ArrayUn
 }
 
 // getCreateRequest creates the Get request.
-func (client *ArrayUnknownValueClient) getCreateRequest(ctx context.Context, options *ArrayUnknownValueClientGetOptions) (*policy.Request, error) {
+func (client *ArrayUnknownValueClient) getCreateRequest(ctx context.Context, _ *ArrayUnknownValueClientGetOptions) (*policy.Request, error) {
 	urlPath := "/type/array/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,7 +84,7 @@ func (client *ArrayUnknownValueClient) Put(ctx context.Context, body []any, opti
 }
 
 // putCreateRequest creates the Put request.
-func (client *ArrayUnknownValueClient) putCreateRequest(ctx context.Context, body []any, options *ArrayUnknownValueClientPutOptions) (*policy.Request, error) {
+func (client *ArrayUnknownValueClient) putCreateRequest(ctx context.Context, body []any, _ *ArrayUnknownValueClientPutOptions) (*policy.Request, error) {
 	urlPath := "/type/array/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -69,7 +69,7 @@ func (client *CodeContainersClient) CreateOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *CodeContainersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, body CodeContainerData, options *CodeContainersClientCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *CodeContainersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, body CodeContainerData, _ *CodeContainersClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -136,7 +136,7 @@ func (client *CodeContainersClient) Delete(ctx context.Context, resourceGroupNam
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *CodeContainersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *CodeContainersClientDeleteOptions) (*policy.Request, error) {
+func (client *CodeContainersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, _ *CodeContainersClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -192,7 +192,7 @@ func (client *CodeContainersClient) Get(ctx context.Context, resourceGroupName s
 }
 
 // getCreateRequest creates the Get request.
-func (client *CodeContainersClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, options *CodeContainersClientGetOptions) (*policy.Request, error) {
+func (client *CodeContainersClient) getCreateRequest(ctx context.Context, resourceGroupName string, workspaceName string, name string, _ *CodeContainersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
