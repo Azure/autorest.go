@@ -4,11 +4,6 @@
 
 package recursivegroup
 
-// Element - element
-type Element struct {
-	Extension []Extension
-}
-
 // Extension - extension
 type Extension struct {
 	// REQUIRED

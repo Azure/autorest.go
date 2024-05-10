@@ -40,12 +40,6 @@ type abstractModel struct {
 // GetabstractModel implements the abstractModelClassification interface for type abstractModel.
 func (a *abstractModel) GetabstractModel() *abstractModel { return a }
 
-// baseModel - Used in internal operations, should be generated but not exported.
-type baseModel struct {
-	// REQUIRED
-	Name *string
-}
-
 // innerModel - Used in internal operations, should be generated but not exported.
 type innerModel struct {
 	// REQUIRED

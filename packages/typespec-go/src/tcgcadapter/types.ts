@@ -797,6 +797,7 @@ export class typeAdapter {
   private flagUnreferencedBaseModels(sdkContext: tcgc.SdkContext): void {
     const baseModels = new Set<string>();
     const referencedBaseModels = new Set<string>();
+    const visitedModels = new Set<string>(); // avoids infinite recursion
 
     const recursiveAddReferencedBaseModel = function(type: tcgc.SdkType): void {
       switch (type.kind) {
@@ -809,7 +810,8 @@ export class typeAdapter {
             if (!referencedBaseModels.has(type.name)) {
               referencedBaseModels.add(type.name);
             }
-          } else {
+          } else if (!visitedModels.has(type.name)) {
+            visitedModels.add(type.name);
             const aggregateProps = aggregateProperties(type);
             for (const prop of aggregateProps.props) {
               recursiveAddReferencedBaseModel(prop.type);
