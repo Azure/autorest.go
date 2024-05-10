@@ -126,7 +126,7 @@ const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance', 'remove-unreferenced-types=true']);
 
 const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=true']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher');
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
