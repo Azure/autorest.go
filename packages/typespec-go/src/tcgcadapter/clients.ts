@@ -271,7 +271,7 @@ export class clientAdapter {
         switch (contentType) {
           case 'JSON':
           case 'XML': {
-            // find the corresponding field within the model param so we can get the serialized named
+            // find the corresponding field within the model param so we can get the serialized name
             let serializedName: string | undefined;
             for (const property of opParam.type.properties) {
               if (property.name === param.name) {
