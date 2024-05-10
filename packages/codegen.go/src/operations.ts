@@ -752,11 +752,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     // define and instantiate an instance of the wire type, using the values from each param.
     text += '\tbody := struct {\n';
     for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
-      let star = '*';
-      if (go.isRequiredParameter(partialBodyParam)) {
-        star = '';
-      }
-      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${star}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
+      text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
     for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {

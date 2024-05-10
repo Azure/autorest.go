@@ -632,11 +632,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // construct the partial body params type and unmarshal it
     content += '\ttype partialBodyParams struct {\n';
     for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
-      let star = '*';
-      if (go.isRequiredParameter(partialBodyParam)) {
-        star = '';
-      }
-      content += `\t\t${capitalize(partialBodyParam.name)} ${star}${go.getTypeDeclaration(partialBodyParam.type)} \`json:"${partialBodyParam.serializedName}"\`\n`;
+      content += `\t\t${capitalize(partialBodyParam.name)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`json:"${partialBodyParam.serializedName}"\`\n`;
     }
     content += '\t}\n';
     content += `\tbody, err := server.UnmarshalRequestAs${(<Array<go.PartialBodyParameter>>partialBodyParams)[0].format}[partialBodyParams](req)\n`;
@@ -648,11 +644,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
 
   // translate each partial body param to its field within the unmarshalled body
   for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
-    let star = '*';
-    if (go.isRequiredParameter(partialBodyParam)) {
-      star = '';
-    }
-    result.params.set(partialBodyParam.name, `${star}body.${capitalize(partialBodyParam.name)}`);
+    result.params.set(partialBodyParam.name, `${helpers.star(partialBodyParam)}body.${capitalize(partialBodyParam.name)}`);
   }
 
   const apiCall = `:= ${receiverName}.srv.${fixUpMethodName(method)}(${populateApiParams(clientPkg, method, result.params, imports)})`;

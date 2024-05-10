@@ -578,3 +578,8 @@ export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType 
   }
   return item;
 }
+
+// returns a * for optional params
+export function star(param: go.Parameter): string {
+  return go.isRequiredParameter(param) ? '' : '*';
+}
