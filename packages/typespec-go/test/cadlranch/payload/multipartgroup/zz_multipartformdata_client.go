@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"io"
 	"net/http"
 )
 
@@ -21,13 +22,13 @@ type MultiPartFormDataClient struct {
 // AnonymousModel - Test content-type: multipart/form-data
 //   - options - MultiPartFormDataClientAnonymousModelOptions contains the optional parameters for the MultiPartFormDataClient.AnonymousModel
 //     method.
-func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, anonymousModelRequest AnonymousModelRequest, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
+func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, profileImage io.ReadSeekCloser, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
 	var err error
 	const operationName = "MultiPartFormDataClient.AnonymousModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.anonymousModelCreateRequest(ctx, anonymousModelRequest, options)
+	req, err := client.anonymousModelCreateRequest(ctx, profileImage, options)
 	if err != nil {
 		return MultiPartFormDataClientAnonymousModelResponse{}, err
 	}
@@ -43,17 +44,15 @@ func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, anony
 }
 
 // anonymousModelCreateRequest creates the AnonymousModel request.
-func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, anonymousModelRequest AnonymousModelRequest, _ *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
+func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.Context, profileImage io.ReadSeekCloser, _ *MultiPartFormDataClientAnonymousModelOptions) (*policy.Request, error) {
 	urlPath := "/multipart/form-data/anonymous-model"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
-	formData, err := anonymousModelRequest.toMultipartFormData()
-	if err != nil {
-		return nil, err
-	}
+	formData := map[string]any{}
+	formData["profileImage"] = profileImage
 	if err := runtime.SetMultipartFormData(req, formData); err != nil {
 		return nil, err
 	}

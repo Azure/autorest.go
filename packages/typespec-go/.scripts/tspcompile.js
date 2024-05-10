@@ -37,10 +37,10 @@ const cadlRanch = {
   'bytesgroup': ['encode/bytes'],
   'datetimegroup': ['encode/datetime', 'slice-elements-byval=true'],
   'durationgroup': ['encode/duration'],
-  //'basicparamsgroup': ['parameters/basic'], // spread params support
+  'basicparamsgroup': ['parameters/basic'],
   'bodyoptionalgroup': ['parameters/body-optionality'],
   'collectionfmtgroup': ['parameters/collection-format'],
-  //'spreadgroup': ['parameters/spread'], // spread params support
+  'spreadgroup': ['parameters/spread'],
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],

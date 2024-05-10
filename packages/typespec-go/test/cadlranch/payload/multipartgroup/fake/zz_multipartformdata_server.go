@@ -25,7 +25,7 @@ import (
 type MultiPartFormDataServer struct {
 	// AnonymousModel is the fake for method MultiPartFormDataClient.AnonymousModel
 	// HTTP status codes to indicate success: http.StatusNoContent
-	AnonymousModel func(ctx context.Context, anonymousModelRequest multipartgroup.AnonymousModelRequest, options *multipartgroup.MultiPartFormDataClientAnonymousModelOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientAnonymousModelResponse], errResp azfake.ErrorResponder)
+	AnonymousModel func(ctx context.Context, profileImage io.ReadSeekCloser, options *multipartgroup.MultiPartFormDataClientAnonymousModelOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientAnonymousModelResponse], errResp azfake.ErrorResponder)
 
 	// Basic is the fake for method MultiPartFormDataClient.Basic
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -117,7 +117,7 @@ func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Requ
 		return nil, err
 	}
 	reader := multipart.NewReader(req.Body, params["boundary"])
-	var anonymousModelRequest multipartgroup.AnonymousModelRequest
+	var profileImage io.ReadSeekCloser
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
@@ -133,14 +133,12 @@ func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Requ
 			if err != nil {
 				return nil, err
 			}
-			anonymousModelRequest.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
-			anonymousModelRequest.ProfileImage.ContentType = part.Header.Get("Content-Type")
-			anonymousModelRequest.ProfileImage.Filename = part.FileName()
+			profileImage = streaming.NopCloser(bytes.NewReader(content))
 		default:
 			return nil, fmt.Errorf("unexpected part %s", fn)
 		}
 	}
-	respr, errRespr := m.srv.AnonymousModel(req.Context(), anonymousModelRequest, nil)
+	respr, errRespr := m.srv.AnonymousModel(req.Context(), profileImage, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

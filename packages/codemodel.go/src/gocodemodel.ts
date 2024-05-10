@@ -514,6 +514,14 @@ export interface BodyParameter extends Parameter {
   contentType: string;
 }
 
+// PartialBodyParameter is a field within a struct type sent in the body
+export interface PartialBodyParameter extends Parameter {
+  // the name of the field over the wire
+  serializedName: string;
+
+  format: 'JSON' | 'XML';
+}
+
 export interface FormBodyParameter extends Parameter {
   formDataName: string;
 }
@@ -536,6 +544,10 @@ export interface ResumeTokenParameter extends Parameter {
 
 export function isBodyParameter(param: Parameter): param is BodyParameter {
   return (<BodyParameter>param).bodyFormat !== undefined;
+}
+
+export function isPartialBodyParameter(param: Parameter): param is PartialBodyParameter {
+  return (<PartialBodyParameter>param).serializedName !== undefined;
 }
 
 export function isFormBodyParameter(param: Parameter): param is FormBodyParameter {
@@ -1337,6 +1349,18 @@ export class BodyParameter implements BodyParameter {
     this.paramType = paramType;
     this.byValue = byValue;
     this.location = 'method';
+  }
+}
+
+export class PartialBodyParameter implements PartialBodyParameter{
+  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: PossibleType, paramType: ParameterType, byValue: boolean) {
+    this.byValue = byValue;
+    this.format = format;
+    this.location = 'method';
+    this.name = name;
+    this.paramType = paramType;
+    this.serializedName = serializedName;
+    this.type = type;
   }
 }
 
