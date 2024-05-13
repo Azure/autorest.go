@@ -39,11 +39,11 @@ type AzureLargeInstancesServer struct {
 
 	// BeginShutdown is the fake for method AzureLargeInstancesClient.BeginShutdown
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginShutdown func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
+	BeginShutdown func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, body any, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method AzureLargeInstancesClient.BeginStart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginStart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
+	BeginStart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, body any, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
 
 	// Update is the fake for method AzureLargeInstancesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
@@ -281,6 +281,10 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Req
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
+		body, err := server.UnmarshalRequestAsJSON[any](req)
+		if err != nil {
+			return nil, err
+		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -289,7 +293,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Req
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginShutdown(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+		respr, errRespr := a.srv.BeginShutdown(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}
@@ -325,6 +329,10 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
+		body, err := server.UnmarshalRequestAsJSON[any](req)
+		if err != nil {
+			return nil, err
+		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -333,7 +341,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Reques
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginStart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+		respr, errRespr := a.srv.BeginStart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

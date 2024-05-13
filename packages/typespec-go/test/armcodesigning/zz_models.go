@@ -8,14 +8,8 @@ import "time"
 
 // Account - Trusted signing account resource.
 type Account struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
 
 	// The resource-specific properties for this resource.
 	Properties *AccountProperties
@@ -23,11 +17,17 @@ type Account struct {
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
-	// Resource tags.
-	Tags map[string]*string
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 
 	// READ-ONLY; Trusted Signing account name.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// Resource tags.
+	Tags map[string]*string
 }
 
 // AccountListResult - The response of a CodeSigningAccount list operation.
@@ -98,20 +98,20 @@ type Certificate struct {
 
 // CertificateProfile - Certificate profile resource.
 type CertificateProfile struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// The resource-specific properties for this resource.
 	Properties *CertificateProfileProperties
 
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+
 	// READ-ONLY; Certificate profile name.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
 }
 
 // CertificateProfileListResult - The response of a CertificateProfile list operation.
@@ -205,7 +205,7 @@ type CheckNameAvailabilityResult struct {
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
-	// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+	// Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
 
 	// Localized display information for this particular operation.
