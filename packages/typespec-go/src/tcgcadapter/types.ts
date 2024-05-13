@@ -34,7 +34,10 @@ export class typeAdapter {
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext, removeUnreferencedTypes: boolean) {
     if (removeUnreferencedTypes) {
+      // this is a superset of flagUnreferencedBaseModels
       this.flagUnreferencedTypes(sdkContext);
+    } else {
+      this.flagUnreferencedBaseModels(sdkContext);
     }
 
     for (const enumType of sdkContext.experimental_sdkPackage.enums) {
@@ -786,6 +789,78 @@ export class typeAdapter {
     for (const model of sdkContext.experimental_sdkPackage.models) {
       if (!referencedModels.has(model.name)) {
         this.unreferencedModels.add(model.name);
+      }
+    }
+  }
+
+  // updates this.unreferencedModels
+  private flagUnreferencedBaseModels(sdkContext: tcgc.SdkContext): void {
+    const baseModels = new Set<string>();
+    const referencedBaseModels = new Set<string>();
+    const visitedModels = new Set<string>(); // avoids infinite recursion
+
+    const recursiveAddReferencedBaseModel = function(type: tcgc.SdkType): void {
+      switch (type.kind) {
+        case 'array':
+        case 'dict':
+          recursiveAddReferencedBaseModel(type.valueType);
+          break;
+        case 'model':
+          if (baseModels.has(type.name)) {
+            if (!referencedBaseModels.has(type.name)) {
+              referencedBaseModels.add(type.name);
+            }
+          } else if (!visitedModels.has(type.name)) {
+            visitedModels.add(type.name);
+            const aggregateProps = aggregateProperties(type);
+            for (const prop of aggregateProps.props) {
+              recursiveAddReferencedBaseModel(prop.type);
+            }
+            if (type.discriminatedSubtypes) {
+              for (const subType of values(type.discriminatedSubtypes)) {
+                recursiveAddReferencedBaseModel(subType);
+              }
+            }
+          }
+          break;
+      }
+    };
+
+    // collect all the base model types
+    for (const model of sdkContext.experimental_sdkPackage.models) {
+      let parent = model.baseModel;
+      while (parent) {
+        if (!baseModels.has(parent.name)) {
+          baseModels.add(parent.name);
+        }
+        parent = parent.baseModel;
+      }
+    }
+
+    // traverse all methods to find any references to a base model type.
+    // NOTE: it's possible for there to be no base types.
+    if (baseModels.size > 0) {
+      for (const client of sdkContext.experimental_sdkPackage.clients) {
+        for (const method of client.methods) {
+          if (method.kind === 'clientaccessor') {
+            continue;
+          }
+  
+          for (const param of method.parameters) {
+            recursiveAddReferencedBaseModel(param.type);
+          }
+  
+          if (method.response.type) {
+            recursiveAddReferencedBaseModel(method.response.type);
+          }
+        }
+      }
+    }
+
+    // now that we have the referenced set, update the unreferenced set
+    for (const baseModel of baseModels) {
+      if (!referencedBaseModels.has(baseModel)) {
+        this.unreferencedModels.add(baseModel);
       }
     }
   }
