@@ -11,8 +11,8 @@ import (
 	"reflect"
 )
 
-// MarshalJSON implements the json.Marshaller interface for type ArmOperationStatusResourceProvisioningState.
-func (a ArmOperationStatusResourceProvisioningState) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ArmOperationStatus.
+func (a ArmOperationStatus) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populateDateTimeRFC3339(objectMap, "endTime", a.EndTime)
 	populate(objectMap, "error", a.Error)
@@ -24,8 +24,8 @@ func (a ArmOperationStatusResourceProvisioningState) MarshalJSON() ([]byte, erro
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ArmOperationStatusResourceProvisioningState.
-func (a *ArmOperationStatusResourceProvisioningState) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ArmOperationStatus.
+func (a *ArmOperationStatus) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", a, err)
@@ -113,8 +113,8 @@ func (d *Datastore) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ManagedIdentityProperties.
-func (m ManagedIdentityProperties) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ManagedServiceIdentity.
+func (m ManagedServiceIdentity) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
 	populate(objectMap, "principalId", m.PrincipalID)
 	populate(objectMap, "tenantId", m.TenantID)
@@ -123,8 +123,8 @@ func (m ManagedIdentityProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ManagedIdentityProperties.
-func (m *ManagedIdentityProperties) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ManagedServiceIdentity.
+func (m *ManagedServiceIdentity) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return fmt.Errorf("unmarshalling type %T: %v", m, err)
@@ -761,6 +761,44 @@ func (t *TargetProperties) UnmarshalJSON(data []byte) error {
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", t, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type UserAssignedIdentities.
+func (u UserAssignedIdentities) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	if u.AdditionalProperties != nil {
+		for key, val := range u.AdditionalProperties {
+			objectMap[key] = val
+		}
+	}
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type UserAssignedIdentities.
+func (u *UserAssignedIdentities) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", u, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		default:
+			if u.AdditionalProperties == nil {
+				u.AdditionalProperties = map[string]*UserAssignedIdentity{}
+			}
+			if val != nil {
+				var aux UserAssignedIdentity
+				err = json.Unmarshal(val, &aux)
+				u.AdditionalProperties[key] = &aux
+			}
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", u, err)
 		}
 	}
 	return nil

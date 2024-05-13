@@ -30,12 +30,14 @@ type AzureLargeInstancesClientRestartResponse struct {
 
 // AzureLargeInstancesClientShutdownResponse contains the response from method AzureLargeInstancesClient.BeginShutdown.
 type AzureLargeInstancesClientShutdownResponse struct {
-	// placeholder for future response values
+	// The current status of an async operation.
+	OperationStatusResult
 }
 
 // AzureLargeInstancesClientStartResponse contains the response from method AzureLargeInstancesClient.BeginStart.
 type AzureLargeInstancesClientStartResponse struct {
-	// placeholder for future response values
+	// The current status of an async operation.
+	OperationStatusResult
 }
 
 // AzureLargeInstancesClientUpdateResponse contains the response from method AzureLargeInstancesClient.Update.

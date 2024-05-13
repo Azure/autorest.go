@@ -6,7 +6,7 @@ package customgroup
 
 // CustomClientInvalidResponse contains the response from method CustomClient.Invalid.
 type CustomClientInvalidResponse struct {
-	// placeholder for future response values
+	InvalidAuth
 }
 
 // CustomClientValidResponse contains the response from method CustomClient.Valid.

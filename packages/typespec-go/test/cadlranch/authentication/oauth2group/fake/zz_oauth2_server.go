@@ -18,7 +18,7 @@ import (
 // OAuth2Server is a fake server for instances of the oauth2group.OAuth2Client type.
 type OAuth2Server struct {
 	// Invalid is the fake for method OAuth2Client.Invalid
-	// HTTP status codes to indicate success: http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusNoContent, http.StatusForbidden
 	Invalid func(ctx context.Context, options *oauth2group.OAuth2ClientInvalidOptions) (resp azfake.Responder[oauth2group.OAuth2ClientInvalidResponse], errResp azfake.ErrorResponder)
 
 	// Valid is the fake for method OAuth2Client.Valid
@@ -75,10 +75,10 @@ func (o *OAuth2ServerTransport) dispatchInvalid(req *http.Request) (*http.Respon
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	if !contains([]int{http.StatusNoContent, http.StatusForbidden}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent, http.StatusForbidden", respContent.HTTPStatus)}
 	}
-	resp, err := server.NewResponse(respContent, req, nil)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).InvalidAuth, req)
 	if err != nil {
 		return nil, err
 	}

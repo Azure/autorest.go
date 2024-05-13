@@ -11,7 +11,7 @@ const (
 	moduleVersion = "v0.1.0"
 )
 
-// ActionType - Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+// ActionType - Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 type ActionType string
 
 const (
@@ -71,27 +71,27 @@ func PossibleKustoOfferingTypeValues() []KustoOfferingType {
 	}
 }
 
-// ManagedIdentityType - The kind of managed identity assigned to this resource.
-type ManagedIdentityType string
+// ManagedServiceIdentityType - The kind of managed identity assigned to this resource.
+type ManagedServiceIdentityType string
 
 const (
-	// ManagedIdentityTypeNone - No managed identity.
-	ManagedIdentityTypeNone ManagedIdentityType = "None"
-	// ManagedIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
-	ManagedIdentityTypeSystemAndUserAssigned ManagedIdentityType = "SystemAssigned, UserAssigned"
-	// ManagedIdentityTypeSystemAssigned - System assigned managed identity.
-	ManagedIdentityTypeSystemAssigned ManagedIdentityType = "SystemAssigned"
-	// ManagedIdentityTypeUserAssigned - User assigned managed identity.
-	ManagedIdentityTypeUserAssigned ManagedIdentityType = "UserAssigned"
+	// ManagedServiceIdentityTypeNone - No managed identity.
+	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
+	// ManagedServiceIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
+	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned, UserAssigned"
+	// ManagedServiceIdentityTypeSystemAssigned - System assigned managed identity.
+	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
+	// ManagedServiceIdentityTypeUserAssigned - User assigned managed identity.
+	ManagedServiceIdentityTypeUserAssigned ManagedServiceIdentityType = "UserAssigned"
 )
 
-// PossibleManagedIdentityTypeValues returns the possible values for the ManagedIdentityType const type.
-func PossibleManagedIdentityTypeValues() []ManagedIdentityType {
-	return []ManagedIdentityType{
-		ManagedIdentityTypeNone,
-		ManagedIdentityTypeSystemAndUserAssigned,
-		ManagedIdentityTypeSystemAssigned,
-		ManagedIdentityTypeUserAssigned,
+// PossibleManagedServiceIdentityTypeValues returns the possible values for the ManagedServiceIdentityType const type.
+func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
+	return []ManagedServiceIdentityType{
+		ManagedServiceIdentityTypeNone,
+		ManagedServiceIdentityTypeSystemAndUserAssigned,
+		ManagedServiceIdentityTypeSystemAssigned,
+		ManagedServiceIdentityTypeUserAssigned,
 	}
 }
 

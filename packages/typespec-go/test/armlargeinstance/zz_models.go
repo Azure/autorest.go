@@ -4,19 +4,16 @@
 
 package armlargeinstance
 
-import "time"
+import (
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"time"
+)
 
 // AzureLargeInstance - Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 // properties)
 type AzureLargeInstance struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
 
 	// The resource-specific properties for this resource.
 	Properties *Properties
@@ -24,24 +21,24 @@ type AzureLargeInstance struct {
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
-	// Resource tags.
-	Tags map[string]*string
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 
 	// READ-ONLY; Name of the AzureLargeInstance.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// Resource tags.
+	Tags map[string]*string
 }
 
 // AzureLargeStorageInstance info on Azure (ARM properties and
 // AzureLargeStorageInstance properties)
 type AzureLargeStorageInstance struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
 
 	// The resource-specific properties for this resource.
 	Properties *AzureLargeStorageInstanceProperties
@@ -49,11 +46,17 @@ type AzureLargeStorageInstance struct {
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
-	// Resource tags.
-	Tags map[string]*string
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 
 	// READ-ONLY; Name of the AzureLargeStorageInstance.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// Resource tags.
+	Tags map[string]*string
 }
 
 // AzureLargeStorageInstanceListResult - The response of a AzureLargeStorageInstance list operation.
@@ -136,7 +139,7 @@ type NetworkProfile struct {
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
-	// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+	// Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
 
 	// Localized display information for this particular operation.
@@ -169,6 +172,33 @@ type OperationDisplay struct {
 
 	// The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
 	Resource *string
+}
+
+// OperationStatusResult - The current status of an async operation.
+type OperationStatusResult struct {
+	// REQUIRED; The operations list.
+	Operations []*OperationStatusResult
+
+	// REQUIRED; Operation status.
+	Status *string
+
+	// The end time of the operation.
+	EndTime *time.Time
+
+	// If present, details of the operation error.
+	Error *azcore.ResponseError
+
+	// Fully qualified ID for the async operation.
+	ID *string
+
+	// Name of the async operation.
+	Name *string
+
+	// Percent of the operation that is complete.
+	PercentComplete *int32
+
+	// The start time of the operation.
+	StartTime *time.Time
 }
 
 // OsProfile - Specifies the operating system settings for the Azure Large Instance.

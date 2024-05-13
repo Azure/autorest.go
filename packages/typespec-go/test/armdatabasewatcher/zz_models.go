@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-// ArmOperationStatusResourceProvisioningState - Standard Azure Resource Manager operation status response
-type ArmOperationStatusResourceProvisioningState struct {
+// ArmOperationStatus - Standard Azure Resource Manager operation status response
+type ArmOperationStatus struct {
 	// REQUIRED; The operation status
 	Status *ResourceProvisioningState
 
@@ -57,10 +57,10 @@ type Datastore struct {
 	KustoClusterDisplayName *string
 }
 
-// ManagedIdentityProperties - The properties of the managed service identities assigned to this resource.
-type ManagedIdentityProperties struct {
+// ManagedServiceIdentity - The properties of the managed service identities assigned to this resource.
+type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
-	Type *ManagedIdentityType
+	Type *ManagedServiceIdentityType
 
 	// The active directory identifier of this principal.
 	PrincipalID *string
@@ -69,12 +69,12 @@ type ManagedIdentityProperties struct {
 	TenantID *string
 
 	// The identities assigned to this resource by the user.
-	UserAssignedIdentities map[string]*UserAssignedIdentity
+	UserAssignedIdentities *UserAssignedIdentities
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
 type Operation struct {
-	// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+	// Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
 
 	// Localized display information for this particular operation.
@@ -279,20 +279,20 @@ func (s *SQLVMTargetProperties) GetTargetProperties() *TargetProperties {
 // SharedPrivateLinkResource - Concrete proxy resource types can be created by aliasing this type using a specific property
 // type.
 type SharedPrivateLinkResource struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// The resource-specific properties for this resource.
 	Properties *SharedPrivateLinkResourceProperties
 
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+
 	// READ-ONLY; The Shared Private Link resource name.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
 }
 
 // SharedPrivateLinkResourceListResult - The response of a SharedPrivateLinkResource list operation.
@@ -348,20 +348,20 @@ type SystemData struct {
 
 // Target - Concrete proxy resource types can be created by aliasing this type using a specific property type.
 type Target struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// The resource-specific properties for this resource.
 	Properties TargetPropertiesClassification
 
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+
 	// READ-ONLY; The target resource name.
 	Name *string
+
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
 }
 
 // TargetListResult - The response of a Target list operation.
@@ -395,6 +395,13 @@ type TargetProperties struct {
 // GetTargetProperties implements the TargetPropertiesClassification interface for type TargetProperties.
 func (t *TargetProperties) GetTargetProperties() *TargetProperties { return t }
 
+// UserAssignedIdentities - The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary
+// keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
+// The dictionary values can be empty objects ({}) in requests.",
+type UserAssignedIdentities struct {
+	AdditionalProperties map[string]*UserAssignedIdentity
+}
+
 // UserAssignedIdentity - A managed identity assigned by the user.
 type UserAssignedIdentity struct {
 	// The active directory client identifier for this principal.
@@ -418,29 +425,29 @@ type VaultSecret struct {
 
 // Watcher - The DatabaseWatcherProviderHub resource.
 type Watcher struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// The resource-specific properties for this resource.
-	Properties *WatcherProperties
-
-	// Resource tags.
-	Tags map[string]*string
 
 	// READ-ONLY; The database watcher name.
 	Name *string
 
+	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
 	// The managed service identities assigned to this resource.
-	Identity *ManagedIdentityProperties
+	Identity *ManagedServiceIdentity
+
+	// The resource-specific properties for this resource.
+	Properties *WatcherProperties
 
 	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
+
+	// Resource tags.
+	Tags map[string]*string
+
+	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // WatcherListResult - The response of a Watcher list operation.
@@ -467,7 +474,7 @@ type WatcherProperties struct {
 // WatcherUpdate - The type used for update operations of the Watcher.
 type WatcherUpdate struct {
 	// The managed service identities assigned to this resource.
-	Identity   *ManagedIdentityProperties
+	Identity   *ManagedServiceIdentity
 	Properties *WatcherUpdateProperties
 
 	// Resource tags.

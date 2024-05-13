@@ -56,6 +56,14 @@ func (client *Client) NewApisClient() *ApisClient {
 	}
 }
 
+// NewDeletedServicesClient creates a new instance of [DeletedServicesClient].
+func (client *Client) NewDeletedServicesClient() *DeletedServicesClient {
+	return &DeletedServicesClient{
+		internal:       client.internal,
+		subscriptionID: client.subscriptionID,
+	}
+}
+
 // NewDeploymentsClient creates a new instance of [DeploymentsClient].
 func (client *Client) NewDeploymentsClient() *DeploymentsClient {
 	return &DeploymentsClient{

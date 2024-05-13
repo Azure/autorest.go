@@ -18,7 +18,7 @@ import (
 // APIKeyServer is a fake server for instances of the apikeygroup.APIKeyClient type.
 type APIKeyServer struct {
 	// Invalid is the fake for method APIKeyClient.Invalid
-	// HTTP status codes to indicate success: http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusNoContent, http.StatusForbidden
 	Invalid func(ctx context.Context, options *apikeygroup.APIKeyClientInvalidOptions) (resp azfake.Responder[apikeygroup.APIKeyClientInvalidResponse], errResp azfake.ErrorResponder)
 
 	// Valid is the fake for method APIKeyClient.Valid
@@ -75,10 +75,10 @@ func (a *APIKeyServerTransport) dispatchInvalid(req *http.Request) (*http.Respon
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	if !contains([]int{http.StatusNoContent, http.StatusForbidden}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent, http.StatusForbidden", respContent.HTTPStatus)}
 	}
-	resp, err := server.NewResponse(respContent, req, nil)
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).InvalidAuth, req)
 	if err != nil {
 		return nil, err
 	}
