@@ -24,6 +24,9 @@ type Server struct {
 	// ApisServer contains the fakes for client ApisClient
 	ApisServer ApisServer
 
+	// DeletedServicesServer contains the fakes for client DeletedServicesClient
+	DeletedServicesServer DeletedServicesServer
+
 	// DeploymentsServer contains the fakes for client DeploymentsClient
 	DeploymentsServer DeploymentsServer
 
@@ -58,6 +61,7 @@ type ServerTransport struct {
 	trAPIDefinitionsServer  *APIDefinitionsServerTransport
 	trAPIVersionsServer     *APIVersionsServerTransport
 	trApisServer            *ApisServerTransport
+	trDeletedServicesServer *DeletedServicesServerTransport
 	trDeploymentsServer     *DeploymentsServerTransport
 	trEnvironmentsServer    *EnvironmentsServerTransport
 	trMetadataSchemasServer *MetadataSchemasServerTransport
@@ -97,6 +101,11 @@ func (s *ServerTransport) dispatchToClientFake(req *http.Request, client string)
 			return NewApisServerTransport(&s.srv.ApisServer)
 		})
 		resp, err = s.trApisServer.Do(req)
+	case "DeletedServicesClient":
+		initServer(&s.trMu, &s.trDeletedServicesServer, func() *DeletedServicesServerTransport {
+			return NewDeletedServicesServerTransport(&s.srv.DeletedServicesServer)
+		})
+		resp, err = s.trDeletedServicesServer.Do(req)
 	case "DeploymentsClient":
 		initServer(&s.trMu, &s.trDeploymentsServer, func() *DeploymentsServerTransport {
 			return NewDeploymentsServerTransport(&s.srv.DeploymentsServer)

@@ -95,6 +95,28 @@ type ApisClientListOptions struct {
 	Filter *string
 }
 
+// DeletedServicesClientDeleteOptions contains the optional parameters for the DeletedServicesClient.Delete method.
+type DeletedServicesClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DeletedServicesClientGetOptions contains the optional parameters for the DeletedServicesClient.Get method.
+type DeletedServicesClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DeletedServicesClientListBySubscriptionOptions contains the optional parameters for the DeletedServicesClient.NewListBySubscriptionPager
+// method.
+type DeletedServicesClientListBySubscriptionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DeletedServicesClientListOptions contains the optional parameters for the DeletedServicesClient.NewListPager method.
+type DeletedServicesClientListOptions struct {
+	// OData filter parameter.
+	Filter *string
+}
+
 // DeploymentsClientCreateOrUpdateOptions contains the optional parameters for the DeploymentsClient.CreateOrUpdate method.
 type DeploymentsClientCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters

@@ -752,6 +752,9 @@ export class typeAdapter {
             for (const prop of aggregateProps.props) {
               recursiveAddReferencedType(prop.type);
             }
+            if (aggregateProps.addlProps) {
+              recursiveAddReferencedType(aggregateProps.addlProps);
+            }
             if (type.discriminatedSubtypes) {
               for (const subType of values(type.discriminatedSubtypes)) {
                 recursiveAddReferencedType(subType);
@@ -815,6 +818,9 @@ export class typeAdapter {
             const aggregateProps = aggregateProperties(type);
             for (const prop of aggregateProps.props) {
               recursiveAddReferencedBaseModel(prop.type);
+            }
+            if (aggregateProps.addlProps) {
+              recursiveAddReferencedBaseModel(aggregateProps.addlProps);
             }
             if (type.discriminatedSubtypes) {
               for (const subType of values(type.discriminatedSubtypes)) {
