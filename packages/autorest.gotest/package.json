@@ -49,7 +49,7 @@
     "dependencies": {
         "@autorest/codemodel": "~4.19.3",
         "@autorest/extension-base": "~3.5.2",
-        "@autorest/testmodeler": "~2.4.0",
+        "@autorest/testmodeler": "~2.6.1",
         "@azure-tools/codegen": "~2.9.2",
         "@azure-tools/linq": "~3.1.0",
         "autorest": "^3.2.3",
@@ -60,7 +60,7 @@
         "lodash": "^4.17.21",
         "node-yaml": "^3.2.0",
         "nunjucks": "^3.2.3",
-        "oav": "3.0.3",
+        "oav": "3.2.11",
         "reflect-metadata": "~0.1.13"
     },
     "files": [
