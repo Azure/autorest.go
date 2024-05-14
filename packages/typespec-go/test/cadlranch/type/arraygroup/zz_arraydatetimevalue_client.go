@@ -19,7 +19,9 @@ type ArrayDatetimeValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayDatetimeValueClientGetOptions contains the optional parameters for the ArrayDatetimeValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayDatetimeValueClientGetOptions contains the optional parameters for the ArrayDatetimeValueClient.Get method.
 func (client *ArrayDatetimeValueClient) Get(ctx context.Context, options *ArrayDatetimeValueClientGetOptions) (ArrayDatetimeValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayDatetimeValueClient.Get"
@@ -68,7 +70,9 @@ func (client *ArrayDatetimeValueClient) getHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// - options - ArrayDatetimeValueClientPutOptions contains the optional parameters for the ArrayDatetimeValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayDatetimeValueClientPutOptions contains the optional parameters for the ArrayDatetimeValueClient.Put method.
 func (client *ArrayDatetimeValueClient) Put(ctx context.Context, body []time.Time, options *ArrayDatetimeValueClientPutOptions) (ArrayDatetimeValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayDatetimeValueClient.Put"

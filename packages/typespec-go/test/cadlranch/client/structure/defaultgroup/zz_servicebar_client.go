@@ -21,7 +21,9 @@ type ServiceBarClient struct {
 	client   ClientType
 }
 
-// - options - ServiceBarClientFiveOptions contains the optional parameters for the ServiceBarClient.Five method.
+// Five -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceBarClientFiveOptions contains the optional parameters for the ServiceBarClient.Five method.
 func (client *ServiceBarClient) Five(ctx context.Context, options *ServiceBarClientFiveOptions) (ServiceBarClientFiveResponse, error) {
 	var err error
 	const operationName = "ServiceBarClient.Five"
@@ -56,7 +58,9 @@ func (client *ServiceBarClient) fiveCreateRequest(ctx context.Context, _ *Servic
 	return req, nil
 }
 
-// - options - ServiceBarClientSixOptions contains the optional parameters for the ServiceBarClient.Six method.
+// Six -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceBarClientSixOptions contains the optional parameters for the ServiceBarClient.Six method.
 func (client *ServiceBarClient) Six(ctx context.Context, options *ServiceBarClientSixOptions) (ServiceBarClientSixResponse, error) {
 	var err error
 	const operationName = "ServiceBarClient.Six"

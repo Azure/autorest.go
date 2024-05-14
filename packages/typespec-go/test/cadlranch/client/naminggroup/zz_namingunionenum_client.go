@@ -18,6 +18,8 @@ type NamingUnionEnumClient struct {
 	internal *azcore.Client
 }
 
+// UnionEnumMemberName -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NamingUnionEnumClientUnionEnumMemberNameOptions contains the optional parameters for the NamingUnionEnumClient.UnionEnumMemberName
 //     method.
 func (client *NamingUnionEnumClient) UnionEnumMemberName(ctx context.Context, body ExtensibleEnum, options *NamingUnionEnumClientUnionEnumMemberNameOptions) (NamingUnionEnumClientUnionEnumMemberNameResponse, error) {
@@ -55,6 +57,8 @@ func (client *NamingUnionEnumClient) unionEnumMemberNameCreateRequest(ctx contex
 	return req, nil
 }
 
+// UnionEnumName -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NamingUnionEnumClientUnionEnumNameOptions contains the optional parameters for the NamingUnionEnumClient.UnionEnumName
 //     method.
 func (client *NamingUnionEnumClient) UnionEnumName(ctx context.Context, body ClientExtensibleEnum, options *NamingUnionEnumClientUnionEnumNameOptions) (NamingUnionEnumClientUnionEnumNameResponse, error) {

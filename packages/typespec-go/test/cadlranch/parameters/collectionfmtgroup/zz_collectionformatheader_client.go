@@ -19,6 +19,8 @@ type CollectionFormatHeaderClient struct {
 	internal *azcore.Client
 }
 
+// CSV -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatHeaderClientCSVOptions contains the optional parameters for the CollectionFormatHeaderClient.CSV
 //     method.

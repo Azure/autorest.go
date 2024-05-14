@@ -18,6 +18,8 @@ type DatetimePropertyClient struct {
 	internal *azcore.Client
 }
 
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimePropertyClientDefaultOptions contains the optional parameters for the DatetimePropertyClient.Default
 //     method.
 func (client *DatetimePropertyClient) Default(ctx context.Context, body DefaultDatetimeProperty, options *DatetimePropertyClientDefaultOptions) (DatetimePropertyClientDefaultResponse, error) {
@@ -66,6 +68,8 @@ func (client *DatetimePropertyClient) defaultHandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// RFC3339 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimePropertyClientRFC3339Options contains the optional parameters for the DatetimePropertyClient.RFC3339
 //     method.
 func (client *DatetimePropertyClient) RFC3339(ctx context.Context, body RFC3339DatetimeProperty, options *DatetimePropertyClientRFC3339Options) (DatetimePropertyClientRFC3339Response, error) {
@@ -114,6 +118,8 @@ func (client *DatetimePropertyClient) rfc3339HandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// RFC7231 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimePropertyClientRFC7231Options contains the optional parameters for the DatetimePropertyClient.RFC7231
 //     method.
 func (client *DatetimePropertyClient) RFC7231(ctx context.Context, body RFC7231DatetimeProperty, options *DatetimePropertyClientRFC7231Options) (DatetimePropertyClientRFC7231Response, error) {
@@ -162,6 +168,8 @@ func (client *DatetimePropertyClient) rfc7231HandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// UnixTimestamp -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimePropertyClientUnixTimestampOptions contains the optional parameters for the DatetimePropertyClient.UnixTimestamp
 //     method.
 func (client *DatetimePropertyClient) UnixTimestamp(ctx context.Context, body UnixTimestampDatetimeProperty, options *DatetimePropertyClientUnixTimestampOptions) (DatetimePropertyClientUnixTimestampResponse, error) {
@@ -210,6 +218,8 @@ func (client *DatetimePropertyClient) unixTimestampHandleResponse(resp *http.Res
 	return result, nil
 }
 
+// UnixTimestampArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimePropertyClientUnixTimestampArrayOptions contains the optional parameters for the DatetimePropertyClient.UnixTimestampArray
 //     method.
 func (client *DatetimePropertyClient) UnixTimestampArray(ctx context.Context, body UnixTimestampArrayDatetimeProperty, options *DatetimePropertyClientUnixTimestampArrayOptions) (DatetimePropertyClientUnixTimestampArrayResponse, error) {

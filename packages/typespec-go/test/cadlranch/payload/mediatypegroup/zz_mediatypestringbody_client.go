@@ -20,6 +20,8 @@ type MediaTypeStringBodyClient struct {
 	internal *azcore.Client
 }
 
+// GetAsJSON -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MediaTypeStringBodyClientGetAsJSONOptions contains the optional parameters for the MediaTypeStringBodyClient.GetAsJSON
 //     method.
 func (client *MediaTypeStringBodyClient) GetAsJSON(ctx context.Context, options *MediaTypeStringBodyClientGetAsJSONOptions) (MediaTypeStringBodyClientGetAsJSONResponse, error) {
@@ -64,6 +66,8 @@ func (client *MediaTypeStringBodyClient) getAsJSONHandleResponse(resp *http.Resp
 	return result, nil
 }
 
+// GetAsText -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MediaTypeStringBodyClientGetAsTextOptions contains the optional parameters for the MediaTypeStringBodyClient.GetAsText
 //     method.
 func (client *MediaTypeStringBodyClient) GetAsText(ctx context.Context, options *MediaTypeStringBodyClientGetAsTextOptions) (MediaTypeStringBodyClientGetAsTextResponse, error) {
@@ -111,6 +115,8 @@ func (client *MediaTypeStringBodyClient) getAsTextHandleResponse(resp *http.Resp
 	return result, nil
 }
 
+// SendAsJSON -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MediaTypeStringBodyClientSendAsJSONOptions contains the optional parameters for the MediaTypeStringBodyClient.SendAsJSON
 //     method.
 func (client *MediaTypeStringBodyClient) SendAsJSON(ctx context.Context, textParam string, options *MediaTypeStringBodyClientSendAsJSONOptions) (MediaTypeStringBodyClientSendAsJSONResponse, error) {
@@ -148,6 +154,8 @@ func (client *MediaTypeStringBodyClient) sendAsJSONCreateRequest(ctx context.Con
 	return req, nil
 }
 
+// SendAsText -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MediaTypeStringBodyClientSendAsTextOptions contains the optional parameters for the MediaTypeStringBodyClient.SendAsText
 //     method.
 func (client *MediaTypeStringBodyClient) SendAsText(ctx context.Context, textParam string, options *MediaTypeStringBodyClientSendAsTextOptions) (MediaTypeStringBodyClientSendAsTextResponse, error) {

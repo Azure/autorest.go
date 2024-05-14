@@ -64,7 +64,9 @@ func (client *ServiceClient) NewServiceQuxClient() *ServiceQuxClient {
 	}
 }
 
-// - options - ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
+// One -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceClientOneOptions contains the optional parameters for the ServiceClient.One method.
 func (client *ServiceClient) One(ctx context.Context, options *ServiceClientOneOptions) (ServiceClientOneResponse, error) {
 	var err error
 	const operationName = "ServiceClient.One"
@@ -99,7 +101,9 @@ func (client *ServiceClient) oneCreateRequest(ctx context.Context, _ *ServiceCli
 	return req, nil
 }
 
-// - options - ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
+// Two -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceClientTwoOptions contains the optional parameters for the ServiceClient.Two method.
 func (client *ServiceClient) Two(ctx context.Context, options *ServiceClientTwoOptions) (ServiceClientTwoResponse, error) {
 	var err error
 	const operationName = "ServiceClient.Two"

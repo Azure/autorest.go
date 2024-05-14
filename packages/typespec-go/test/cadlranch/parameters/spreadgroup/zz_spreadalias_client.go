@@ -21,6 +21,8 @@ type SpreadAliasClient struct {
 	internal *azcore.Client
 }
 
+// SpreadAsRequestBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadAliasClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadAliasClient.SpreadAsRequestBody
 //     method.
 func (client *SpreadAliasClient) SpreadAsRequestBody(ctx context.Context, name string, options *SpreadAliasClientSpreadAsRequestBodyOptions) (SpreadAliasClientSpreadAsRequestBodyResponse, error) {
@@ -63,6 +65,8 @@ func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Co
 	return req, nil
 }
 
+// SpreadAsRequestParameter -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadAliasClientSpreadAsRequestParameterOptions contains the optional parameters for the SpreadAliasClient.SpreadAsRequestParameter
 //     method.
 func (client *SpreadAliasClient) SpreadAsRequestParameter(ctx context.Context, id string, xMSTestHeader string, name string, options *SpreadAliasClientSpreadAsRequestParameterOptions) (SpreadAliasClientSpreadAsRequestParameterResponse, error) {
@@ -110,6 +114,8 @@ func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx conte
 	return req, nil
 }
 
+// SpreadWithMultipleParameters -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadAliasClientSpreadWithMultipleParametersOptions contains the optional parameters for the SpreadAliasClient.SpreadWithMultipleParameters
 //     method.
 func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Context, id string, xMSTestHeader string, prop1 string, prop2 string, prop3 string, prop4 string, prop5 string, prop6 string, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (SpreadAliasClientSpreadWithMultipleParametersResponse, error) {

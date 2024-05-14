@@ -21,6 +21,8 @@ type RenamedOperationGroupClient struct {
 	client   ClientType
 }
 
+// RenamedFour -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationGroupClientRenamedFourOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedFour
 //     method.
 func (client *RenamedOperationGroupClient) RenamedFour(ctx context.Context, options *RenamedOperationGroupClientRenamedFourOptions) (RenamedOperationGroupClientRenamedFourResponse, error) {
@@ -57,6 +59,8 @@ func (client *RenamedOperationGroupClient) renamedFourCreateRequest(ctx context.
 	return req, nil
 }
 
+// RenamedSix -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationGroupClientRenamedSixOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedSix
 //     method.
 func (client *RenamedOperationGroupClient) RenamedSix(ctx context.Context, options *RenamedOperationGroupClientRenamedSixOptions) (RenamedOperationGroupClientRenamedSixResponse, error) {
@@ -93,6 +97,8 @@ func (client *RenamedOperationGroupClient) renamedSixCreateRequest(ctx context.C
 	return req, nil
 }
 
+// RenamedTwo -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationGroupClientRenamedTwoOptions contains the optional parameters for the RenamedOperationGroupClient.RenamedTwo
 //     method.
 func (client *RenamedOperationGroupClient) RenamedTwo(ctx context.Context, options *RenamedOperationGroupClientRenamedTwoOptions) (RenamedOperationGroupClientRenamedTwoResponse, error) {

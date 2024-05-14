@@ -21,7 +21,9 @@ type ClientAClient struct {
 	client   ClientType
 }
 
-// - options - ClientAClientRenamedFiveOptions contains the optional parameters for the ClientAClient.RenamedFive method.
+// RenamedFive -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientAClientRenamedFiveOptions contains the optional parameters for the ClientAClient.RenamedFive method.
 func (client *ClientAClient) RenamedFive(ctx context.Context, options *ClientAClientRenamedFiveOptions) (ClientAClientRenamedFiveResponse, error) {
 	var err error
 	const operationName = "ClientAClient.RenamedFive"
@@ -56,7 +58,9 @@ func (client *ClientAClient) renamedFiveCreateRequest(ctx context.Context, _ *Cl
 	return req, nil
 }
 
-// - options - ClientAClientRenamedOneOptions contains the optional parameters for the ClientAClient.RenamedOne method.
+// RenamedOne -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientAClientRenamedOneOptions contains the optional parameters for the ClientAClient.RenamedOne method.
 func (client *ClientAClient) RenamedOne(ctx context.Context, options *ClientAClientRenamedOneOptions) (ClientAClientRenamedOneResponse, error) {
 	var err error
 	const operationName = "ClientAClient.RenamedOne"
@@ -91,7 +95,9 @@ func (client *ClientAClient) renamedOneCreateRequest(ctx context.Context, _ *Cli
 	return req, nil
 }
 
-// - options - ClientAClientRenamedThreeOptions contains the optional parameters for the ClientAClient.RenamedThree method.
+// RenamedThree -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientAClientRenamedThreeOptions contains the optional parameters for the ClientAClient.RenamedThree method.
 func (client *ClientAClient) RenamedThree(ctx context.Context, options *ClientAClientRenamedThreeOptions) (ClientAClientRenamedThreeResponse, error) {
 	var err error
 	const operationName = "ClientAClient.RenamedThree"

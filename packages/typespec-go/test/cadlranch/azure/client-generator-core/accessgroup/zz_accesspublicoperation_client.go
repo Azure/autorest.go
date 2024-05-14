@@ -18,6 +18,8 @@ type AccessPublicOperationClient struct {
 	internal *azcore.Client
 }
 
+// NoDecoratorInPublic -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - AccessPublicOperationClientNoDecoratorInPublicOptions contains the optional parameters for the AccessPublicOperationClient.NoDecoratorInPublic
 //     method.
 func (client *AccessPublicOperationClient) NoDecoratorInPublic(ctx context.Context, name string, options *AccessPublicOperationClientNoDecoratorInPublicOptions) (AccessPublicOperationClientNoDecoratorInPublicResponse, error) {
@@ -65,6 +67,8 @@ func (client *AccessPublicOperationClient) noDecoratorInPublicHandleResponse(res
 	return result, nil
 }
 
+// PublicDecoratorInPublic -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - AccessPublicOperationClientPublicDecoratorInPublicOptions contains the optional parameters for the AccessPublicOperationClient.PublicDecoratorInPublic
 //     method.
 func (client *AccessPublicOperationClient) PublicDecoratorInPublic(ctx context.Context, name string, options *AccessPublicOperationClientPublicDecoratorInPublicOptions) (AccessPublicOperationClientPublicDecoratorInPublicResponse, error) {

@@ -18,6 +18,8 @@ type DurationPropertyClient struct {
 	internal *azcore.Client
 }
 
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientDefaultOptions contains the optional parameters for the DurationPropertyClient.Default
 //     method.
 func (client *DurationPropertyClient) Default(ctx context.Context, body DefaultDurationProperty, options *DurationPropertyClientDefaultOptions) (DurationPropertyClientDefaultResponse, error) {
@@ -66,6 +68,8 @@ func (client *DurationPropertyClient) defaultHandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// Float64Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientFloat64SecondsOptions contains the optional parameters for the DurationPropertyClient.Float64Seconds
 //     method.
 func (client *DurationPropertyClient) Float64Seconds(ctx context.Context, body Float64SecondsDurationProperty, options *DurationPropertyClientFloat64SecondsOptions) (DurationPropertyClientFloat64SecondsResponse, error) {
@@ -114,6 +118,8 @@ func (client *DurationPropertyClient) float64SecondsHandleResponse(resp *http.Re
 	return result, nil
 }
 
+// FloatSeconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientFloatSecondsOptions contains the optional parameters for the DurationPropertyClient.FloatSeconds
 //     method.
 func (client *DurationPropertyClient) FloatSeconds(ctx context.Context, body FloatSecondsDurationProperty, options *DurationPropertyClientFloatSecondsOptions) (DurationPropertyClientFloatSecondsResponse, error) {
@@ -162,6 +168,8 @@ func (client *DurationPropertyClient) floatSecondsHandleResponse(resp *http.Resp
 	return result, nil
 }
 
+// FloatSecondsArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientFloatSecondsArrayOptions contains the optional parameters for the DurationPropertyClient.FloatSecondsArray
 //     method.
 func (client *DurationPropertyClient) FloatSecondsArray(ctx context.Context, body FloatSecondsDurationArrayProperty, options *DurationPropertyClientFloatSecondsArrayOptions) (DurationPropertyClientFloatSecondsArrayResponse, error) {
@@ -210,6 +218,8 @@ func (client *DurationPropertyClient) floatSecondsArrayHandleResponse(resp *http
 	return result, nil
 }
 
+// ISO8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientISO8601Options contains the optional parameters for the DurationPropertyClient.ISO8601
 //     method.
 func (client *DurationPropertyClient) ISO8601(ctx context.Context, body ISO8601DurationProperty, options *DurationPropertyClientISO8601Options) (DurationPropertyClientISO8601Response, error) {
@@ -258,6 +268,8 @@ func (client *DurationPropertyClient) iso8601HandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// Int32Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationPropertyClientInt32SecondsOptions contains the optional parameters for the DurationPropertyClient.Int32Seconds
 //     method.
 func (client *DurationPropertyClient) Int32Seconds(ctx context.Context, body Int32SecondsDurationProperty, options *DurationPropertyClientInt32SecondsOptions) (DurationPropertyClientInt32SecondsResponse, error) {

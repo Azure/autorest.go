@@ -18,7 +18,9 @@ type NamingModelClient struct {
 	internal *azcore.Client
 }
 
-// - options - NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
+// Client -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
 func (client *NamingModelClient) Client(ctx context.Context, clientModel ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Client"
@@ -54,7 +56,9 @@ func (client *NamingModelClient) clientCreateRequest(ctx context.Context, client
 	return req, nil
 }
 
-// - options - NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
+// Language -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
 func (client *NamingModelClient) Language(ctx context.Context, goModel GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Language"

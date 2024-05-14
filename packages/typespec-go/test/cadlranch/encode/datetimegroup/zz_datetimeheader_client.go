@@ -20,7 +20,9 @@ type DatetimeHeaderClient struct {
 	internal *azcore.Client
 }
 
-// - options - DatetimeHeaderClientDefaultOptions contains the optional parameters for the DatetimeHeaderClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeHeaderClientDefaultOptions contains the optional parameters for the DatetimeHeaderClient.Default method.
 func (client *DatetimeHeaderClient) Default(ctx context.Context, value time.Time, options *DatetimeHeaderClientDefaultOptions) (DatetimeHeaderClientDefaultResponse, error) {
 	var err error
 	const operationName = "DatetimeHeaderClient.Default"
@@ -53,7 +55,9 @@ func (client *DatetimeHeaderClient) defaultCreateRequest(ctx context.Context, va
 	return req, nil
 }
 
-// - options - DatetimeHeaderClientRFC3339Options contains the optional parameters for the DatetimeHeaderClient.RFC3339 method.
+// RFC3339 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeHeaderClientRFC3339Options contains the optional parameters for the DatetimeHeaderClient.RFC3339 method.
 func (client *DatetimeHeaderClient) RFC3339(ctx context.Context, value time.Time, options *DatetimeHeaderClientRFC3339Options) (DatetimeHeaderClientRFC3339Response, error) {
 	var err error
 	const operationName = "DatetimeHeaderClient.RFC3339"
@@ -86,7 +90,9 @@ func (client *DatetimeHeaderClient) rfc3339CreateRequest(ctx context.Context, va
 	return req, nil
 }
 
-// - options - DatetimeHeaderClientRFC7231Options contains the optional parameters for the DatetimeHeaderClient.RFC7231 method.
+// RFC7231 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeHeaderClientRFC7231Options contains the optional parameters for the DatetimeHeaderClient.RFC7231 method.
 func (client *DatetimeHeaderClient) RFC7231(ctx context.Context, value time.Time, options *DatetimeHeaderClientRFC7231Options) (DatetimeHeaderClientRFC7231Response, error) {
 	var err error
 	const operationName = "DatetimeHeaderClient.RFC7231"
@@ -119,6 +125,8 @@ func (client *DatetimeHeaderClient) rfc7231CreateRequest(ctx context.Context, va
 	return req, nil
 }
 
+// UnixTimestamp -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeHeaderClientUnixTimestampOptions contains the optional parameters for the DatetimeHeaderClient.UnixTimestamp
 //     method.
 func (client *DatetimeHeaderClient) UnixTimestamp(ctx context.Context, value time.Time, options *DatetimeHeaderClientUnixTimestampOptions) (DatetimeHeaderClientUnixTimestampResponse, error) {
@@ -153,6 +161,8 @@ func (client *DatetimeHeaderClient) unixTimestampCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// UnixTimestampArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeHeaderClientUnixTimestampArrayOptions contains the optional parameters for the DatetimeHeaderClient.UnixTimestampArray
 //     method.
 func (client *DatetimeHeaderClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *DatetimeHeaderClientUnixTimestampArrayOptions) (DatetimeHeaderClientUnixTimestampArrayResponse, error) {

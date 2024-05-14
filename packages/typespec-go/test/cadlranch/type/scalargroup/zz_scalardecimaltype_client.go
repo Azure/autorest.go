@@ -19,6 +19,8 @@ type ScalarDecimalTypeClient struct {
 	internal *azcore.Client
 }
 
+// RequestBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimalTypeClientRequestBodyOptions contains the optional parameters for the ScalarDecimalTypeClient.RequestBody
 //     method.
 func (client *ScalarDecimalTypeClient) RequestBody(ctx context.Context, body float64, options *ScalarDecimalTypeClientRequestBodyOptions) (ScalarDecimalTypeClientRequestBodyResponse, error) {
@@ -56,6 +58,8 @@ func (client *ScalarDecimalTypeClient) requestBodyCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// RequestParameter -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimalTypeClientRequestParameterOptions contains the optional parameters for the ScalarDecimalTypeClient.RequestParameter
 //     method.
 func (client *ScalarDecimalTypeClient) RequestParameter(ctx context.Context, value float64, options *ScalarDecimalTypeClientRequestParameterOptions) (ScalarDecimalTypeClientRequestParameterResponse, error) {
@@ -92,6 +96,8 @@ func (client *ScalarDecimalTypeClient) requestParameterCreateRequest(ctx context
 	return req, nil
 }
 
+// ResponseBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimalTypeClientResponseBodyOptions contains the optional parameters for the ScalarDecimalTypeClient.ResponseBody
 //     method.
 func (client *ScalarDecimalTypeClient) ResponseBody(ctx context.Context, options *ScalarDecimalTypeClientResponseBodyOptions) (ScalarDecimalTypeClientResponseBodyResponse, error) {

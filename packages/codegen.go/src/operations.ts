@@ -435,11 +435,18 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
     methodName = fixUpMethodName(method);
   }
   let text = '';
+  const respErrDoc = genRespErrorDoc(method);
+  const apiVerDoc = genApiVersionDoc(method.apiVersions);
   if (method.description) {
     text += `${comment(`${methodName} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
-    text += genRespErrorDoc(method);
-    text += genApiVersionDoc(method.apiVersions);
+  } else if (respErrDoc.length > 0 || apiVerDoc.length > 0) {
+    // if the method has no doc comment but we're adding other
+    // doc comments, add an empty method name comment. this preserves
+    // existing behavior and makes the docs look better overall.
+    text += `// ${methodName} -\n`;
   }
+  text += respErrDoc;
+  text += apiVerDoc;
   if (go.isLROMethod(method)) {
     methodName = method.naming.internalMethod;
   } else {

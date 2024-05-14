@@ -19,6 +19,8 @@ type DictionaryDatetimeValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryDatetimeValueClientGetOptions contains the optional parameters for the DictionaryDatetimeValueClient.Get
 //     method.
 func (client *DictionaryDatetimeValueClient) Get(ctx context.Context, options *DictionaryDatetimeValueClientGetOptions) (DictionaryDatetimeValueClientGetResponse, error) {
@@ -69,6 +71,8 @@ func (client *DictionaryDatetimeValueClient) getHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryDatetimeValueClientPutOptions contains the optional parameters for the DictionaryDatetimeValueClient.Put
 //     method.
 func (client *DictionaryDatetimeValueClient) Put(ctx context.Context, body map[string]*time.Time, options *DictionaryDatetimeValueClientPutOptions) (DictionaryDatetimeValueClientPutResponse, error) {

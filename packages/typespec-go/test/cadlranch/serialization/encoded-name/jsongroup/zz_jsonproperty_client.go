@@ -18,7 +18,9 @@ type JSONPropertyClient struct {
 	internal *azcore.Client
 }
 
-// - options - JSONPropertyClientGetOptions contains the optional parameters for the JSONPropertyClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - JSONPropertyClientGetOptions contains the optional parameters for the JSONPropertyClient.Get method.
 func (client *JSONPropertyClient) Get(ctx context.Context, options *JSONPropertyClientGetOptions) (JSONPropertyClientGetResponse, error) {
 	var err error
 	const operationName = "JSONPropertyClient.Get"
@@ -61,7 +63,9 @@ func (client *JSONPropertyClient) getHandleResponse(resp *http.Response) (JSONPr
 	return result, nil
 }
 
-// - options - JSONPropertyClientSendOptions contains the optional parameters for the JSONPropertyClient.Send method.
+// Send -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - JSONPropertyClientSendOptions contains the optional parameters for the JSONPropertyClient.Send method.
 func (client *JSONPropertyClient) Send(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (JSONPropertyClientSendResponse, error) {
 	var err error
 	const operationName = "JSONPropertyClient.Send"

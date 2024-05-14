@@ -25,6 +25,8 @@ func (client *BodyOptionalityClient) NewBodyOptionalityOptionalExplicitClient() 
 	}
 }
 
+// RequiredExplicit -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BodyOptionalityClientRequiredExplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredExplicit
 //     method.
 func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body BodyModel, options *BodyOptionalityClientRequiredExplicitOptions) (BodyOptionalityClientRequiredExplicitResponse, error) {
@@ -62,6 +64,8 @@ func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.C
 	return req, nil
 }
 
+// RequiredImplicit -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BodyOptionalityClientRequiredImplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredImplicit
 //     method.
 func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, bodyModel BodyModel, options *BodyOptionalityClientRequiredImplicitOptions) (BodyOptionalityClientRequiredImplicitResponse, error) {

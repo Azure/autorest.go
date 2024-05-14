@@ -19,6 +19,8 @@ type CollectionFormatQueryClient struct {
 	internal *azcore.Client
 }
 
+// CSV -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatQueryClientCSVOptions contains the optional parameters for the CollectionFormatQueryClient.CSV
 //     method.
@@ -56,6 +58,8 @@ func (client *CollectionFormatQueryClient) csvCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// Multi -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatQueryClientMultiOptions contains the optional parameters for the CollectionFormatQueryClient.Multi
 //     method.
@@ -95,6 +99,8 @@ func (client *CollectionFormatQueryClient) multiCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// Pipes -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatQueryClientPipesOptions contains the optional parameters for the CollectionFormatQueryClient.Pipes
 //     method.
@@ -132,6 +138,8 @@ func (client *CollectionFormatQueryClient) pipesCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// Ssv -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatQueryClientSsvOptions contains the optional parameters for the CollectionFormatQueryClient.Ssv
 //     method.
@@ -169,6 +177,8 @@ func (client *CollectionFormatQueryClient) ssvCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// Tsv -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - colors - Possible values for colors are [blue,red,green]
 //   - options - CollectionFormatQueryClientTsvOptions contains the optional parameters for the CollectionFormatQueryClient.Tsv
 //     method.

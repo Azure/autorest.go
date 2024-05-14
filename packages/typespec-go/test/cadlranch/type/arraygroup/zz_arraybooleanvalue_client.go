@@ -18,7 +18,9 @@ type ArrayBooleanValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayBooleanValueClientGetOptions contains the optional parameters for the ArrayBooleanValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayBooleanValueClientGetOptions contains the optional parameters for the ArrayBooleanValueClient.Get method.
 func (client *ArrayBooleanValueClient) Get(ctx context.Context, options *ArrayBooleanValueClientGetOptions) (ArrayBooleanValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayBooleanValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayBooleanValueClient) getHandleResponse(resp *http.Response) (A
 	return result, nil
 }
 
-// - options - ArrayBooleanValueClientPutOptions contains the optional parameters for the ArrayBooleanValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayBooleanValueClientPutOptions contains the optional parameters for the ArrayBooleanValueClient.Put method.
 func (client *ArrayBooleanValueClient) Put(ctx context.Context, body []bool, options *ArrayBooleanValueClientPutOptions) (ArrayBooleanValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayBooleanValueClient.Put"

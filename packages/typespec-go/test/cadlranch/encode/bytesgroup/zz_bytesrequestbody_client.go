@@ -19,7 +19,9 @@ type BytesRequestBodyClient struct {
 	internal *azcore.Client
 }
 
-// - options - BytesRequestBodyClientBase64Options contains the optional parameters for the BytesRequestBodyClient.Base64 method.
+// Base64 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesRequestBodyClientBase64Options contains the optional parameters for the BytesRequestBodyClient.Base64 method.
 func (client *BytesRequestBodyClient) Base64(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64Options) (BytesRequestBodyClientBase64Response, error) {
 	var err error
 	const operationName = "BytesRequestBodyClient.Base64"
@@ -55,6 +57,8 @@ func (client *BytesRequestBodyClient) base64CreateRequest(ctx context.Context, v
 	return req, nil
 }
 
+// Base64URL -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientBase64URLOptions contains the optional parameters for the BytesRequestBodyClient.Base64URL
 //     method.
 func (client *BytesRequestBodyClient) Base64URL(ctx context.Context, value []byte, options *BytesRequestBodyClientBase64URLOptions) (BytesRequestBodyClientBase64URLResponse, error) {
@@ -92,6 +96,8 @@ func (client *BytesRequestBodyClient) base64URLCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// CustomContentType -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientCustomContentTypeOptions contains the optional parameters for the BytesRequestBodyClient.CustomContentType
 //     method.
 func (client *BytesRequestBodyClient) CustomContentType(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientCustomContentTypeOptions) (BytesRequestBodyClientCustomContentTypeResponse, error) {
@@ -129,6 +135,8 @@ func (client *BytesRequestBodyClient) customContentTypeCreateRequest(ctx context
 	return req, nil
 }
 
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientDefaultOptions contains the optional parameters for the BytesRequestBodyClient.Default
 //     method.
 func (client *BytesRequestBodyClient) Default(ctx context.Context, value []byte, options *BytesRequestBodyClientDefaultOptions) (BytesRequestBodyClientDefaultResponse, error) {
@@ -166,6 +174,8 @@ func (client *BytesRequestBodyClient) defaultCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
+// OctetStream -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesRequestBodyClientOctetStreamOptions contains the optional parameters for the BytesRequestBodyClient.OctetStream
 //     method.
 func (client *BytesRequestBodyClient) OctetStream(ctx context.Context, value io.ReadSeekCloser, options *BytesRequestBodyClientOctetStreamOptions) (BytesRequestBodyClientOctetStreamResponse, error) {

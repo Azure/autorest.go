@@ -18,7 +18,9 @@ type FlattenClient struct {
 	internal *azcore.Client
 }
 
-// - options - FlattenClientPutFlattenModelOptions contains the optional parameters for the FlattenClient.PutFlattenModel method.
+// PutFlattenModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - FlattenClientPutFlattenModelOptions contains the optional parameters for the FlattenClient.PutFlattenModel method.
 func (client *FlattenClient) PutFlattenModel(ctx context.Context, input FlattenModel, options *FlattenClientPutFlattenModelOptions) (FlattenClientPutFlattenModelResponse, error) {
 	var err error
 	const operationName = "FlattenClient.PutFlattenModel"
@@ -65,6 +67,8 @@ func (client *FlattenClient) putFlattenModelHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
+// PutNestedFlattenModel -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - FlattenClientPutNestedFlattenModelOptions contains the optional parameters for the FlattenClient.PutNestedFlattenModel
 //     method.
 func (client *FlattenClient) PutNestedFlattenModel(ctx context.Context, input NestedFlattenModel, options *FlattenClientPutNestedFlattenModelOptions) (FlattenClientPutNestedFlattenModelResponse, error) {

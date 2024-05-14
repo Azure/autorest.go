@@ -18,7 +18,9 @@ type BytesPropertyClient struct {
 	internal *azcore.Client
 }
 
-// - options - BytesPropertyClientBase64Options contains the optional parameters for the BytesPropertyClient.Base64 method.
+// Base64 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesPropertyClientBase64Options contains the optional parameters for the BytesPropertyClient.Base64 method.
 func (client *BytesPropertyClient) Base64(ctx context.Context, body Base64BytesProperty, options *BytesPropertyClientBase64Options) (BytesPropertyClientBase64Response, error) {
 	var err error
 	const operationName = "BytesPropertyClient.Base64"
@@ -65,7 +67,9 @@ func (client *BytesPropertyClient) base64HandleResponse(resp *http.Response) (By
 	return result, nil
 }
 
-// - options - BytesPropertyClientBase64URLOptions contains the optional parameters for the BytesPropertyClient.Base64URL method.
+// Base64URL -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesPropertyClientBase64URLOptions contains the optional parameters for the BytesPropertyClient.Base64URL method.
 func (client *BytesPropertyClient) Base64URL(ctx context.Context, body Base64URLBytesProperty, options *BytesPropertyClientBase64URLOptions) (BytesPropertyClientBase64URLResponse, error) {
 	var err error
 	const operationName = "BytesPropertyClient.Base64URL"
@@ -112,6 +116,8 @@ func (client *BytesPropertyClient) base64URLHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
+// Base64URLArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesPropertyClientBase64URLArrayOptions contains the optional parameters for the BytesPropertyClient.Base64URLArray
 //     method.
 func (client *BytesPropertyClient) Base64URLArray(ctx context.Context, body Base64URLArrayBytesProperty, options *BytesPropertyClientBase64URLArrayOptions) (BytesPropertyClientBase64URLArrayResponse, error) {
@@ -160,7 +166,9 @@ func (client *BytesPropertyClient) base64URLArrayHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// - options - BytesPropertyClientDefaultOptions contains the optional parameters for the BytesPropertyClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesPropertyClientDefaultOptions contains the optional parameters for the BytesPropertyClient.Default method.
 func (client *BytesPropertyClient) Default(ctx context.Context, body DefaultBytesProperty, options *BytesPropertyClientDefaultOptions) (BytesPropertyClientDefaultResponse, error) {
 	var err error
 	const operationName = "BytesPropertyClient.Default"

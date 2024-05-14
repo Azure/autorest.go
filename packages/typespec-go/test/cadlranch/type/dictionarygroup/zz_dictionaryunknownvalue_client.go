@@ -18,6 +18,8 @@ type DictionaryUnknownValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryUnknownValueClientGetOptions contains the optional parameters for the DictionaryUnknownValueClient.Get
 //     method.
 func (client *DictionaryUnknownValueClient) Get(ctx context.Context, options *DictionaryUnknownValueClientGetOptions) (DictionaryUnknownValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryUnknownValueClient) getHandleResponse(resp *http.Respons
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryUnknownValueClientPutOptions contains the optional parameters for the DictionaryUnknownValueClient.Put
 //     method.
 func (client *DictionaryUnknownValueClient) Put(ctx context.Context, body map[string]any, options *DictionaryUnknownValueClientPutOptions) (DictionaryUnknownValueClientPutResponse, error) {

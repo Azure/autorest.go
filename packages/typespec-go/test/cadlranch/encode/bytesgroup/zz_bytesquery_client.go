@@ -20,7 +20,9 @@ type BytesQueryClient struct {
 	internal *azcore.Client
 }
 
-// - options - BytesQueryClientBase64Options contains the optional parameters for the BytesQueryClient.Base64 method.
+// Base64 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesQueryClientBase64Options contains the optional parameters for the BytesQueryClient.Base64 method.
 func (client *BytesQueryClient) Base64(ctx context.Context, value []byte, options *BytesQueryClientBase64Options) (BytesQueryClientBase64Response, error) {
 	var err error
 	const operationName = "BytesQueryClient.Base64"
@@ -55,7 +57,9 @@ func (client *BytesQueryClient) base64CreateRequest(ctx context.Context, value [
 	return req, nil
 }
 
-// - options - BytesQueryClientBase64URLOptions contains the optional parameters for the BytesQueryClient.Base64URL method.
+// Base64URL -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesQueryClientBase64URLOptions contains the optional parameters for the BytesQueryClient.Base64URL method.
 func (client *BytesQueryClient) Base64URL(ctx context.Context, value []byte, options *BytesQueryClientBase64URLOptions) (BytesQueryClientBase64URLResponse, error) {
 	var err error
 	const operationName = "BytesQueryClient.Base64URL"
@@ -90,6 +94,8 @@ func (client *BytesQueryClient) base64URLCreateRequest(ctx context.Context, valu
 	return req, nil
 }
 
+// Base64URLArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesQueryClientBase64URLArrayOptions contains the optional parameters for the BytesQueryClient.Base64URLArray
 //     method.
 func (client *BytesQueryClient) Base64URLArray(ctx context.Context, value [][]byte, options *BytesQueryClientBase64URLArrayOptions) (BytesQueryClientBase64URLArrayResponse, error) {
@@ -132,7 +138,9 @@ func (client *BytesQueryClient) base64URLArrayCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// - options - BytesQueryClientDefaultOptions contains the optional parameters for the BytesQueryClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesQueryClientDefaultOptions contains the optional parameters for the BytesQueryClient.Default method.
 func (client *BytesQueryClient) Default(ctx context.Context, value []byte, options *BytesQueryClientDefaultOptions) (BytesQueryClientDefaultResponse, error) {
 	var err error
 	const operationName = "BytesQueryClient.Default"

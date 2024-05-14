@@ -18,6 +18,8 @@ type DictionaryNullableFloatValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryNullableFloatValueClientGetOptions contains the optional parameters for the DictionaryNullableFloatValueClient.Get
 //     method.
 func (client *DictionaryNullableFloatValueClient) Get(ctx context.Context, options *DictionaryNullableFloatValueClientGetOptions) (DictionaryNullableFloatValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryNullableFloatValueClient) getHandleResponse(resp *http.R
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryNullableFloatValueClientPutOptions contains the optional parameters for the DictionaryNullableFloatValueClient.Put
 //     method.
 func (client *DictionaryNullableFloatValueClient) Put(ctx context.Context, body map[string]*float32, options *DictionaryNullableFloatValueClientPutOptions) (DictionaryNullableFloatValueClientPutResponse, error) {

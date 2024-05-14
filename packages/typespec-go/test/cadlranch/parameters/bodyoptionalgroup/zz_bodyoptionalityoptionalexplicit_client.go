@@ -18,6 +18,8 @@ type BodyOptionalityOptionalExplicitClient struct {
 	internal *azcore.Client
 }
 
+// Omit -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BodyOptionalityOptionalExplicitClientOmitOptions contains the optional parameters for the BodyOptionalityOptionalExplicitClient.Omit
 //     method.
 func (client *BodyOptionalityOptionalExplicitClient) Omit(ctx context.Context, options *BodyOptionalityOptionalExplicitClientOmitOptions) (BodyOptionalityOptionalExplicitClientOmitResponse, error) {
@@ -58,6 +60,8 @@ func (client *BodyOptionalityOptionalExplicitClient) omitCreateRequest(ctx conte
 	return req, nil
 }
 
+// Set -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BodyOptionalityOptionalExplicitClientSetOptions contains the optional parameters for the BodyOptionalityOptionalExplicitClient.Set
 //     method.
 func (client *BodyOptionalityOptionalExplicitClient) Set(ctx context.Context, options *BodyOptionalityOptionalExplicitClientSetOptions) (BodyOptionalityOptionalExplicitClientSetResponse, error) {

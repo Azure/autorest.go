@@ -18,6 +18,8 @@ type ScalarDecimal128VerifyClient struct {
 	internal *azcore.Client
 }
 
+// PrepareVerify -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimal128VerifyClientPrepareVerifyOptions contains the optional parameters for the ScalarDecimal128VerifyClient.PrepareVerify
 //     method.
 func (client *ScalarDecimal128VerifyClient) PrepareVerify(ctx context.Context, options *ScalarDecimal128VerifyClientPrepareVerifyOptions) (ScalarDecimal128VerifyClientPrepareVerifyResponse, error) {
@@ -62,6 +64,8 @@ func (client *ScalarDecimal128VerifyClient) prepareVerifyHandleResponse(resp *ht
 	return result, nil
 }
 
+// Verify -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimal128VerifyClientVerifyOptions contains the optional parameters for the ScalarDecimal128VerifyClient.Verify
 //     method.
 func (client *ScalarDecimal128VerifyClient) Verify(ctx context.Context, body float64, options *ScalarDecimal128VerifyClientVerifyOptions) (ScalarDecimal128VerifyClientVerifyResponse, error) {

@@ -21,6 +21,8 @@ type TwoOperationGroupGroup1Client struct {
 	client   ClientType
 }
 
+// Four -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - TwoOperationGroupGroup1ClientFourOptions contains the optional parameters for the TwoOperationGroupGroup1Client.Four
 //     method.
 func (client *TwoOperationGroupGroup1Client) Four(ctx context.Context, options *TwoOperationGroupGroup1ClientFourOptions) (TwoOperationGroupGroup1ClientFourResponse, error) {
@@ -57,6 +59,8 @@ func (client *TwoOperationGroupGroup1Client) fourCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// One -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - TwoOperationGroupGroup1ClientOneOptions contains the optional parameters for the TwoOperationGroupGroup1Client.One
 //     method.
 func (client *TwoOperationGroupGroup1Client) One(ctx context.Context, options *TwoOperationGroupGroup1ClientOneOptions) (TwoOperationGroupGroup1ClientOneResponse, error) {
@@ -93,6 +97,8 @@ func (client *TwoOperationGroupGroup1Client) oneCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// Three -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - TwoOperationGroupGroup1ClientThreeOptions contains the optional parameters for the TwoOperationGroupGroup1Client.Three
 //     method.
 func (client *TwoOperationGroupGroup1Client) Three(ctx context.Context, options *TwoOperationGroupGroup1ClientThreeOptions) (TwoOperationGroupGroup1ClientThreeResponse, error) {

@@ -18,6 +18,8 @@ type ContentNegotiationDifferentBodyClient struct {
 	internal *azcore.Client
 }
 
+// GetAvatarAsJSON -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions contains the optional parameters for the ContentNegotiationDifferentBodyClient.GetAvatarAsJSON
 //     method.
 func (client *ContentNegotiationDifferentBodyClient) GetAvatarAsJSON(ctx context.Context, options *ContentNegotiationDifferentBodyClientGetAvatarAsJSONOptions) (ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse, error) {
@@ -62,6 +64,8 @@ func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONHandleRespon
 	return result, nil
 }
 
+// GetAvatarAsPNG -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions contains the optional parameters for the ContentNegotiationDifferentBodyClient.GetAvatarAsPNG
 //     method.
 func (client *ContentNegotiationDifferentBodyClient) GetAvatarAsPNG(ctx context.Context, options *ContentNegotiationDifferentBodyClientGetAvatarAsPNGOptions) (ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse, error) {

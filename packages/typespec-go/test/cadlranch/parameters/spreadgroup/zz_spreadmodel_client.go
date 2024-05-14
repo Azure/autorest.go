@@ -21,6 +21,8 @@ type SpreadModelClient struct {
 	internal *azcore.Client
 }
 
+// SpreadAsRequestBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - bodyParameter - This is a simple model.
 //   - options - SpreadModelClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadModelClient.SpreadAsRequestBody
 //     method.
@@ -59,6 +61,8 @@ func (client *SpreadModelClient) spreadAsRequestBodyCreateRequest(ctx context.Co
 	return req, nil
 }
 
+// SpreadCompositeRequest -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadModelClientSpreadCompositeRequestOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequest
 //     method.
 func (client *SpreadModelClient) SpreadCompositeRequest(ctx context.Context, name string, testHeader string, body BodyParameter, options *SpreadModelClientSpreadCompositeRequestOptions) (SpreadModelClientSpreadCompositeRequestResponse, error) {
@@ -101,6 +105,8 @@ func (client *SpreadModelClient) spreadCompositeRequestCreateRequest(ctx context
 	return req, nil
 }
 
+// SpreadCompositeRequestMix -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - compositeRequestMix - This is a model with non-body http request decorator.
 //   - options - SpreadModelClientSpreadCompositeRequestMixOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequestMix
 //     method.
@@ -144,6 +150,8 @@ func (client *SpreadModelClient) spreadCompositeRequestMixCreateRequest(ctx cont
 	return req, nil
 }
 
+// SpreadCompositeRequestOnlyWithBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadModelClientSpreadCompositeRequestOnlyWithBodyOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequestOnlyWithBody
 //     method.
 func (client *SpreadModelClient) SpreadCompositeRequestOnlyWithBody(ctx context.Context, body BodyParameter, options *SpreadModelClientSpreadCompositeRequestOnlyWithBodyOptions) (SpreadModelClientSpreadCompositeRequestOnlyWithBodyResponse, error) {
@@ -181,6 +189,8 @@ func (client *SpreadModelClient) spreadCompositeRequestOnlyWithBodyCreateRequest
 	return req, nil
 }
 
+// SpreadCompositeRequestWithoutBody -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpreadModelClientSpreadCompositeRequestWithoutBodyOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequestWithoutBody
 //     method.
 func (client *SpreadModelClient) SpreadCompositeRequestWithoutBody(ctx context.Context, name string, testHeader string, options *SpreadModelClientSpreadCompositeRequestWithoutBodyOptions) (SpreadModelClientSpreadCompositeRequestWithoutBodyResponse, error) {

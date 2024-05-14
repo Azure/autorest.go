@@ -18,7 +18,9 @@ type ArrayInt64ValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayInt64ValueClientGetOptions contains the optional parameters for the ArrayInt64ValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayInt64ValueClientGetOptions contains the optional parameters for the ArrayInt64ValueClient.Get method.
 func (client *ArrayInt64ValueClient) Get(ctx context.Context, options *ArrayInt64ValueClientGetOptions) (ArrayInt64ValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayInt64ValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayInt64ValueClient) getHandleResponse(resp *http.Response) (Arr
 	return result, nil
 }
 
-// - options - ArrayInt64ValueClientPutOptions contains the optional parameters for the ArrayInt64ValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayInt64ValueClientPutOptions contains the optional parameters for the ArrayInt64ValueClient.Put method.
 func (client *ArrayInt64ValueClient) Put(ctx context.Context, body []int64, options *ArrayInt64ValueClientPutOptions) (ArrayInt64ValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayInt64ValueClient.Put"

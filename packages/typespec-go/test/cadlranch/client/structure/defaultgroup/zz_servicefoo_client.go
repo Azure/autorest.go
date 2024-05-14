@@ -21,7 +21,9 @@ type ServiceFooClient struct {
 	client   ClientType
 }
 
-// - options - ServiceFooClientFourOptions contains the optional parameters for the ServiceFooClient.Four method.
+// Four -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceFooClientFourOptions contains the optional parameters for the ServiceFooClient.Four method.
 func (client *ServiceFooClient) Four(ctx context.Context, options *ServiceFooClientFourOptions) (ServiceFooClientFourResponse, error) {
 	var err error
 	const operationName = "ServiceFooClient.Four"
@@ -56,7 +58,9 @@ func (client *ServiceFooClient) fourCreateRequest(ctx context.Context, _ *Servic
 	return req, nil
 }
 
-// - options - ServiceFooClientThreeOptions contains the optional parameters for the ServiceFooClient.Three method.
+// Three -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceFooClientThreeOptions contains the optional parameters for the ServiceFooClient.Three method.
 func (client *ServiceFooClient) Three(ctx context.Context, options *ServiceFooClientThreeOptions) (ServiceFooClientThreeResponse, error) {
 	var err error
 	const operationName = "ServiceFooClient.Three"

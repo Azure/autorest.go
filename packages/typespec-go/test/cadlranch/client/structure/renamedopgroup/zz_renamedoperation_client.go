@@ -30,6 +30,8 @@ func (client *RenamedOperationClient) NewRenamedOperationGroupClient() *RenamedO
 	}
 }
 
+// RenamedFive -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationClientRenamedFiveOptions contains the optional parameters for the RenamedOperationClient.RenamedFive
 //     method.
 func (client *RenamedOperationClient) RenamedFive(ctx context.Context, options *RenamedOperationClientRenamedFiveOptions) (RenamedOperationClientRenamedFiveResponse, error) {
@@ -66,6 +68,8 @@ func (client *RenamedOperationClient) renamedFiveCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// RenamedOne -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationClientRenamedOneOptions contains the optional parameters for the RenamedOperationClient.RenamedOne
 //     method.
 func (client *RenamedOperationClient) RenamedOne(ctx context.Context, options *RenamedOperationClientRenamedOneOptions) (RenamedOperationClientRenamedOneResponse, error) {
@@ -102,6 +106,8 @@ func (client *RenamedOperationClient) renamedOneCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// RenamedThree -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - RenamedOperationClientRenamedThreeOptions contains the optional parameters for the RenamedOperationClient.RenamedThree
 //     method.
 func (client *RenamedOperationClient) RenamedThree(ctx context.Context, options *RenamedOperationClientRenamedThreeOptions) (RenamedOperationClientRenamedThreeResponse, error) {

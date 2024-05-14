@@ -18,7 +18,9 @@ type ArrayStringValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayStringValueClientGetOptions contains the optional parameters for the ArrayStringValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayStringValueClientGetOptions contains the optional parameters for the ArrayStringValueClient.Get method.
 func (client *ArrayStringValueClient) Get(ctx context.Context, options *ArrayStringValueClientGetOptions) (ArrayStringValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayStringValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayStringValueClient) getHandleResponse(resp *http.Response) (Ar
 	return result, nil
 }
 
-// - options - ArrayStringValueClientPutOptions contains the optional parameters for the ArrayStringValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayStringValueClientPutOptions contains the optional parameters for the ArrayStringValueClient.Put method.
 func (client *ArrayStringValueClient) Put(ctx context.Context, body []string, options *ArrayStringValueClientPutOptions) (ArrayStringValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayStringValueClient.Put"

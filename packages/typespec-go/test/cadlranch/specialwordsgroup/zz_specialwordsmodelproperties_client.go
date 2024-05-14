@@ -18,6 +18,8 @@ type SpecialWordsModelPropertiesClient struct {
 	internal *azcore.Client
 }
 
+// SameAsModel -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelPropertiesClientSameAsModelOptions contains the optional parameters for the SpecialWordsModelPropertiesClient.SameAsModel
 //     method.
 func (client *SpecialWordsModelPropertiesClient) SameAsModel(ctx context.Context, body SameAsModel, options *SpecialWordsModelPropertiesClientSameAsModelOptions) (SpecialWordsModelPropertiesClientSameAsModelResponse, error) {

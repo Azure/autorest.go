@@ -20,7 +20,9 @@ type DurationHeaderClient struct {
 	internal *azcore.Client
 }
 
-// - options - DurationHeaderClientDefaultOptions contains the optional parameters for the DurationHeaderClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientDefaultOptions contains the optional parameters for the DurationHeaderClient.Default method.
 func (client *DurationHeaderClient) Default(ctx context.Context, duration string, options *DurationHeaderClientDefaultOptions) (DurationHeaderClientDefaultResponse, error) {
 	var err error
 	const operationName = "DurationHeaderClient.Default"
@@ -53,6 +55,8 @@ func (client *DurationHeaderClient) defaultCreateRequest(ctx context.Context, du
 	return req, nil
 }
 
+// Float64Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientFloat64SecondsOptions contains the optional parameters for the DurationHeaderClient.Float64Seconds
 //     method.
 func (client *DurationHeaderClient) Float64Seconds(ctx context.Context, duration float64, options *DurationHeaderClientFloat64SecondsOptions) (DurationHeaderClientFloat64SecondsResponse, error) {
@@ -87,6 +91,8 @@ func (client *DurationHeaderClient) float64SecondsCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// FloatSeconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientFloatSecondsOptions contains the optional parameters for the DurationHeaderClient.FloatSeconds
 //     method.
 func (client *DurationHeaderClient) FloatSeconds(ctx context.Context, duration float32, options *DurationHeaderClientFloatSecondsOptions) (DurationHeaderClientFloatSecondsResponse, error) {
@@ -121,7 +127,9 @@ func (client *DurationHeaderClient) floatSecondsCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// - options - DurationHeaderClientISO8601Options contains the optional parameters for the DurationHeaderClient.ISO8601 method.
+// ISO8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationHeaderClientISO8601Options contains the optional parameters for the DurationHeaderClient.ISO8601 method.
 func (client *DurationHeaderClient) ISO8601(ctx context.Context, duration string, options *DurationHeaderClientISO8601Options) (DurationHeaderClientISO8601Response, error) {
 	var err error
 	const operationName = "DurationHeaderClient.ISO8601"
@@ -154,6 +162,8 @@ func (client *DurationHeaderClient) iso8601CreateRequest(ctx context.Context, du
 	return req, nil
 }
 
+// ISO8601Array -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientISO8601ArrayOptions contains the optional parameters for the DurationHeaderClient.ISO8601Array
 //     method.
 func (client *DurationHeaderClient) ISO8601Array(ctx context.Context, duration []string, options *DurationHeaderClientISO8601ArrayOptions) (DurationHeaderClientISO8601ArrayResponse, error) {
@@ -188,6 +198,8 @@ func (client *DurationHeaderClient) iso8601ArrayCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// Int32Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationHeaderClientInt32SecondsOptions contains the optional parameters for the DurationHeaderClient.Int32Seconds
 //     method.
 func (client *DurationHeaderClient) Int32Seconds(ctx context.Context, duration int32, options *DurationHeaderClientInt32SecondsOptions) (DurationHeaderClientInt32SecondsResponse, error) {

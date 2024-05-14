@@ -374,7 +374,10 @@ func (client *Client) listLROHandleResponse(resp *http.Response) (ListLRORespons
 	return result, nil
 }
 
-// - options - ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
+// NewListWithSharedNextOnePager -
+//
+// Generated from API version 2.0
+//   - options - ListWithSharedNextOneOptions contains the optional parameters for the Client.NewListWithSharedNextOnePager method.
 func (client *Client) NewListWithSharedNextOnePager(options *ListWithSharedNextOneOptions) *runtime.Pager[ListWithSharedNextOneResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ListWithSharedNextOneResponse]{
 		More: func(page ListWithSharedNextOneResponse) bool {
@@ -424,7 +427,10 @@ func (client *Client) listWithSharedNextOneHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// - options - ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
+// NewListWithSharedNextTwoPager -
+//
+// Generated from API version 2.0
+//   - options - ListWithSharedNextTwoOptions contains the optional parameters for the Client.NewListWithSharedNextTwoPager method.
 func (client *Client) NewListWithSharedNextTwoPager(options *ListWithSharedNextTwoOptions) *runtime.Pager[ListWithSharedNextTwoResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ListWithSharedNextTwoResponse]{
 		More: func(page ListWithSharedNextTwoResponse) bool {

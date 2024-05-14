@@ -18,6 +18,8 @@ type ContentNegotiationSameBodyClient struct {
 	internal *azcore.Client
 }
 
+// GetAvatarAsJPEG -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions contains the optional parameters for the ContentNegotiationSameBodyClient.GetAvatarAsJPEG
 //     method.
 func (client *ContentNegotiationSameBodyClient) GetAvatarAsJPEG(ctx context.Context, options *ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions) (ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse, error) {
@@ -53,6 +55,8 @@ func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGCreateRequest(ctx
 	return req, nil
 }
 
+// GetAvatarAsPNG -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ContentNegotiationSameBodyClientGetAvatarAsPNGOptions contains the optional parameters for the ContentNegotiationSameBodyClient.GetAvatarAsPNG
 //     method.
 func (client *ContentNegotiationSameBodyClient) GetAvatarAsPNG(ctx context.Context, options *ContentNegotiationSameBodyClientGetAvatarAsPNGOptions) (ContentNegotiationSameBodyClientGetAvatarAsPNGResponse, error) {
