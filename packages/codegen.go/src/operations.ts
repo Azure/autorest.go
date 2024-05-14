@@ -415,7 +415,16 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
   if (apiVersions.length === 0) {
     return '';
   }
-  return `//\n// Generated from API version ${apiVersions.join(',')}\n`;
+  return `//\n// Generated from API version ${apiVersions.join(', ')}\n`;
+}
+
+function genRespErrorDoc(method: go.Method): string {
+  if (!(method.responseEnvelope.result && go.isHeadAsBooleanResult(method.responseEnvelope.result)) && !go.isPageableMethod(method)) {
+    // when head-as-boolean is enabled, no error is returned for 4xx status codes.
+    // pager constructors don't return an error
+    return '// If the operation fails it returns an *azcore.ResponseError type.\n';
+  }
+  return '';
 }
 
 function generateOperation(client: go.Client, method: go.Method, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
@@ -428,6 +437,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   let text = '';
   if (method.description) {
     text += `${comment(`${methodName} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+    text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
   if (go.isLROMethod(method)) {
@@ -1192,6 +1202,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   let text = '';
   if (method.description) {
     text += `${comment(`${fixUpMethodName(method)} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+    text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
   const zeroResp = getZeroReturnValue(method, 'api');

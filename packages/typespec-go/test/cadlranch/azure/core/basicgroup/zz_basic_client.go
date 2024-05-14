@@ -29,6 +29,9 @@ func (client *BasicClient) NewBasicTwoModelsAsPageItemClient() *BasicTwoModelsAs
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - resource - The resource instance.
 //   - options - BasicClientCreateOrReplaceOptions contains the optional parameters for the BasicClient.CreateOrReplace method.
@@ -83,6 +86,9 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 }
 
 // CreateOrUpdate - Adds a user or updates a user's fields.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - resource - The resource instance.
 //   - options - BasicClientCreateOrUpdateOptions contains the optional parameters for the BasicClient.CreateOrUpdate method.
@@ -137,6 +143,9 @@ func (client *BasicClient) createOrUpdateHandleResponse(resp *http.Response) (Ba
 }
 
 // Delete - Deletes a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - options - BasicClientDeleteOptions contains the optional parameters for the BasicClient.Delete method.
 func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicClientDeleteOptions) (BasicClientDeleteResponse, error) {
@@ -176,6 +185,9 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 }
 
 // Export - Exports a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - formatParam - The format of the data.
 //   - options - BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
@@ -227,6 +239,9 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 }
 
 // Get - Gets a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - id - The user's id.
 //   - options - BasicClientGetOptions contains the optional parameters for the BasicClient.Get method.
 func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClientGetOptions) (BasicClientGetResponse, error) {
@@ -276,6 +291,8 @@ func (client *BasicClient) getHandleResponse(resp *http.Response) (BasicClientGe
 }
 
 // NewListPager - Lists all users.
+//
+// Generated from API version 2022-12-01-preview
 //   - options - BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
 func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtime.Pager[BasicClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListResponse]{
@@ -351,6 +368,8 @@ func (client *BasicClient) listHandleResponse(resp *http.Response) (BasicClientL
 }
 
 // NewListWithCustomPageModelPager - List with custom page model.
+//
+// Generated from API version 2022-12-01-preview
 //   - options - BasicClientListWithCustomPageModelOptions contains the optional parameters for the BasicClient.NewListWithCustomPageModelPager
 //     method.
 func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientListWithCustomPageModelOptions) *runtime.Pager[BasicClientListWithCustomPageModelResponse] {
@@ -400,6 +419,8 @@ func (client *BasicClient) listWithCustomPageModelHandleResponse(resp *http.Resp
 }
 
 // NewListWithPagePager - List with Azure.Core.Page<>.
+//
+// Generated from API version 2022-12-01-preview
 //   - options - BasicClientListWithPageOptions contains the optional parameters for the BasicClient.NewListWithPagePager method.
 func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPageOptions) *runtime.Pager[BasicClientListWithPageResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BasicClientListWithPageResponse]{
@@ -448,6 +469,8 @@ func (client *BasicClient) listWithPageHandleResponse(resp *http.Response) (Basi
 }
 
 // NewListWithParametersPager - List with extensible enum parameter Azure.Core.Page<>.
+//
+// Generated from API version 2022-12-01-preview
 //   - bodyInput - The body of the input.
 //   - options - BasicClientListWithParametersOptions contains the optional parameters for the BasicClient.NewListWithParametersPager
 //     method.

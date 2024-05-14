@@ -19,6 +19,7 @@ type ValueTypesBytesClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesBytesClientGetOptions contains the optional parameters for the ValueTypesBytesClient.Get method.
 func (client *ValueTypesBytesClient) Get(ctx context.Context, options *ValueTypesBytesClientGetOptions) (ValueTypesBytesClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesBytesClient) getHandleResponse(resp *http.Response) (Val
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesBytesClientPutOptions contains the optional parameters for the ValueTypesBytesClient.Put method.
 func (client *ValueTypesBytesClient) Put(ctx context.Context, body BytesProperty, options *ValueTypesBytesClientPutOptions) (ValueTypesBytesClientPutResponse, error) {

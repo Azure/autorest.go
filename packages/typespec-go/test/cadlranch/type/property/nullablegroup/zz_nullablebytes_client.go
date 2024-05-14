@@ -19,6 +19,7 @@ type NullableBytesClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableBytesClientGetNonNullOptions contains the optional parameters for the NullableBytesClient.GetNonNull
 //     method.
 func (client *NullableBytesClient) GetNonNull(ctx context.Context, options *NullableBytesClientGetNonNullOptions) (NullableBytesClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableBytesClient) getNonNullHandleResponse(resp *http.Response)
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableBytesClientGetNullOptions contains the optional parameters for the NullableBytesClient.GetNull method.
 func (client *NullableBytesClient) GetNull(ctx context.Context, options *NullableBytesClientGetNullOptions) (NullableBytesClientGetNullResponse, error) {
 	var err error
@@ -108,6 +110,7 @@ func (client *NullableBytesClient) getNullHandleResponse(resp *http.Response) (N
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableBytesClientPatchNonNullOptions contains the optional parameters for the NullableBytesClient.PatchNonNull
 //     method.
 func (client *NullableBytesClient) PatchNonNull(ctx context.Context, body BytesProperty, options *NullableBytesClientPatchNonNullOptions) (NullableBytesClientPatchNonNullResponse, error) {
@@ -146,6 +149,7 @@ func (client *NullableBytesClient) patchNonNullCreateRequest(ctx context.Context
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableBytesClientPatchNullOptions contains the optional parameters for the NullableBytesClient.PatchNull method.
 func (client *NullableBytesClient) PatchNull(ctx context.Context, body BytesProperty, options *NullableBytesClientPatchNullOptions) (NullableBytesClientPatchNullResponse, error) {
 	var err error

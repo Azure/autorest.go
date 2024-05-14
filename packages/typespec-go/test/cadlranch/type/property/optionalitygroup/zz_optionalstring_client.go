@@ -19,6 +19,7 @@ type OptionalStringClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringClientGetAllOptions contains the optional parameters for the OptionalStringClient.GetAll method.
 func (client *OptionalStringClient) GetAll(ctx context.Context, options *OptionalStringClientGetAllOptions) (OptionalStringClientGetAllResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *OptionalStringClient) getAllHandleResponse(resp *http.Response) (O
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringClientGetDefaultOptions contains the optional parameters for the OptionalStringClient.GetDefault
 //     method.
 func (client *OptionalStringClient) GetDefault(ctx context.Context, options *OptionalStringClientGetDefaultOptions) (OptionalStringClientGetDefaultResponse, error) {
@@ -108,6 +110,7 @@ func (client *OptionalStringClient) getDefaultHandleResponse(resp *http.Response
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringClientPutAllOptions contains the optional parameters for the OptionalStringClient.PutAll method.
 func (client *OptionalStringClient) PutAll(ctx context.Context, body StringProperty, options *OptionalStringClientPutAllOptions) (OptionalStringClientPutAllResponse, error) {
 	var err error
@@ -145,6 +148,7 @@ func (client *OptionalStringClient) putAllCreateRequest(ctx context.Context, bod
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringClientPutDefaultOptions contains the optional parameters for the OptionalStringClient.PutDefault
 //     method.
 func (client *OptionalStringClient) PutDefault(ctx context.Context, body StringProperty, options *OptionalStringClientPutDefaultOptions) (OptionalStringClientPutDefaultResponse, error) {

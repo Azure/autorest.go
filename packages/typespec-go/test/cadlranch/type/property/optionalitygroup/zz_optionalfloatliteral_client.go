@@ -19,6 +19,7 @@ type OptionalFloatLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalFloatLiteralClientGetAllOptions contains the optional parameters for the OptionalFloatLiteralClient.GetAll
 //     method.
 func (client *OptionalFloatLiteralClient) GetAll(ctx context.Context, options *OptionalFloatLiteralClientGetAllOptions) (OptionalFloatLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalFloatLiteralClient) getAllHandleResponse(resp *http.Respon
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalFloatLiteralClientGetDefaultOptions contains the optional parameters for the OptionalFloatLiteralClient.GetDefault
 //     method.
 func (client *OptionalFloatLiteralClient) GetDefault(ctx context.Context, options *OptionalFloatLiteralClientGetDefaultOptions) (OptionalFloatLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalFloatLiteralClient) getDefaultHandleResponse(resp *http.Re
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalFloatLiteralClientPutAllOptions contains the optional parameters for the OptionalFloatLiteralClient.PutAll
 //     method.
 func (client *OptionalFloatLiteralClient) PutAll(ctx context.Context, body FloatLiteralProperty, options *OptionalFloatLiteralClientPutAllOptions) (OptionalFloatLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalFloatLiteralClient) putAllCreateRequest(ctx context.Contex
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalFloatLiteralClientPutDefaultOptions contains the optional parameters for the OptionalFloatLiteralClient.PutDefault
 //     method.
 func (client *OptionalFloatLiteralClient) PutDefault(ctx context.Context, body FloatLiteralProperty, options *OptionalFloatLiteralClientPutDefaultOptions) (OptionalFloatLiteralClientPutDefaultResponse, error) {

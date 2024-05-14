@@ -19,6 +19,7 @@ type EnumDiscriminatorClient struct {
 }
 
 // GetExtensibleModel - Receive model with extensible enum discriminator type.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModel
 //     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModel(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelOptions) (EnumDiscriminatorClientGetExtensibleModelResponse, error) {
@@ -64,6 +65,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelHandleResponse(resp *ht
 }
 
 // GetExtensibleModelMissingDiscriminator - Get a model omitting the discriminator.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions contains the optional parameters for the
 //     EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelMissingDiscriminatorResponse, error) {
@@ -109,6 +111,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelMissingDiscriminatorHan
 }
 
 // GetExtensibleModelWrongDiscriminator - Get a model containing discriminator value never defined.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator
 //     method.
 func (client *EnumDiscriminatorClient) GetExtensibleModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetExtensibleModelWrongDiscriminatorResponse, error) {
@@ -154,6 +157,7 @@ func (client *EnumDiscriminatorClient) getExtensibleModelWrongDiscriminatorHandl
 }
 
 // GetFixedModel - Receive model with fixed enum discriminator type.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModel
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModel(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelOptions) (EnumDiscriminatorClientGetFixedModelResponse, error) {
@@ -199,6 +203,7 @@ func (client *EnumDiscriminatorClient) getFixedModelHandleResponse(resp *http.Re
 }
 
 // GetFixedModelMissingDiscriminator - Get a model omitting the discriminator.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelMissingDiscriminator
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModelMissingDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelMissingDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelMissingDiscriminatorResponse, error) {
@@ -244,6 +249,7 @@ func (client *EnumDiscriminatorClient) getFixedModelMissingDiscriminatorHandleRe
 }
 
 // GetFixedModelWrongDiscriminator - Get a model containing discriminator value never defined.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions contains the optional parameters for the EnumDiscriminatorClient.GetFixedModelWrongDiscriminator
 //     method.
 func (client *EnumDiscriminatorClient) GetFixedModelWrongDiscriminator(ctx context.Context, options *EnumDiscriminatorClientGetFixedModelWrongDiscriminatorOptions) (EnumDiscriminatorClientGetFixedModelWrongDiscriminatorResponse, error) {
@@ -289,6 +295,7 @@ func (client *EnumDiscriminatorClient) getFixedModelWrongDiscriminatorHandleResp
 }
 
 // PutExtensibleModel - Send model with extensible enum discriminator type.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - input - Dog to create
 //   - options - EnumDiscriminatorClientPutExtensibleModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutExtensibleModel
 //     method.
@@ -328,6 +335,7 @@ func (client *EnumDiscriminatorClient) putExtensibleModelCreateRequest(ctx conte
 }
 
 // PutFixedModel - Send model with fixed enum discriminator type.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - input - Snake to create
 //   - options - EnumDiscriminatorClientPutFixedModelOptions contains the optional parameters for the EnumDiscriminatorClient.PutFixedModel
 //     method.

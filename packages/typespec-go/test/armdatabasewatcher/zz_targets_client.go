@@ -40,6 +40,9 @@ func NewTargetsClient(subscriptionID string, credential azcore.TokenCredential, 
 }
 
 // CreateOrUpdate - Create a Target
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -111,6 +114,9 @@ func (client *TargetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 }
 
 // Delete - Delete a Target
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -167,6 +173,9 @@ func (client *TargetsClient) deleteCreateRequest(ctx context.Context, resourceGr
 }
 
 // Get - Get a Target
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -233,6 +242,8 @@ func (client *TargetsClient) getHandleResponse(resp *http.Response) (TargetsClie
 }
 
 // NewListByWatcherPager - List Target resources by Watcher
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - TargetsClientListByWatcherOptions contains the optional parameters for the TargetsClient.NewListByWatcherPager

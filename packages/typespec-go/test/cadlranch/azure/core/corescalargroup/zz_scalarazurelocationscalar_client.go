@@ -19,6 +19,7 @@ type ScalarAzureLocationScalarClient struct {
 }
 
 // Get - get azureLocation value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarAzureLocationScalarClientGetOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Get
 //     method.
 func (client *ScalarAzureLocationScalarClient) Get(ctx context.Context, options *ScalarAzureLocationScalarClientGetOptions) (ScalarAzureLocationScalarClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ScalarAzureLocationScalarClient) getHandleResponse(resp *http.Resp
 }
 
 // Header - azureLocation value header
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - region - _
 //   - options - ScalarAzureLocationScalarClientHeaderOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Header
 //     method.
@@ -100,6 +102,7 @@ func (client *ScalarAzureLocationScalarClient) headerCreateRequest(ctx context.C
 }
 
 // Post - post a model which has azureLocation property
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - ScalarAzureLocationScalarClientPostOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Post
 //     method.
@@ -150,6 +153,7 @@ func (client *ScalarAzureLocationScalarClient) postHandleResponse(resp *http.Res
 }
 
 // Put - put azureLocation value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - ScalarAzureLocationScalarClientPutOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Put
 //     method.
@@ -189,6 +193,7 @@ func (client *ScalarAzureLocationScalarClient) putCreateRequest(ctx context.Cont
 }
 
 // Query - azureLocation value query
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - region - _
 //   - options - ScalarAzureLocationScalarClientQueryOptions contains the optional parameters for the ScalarAzureLocationScalarClient.Query
 //     method.

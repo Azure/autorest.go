@@ -19,6 +19,7 @@ type CustomClient struct {
 }
 
 // Invalid - Check whether client is authenticated.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - CustomClientInvalidOptions contains the optional parameters for the CustomClient.Invalid method.
 func (client *CustomClient) Invalid(ctx context.Context, options *CustomClientInvalidOptions) (CustomClientInvalidResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *CustomClient) invalidHandleResponse(resp *http.Response) (CustomCl
 }
 
 // Valid - Check whether client is authenticated
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - CustomClientValidOptions contains the optional parameters for the CustomClient.Valid method.
 func (client *CustomClient) Valid(ctx context.Context, options *CustomClientValidOptions) (CustomClientValidResponse, error) {
 	var err error

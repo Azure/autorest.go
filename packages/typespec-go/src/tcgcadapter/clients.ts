@@ -221,7 +221,17 @@ export class clientAdapter {
     } else {
       throw new Error('NYI');
     }
-  
+
+    // find the api version param to use for the doc comment.
+    // we can't use sdkMethod.apiVersions as that includes all
+    // of the api versions supported by the service.
+    for (const opParam of sdkMethod.operation.parameters) {
+      if (opParam.isApiVersionParam && opParam.clientDefaultValue) {
+        method.apiVersions.push(opParam.clientDefaultValue);
+        break;
+      }
+    }
+
     this.adaptMethodParameters(sdkMethod, method);
 
     // we must do this after adapting method params as it can add optional params

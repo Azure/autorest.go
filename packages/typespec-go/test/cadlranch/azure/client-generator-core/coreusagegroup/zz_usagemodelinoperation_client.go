@@ -24,6 +24,7 @@ type UsageModelInOperationClient struct {
 // "name": <any string>
 // }
 // ```
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - UsageModelInOperationClientInputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.InputToInputOutput
 //     method.
 func (client *UsageModelInOperationClient) InputToInputOutput(ctx context.Context, body InputModel, options *UsageModelInOperationClientInputToInputOutputOptions) (UsageModelInOperationClientInputToInputOutputResponse, error) {
@@ -67,6 +68,7 @@ func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx c
 // "name": <any string>
 // }
 // ```
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - UsageModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.OutputToInputOutput
 //     method.
 func (client *UsageModelInOperationClient) OutputToInputOutput(ctx context.Context, options *UsageModelInOperationClientOutputToInputOutputOptions) (UsageModelInOperationClientOutputToInputOutputResponse, error) {

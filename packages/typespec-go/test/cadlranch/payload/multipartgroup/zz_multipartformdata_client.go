@@ -20,6 +20,7 @@ type MultiPartFormDataClient struct {
 }
 
 // AnonymousModel - Test content-type: multipart/form-data
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientAnonymousModelOptions contains the optional parameters for the MultiPartFormDataClient.AnonymousModel
 //     method.
 func (client *MultiPartFormDataClient) AnonymousModel(ctx context.Context, profileImage io.ReadSeekCloser, options *MultiPartFormDataClientAnonymousModelOptions) (MultiPartFormDataClientAnonymousModelResponse, error) {
@@ -60,6 +61,7 @@ func (client *MultiPartFormDataClient) anonymousModelCreateRequest(ctx context.C
 }
 
 // Basic - Test content-type: multipart/form-data
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientBasicOptions contains the optional parameters for the MultiPartFormDataClient.Basic method.
 func (client *MultiPartFormDataClient) Basic(ctx context.Context, body MultiPartRequest, options *MultiPartFormDataClientBasicOptions) (MultiPartFormDataClientBasicResponse, error) {
 	var err error
@@ -101,6 +103,7 @@ func (client *MultiPartFormDataClient) basicCreateRequest(ctx context.Context, b
 }
 
 // BinaryArrayParts - Test content-type: multipart/form-data for scenario contains multi binary parts
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientBinaryArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.BinaryArrayParts
 //     method.
 func (client *MultiPartFormDataClient) BinaryArrayParts(ctx context.Context, body BinaryArrayPartsRequest, options *MultiPartFormDataClientBinaryArrayPartsOptions) (MultiPartFormDataClientBinaryArrayPartsResponse, error) {
@@ -143,6 +146,7 @@ func (client *MultiPartFormDataClient) binaryArrayPartsCreateRequest(ctx context
 }
 
 // CheckFileNameAndContentType - Test content-type: multipart/form-data
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientCheckFileNameAndContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.CheckFileNameAndContentType
 //     method.
 func (client *MultiPartFormDataClient) CheckFileNameAndContentType(ctx context.Context, body MultiPartRequest, options *MultiPartFormDataClientCheckFileNameAndContentTypeOptions) (MultiPartFormDataClientCheckFileNameAndContentTypeResponse, error) {
@@ -185,6 +189,7 @@ func (client *MultiPartFormDataClient) checkFileNameAndContentTypeCreateRequest(
 }
 
 // Complex - Test content-type: multipart/form-data for mixed scenarios
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientComplexOptions contains the optional parameters for the MultiPartFormDataClient.Complex
 //     method.
 func (client *MultiPartFormDataClient) Complex(ctx context.Context, body ComplexPartsRequest, options *MultiPartFormDataClientComplexOptions) (MultiPartFormDataClientComplexResponse, error) {
@@ -227,6 +232,7 @@ func (client *MultiPartFormDataClient) complexCreateRequest(ctx context.Context,
 }
 
 // JSONArrayParts - Test content-type: multipart/form-data for scenario contains multi json parts
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientJSONArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.JSONArrayParts
 //     method.
 func (client *MultiPartFormDataClient) JSONArrayParts(ctx context.Context, body JSONArrayPartsRequest, options *MultiPartFormDataClientJSONArrayPartsOptions) (MultiPartFormDataClientJSONArrayPartsResponse, error) {
@@ -269,6 +275,7 @@ func (client *MultiPartFormDataClient) jsonArrayPartsCreateRequest(ctx context.C
 }
 
 // JSONPart - Test content-type: multipart/form-data for scenario contains json part and binary part
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientJSONPartOptions contains the optional parameters for the MultiPartFormDataClient.JSONPart
 //     method.
 func (client *MultiPartFormDataClient) JSONPart(ctx context.Context, body JSONPartRequest, options *MultiPartFormDataClientJSONPartOptions) (MultiPartFormDataClientJSONPartResponse, error) {
@@ -311,6 +318,7 @@ func (client *MultiPartFormDataClient) jsonPartCreateRequest(ctx context.Context
 }
 
 // MultiBinaryParts - Test content-type: multipart/form-data for scenario contains multi binary parts
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultiPartFormDataClientMultiBinaryPartsOptions contains the optional parameters for the MultiPartFormDataClient.MultiBinaryParts
 //     method.
 func (client *MultiPartFormDataClient) MultiBinaryParts(ctx context.Context, body MultiBinaryPartsRequest, options *MultiPartFormDataClientMultiBinaryPartsOptions) (MultiPartFormDataClientMultiBinaryPartsResponse, error) {

@@ -19,6 +19,7 @@ type OptionalUnionIntLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionIntLiteralClientGetAllOptions contains the optional parameters for the OptionalUnionIntLiteralClient.GetAll
 //     method.
 func (client *OptionalUnionIntLiteralClient) GetAll(ctx context.Context, options *OptionalUnionIntLiteralClientGetAllOptions) (OptionalUnionIntLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalUnionIntLiteralClient) getAllHandleResponse(resp *http.Res
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionIntLiteralClientGetDefaultOptions contains the optional parameters for the OptionalUnionIntLiteralClient.GetDefault
 //     method.
 func (client *OptionalUnionIntLiteralClient) GetDefault(ctx context.Context, options *OptionalUnionIntLiteralClientGetDefaultOptions) (OptionalUnionIntLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalUnionIntLiteralClient) getDefaultHandleResponse(resp *http
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionIntLiteralClientPutAllOptions contains the optional parameters for the OptionalUnionIntLiteralClient.PutAll
 //     method.
 func (client *OptionalUnionIntLiteralClient) PutAll(ctx context.Context, body UnionIntLiteralProperty, options *OptionalUnionIntLiteralClientPutAllOptions) (OptionalUnionIntLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalUnionIntLiteralClient) putAllCreateRequest(ctx context.Con
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionIntLiteralClientPutDefaultOptions contains the optional parameters for the OptionalUnionIntLiteralClient.PutDefault
 //     method.
 func (client *OptionalUnionIntLiteralClient) PutDefault(ctx context.Context, body UnionIntLiteralProperty, options *OptionalUnionIntLiteralClientPutDefaultOptions) (OptionalUnionIntLiteralClientPutDefaultResponse, error) {

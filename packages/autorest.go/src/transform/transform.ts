@@ -711,11 +711,6 @@ function processOperationResponses(session: Session<m4.CodeModel>) {
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') && !helpers.isPageableOperation(op)) {
-        // when head-as-boolean is enabled, no error is returned for 4xx status codes.
-        // pager constructors don't return an error
-        op.language.go!.description += '\nIf the operation fails it returns an *azcore.ResponseError type.';
-      }
       // recursively add the marshalling format to the responses if applicable.
       // also remove any HTTP redirects from the list of responses.
       const filtered = new Array<m4.Response>();

@@ -19,6 +19,7 @@ type ValueTypesExtensibleEnumClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesExtensibleEnumClientGetOptions contains the optional parameters for the ValueTypesExtensibleEnumClient.Get
 //     method.
 func (client *ValueTypesExtensibleEnumClient) Get(ctx context.Context, options *ValueTypesExtensibleEnumClientGetOptions) (ValueTypesExtensibleEnumClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesExtensibleEnumClient) getHandleResponse(resp *http.Respo
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesExtensibleEnumClientPutOptions contains the optional parameters for the ValueTypesExtensibleEnumClient.Put
 //     method.

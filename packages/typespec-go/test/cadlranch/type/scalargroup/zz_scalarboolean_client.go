@@ -19,6 +19,7 @@ type ScalarBooleanClient struct {
 }
 
 // Get - get boolean value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarBooleanClientGetOptions contains the optional parameters for the ScalarBooleanClient.Get method.
 func (client *ScalarBooleanClient) Get(ctx context.Context, options *ScalarBooleanClientGetOptions) (ScalarBooleanClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ScalarBooleanClient) getHandleResponse(resp *http.Response) (Scala
 }
 
 // Put - put boolean value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - ScalarBooleanClientPutOptions contains the optional parameters for the ScalarBooleanClient.Put method.
 func (client *ScalarBooleanClient) Put(ctx context.Context, body bool, options *ScalarBooleanClientPutOptions) (ScalarBooleanClientPutResponse, error) {

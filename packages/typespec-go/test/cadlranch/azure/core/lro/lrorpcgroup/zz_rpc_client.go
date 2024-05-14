@@ -19,6 +19,9 @@ type RPCClient struct {
 }
 
 // BeginLongRunningRPC - Generate data.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - generationOptions - Options for the generation.
 //   - options - RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.BeginLongRunningRPC method.
 func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
@@ -39,6 +42,9 @@ func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOpti
 }
 
 // LongRunningRPC - Generate data.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 func (client *RPCClient) longRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RPCClient.BeginLongRunningRPC"

@@ -40,6 +40,9 @@ func NewDeletedServicesClient(subscriptionID string, credential azcore.TokenCred
 }
 
 // Delete - Permanently deletes specified service.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - deletedServiceName - The name of the deleted service.
 //   - options - DeletedServicesClientDeleteOptions contains the optional parameters for the DeletedServicesClient.Delete method.
@@ -91,6 +94,9 @@ func (client *DeletedServicesClient) deleteCreateRequest(ctx context.Context, re
 }
 
 // Get - Returns details of the soft-deleted service.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - deletedServiceName - The name of the deleted service.
 //   - options - DeletedServicesClientGetOptions contains the optional parameters for the DeletedServicesClient.Get method.
@@ -155,6 +161,8 @@ func (client *DeletedServicesClient) getHandleResponse(resp *http.Response) (Del
 }
 
 // NewListPager - Lists soft-deleted services.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - DeletedServicesClientListOptions contains the optional parameters for the DeletedServicesClient.NewListPager
 //     method.
@@ -216,6 +224,8 @@ func (client *DeletedServicesClient) listHandleResponse(resp *http.Response) (De
 }
 
 // NewListBySubscriptionPager - Lists services within an Azure subscription.
+//
+// Generated from API version 2024-03-15-preview
 //   - options - DeletedServicesClientListBySubscriptionOptions contains the optional parameters for the DeletedServicesClient.NewListBySubscriptionPager
 //     method.
 func (client *DeletedServicesClient) NewListBySubscriptionPager(options *DeletedServicesClientListBySubscriptionOptions) *runtime.Pager[DeletedServicesClientListBySubscriptionResponse] {

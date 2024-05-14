@@ -19,6 +19,7 @@ type FixedStringClient struct {
 }
 
 // GetKnownValue - getKnownValue
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - FixedStringClientGetKnownValueOptions contains the optional parameters for the FixedStringClient.GetKnownValue
 //     method.
 func (client *FixedStringClient) GetKnownValue(ctx context.Context, options *FixedStringClientGetKnownValueOptions) (FixedStringClientGetKnownValueResponse, error) {
@@ -64,6 +65,7 @@ func (client *FixedStringClient) getKnownValueHandleResponse(resp *http.Response
 }
 
 // PutKnownValue - putKnownValue
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - FixedStringClientPutKnownValueOptions contains the optional parameters for the FixedStringClient.PutKnownValue
 //     method.
@@ -103,6 +105,7 @@ func (client *FixedStringClient) putKnownValueCreateRequest(ctx context.Context,
 }
 
 // PutUnknownValue - putUnknownValue
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - FixedStringClientPutUnknownValueOptions contains the optional parameters for the FixedStringClient.PutUnknownValue
 //     method.

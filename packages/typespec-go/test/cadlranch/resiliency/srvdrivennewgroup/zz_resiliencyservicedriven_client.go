@@ -34,6 +34,7 @@ type ResiliencyServiceDrivenClient struct {
 }
 
 // AddOperation - Added operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ResiliencyServiceDrivenClientAddOperationOptions contains the optional parameters for the ResiliencyServiceDrivenClient.AddOperation
 //     method.
 func (client *ResiliencyServiceDrivenClient) AddOperation(ctx context.Context, options *ResiliencyServiceDrivenClientAddOperationOptions) (ResiliencyServiceDrivenClientAddOperationResponse, error) {
@@ -116,6 +117,7 @@ func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.C
 
 // FromOneOptional - Tests that we can grow up an operation from accepting one optional parameter to accepting two optional
 // parameters.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ResiliencyServiceDrivenClientFromOneOptionalOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneOptional
 //     method.
 func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (ResiliencyServiceDrivenClientFromOneOptionalResponse, error) {
@@ -163,6 +165,7 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 
 // FromOneRequired - Operation that grew up from accepting one required parameter to accepting a required parameter and an
 // optional parameter.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - parameter - I am a required parameter
 //   - options - ResiliencyServiceDrivenClientFromOneRequiredOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneRequired
 //     method.

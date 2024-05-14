@@ -19,6 +19,7 @@ type XMSClientRequestIDClient struct {
 }
 
 // Get - Get operation with azure `x-ms-client-request-id` header.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
 	var err error

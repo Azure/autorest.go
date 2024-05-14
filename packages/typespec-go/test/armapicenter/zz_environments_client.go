@@ -40,6 +40,9 @@ func NewEnvironmentsClient(subscriptionID string, credential azcore.TokenCredent
 }
 
 // CreateOrUpdate - Creates new or updates existing environment.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -120,6 +123,9 @@ func (client *EnvironmentsClient) createOrUpdateHandleResponse(resp *http.Respon
 }
 
 // Delete - Deletes the environment.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -181,6 +187,9 @@ func (client *EnvironmentsClient) deleteCreateRequest(ctx context.Context, resou
 }
 
 // Get - Returns details of the environment.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -255,6 +264,8 @@ func (client *EnvironmentsClient) getHandleResponse(resp *http.Response) (Enviro
 }
 
 // Head - Checks if specified environment exists.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -316,6 +327,8 @@ func (client *EnvironmentsClient) headCreateRequest(ctx context.Context, resourc
 }
 
 // NewListPager - Returns a collection of environments.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.

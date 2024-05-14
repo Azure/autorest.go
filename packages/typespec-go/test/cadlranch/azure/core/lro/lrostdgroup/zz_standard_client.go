@@ -22,6 +22,9 @@ type StandardClient struct {
 }
 
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - resource - The resource instance.
 //   - options - StandardClientBeginCreateOrReplaceOptions contains the optional parameters for the StandardClient.BeginCreateOrReplace
@@ -44,6 +47,9 @@ func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name str
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 func (client *StandardClient) createOrReplace(ctx context.Context, name string, resource User, options *StandardClientBeginCreateOrReplaceOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginCreateOrReplace"
@@ -88,6 +94,9 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 }
 
 // BeginDelete - Deletes a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - options - StandardClientBeginDeleteOptions contains the optional parameters for the StandardClient.BeginDelete method.
 func (client *StandardClient) BeginDelete(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*runtime.Poller[StandardClientDeleteResponse], error) {
@@ -108,6 +117,9 @@ func (client *StandardClient) BeginDelete(ctx context.Context, name string, opti
 }
 
 // Delete - Deletes a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 func (client *StandardClient) deleteOperation(ctx context.Context, name string, options *StandardClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginDelete"
@@ -148,6 +160,9 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 }
 
 // BeginExport - Exports a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 //   - name - The name of user.
 //   - formatParam - The format of the data.
 //   - options - StandardClientBeginExportOptions contains the optional parameters for the StandardClient.BeginExport method.
@@ -169,6 +184,9 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 }
 
 // Export - Exports a user.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
 func (client *StandardClient) export(ctx context.Context, name string, formatParam string, options *StandardClientBeginExportOptions) (*http.Response, error) {
 	var err error
 	const operationName = "StandardClient.BeginExport"

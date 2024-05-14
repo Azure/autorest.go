@@ -19,6 +19,7 @@ type OptionalDatetimeClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDatetimeClientGetAllOptions contains the optional parameters for the OptionalDatetimeClient.GetAll method.
 func (client *OptionalDatetimeClient) GetAll(ctx context.Context, options *OptionalDatetimeClientGetAllOptions) (OptionalDatetimeClientGetAllResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *OptionalDatetimeClient) getAllHandleResponse(resp *http.Response) 
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDatetimeClientGetDefaultOptions contains the optional parameters for the OptionalDatetimeClient.GetDefault
 //     method.
 func (client *OptionalDatetimeClient) GetDefault(ctx context.Context, options *OptionalDatetimeClientGetDefaultOptions) (OptionalDatetimeClientGetDefaultResponse, error) {
@@ -108,6 +110,7 @@ func (client *OptionalDatetimeClient) getDefaultHandleResponse(resp *http.Respon
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDatetimeClientPutAllOptions contains the optional parameters for the OptionalDatetimeClient.PutAll method.
 func (client *OptionalDatetimeClient) PutAll(ctx context.Context, body DatetimeProperty, options *OptionalDatetimeClientPutAllOptions) (OptionalDatetimeClientPutAllResponse, error) {
 	var err error
@@ -145,6 +148,7 @@ func (client *OptionalDatetimeClient) putAllCreateRequest(ctx context.Context, b
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDatetimeClientPutDefaultOptions contains the optional parameters for the OptionalDatetimeClient.PutDefault
 //     method.
 func (client *OptionalDatetimeClient) PutDefault(ctx context.Context, body DatetimeProperty, options *OptionalDatetimeClientPutDefaultOptions) (OptionalDatetimeClientPutDefaultResponse, error) {

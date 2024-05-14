@@ -41,6 +41,9 @@ func NewAzureLargeStorageInstancesClient(subscriptionID string, credential azcor
 
 // Get - Gets an Azure Large Storage instance for the specified subscription, resource
 // group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
 //   - options - AzureLargeStorageInstancesClientGetOptions contains the optional parameters for the AzureLargeStorageInstancesClient.Get
@@ -105,6 +108,8 @@ func (client *AzureLargeStorageInstancesClient) getHandleResponse(resp *http.Res
 // NewListByResourceGroupPager - Gets a list of AzureLargeStorageInstances in the specified subscription and
 // resource group. The operations returns various properties of each Azure
 // LargeStorage instance.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - AzureLargeStorageInstancesClientListByResourceGroupOptions contains the optional parameters for the AzureLargeStorageInstancesClient.NewListByResourceGroupPager
 //     method.
@@ -164,6 +169,8 @@ func (client *AzureLargeStorageInstancesClient) listByResourceGroupHandleRespons
 
 // NewListBySubscriptionPager - Gets a list of AzureLargeStorageInstances in the specified subscription. The
 // operations returns various properties of each Azure LargeStorage instance.
+//
+// Generated from API version 2023-07-20-preview
 //   - options - AzureLargeStorageInstancesClientListBySubscriptionOptions contains the optional parameters for the AzureLargeStorageInstancesClient.NewListBySubscriptionPager
 //     method.
 func (client *AzureLargeStorageInstancesClient) NewListBySubscriptionPager(options *AzureLargeStorageInstancesClientListBySubscriptionOptions) *runtime.Pager[AzureLargeStorageInstancesClientListBySubscriptionResponse] {
@@ -218,6 +225,9 @@ func (client *AzureLargeStorageInstancesClient) listBySubscriptionHandleResponse
 
 // Update - Patches the Tags field of a Azure Large Storage Instance for the specified
 // subscription, resource group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
 //   - properties - The resource properties to be updated.

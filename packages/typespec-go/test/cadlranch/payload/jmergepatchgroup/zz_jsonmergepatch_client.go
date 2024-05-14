@@ -19,6 +19,7 @@ type JSONMergePatchClient struct {
 }
 
 // CreateResource - Test content-type: application/merge-patch+json with required body
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - JSONMergePatchClientCreateResourceOptions contains the optional parameters for the JSONMergePatchClient.CreateResource
 //     method.
 func (client *JSONMergePatchClient) CreateResource(ctx context.Context, body Resource, options *JSONMergePatchClientCreateResourceOptions) (JSONMergePatchClientCreateResourceResponse, error) {
@@ -68,6 +69,7 @@ func (client *JSONMergePatchClient) createResourceHandleResponse(resp *http.Resp
 }
 
 // UpdateOptionalResource - Test content-type: application/merge-patch+json with optional body
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - JSONMergePatchClientUpdateOptionalResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateOptionalResource
 //     method.
 func (client *JSONMergePatchClient) UpdateOptionalResource(ctx context.Context, options *JSONMergePatchClientUpdateOptionalResourceOptions) (JSONMergePatchClientUpdateOptionalResourceResponse, error) {
@@ -120,6 +122,7 @@ func (client *JSONMergePatchClient) updateOptionalResourceHandleResponse(resp *h
 }
 
 // UpdateResource - Test content-type: application/merge-patch+json with required body
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - JSONMergePatchClientUpdateResourceOptions contains the optional parameters for the JSONMergePatchClient.UpdateResource
 //     method.
 func (client *JSONMergePatchClient) UpdateResource(ctx context.Context, body ResourcePatch, options *JSONMergePatchClientUpdateResourceOptions) (JSONMergePatchClientUpdateResourceResponse, error) {

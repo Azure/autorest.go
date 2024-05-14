@@ -19,6 +19,7 @@ type APIKeyClient struct {
 }
 
 // Invalid - Check whether client is authenticated.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - APIKeyClientInvalidOptions contains the optional parameters for the APIKeyClient.Invalid method.
 func (client *APIKeyClient) Invalid(ctx context.Context, options *APIKeyClientInvalidOptions) (APIKeyClientInvalidResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *APIKeyClient) invalidHandleResponse(resp *http.Response) (APIKeyCl
 }
 
 // Valid - Check whether client is authenticated
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - APIKeyClientValidOptions contains the optional parameters for the APIKeyClient.Valid method.
 func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientValidOptions) (APIKeyClientValidResponse, error) {
 	var err error

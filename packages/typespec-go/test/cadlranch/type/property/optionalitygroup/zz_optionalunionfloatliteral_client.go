@@ -19,6 +19,7 @@ type OptionalUnionFloatLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionFloatLiteralClientGetAllOptions contains the optional parameters for the OptionalUnionFloatLiteralClient.GetAll
 //     method.
 func (client *OptionalUnionFloatLiteralClient) GetAll(ctx context.Context, options *OptionalUnionFloatLiteralClientGetAllOptions) (OptionalUnionFloatLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalUnionFloatLiteralClient) getAllHandleResponse(resp *http.R
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionFloatLiteralClientGetDefaultOptions contains the optional parameters for the OptionalUnionFloatLiteralClient.GetDefault
 //     method.
 func (client *OptionalUnionFloatLiteralClient) GetDefault(ctx context.Context, options *OptionalUnionFloatLiteralClientGetDefaultOptions) (OptionalUnionFloatLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalUnionFloatLiteralClient) getDefaultHandleResponse(resp *ht
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionFloatLiteralClientPutAllOptions contains the optional parameters for the OptionalUnionFloatLiteralClient.PutAll
 //     method.
 func (client *OptionalUnionFloatLiteralClient) PutAll(ctx context.Context, body UnionFloatLiteralProperty, options *OptionalUnionFloatLiteralClientPutAllOptions) (OptionalUnionFloatLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalUnionFloatLiteralClient) putAllCreateRequest(ctx context.C
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalUnionFloatLiteralClientPutDefaultOptions contains the optional parameters for the OptionalUnionFloatLiteralClient.PutDefault
 //     method.
 func (client *OptionalUnionFloatLiteralClient) PutDefault(ctx context.Context, body UnionFloatLiteralProperty, options *OptionalUnionFloatLiteralClientPutDefaultOptions) (OptionalUnionFloatLiteralClientPutDefaultResponse, error) {

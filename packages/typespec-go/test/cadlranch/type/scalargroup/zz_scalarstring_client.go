@@ -19,6 +19,7 @@ type ScalarStringClient struct {
 }
 
 // Get - get string value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarStringClientGetOptions contains the optional parameters for the ScalarStringClient.Get method.
 func (client *ScalarStringClient) Get(ctx context.Context, options *ScalarStringClientGetOptions) (ScalarStringClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ScalarStringClient) getHandleResponse(resp *http.Response) (Scalar
 }
 
 // Put - put string value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - ScalarStringClientPutOptions contains the optional parameters for the ScalarStringClient.Put method.
 func (client *ScalarStringClient) Put(ctx context.Context, body string, options *ScalarStringClientPutOptions) (ScalarStringClientPutResponse, error) {

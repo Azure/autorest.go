@@ -19,6 +19,7 @@ type ValueTypesBooleanClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesBooleanClientGetOptions contains the optional parameters for the ValueTypesBooleanClient.Get method.
 func (client *ValueTypesBooleanClient) Get(ctx context.Context, options *ValueTypesBooleanClientGetOptions) (ValueTypesBooleanClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesBooleanClient) getHandleResponse(resp *http.Response) (V
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesBooleanClientPutOptions contains the optional parameters for the ValueTypesBooleanClient.Put method.
 func (client *ValueTypesBooleanClient) Put(ctx context.Context, body BooleanProperty, options *ValueTypesBooleanClientPutOptions) (ValueTypesBooleanClientPutResponse, error) {
