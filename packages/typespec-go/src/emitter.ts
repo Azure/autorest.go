@@ -5,6 +5,7 @@
 
 import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
+import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
 import { generateGoModFile } from '../../codegen.go/src/gomod.js';
 import { generateInterfaces } from '../../codegen.go/src/interfaces.js';
@@ -15,7 +16,7 @@ import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js
 import { generateResponses } from '../../codegen.go/src/responses.js';
 import { generateTimeHelpers } from '../../codegen.go/src/time.js';
 import { generateServers } from '../../codegen.go/src/fake/servers.js';
-//import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
+import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { EmitContext } from '@typespec/compiler';
@@ -43,6 +44,11 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     if (filePrefix[filePrefix.length - 1] !== '_') {
       filePrefix += '_';
     }
+  }
+
+  const clientFactory = await generateClientFactory(codeModel);
+  if (clientFactory.length > 0) {
+    writeFile(`${context.emitterOutputDir}/${filePrefix}client_factory.go`, clientFactory);
   }
 
   const constants = await generateConstants(codeModel);
@@ -114,11 +120,10 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
         writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }
 
-      // TODO: skip server factory for now as we don't generate it (yet)
-      /*const serverFactory = generateServerFactory(codeModel);
-      if (serverFactory !== '') {
+      const serverFactory = generateServerFactory(codeModel);
+      if (serverFactory.length > 0) {
         writeFile(`${fakesDir}/${filePrefix}server_factory.go`, serverFactory);
-      }*/
+      }
 
       writeFile(`${fakesDir}/${filePrefix}internal.go`, serverContent.internals);
 

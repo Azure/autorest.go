@@ -13,8 +13,8 @@ import (
 	"sync"
 )
 
-// Server is a fake server for instances of the armlargeinstance.Client type.
-type Server struct {
+// ServerFactory is a fake server for instances of the armlargeinstance.ClientFactory type.
+type ServerFactory struct {
 	// AzureLargeInstancesServer contains the fakes for client AzureLargeInstancesClient
 	AzureLargeInstancesServer AzureLargeInstancesServer
 
@@ -25,57 +25,66 @@ type Server struct {
 	OperationsServer OperationsServer
 }
 
-// NewServerTransport creates a new instance of ServerTransport with the provided implementation.
-// The returned ServerTransport instance is connected to an instance of armlargeinstance.Client via the
+// NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
+// The returned ServerFactoryTransport instance is connected to an instance of armlargeinstance.ClientFactory via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewServerTransport(srv *Server) *ServerTransport {
-	return &ServerTransport{srv: srv}
+func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
+	return &ServerFactoryTransport{
+		srv: srv,
+	}
 }
 
-// ServerTransport connects instances of armlargeinstance.Client to instances of Server.
-// Don't use this type directly, use NewServerTransport instead.
-type ServerTransport struct {
-	srv                                *Server
+// ServerFactoryTransport connects instances of armlargeinstance.ClientFactory to instances of ServerFactory.
+// Don't use this type directly, use NewServerFactoryTransport instead.
+type ServerFactoryTransport struct {
+	srv                                *ServerFactory
 	trMu                               sync.Mutex
 	trAzureLargeInstancesServer        *AzureLargeInstancesServerTransport
 	trAzureLargeStorageInstancesServer *AzureLargeStorageInstancesServerTransport
 	trOperationsServer                 *OperationsServerTransport
 }
 
-// Do implements the policy.Transporter interface for ServerTransport.
-func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ServerFactoryTransport.
+func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return s.dispatchToClientFake(req, method[:strings.Index(method, ".")])
-}
-
-func (s *ServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	client := method[:strings.Index(method, ".")]
 	var resp *http.Response
 	var err error
 
 	switch client {
 	case "AzureLargeInstancesClient":
-		initServer(&s.trMu, &s.trAzureLargeInstancesServer, func() *AzureLargeInstancesServerTransport {
+		initServer(s, &s.trAzureLargeInstancesServer, func() *AzureLargeInstancesServerTransport {
 			return NewAzureLargeInstancesServerTransport(&s.srv.AzureLargeInstancesServer)
 		})
 		resp, err = s.trAzureLargeInstancesServer.Do(req)
 	case "AzureLargeStorageInstancesClient":
-		initServer(&s.trMu, &s.trAzureLargeStorageInstancesServer, func() *AzureLargeStorageInstancesServerTransport {
+		initServer(s, &s.trAzureLargeStorageInstancesServer, func() *AzureLargeStorageInstancesServerTransport {
 			return NewAzureLargeStorageInstancesServerTransport(&s.srv.AzureLargeStorageInstancesServer)
 		})
 		resp, err = s.trAzureLargeStorageInstancesServer.Do(req)
 	case "OperationsClient":
-		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport {
-			return NewOperationsServerTransport(&s.srv.OperationsServer)
-		})
+		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
 
-	return resp, err
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
+	s.trMu.Lock()
+	if *dst == nil {
+		*dst = src()
+	}
+	s.trMu.Unlock()
 }

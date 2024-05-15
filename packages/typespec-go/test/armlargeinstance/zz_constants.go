@@ -4,8 +4,6 @@
 
 package armlargeinstance
 
-const host = "https://management.azure.com"
-
 const (
 	moduleName    = "armlargeinstance"
 	moduleVersion = "v0.1.0"
