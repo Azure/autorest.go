@@ -10,12 +10,6 @@ type InputModel struct {
 	Name *string
 }
 
-// OrphanModel - Not used anywhere, but access is override to public so still need to be generated and exported with serialization.
-type OrphanModel struct {
-	// REQUIRED
-	Name *string
-}
-
 // OutputModel - Usage override to roundtrip.
 type OutputModel struct {
 	// REQUIRED

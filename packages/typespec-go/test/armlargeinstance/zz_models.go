@@ -4,10 +4,7 @@
 
 package armlargeinstance
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"time"
-)
+import "time"
 
 // AzureLargeInstance - Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 // properties)
@@ -95,6 +92,36 @@ type Disk struct {
 
 	// The disk name.
 	Name *string
+}
+
+// ErrorAdditionalInfo - The resource management error additional info.
+type ErrorAdditionalInfo struct {
+	// The additional info.
+	Info *ErrorAdditionalInfoInfo
+
+	// The additional info type.
+	Type *string
+}
+
+type ErrorAdditionalInfoInfo struct {
+}
+
+// ErrorDetail - The error detail.
+type ErrorDetail struct {
+	// The error additional info.
+	AdditionalInfo []*ErrorAdditionalInfo
+
+	// The error code.
+	Code *string
+
+	// The error details.
+	Details []*ErrorDetail
+
+	// The error message.
+	Message *string
+
+	// The error target.
+	Target *string
 }
 
 // ForceState - The active state empowers the server with the ability to forcefully terminate
@@ -186,7 +213,7 @@ type OperationStatusResult struct {
 	EndTime *time.Time
 
 	// If present, details of the operation error.
-	Error *azcore.ResponseError
+	Error *ErrorDetail
 
 	// Fully qualified ID for the async operation.
 	ID *string

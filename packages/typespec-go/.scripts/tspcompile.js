@@ -117,16 +117,16 @@ function should_generate(name) {
 }
 
 const armcodesigning = pkgRoot + 'test/tsp/CodeSigning.Management';
-generate('armcodesigning', armcodesigning, 'test/armcodesigning', ['remove-unreferenced-types=true']);
+generate('armcodesigning', armcodesigning, 'test/armcodesigning');
 
 const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
-generate('armapicenter', armapicenter, 'test/armapicenter', ['remove-unreferenced-types=true']);
+generate('armapicenter', armapicenter, 'test/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance', 'remove-unreferenced-types=true']);
+generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher');
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false']);
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
@@ -156,6 +156,7 @@ function generate(moduleName, input, outputDir, additionalArgs) {
       additionalArgs[i] = `--option="@azure-tools/typespec-go.${additionalArgs[i]}"`;
     }
   }
+
   sem.take(function() {
     // default to main.tsp if a .tsp file isn't specified in the input
     if (input.lastIndexOf('.tsp') === -1) {
@@ -172,6 +173,7 @@ function generate(moduleName, input, outputDir, additionalArgs) {
       options.push(`--option="@azure-tools/typespec-go.generate-fakes=true"`);
       options.push(`--option="@azure-tools/typespec-go.inject-spans=true"`);
       options.push(`--option="@azure-tools/typespec-go.head-as-boolean=true"`);
+      options.push(`--option="@azure-tools/typespec-go.remove-unreferenced-types=true"`);
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
