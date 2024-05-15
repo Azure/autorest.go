@@ -4,8 +4,6 @@
 
 package armcodesigning
 
-const host = "https://management.azure.com"
-
 const (
 	moduleName    = "armcodesigning"
 	moduleVersion = "v0.1.0"

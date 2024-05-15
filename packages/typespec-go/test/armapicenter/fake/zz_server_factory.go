@@ -13,8 +13,8 @@ import (
 	"sync"
 )
 
-// Server is a fake server for instances of the armapicenter.Client type.
-type Server struct {
+// ServerFactory is a fake server for instances of the armapicenter.ClientFactory type.
+type ServerFactory struct {
 	// APIDefinitionsServer contains the fakes for client APIDefinitionsClient
 	APIDefinitionsServer APIDefinitionsServer
 
@@ -46,17 +46,19 @@ type Server struct {
 	WorkspacesServer WorkspacesServer
 }
 
-// NewServerTransport creates a new instance of ServerTransport with the provided implementation.
-// The returned ServerTransport instance is connected to an instance of armapicenter.Client via the
+// NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
+// The returned ServerFactoryTransport instance is connected to an instance of armapicenter.ClientFactory via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewServerTransport(srv *Server) *ServerTransport {
-	return &ServerTransport{srv: srv}
+func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
+	return &ServerFactoryTransport{
+		srv: srv,
+	}
 }
 
-// ServerTransport connects instances of armapicenter.Client to instances of Server.
-// Don't use this type directly, use NewServerTransport instead.
-type ServerTransport struct {
-	srv                     *Server
+// ServerFactoryTransport connects instances of armapicenter.ClientFactory to instances of ServerFactory.
+// Don't use this type directly, use NewServerFactoryTransport instead.
+type ServerFactoryTransport struct {
+	srv                     *ServerFactory
 	trMu                    sync.Mutex
 	trAPIDefinitionsServer  *APIDefinitionsServerTransport
 	trAPIVersionsServer     *APIVersionsServerTransport
@@ -70,75 +72,70 @@ type ServerTransport struct {
 	trWorkspacesServer      *WorkspacesServerTransport
 }
 
-// Do implements the policy.Transporter interface for ServerTransport.
-func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ServerFactoryTransport.
+func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	return s.dispatchToClientFake(req, method[:strings.Index(method, ".")])
-}
-
-func (s *ServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
+	client := method[:strings.Index(method, ".")]
 	var resp *http.Response
 	var err error
 
 	switch client {
 	case "APIDefinitionsClient":
-		initServer(&s.trMu, &s.trAPIDefinitionsServer, func() *APIDefinitionsServerTransport {
+		initServer(s, &s.trAPIDefinitionsServer, func() *APIDefinitionsServerTransport {
 			return NewAPIDefinitionsServerTransport(&s.srv.APIDefinitionsServer)
 		})
 		resp, err = s.trAPIDefinitionsServer.Do(req)
 	case "APIVersionsClient":
-		initServer(&s.trMu, &s.trAPIVersionsServer, func() *APIVersionsServerTransport {
-			return NewAPIVersionsServerTransport(&s.srv.APIVersionsServer)
-		})
+		initServer(s, &s.trAPIVersionsServer, func() *APIVersionsServerTransport { return NewAPIVersionsServerTransport(&s.srv.APIVersionsServer) })
 		resp, err = s.trAPIVersionsServer.Do(req)
 	case "ApisClient":
-		initServer(&s.trMu, &s.trApisServer, func() *ApisServerTransport {
-			return NewApisServerTransport(&s.srv.ApisServer)
-		})
+		initServer(s, &s.trApisServer, func() *ApisServerTransport { return NewApisServerTransport(&s.srv.ApisServer) })
 		resp, err = s.trApisServer.Do(req)
 	case "DeletedServicesClient":
-		initServer(&s.trMu, &s.trDeletedServicesServer, func() *DeletedServicesServerTransport {
+		initServer(s, &s.trDeletedServicesServer, func() *DeletedServicesServerTransport {
 			return NewDeletedServicesServerTransport(&s.srv.DeletedServicesServer)
 		})
 		resp, err = s.trDeletedServicesServer.Do(req)
 	case "DeploymentsClient":
-		initServer(&s.trMu, &s.trDeploymentsServer, func() *DeploymentsServerTransport {
-			return NewDeploymentsServerTransport(&s.srv.DeploymentsServer)
-		})
+		initServer(s, &s.trDeploymentsServer, func() *DeploymentsServerTransport { return NewDeploymentsServerTransport(&s.srv.DeploymentsServer) })
 		resp, err = s.trDeploymentsServer.Do(req)
 	case "EnvironmentsClient":
-		initServer(&s.trMu, &s.trEnvironmentsServer, func() *EnvironmentsServerTransport {
-			return NewEnvironmentsServerTransport(&s.srv.EnvironmentsServer)
-		})
+		initServer(s, &s.trEnvironmentsServer, func() *EnvironmentsServerTransport { return NewEnvironmentsServerTransport(&s.srv.EnvironmentsServer) })
 		resp, err = s.trEnvironmentsServer.Do(req)
 	case "MetadataSchemasClient":
-		initServer(&s.trMu, &s.trMetadataSchemasServer, func() *MetadataSchemasServerTransport {
+		initServer(s, &s.trMetadataSchemasServer, func() *MetadataSchemasServerTransport {
 			return NewMetadataSchemasServerTransport(&s.srv.MetadataSchemasServer)
 		})
 		resp, err = s.trMetadataSchemasServer.Do(req)
 	case "OperationsClient":
-		initServer(&s.trMu, &s.trOperationsServer, func() *OperationsServerTransport {
-			return NewOperationsServerTransport(&s.srv.OperationsServer)
-		})
+		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)
 	case "ServicesClient":
-		initServer(&s.trMu, &s.trServicesServer, func() *ServicesServerTransport {
-			return NewServicesServerTransport(&s.srv.ServicesServer)
-		})
+		initServer(s, &s.trServicesServer, func() *ServicesServerTransport { return NewServicesServerTransport(&s.srv.ServicesServer) })
 		resp, err = s.trServicesServer.Do(req)
 	case "WorkspacesClient":
-		initServer(&s.trMu, &s.trWorkspacesServer, func() *WorkspacesServerTransport {
-			return NewWorkspacesServerTransport(&s.srv.WorkspacesServer)
-		})
+		initServer(s, &s.trWorkspacesServer, func() *WorkspacesServerTransport { return NewWorkspacesServerTransport(&s.srv.WorkspacesServer) })
 		resp, err = s.trWorkspacesServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}
 
-	return resp, err
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func initServer[T any](s *ServerFactoryTransport, dst **T, src func() *T) {
+	s.trMu.Lock()
+	if *dst == nil {
+		*dst = src()
+	}
+	s.trMu.Unlock()
 }

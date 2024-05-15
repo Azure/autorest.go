@@ -88,7 +88,10 @@ export class clientAdapter {
           continue;
         } else if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
           // this will either be a fixed or templated host
-          goClient.host = param.type.serverUrl;
+          // don't set the fixed host for ARM as it isn't used
+          if (this.ta.codeModel.type !== 'azure-arm') {
+            goClient.host = param.type.serverUrl;
+          }
           if (param.type.templateArguments.length === 0) {
             // this is the param for the fixed host, don't create a param for it
             if (!this.ta.codeModel.host) {
@@ -134,7 +137,13 @@ export class clientAdapter {
       }
     }
 
-    this.ta.codeModel.clients.push(goClient);
+    if (this.ta.codeModel.type === 'azure-arm' && goClient.clientAccessors.length > 0 && goClient.methods.length === 0) {
+      // this is the service client. to keep compat with existing
+      // ARM SDKs we skip adding it to the code model in favor of
+      // the synthesized client factory.
+    } else {
+      this.ta.codeModel.clients.push(goClient);
+    }
     return goClient;
   }
 

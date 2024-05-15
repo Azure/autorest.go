@@ -4,8 +4,6 @@
 
 package armdatabasewatcher
 
-const host = "https://management.azure.com"
-
 const (
 	moduleName    = "armdatabasewatcher"
 	moduleVersion = "v0.1.0"
