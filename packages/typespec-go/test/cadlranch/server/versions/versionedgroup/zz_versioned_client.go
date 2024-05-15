@@ -21,6 +21,9 @@ type VersionedClient struct {
 	endpoint string
 }
 
+// WithPathAPIVersion -
+//
+// Generated from API version 2022-12-01-preview
 //   - options - VersionedClientWithPathAPIVersionOptions contains the optional parameters for the VersionedClient.WithPathAPIVersion
 //     method.
 func (client *VersionedClient) WithPathAPIVersion(ctx context.Context, options *VersionedClientWithPathAPIVersionOptions) (VersionedClientWithPathAPIVersionResponse, error) {
@@ -57,6 +60,9 @@ func (client *VersionedClient) withPathAPIVersionCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithQueryAPIVersion -
+//
+// Generated from API version 2022-12-01-preview
 //   - options - VersionedClientWithQueryAPIVersionOptions contains the optional parameters for the VersionedClient.WithQueryAPIVersion
 //     method.
 func (client *VersionedClient) WithQueryAPIVersion(ctx context.Context, options *VersionedClientWithQueryAPIVersionOptions) (VersionedClientWithQueryAPIVersionResponse, error) {
@@ -95,6 +101,9 @@ func (client *VersionedClient) withQueryAPIVersionCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithQueryOldAPIVersion -
+//
+// Generated from API version 2022-12-01-preview
 //   - options - VersionedClientWithQueryOldAPIVersionOptions contains the optional parameters for the VersionedClient.WithQueryOldAPIVersion
 //     method.
 func (client *VersionedClient) WithQueryOldAPIVersion(ctx context.Context, options *VersionedClientWithQueryOldAPIVersionOptions) (VersionedClientWithQueryOldAPIVersionResponse, error) {

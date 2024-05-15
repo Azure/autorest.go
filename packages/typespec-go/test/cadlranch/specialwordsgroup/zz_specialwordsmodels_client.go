@@ -18,6 +18,8 @@ type SpecialWordsModelsClient struct {
 	internal *azcore.Client
 }
 
+// WithAnd -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithAndOptions contains the optional parameters for the SpecialWordsModelsClient.WithAnd
 //     method.
 func (client *SpecialWordsModelsClient) WithAnd(ctx context.Context, body And, options *SpecialWordsModelsClientWithAndOptions) (SpecialWordsModelsClientWithAndResponse, error) {
@@ -55,6 +57,8 @@ func (client *SpecialWordsModelsClient) withAndCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithAs -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithAsOptions contains the optional parameters for the SpecialWordsModelsClient.WithAs
 //     method.
 func (client *SpecialWordsModelsClient) WithAs(ctx context.Context, body As, options *SpecialWordsModelsClientWithAsOptions) (SpecialWordsModelsClientWithAsResponse, error) {
@@ -92,6 +96,8 @@ func (client *SpecialWordsModelsClient) withAsCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// WithAssert -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithAssertOptions contains the optional parameters for the SpecialWordsModelsClient.WithAssert
 //     method.
 func (client *SpecialWordsModelsClient) WithAssert(ctx context.Context, body Assert, options *SpecialWordsModelsClientWithAssertOptions) (SpecialWordsModelsClientWithAssertResponse, error) {
@@ -129,6 +135,8 @@ func (client *SpecialWordsModelsClient) withAssertCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithAsync -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithAsyncOptions contains the optional parameters for the SpecialWordsModelsClient.WithAsync
 //     method.
 func (client *SpecialWordsModelsClient) WithAsync(ctx context.Context, body Async, options *SpecialWordsModelsClientWithAsyncOptions) (SpecialWordsModelsClientWithAsyncResponse, error) {
@@ -166,6 +174,8 @@ func (client *SpecialWordsModelsClient) withAsyncCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithAwait -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithAwaitOptions contains the optional parameters for the SpecialWordsModelsClient.WithAwait
 //     method.
 func (client *SpecialWordsModelsClient) WithAwait(ctx context.Context, body Await, options *SpecialWordsModelsClientWithAwaitOptions) (SpecialWordsModelsClientWithAwaitResponse, error) {
@@ -203,6 +213,8 @@ func (client *SpecialWordsModelsClient) withAwaitCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithBreak -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithBreakOptions contains the optional parameters for the SpecialWordsModelsClient.WithBreak
 //     method.
 func (client *SpecialWordsModelsClient) WithBreak(ctx context.Context, body Break, options *SpecialWordsModelsClientWithBreakOptions) (SpecialWordsModelsClientWithBreakResponse, error) {
@@ -240,6 +252,8 @@ func (client *SpecialWordsModelsClient) withBreakCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithClass -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithClassOptions contains the optional parameters for the SpecialWordsModelsClient.WithClass
 //     method.
 func (client *SpecialWordsModelsClient) WithClass(ctx context.Context, body Class, options *SpecialWordsModelsClientWithClassOptions) (SpecialWordsModelsClientWithClassResponse, error) {
@@ -277,6 +291,8 @@ func (client *SpecialWordsModelsClient) withClassCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithConstructor -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithConstructorOptions contains the optional parameters for the SpecialWordsModelsClient.WithConstructor
 //     method.
 func (client *SpecialWordsModelsClient) WithConstructor(ctx context.Context, body Constructor, options *SpecialWordsModelsClientWithConstructorOptions) (SpecialWordsModelsClientWithConstructorResponse, error) {
@@ -314,6 +330,8 @@ func (client *SpecialWordsModelsClient) withConstructorCreateRequest(ctx context
 	return req, nil
 }
 
+// WithContinue -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithContinueOptions contains the optional parameters for the SpecialWordsModelsClient.WithContinue
 //     method.
 func (client *SpecialWordsModelsClient) WithContinue(ctx context.Context, body Continue, options *SpecialWordsModelsClientWithContinueOptions) (SpecialWordsModelsClientWithContinueResponse, error) {
@@ -351,6 +369,8 @@ func (client *SpecialWordsModelsClient) withContinueCreateRequest(ctx context.Co
 	return req, nil
 }
 
+// WithDef -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithDefOptions contains the optional parameters for the SpecialWordsModelsClient.WithDef
 //     method.
 func (client *SpecialWordsModelsClient) WithDef(ctx context.Context, body Def, options *SpecialWordsModelsClientWithDefOptions) (SpecialWordsModelsClientWithDefResponse, error) {
@@ -388,6 +408,8 @@ func (client *SpecialWordsModelsClient) withDefCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithDel -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithDelOptions contains the optional parameters for the SpecialWordsModelsClient.WithDel
 //     method.
 func (client *SpecialWordsModelsClient) WithDel(ctx context.Context, body Del, options *SpecialWordsModelsClientWithDelOptions) (SpecialWordsModelsClientWithDelResponse, error) {
@@ -425,6 +447,8 @@ func (client *SpecialWordsModelsClient) withDelCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithElif -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithElifOptions contains the optional parameters for the SpecialWordsModelsClient.WithElif
 //     method.
 func (client *SpecialWordsModelsClient) WithElif(ctx context.Context, body Elif, options *SpecialWordsModelsClientWithElifOptions) (SpecialWordsModelsClientWithElifResponse, error) {
@@ -462,6 +486,8 @@ func (client *SpecialWordsModelsClient) withElifCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithElse -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithElseOptions contains the optional parameters for the SpecialWordsModelsClient.WithElse
 //     method.
 func (client *SpecialWordsModelsClient) WithElse(ctx context.Context, body Else, options *SpecialWordsModelsClientWithElseOptions) (SpecialWordsModelsClientWithElseResponse, error) {
@@ -499,6 +525,8 @@ func (client *SpecialWordsModelsClient) withElseCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithExcept -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithExceptOptions contains the optional parameters for the SpecialWordsModelsClient.WithExcept
 //     method.
 func (client *SpecialWordsModelsClient) WithExcept(ctx context.Context, body Except, options *SpecialWordsModelsClientWithExceptOptions) (SpecialWordsModelsClientWithExceptResponse, error) {
@@ -536,6 +564,8 @@ func (client *SpecialWordsModelsClient) withExceptCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithExec -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithExecOptions contains the optional parameters for the SpecialWordsModelsClient.WithExec
 //     method.
 func (client *SpecialWordsModelsClient) WithExec(ctx context.Context, body Exec, options *SpecialWordsModelsClientWithExecOptions) (SpecialWordsModelsClientWithExecResponse, error) {
@@ -573,6 +603,8 @@ func (client *SpecialWordsModelsClient) withExecCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithFinally -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithFinallyOptions contains the optional parameters for the SpecialWordsModelsClient.WithFinally
 //     method.
 func (client *SpecialWordsModelsClient) WithFinally(ctx context.Context, body Finally, options *SpecialWordsModelsClientWithFinallyOptions) (SpecialWordsModelsClientWithFinallyResponse, error) {
@@ -610,6 +642,8 @@ func (client *SpecialWordsModelsClient) withFinallyCreateRequest(ctx context.Con
 	return req, nil
 }
 
+// WithFor -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithForOptions contains the optional parameters for the SpecialWordsModelsClient.WithFor
 //     method.
 func (client *SpecialWordsModelsClient) WithFor(ctx context.Context, body For, options *SpecialWordsModelsClientWithForOptions) (SpecialWordsModelsClientWithForResponse, error) {
@@ -647,6 +681,8 @@ func (client *SpecialWordsModelsClient) withForCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithFrom -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithFromOptions contains the optional parameters for the SpecialWordsModelsClient.WithFrom
 //     method.
 func (client *SpecialWordsModelsClient) WithFrom(ctx context.Context, body From, options *SpecialWordsModelsClientWithFromOptions) (SpecialWordsModelsClientWithFromResponse, error) {
@@ -684,6 +720,8 @@ func (client *SpecialWordsModelsClient) withFromCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithGlobal -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithGlobalOptions contains the optional parameters for the SpecialWordsModelsClient.WithGlobal
 //     method.
 func (client *SpecialWordsModelsClient) WithGlobal(ctx context.Context, body Global, options *SpecialWordsModelsClientWithGlobalOptions) (SpecialWordsModelsClientWithGlobalResponse, error) {
@@ -721,6 +759,8 @@ func (client *SpecialWordsModelsClient) withGlobalCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithIf -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithIfOptions contains the optional parameters for the SpecialWordsModelsClient.WithIf
 //     method.
 func (client *SpecialWordsModelsClient) WithIf(ctx context.Context, body If, options *SpecialWordsModelsClientWithIfOptions) (SpecialWordsModelsClientWithIfResponse, error) {
@@ -758,6 +798,8 @@ func (client *SpecialWordsModelsClient) withIfCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// WithImport -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithImportOptions contains the optional parameters for the SpecialWordsModelsClient.WithImport
 //     method.
 func (client *SpecialWordsModelsClient) WithImport(ctx context.Context, body Import, options *SpecialWordsModelsClientWithImportOptions) (SpecialWordsModelsClientWithImportResponse, error) {
@@ -795,6 +837,8 @@ func (client *SpecialWordsModelsClient) withImportCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithIn -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithInOptions contains the optional parameters for the SpecialWordsModelsClient.WithIn
 //     method.
 func (client *SpecialWordsModelsClient) WithIn(ctx context.Context, body In, options *SpecialWordsModelsClientWithInOptions) (SpecialWordsModelsClientWithInResponse, error) {
@@ -832,6 +876,8 @@ func (client *SpecialWordsModelsClient) withInCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// WithIs -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithIsOptions contains the optional parameters for the SpecialWordsModelsClient.WithIs
 //     method.
 func (client *SpecialWordsModelsClient) WithIs(ctx context.Context, body Is, options *SpecialWordsModelsClientWithIsOptions) (SpecialWordsModelsClientWithIsResponse, error) {
@@ -869,6 +915,8 @@ func (client *SpecialWordsModelsClient) withIsCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// WithLambda -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithLambdaOptions contains the optional parameters for the SpecialWordsModelsClient.WithLambda
 //     method.
 func (client *SpecialWordsModelsClient) WithLambda(ctx context.Context, body Lambda, options *SpecialWordsModelsClientWithLambdaOptions) (SpecialWordsModelsClientWithLambdaResponse, error) {
@@ -906,6 +954,8 @@ func (client *SpecialWordsModelsClient) withLambdaCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithNot -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithNotOptions contains the optional parameters for the SpecialWordsModelsClient.WithNot
 //     method.
 func (client *SpecialWordsModelsClient) WithNot(ctx context.Context, body Not, options *SpecialWordsModelsClientWithNotOptions) (SpecialWordsModelsClientWithNotResponse, error) {
@@ -943,6 +993,8 @@ func (client *SpecialWordsModelsClient) withNotCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithOr -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithOrOptions contains the optional parameters for the SpecialWordsModelsClient.WithOr
 //     method.
 func (client *SpecialWordsModelsClient) WithOr(ctx context.Context, body Or, options *SpecialWordsModelsClientWithOrOptions) (SpecialWordsModelsClientWithOrResponse, error) {
@@ -980,6 +1032,8 @@ func (client *SpecialWordsModelsClient) withOrCreateRequest(ctx context.Context,
 	return req, nil
 }
 
+// WithPass -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithPassOptions contains the optional parameters for the SpecialWordsModelsClient.WithPass
 //     method.
 func (client *SpecialWordsModelsClient) WithPass(ctx context.Context, body Pass, options *SpecialWordsModelsClientWithPassOptions) (SpecialWordsModelsClientWithPassResponse, error) {
@@ -1017,6 +1071,8 @@ func (client *SpecialWordsModelsClient) withPassCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithRaise -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithRaiseOptions contains the optional parameters for the SpecialWordsModelsClient.WithRaise
 //     method.
 func (client *SpecialWordsModelsClient) WithRaise(ctx context.Context, body Raise, options *SpecialWordsModelsClientWithRaiseOptions) (SpecialWordsModelsClientWithRaiseResponse, error) {
@@ -1054,6 +1110,8 @@ func (client *SpecialWordsModelsClient) withRaiseCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithReturn -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithReturnOptions contains the optional parameters for the SpecialWordsModelsClient.WithReturn
 //     method.
 func (client *SpecialWordsModelsClient) WithReturn(ctx context.Context, body Return, options *SpecialWordsModelsClientWithReturnOptions) (SpecialWordsModelsClientWithReturnResponse, error) {
@@ -1091,6 +1149,8 @@ func (client *SpecialWordsModelsClient) withReturnCreateRequest(ctx context.Cont
 	return req, nil
 }
 
+// WithTry -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithTryOptions contains the optional parameters for the SpecialWordsModelsClient.WithTry
 //     method.
 func (client *SpecialWordsModelsClient) WithTry(ctx context.Context, body Try, options *SpecialWordsModelsClientWithTryOptions) (SpecialWordsModelsClientWithTryResponse, error) {
@@ -1128,6 +1188,8 @@ func (client *SpecialWordsModelsClient) withTryCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithWhile -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithWhileOptions contains the optional parameters for the SpecialWordsModelsClient.WithWhile
 //     method.
 func (client *SpecialWordsModelsClient) WithWhile(ctx context.Context, body While, options *SpecialWordsModelsClientWithWhileOptions) (SpecialWordsModelsClientWithWhileResponse, error) {
@@ -1165,6 +1227,8 @@ func (client *SpecialWordsModelsClient) withWhileCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// WithWith -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithWithOptions contains the optional parameters for the SpecialWordsModelsClient.WithWith
 //     method.
 func (client *SpecialWordsModelsClient) WithWith(ctx context.Context, body With, options *SpecialWordsModelsClientWithWithOptions) (SpecialWordsModelsClientWithWithResponse, error) {
@@ -1202,6 +1266,8 @@ func (client *SpecialWordsModelsClient) withWithCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// WithYield -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - SpecialWordsModelsClientWithYieldOptions contains the optional parameters for the SpecialWordsModelsClient.WithYield
 //     method.
 func (client *SpecialWordsModelsClient) WithYield(ctx context.Context, body Yield, options *SpecialWordsModelsClientWithYieldOptions) (SpecialWordsModelsClientWithYieldResponse, error) {

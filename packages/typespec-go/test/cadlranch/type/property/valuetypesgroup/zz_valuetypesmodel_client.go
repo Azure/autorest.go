@@ -19,6 +19,7 @@ type ValueTypesModelClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesModelClientGetOptions contains the optional parameters for the ValueTypesModelClient.Get method.
 func (client *ValueTypesModelClient) Get(ctx context.Context, options *ValueTypesModelClientGetOptions) (ValueTypesModelClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesModelClient) getHandleResponse(resp *http.Response) (Val
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesModelClientPutOptions contains the optional parameters for the ValueTypesModelClient.Put method.
 func (client *ValueTypesModelClient) Put(ctx context.Context, body ModelProperty, options *ValueTypesModelClientPutOptions) (ValueTypesModelClientPutResponse, error) {

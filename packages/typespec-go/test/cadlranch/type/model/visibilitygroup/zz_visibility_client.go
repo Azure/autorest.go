@@ -18,7 +18,9 @@ type VisibilityClient struct {
 	internal *azcore.Client
 }
 
-// - options - VisibilityClientDeleteModelOptions contains the optional parameters for the VisibilityClient.DeleteModel method.
+// DeleteModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientDeleteModelOptions contains the optional parameters for the VisibilityClient.DeleteModel method.
 func (client *VisibilityClient) DeleteModel(ctx context.Context, input VisibilityModel, options *VisibilityClientDeleteModelOptions) (VisibilityClientDeleteModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.DeleteModel"
@@ -54,7 +56,9 @@ func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, in
 	return req, nil
 }
 
-// - options - VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
+// GetModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientGetModelOptions contains the optional parameters for the VisibilityClient.GetModel method.
 func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityModel, options *VisibilityClientGetModelOptions) (VisibilityClientGetModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.GetModel"
@@ -137,7 +141,9 @@ func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, inpu
 	return req, nil
 }
 
-// - options - VisibilityClientPatchModelOptions contains the optional parameters for the VisibilityClient.PatchModel method.
+// PatchModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientPatchModelOptions contains the optional parameters for the VisibilityClient.PatchModel method.
 func (client *VisibilityClient) PatchModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPatchModelOptions) (VisibilityClientPatchModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.PatchModel"
@@ -173,7 +179,9 @@ func (client *VisibilityClient) patchModelCreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
-// - options - VisibilityClientPostModelOptions contains the optional parameters for the VisibilityClient.PostModel method.
+// PostModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientPostModelOptions contains the optional parameters for the VisibilityClient.PostModel method.
 func (client *VisibilityClient) PostModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPostModelOptions) (VisibilityClientPostModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.PostModel"
@@ -209,7 +217,9 @@ func (client *VisibilityClient) postModelCreateRequest(ctx context.Context, inpu
 	return req, nil
 }
 
-// - options - VisibilityClientPutModelOptions contains the optional parameters for the VisibilityClient.PutModel method.
+// PutModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientPutModelOptions contains the optional parameters for the VisibilityClient.PutModel method.
 func (client *VisibilityClient) PutModel(ctx context.Context, input VisibilityModel, options *VisibilityClientPutModelOptions) (VisibilityClientPutModelResponse, error) {
 	var err error
 	const operationName = "VisibilityClient.PutModel"

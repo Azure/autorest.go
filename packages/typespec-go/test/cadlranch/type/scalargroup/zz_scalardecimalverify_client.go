@@ -18,6 +18,8 @@ type ScalarDecimalVerifyClient struct {
 	internal *azcore.Client
 }
 
+// PrepareVerify -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimalVerifyClientPrepareVerifyOptions contains the optional parameters for the ScalarDecimalVerifyClient.PrepareVerify
 //     method.
 func (client *ScalarDecimalVerifyClient) PrepareVerify(ctx context.Context, options *ScalarDecimalVerifyClientPrepareVerifyOptions) (ScalarDecimalVerifyClientPrepareVerifyResponse, error) {
@@ -62,6 +64,8 @@ func (client *ScalarDecimalVerifyClient) prepareVerifyHandleResponse(resp *http.
 	return result, nil
 }
 
+// Verify -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarDecimalVerifyClientVerifyOptions contains the optional parameters for the ScalarDecimalVerifyClient.Verify
 //     method.
 func (client *ScalarDecimalVerifyClient) Verify(ctx context.Context, body float64, options *ScalarDecimalVerifyClientVerifyOptions) (ScalarDecimalVerifyClientVerifyResponse, error) {

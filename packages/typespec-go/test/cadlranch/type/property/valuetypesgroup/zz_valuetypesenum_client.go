@@ -19,6 +19,7 @@ type ValueTypesEnumClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesEnumClientGetOptions contains the optional parameters for the ValueTypesEnumClient.Get method.
 func (client *ValueTypesEnumClient) Get(ctx context.Context, options *ValueTypesEnumClientGetOptions) (ValueTypesEnumClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesEnumClient) getHandleResponse(resp *http.Response) (Valu
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesEnumClientPutOptions contains the optional parameters for the ValueTypesEnumClient.Put method.
 func (client *ValueTypesEnumClient) Put(ctx context.Context, body EnumProperty, options *ValueTypesEnumClientPutOptions) (ValueTypesEnumClientPutResponse, error) {

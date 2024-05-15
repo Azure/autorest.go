@@ -23,6 +23,8 @@ type MultipleClient struct {
 	apiVersion Versions
 }
 
+// NoOperationParams -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultipleClientNoOperationParamsOptions contains the optional parameters for the MultipleClient.NoOperationParams
 //     method.
 func (client *MultipleClient) NoOperationParams(ctx context.Context, options *MultipleClientNoOperationParamsOptions) (MultipleClientNoOperationParamsResponse, error) {
@@ -58,6 +60,8 @@ func (client *MultipleClient) noOperationParamsCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// WithOperationPathParam -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - MultipleClientWithOperationPathParamOptions contains the optional parameters for the MultipleClient.WithOperationPathParam
 //     method.
 func (client *MultipleClient) WithOperationPathParam(ctx context.Context, keyword string, options *MultipleClientWithOperationPathParamOptions) (MultipleClientWithOperationPathParamResponse, error) {

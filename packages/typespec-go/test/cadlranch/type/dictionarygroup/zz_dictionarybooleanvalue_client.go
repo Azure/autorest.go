@@ -18,6 +18,8 @@ type DictionaryBooleanValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryBooleanValueClientGetOptions contains the optional parameters for the DictionaryBooleanValueClient.Get
 //     method.
 func (client *DictionaryBooleanValueClient) Get(ctx context.Context, options *DictionaryBooleanValueClientGetOptions) (DictionaryBooleanValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryBooleanValueClient) getHandleResponse(resp *http.Respons
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryBooleanValueClientPutOptions contains the optional parameters for the DictionaryBooleanValueClient.Put
 //     method.
 func (client *DictionaryBooleanValueClient) Put(ctx context.Context, body map[string]*bool, options *DictionaryBooleanValueClientPutOptions) (DictionaryBooleanValueClientPutResponse, error) {

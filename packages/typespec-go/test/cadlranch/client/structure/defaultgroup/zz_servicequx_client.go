@@ -30,7 +30,9 @@ func (client *ServiceQuxClient) NewServiceQuxBarClient() *ServiceQuxBarClient {
 	}
 }
 
-// - options - ServiceQuxClientEightOptions contains the optional parameters for the ServiceQuxClient.Eight method.
+// Eight -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceQuxClientEightOptions contains the optional parameters for the ServiceQuxClient.Eight method.
 func (client *ServiceQuxClient) Eight(ctx context.Context, options *ServiceQuxClientEightOptions) (ServiceQuxClientEightResponse, error) {
 	var err error
 	const operationName = "ServiceQuxClient.Eight"

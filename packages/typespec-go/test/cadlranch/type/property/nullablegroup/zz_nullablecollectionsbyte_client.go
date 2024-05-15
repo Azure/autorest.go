@@ -19,6 +19,7 @@ type NullableCollectionsByteClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsByteClientGetNonNullOptions contains the optional parameters for the NullableCollectionsByteClient.GetNonNull
 //     method.
 func (client *NullableCollectionsByteClient) GetNonNull(ctx context.Context, options *NullableCollectionsByteClientGetNonNullOptions) (NullableCollectionsByteClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableCollectionsByteClient) getNonNullHandleResponse(resp *http
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsByteClientGetNullOptions contains the optional parameters for the NullableCollectionsByteClient.GetNull
 //     method.
 func (client *NullableCollectionsByteClient) GetNull(ctx context.Context, options *NullableCollectionsByteClientGetNullOptions) (NullableCollectionsByteClientGetNullResponse, error) {
@@ -109,6 +111,7 @@ func (client *NullableCollectionsByteClient) getNullHandleResponse(resp *http.Re
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsByteClientPatchNonNullOptions contains the optional parameters for the NullableCollectionsByteClient.PatchNonNull
 //     method.
 func (client *NullableCollectionsByteClient) PatchNonNull(ctx context.Context, body CollectionsByteProperty, options *NullableCollectionsByteClientPatchNonNullOptions) (NullableCollectionsByteClientPatchNonNullResponse, error) {
@@ -147,6 +150,7 @@ func (client *NullableCollectionsByteClient) patchNonNullCreateRequest(ctx conte
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsByteClientPatchNullOptions contains the optional parameters for the NullableCollectionsByteClient.PatchNull
 //     method.
 func (client *NullableCollectionsByteClient) PatchNull(ctx context.Context, body CollectionsByteProperty, options *NullableCollectionsByteClientPatchNullOptions) (NullableCollectionsByteClientPatchNullResponse, error) {

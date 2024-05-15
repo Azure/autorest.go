@@ -19,6 +19,7 @@ type ValueTypesDurationClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesDurationClientGetOptions contains the optional parameters for the ValueTypesDurationClient.Get method.
 func (client *ValueTypesDurationClient) Get(ctx context.Context, options *ValueTypesDurationClientGetOptions) (ValueTypesDurationClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesDurationClient) getHandleResponse(resp *http.Response) (
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesDurationClientPutOptions contains the optional parameters for the ValueTypesDurationClient.Put method.
 func (client *ValueTypesDurationClient) Put(ctx context.Context, body DurationProperty, options *ValueTypesDurationClientPutOptions) (ValueTypesDurationClientPutResponse, error) {

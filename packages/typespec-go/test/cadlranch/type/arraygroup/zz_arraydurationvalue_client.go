@@ -18,7 +18,9 @@ type ArrayDurationValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayDurationValueClientGetOptions contains the optional parameters for the ArrayDurationValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayDurationValueClientGetOptions contains the optional parameters for the ArrayDurationValueClient.Get method.
 func (client *ArrayDurationValueClient) Get(ctx context.Context, options *ArrayDurationValueClientGetOptions) (ArrayDurationValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayDurationValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayDurationValueClient) getHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// - options - ArrayDurationValueClientPutOptions contains the optional parameters for the ArrayDurationValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayDurationValueClientPutOptions contains the optional parameters for the ArrayDurationValueClient.Put method.
 func (client *ArrayDurationValueClient) Put(ctx context.Context, body []string, options *ArrayDurationValueClientPutOptions) (ArrayDurationValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayDurationValueClient.Put"

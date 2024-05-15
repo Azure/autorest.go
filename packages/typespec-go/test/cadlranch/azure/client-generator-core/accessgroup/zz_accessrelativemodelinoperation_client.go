@@ -26,6 +26,7 @@ type AccessRelativeModelInOperationClient struct {
 // "kind": "real"
 // }
 // ```
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessRelativeModelInOperationClientdiscriminatorOptions contains the optional parameters for the AccessRelativeModelInOperationClient.discriminator
 //     method.
 func (client *AccessRelativeModelInOperationClient) discriminator(ctx context.Context, kind string, options *accessRelativeModelInOperationClientdiscriminatorOptions) (accessRelativeModelInOperationClientdiscriminatorResponse, error) {
@@ -84,6 +85,7 @@ func (client *AccessRelativeModelInOperationClient) discriminatorHandleResponse(
 // }
 // }
 // ```
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessRelativeModelInOperationClientoperationOptions contains the optional parameters for the AccessRelativeModelInOperationClient.operation
 //     method.
 func (client *AccessRelativeModelInOperationClient) operation(ctx context.Context, name string, options *accessRelativeModelInOperationClientoperationOptions) (accessRelativeModelInOperationClientoperationResponse, error) {

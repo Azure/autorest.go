@@ -18,6 +18,8 @@ type BytesResponseBodyClient struct {
 	internal *azcore.Client
 }
 
+// Base64 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesResponseBodyClientBase64Options contains the optional parameters for the BytesResponseBodyClient.Base64
 //     method.
 func (client *BytesResponseBodyClient) Base64(ctx context.Context, options *BytesResponseBodyClientBase64Options) (BytesResponseBodyClientBase64Response, error) {
@@ -62,6 +64,8 @@ func (client *BytesResponseBodyClient) base64HandleResponse(resp *http.Response)
 	return result, nil
 }
 
+// Base64URL -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesResponseBodyClientBase64URLOptions contains the optional parameters for the BytesResponseBodyClient.Base64URL
 //     method.
 func (client *BytesResponseBodyClient) Base64URL(ctx context.Context, options *BytesResponseBodyClientBase64URLOptions) (BytesResponseBodyClientBase64URLResponse, error) {
@@ -106,6 +110,8 @@ func (client *BytesResponseBodyClient) base64URLHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// CustomContentType -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesResponseBodyClientCustomContentTypeOptions contains the optional parameters for the BytesResponseBodyClient.CustomContentType
 //     method.
 func (client *BytesResponseBodyClient) CustomContentType(ctx context.Context, options *BytesResponseBodyClientCustomContentTypeOptions) (BytesResponseBodyClientCustomContentTypeResponse, error) {
@@ -141,6 +147,8 @@ func (client *BytesResponseBodyClient) customContentTypeCreateRequest(ctx contex
 	return req, nil
 }
 
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesResponseBodyClientDefaultOptions contains the optional parameters for the BytesResponseBodyClient.Default
 //     method.
 func (client *BytesResponseBodyClient) Default(ctx context.Context, options *BytesResponseBodyClientDefaultOptions) (BytesResponseBodyClientDefaultResponse, error) {
@@ -185,6 +193,8 @@ func (client *BytesResponseBodyClient) defaultHandleResponse(resp *http.Response
 	return result, nil
 }
 
+// OctetStream -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesResponseBodyClientOctetStreamOptions contains the optional parameters for the BytesResponseBodyClient.OctetStream
 //     method.
 func (client *BytesResponseBodyClient) OctetStream(ctx context.Context, options *BytesResponseBodyClientOctetStreamOptions) (BytesResponseBodyClientOctetStreamResponse, error) {

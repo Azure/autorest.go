@@ -18,6 +18,8 @@ type ExtensibleStringClient struct {
 	internal *azcore.Client
 }
 
+// GetKnownValue -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ExtensibleStringClientGetKnownValueOptions contains the optional parameters for the ExtensibleStringClient.GetKnownValue
 //     method.
 func (client *ExtensibleStringClient) GetKnownValue(ctx context.Context, options *ExtensibleStringClientGetKnownValueOptions) (ExtensibleStringClientGetKnownValueResponse, error) {
@@ -62,6 +64,8 @@ func (client *ExtensibleStringClient) getKnownValueHandleResponse(resp *http.Res
 	return result, nil
 }
 
+// GetUnknownValue -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ExtensibleStringClientGetUnknownValueOptions contains the optional parameters for the ExtensibleStringClient.GetUnknownValue
 //     method.
 func (client *ExtensibleStringClient) GetUnknownValue(ctx context.Context, options *ExtensibleStringClientGetUnknownValueOptions) (ExtensibleStringClientGetUnknownValueResponse, error) {
@@ -106,6 +110,8 @@ func (client *ExtensibleStringClient) getUnknownValueHandleResponse(resp *http.R
 	return result, nil
 }
 
+// PutKnownValue -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ExtensibleStringClientPutKnownValueOptions contains the optional parameters for the ExtensibleStringClient.PutKnownValue
 //     method.
 func (client *ExtensibleStringClient) PutKnownValue(ctx context.Context, body DaysOfWeekExtensibleEnum, options *ExtensibleStringClientPutKnownValueOptions) (ExtensibleStringClientPutKnownValueResponse, error) {
@@ -143,6 +149,8 @@ func (client *ExtensibleStringClient) putKnownValueCreateRequest(ctx context.Con
 	return req, nil
 }
 
+// PutUnknownValue -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ExtensibleStringClientPutUnknownValueOptions contains the optional parameters for the ExtensibleStringClient.PutUnknownValue
 //     method.
 func (client *ExtensibleStringClient) PutUnknownValue(ctx context.Context, body DaysOfWeekExtensibleEnum, options *ExtensibleStringClientPutUnknownValueOptions) (ExtensibleStringClientPutUnknownValueResponse, error) {

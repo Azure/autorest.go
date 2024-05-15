@@ -18,7 +18,9 @@ type ArrayUnknownValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayUnknownValueClientGetOptions contains the optional parameters for the ArrayUnknownValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayUnknownValueClientGetOptions contains the optional parameters for the ArrayUnknownValueClient.Get method.
 func (client *ArrayUnknownValueClient) Get(ctx context.Context, options *ArrayUnknownValueClientGetOptions) (ArrayUnknownValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayUnknownValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayUnknownValueClient) getHandleResponse(resp *http.Response) (A
 	return result, nil
 }
 
-// - options - ArrayUnknownValueClientPutOptions contains the optional parameters for the ArrayUnknownValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayUnknownValueClientPutOptions contains the optional parameters for the ArrayUnknownValueClient.Put method.
 func (client *ArrayUnknownValueClient) Put(ctx context.Context, body []any, options *ArrayUnknownValueClientPutOptions) (ArrayUnknownValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayUnknownValueClient.Put"

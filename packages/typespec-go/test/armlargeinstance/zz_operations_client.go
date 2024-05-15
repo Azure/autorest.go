@@ -37,6 +37,8 @@ func NewOperationsClient(subscriptionID string, credential azcore.TokenCredentia
 }
 
 // NewListPager - List the operations for the provider
+//
+// Generated from API version 2023-07-20-preview
 //   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{

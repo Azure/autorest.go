@@ -21,7 +21,9 @@ type ClientBClient struct {
 	client   ClientType
 }
 
-// - options - ClientBClientRenamedFourOptions contains the optional parameters for the ClientBClient.RenamedFour method.
+// RenamedFour -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientBClientRenamedFourOptions contains the optional parameters for the ClientBClient.RenamedFour method.
 func (client *ClientBClient) RenamedFour(ctx context.Context, options *ClientBClientRenamedFourOptions) (ClientBClientRenamedFourResponse, error) {
 	var err error
 	const operationName = "ClientBClient.RenamedFour"
@@ -56,7 +58,9 @@ func (client *ClientBClient) renamedFourCreateRequest(ctx context.Context, _ *Cl
 	return req, nil
 }
 
-// - options - ClientBClientRenamedSixOptions contains the optional parameters for the ClientBClient.RenamedSix method.
+// RenamedSix -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientBClientRenamedSixOptions contains the optional parameters for the ClientBClient.RenamedSix method.
 func (client *ClientBClient) RenamedSix(ctx context.Context, options *ClientBClientRenamedSixOptions) (ClientBClientRenamedSixResponse, error) {
 	var err error
 	const operationName = "ClientBClient.RenamedSix"
@@ -91,7 +95,9 @@ func (client *ClientBClient) renamedSixCreateRequest(ctx context.Context, _ *Cli
 	return req, nil
 }
 
-// - options - ClientBClientRenamedTwoOptions contains the optional parameters for the ClientBClient.RenamedTwo method.
+// RenamedTwo -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ClientBClientRenamedTwoOptions contains the optional parameters for the ClientBClient.RenamedTwo method.
 func (client *ClientBClient) RenamedTwo(ctx context.Context, options *ClientBClientRenamedTwoOptions) (ClientBClientRenamedTwoResponse, error) {
 	var err error
 	const operationName = "ClientBClient.RenamedTwo"

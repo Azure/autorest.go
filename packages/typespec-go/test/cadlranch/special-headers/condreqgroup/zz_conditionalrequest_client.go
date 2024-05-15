@@ -19,6 +19,7 @@ type ConditionalRequestClient struct {
 }
 
 // PostIfMatch - Check when only If-Match in header is defined.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ConditionalRequestClientPostIfMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfMatch
 //     method.
 func (client *ConditionalRequestClient) PostIfMatch(ctx context.Context, options *ConditionalRequestClientPostIfMatchOptions) (ConditionalRequestClientPostIfMatchResponse, error) {
@@ -56,6 +57,7 @@ func (client *ConditionalRequestClient) postIfMatchCreateRequest(ctx context.Con
 }
 
 // PostIfNoneMatch - Check when only If-None-Match in header is defined.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ConditionalRequestClientPostIfNoneMatchOptions contains the optional parameters for the ConditionalRequestClient.PostIfNoneMatch
 //     method.
 func (client *ConditionalRequestClient) PostIfNoneMatch(ctx context.Context, options *ConditionalRequestClientPostIfNoneMatchOptions) (ConditionalRequestClientPostIfNoneMatchResponse, error) {

@@ -19,6 +19,7 @@ type NullableCollectionsModelClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsModelClientGetNonNullOptions contains the optional parameters for the NullableCollectionsModelClient.GetNonNull
 //     method.
 func (client *NullableCollectionsModelClient) GetNonNull(ctx context.Context, options *NullableCollectionsModelClientGetNonNullOptions) (NullableCollectionsModelClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableCollectionsModelClient) getNonNullHandleResponse(resp *htt
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsModelClientGetNullOptions contains the optional parameters for the NullableCollectionsModelClient.GetNull
 //     method.
 func (client *NullableCollectionsModelClient) GetNull(ctx context.Context, options *NullableCollectionsModelClientGetNullOptions) (NullableCollectionsModelClientGetNullResponse, error) {
@@ -109,6 +111,7 @@ func (client *NullableCollectionsModelClient) getNullHandleResponse(resp *http.R
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsModelClientPatchNonNullOptions contains the optional parameters for the NullableCollectionsModelClient.PatchNonNull
 //     method.
 func (client *NullableCollectionsModelClient) PatchNonNull(ctx context.Context, body CollectionsModelProperty, options *NullableCollectionsModelClientPatchNonNullOptions) (NullableCollectionsModelClientPatchNonNullResponse, error) {
@@ -147,6 +150,7 @@ func (client *NullableCollectionsModelClient) patchNonNullCreateRequest(ctx cont
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableCollectionsModelClientPatchNullOptions contains the optional parameters for the NullableCollectionsModelClient.PatchNull
 //     method.
 func (client *NullableCollectionsModelClient) PatchNull(ctx context.Context, body CollectionsModelProperty, options *NullableCollectionsModelClientPatchNullOptions) (NullableCollectionsModelClientPatchNullResponse, error) {

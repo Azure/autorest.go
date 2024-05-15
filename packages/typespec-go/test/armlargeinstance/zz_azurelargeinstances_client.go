@@ -41,6 +41,9 @@ func NewAzureLargeInstancesClient(subscriptionID string, credential azcore.Token
 
 // Get - Gets an Azure Large Instance for the specified subscription, resource group,
 // and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstancesClientGetOptions contains the optional parameters for the AzureLargeInstancesClient.Get method.
@@ -103,6 +106,8 @@ func (client *AzureLargeInstancesClient) getHandleResponse(resp *http.Response) 
 
 // NewListByResourceGroupPager - Gets a list of Azure Large Instances in the specified subscription and resource
 // group. The operations returns various properties of each Azure Large Instance.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - AzureLargeInstancesClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstancesClient.NewListByResourceGroupPager
 //     method.
@@ -162,6 +167,8 @@ func (client *AzureLargeInstancesClient) listByResourceGroupHandleResponse(resp 
 
 // NewListBySubscriptionPager - Gets a list of Azure Large Instances in the specified subscription. The
 // operations returns various properties of each Azure Large Instance.
+//
+// Generated from API version 2023-07-20-preview
 //   - options - AzureLargeInstancesClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstancesClient.NewListBySubscriptionPager
 //     method.
 func (client *AzureLargeInstancesClient) NewListBySubscriptionPager(options *AzureLargeInstancesClientListBySubscriptionOptions) *runtime.Pager[AzureLargeInstancesClientListBySubscriptionResponse] {
@@ -215,6 +222,9 @@ func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *
 }
 
 // BeginRestart - The operation to restart an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginRestart
@@ -237,6 +247,9 @@ func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, resou
 }
 
 // Restart - The operation to restart an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 func (client *AzureLargeInstancesClient) restart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginRestart"
@@ -292,6 +305,9 @@ func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Contex
 }
 
 // BeginShutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - body - The content of the action request
@@ -315,6 +331,9 @@ func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, reso
 }
 
 // Shutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, body any, options *AzureLargeInstancesClientBeginShutdownOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginShutdown"
@@ -367,6 +386,9 @@ func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Conte
 }
 
 // BeginStart - The operation to start an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - body - The content of the action request
@@ -390,6 +412,9 @@ func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, resourc
 }
 
 // Start - The operation to start an Azure Large Instance (only for compute instances)
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 func (client *AzureLargeInstancesClient) start(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, body any, options *AzureLargeInstancesClientBeginStartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstancesClient.BeginStart"
@@ -443,6 +468,9 @@ func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context,
 
 // Update - Patches the Tags field of an Azure Large Instance for the specified
 // subscription, resource group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - properties - The resource properties to be updated.

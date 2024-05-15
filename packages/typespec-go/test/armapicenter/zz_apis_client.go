@@ -40,6 +40,9 @@ func NewApisClient(subscriptionID string, credential azcore.TokenCredential, opt
 }
 
 // CreateOrUpdate - Creates new or updates existing API.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -119,6 +122,9 @@ func (client *ApisClient) createOrUpdateHandleResponse(resp *http.Response) (Api
 }
 
 // Delete - Deletes specified API.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -180,6 +186,9 @@ func (client *ApisClient) deleteCreateRequest(ctx context.Context, resourceGroup
 }
 
 // Get - Returns details of the API.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -254,6 +263,8 @@ func (client *ApisClient) getHandleResponse(resp *http.Response) (ApisClientGetR
 }
 
 // Head - Checks if specified API exists.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.
@@ -315,6 +326,8 @@ func (client *ApisClient) headCreateRequest(ctx context.Context, resourceGroupNa
 }
 
 // NewListPager - Returns a collection of APIs.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - workspaceName - The name of the workspace.

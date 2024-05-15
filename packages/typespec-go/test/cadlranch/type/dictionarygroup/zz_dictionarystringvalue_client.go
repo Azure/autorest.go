@@ -18,6 +18,8 @@ type DictionaryStringValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryStringValueClientGetOptions contains the optional parameters for the DictionaryStringValueClient.Get
 //     method.
 func (client *DictionaryStringValueClient) Get(ctx context.Context, options *DictionaryStringValueClientGetOptions) (DictionaryStringValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryStringValueClient) getHandleResponse(resp *http.Response
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryStringValueClientPutOptions contains the optional parameters for the DictionaryStringValueClient.Put
 //     method.
 func (client *DictionaryStringValueClient) Put(ctx context.Context, body map[string]*string, options *DictionaryStringValueClientPutOptions) (DictionaryStringValueClientPutResponse, error) {

@@ -18,6 +18,8 @@ type DictionaryDurationValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryDurationValueClientGetOptions contains the optional parameters for the DictionaryDurationValueClient.Get
 //     method.
 func (client *DictionaryDurationValueClient) Get(ctx context.Context, options *DictionaryDurationValueClientGetOptions) (DictionaryDurationValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryDurationValueClient) getHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryDurationValueClientPutOptions contains the optional parameters for the DictionaryDurationValueClient.Put
 //     method.
 func (client *DictionaryDurationValueClient) Put(ctx context.Context, body map[string]*string, options *DictionaryDurationValueClientPutOptions) (DictionaryDurationValueClientPutResponse, error) {

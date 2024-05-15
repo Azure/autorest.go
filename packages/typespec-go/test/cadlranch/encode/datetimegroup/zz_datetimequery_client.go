@@ -20,7 +20,9 @@ type DatetimeQueryClient struct {
 	internal *azcore.Client
 }
 
-// - options - DatetimeQueryClientDefaultOptions contains the optional parameters for the DatetimeQueryClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeQueryClientDefaultOptions contains the optional parameters for the DatetimeQueryClient.Default method.
 func (client *DatetimeQueryClient) Default(ctx context.Context, value time.Time, options *DatetimeQueryClientDefaultOptions) (DatetimeQueryClientDefaultResponse, error) {
 	var err error
 	const operationName = "DatetimeQueryClient.Default"
@@ -55,7 +57,9 @@ func (client *DatetimeQueryClient) defaultCreateRequest(ctx context.Context, val
 	return req, nil
 }
 
-// - options - DatetimeQueryClientRFC3339Options contains the optional parameters for the DatetimeQueryClient.RFC3339 method.
+// RFC3339 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeQueryClientRFC3339Options contains the optional parameters for the DatetimeQueryClient.RFC3339 method.
 func (client *DatetimeQueryClient) RFC3339(ctx context.Context, value time.Time, options *DatetimeQueryClientRFC3339Options) (DatetimeQueryClientRFC3339Response, error) {
 	var err error
 	const operationName = "DatetimeQueryClient.RFC3339"
@@ -90,7 +94,9 @@ func (client *DatetimeQueryClient) rfc3339CreateRequest(ctx context.Context, val
 	return req, nil
 }
 
-// - options - DatetimeQueryClientRFC7231Options contains the optional parameters for the DatetimeQueryClient.RFC7231 method.
+// RFC7231 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DatetimeQueryClientRFC7231Options contains the optional parameters for the DatetimeQueryClient.RFC7231 method.
 func (client *DatetimeQueryClient) RFC7231(ctx context.Context, value time.Time, options *DatetimeQueryClientRFC7231Options) (DatetimeQueryClientRFC7231Response, error) {
 	var err error
 	const operationName = "DatetimeQueryClient.RFC7231"
@@ -125,6 +131,8 @@ func (client *DatetimeQueryClient) rfc7231CreateRequest(ctx context.Context, val
 	return req, nil
 }
 
+// UnixTimestamp -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeQueryClientUnixTimestampOptions contains the optional parameters for the DatetimeQueryClient.UnixTimestamp
 //     method.
 func (client *DatetimeQueryClient) UnixTimestamp(ctx context.Context, value time.Time, options *DatetimeQueryClientUnixTimestampOptions) (DatetimeQueryClientUnixTimestampResponse, error) {
@@ -161,6 +169,8 @@ func (client *DatetimeQueryClient) unixTimestampCreateRequest(ctx context.Contex
 	return req, nil
 }
 
+// UnixTimestampArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeQueryClientUnixTimestampArrayOptions contains the optional parameters for the DatetimeQueryClient.UnixTimestampArray
 //     method.
 func (client *DatetimeQueryClient) UnixTimestampArray(ctx context.Context, value []time.Time, options *DatetimeQueryClientUnixTimestampArrayOptions) (DatetimeQueryClientUnixTimestampArrayResponse, error) {

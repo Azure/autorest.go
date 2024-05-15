@@ -21,7 +21,9 @@ type ServiceQuxBarClient struct {
 	client   ClientType
 }
 
-// - options - ServiceQuxBarClientNineOptions contains the optional parameters for the ServiceQuxBarClient.Nine method.
+// Nine -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceQuxBarClientNineOptions contains the optional parameters for the ServiceQuxBarClient.Nine method.
 func (client *ServiceQuxBarClient) Nine(ctx context.Context, options *ServiceQuxBarClientNineOptions) (ServiceQuxBarClientNineResponse, error) {
 	var err error
 	const operationName = "ServiceQuxBarClient.Nine"

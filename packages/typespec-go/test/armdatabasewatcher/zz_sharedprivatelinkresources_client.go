@@ -40,6 +40,9 @@ func NewSharedPrivateLinkResourcesClient(subscriptionID string, credential azcor
 }
 
 // BeginCreate - Create a SharedPrivateLinkResource
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - sharedPrivateLinkResourceName - The Shared Private Link resource name.
@@ -64,6 +67,9 @@ func (client *SharedPrivateLinkResourcesClient) BeginCreate(ctx context.Context,
 }
 
 // Create - Create a SharedPrivateLinkResource
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 func (client *SharedPrivateLinkResourcesClient) create(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, resource SharedPrivateLinkResource, options *SharedPrivateLinkResourcesClientBeginCreateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SharedPrivateLinkResourcesClient.BeginCreate"
@@ -120,6 +126,9 @@ func (client *SharedPrivateLinkResourcesClient) createCreateRequest(ctx context.
 }
 
 // BeginDelete - Delete a SharedPrivateLinkResource
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - sharedPrivateLinkResourceName - The Shared Private Link resource name.
@@ -143,6 +152,9 @@ func (client *SharedPrivateLinkResourcesClient) BeginDelete(ctx context.Context,
 }
 
 // Delete - Delete a SharedPrivateLinkResource
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 func (client *SharedPrivateLinkResourcesClient) deleteOperation(ctx context.Context, resourceGroupName string, watcherName string, sharedPrivateLinkResourceName string, options *SharedPrivateLinkResourcesClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "SharedPrivateLinkResourcesClient.BeginDelete"
@@ -195,6 +207,9 @@ func (client *SharedPrivateLinkResourcesClient) deleteCreateRequest(ctx context.
 }
 
 // Get - Get a SharedPrivateLinkResource
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - sharedPrivateLinkResourceName - The Shared Private Link resource name.
@@ -262,6 +277,8 @@ func (client *SharedPrivateLinkResourcesClient) getHandleResponse(resp *http.Res
 }
 
 // NewListByWatcherPager - List SharedPrivateLinkResource resources by Watcher
+//
+// Generated from API version 2023-09-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - SharedPrivateLinkResourcesClientListByWatcherOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.NewListByWatcherPager

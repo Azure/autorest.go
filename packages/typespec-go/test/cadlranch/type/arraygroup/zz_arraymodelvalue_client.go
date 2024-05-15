@@ -18,7 +18,9 @@ type ArrayModelValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayModelValueClientGetOptions contains the optional parameters for the ArrayModelValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayModelValueClientGetOptions contains the optional parameters for the ArrayModelValueClient.Get method.
 func (client *ArrayModelValueClient) Get(ctx context.Context, options *ArrayModelValueClientGetOptions) (ArrayModelValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayModelValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayModelValueClient) getHandleResponse(resp *http.Response) (Arr
 	return result, nil
 }
 
-// - options - ArrayModelValueClientPutOptions contains the optional parameters for the ArrayModelValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayModelValueClientPutOptions contains the optional parameters for the ArrayModelValueClient.Put method.
 func (client *ArrayModelValueClient) Put(ctx context.Context, body []InnerModel, options *ArrayModelValueClientPutOptions) (ArrayModelValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayModelValueClient.Put"

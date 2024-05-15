@@ -19,6 +19,7 @@ type ValueTypesDatetimeClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesDatetimeClientGetOptions contains the optional parameters for the ValueTypesDatetimeClient.Get method.
 func (client *ValueTypesDatetimeClient) Get(ctx context.Context, options *ValueTypesDatetimeClientGetOptions) (ValueTypesDatetimeClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesDatetimeClient) getHandleResponse(resp *http.Response) (
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesDatetimeClientPutOptions contains the optional parameters for the ValueTypesDatetimeClient.Put method.
 func (client *ValueTypesDatetimeClient) Put(ctx context.Context, body DatetimeProperty, options *ValueTypesDatetimeClientPutOptions) (ValueTypesDatetimeClientPutResponse, error) {

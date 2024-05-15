@@ -19,6 +19,7 @@ type OptionalDurationClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDurationClientGetAllOptions contains the optional parameters for the OptionalDurationClient.GetAll method.
 func (client *OptionalDurationClient) GetAll(ctx context.Context, options *OptionalDurationClientGetAllOptions) (OptionalDurationClientGetAllResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *OptionalDurationClient) getAllHandleResponse(resp *http.Response) 
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDurationClientGetDefaultOptions contains the optional parameters for the OptionalDurationClient.GetDefault
 //     method.
 func (client *OptionalDurationClient) GetDefault(ctx context.Context, options *OptionalDurationClientGetDefaultOptions) (OptionalDurationClientGetDefaultResponse, error) {
@@ -108,6 +110,7 @@ func (client *OptionalDurationClient) getDefaultHandleResponse(resp *http.Respon
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDurationClientPutAllOptions contains the optional parameters for the OptionalDurationClient.PutAll method.
 func (client *OptionalDurationClient) PutAll(ctx context.Context, body DurationProperty, options *OptionalDurationClientPutAllOptions) (OptionalDurationClientPutAllResponse, error) {
 	var err error
@@ -145,6 +148,7 @@ func (client *OptionalDurationClient) putAllCreateRequest(ctx context.Context, b
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalDurationClientPutDefaultOptions contains the optional parameters for the OptionalDurationClient.PutDefault
 //     method.
 func (client *OptionalDurationClient) PutDefault(ctx context.Context, body DurationProperty, options *OptionalDurationClientPutDefaultOptions) (OptionalDurationClientPutDefaultResponse, error) {

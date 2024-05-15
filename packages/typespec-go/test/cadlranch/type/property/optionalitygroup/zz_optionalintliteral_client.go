@@ -19,6 +19,7 @@ type OptionalIntLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalIntLiteralClientGetAllOptions contains the optional parameters for the OptionalIntLiteralClient.GetAll
 //     method.
 func (client *OptionalIntLiteralClient) GetAll(ctx context.Context, options *OptionalIntLiteralClientGetAllOptions) (OptionalIntLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalIntLiteralClient) getAllHandleResponse(resp *http.Response
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalIntLiteralClientGetDefaultOptions contains the optional parameters for the OptionalIntLiteralClient.GetDefault
 //     method.
 func (client *OptionalIntLiteralClient) GetDefault(ctx context.Context, options *OptionalIntLiteralClientGetDefaultOptions) (OptionalIntLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalIntLiteralClient) getDefaultHandleResponse(resp *http.Resp
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalIntLiteralClientPutAllOptions contains the optional parameters for the OptionalIntLiteralClient.PutAll
 //     method.
 func (client *OptionalIntLiteralClient) PutAll(ctx context.Context, body IntLiteralProperty, options *OptionalIntLiteralClientPutAllOptions) (OptionalIntLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalIntLiteralClient) putAllCreateRequest(ctx context.Context,
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalIntLiteralClientPutDefaultOptions contains the optional parameters for the OptionalIntLiteralClient.PutDefault
 //     method.
 func (client *OptionalIntLiteralClient) PutDefault(ctx context.Context, body IntLiteralProperty, options *OptionalIntLiteralClientPutDefaultOptions) (OptionalIntLiteralClientPutDefaultResponse, error) {

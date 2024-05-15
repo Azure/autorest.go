@@ -19,6 +19,7 @@ type ValueTypesDictionaryStringClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesDictionaryStringClientGetOptions contains the optional parameters for the ValueTypesDictionaryStringClient.Get
 //     method.
 func (client *ValueTypesDictionaryStringClient) Get(ctx context.Context, options *ValueTypesDictionaryStringClientGetOptions) (ValueTypesDictionaryStringClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesDictionaryStringClient) getHandleResponse(resp *http.Res
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesDictionaryStringClientPutOptions contains the optional parameters for the ValueTypesDictionaryStringClient.Put
 //     method.

@@ -20,6 +20,8 @@ type BasicTwoModelsAsPageItemClient struct {
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for FirstItem.
+//
+// Generated from API version 2022-12-01-preview
 //   - options - BasicTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListFirstItemPager
 //     method.
 func (client *BasicTwoModelsAsPageItemClient) NewListFirstItemPager(options *BasicTwoModelsAsPageItemClientListFirstItemOptions) *runtime.Pager[BasicTwoModelsAsPageItemClientListFirstItemResponse] {
@@ -70,6 +72,8 @@ func (client *BasicTwoModelsAsPageItemClient) listFirstItemHandleResponse(resp *
 
 // NewListSecondItemPager - Two operations with two different page item types should be successfully generated. Should generate
 // model for SecondItem.
+//
+// Generated from API version 2022-12-01-preview
 //   - options - BasicTwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListSecondItemPager
 //     method.
 func (client *BasicTwoModelsAsPageItemClient) NewListSecondItemPager(options *BasicTwoModelsAsPageItemClientListSecondItemOptions) *runtime.Pager[BasicTwoModelsAsPageItemClientListSecondItemResponse] {

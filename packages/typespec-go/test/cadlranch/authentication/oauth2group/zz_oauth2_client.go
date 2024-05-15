@@ -19,6 +19,7 @@ type OAuth2Client struct {
 }
 
 // Invalid - Check whether client is authenticated. Will return an invalid bearer error.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OAuth2ClientInvalidOptions contains the optional parameters for the OAuth2Client.Invalid method.
 func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientInvalidOptions) (OAuth2ClientInvalidResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *OAuth2Client) invalidHandleResponse(resp *http.Response) (OAuth2Cl
 }
 
 // Valid - Check whether client is authenticated
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OAuth2ClientValidOptions contains the optional parameters for the OAuth2Client.Valid method.
 func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientValidOptions) (OAuth2ClientValidResponse, error) {
 	var err error

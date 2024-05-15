@@ -40,6 +40,9 @@ func NewMetadataSchemasClient(subscriptionID string, credential azcore.TokenCred
 }
 
 // CreateOrUpdate - Creates new or updates existing metadata schema.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - metadataSchemaName - The name of the metadata schema.
@@ -115,6 +118,9 @@ func (client *MetadataSchemasClient) createOrUpdateHandleResponse(resp *http.Res
 }
 
 // Delete - Deletes specified metadata schema.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - metadataSchemaName - The name of the metadata schema.
@@ -171,6 +177,9 @@ func (client *MetadataSchemasClient) deleteCreateRequest(ctx context.Context, re
 }
 
 // Get - Returns details of the metadata schema.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - metadataSchemaName - The name of the metadata schema.
@@ -240,6 +249,8 @@ func (client *MetadataSchemasClient) getHandleResponse(resp *http.Response) (Met
 }
 
 // Head - Checks if specified metadata schema exists.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - metadataSchemaName - The name of the metadata schema.
@@ -296,6 +307,8 @@ func (client *MetadataSchemasClient) headCreateRequest(ctx context.Context, reso
 }
 
 // NewListPager - Returns a collection of metadata schemas.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - options - MetadataSchemasClientListOptions contains the optional parameters for the MetadataSchemasClient.NewListPager

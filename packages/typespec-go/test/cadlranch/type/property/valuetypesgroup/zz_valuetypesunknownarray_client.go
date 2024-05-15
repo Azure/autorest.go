@@ -19,6 +19,7 @@ type ValueTypesUnknownArrayClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesUnknownArrayClientGetOptions contains the optional parameters for the ValueTypesUnknownArrayClient.Get
 //     method.
 func (client *ValueTypesUnknownArrayClient) Get(ctx context.Context, options *ValueTypesUnknownArrayClientGetOptions) (ValueTypesUnknownArrayClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesUnknownArrayClient) getHandleResponse(resp *http.Respons
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesUnknownArrayClientPutOptions contains the optional parameters for the ValueTypesUnknownArrayClient.Put
 //     method.

@@ -18,6 +18,8 @@ type BasicExplicitBodyClient struct {
 	internal *azcore.Client
 }
 
+// Simple -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BasicExplicitBodyClientSimpleOptions contains the optional parameters for the BasicExplicitBodyClient.Simple
 //     method.
 func (client *BasicExplicitBodyClient) Simple(ctx context.Context, body User, options *BasicExplicitBodyClientSimpleOptions) (BasicExplicitBodyClientSimpleResponse, error) {

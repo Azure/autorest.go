@@ -21,7 +21,9 @@ type ServiceBazFooClient struct {
 	client   ClientType
 }
 
-// - options - ServiceBazFooClientSevenOptions contains the optional parameters for the ServiceBazFooClient.Seven method.
+// Seven -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ServiceBazFooClientSevenOptions contains the optional parameters for the ServiceBazFooClient.Seven method.
 func (client *ServiceBazFooClient) Seven(ctx context.Context, options *ServiceBazFooClientSevenOptions) (ServiceBazFooClientSevenResponse, error) {
 	var err error
 	const operationName = "ServiceBazFooClient.Seven"

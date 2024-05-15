@@ -18,7 +18,9 @@ type UsageClient struct {
 	internal *azcore.Client
 }
 
-// - options - UsageClientInputOptions contains the optional parameters for the UsageClient.Input method.
+// Input -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - UsageClientInputOptions contains the optional parameters for the UsageClient.Input method.
 func (client *UsageClient) Input(ctx context.Context, input InputRecord, options *UsageClientInputOptions) (UsageClientInputResponse, error) {
 	var err error
 	const operationName = "UsageClient.Input"
@@ -54,7 +56,9 @@ func (client *UsageClient) inputCreateRequest(ctx context.Context, input InputRe
 	return req, nil
 }
 
-// - options - UsageClientInputAndOutputOptions contains the optional parameters for the UsageClient.InputAndOutput method.
+// InputAndOutput -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - UsageClientInputAndOutputOptions contains the optional parameters for the UsageClient.InputAndOutput method.
 func (client *UsageClient) InputAndOutput(ctx context.Context, body InputOutputRecord, options *UsageClientInputAndOutputOptions) (UsageClientInputAndOutputResponse, error) {
 	var err error
 	const operationName = "UsageClient.InputAndOutput"
@@ -101,7 +105,9 @@ func (client *UsageClient) inputAndOutputHandleResponse(resp *http.Response) (Us
 	return result, nil
 }
 
-// - options - UsageClientOutputOptions contains the optional parameters for the UsageClient.Output method.
+// Output -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - UsageClientOutputOptions contains the optional parameters for the UsageClient.Output method.
 func (client *UsageClient) Output(ctx context.Context, options *UsageClientOutputOptions) (UsageClientOutputResponse, error) {
 	var err error
 	const operationName = "UsageClient.Output"

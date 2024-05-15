@@ -19,6 +19,7 @@ type NullableDurationClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDurationClientGetNonNullOptions contains the optional parameters for the NullableDurationClient.GetNonNull
 //     method.
 func (client *NullableDurationClient) GetNonNull(ctx context.Context, options *NullableDurationClientGetNonNullOptions) (NullableDurationClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableDurationClient) getNonNullHandleResponse(resp *http.Respon
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDurationClientGetNullOptions contains the optional parameters for the NullableDurationClient.GetNull
 //     method.
 func (client *NullableDurationClient) GetNull(ctx context.Context, options *NullableDurationClientGetNullOptions) (NullableDurationClientGetNullResponse, error) {
@@ -109,6 +111,7 @@ func (client *NullableDurationClient) getNullHandleResponse(resp *http.Response)
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDurationClientPatchNonNullOptions contains the optional parameters for the NullableDurationClient.PatchNonNull
 //     method.
 func (client *NullableDurationClient) PatchNonNull(ctx context.Context, body DurationProperty, options *NullableDurationClientPatchNonNullOptions) (NullableDurationClientPatchNonNullResponse, error) {
@@ -147,6 +150,7 @@ func (client *NullableDurationClient) patchNonNullCreateRequest(ctx context.Cont
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDurationClientPatchNullOptions contains the optional parameters for the NullableDurationClient.PatchNull
 //     method.
 func (client *NullableDurationClient) PatchNull(ctx context.Context, body DurationProperty, options *NullableDurationClientPatchNullOptions) (NullableDurationClientPatchNullResponse, error) {

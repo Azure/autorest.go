@@ -19,6 +19,7 @@ type ValueTypesStringLiteralClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesStringLiteralClientGetOptions contains the optional parameters for the ValueTypesStringLiteralClient.Get
 //     method.
 func (client *ValueTypesStringLiteralClient) Get(ctx context.Context, options *ValueTypesStringLiteralClientGetOptions) (ValueTypesStringLiteralClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesStringLiteralClient) getHandleResponse(resp *http.Respon
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesStringLiteralClientPutOptions contains the optional parameters for the ValueTypesStringLiteralClient.Put
 //     method.

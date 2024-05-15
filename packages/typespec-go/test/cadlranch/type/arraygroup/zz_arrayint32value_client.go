@@ -18,7 +18,9 @@ type ArrayInt32ValueClient struct {
 	internal *azcore.Client
 }
 
-// - options - ArrayInt32ValueClientGetOptions contains the optional parameters for the ArrayInt32ValueClient.Get method.
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayInt32ValueClientGetOptions contains the optional parameters for the ArrayInt32ValueClient.Get method.
 func (client *ArrayInt32ValueClient) Get(ctx context.Context, options *ArrayInt32ValueClientGetOptions) (ArrayInt32ValueClientGetResponse, error) {
 	var err error
 	const operationName = "ArrayInt32ValueClient.Get"
@@ -61,7 +63,9 @@ func (client *ArrayInt32ValueClient) getHandleResponse(resp *http.Response) (Arr
 	return result, nil
 }
 
-// - options - ArrayInt32ValueClientPutOptions contains the optional parameters for the ArrayInt32ValueClient.Put method.
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - ArrayInt32ValueClientPutOptions contains the optional parameters for the ArrayInt32ValueClient.Put method.
 func (client *ArrayInt32ValueClient) Put(ctx context.Context, body []int32, options *ArrayInt32ValueClientPutOptions) (ArrayInt32ValueClientPutResponse, error) {
 	var err error
 	const operationName = "ArrayInt32ValueClient.Put"

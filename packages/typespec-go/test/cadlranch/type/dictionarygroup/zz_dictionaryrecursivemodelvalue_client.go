@@ -18,6 +18,8 @@ type DictionaryRecursiveModelValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryRecursiveModelValueClientGetOptions contains the optional parameters for the DictionaryRecursiveModelValueClient.Get
 //     method.
 func (client *DictionaryRecursiveModelValueClient) Get(ctx context.Context, options *DictionaryRecursiveModelValueClientGetOptions) (DictionaryRecursiveModelValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *DictionaryRecursiveModelValueClient) getHandleResponse(resp *http.
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DictionaryRecursiveModelValueClientPutOptions contains the optional parameters for the DictionaryRecursiveModelValueClient.Put
 //     method.
 func (client *DictionaryRecursiveModelValueClient) Put(ctx context.Context, body map[string]*InnerModel, options *DictionaryRecursiveModelValueClientPutOptions) (DictionaryRecursiveModelValueClientPutResponse, error) {

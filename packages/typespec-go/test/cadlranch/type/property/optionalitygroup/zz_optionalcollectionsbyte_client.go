@@ -19,6 +19,7 @@ type OptionalCollectionsByteClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsByteClientGetAllOptions contains the optional parameters for the OptionalCollectionsByteClient.GetAll
 //     method.
 func (client *OptionalCollectionsByteClient) GetAll(ctx context.Context, options *OptionalCollectionsByteClientGetAllOptions) (OptionalCollectionsByteClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalCollectionsByteClient) getAllHandleResponse(resp *http.Res
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsByteClientGetDefaultOptions contains the optional parameters for the OptionalCollectionsByteClient.GetDefault
 //     method.
 func (client *OptionalCollectionsByteClient) GetDefault(ctx context.Context, options *OptionalCollectionsByteClientGetDefaultOptions) (OptionalCollectionsByteClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalCollectionsByteClient) getDefaultHandleResponse(resp *http
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsByteClientPutAllOptions contains the optional parameters for the OptionalCollectionsByteClient.PutAll
 //     method.
 func (client *OptionalCollectionsByteClient) PutAll(ctx context.Context, body CollectionsByteProperty, options *OptionalCollectionsByteClientPutAllOptions) (OptionalCollectionsByteClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalCollectionsByteClient) putAllCreateRequest(ctx context.Con
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsByteClientPutDefaultOptions contains the optional parameters for the OptionalCollectionsByteClient.PutDefault
 //     method.
 func (client *OptionalCollectionsByteClient) PutDefault(ctx context.Context, body CollectionsByteProperty, options *OptionalCollectionsByteClientPutDefaultOptions) (OptionalCollectionsByteClientPutDefaultResponse, error) {

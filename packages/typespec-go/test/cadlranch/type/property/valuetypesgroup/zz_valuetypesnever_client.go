@@ -19,6 +19,7 @@ type ValueTypesNeverClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesNeverClientGetOptions contains the optional parameters for the ValueTypesNeverClient.Get method.
 func (client *ValueTypesNeverClient) Get(ctx context.Context, options *ValueTypesNeverClientGetOptions) (ValueTypesNeverClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesNeverClient) getHandleResponse(resp *http.Response) (Val
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesNeverClientPutOptions contains the optional parameters for the ValueTypesNeverClient.Put method.
 func (client *ValueTypesNeverClient) Put(ctx context.Context, body NeverProperty, options *ValueTypesNeverClientPutOptions) (ValueTypesNeverClientPutResponse, error) {

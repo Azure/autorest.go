@@ -18,6 +18,8 @@ type ArrayNullableFloatValueClient struct {
 	internal *azcore.Client
 }
 
+// Get -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ArrayNullableFloatValueClientGetOptions contains the optional parameters for the ArrayNullableFloatValueClient.Get
 //     method.
 func (client *ArrayNullableFloatValueClient) Get(ctx context.Context, options *ArrayNullableFloatValueClientGetOptions) (ArrayNullableFloatValueClientGetResponse, error) {
@@ -62,6 +64,8 @@ func (client *ArrayNullableFloatValueClient) getHandleResponse(resp *http.Respon
 	return result, nil
 }
 
+// Put -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ArrayNullableFloatValueClientPutOptions contains the optional parameters for the ArrayNullableFloatValueClient.Put
 //     method.
 func (client *ArrayNullableFloatValueClient) Put(ctx context.Context, body []*float32, options *ArrayNullableFloatValueClientPutOptions) (ArrayNullableFloatValueClientPutResponse, error) {

@@ -20,7 +20,9 @@ type BytesHeaderClient struct {
 	internal *azcore.Client
 }
 
-// - options - BytesHeaderClientBase64Options contains the optional parameters for the BytesHeaderClient.Base64 method.
+// Base64 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesHeaderClientBase64Options contains the optional parameters for the BytesHeaderClient.Base64 method.
 func (client *BytesHeaderClient) Base64(ctx context.Context, value []byte, options *BytesHeaderClientBase64Options) (BytesHeaderClientBase64Response, error) {
 	var err error
 	const operationName = "BytesHeaderClient.Base64"
@@ -53,7 +55,9 @@ func (client *BytesHeaderClient) base64CreateRequest(ctx context.Context, value 
 	return req, nil
 }
 
-// - options - BytesHeaderClientBase64URLOptions contains the optional parameters for the BytesHeaderClient.Base64URL method.
+// Base64URL -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesHeaderClientBase64URLOptions contains the optional parameters for the BytesHeaderClient.Base64URL method.
 func (client *BytesHeaderClient) Base64URL(ctx context.Context, value []byte, options *BytesHeaderClientBase64URLOptions) (BytesHeaderClientBase64URLResponse, error) {
 	var err error
 	const operationName = "BytesHeaderClient.Base64URL"
@@ -86,6 +90,8 @@ func (client *BytesHeaderClient) base64URLCreateRequest(ctx context.Context, val
 	return req, nil
 }
 
+// Base64URLArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BytesHeaderClientBase64URLArrayOptions contains the optional parameters for the BytesHeaderClient.Base64URLArray
 //     method.
 func (client *BytesHeaderClient) Base64URLArray(ctx context.Context, value [][]byte, options *BytesHeaderClientBase64URLArrayOptions) (BytesHeaderClientBase64URLArrayResponse, error) {
@@ -126,7 +132,9 @@ func (client *BytesHeaderClient) base64URLArrayCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// - options - BytesHeaderClientDefaultOptions contains the optional parameters for the BytesHeaderClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - BytesHeaderClientDefaultOptions contains the optional parameters for the BytesHeaderClient.Default method.
 func (client *BytesHeaderClient) Default(ctx context.Context, value []byte, options *BytesHeaderClientDefaultOptions) (BytesHeaderClientDefaultResponse, error) {
 	var err error
 	const operationName = "BytesHeaderClient.Default"

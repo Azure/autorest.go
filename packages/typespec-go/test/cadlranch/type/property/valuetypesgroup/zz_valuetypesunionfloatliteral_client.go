@@ -19,6 +19,7 @@ type ValueTypesUnionFloatLiteralClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesUnionFloatLiteralClientGetOptions contains the optional parameters for the ValueTypesUnionFloatLiteralClient.Get
 //     method.
 func (client *ValueTypesUnionFloatLiteralClient) Get(ctx context.Context, options *ValueTypesUnionFloatLiteralClientGetOptions) (ValueTypesUnionFloatLiteralClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesUnionFloatLiteralClient) getHandleResponse(resp *http.Re
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesUnionFloatLiteralClientPutOptions contains the optional parameters for the ValueTypesUnionFloatLiteralClient.Put
 //     method.

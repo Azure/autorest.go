@@ -19,6 +19,7 @@ type ScalarUnknownClient struct {
 }
 
 // Get - get unknown value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ScalarUnknownClientGetOptions contains the optional parameters for the ScalarUnknownClient.Get method.
 func (client *ScalarUnknownClient) Get(ctx context.Context, options *ScalarUnknownClientGetOptions) (ScalarUnknownClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ScalarUnknownClient) getHandleResponse(resp *http.Response) (Scala
 }
 
 // Put - put unknown value
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - _
 //   - options - ScalarUnknownClientPutOptions contains the optional parameters for the ScalarUnknownClient.Put method.
 func (client *ScalarUnknownClient) Put(ctx context.Context, body any, options *ScalarUnknownClientPutOptions) (ScalarUnknownClientPutResponse, error) {

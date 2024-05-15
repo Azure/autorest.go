@@ -64,6 +64,7 @@ func (client *ResiliencyServiceDrivenClient) fromNoneCreateRequest(ctx context.C
 
 // FromOneOptional - Test that currently accepts one optional parameter, will be updated in next spec to accept a new optional
 // parameter as well
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ResiliencyServiceDrivenClientFromOneOptionalOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneOptional
 //     method.
 func (client *ResiliencyServiceDrivenClient) FromOneOptional(ctx context.Context, options *ResiliencyServiceDrivenClientFromOneOptionalOptions) (ResiliencyServiceDrivenClientFromOneOptionalResponse, error) {
@@ -108,6 +109,7 @@ func (client *ResiliencyServiceDrivenClient) fromOneOptionalCreateRequest(ctx co
 
 // FromOneRequired - Test that currently accepts one required parameter, will be updated in next spec to accept a new optional
 // parameter as well
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - parameter - I am a required parameter
 //   - options - ResiliencyServiceDrivenClientFromOneRequiredOptions contains the optional parameters for the ResiliencyServiceDrivenClient.FromOneRequired
 //     method.

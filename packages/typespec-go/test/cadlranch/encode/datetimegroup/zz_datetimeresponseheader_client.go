@@ -21,6 +21,8 @@ type DatetimeResponseHeaderClient struct {
 	internal *azcore.Client
 }
 
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeResponseHeaderClientDefaultOptions contains the optional parameters for the DatetimeResponseHeaderClient.Default
 //     method.
 func (client *DatetimeResponseHeaderClient) Default(ctx context.Context, options *DatetimeResponseHeaderClientDefaultOptions) (DatetimeResponseHeaderClientDefaultResponse, error) {
@@ -68,6 +70,8 @@ func (client *DatetimeResponseHeaderClient) defaultHandleResponse(resp *http.Res
 	return result, nil
 }
 
+// RFC3339 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeResponseHeaderClientRFC3339Options contains the optional parameters for the DatetimeResponseHeaderClient.RFC3339
 //     method.
 func (client *DatetimeResponseHeaderClient) RFC3339(ctx context.Context, options *DatetimeResponseHeaderClientRFC3339Options) (DatetimeResponseHeaderClientRFC3339Response, error) {
@@ -115,6 +119,8 @@ func (client *DatetimeResponseHeaderClient) rfc3339HandleResponse(resp *http.Res
 	return result, nil
 }
 
+// RFC7231 -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeResponseHeaderClientRFC7231Options contains the optional parameters for the DatetimeResponseHeaderClient.RFC7231
 //     method.
 func (client *DatetimeResponseHeaderClient) RFC7231(ctx context.Context, options *DatetimeResponseHeaderClientRFC7231Options) (DatetimeResponseHeaderClientRFC7231Response, error) {
@@ -162,6 +168,8 @@ func (client *DatetimeResponseHeaderClient) rfc7231HandleResponse(resp *http.Res
 	return result, nil
 }
 
+// UnixTimestamp -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DatetimeResponseHeaderClientUnixTimestampOptions contains the optional parameters for the DatetimeResponseHeaderClient.UnixTimestamp
 //     method.
 func (client *DatetimeResponseHeaderClient) UnixTimestamp(ctx context.Context, options *DatetimeResponseHeaderClientUnixTimestampOptions) (DatetimeResponseHeaderClientUnixTimestampResponse, error) {

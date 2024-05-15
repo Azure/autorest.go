@@ -18,6 +18,8 @@ type AccessInternalOperationClient struct {
 	internal *azcore.Client
 }
 
+// internalDecoratorInInternal -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessInternalOperationClientinternalDecoratorInInternalOptions contains the optional parameters for the AccessInternalOperationClient.internalDecoratorInInternal
 //     method.
 func (client *AccessInternalOperationClient) internalDecoratorInInternal(ctx context.Context, name string, options *accessInternalOperationClientinternalDecoratorInInternalOptions) (accessInternalOperationClientinternalDecoratorInInternalResponse, error) {
@@ -65,6 +67,8 @@ func (client *AccessInternalOperationClient) internalDecoratorInInternalHandleRe
 	return result, nil
 }
 
+// noDecoratorInInternal -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessInternalOperationClientnoDecoratorInInternalOptions contains the optional parameters for the AccessInternalOperationClient.noDecoratorInInternal
 //     method.
 func (client *AccessInternalOperationClient) noDecoratorInInternal(ctx context.Context, name string, options *accessInternalOperationClientnoDecoratorInInternalOptions) (accessInternalOperationClientnoDecoratorInInternalResponse, error) {
@@ -112,6 +116,8 @@ func (client *AccessInternalOperationClient) noDecoratorInInternalHandleResponse
 	return result, nil
 }
 
+// publicDecoratorInInternal -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessInternalOperationClientpublicDecoratorInInternalOptions contains the optional parameters for the AccessInternalOperationClient.publicDecoratorInInternal
 //     method.
 func (client *AccessInternalOperationClient) publicDecoratorInInternal(ctx context.Context, name string, options *accessInternalOperationClientpublicDecoratorInInternalOptions) (accessInternalOperationClientpublicDecoratorInInternalResponse, error) {

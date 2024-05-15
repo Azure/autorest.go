@@ -287,7 +287,7 @@ export interface Method {
 
   naming: MethodNaming;
 
-  apiVersions: Array<string>; // TODO: not sure why this needs to be an array
+  apiVersions: Array<string>;
 }
 
 export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
@@ -333,7 +333,7 @@ export interface NextPageMethod {
 
   client: Client;
 
-  apiVersions: Array<string>; // TODO: not sure why this needs to be an array
+  apiVersions: Array<string>;
 
   isNextPageMethod: true;
 }

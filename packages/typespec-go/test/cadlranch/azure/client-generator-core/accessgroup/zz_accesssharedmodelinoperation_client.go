@@ -18,6 +18,8 @@ type AccessSharedModelInOperationClient struct {
 	internal *azcore.Client
 }
 
+// Public -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - AccessSharedModelInOperationClientPublicOptions contains the optional parameters for the AccessSharedModelInOperationClient.Public
 //     method.
 func (client *AccessSharedModelInOperationClient) Public(ctx context.Context, name string, options *AccessSharedModelInOperationClientPublicOptions) (AccessSharedModelInOperationClientPublicResponse, error) {
@@ -65,6 +67,8 @@ func (client *AccessSharedModelInOperationClient) publicHandleResponse(resp *htt
 	return result, nil
 }
 
+// internalMethod -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - accessSharedModelInOperationClientinternalMethodOptions contains the optional parameters for the AccessSharedModelInOperationClient.internalMethod
 //     method.
 func (client *AccessSharedModelInOperationClient) internalMethod(ctx context.Context, name string, options *accessSharedModelInOperationClientinternalMethodOptions) (accessSharedModelInOperationClientinternalMethodResponse, error) {

@@ -19,6 +19,7 @@ type OptionalRequiredAndOptionalClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalRequiredAndOptionalClientGetAllOptions contains the optional parameters for the OptionalRequiredAndOptionalClient.GetAll
 //     method.
 func (client *OptionalRequiredAndOptionalClient) GetAll(ctx context.Context, options *OptionalRequiredAndOptionalClientGetAllOptions) (OptionalRequiredAndOptionalClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalRequiredAndOptionalClient) getAllHandleResponse(resp *http
 }
 
 // GetRequiredOnly - Get models that will return only the required properties
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalRequiredAndOptionalClientGetRequiredOnlyOptions contains the optional parameters for the OptionalRequiredAndOptionalClient.GetRequiredOnly
 //     method.
 func (client *OptionalRequiredAndOptionalClient) GetRequiredOnly(ctx context.Context, options *OptionalRequiredAndOptionalClientGetRequiredOnlyOptions) (OptionalRequiredAndOptionalClientGetRequiredOnlyResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalRequiredAndOptionalClient) getRequiredOnlyHandleResponse(r
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalRequiredAndOptionalClientPutAllOptions contains the optional parameters for the OptionalRequiredAndOptionalClient.PutAll
 //     method.
 func (client *OptionalRequiredAndOptionalClient) PutAll(ctx context.Context, body RequiredAndOptionalProperty, options *OptionalRequiredAndOptionalClientPutAllOptions) (OptionalRequiredAndOptionalClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalRequiredAndOptionalClient) putAllCreateRequest(ctx context
 }
 
 // PutRequiredOnly - Put a body with only required properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalRequiredAndOptionalClientPutRequiredOnlyOptions contains the optional parameters for the OptionalRequiredAndOptionalClient.PutRequiredOnly
 //     method.
 func (client *OptionalRequiredAndOptionalClient) PutRequiredOnly(ctx context.Context, body RequiredAndOptionalProperty, options *OptionalRequiredAndOptionalClientPutRequiredOnlyOptions) (OptionalRequiredAndOptionalClientPutRequiredOnlyResponse, error) {

@@ -19,6 +19,7 @@ type OptionalBooleanLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBooleanLiteralClientGetAllOptions contains the optional parameters for the OptionalBooleanLiteralClient.GetAll
 //     method.
 func (client *OptionalBooleanLiteralClient) GetAll(ctx context.Context, options *OptionalBooleanLiteralClientGetAllOptions) (OptionalBooleanLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalBooleanLiteralClient) getAllHandleResponse(resp *http.Resp
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBooleanLiteralClientGetDefaultOptions contains the optional parameters for the OptionalBooleanLiteralClient.GetDefault
 //     method.
 func (client *OptionalBooleanLiteralClient) GetDefault(ctx context.Context, options *OptionalBooleanLiteralClientGetDefaultOptions) (OptionalBooleanLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalBooleanLiteralClient) getDefaultHandleResponse(resp *http.
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBooleanLiteralClientPutAllOptions contains the optional parameters for the OptionalBooleanLiteralClient.PutAll
 //     method.
 func (client *OptionalBooleanLiteralClient) PutAll(ctx context.Context, body BooleanLiteralProperty, options *OptionalBooleanLiteralClientPutAllOptions) (OptionalBooleanLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalBooleanLiteralClient) putAllCreateRequest(ctx context.Cont
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBooleanLiteralClientPutDefaultOptions contains the optional parameters for the OptionalBooleanLiteralClient.PutDefault
 //     method.
 func (client *OptionalBooleanLiteralClient) PutDefault(ctx context.Context, body BooleanLiteralProperty, options *OptionalBooleanLiteralClientPutDefaultOptions) (OptionalBooleanLiteralClientPutDefaultResponse, error) {

@@ -19,6 +19,7 @@ type ValueTypesDecimal128Client struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesDecimal128ClientGetOptions contains the optional parameters for the ValueTypesDecimal128Client.Get
 //     method.
 func (client *ValueTypesDecimal128Client) Get(ctx context.Context, options *ValueTypesDecimal128ClientGetOptions) (ValueTypesDecimal128ClientGetResponse, error) {
@@ -64,6 +65,7 @@ func (client *ValueTypesDecimal128Client) getHandleResponse(resp *http.Response)
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesDecimal128ClientPutOptions contains the optional parameters for the ValueTypesDecimal128Client.Put
 //     method.

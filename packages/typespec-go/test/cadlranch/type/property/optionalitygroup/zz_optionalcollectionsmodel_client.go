@@ -19,6 +19,7 @@ type OptionalCollectionsModelClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsModelClientGetAllOptions contains the optional parameters for the OptionalCollectionsModelClient.GetAll
 //     method.
 func (client *OptionalCollectionsModelClient) GetAll(ctx context.Context, options *OptionalCollectionsModelClientGetAllOptions) (OptionalCollectionsModelClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalCollectionsModelClient) getAllHandleResponse(resp *http.Re
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsModelClientGetDefaultOptions contains the optional parameters for the OptionalCollectionsModelClient.GetDefault
 //     method.
 func (client *OptionalCollectionsModelClient) GetDefault(ctx context.Context, options *OptionalCollectionsModelClientGetDefaultOptions) (OptionalCollectionsModelClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalCollectionsModelClient) getDefaultHandleResponse(resp *htt
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsModelClientPutAllOptions contains the optional parameters for the OptionalCollectionsModelClient.PutAll
 //     method.
 func (client *OptionalCollectionsModelClient) PutAll(ctx context.Context, body CollectionsModelProperty, options *OptionalCollectionsModelClientPutAllOptions) (OptionalCollectionsModelClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalCollectionsModelClient) putAllCreateRequest(ctx context.Co
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalCollectionsModelClientPutDefaultOptions contains the optional parameters for the OptionalCollectionsModelClient.PutDefault
 //     method.
 func (client *OptionalCollectionsModelClient) PutDefault(ctx context.Context, body CollectionsModelProperty, options *OptionalCollectionsModelClientPutDefaultOptions) (OptionalCollectionsModelClientPutDefaultResponse, error) {

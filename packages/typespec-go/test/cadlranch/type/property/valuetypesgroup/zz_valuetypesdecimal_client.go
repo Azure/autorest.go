@@ -19,6 +19,7 @@ type ValueTypesDecimalClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesDecimalClientGetOptions contains the optional parameters for the ValueTypesDecimalClient.Get method.
 func (client *ValueTypesDecimalClient) Get(ctx context.Context, options *ValueTypesDecimalClientGetOptions) (ValueTypesDecimalClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesDecimalClient) getHandleResponse(resp *http.Response) (V
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesDecimalClientPutOptions contains the optional parameters for the ValueTypesDecimalClient.Put method.
 func (client *ValueTypesDecimalClient) Put(ctx context.Context, body DecimalProperty, options *ValueTypesDecimalClientPutOptions) (ValueTypesDecimalClientPutResponse, error) {

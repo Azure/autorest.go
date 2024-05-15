@@ -18,7 +18,9 @@ type EmptyClient struct {
 	internal *azcore.Client
 }
 
-// - options - GetEmptyOptions contains the optional parameters for the EmptyClient.GetEmpty method.
+// GetEmpty -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - GetEmptyOptions contains the optional parameters for the EmptyClient.GetEmpty method.
 func (client *EmptyClient) GetEmpty(ctx context.Context, options *GetEmptyOptions) (GetEmptyResponse, error) {
 	var err error
 	const operationName = "EmptyClient.GetEmpty"
@@ -61,7 +63,9 @@ func (client *EmptyClient) getEmptyHandleResponse(resp *http.Response) (GetEmpty
 	return result, nil
 }
 
-// - options - PostRoundTripEmptyOptions contains the optional parameters for the EmptyClient.PostRoundTripEmpty method.
+// PostRoundTripEmpty -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - PostRoundTripEmptyOptions contains the optional parameters for the EmptyClient.PostRoundTripEmpty method.
 func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInputOutput, options *PostRoundTripEmptyOptions) (PostRoundTripEmptyResponse, error) {
 	var err error
 	const operationName = "EmptyClient.PostRoundTripEmpty"
@@ -108,7 +112,9 @@ func (client *EmptyClient) postRoundTripEmptyHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// - options - PutEmptyOptions contains the optional parameters for the EmptyClient.PutEmpty method.
+// PutEmpty -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - PutEmptyOptions contains the optional parameters for the EmptyClient.PutEmpty method.
 func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, options *PutEmptyOptions) (PutEmptyResponse, error) {
 	var err error
 	const operationName = "EmptyClient.PutEmpty"

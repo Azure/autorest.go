@@ -19,6 +19,7 @@ type ValueTypesIntClient struct {
 }
 
 // Get - Get call
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - ValueTypesIntClientGetOptions contains the optional parameters for the ValueTypesIntClient.Get method.
 func (client *ValueTypesIntClient) Get(ctx context.Context, options *ValueTypesIntClientGetOptions) (ValueTypesIntClientGetResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *ValueTypesIntClient) getHandleResponse(resp *http.Response) (Value
 }
 
 // Put - Put operation
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - body - body
 //   - options - ValueTypesIntClientPutOptions contains the optional parameters for the ValueTypesIntClient.Put method.
 func (client *ValueTypesIntClient) Put(ctx context.Context, body IntProperty, options *ValueTypesIntClientPutOptions) (ValueTypesIntClientPutResponse, error) {

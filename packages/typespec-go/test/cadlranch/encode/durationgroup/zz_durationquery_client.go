@@ -21,7 +21,9 @@ type DurationQueryClient struct {
 	internal *azcore.Client
 }
 
-// - options - DurationQueryClientDefaultOptions contains the optional parameters for the DurationQueryClient.Default method.
+// Default -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientDefaultOptions contains the optional parameters for the DurationQueryClient.Default method.
 func (client *DurationQueryClient) Default(ctx context.Context, input string, options *DurationQueryClientDefaultOptions) (DurationQueryClientDefaultResponse, error) {
 	var err error
 	const operationName = "DurationQueryClient.Default"
@@ -56,6 +58,8 @@ func (client *DurationQueryClient) defaultCreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
+// Float64Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientFloat64SecondsOptions contains the optional parameters for the DurationQueryClient.Float64Seconds
 //     method.
 func (client *DurationQueryClient) Float64Seconds(ctx context.Context, input float64, options *DurationQueryClientFloat64SecondsOptions) (DurationQueryClientFloat64SecondsResponse, error) {
@@ -92,6 +96,8 @@ func (client *DurationQueryClient) float64SecondsCreateRequest(ctx context.Conte
 	return req, nil
 }
 
+// FloatSeconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientFloatSecondsOptions contains the optional parameters for the DurationQueryClient.FloatSeconds
 //     method.
 func (client *DurationQueryClient) FloatSeconds(ctx context.Context, input float32, options *DurationQueryClientFloatSecondsOptions) (DurationQueryClientFloatSecondsResponse, error) {
@@ -128,7 +134,9 @@ func (client *DurationQueryClient) floatSecondsCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// - options - DurationQueryClientISO8601Options contains the optional parameters for the DurationQueryClient.ISO8601 method.
+// ISO8601 -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - DurationQueryClientISO8601Options contains the optional parameters for the DurationQueryClient.ISO8601 method.
 func (client *DurationQueryClient) ISO8601(ctx context.Context, input string, options *DurationQueryClientISO8601Options) (DurationQueryClientISO8601Response, error) {
 	var err error
 	const operationName = "DurationQueryClient.ISO8601"
@@ -163,6 +171,8 @@ func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, inp
 	return req, nil
 }
 
+// Int32Seconds -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientInt32SecondsOptions contains the optional parameters for the DurationQueryClient.Int32Seconds
 //     method.
 func (client *DurationQueryClient) Int32Seconds(ctx context.Context, input int32, options *DurationQueryClientInt32SecondsOptions) (DurationQueryClientInt32SecondsResponse, error) {
@@ -199,6 +209,8 @@ func (client *DurationQueryClient) int32SecondsCreateRequest(ctx context.Context
 	return req, nil
 }
 
+// Int32SecondsArray -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - DurationQueryClientInt32SecondsArrayOptions contains the optional parameters for the DurationQueryClient.Int32SecondsArray
 //     method.
 func (client *DurationQueryClient) Int32SecondsArray(ctx context.Context, input []int32, options *DurationQueryClientInt32SecondsArrayOptions) (DurationQueryClientInt32SecondsArrayResponse, error) {

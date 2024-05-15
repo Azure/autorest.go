@@ -415,7 +415,16 @@ function genApiVersionDoc(apiVersions: Array<string>): string {
   if (apiVersions.length === 0) {
     return '';
   }
-  return `//\n// Generated from API version ${apiVersions.join(',')}\n`;
+  return `//\n// Generated from API version ${apiVersions.join(', ')}\n`;
+}
+
+function genRespErrorDoc(method: go.Method): string {
+  if (!(method.responseEnvelope.result && go.isHeadAsBooleanResult(method.responseEnvelope.result)) && !go.isPageableMethod(method)) {
+    // when head-as-boolean is enabled, no error is returned for 4xx status codes.
+    // pager constructors don't return an error
+    return '// If the operation fails it returns an *azcore.ResponseError type.\n';
+  }
+  return '';
 }
 
 function generateOperation(client: go.Client, method: go.Method, imports: ImportManager, injectSpans: boolean, generateFakes: boolean): string {
@@ -426,10 +435,18 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
     methodName = fixUpMethodName(method);
   }
   let text = '';
+  const respErrDoc = genRespErrorDoc(method);
+  const apiVerDoc = genApiVersionDoc(method.apiVersions);
   if (method.description) {
     text += `${comment(`${methodName} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
-    text += genApiVersionDoc(method.apiVersions);
+  } else if (respErrDoc.length > 0 || apiVerDoc.length > 0) {
+    // if the method has no doc comment but we're adding other
+    // doc comments, add an empty method name comment. this preserves
+    // existing behavior and makes the docs look better overall.
+    text += `// ${methodName} -\n`;
   }
+  text += respErrDoc;
+  text += apiVerDoc;
   if (go.isLROMethod(method)) {
     methodName = method.naming.internalMethod;
   } else {
@@ -1192,6 +1209,7 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   let text = '';
   if (method.description) {
     text += `${comment(`${fixUpMethodName(method)} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+    text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
   const zeroResp = getZeroReturnValue(method, 'api');

@@ -19,6 +19,7 @@ type OptionalBytesClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBytesClientGetAllOptions contains the optional parameters for the OptionalBytesClient.GetAll method.
 func (client *OptionalBytesClient) GetAll(ctx context.Context, options *OptionalBytesClientGetAllOptions) (OptionalBytesClientGetAllResponse, error) {
 	var err error
@@ -63,6 +64,7 @@ func (client *OptionalBytesClient) getAllHandleResponse(resp *http.Response) (Op
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBytesClientGetDefaultOptions contains the optional parameters for the OptionalBytesClient.GetDefault
 //     method.
 func (client *OptionalBytesClient) GetDefault(ctx context.Context, options *OptionalBytesClientGetDefaultOptions) (OptionalBytesClientGetDefaultResponse, error) {
@@ -108,6 +110,7 @@ func (client *OptionalBytesClient) getDefaultHandleResponse(resp *http.Response)
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBytesClientPutAllOptions contains the optional parameters for the OptionalBytesClient.PutAll method.
 func (client *OptionalBytesClient) PutAll(ctx context.Context, body BytesProperty, options *OptionalBytesClientPutAllOptions) (OptionalBytesClientPutAllResponse, error) {
 	var err error
@@ -145,6 +148,7 @@ func (client *OptionalBytesClient) putAllCreateRequest(ctx context.Context, body
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalBytesClientPutDefaultOptions contains the optional parameters for the OptionalBytesClient.PutDefault
 //     method.
 func (client *OptionalBytesClient) PutDefault(ctx context.Context, body BytesProperty, options *OptionalBytesClientPutDefaultOptions) (OptionalBytesClientPutDefaultResponse, error) {

@@ -32,7 +32,9 @@ func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 	}
 }
 
-// - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
+// Client -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
 func (client *NamingClient) Client(ctx context.Context, clientNameModel ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
 	const operationName = "NamingClient.Client"
@@ -68,7 +70,9 @@ func (client *NamingClient) clientCreateRequest(ctx context.Context, clientNameM
 	return req, nil
 }
 
-// - options - NamingClientClientNameOptions contains the optional parameters for the NamingClient.ClientName method.
+// ClientName -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientClientNameOptions contains the optional parameters for the NamingClient.ClientName method.
 func (client *NamingClient) ClientName(ctx context.Context, options *NamingClientClientNameOptions) (NamingClientClientNameResponse, error) {
 	var err error
 	const operationName = "NamingClient.ClientName"
@@ -100,6 +104,8 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *Nami
 	return req, nil
 }
 
+// CompatibleWithEncodedName -
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
 //     method.
 func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
@@ -137,7 +143,9 @@ func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.C
 	return req, nil
 }
 
-// - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
+// Language -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
 func (client *NamingClient) Language(ctx context.Context, languageClientNameModel LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingClient.Language"
@@ -173,7 +181,9 @@ func (client *NamingClient) languageCreateRequest(ctx context.Context, languageC
 	return req, nil
 }
 
-// - options - NamingClientParameterOptions contains the optional parameters for the NamingClient.Parameter method.
+// Parameter -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientParameterOptions contains the optional parameters for the NamingClient.Parameter method.
 func (client *NamingClient) Parameter(ctx context.Context, clientName string, options *NamingClientParameterOptions) (NamingClientParameterResponse, error) {
 	var err error
 	const operationName = "NamingClient.Parameter"
@@ -208,7 +218,9 @@ func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientNa
 	return req, nil
 }
 
-// - options - NamingClientRequestOptions contains the optional parameters for the NamingClient.Request method.
+// Request -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientRequestOptions contains the optional parameters for the NamingClient.Request method.
 func (client *NamingClient) Request(ctx context.Context, clientName string, options *NamingClientRequestOptions) (NamingClientRequestResponse, error) {
 	var err error
 	const operationName = "NamingClient.Request"
@@ -241,7 +253,9 @@ func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName
 	return req, nil
 }
 
-// - options - NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
+// Response -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
 func (client *NamingClient) Response(ctx context.Context, options *NamingClientResponseOptions) (NamingClientResponseResponse, error) {
 	var err error
 	const operationName = "NamingClient.Response"

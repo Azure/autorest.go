@@ -19,6 +19,7 @@ type NullableDatetimeClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDatetimeClientGetNonNullOptions contains the optional parameters for the NullableDatetimeClient.GetNonNull
 //     method.
 func (client *NullableDatetimeClient) GetNonNull(ctx context.Context, options *NullableDatetimeClientGetNonNullOptions) (NullableDatetimeClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableDatetimeClient) getNonNullHandleResponse(resp *http.Respon
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDatetimeClientGetNullOptions contains the optional parameters for the NullableDatetimeClient.GetNull
 //     method.
 func (client *NullableDatetimeClient) GetNull(ctx context.Context, options *NullableDatetimeClientGetNullOptions) (NullableDatetimeClientGetNullResponse, error) {
@@ -109,6 +111,7 @@ func (client *NullableDatetimeClient) getNullHandleResponse(resp *http.Response)
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDatetimeClientPatchNonNullOptions contains the optional parameters for the NullableDatetimeClient.PatchNonNull
 //     method.
 func (client *NullableDatetimeClient) PatchNonNull(ctx context.Context, body DatetimeProperty, options *NullableDatetimeClientPatchNonNullOptions) (NullableDatetimeClientPatchNonNullResponse, error) {
@@ -147,6 +150,7 @@ func (client *NullableDatetimeClient) patchNonNullCreateRequest(ctx context.Cont
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableDatetimeClientPatchNullOptions contains the optional parameters for the NullableDatetimeClient.PatchNull
 //     method.
 func (client *NullableDatetimeClient) PatchNull(ctx context.Context, body DatetimeProperty, options *NullableDatetimeClientPatchNullOptions) (NullableDatetimeClientPatchNullResponse, error) {

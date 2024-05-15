@@ -40,6 +40,9 @@ func NewServicesClient(subscriptionID string, credential azcore.TokenCredential,
 }
 
 // CreateOrUpdate - Creates new or updates existing API.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - resource - Resource create parameters.
@@ -106,6 +109,9 @@ func (client *ServicesClient) createOrUpdateHandleResponse(resp *http.Response) 
 }
 
 // Delete - Deletes specified service.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - options - ServicesClientDeleteOptions contains the optional parameters for the ServicesClient.Delete method.
@@ -157,6 +163,9 @@ func (client *ServicesClient) deleteCreateRequest(ctx context.Context, resourceG
 }
 
 // BeginExportMetadataSchema - Exports the effective metadata schema.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - payload - The content of the action request
@@ -180,6 +189,9 @@ func (client *ServicesClient) BeginExportMetadataSchema(ctx context.Context, res
 }
 
 // ExportMetadataSchema - Exports the effective metadata schema.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 func (client *ServicesClient) exportMetadataSchema(ctx context.Context, resourceGroupName string, serviceName string, payload MetadataSchemaExportRequest, options *ServicesClientBeginExportMetadataSchemaOptions) (*http.Response, error) {
 	var err error
 	const operationName = "ServicesClient.BeginExportMetadataSchema"
@@ -232,6 +244,9 @@ func (client *ServicesClient) exportMetadataSchemaCreateRequest(ctx context.Cont
 }
 
 // Get - Returns details of the service.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - options - ServicesClientGetOptions contains the optional parameters for the ServicesClient.Get method.
@@ -293,6 +308,8 @@ func (client *ServicesClient) getHandleResponse(resp *http.Response) (ServicesCl
 }
 
 // NewListByResourceGroupPager - Returns a collection of services within the resource group.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - ServicesClientListByResourceGroupOptions contains the optional parameters for the ServicesClient.NewListByResourceGroupPager
 //     method.
@@ -351,6 +368,8 @@ func (client *ServicesClient) listByResourceGroupHandleResponse(resp *http.Respo
 }
 
 // NewListBySubscriptionPager - Lists services within an Azure subscription.
+//
+// Generated from API version 2024-03-15-preview
 //   - options - ServicesClientListBySubscriptionOptions contains the optional parameters for the ServicesClient.NewListBySubscriptionPager
 //     method.
 func (client *ServicesClient) NewListBySubscriptionPager(options *ServicesClientListBySubscriptionOptions) *runtime.Pager[ServicesClientListBySubscriptionResponse] {
@@ -404,6 +423,9 @@ func (client *ServicesClient) listBySubscriptionHandleResponse(resp *http.Respon
 }
 
 // Update - Updates existing service.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-03-15-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - serviceName - The name of Azure API Center service.
 //   - payload - The resource properties to be updated.

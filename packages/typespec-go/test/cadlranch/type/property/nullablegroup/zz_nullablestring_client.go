@@ -19,6 +19,7 @@ type NullableStringClient struct {
 }
 
 // GetNonNull - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableStringClientGetNonNullOptions contains the optional parameters for the NullableStringClient.GetNonNull
 //     method.
 func (client *NullableStringClient) GetNonNull(ctx context.Context, options *NullableStringClientGetNonNullOptions) (NullableStringClientGetNonNullResponse, error) {
@@ -64,6 +65,7 @@ func (client *NullableStringClient) getNonNullHandleResponse(resp *http.Response
 }
 
 // GetNull - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableStringClientGetNullOptions contains the optional parameters for the NullableStringClient.GetNull method.
 func (client *NullableStringClient) GetNull(ctx context.Context, options *NullableStringClientGetNullOptions) (NullableStringClientGetNullResponse, error) {
 	var err error
@@ -108,6 +110,7 @@ func (client *NullableStringClient) getNullHandleResponse(resp *http.Response) (
 }
 
 // PatchNonNull - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableStringClientPatchNonNullOptions contains the optional parameters for the NullableStringClient.PatchNonNull
 //     method.
 func (client *NullableStringClient) PatchNonNull(ctx context.Context, body StringProperty, options *NullableStringClientPatchNonNullOptions) (NullableStringClientPatchNonNullResponse, error) {
@@ -146,6 +149,7 @@ func (client *NullableStringClient) patchNonNullCreateRequest(ctx context.Contex
 }
 
 // PatchNull - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NullableStringClientPatchNullOptions contains the optional parameters for the NullableStringClient.PatchNull
 //     method.
 func (client *NullableStringClient) PatchNull(ctx context.Context, body StringProperty, options *NullableStringClientPatchNullOptions) (NullableStringClientPatchNullResponse, error) {

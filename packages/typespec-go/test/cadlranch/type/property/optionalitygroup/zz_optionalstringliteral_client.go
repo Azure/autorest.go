@@ -19,6 +19,7 @@ type OptionalStringLiteralClient struct {
 }
 
 // GetAll - Get models that will return all properties in the model
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringLiteralClientGetAllOptions contains the optional parameters for the OptionalStringLiteralClient.GetAll
 //     method.
 func (client *OptionalStringLiteralClient) GetAll(ctx context.Context, options *OptionalStringLiteralClientGetAllOptions) (OptionalStringLiteralClientGetAllResponse, error) {
@@ -64,6 +65,7 @@ func (client *OptionalStringLiteralClient) getAllHandleResponse(resp *http.Respo
 }
 
 // GetDefault - Get models that will return the default object
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringLiteralClientGetDefaultOptions contains the optional parameters for the OptionalStringLiteralClient.GetDefault
 //     method.
 func (client *OptionalStringLiteralClient) GetDefault(ctx context.Context, options *OptionalStringLiteralClientGetDefaultOptions) (OptionalStringLiteralClientGetDefaultResponse, error) {
@@ -109,6 +111,7 @@ func (client *OptionalStringLiteralClient) getDefaultHandleResponse(resp *http.R
 }
 
 // PutAll - Put a body with all properties present.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringLiteralClientPutAllOptions contains the optional parameters for the OptionalStringLiteralClient.PutAll
 //     method.
 func (client *OptionalStringLiteralClient) PutAll(ctx context.Context, body StringLiteralProperty, options *OptionalStringLiteralClientPutAllOptions) (OptionalStringLiteralClientPutAllResponse, error) {
@@ -147,6 +150,7 @@ func (client *OptionalStringLiteralClient) putAllCreateRequest(ctx context.Conte
 }
 
 // PutDefault - Put a body with default properties.
+// If the operation fails it returns an *azcore.ResponseError type.
 //   - options - OptionalStringLiteralClientPutDefaultOptions contains the optional parameters for the OptionalStringLiteralClient.PutDefault
 //     method.
 func (client *OptionalStringLiteralClient) PutDefault(ctx context.Context, body StringLiteralProperty, options *OptionalStringLiteralClientPutDefaultOptions) (OptionalStringLiteralClientPutDefaultResponse, error) {
