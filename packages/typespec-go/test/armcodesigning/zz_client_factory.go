@@ -51,7 +51,6 @@ func (c *ClientFactory) NewCertificateProfilesClient() *CertificateProfilesClien
 // NewOperationsClient creates a new instance of OperationsClient.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
-		subscriptionID: c.subscriptionID,
-		internal:       c.internal,
+		internal: c.internal,
 	}
 }

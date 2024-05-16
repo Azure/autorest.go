@@ -107,7 +107,7 @@ export class clientAdapter {
           }
           continue;
         } else if (param.kind === 'method') {
-          // some client params, notably (only?) api-version, can be explicitly
+          // some client params, notably api-version, can be explicitly
           // defined in the operation signature:
           // e.g. op withQueryApiVersion(@query("api-version") apiVersion: string)
           // these get propagated to sdkMethod.operation.parameters thus they
@@ -123,7 +123,10 @@ export class clientAdapter {
       // to create a child client that will need to inherit our client params.
       goClient.templatedHost = parent.templatedHost;
       goClient.host = parent.host;
-      goClient.parameters = parent.parameters;
+      // make a copy of the client params. this is to prevent
+      // client method params from being shared across clients
+      // as not all client method params might be uniform.
+      goClient.parameters = new Array<go.Parameter>(...parent.parameters);
     } else {
       throw new Error(`uninstantiable client ${sdkClient.name} has no parent`);
     }
