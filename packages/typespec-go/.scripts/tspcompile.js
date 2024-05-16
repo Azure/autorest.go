@@ -125,11 +125,14 @@ generate('armapicenter', armapicenter, 'test/armapicenter');
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
-const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
+const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
 generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
+
+const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
+generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/armdevopsinfrastructure');
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];

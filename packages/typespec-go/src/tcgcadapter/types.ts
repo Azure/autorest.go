@@ -422,6 +422,9 @@ export class typeAdapter {
   }
 
   private getInterfaceType(model: tcgc.SdkModelType, parent?: go.InterfaceType): go.InterfaceType {
+    if (model.name.length === 0) {
+      throw new Error('unnamed model');
+    }
     if (!model.discriminatedSubtypes) {
       throw new Error(`type ${model.name} isn't a discriminator root`);
     }
@@ -829,7 +832,10 @@ export class typeAdapter {
     for (const model of sdkContext.experimental_sdkPackage.models) {
       let parent = model.baseModel;
       while (parent) {
-        if (!baseModels.has(parent.name)) {
+        // exclude any polymorphic root type from the check
+        // as we always need to include the root type even
+        // if it's not referenced.
+        if (!parent.discriminatedSubtypes && !baseModels.has(parent.name)) {
           baseModels.add(parent.name);
         }
         parent = parent.baseModel;
