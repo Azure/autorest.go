@@ -91,8 +91,7 @@ func (c *ClientFactory) NewMetadataSchemasClient() *MetadataSchemasClient {
 // NewOperationsClient creates a new instance of OperationsClient.
 func (c *ClientFactory) NewOperationsClient() *OperationsClient {
 	return &OperationsClient{
-		subscriptionID: c.subscriptionID,
-		internal:       c.internal,
+		internal: c.internal,
 	}
 }
 
