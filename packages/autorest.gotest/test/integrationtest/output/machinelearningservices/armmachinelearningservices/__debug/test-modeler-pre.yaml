@@ -38667,7 +38667,7 @@ operationGroups:
             OperationsList:
               parameters:
                 api-version: 2022-02-01-preview
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/operationsList.json
               responses:
                 '200':
                   body:
@@ -38878,7 +38878,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json
               responses:
                 '200':
                   body:
@@ -38941,9 +38941,7 @@ operationGroups:
             description: Gets the properties of the specified machine learning workspace.
           go:
             name: Get
-            description: |-
-              Gets the properties of the specified machine learning workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets the properties of the specified machine learning workspace.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -39206,7 +39204,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json
               responses:
                 '200':
                   body:
@@ -39256,9 +39254,7 @@ operationGroups:
             description: Creates or updates a workspace with the specified parameters.
           go:
             name: CreateOrUpdate
-            description: |-
-              Creates or updates a workspace with the specified parameters.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Creates or updates a workspace with the specified parameters.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -39461,7 +39457,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -39473,9 +39469,7 @@ operationGroups:
             description: Deletes a machine learning workspace.
           go:
             name: Delete
-            description: |-
-              Deletes a machine learning workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Deletes a machine learning workspace.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -39684,7 +39678,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json
               responses:
                 '200':
                   body:
@@ -39713,9 +39707,7 @@ operationGroups:
             description: Updates a machine learning workspace with the specified parameters.
           go:
             name: Update
-            description: |-
-              Updates a machine learning workspace with the specified parameters.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Updates a machine learning workspace with the specified parameters.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -39879,7 +39871,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json
               responses:
                 '200':
                   body:
@@ -40170,7 +40162,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json
               responses:
                 '200':
                   body:
@@ -40198,9 +40190,7 @@ operationGroups:
             summary: Diagnose workspace setup issue.
           go:
             name: Diagnose
-            description: |-
-              Diagnose workspace setup issue.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Diagnose workspace setup issue.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -40348,7 +40338,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json
               responses:
                 '200':
                   body:
@@ -40372,9 +40362,7 @@ operationGroups:
             description: Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
           go:
             name: ListKeys
-            description: |-
-              Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -40582,7 +40570,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json
               responses:
                 '200': {}
                 '202': {}
@@ -40593,9 +40581,7 @@ operationGroups:
             description: Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
           go:
             name: ResyncKeys
-            description: |-
-              Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Resync all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -40727,7 +40713,7 @@ operationGroups:
               parameters:
                 api-version: 2022-02-01-preview
                 subscriptionId: 00000000-1111-2222-3333-444444444444
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listBySubscription.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listBySubscription.json
               responses:
                 '200':
                   body:
@@ -40915,8 +40901,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json
               responses:
                 '200':
                   body:
@@ -40932,9 +40917,7 @@ operationGroups:
             description: return notebook access token and refresh token
           go:
             name: ListNotebookAccessToken
-            description: |-
-              return notebook access token and refresh token
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: return notebook access token and refresh token
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -41146,7 +41129,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json
               responses:
                 '200':
                   body:
@@ -41165,9 +41148,7 @@ operationGroups:
             description: Prepare a notebook.
           go:
             name: PrepareNotebook
-            description: |-
-              Prepare a notebook.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Prepare a notebook.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -41314,8 +41295,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json
               responses:
                 '200':
                   body:
@@ -41326,9 +41306,7 @@ operationGroups:
             description: List storage account keys of a workspace.
           go:
             name: ListStorageAccountKeys
-            description: |-
-              List storage account keys of a workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List storage account keys of a workspace.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -41491,7 +41469,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json
               responses:
                 '200':
                   body:
@@ -41503,9 +41481,7 @@ operationGroups:
             description: List keys of a notebook.
           go:
             name: ListNotebookKeys
-            description: |-
-              List keys of a notebook.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List keys of a notebook.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -41668,7 +41644,7 @@ operationGroups:
                 resourceGroupName: workspace-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json
               responses:
                 '200':
                   body:
@@ -41692,9 +41668,7 @@ operationGroups:
             summary: Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically.
           go:
             name: ListOutboundNetworkDependenciesEndpoints
-            description: |-
-              Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -41855,7 +41829,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json
               responses:
                 '200':
                   body:
@@ -42319,7 +42293,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json
               responses:
                 '200':
                   body:
@@ -42586,9 +42560,7 @@ operationGroups:
             description: Returns supported VM Sizes in a location
           go:
             name: List
-            description: |-
-              Returns supported VM Sizes in a location
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Returns supported VM Sizes in a location
             azureARM: true
             clientName: VirtualMachineSizesClient
             openApiType: arm
@@ -42780,7 +42752,7 @@ operationGroups:
                       limit: 200
                       unit: Count
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json
               responses:
                 '200':
                   body:
@@ -42801,9 +42773,7 @@ operationGroups:
             description: Update quota for each VM family in workspace.
           go:
             name: Update
-            description: |-
-              Update quota for each VM family in workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update quota for each VM family in workspace.
             azureARM: true
             clientName: QuotasClient
             openApiType: arm
@@ -42948,7 +42918,7 @@ operationGroups:
                 api-version: 2022-02-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json
               responses:
                 '200':
                   body:
@@ -43462,7 +43432,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json
               responses:
                 '200':
                   body:
@@ -43666,7 +43636,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
               responses:
                 '200':
                   body:
@@ -43688,7 +43658,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
               responses:
                 '200':
                   body:
@@ -43735,7 +43705,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
               responses:
                 '200':
                   body:
@@ -43778,7 +43748,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
               responses:
                 '200':
                   body:
@@ -43824,9 +43794,7 @@ operationGroups:
             description: Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
           go:
             name: Get
-            description: |-
-              Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -44113,8 +44081,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
               responses:
                 '200':
                   body:
@@ -44204,8 +44171,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
               responses:
                 '200':
                   body:
@@ -44238,8 +44204,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
               responses:
                 '200':
                   body:
@@ -44272,8 +44237,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
               responses:
                 '200':
                   body:
@@ -44318,8 +44282,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
               responses:
                 '200':
                   body:
@@ -44354,8 +44317,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
               responses:
                 '200':
                   body:
@@ -44394,8 +44356,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
               responses:
                 '200':
                   body:
@@ -44462,8 +44423,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
               responses:
                 '200':
                   body:
@@ -44501,7 +44461,6 @@ operationGroups:
             description: |-
               Creates or updates compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. If your intent is to create a new compute, do a GET first to verify that it does not
               exist yet.
-              If the operation fails it returns an *azcore.ResponseError type.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -44733,7 +44692,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json
               responses:
                 '200':
                   body:
@@ -44754,9 +44713,7 @@ operationGroups:
             description: Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation.
           go:
             name: Update
-            description: |-
-              Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -45014,7 +44971,7 @@ operationGroups:
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 underlyingResourceAction: Delete
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json
               responses:
                 '200': {}
                 '202':
@@ -45029,9 +44986,7 @@ operationGroups:
             description: Deletes specified Machine Learning compute.
           go:
             name: Delete
-            description: |-
-              Deletes specified Machine Learning compute.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Deletes specified Machine Learning compute.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -45182,7 +45137,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json
               responses:
                 '200':
                   body:
@@ -45396,7 +45351,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json
               responses:
                 '200':
                   body:
@@ -45410,9 +45365,7 @@ operationGroups:
             description: Gets secrets related to Machine Learning compute (storage keys, service credentials, etc).
           go:
             name: ListKeys
-            description: |-
-              Gets secrets related to Machine Learning compute (storage keys, service credentials, etc).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets secrets related to Machine Learning compute (storage keys, service credentials, etc).
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -45638,7 +45591,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -45648,9 +45601,7 @@ operationGroups:
             description: Posts a start action to a compute instance
           go:
             name: Start
-            description: |-
-              Posts a start action to a compute instance
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Posts a start action to a compute instance
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -45835,7 +45786,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -45845,9 +45796,7 @@ operationGroups:
             description: Posts a stop action to a compute instance
           go:
             name: Stop
-            description: |-
-              Posts a stop action to a compute instance
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Posts a stop action to a compute instance
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -46032,7 +45981,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 34adfa4f-cedf-4dc0-ba29-b6d1a69ab345
                 workspaceName: workspaces123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json
               responses:
                 '202': {}
           x-ms-long-running-operation: true
@@ -46042,9 +45991,7 @@ operationGroups:
             description: Posts a restart action to a compute instance
           go:
             name: Restart
-            description: |-
-              Posts a restart action to a compute instance
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Posts a restart action to a compute instance
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -46194,7 +46141,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json
               responses:
                 '200':
                   body:
@@ -46415,7 +46362,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json
               responses:
                 '200':
                   body:
@@ -46436,9 +46383,7 @@ operationGroups:
             description: Gets the specified private endpoint connection associated with the workspace.
           go:
             name: Get
-            description: |-
-              Gets the specified private endpoint connection associated with the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets the specified private endpoint connection associated with the workspace.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -46647,8 +46592,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -46669,9 +46613,7 @@ operationGroups:
             description: Update the state of specified private endpoint connection associated with the workspace.
           go:
             name: CreateOrUpdate
-            description: |-
-              Update the state of specified private endpoint connection associated with the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the state of specified private endpoint connection associated with the workspace.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -46860,8 +46802,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -46871,9 +46812,7 @@ operationGroups:
             description: Deletes the specified private endpoint connection associated with the workspace.
           go:
             name: Delete
-            description: |-
-              Deletes the specified private endpoint connection associated with the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Deletes the specified private endpoint connection associated with the workspace.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -47038,7 +46977,7 @@ operationGroups:
                 resourceGroupName: rg-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json
               responses:
                 '200':
                   body:
@@ -47056,9 +46995,7 @@ operationGroups:
             description: Gets the private link resources that need to be created for a workspace.
           go:
             name: List
-            description: |-
-              Gets the private link resources that need to be created for a workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets the private link resources that need to be created for a workspace.
             azureARM: true
             clientName: PrivateLinkResourcesClient
             openApiType: arm
@@ -47295,7 +47232,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 target: www.facebook.com
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json
               responses:
                 '200':
                   body:
@@ -47520,7 +47457,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json
               responses:
                 '200':
                   body:
@@ -47538,9 +47475,7 @@ operationGroups:
             description: Add a new workspace connection.
           go:
             name: Create
-            description: |-
-              Add a new workspace connection.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Add a new workspace connection.
             azureARM: true
             clientName: WorkspaceConnectionsClient
             openApiType: arm
@@ -47721,7 +47656,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json
               responses:
                 '200':
                   body:
@@ -47739,9 +47674,7 @@ operationGroups:
             description: Get the detail of a workspace connection.
           go:
             name: Get
-            description: |-
-              Get the detail of a workspace connection.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the detail of a workspace connection.
             azureARM: true
             clientName: WorkspaceConnectionsClient
             openApiType: arm
@@ -47929,7 +47862,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace-1
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -47939,9 +47872,7 @@ operationGroups:
             description: Delete a workspace connection.
           go:
             name: Delete
-            description: |-
-              Delete a workspace connection.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete a workspace connection.
             azureARM: true
             clientName: WorkspaceConnectionsClient
             openApiType: arm
@@ -48160,7 +48091,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json
               responses:
                 '200':
                   body:
@@ -48465,7 +48396,7 @@ operationGroups:
                 resourceGroupName: resourceGroup-1234
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -48478,9 +48409,7 @@ operationGroups:
             summary: Delete Batch Inference Endpoint (asynchronous).
           go:
             name: Delete
-            description: |-
-              Delete Batch Inference Endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete Batch Inference Endpoint (asynchronous).
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -48632,7 +48561,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json
               responses:
                 '200':
                   body:
@@ -48680,9 +48609,7 @@ operationGroups:
             summary: Gets a batch inference endpoint by name.
           go:
             name: Get
-            description: |-
-              Gets a batch inference endpoint by name.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets a batch inference endpoint by name.
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -48980,7 +48907,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json
               responses:
                 '200':
                   body:
@@ -49031,9 +48958,7 @@ operationGroups:
             summary: Update a batch inference endpoint (asynchronous).
           go:
             name: Update
-            description: |-
-              Update a batch inference endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update a batch inference endpoint (asynchronous).
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -49314,7 +49239,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -49402,9 +49327,7 @@ operationGroups:
             summary: Creates a batch inference endpoint (asynchronous).
           go:
             name: CreateOrUpdate
-            description: |-
-              Creates a batch inference endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Creates a batch inference endpoint (asynchronous).
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -49570,7 +49493,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json
               responses:
                 '200':
                   body:
@@ -49584,9 +49507,7 @@ operationGroups:
             summary: Lists batch Inference Endpoint keys.
           go:
             name: ListKeys
-            description: |-
-              Lists batch Inference Endpoint keys.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists batch Inference Endpoint keys.
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -49857,7 +49778,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json
               responses:
                 '200':
                   body:
@@ -50201,7 +50122,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -50214,9 +50135,7 @@ operationGroups:
             summary: Delete Batch Inference deployment (asynchronous).
           go:
             name: Delete
-            description: |-
-              Delete Batch Inference deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete Batch Inference deployment (asynchronous).
             azureARM: true
             clientName: BatchDeploymentsClient
             openApiType: arm
@@ -50386,7 +50305,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json
               responses:
                 '200':
                   body:
@@ -50455,9 +50374,7 @@ operationGroups:
             summary: Gets a batch inference deployment by id.
           go:
             name: Get
-            description: |-
-              Gets a batch inference deployment by id.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets a batch inference deployment by id.
             azureARM: true
             clientName: BatchDeploymentsClient
             openApiType: arm
@@ -50793,7 +50710,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json
               responses:
                 '200':
                   body:
@@ -50864,9 +50781,7 @@ operationGroups:
             summary: Update a batch inference deployment (asynchronous).
           go:
             name: Update
-            description: |-
-              Update a batch inference deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update a batch inference deployment (asynchronous).
             azureARM: true
             clientName: BatchDeploymentsClient
             openApiType: arm
@@ -51187,7 +51102,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -51317,9 +51232,7 @@ operationGroups:
             summary: Creates/updates a batch inference deployment (asynchronous).
           go:
             name: CreateOrUpdate
-            description: |-
-              Creates/updates a batch inference deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Creates/updates a batch inference deployment (asynchronous).
             azureARM: true
             clientName: BatchDeploymentsClient
             openApiType: arm
@@ -51518,7 +51431,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json
               responses:
                 '200':
                   body:
@@ -51739,7 +51652,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -51750,9 +51663,7 @@ operationGroups:
             summary: Delete container.
           go:
             name: Delete
-            description: |-
-              Delete container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete container.
             azureARM: true
             clientName: CodeContainersClient
             openApiType: arm
@@ -51920,7 +51831,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json
               responses:
                 '200':
                   body:
@@ -51946,9 +51857,7 @@ operationGroups:
             summary: Get container.
           go:
             name: Get
-            description: |-
-              Get container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get container.
             azureARM: true
             clientName: CodeContainersClient
             openApiType: arm
@@ -52173,7 +52082,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -52216,9 +52125,7 @@ operationGroups:
             summary: Create or update container.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update container.
             azureARM: true
             clientName: CodeContainersClient
             openApiType: arm
@@ -52489,7 +52396,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json
               responses:
                 '200':
                   body:
@@ -52717,7 +52624,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -52728,9 +52635,7 @@ operationGroups:
             summary: Delete version.
           go:
             name: Delete
-            description: |-
-              Delete version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete version.
             azureARM: true
             clientName: CodeVersionsClient
             openApiType: arm
@@ -52916,7 +52821,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json
               responses:
                 '200':
                   body:
@@ -52946,9 +52851,7 @@ operationGroups:
             summary: Get version.
           go:
             name: Get
-            description: |-
-              Get version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get version.
             azureARM: true
             clientName: CodeVersionsClient
             openApiType: arm
@@ -53194,7 +53097,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -53245,9 +53148,7 @@ operationGroups:
             summary: Create or update version.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update version.
             azureARM: true
             clientName: CodeVersionsClient
             openApiType: arm
@@ -53480,7 +53381,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json
               responses:
                 '200':
                   body:
@@ -53688,7 +53589,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -53699,9 +53600,7 @@ operationGroups:
             summary: Delete container.
           go:
             name: Delete
-            description: |-
-              Delete container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete container.
             azureARM: true
             clientName: ComponentContainersClient
             openApiType: arm
@@ -53869,7 +53768,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json
               responses:
                 '200':
                   body:
@@ -53897,9 +53796,7 @@ operationGroups:
             summary: Get container.
           go:
             name: Get
-            description: |-
-              Get container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get container.
             azureARM: true
             clientName: ComponentContainersClient
             openApiType: arm
@@ -54125,8 +54022,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -54173,9 +54069,7 @@ operationGroups:
             summary: Create or update container.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update container.
             azureARM: true
             clientName: ComponentContainersClient
             openApiType: arm
@@ -54464,7 +54358,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json
               responses:
                 '200':
                   body:
@@ -54693,7 +54587,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -54704,9 +54598,7 @@ operationGroups:
             summary: Delete version.
           go:
             name: Delete
-            description: |-
-              Delete version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete version.
             azureARM: true
             clientName: ComponentVersionsClient
             openApiType: arm
@@ -54892,7 +54784,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json
               responses:
                 '200':
                   body:
@@ -54923,9 +54815,7 @@ operationGroups:
             summary: Get version.
           go:
             name: Get
-            description: |-
-              Get version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get version.
             azureARM: true
             clientName: ComponentVersionsClient
             openApiType: arm
@@ -55172,8 +55062,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -55226,9 +55115,7 @@ operationGroups:
             summary: Create or update version.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update version.
             azureARM: true
             clientName: ComponentVersionsClient
             openApiType: arm
@@ -55460,7 +55347,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json
               responses:
                 '200':
                   body:
@@ -55689,7 +55576,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -55700,9 +55587,7 @@ operationGroups:
             summary: Delete container.
           go:
             name: Delete
-            description: |-
-              Delete container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete container.
             azureARM: true
             clientName: DataContainersClient
             openApiType: arm
@@ -55870,7 +55755,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json
               responses:
                 '200':
                   body:
@@ -55900,9 +55785,7 @@ operationGroups:
             summary: Get container.
           go:
             name: Get
-            description: |-
-              Get container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get container.
             azureARM: true
             clientName: DataContainersClient
             openApiType: arm
@@ -56131,7 +56014,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -56182,9 +56065,7 @@ operationGroups:
             summary: Create or update container.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update container.
             azureARM: true
             clientName: DataContainersClient
             openApiType: arm
@@ -56492,7 +56373,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json
               responses:
                 '200':
                   body:
@@ -56721,7 +56602,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -56732,9 +56613,7 @@ operationGroups:
             summary: Delete version.
           go:
             name: Delete
-            description: |-
-              Delete version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete version.
             azureARM: true
             clientName: DataVersionsClient
             openApiType: arm
@@ -56920,7 +56799,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json
               responses:
                 '200':
                   body:
@@ -56951,9 +56830,7 @@ operationGroups:
             summary: Get version.
           go:
             name: Get
-            description: |-
-              Get version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get version.
             azureARM: true
             clientName: DataVersionsClient
             openApiType: arm
@@ -57200,7 +57077,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -57253,9 +57130,7 @@ operationGroups:
             summary: Create or update version.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update version.
             azureARM: true
             clientName: DataVersionsClient
             openApiType: arm
@@ -57587,7 +57462,7 @@ operationGroups:
                 searchText: string
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json
               responses:
                 '200':
                   body:
@@ -57802,7 +57677,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -57813,9 +57688,7 @@ operationGroups:
             summary: Delete datastore.
           go:
             name: Delete
-            description: |-
-              Delete datastore.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete datastore.
             azureARM: true
             clientName: DatastoresClient
             openApiType: arm
@@ -57983,7 +57856,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json
               responses:
                 '200':
                   body:
@@ -58018,9 +57891,7 @@ operationGroups:
             summary: Get datastore.
           go:
             name: Get
-            description: |-
-              Get datastore.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get datastore.
             azureARM: true
             clientName: DatastoresClient
             openApiType: arm
@@ -58293,7 +58164,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
+                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -58376,7 +58247,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
+                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -58460,8 +58331,7 @@ operationGroups:
                 skipValidation: false
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -58537,8 +58407,7 @@ operationGroups:
                 skipValidation: false
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -58599,9 +58468,7 @@ operationGroups:
             summary: Create or update datastore.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update datastore.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update datastore.
             azureARM: true
             clientName: DatastoresClient
             openApiType: arm
@@ -58767,7 +58634,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json
               responses:
                 '200':
                   body:
@@ -58781,9 +58648,7 @@ operationGroups:
             summary: Get datastore secrets.
           go:
             name: ListSecrets
-            description: |-
-              Get datastore secrets.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get datastore secrets.
             azureARM: true
             clientName: DatastoresClient
             openApiType: arm
@@ -59027,7 +58892,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json
               responses:
                 '200':
                   body:
@@ -59233,7 +59098,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -59244,9 +59109,7 @@ operationGroups:
             summary: Delete container.
           go:
             name: Delete
-            description: |-
-              Delete container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete container.
             azureARM: true
             clientName: EnvironmentContainersClient
             openApiType: arm
@@ -59414,7 +59277,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json
               responses:
                 '200':
                   body:
@@ -59440,9 +59303,7 @@ operationGroups:
             summary: Get container.
           go:
             name: Get
-            description: |-
-              Get container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get container.
             azureARM: true
             clientName: EnvironmentContainersClient
             openApiType: arm
@@ -59672,8 +59533,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: testworkspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -59726,9 +59586,7 @@ operationGroups:
             summary: Create or update container.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update container.
             azureARM: true
             clientName: EnvironmentContainersClient
             openApiType: arm
@@ -60017,7 +59875,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json
               responses:
                 '200':
                   body:
@@ -60260,7 +60118,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -60271,9 +60129,7 @@ operationGroups:
             summary: Delete version.
           go:
             name: Delete
-            description: |-
-              Delete version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete version.
             azureARM: true
             clientName: EnvironmentVersionsClient
             openApiType: arm
@@ -60459,7 +60315,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json
               responses:
                 '200':
                   body:
@@ -60504,9 +60360,7 @@ operationGroups:
             summary: Get version.
           go:
             name: Get
-            description: |-
-              Get version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get version.
             azureARM: true
             clientName: EnvironmentVersionsClient
             openApiType: arm
@@ -60766,8 +60620,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -60848,9 +60701,7 @@ operationGroups:
             summary: Creates or updates an EnvironmentVersion.
           go:
             name: CreateOrUpdate
-            description: |-
-              Creates or updates an EnvironmentVersion.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Creates or updates an EnvironmentVersion.
             azureARM: true
             clientName: EnvironmentVersionsClient
             openApiType: arm
@@ -61154,7 +61005,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json
               responses:
                 '200':
                   body:
@@ -61238,7 +61089,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json
               responses:
                 '200':
                   body:
@@ -61317,7 +61168,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json
               responses:
                 '200':
                   body:
@@ -61375,7 +61226,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tag: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json
               responses:
                 '200':
                   body:
@@ -61705,7 +61556,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -61718,9 +61569,7 @@ operationGroups:
             summary: Deletes a Job (asynchronous).
           go:
             name: Delete
-            description: |-
-              Deletes a Job (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Deletes a Job (asynchronous).
             azureARM: true
             clientName: JobsClient
             openApiType: arm
@@ -61872,7 +61721,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json
               responses:
                 '200':
                   body:
@@ -61953,7 +61802,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json
               responses:
                 '200':
                   body:
@@ -62028,7 +61877,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json
               responses:
                 '200':
                   body:
@@ -62082,7 +61931,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json
               responses:
                 '200':
                   body:
@@ -62155,9 +62004,7 @@ operationGroups:
             summary: Gets a Job by name/id.
           go:
             name: Get
-            description: |-
-              Gets a Job by name/id.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets a Job by name/id.
             azureARM: true
             clientName: JobsClient
             openApiType: arm
@@ -62433,7 +62280,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -62635,7 +62482,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -62806,7 +62653,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -62954,7 +62801,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -63091,9 +62938,7 @@ operationGroups:
             summary: Creates and executes a Job.
           go:
             name: CreateOrUpdate
-            description: |-
-              Creates and executes a Job.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Creates and executes a Job.
             azureARM: true
             clientName: JobsClient
             openApiType: arm
@@ -63271,7 +63116,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json
               responses:
                 '200': {}
         language:
@@ -63281,9 +63126,7 @@ operationGroups:
             summary: Cancels a Job.
           go:
             name: Cancel
-            description: |-
-              Cancels a Job.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Cancels a Job.
             azureARM: true
             clientName: JobsClient
             openApiType: arm
@@ -63520,7 +63363,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json
               responses:
                 '200':
                   body:
@@ -63726,7 +63569,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -63737,9 +63580,7 @@ operationGroups:
             summary: Delete container.
           go:
             name: Delete
-            description: |-
-              Delete container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete container.
             azureARM: true
             clientName: ModelContainersClient
             openApiType: arm
@@ -63907,7 +63748,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json
               responses:
                 '200':
                   body:
@@ -63933,9 +63774,7 @@ operationGroups:
             summary: Get container.
           go:
             name: Get
-            description: |-
-              Get container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get container.
             azureARM: true
             clientName: ModelContainersClient
             openApiType: arm
@@ -64160,7 +63999,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -64203,9 +64042,7 @@ operationGroups:
             summary: Create or update container.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update container.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update container.
             azureARM: true
             clientName: ModelContainersClient
             openApiType: arm
@@ -64607,7 +64444,7 @@ operationGroups:
                 tags: string
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json
               responses:
                 '200':
                   body:
@@ -64840,7 +64677,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json
               responses:
                 '200': {}
                 '204': {}
@@ -64851,9 +64688,7 @@ operationGroups:
             summary: Delete version.
           go:
             name: Delete
-            description: |-
-              Delete version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete version.
             azureARM: true
             clientName: ModelVersionsClient
             openApiType: arm
@@ -65039,7 +64874,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json
               responses:
                 '200':
                   body:
@@ -65074,9 +64909,7 @@ operationGroups:
             summary: Get version.
           go:
             name: Get
-            description: |-
-              Get version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get version.
             azureARM: true
             clientName: ModelVersionsClient
             openApiType: arm
@@ -65327,7 +65160,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 version: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -65388,9 +65221,7 @@ operationGroups:
             summary: Create or update version.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update version.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update version.
             azureARM: true
             clientName: ModelVersionsClient
             openApiType: arm
@@ -65719,7 +65550,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 tags: string
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json
               responses:
                 '200':
                   body:
@@ -66026,7 +65857,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -66039,9 +65870,7 @@ operationGroups:
             summary: Delete Online Endpoint (asynchronous).
           go:
             name: Delete
-            description: |-
-              Delete Online Endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete Online Endpoint (asynchronous).
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -66193,7 +66022,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json
               responses:
                 '200':
                   body:
@@ -66243,9 +66072,7 @@ operationGroups:
             summary: Get Online Endpoint.
           go:
             name: Get
-            description: |-
-              Get Online Endpoint.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get Online Endpoint.
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -66543,7 +66370,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json
               responses:
                 '200':
                   body:
@@ -66595,9 +66422,7 @@ operationGroups:
             summary: Update Online Endpoint (asynchronous).
           go:
             name: Update
-            description: |-
-              Update Online Endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update Online Endpoint (asynchronous).
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -66879,7 +66704,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -66971,9 +66796,7 @@ operationGroups:
             summary: Create or update Online Endpoint (asynchronous).
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update Online Endpoint (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update Online Endpoint (asynchronous).
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -67139,7 +66962,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json
               responses:
                 '200':
                   body:
@@ -67153,9 +66976,7 @@ operationGroups:
             summary: List EndpointAuthKeys for an Endpoint using Key-based authentication.
           go:
             name: ListKeys
-            description: |-
-              List EndpointAuthKeys for an Endpoint using Key-based authentication.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List EndpointAuthKeys for an Endpoint using Key-based authentication.
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -67426,7 +67247,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json
               responses:
                 '200': {}
                 '202': {}
@@ -67440,9 +67261,7 @@ operationGroups:
             summary: Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous).
           go:
             name: RegenerateKeys
-            description: |-
-              Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous).
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -67594,7 +67413,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json
               responses:
                 '200':
                   body:
@@ -67610,9 +67429,7 @@ operationGroups:
             summary: Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
           go:
             name: GetToken
-            description: |-
-              Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -67883,7 +67700,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json
               responses:
                 '200':
                   body:
@@ -68234,7 +68051,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -68247,9 +68064,7 @@ operationGroups:
             summary: Delete Inference Endpoint Deployment (asynchronous).
           go:
             name: Delete
-            description: |-
-              Delete Inference Endpoint Deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete Inference Endpoint Deployment (asynchronous).
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -68419,8 +68234,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -68497,8 +68311,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
               responses:
                 '200':
                   body:
@@ -68571,9 +68384,7 @@ operationGroups:
             summary: Get Inference Deployment Deployment.
           go:
             name: Get
-            description: |-
-              Get Inference Deployment Deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get Inference Deployment Deployment.
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -68888,8 +68699,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -68983,8 +68793,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
               responses:
                 '200':
                   body:
@@ -69059,9 +68868,7 @@ operationGroups:
             summary: Update Online Deployment (asynchronous).
           go:
             name: Update
-            description: |-
-              Update Online Deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update Online Deployment (asynchronous).
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -69390,7 +69197,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
+                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -69582,7 +69389,7 @@ operationGroups:
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
               x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
+                file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
               responses:
                 '200':
                   body:
@@ -69720,9 +69527,7 @@ operationGroups:
             summary: Create or update Inference Endpoint Deployment (asynchronous).
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update Inference Endpoint Deployment (asynchronous).
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update Inference Endpoint Deployment (asynchronous).
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -69931,7 +69736,7 @@ operationGroups:
                 resourceGroupName: testrg123
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: workspace123
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json
               responses:
                 '200':
                   body:
@@ -69943,9 +69748,7 @@ operationGroups:
             summary: Polls an Endpoint operation.
           go:
             name: GetLogs
-            description: |-
-              Polls an Endpoint operation.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Polls an Endpoint operation.
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -70200,8 +70003,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -70227,8 +70029,7 @@ operationGroups:
                 resourceGroupName: test-rg
                 subscriptionId: 00000000-1111-2222-3333-444444444444
                 workspaceName: my-aml-workspace
-              x-ms-original-file: >-
-                file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
               responses:
                 '200':
                   body:
@@ -70419,7 +70220,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
                 workspaceName: testworkspace
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json
               responses:
                 '200':
                   body:

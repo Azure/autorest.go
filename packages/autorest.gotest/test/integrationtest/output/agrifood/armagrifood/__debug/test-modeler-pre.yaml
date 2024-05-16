@@ -3835,9 +3835,7 @@ operationGroups:
             description: Install extension.
           go:
             name: Create
-            description: |-
-              Install extension.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Install extension.
             azureARM: true
             clientName: ExtensionsClient
             openApiType: arm
@@ -4044,9 +4042,7 @@ operationGroups:
             description: Get installed extension details by extension id.
           go:
             name: Get
-            description: |-
-              Get installed extension details by extension id.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get installed extension details by extension id.
             azureARM: true
             clientName: ExtensionsClient
             openApiType: arm
@@ -4253,9 +4249,7 @@ operationGroups:
             description: Upgrade to latest extension.
           go:
             name: Update
-            description: |-
-              Upgrade to latest extension.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Upgrade to latest extension.
             azureARM: true
             clientName: ExtensionsClient
             openApiType: arm
@@ -4453,9 +4447,7 @@ operationGroups:
             description: Uninstall extension.
           go:
             name: Delete
-            description: |-
-              Uninstall extension.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Uninstall extension.
             azureARM: true
             clientName: ExtensionsClient
             openApiType: arm
@@ -5530,9 +5522,7 @@ operationGroups:
             description: Get farmBeats extension.
           go:
             name: Get
-            description: |-
-              Get farmBeats extension.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get farmBeats extension.
             azureARM: true
             clientName: FarmBeatsExtensionsClient
             openApiType: arm
@@ -5735,9 +5725,7 @@ operationGroups:
             description: Get FarmBeats resource.
           go:
             name: Get
-            description: |-
-              Get FarmBeats resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get FarmBeats resource.
             azureARM: true
             clientName: FarmBeatsModelsClient
             openApiType: arm
@@ -5989,9 +5977,7 @@ operationGroups:
             description: Create or update FarmBeats resource.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update FarmBeats resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update FarmBeats resource.
             azureARM: true
             clientName: FarmBeatsModelsClient
             openApiType: arm
@@ -6318,9 +6304,7 @@ operationGroups:
             description: Update a FarmBeats resource.
           go:
             name: Update
-            description: |-
-              Update a FarmBeats resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update a FarmBeats resource.
             azureARM: true
             clientName: FarmBeatsModelsClient
             openApiType: arm
@@ -6484,9 +6468,7 @@ operationGroups:
             description: Delete a FarmBeats resource.
           go:
             name: Delete
-            description: |-
-              Delete a FarmBeats resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete a FarmBeats resource.
             azureARM: true
             clientName: FarmBeatsModelsClient
             openApiType: arm
@@ -7081,9 +7063,7 @@ operationGroups:
             description: Get operationResults for a FarmBeats resource.
           go:
             name: GetOperationResult
-            description: |-
-              Get operationResults for a FarmBeats resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get operationResults for a FarmBeats resource.
             azureARM: true
             clientName: FarmBeatsModelsClient
             openApiType: arm
@@ -7277,9 +7257,7 @@ operationGroups:
             description: Checks the name availability of the resource with requested resource name.
           go:
             name: CheckNameAvailability
-            description: |-
-              Checks the name availability of the resource with requested resource name.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Checks the name availability of the resource with requested resource name.
             azureARM: true
             clientName: LocationsClient
             openApiType: arm
@@ -7736,9 +7714,7 @@ operationGroups:
             description: Approves or Rejects a Private endpoint connection request.
           go:
             name: CreateOrUpdate
-            description: |-
-              Approves or Rejects a Private endpoint connection request.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Approves or Rejects a Private endpoint connection request.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -7965,9 +7941,7 @@ operationGroups:
             description: Get Private endpoint connection object.
           go:
             name: Get
-            description: |-
-              Get Private endpoint connection object.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get Private endpoint connection object.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8229,9 +8203,7 @@ operationGroups:
             description: Delete Private endpoint connection request.
           go:
             name: Delete
-            description: |-
-              Delete Private endpoint connection request.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete Private endpoint connection request.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8831,9 +8803,7 @@ operationGroups:
             description: Get Private link resource object.
           go:
             name: Get
-            description: |-
-              Get Private link resource object.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get Private link resource object.
             azureARM: true
             clientName: PrivateLinkResourcesClient
             openApiType: arm
