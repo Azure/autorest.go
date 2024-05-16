@@ -5064,7 +5064,7 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2021-06-01-preview
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Operations_List.json
               responses:
                 '200':
                   body:
@@ -5275,7 +5275,7 @@ operationGroups:
                   name: mySignalRService
                   type: Microsoft.SignalRService/SignalR
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json
               responses:
                 '200':
                   body:
@@ -5288,9 +5288,7 @@ operationGroups:
             description: Checks that the resource name is valid and is not already in use.
           go:
             name: CheckNameAvailability
-            description: |-
-              Checks that the resource name is valid and is not already in use.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Checks that the resource name is valid and is not already in use.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -5418,7 +5416,7 @@ operationGroups:
               parameters:
                 api-version: 2021-06-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListBySubscription.json
               responses:
                 '200':
                   body:
@@ -5664,7 +5662,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json
               responses:
                 '200':
                   body:
@@ -5928,7 +5926,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json
               responses:
                 '200':
                   body:
@@ -6021,9 +6019,7 @@ operationGroups:
             description: Get the resource and its properties.
           go:
             name: Get
-            description: |-
-              Get the resource and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the resource and its properties.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -6326,7 +6322,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -6512,9 +6508,7 @@ operationGroups:
             description: Create or update a resource.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update a resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update a resource.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -6718,7 +6712,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -6733,9 +6727,7 @@ operationGroups:
             description: Operation to delete a resource.
           go:
             name: Delete
-            description: |-
-              Operation to delete a resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to delete a resource.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -6994,7 +6986,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json
               responses:
                 '200':
                   body:
@@ -7092,9 +7084,7 @@ operationGroups:
             description: Operation to update an exiting resource.
           go:
             name: Update
-            description: |-
-              Operation to update an exiting resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to update an exiting resource.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -7242,7 +7232,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json
               responses:
                 '200':
                   body: {}
@@ -7252,9 +7242,7 @@ operationGroups:
             description: Get the access keys of the resource.
           go:
             name: ListKeys
-            description: |-
-              Get the access keys of the resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the access keys of the resource.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -7480,7 +7468,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json
               responses:
                 '202':
                   body: {}
@@ -7496,9 +7484,7 @@ operationGroups:
             description: Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
           go:
             name: RegenerateKey
-            description: |-
-              Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Regenerate the access key for the resource. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -7691,7 +7677,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json
               responses:
                 '202':
                   headers: &ref_538
@@ -7707,9 +7693,7 @@ operationGroups:
             description: Operation to restart a resource.
           go:
             name: Restart
-            description: |-
-              Operation to restart a resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to restart a resource.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -7841,7 +7825,7 @@ operationGroups:
                 api-version: 2021-06-01-preview
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json
               responses:
                 '200':
                   body:
@@ -8053,7 +8037,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json
               responses:
                 '200':
                   body:
@@ -8270,7 +8254,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json
               responses:
                 '200':
                   body:
@@ -8298,9 +8282,7 @@ operationGroups:
             description: Get the specified private endpoint connection
           go:
             name: Get
-            description: |-
-              Get the specified private endpoint connection
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the specified private endpoint connection
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8511,7 +8493,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json
               responses:
                 '200':
                   body:
@@ -8542,9 +8524,7 @@ operationGroups:
             description: Update the state of specified private endpoint connection
           go:
             name: Update
-            description: |-
-              Update the state of specified private endpoint connection
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the state of specified private endpoint connection
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8782,7 +8762,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -8797,9 +8777,7 @@ operationGroups:
             description: Delete the specified private endpoint connection
           go:
             name: Delete
-            description: |-
-              Delete the specified private endpoint connection
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete the specified private endpoint connection
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8949,7 +8927,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -9162,7 +9140,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json
               responses:
                 '200':
                   body:
@@ -9370,7 +9348,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json
               responses:
                 '200':
                   body:
@@ -9389,9 +9367,7 @@ operationGroups:
             description: Get the specified shared private link resource
           go:
             name: Get
-            description: |-
-              Get the specified shared private link resource
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the specified shared private link resource
             azureARM: true
             clientName: SharedPrivateLinkResourcesClient
             openApiType: arm
@@ -9653,7 +9629,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -9687,9 +9663,7 @@ operationGroups:
             description: Create or update a shared private link resource
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update a shared private link resource
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update a shared private link resource
             azureARM: true
             clientName: SharedPrivateLinkResourcesClient
             openApiType: arm
@@ -9911,7 +9885,7 @@ operationGroups:
                 resourceName: mySignalRService
                 sharedPrivateLinkResourceName: upstream
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json
               responses:
                 '200': {}
                 '202':
@@ -9926,9 +9900,7 @@ operationGroups:
             description: Delete the specified shared private link resource
           go:
             name: Delete
-            description: |-
-              Delete the specified shared private link resource
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete the specified shared private link resource
             azureARM: true
             clientName: SharedPrivateLinkResourcesClient
             openApiType: arm

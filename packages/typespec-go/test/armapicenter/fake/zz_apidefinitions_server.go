@@ -30,7 +30,7 @@ type APIDefinitionsServer struct {
 
 	// BeginExportSpecification is the fake for method APIDefinitionsClient.BeginExportSpecification
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginExportSpecification func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *armapicenter.APIDefinitionsClientBeginExportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientExportSpecificationResponse], errResp azfake.ErrorResponder)
+	BeginExportSpecification func(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *armapicenter.APIDefinitionsClientBeginExportSpecificationOptions) (resp azfake.PollerResponder[armapicenter.APIDefinitionsClientExportSpecificationResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method APIDefinitionsClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
@@ -224,10 +224,6 @@ func (a *APIDefinitionsServerTransport) dispatchBeginExportSpecification(req *ht
 		if matches == nil || len(matches) < 7 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[any](req)
-		if err != nil {
-			return nil, err
-		}
 		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
 		if err != nil {
 			return nil, err
@@ -252,7 +248,7 @@ func (a *APIDefinitionsServerTransport) dispatchBeginExportSpecification(req *ht
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := a.srv.BeginExportSpecification(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, body, nil)
+		respr, errRespr := a.srv.BeginExportSpecification(req.Context(), resourceGroupNameParam, serviceNameParam, workspaceNameParam, apiNameParam, versionNameParam, definitionNameParam, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

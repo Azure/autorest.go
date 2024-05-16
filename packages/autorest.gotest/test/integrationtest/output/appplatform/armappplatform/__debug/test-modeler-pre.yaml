@@ -7717,7 +7717,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json
               responses:
                 '200':
                   body:
@@ -7763,9 +7763,7 @@ operationGroups:
             description: Get a Service and its properties.
           go:
             name: Get
-            description: |-
-              Get a Service and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get a Service and its properties.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -8026,7 +8024,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -8162,7 +8160,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
               responses:
                 '200':
                   body:
@@ -8299,9 +8297,7 @@ operationGroups:
             description: Create a new Service or update an exiting Service.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create a new Service or update an exiting Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create a new Service or update an exiting Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -8493,7 +8489,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json
               responses:
                 '202':
                   headers:
@@ -8508,9 +8504,7 @@ operationGroups:
             description: Operation to delete a Service.
           go:
             name: Delete
-            description: |-
-              Operation to delete a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to delete a Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -8726,7 +8720,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json
               responses:
                 '200':
                   body:
@@ -8818,9 +8812,7 @@ operationGroups:
             description: Operation to update an exiting Service.
           go:
             name: Update
-            description: |-
-              Operation to update an exiting Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to update an exiting Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -8967,7 +8959,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json
               responses:
                 '200':
                   body:
@@ -8982,9 +8974,7 @@ operationGroups:
             description: List test keys for a Service.
           go:
             name: ListTestKeys
-            description: |-
-              List test keys for a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List test keys for a Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -9171,7 +9161,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json
               responses:
                 '200':
                   body:
@@ -9186,9 +9176,7 @@ operationGroups:
             description: Regenerate a test key for a Service.
           go:
             name: RegenerateTestKey
-            description: |-
-              Regenerate a test key for a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Regenerate a test key for a Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -9347,7 +9335,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json
               responses:
                 '200': {}
         language:
@@ -9356,9 +9344,7 @@ operationGroups:
             description: Disable test endpoint functionality for a Service.
           go:
             name: DisableTestEndpoint
-            description: |-
-              Disable test endpoint functionality for a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Disable test endpoint functionality for a Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -9507,7 +9493,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json
               responses:
                 '200':
                   body:
@@ -9522,9 +9508,7 @@ operationGroups:
             description: Enable test endpoint functionality for a Service.
           go:
             name: EnableTestEndpoint
-            description: |-
-              Enable test endpoint functionality for a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Enable test endpoint functionality for a Service.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -9694,7 +9678,7 @@ operationGroups:
                   type: Microsoft.AppPlatform/Spring
                 location: eastus
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json
               responses:
                 '200':
                   body:
@@ -9707,9 +9691,7 @@ operationGroups:
             description: Checks that the resource name is valid and is not already in use.
           go:
             name: CheckNameAvailability
-            description: |-
-              Checks that the resource name is valid and is not already in use.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Checks that the resource name is valid and is not already in use.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -9836,7 +9818,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListBySubscription.json
               responses:
                 '200':
                   body:
@@ -10034,7 +10016,7 @@ operationGroups:
                 api-version: 2020-11-01-preview
                 resourceGroupName: myResourceGroup
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json
               responses:
                 '200':
                   body:
@@ -10265,7 +10247,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json
               responses:
                 '200':
                   body:
@@ -10286,9 +10268,7 @@ operationGroups:
             description: Get the config server and its properties.
           go:
             name: Get
-            description: |-
-              Get the config server and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the config server and its properties.
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
@@ -10534,7 +10514,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json
               responses:
                 '200':
                   body:
@@ -10571,9 +10551,7 @@ operationGroups:
             description: Update the config server.
           go:
             name: UpdatePut
-            description: |-
-              Update the config server.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the config server.
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
@@ -10803,7 +10781,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json
               responses:
                 '200':
                   body:
@@ -10845,9 +10823,7 @@ operationGroups:
             description: Update the config server.
           go:
             name: UpdatePatch
-            description: |-
-              Update the config server.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the config server.
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
@@ -11075,7 +11051,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json
               responses:
                 '200':
                   body:
@@ -11096,9 +11072,7 @@ operationGroups:
             description: Check if the config server settings are valid.
           go:
             name: Validate
-            description: |-
-              Check if the config server settings are valid.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Check if the config server settings are valid.
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
@@ -11260,7 +11234,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json
               responses:
                 '200':
                   body:
@@ -11280,9 +11254,7 @@ operationGroups:
             description: Get the Monitoring Setting and its properties.
           go:
             name: Get
-            description: |-
-              Get the Monitoring Setting and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the Monitoring Setting and its properties.
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
@@ -11525,7 +11497,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json
               responses:
                 '200':
                   body:
@@ -11560,9 +11532,7 @@ operationGroups:
             description: Update the Monitoring Setting.
           go:
             name: UpdatePut
-            description: |-
-              Update the Monitoring Setting.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the Monitoring Setting.
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
@@ -11789,7 +11759,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json
               responses:
                 '200':
                   body:
@@ -11829,9 +11799,7 @@ operationGroups:
             description: Update the Monitoring Setting.
           go:
             name: UpdatePatch
-            description: |-
-              Update the Monitoring Setting.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update the Monitoring Setting.
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
@@ -12046,7 +12014,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json
               responses:
                 '200':
                   body:
@@ -12079,9 +12047,7 @@ operationGroups:
             description: Get an App and its properties.
           go:
             name: Get
-            description: |-
-              Get an App and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get an App and its properties.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -12350,7 +12316,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -12436,9 +12402,7 @@ operationGroups:
             description: Create a new App or update an exiting App.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create a new App or update an exiting App.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create a new App or update an exiting App.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -12659,7 +12623,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -12673,9 +12637,7 @@ operationGroups:
             description: Operation to delete an App.
           go:
             name: Delete
-            description: |-
-              Operation to delete an App.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to delete an App.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -12919,7 +12881,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json
               responses:
                 '200':
                   body:
@@ -12985,9 +12947,7 @@ operationGroups:
             description: Operation to update an exiting App.
           go:
             name: Update
-            description: |-
-              Operation to update an exiting App.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to update an exiting App.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -13134,7 +13094,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json
               responses:
                 '200':
                   body:
@@ -13355,7 +13315,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
               responses:
                 '200':
                   body:
@@ -13368,9 +13328,7 @@ operationGroups:
             description: Get an resource upload URL for an App, which may be artifacts or source archive.
           go:
             name: GetResourceUploadURL
-            description: |-
-              Get an resource upload URL for an App, which may be artifacts or source archive.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get an resource upload URL for an App, which may be artifacts or source archive.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -13575,7 +13533,7 @@ operationGroups:
                 subscriptionId: 00000000-0000-0000-0000-000000000000
                 validatePayload:
                   name: mydomain.io
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
               responses:
                 '200':
                   body:
@@ -13587,9 +13545,7 @@ operationGroups:
             description: Check the resource name is valid as well as not in use.
           go:
             name: ValidateDomain
-            description: |-
-              Check the resource name is valid as well as not in use.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Check the resource name is valid as well as not in use.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -13803,7 +13759,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json
               responses:
                 '200':
                   body:
@@ -13829,9 +13785,7 @@ operationGroups:
             description: Get a Binding and its properties.
           go:
             name: Get
-            description: |-
-              Get a Binding and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get a Binding and its properties.
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
@@ -14130,7 +14084,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -14195,9 +14149,7 @@ operationGroups:
             description: Create a new Binding or update an exiting Binding.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create a new Binding or update an exiting Binding.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create a new Binding or update an exiting Binding.
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
@@ -14436,7 +14388,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -14450,9 +14402,7 @@ operationGroups:
             description: Operation to delete a Binding.
           go:
             name: Delete
-            description: |-
-              Operation to delete a Binding.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to delete a Binding.
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
@@ -14705,7 +14655,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json
               responses:
                 '200':
                   body:
@@ -14757,9 +14707,7 @@ operationGroups:
             description: Operation to update an exiting Binding.
           go:
             name: Update
-            description: |-
-              Operation to update an exiting Binding.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to update an exiting Binding.
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
@@ -14924,7 +14872,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json
               responses:
                 '200':
                   body:
@@ -15153,7 +15101,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json
               responses:
                 '200':
                   body:
@@ -15180,9 +15128,7 @@ operationGroups:
             description: Get the certificate resource.
           go:
             name: Get
-            description: |-
-              Get the certificate resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the certificate resource.
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
@@ -15458,7 +15404,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -15526,9 +15472,7 @@ operationGroups:
             description: Create or update certificate resource.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update certificate resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update certificate resource.
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
@@ -15749,7 +15693,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -15763,9 +15707,7 @@ operationGroups:
             description: Delete the certificate resource.
           go:
             name: Delete
-            description: |-
-              Delete the certificate resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete the certificate resource.
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
@@ -15898,7 +15840,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myService
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json
               responses:
                 '200':
                   body:
@@ -16147,7 +16089,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json
               responses:
                 '200':
                   body:
@@ -16164,9 +16106,7 @@ operationGroups:
             description: Get the custom domain of one lifecycle application.
           go:
             name: Get
-            description: |-
-              Get the custom domain of one lifecycle application.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the custom domain of one lifecycle application.
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
@@ -16459,7 +16399,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -16497,9 +16437,7 @@ operationGroups:
             description: Create or update custom domain of one lifecycle application.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create or update custom domain of one lifecycle application.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create or update custom domain of one lifecycle application.
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
@@ -16738,7 +16676,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -16752,9 +16690,7 @@ operationGroups:
             description: Delete the custom domain of one lifecycle application.
           go:
             name: Delete
-            description: |-
-              Delete the custom domain of one lifecycle application.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Delete the custom domain of one lifecycle application.
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
@@ -17002,7 +16938,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json
               responses:
                 '200':
                   body:
@@ -17036,9 +16972,7 @@ operationGroups:
             description: Update custom domain of one lifecycle application.
           go:
             name: Update
-            description: |-
-              Update custom domain of one lifecycle application.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Update custom domain of one lifecycle application.
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
@@ -17203,7 +17137,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json
               responses:
                 '200':
                   body:
@@ -17442,7 +17376,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json
               responses:
                 '200':
                   body:
@@ -17481,9 +17415,7 @@ operationGroups:
             description: Get a Deployment and its properties.
           go:
             name: Get
-            description: |-
-              Get a Deployment and its properties.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get a Deployment and its properties.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -17791,7 +17723,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json
               responses:
                 '200':
                   body:
@@ -17895,9 +17827,7 @@ operationGroups:
             description: Create a new Deployment or update an exiting Deployment.
           go:
             name: CreateOrUpdate
-            description: |-
-              Create a new Deployment or update an exiting Deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Create a new Deployment or update an exiting Deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -18136,7 +18066,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json
               responses:
                 '200': {}
                 '202': {}
@@ -18150,9 +18080,7 @@ operationGroups:
             description: Operation to delete a Deployment.
           go:
             name: Delete
-            description: |-
-              Operation to delete a Deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to delete a Deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -18404,7 +18332,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json
               responses:
                 '200':
                   body:
@@ -18482,9 +18410,7 @@ operationGroups:
             description: Operation to update an exiting Deployment.
           go:
             name: Update
-            description: |-
-              Operation to update an exiting Deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Operation to update an exiting Deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -18687,7 +18613,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json
               responses:
                 '200':
                   body:
@@ -18918,7 +18844,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json
               responses:
                 '200':
                   body:
@@ -19191,7 +19117,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json
               responses:
                 '200': {}
                 '202':
@@ -19206,9 +19132,7 @@ operationGroups:
             description: Start the deployment.
           go:
             name: Start
-            description: |-
-              Start the deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Start the deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -19422,7 +19346,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json
               responses:
                 '200': {}
                 '202':
@@ -19437,9 +19361,7 @@ operationGroups:
             description: Stop the deployment.
           go:
             name: Stop
-            description: |-
-              Stop the deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Stop the deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -19653,7 +19575,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json
               responses:
                 '200': {}
                 '202':
@@ -19668,9 +19590,7 @@ operationGroups:
             description: Restart the deployment.
           go:
             name: Restart
-            description: |-
-              Restart the deployment.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Restart the deployment.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -19850,7 +19770,7 @@ operationGroups:
                 resourceGroupName: myResourceGroup
                 serviceName: myservice
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
               responses:
                 '200':
                   body:
@@ -19863,9 +19783,7 @@ operationGroups:
             description: Get deployment log file URL
           go:
             name: GetLogFileURL
-            description: |-
-              Get deployment log file URL
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get deployment log file URL
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -20005,7 +19923,7 @@ operationGroups:
             Operations_List:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Operations_List.json
               responses:
                 '200':
                   body:
@@ -20171,7 +20089,7 @@ operationGroups:
             RuntimeVersions_ListRuntimeVersions:
               parameters:
                 api-version: 2020-11-01-preview
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json
               responses:
                 '200':
                   body:
@@ -20191,9 +20109,7 @@ operationGroups:
             description: Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
           go:
             name: ListRuntimeVersions
-            description: |-
-              Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all of the available runtime versions supported by Microsoft.AppPlatform provider.
             azureARM: true
             clientName: RuntimeVersionsClient
             openApiType: arm
@@ -20333,7 +20249,7 @@ operationGroups:
               parameters:
                 api-version: 2020-11-01-preview
                 subscriptionId: 00000000-0000-0000-0000-000000000000
-              x-ms-original-file: file:///D:/Projects/Go/src/github.com/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
+              x-ms-original-file: file:///C:/git/Azure/autorest.go/swagger/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Skus_List.json
               responses:
                 '200':
                   body:
