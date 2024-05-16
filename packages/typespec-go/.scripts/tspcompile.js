@@ -14,7 +14,7 @@ const tspRoot = pkgRoot + 'node_modules/@azure-tools/cadl-ranch-specs/http/';
 const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/tsp';
 
 // the format is as follows
-// 'moduleName': [ 'input', 'additional arg 1', 'additional arg N...' ]
+// 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const cadlRanch = {
   'apikeygroup': ['authentication/api-key'],     // missing tests
@@ -130,9 +130,9 @@ generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['
 
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
-  let additionalArgs;
+  let perTestOptions;
   if (values.length > 1) {
-    additionalArgs = values.slice(1);
+    perTestOptions = values.slice(1);
   }
   // keep the output directory structure similar to the cadl input directory.
   // remove the last dir from the input path as we'll use the module name instead.
@@ -142,20 +142,54 @@ for (const module in cadlRanch) {
     outDir = outDir.substring(0, outDir.lastIndexOf('/'));
   }
   outDir = outDir.substring(0, outDir.lastIndexOf('/'));
-  generate(module, tspRoot + values[0], `test/cadlranch/${outDir}/` + module, additionalArgs);
+  generate(module, tspRoot + values[0], `test/cadlranch/${outDir}/` + module, perTestOptions);
 }
 
-function generate(moduleName, input, outputDir, additionalArgs) {
+function generate(moduleName, input, outputDir, perTestOptions) {
   if (!should_generate(moduleName)) {
     return
   }
-  if (additionalArgs === undefined) {
-    additionalArgs = [];
-  } else {
-    for (let i = 0; i < additionalArgs.length; ++i) {
-      additionalArgs[i] = `--option="@azure-tools/typespec-go.${additionalArgs[i]}"`;
+  if (perTestOptions === undefined) {
+    perTestOptions = [];
+  }
+
+  const fullOutputDir = pkgRoot + outputDir;
+
+  // these options can't be changed per test
+  const fixedOptions = [
+    `module=${moduleName}`,
+    `emitter-output-dir=${fullOutputDir}`,
+    'file-prefix=zz_',
+  ];
+
+  // these options _can_ be changed per test
+  const defaultOptions = [
+    'module-version=0.1.0',
+    'generate-fakes=true',
+    'inject-spans=true',
+    'head-as-boolean=true',
+    'remove-unreferenced-types=true',
+  ];
+
+  let allOptions = fixedOptions;
+
+  // merge in any per-test options.
+  // if a per-test option overlaps with a default option, use the per-test one.
+  for (const perTestOption of perTestOptions) {
+    // perTestOption === 'option=value', grab the option name
+    const optionName = perTestOption.match(/^([a-zA-Z0-9_-]+)/)[0];
+    const index = defaultOptions.findIndex((value, index, obj) => {
+      return value.startsWith(optionName);
+    });
+    if (index > -1) {
+      // found a match, replace the default option with the per-test one
+      defaultOptions[index] = perTestOption;
+    } else {
+      allOptions.push(perTestOption);
     }
   }
+
+  allOptions = allOptions.concat(defaultOptions);
 
   sem.take(function() {
     // default to main.tsp if a .tsp file isn't specified in the input
@@ -163,21 +197,15 @@ function generate(moduleName, input, outputDir, additionalArgs) {
       input += '/main.tsp';
     }
     console.log('generating ' + input);
-    const fullOutputDir = pkgRoot + outputDir;
     try {
       const options = [];
-      options.push(`--option="@azure-tools/typespec-go.module=${moduleName}"`);
-      options.push(`--option="@azure-tools/typespec-go.module-version=0.1.0"`);
-      options.push(`--option="@azure-tools/typespec-go.emitter-output-dir=${fullOutputDir}"`);
-      options.push(`--option="@azure-tools/typespec-go.file-prefix=zz_"`);
-      options.push(`--option="@azure-tools/typespec-go.generate-fakes=true"`);
-      options.push(`--option="@azure-tools/typespec-go.inject-spans=true"`);
-      options.push(`--option="@azure-tools/typespec-go.head-as-boolean=true"`);
-      options.push(`--option="@azure-tools/typespec-go.remove-unreferenced-types=true"`);
+      for (const option of allOptions) {
+        options.push(`--option="@azure-tools/typespec-go.${option}"`);
+      }
       if (switches.includes('--debugger')) {
         options.push(`--option="@azure-tools/typespec-go.debugger=true"`);
       }
-      const command = `${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')} ${additionalArgs.join(' ')}`;
+      const command = `${compiler} compile ${input} --emit=${pkgRoot} ${options.join(' ')}`;
       if (switches.includes('--verbose')) {
         console.log(command);
       }
