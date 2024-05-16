@@ -216,12 +216,11 @@ func (client *APIDefinitionsClient) deleteCreateRequest(ctx context.Context, res
 //   - apiName - The name of the API.
 //   - versionName - The name of the API version.
 //   - definitionName - The name of the API definition.
-//   - payload - The content of the action request
 //   - options - APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginExportSpecification
 //     method.
-func (client *APIDefinitionsClient) BeginExportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientExportSpecificationResponse], error) {
+func (client *APIDefinitionsClient) BeginExportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientBeginExportSpecificationOptions) (*runtime.Poller[APIDefinitionsClientExportSpecificationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.exportSpecification(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
+		resp, err := client.exportSpecification(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 		if err != nil {
 			return nil, err
 		}
@@ -240,13 +239,13 @@ func (client *APIDefinitionsClient) BeginExportSpecification(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2024-03-15-preview
-func (client *APIDefinitionsClient) exportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, options *APIDefinitionsClientBeginExportSpecificationOptions) (*http.Response, error) {
+func (client *APIDefinitionsClient) exportSpecification(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, options *APIDefinitionsClientBeginExportSpecificationOptions) (*http.Response, error) {
 	var err error
 	const operationName = "APIDefinitionsClient.BeginExportSpecification"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.exportSpecificationCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, payload, options)
+	req, err := client.exportSpecificationCreateRequest(ctx, resourceGroupName, serviceName, workspaceName, apiName, versionName, definitionName, options)
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +261,7 @@ func (client *APIDefinitionsClient) exportSpecification(ctx context.Context, res
 }
 
 // exportSpecificationCreateRequest creates the ExportSpecification request.
-func (client *APIDefinitionsClient) exportSpecificationCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, payload any, _ *APIDefinitionsClientBeginExportSpecificationOptions) (*policy.Request, error) {
+func (client *APIDefinitionsClient) exportSpecificationCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, workspaceName string, apiName string, versionName string, definitionName string, _ *APIDefinitionsClientBeginExportSpecificationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}/exportSpecification"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -300,10 +299,6 @@ func (client *APIDefinitionsClient) exportSpecificationCreateRequest(ctx context
 	reqQP.Set("api-version", "2024-03-15-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, payload); err != nil {
-		return nil, err
-	}
 	return req, nil
 }
 

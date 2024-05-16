@@ -18,7 +18,7 @@ import (
 // CustomServer is a fake server for instances of the customgroup.CustomClient type.
 type CustomServer struct {
 	// Invalid is the fake for method CustomClient.Invalid
-	// HTTP status codes to indicate success: http.StatusNoContent, http.StatusForbidden
+	// HTTP status codes to indicate success: http.StatusNoContent
 	Invalid func(ctx context.Context, options *customgroup.CustomClientInvalidOptions) (resp azfake.Responder[customgroup.CustomClientInvalidResponse], errResp azfake.ErrorResponder)
 
 	// Valid is the fake for method CustomClient.Valid
@@ -75,10 +75,10 @@ func (c *CustomServerTransport) dispatchInvalid(req *http.Request) (*http.Respon
 		return nil, respErr
 	}
 	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusNoContent, http.StatusForbidden}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent, http.StatusForbidden", respContent.HTTPStatus)}
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).InvalidAuth, req)
+	resp, err := server.NewResponse(respContent, req, nil)
 	if err != nil {
 		return nil, err
 	}
