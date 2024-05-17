@@ -33,11 +33,6 @@ export class clientAdapter {
       throw new Error('single-client cannot be enabled when there are multiple clients');
     }
     for (const sdkClient of sdkPackage.clients) {
-      if (sdkClient.methods.length === 0) {
-        // skip generating empty clients
-        continue;
-      }
-
       // start with instantiable clients and recursively work down
       if (sdkClient.initialization.access === 'public') {
         this.recursiveAdaptClient(sdkClient);
@@ -45,7 +40,12 @@ export class clientAdapter {
     }
   }
 
-  private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client {
+  private recursiveAdaptClient(sdkClient: tcgc.SdkClientType<tcgc.SdkHttpOperation>, parent?: go.Client): go.Client | undefined {
+    if (sdkClient.methods.length === 0) {
+      // skip generating empty clients
+      return undefined;
+    }
+
     let clientName = ensureNameCase(sdkClient.name);
     if (parent) {
       // for hierarchical clients, the child client names are built
@@ -134,7 +134,9 @@ export class clientAdapter {
     for (const sdkMethod of sdkClient.methods) {
       if (sdkMethod.kind === 'clientaccessor') {
         const subClient = this.recursiveAdaptClient(sdkMethod.response, goClient);
-        goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
+        if (subClient) {
+          goClient.clientAccessors.push(new go.ClientAccessor(`New${subClient.name}`, subClient));
+        }
       } else {
         this.adaptMethod(sdkMethod, goClient);
       }
