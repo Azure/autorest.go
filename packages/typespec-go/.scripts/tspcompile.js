@@ -128,6 +128,9 @@ generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutte
 const armdatabasewatcher = pkgRoot + `test/tsp/DatabaseWatcher.Management`;
 generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher');
 
+const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
+generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let additionalArgs;
