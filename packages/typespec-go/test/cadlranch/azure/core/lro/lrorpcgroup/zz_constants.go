@@ -5,30 +5,3 @@
 package lrorpcgroup
 
 const host = "http://localhost:3000"
-
-// OperationState - Enum describing allowed operation states.
-type OperationState string
-
-const (
-	// OperationStateCanceled - The operation has been canceled by the user.
-	OperationStateCanceled OperationState = "Canceled"
-	// OperationStateFailed - The operation has failed.
-	OperationStateFailed OperationState = "Failed"
-	// OperationStateNotStarted - The operation has not started.
-	OperationStateNotStarted OperationState = "NotStarted"
-	// OperationStateRunning - The operation is in progress.
-	OperationStateRunning OperationState = "Running"
-	// OperationStateSucceeded - The operation has completed successfully.
-	OperationStateSucceeded OperationState = "Succeeded"
-)
-
-// PossibleOperationStateValues returns the possible values for the OperationState const type.
-func PossibleOperationStateValues() []OperationState {
-	return []OperationState{
-		OperationStateCanceled,
-		OperationStateFailed,
-		OperationStateNotStarted,
-		OperationStateRunning,
-		OperationStateSucceeded,
-	}
-}

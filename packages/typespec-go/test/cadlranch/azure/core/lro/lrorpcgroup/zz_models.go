@@ -4,56 +4,14 @@
 
 package lrorpcgroup
 
-// Error - The error object.
-type Error struct {
-	// REQUIRED; One of a server-defined set of error codes.
-	Code *string
-
-	// REQUIRED; A human-readable representation of the error.
-	Message *string
-
-	// An array of details about specific errors that led to this reported error.
-	Details []*Error
-
-	// An object containing more specific information than the current object about the error.
-	Innererror *InnerError
-
-	// The target of the error.
-	Target *string
-}
-
 // GenerationOptions - Options for the generation.
 type GenerationOptions struct {
 	// REQUIRED; Prompt.
 	Prompt *string
 }
 
-// GenerationResponse - Provides status details for long running operations.
-type GenerationResponse struct {
-	// REQUIRED; The unique ID of the operation.
-	ID *string
-
-	// REQUIRED; The status of the operation
-	Status *OperationState
-
-	// Error object that describes the error when status is "Failed".
-	Error *Error
-
-	// The result of the operation.
-	Result *GenerationResult
-}
-
 // GenerationResult - Result of the generation.
 type GenerationResult struct {
 	// REQUIRED; The data.
 	Data *string
-}
-
-// InnerError - An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
-type InnerError struct {
-	// One of a server-defined set of error codes.
-	Code *string
-
-	// Inner error.
-	Innererror *InnerError
 }

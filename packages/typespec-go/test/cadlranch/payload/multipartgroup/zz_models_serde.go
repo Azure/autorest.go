@@ -38,13 +38,6 @@ func (a *Address) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// toMultipartFormData converts AnonymousModelRequest to multipart/form data.
-func (a AnonymousModelRequest) toMultipartFormData() (map[string]any, error) {
-	objectMap := make(map[string]any)
-	objectMap["profileImage"] = a.ProfileImage
-	return objectMap, nil
-}
-
 // toMultipartFormData converts BinaryArrayPartsRequest to multipart/form data.
 func (b BinaryArrayPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)

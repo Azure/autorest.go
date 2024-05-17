@@ -56,10 +56,7 @@ export class typeAdapter {
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.experimental_sdkPackage.models) {
-      if (this.isFoundationsError(modelType)) {
-        // don't create a model as we use azcore.ResponseError instead
-        continue;
-      } else if (this.unreferencedModels.has(modelType.name)) {
+      if (this.unreferencedModels.has(modelType.name)) {
         // skip unreferenced type
         continue;
       }
@@ -217,14 +214,6 @@ export class typeAdapter {
       case 'model':
         if (type.discriminatedSubtypes && substituteDiscriminator) {
           return this.getInterfaceType(type);
-        } else if (this.isFoundationsError(type)) {
-          const keyName = 'azcore-response-error';
-          let respErrType = this.types.get(keyName);
-          if (!respErrType) {
-            respErrType = new go.QualifiedType('ResponseError', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
-            this.types.set(keyName, respErrType);
-          }
-          return respErrType;
         }
         return this.getModel(type);
       default:
@@ -275,10 +264,6 @@ export class typeAdapter {
       this.types.set(keyName, rsc);
     }
     return rsc;
-  }
-
-  private isFoundationsError(sdkModel: tcgc.SdkModelType): boolean {
-    return !!sdkModel.crossLanguageDefinitionId.match(/(?:Foundations|ResourceManager)\.Error[a-zA-Z]+$/i);
   }
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
@@ -765,8 +750,16 @@ export class typeAdapter {
       }
     };
 
-    // traverse all methods to find the set of referenced enums and models
+    // traverse all client initialization params and methods to find the set of referenced enums and models
     for (const client of sdkContext.experimental_sdkPackage.clients) {
+      for (const param of client.initialization.properties) {
+        if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
+          for (const templateArg of param.type.templateArguments) {
+            recursiveAddReferencedType(templateArg.type);
+          }
+        }
+      }
+
       for (const method of client.methods) {
         if (method.kind === 'clientaccessor') {
           continue;

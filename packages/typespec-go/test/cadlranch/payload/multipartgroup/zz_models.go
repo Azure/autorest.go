@@ -11,11 +11,6 @@ type Address struct {
 	City *string
 }
 
-type AnonymousModelRequest struct {
-	// REQUIRED
-	ProfileImage streaming.MultipartContent
-}
-
 type BinaryArrayPartsRequest struct {
 	// REQUIRED
 	ID string

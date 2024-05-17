@@ -30,6 +30,42 @@ type Datastore struct {
 	KustoClusterDisplayName *string
 }
 
+// ErrorAdditionalInfo - The resource management error additional info.
+type ErrorAdditionalInfo struct {
+	// The additional info.
+	Info *ErrorAdditionalInfoInfo
+
+	// The additional info type.
+	Type *string
+}
+
+type ErrorAdditionalInfoInfo struct {
+}
+
+// ErrorDetail - The error detail.
+type ErrorDetail struct {
+	// The error additional info.
+	AdditionalInfo []*ErrorAdditionalInfo
+
+	// The error code.
+	Code *string
+
+	// The error details.
+	Details []*ErrorDetail
+
+	// The error message.
+	Message *string
+
+	// The error target.
+	Target *string
+}
+
+// ErrorResponse - Common error response for all Azure Resource Manager APIs to return error details for failed operations.
+type ErrorResponse struct {
+	// The error object.
+	Error *ErrorDetail
+}
+
 // ManagedServiceIdentity - The properties of the managed service identities assigned to this resource.
 type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
