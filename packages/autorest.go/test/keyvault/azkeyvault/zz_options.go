@@ -32,20 +32,20 @@ type ClientBeginFullBackupOptions struct {
 	// this call
 	AzureStorageBlobContainerURI *SASTokenParameter
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation method.
 type ClientBeginFullRestoreOperationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
 type ClientBeginSelectiveKeyRestoreOperationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -525,14 +525,14 @@ type ClientWrapKeyOptions struct {
 // HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 // method.
 type HSMSecurityDomainClientBeginDownloadOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
 // method.
 type HSMSecurityDomainClientBeginUploadOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 

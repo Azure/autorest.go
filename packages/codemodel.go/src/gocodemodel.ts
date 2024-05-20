@@ -1502,6 +1502,7 @@ export class ResumeTokenParameter implements ResumeTokenParameter {
     this.paramType = 'optional';
     this.byValue = true;
     this.location = 'method';
+    this.description = 'Resumes the long-running operation from the provided token.';
   }
 }
 

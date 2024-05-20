@@ -22,19 +22,19 @@ type DataFlowClientBeginCreateOrUpdateDataFlowOptions struct {
 	// * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the DataFlowClient.BeginDeleteDataFlow method.
 type DataFlowClientBeginDeleteDataFlowOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // DataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the DataFlowClient.BeginRenameDataFlow method.
 type DataFlowClientBeginRenameDataFlowOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -60,14 +60,14 @@ type DataFlowDebugSessionClientAddDataFlowOptions struct {
 // DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
 type DataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // DataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSessionClient.BeginExecuteCommand
 // method.
 type DataFlowDebugSessionClientBeginExecuteCommandOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -90,19 +90,19 @@ type DatasetClientBeginCreateOrUpdateDatasetOptions struct {
 	// for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the DatasetClient.BeginDeleteDataset method.
 type DatasetClientBeginDeleteDatasetOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // DatasetClientBeginRenameDatasetOptions contains the optional parameters for the DatasetClient.BeginRenameDataset method.
 type DatasetClientBeginRenameDatasetOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -132,19 +132,19 @@ type IntegrationRuntimesClientListOptions struct {
 // KqlScriptClientBeginCreateOrUpdateOptions contains the optional parameters for the KqlScriptClient.BeginCreateOrUpdate
 // method.
 type KqlScriptClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // KqlScriptClientBeginDeleteByNameOptions contains the optional parameters for the KqlScriptClient.BeginDeleteByName method.
 type KqlScriptClientBeginDeleteByNameOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // KqlScriptClientBeginRenameOptions contains the optional parameters for the KqlScriptClient.BeginRename method.
 type KqlScriptClientBeginRenameOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -168,19 +168,19 @@ type LibraryClientAppendOptions struct {
 
 // LibraryClientBeginCreateOptions contains the optional parameters for the LibraryClient.BeginCreate method.
 type LibraryClientBeginCreateOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // LibraryClientBeginDeleteOptions contains the optional parameters for the LibraryClient.BeginDelete method.
 type LibraryClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // LibraryClientBeginFlushOptions contains the optional parameters for the LibraryClient.BeginFlush method.
 type LibraryClientBeginFlushOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -277,21 +277,21 @@ type LinkedServiceClientBeginCreateOrUpdateLinkedServiceOptions struct {
 	// be * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // LinkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginDeleteLinkedService
 // method.
 type LinkedServiceClientBeginDeleteLinkedServiceOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // LinkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the LinkedServiceClient.BeginRenameLinkedService
 // method.
 type LinkedServiceClientBeginRenameLinkedServiceOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -337,19 +337,19 @@ type NotebookClientBeginCreateOrUpdateNotebookOptions struct {
 	// * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // NotebookClientBeginDeleteNotebookOptions contains the optional parameters for the NotebookClient.BeginDeleteNotebook method.
 type NotebookClientBeginDeleteNotebookOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // NotebookClientBeginRenameNotebookOptions contains the optional parameters for the NotebookClient.BeginRenameNotebook method.
 type NotebookClientBeginRenameNotebookOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -384,19 +384,19 @@ type PipelineClientBeginCreateOrUpdatePipelineOptions struct {
 	// for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline method.
 type PipelineClientBeginDeletePipelineOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline method.
 type PipelineClientBeginRenamePipelineOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -470,21 +470,21 @@ type SQLScriptClientBeginCreateOrUpdateSQLScriptOptions struct {
 	// * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SQLScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginDeleteSQLScript
 // method.
 type SQLScriptClientBeginDeleteSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SQLScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the SQLScriptClient.BeginRenameSQLScript
 // method.
 type SQLScriptClientBeginRenameSQLScriptOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -508,21 +508,21 @@ type SparkConfigurationClientBeginCreateOrUpdateSparkConfigurationOptions struct
 	// can be * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkConfigurationClientBeginDeleteSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginDeleteSparkConfiguration
 // method.
 type SparkConfigurationClientBeginDeleteSparkConfigurationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkConfigurationClientBeginRenameSparkConfigurationOptions contains the optional parameters for the SparkConfigurationClient.BeginRenameSparkConfiguration
 // method.
 type SparkConfigurationClientBeginRenameSparkConfigurationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -547,35 +547,35 @@ type SparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions struct
 	// or can be * for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDebugSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginDeleteSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginExecuteSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinitionClient.BeginRenameSparkJobDefinition
 // method.
 type SparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -600,39 +600,39 @@ type TriggerClientBeginCreateOrUpdateTriggerOptions struct {
 	// for unconditional update.
 	IfMatch *string
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // TriggerClientBeginDeleteTriggerOptions contains the optional parameters for the TriggerClient.BeginDeleteTrigger method.
 type TriggerClientBeginDeleteTriggerOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // TriggerClientBeginStartTriggerOptions contains the optional parameters for the TriggerClient.BeginStartTrigger method.
 type TriggerClientBeginStartTriggerOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // TriggerClientBeginStopTriggerOptions contains the optional parameters for the TriggerClient.BeginStopTrigger method.
 type TriggerClientBeginStopTriggerOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // TriggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the TriggerClient.BeginSubscribeTriggerToEvents
 // method.
 type TriggerClientBeginSubscribeTriggerToEventsOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // TriggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the TriggerClient.BeginUnsubscribeTriggerFromEvents
 // method.
 type TriggerClientBeginUnsubscribeTriggerFromEventsOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 

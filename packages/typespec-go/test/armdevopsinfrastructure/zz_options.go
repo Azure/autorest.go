@@ -17,16 +17,19 @@ type OperationsClientListOptions struct {
 
 // PoolsClientBeginCreateOrUpdateOptions contains the optional parameters for the PoolsClient.BeginCreateOrUpdate method.
 type PoolsClientBeginCreateOrUpdateOptions struct {
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // PoolsClientBeginDeleteOptions contains the optional parameters for the PoolsClient.BeginDelete method.
 type PoolsClientBeginDeleteOptions struct {
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // PoolsClientBeginUpdateOptions contains the optional parameters for the PoolsClient.BeginUpdate method.
 type PoolsClientBeginUpdateOptions struct {
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
