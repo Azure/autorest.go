@@ -27,7 +27,7 @@ type PagingClientBeginGetMultiplePagesLROOptions struct {
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32
 
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 
 	// Sets the maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.

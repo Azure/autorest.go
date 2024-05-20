@@ -7,14 +7,14 @@ package armapicenter
 // APIDefinitionsClientBeginExportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginExportSpecification
 // method.
 type APIDefinitionsClientBeginExportSpecificationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // APIDefinitionsClientBeginImportSpecificationOptions contains the optional parameters for the APIDefinitionsClient.BeginImportSpecification
 // method.
 type APIDefinitionsClientBeginImportSpecificationOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -206,7 +206,7 @@ type OperationsClientListOptions struct {
 // ServicesClientBeginExportMetadataSchemaOptions contains the optional parameters for the ServicesClient.BeginExportMetadataSchema
 // method.
 type ServicesClientBeginExportMetadataSchemaOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 

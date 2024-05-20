@@ -7,7 +7,7 @@ package armlargeinstance
 // AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginRestart
 // method.
 type AzureLargeInstancesClientBeginRestartOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 
 	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
@@ -18,14 +18,14 @@ type AzureLargeInstancesClientBeginRestartOptions struct {
 // AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.BeginShutdown
 // method.
 type AzureLargeInstancesClientBeginShutdownOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginStart
 // method.
 type AzureLargeInstancesClientBeginStartOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 

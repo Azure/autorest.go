@@ -9,7 +9,7 @@ import "time"
 
 // BeginListLROOptions contains the optional parameters for the Client.BeginListLRO method.
 type BeginListLROOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 

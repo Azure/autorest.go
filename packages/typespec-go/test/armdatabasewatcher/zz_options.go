@@ -12,14 +12,14 @@ type OperationsClientListOptions struct {
 // SharedPrivateLinkResourcesClientBeginCreateOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.BeginCreate
 // method.
 type SharedPrivateLinkResourcesClientBeginCreateOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // SharedPrivateLinkResourcesClientBeginDeleteOptions contains the optional parameters for the SharedPrivateLinkResourcesClient.BeginDelete
 // method.
 type SharedPrivateLinkResourcesClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
@@ -57,31 +57,31 @@ type TargetsClientListByWatcherOptions struct {
 
 // WatchersClientBeginCreateOrUpdateOptions contains the optional parameters for the WatchersClient.BeginCreateOrUpdate method.
 type WatchersClientBeginCreateOrUpdateOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
 type WatchersClientBeginDeleteOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // WatchersClientBeginStartOptions contains the optional parameters for the WatchersClient.BeginStart method.
 type WatchersClientBeginStartOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // WatchersClientBeginStopOptions contains the optional parameters for the WatchersClient.BeginStop method.
 type WatchersClientBeginStopOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
 // WatchersClientBeginUpdateOptions contains the optional parameters for the WatchersClient.BeginUpdate method.
 type WatchersClientBeginUpdateOptions struct {
-	// Resumes the LRO from the provided token.
+	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 }
 
