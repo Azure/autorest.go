@@ -7,16 +7,19 @@ package armloadtestservice
 // LoadTestsClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadTestsClient.BeginCreateOrUpdate
 // method.
 type LoadTestsClientBeginCreateOrUpdateOptions struct {
+	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LoadTestsClientBeginDeleteOptions contains the optional parameters for the LoadTestsClient.BeginDelete method.
 type LoadTestsClientBeginDeleteOptions struct {
+	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LoadTestsClientBeginUpdateOptions contains the optional parameters for the LoadTestsClient.BeginUpdate method.
 type LoadTestsClientBeginUpdateOptions struct {
+	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 

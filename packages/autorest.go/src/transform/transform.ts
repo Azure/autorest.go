@@ -644,7 +644,7 @@ async function processOperationRequests(session: Session<m4.CodeModel>) {
       }
       if (helpers.isLROOperation(op)) {
         // add the ResumeToken to the optional params type
-        const tokenParam = newParameter('ResumeToken', 'Resumes the LRO from the provided token.', newString('string', ''));
+        const tokenParam = newParameter('ResumeToken', '', newString('string', ''));
         tokenParam.language.go!.byValue = true;
         tokenParam.language.go!.isResumeToken = true;
         tokenParam.required = false;
