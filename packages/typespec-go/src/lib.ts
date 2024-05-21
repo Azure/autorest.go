@@ -18,6 +18,7 @@ export interface GoEmitterOptions {
   'slice-elements-byval'?: boolean;
   'single-client'?: boolean;
   'stutter'?: string;
+  'fix-const-stuttering'?: boolean;
   'remove-unreferenced-types'?: boolean;
 }
 
@@ -37,6 +38,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'slice-elements-byval': { type: 'boolean', nullable: true },
     'single-client': { type: 'boolean', nullable: true },
     'stutter': { type: 'string', nullable: true },
+    'fix-const-stuttering': { type: 'boolean', nullable: true },
     'remove-unreferenced-types': { type: 'boolean', nullable: true },
   },
   required: [],

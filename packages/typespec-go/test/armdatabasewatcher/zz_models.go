@@ -474,7 +474,7 @@ type WatcherProperties struct {
 	Datastore *Datastore
 
 	// The provisioning state of the resource watcher.
-	ProvisioningState *ProvisioningState
+	ProvisioningState *DatabaseWatcherProvisioningState
 
 	// The monitoring collection status of the watcher.
 	Status *WatcherStatus

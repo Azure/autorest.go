@@ -126,7 +126,7 @@ const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
 generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
-generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false']);
+generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false', 'fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
 generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
@@ -175,6 +175,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'inject-spans=true',
     'head-as-boolean=true',
     'remove-unreferenced-types=true',
+    'fix-const-stuttering=true',
   ];
 
   let allOptions = fixedOptions;
