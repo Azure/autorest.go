@@ -41,7 +41,7 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     codeModel.options.sliceElementsByval = true;
   }
 
-  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options.stutter);
+  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options);
 
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext, context.options['remove-unreferenced-types'] === true);
@@ -52,11 +52,11 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
   return codeModel;
 }
 
-function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, customPrefix?: string): void {
+function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperation>, codeModel: go.CodeModel, options: GoEmitterOptions): void {
   let stutteringPrefix = codeModel.packageName;
 
-  if (customPrefix) {
-    stutteringPrefix = customPrefix;
+  if (options.stutter) {
+    stutteringPrefix = options.stutter;
   } else {
     // if there's a well-known prefix, remove it
     if (stutteringPrefix.startsWith('arm')) {
@@ -115,8 +115,11 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
     return newName;
   };
 
-  for (const sdkEnum of sdkPackage.enums) {
-    sdkEnum.name = renameType(sdkEnum.name);
+  // to keep compat with autorest.go, this is off by default
+  if (options['fix-const-stuttering'] === true) {
+    for (const sdkEnum of sdkPackage.enums) {
+      sdkEnum.name = renameType(sdkEnum.name);
+    }
   }
 
   for (const modelType of sdkPackage.models) {
