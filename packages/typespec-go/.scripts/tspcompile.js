@@ -137,6 +137,9 @@ generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/armdevopsinfr
 const armrandom = pkgRoot + 'test/tsp/Random.Management';
 generate('armrandom', armrandom, 'test/armrandom');
 
+const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
+generate('armcommunitymanagement', armcommunitymanagement, 'test/armcommunitymanagement');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let perTestOptions;

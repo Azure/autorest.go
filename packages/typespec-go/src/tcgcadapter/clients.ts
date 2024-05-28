@@ -47,7 +47,9 @@ export class clientAdapter {
     }
 
     let clientName = ensureNameCase(sdkClient.name);
-    if (parent) {
+
+    // to keep compat with existing ARM packages, don't use hierarchically named clients
+    if (parent && this.ta.codeModel.type !== 'azure-arm') {
       // for hierarchical clients, the child client names are built
       // from the parent client name. this is because tsp allows subclients
       // with the same name. consider the following example.
