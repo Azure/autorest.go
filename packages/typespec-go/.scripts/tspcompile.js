@@ -49,6 +49,7 @@ const cadlRanch = {
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],
+  'noendpointgroup': ['server/endpoint/not-defined'],
   'multiplegroup': ['server/path/multiple'],
   'singlegroup': ['server/path/single'],
   'unversionedgroup': ['server/versions/not-versioned'],
