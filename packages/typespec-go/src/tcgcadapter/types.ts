@@ -72,26 +72,12 @@ export class typeAdapter {
     }
   
     // add the synthesized models from TCGC for paged results
-    const pagedResponses = new Array<tcgc.SdkModelType>();
-    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
-      for (const sdkMethod of sdkClient.methods) {
-        if (sdkMethod.kind !== 'paging') {
-          continue;
-        }
-
-        for (const httpResp of sdkMethod.operation.responses.values()) {
-          if (!httpResp.type || httpResp.type.kind !== 'model') {
-            continue;
-          }
-
-          // tsp allows custom paged responses, so we must check both the synthesized list and the models list
-          if (!values(pagedResponses).any(each => { return each.name === (<tcgc.SdkModelType>httpResp.type).name; }) && !values(modelTypes).any(each => { return each.tcgc.name === (<tcgc.SdkModelType>httpResp.type).name; })) {
-            pagedResponses.push(httpResp.type);
-          }
-        }
-      }
-    }
+    const pagedResponses = this.getPagedResponses(sdkContext);
     for (const pagedResponse of pagedResponses) {
+      // tsp allows custom paged responses, so we must check both the synthesized list and the models list
+      if (values(modelTypes).any(each => { return each.tcgc.name === pagedResponse.name; })) {
+        continue;
+      }
       const model = this.getModel(pagedResponse);
       modelTypes.push({go: model, tcgc: pagedResponse});
     }
@@ -127,6 +113,29 @@ export class typeAdapter {
       }
       this.codeModel.models.push(modelType.go);
     }
+  }
+
+  // returns the synthesized paged response types
+  private getPagedResponses(sdkContext: tcgc.SdkContext): Array<tcgc.SdkModelType> {
+    const pagedResponses = new Array<tcgc.SdkModelType>();
+    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
+      for (const sdkMethod of sdkClient.methods) {
+        if (sdkMethod.kind !== 'paging') {
+          continue;
+        }
+
+        for (const httpResp of sdkMethod.operation.responses.values()) {
+          if (!httpResp.type || httpResp.type.kind !== 'model') {
+            continue;
+          }
+
+          if (!values(pagedResponses).any(each => { return each.name === (<tcgc.SdkModelType>httpResp.type).name; })) {
+            pagedResponses.push(httpResp.type);
+          }
+        }
+      }
+    }
+    return pagedResponses;
   }
 
   // returns the Go code model type for the specified SDK type.
@@ -783,6 +792,11 @@ export class typeAdapter {
       }
     }
 
+    const pagedResponses = this.getPagedResponses(sdkContext);
+    for (const pagedResponse of pagedResponses) {
+      recursiveAddReferencedType(pagedResponse);
+    }
+
     // now that we have the referenced set, update the unreferenced set
     for (const sdkEnum of sdkContext.experimental_sdkPackage.enums) {
       if (!referencedEnums.has(sdkEnum.name)) {
@@ -864,6 +878,11 @@ export class typeAdapter {
             recursiveAddReferencedBaseModel(method.response.type);
           }
         }
+      }
+
+      const pagedResponses = this.getPagedResponses(sdkContext);
+      for (const pagedResponse of pagedResponses) {
+        recursiveAddReferencedBaseModel(pagedResponse);
       }
     }
 
