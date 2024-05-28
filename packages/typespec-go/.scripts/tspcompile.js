@@ -134,6 +134,9 @@ generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/armdevopsinfrastructure');
 
+const armrandom = pkgRoot + 'test/tsp/Random.Management';
+generate('armrandom', armrandom, 'test/armrandom');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let perTestOptions;
