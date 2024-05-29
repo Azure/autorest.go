@@ -76,12 +76,12 @@ const cadlRanch = {
   'valuetypesgroup': ['type/property/value-types', 'slice-elements-byval=true'],
   'scalargroup': ['type/scalar', 'slice-elements-byval=true'],
   //'uniongroup': ['type/union'], // requires union support
-  //'addedgroup': ['versioning/added'],
-  //'madeoptionalgroup': ['versioning/madeOptional'],
-  //'removedgroup': ['versioning/removed'],
-  //'renamedfromgroup': ['versioning/renamedFrom'],
-  //'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
-  //'typechangedfromgroup': ['versioning/typeChangedFrom']
+  //'addedgroup': ['versioning/added'], // requires union support
+  'madeoptionalgroup': ['versioning/madeOptional'],
+  //'removedgroup': ['versioning/removed'], // requires union support
+  //'renamedfromgroup': ['versioning/renamedFrom'], // requires union support
+  'rettypechangedfromgroup': ['versioning/returnTypeChangedFrom'],
+  'typechangedfromgroup': ['versioning/typeChangedFrom']
 };
 
 // any new args must also be added to autorest.go\common\config\rush\command-line.json
