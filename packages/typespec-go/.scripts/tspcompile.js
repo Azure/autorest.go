@@ -19,7 +19,7 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/ts
 const cadlRanch = {
   'apikeygroup': ['authentication/api-key'],
   'customgroup': ['authentication/http/custom'],
-  'oauth2group': ['authentication/oauth2'],      // missing tests
+  'oauth2group': ['authentication/oauth2'],
   'unionauthgroup': ['authentication/union'],    // missing tests
   'accessgroup': ['azure/client-generator-core/access'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
