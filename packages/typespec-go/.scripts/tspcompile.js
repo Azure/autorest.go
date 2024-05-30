@@ -20,7 +20,7 @@ const cadlRanch = {
   'apikeygroup': ['authentication/api-key'],
   'customgroup': ['authentication/http/custom'],
   'oauth2group': ['authentication/oauth2'],
-  'unionauthgroup': ['authentication/union'],    // missing tests
+  'unionauthgroup': ['authentication/union'],
   'accessgroup': ['azure/client-generator-core/access'],
   'coreusagegroup': ['azure/client-generator-core/usage'],
   'basicgroup': ['azure/core/basic'],
