@@ -17,8 +17,8 @@ const compiler = pkgRoot + 'node_modules/@typespec/compiler/node_modules/.bin/ts
 // 'moduleName': [ 'input', 'emitter option 1', 'emitter option N...' ]
 // if no .tsp file is specified in input, it's assumed to be main.tsp
 const cadlRanch = {
-  'apikeygroup': ['authentication/api-key'],     // missing tests
-  'customgroup': ['authentication/http/custom'], // missing tests
+  'apikeygroup': ['authentication/api-key'],
+  'customgroup': ['authentication/http/custom'],
   'oauth2group': ['authentication/oauth2'],      // missing tests
   'unionauthgroup': ['authentication/union'],    // missing tests
   'accessgroup': ['azure/client-generator-core/access'],
