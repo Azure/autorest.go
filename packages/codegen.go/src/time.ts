@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { values } from '@azure-tools/linq';
-import * as go from '../../codemodel.go/src/gocodemodel.js';
+import * as go from '../../codemodel.go/src/index.js';
 import { contentPreamble, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
 

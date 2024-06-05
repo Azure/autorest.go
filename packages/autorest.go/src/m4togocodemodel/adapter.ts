@@ -7,7 +7,7 @@ import * as m4 from '@autorest/codemodel';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
-import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { adaptClients } from './clients.js';
 import { adaptConstantType, adaptInterfaceType, adaptModel, adaptModelField } from './types.js';
 import { aggregateProperties } from '../transform/helpers.js';

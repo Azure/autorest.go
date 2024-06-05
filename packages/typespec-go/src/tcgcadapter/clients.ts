@@ -6,7 +6,7 @@
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
-import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 
