@@ -9,7 +9,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewCustomClientWithKeyCredential(cred *azcore.KeyCredential, options *azcore.ClientOptions) (*CustomClient, error) {
+type CustomClientOptions struct {
+	azcore.ClientOptions
+}
+
+func NewCustomClientWithKeyCredential(cred *azcore.KeyCredential, options *CustomClientOptions) (*CustomClient, error) {
+	if options == nil {
+		options = &CustomClientOptions{}
+	}
 	internal, err := azcore.NewClient("customgroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			runtime.NewKeyCredentialPolicy(cred, "Authorization", &runtime.KeyCredentialPolicyOptions{
@@ -17,7 +24,7 @@ func NewCustomClientWithKeyCredential(cred *azcore.KeyCredential, options *azcor
 				Prefix:                          "SharedAccessKey ",
 			}),
 		},
-	}, options)
+	}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}

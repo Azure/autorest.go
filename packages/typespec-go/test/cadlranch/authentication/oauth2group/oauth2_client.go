@@ -9,7 +9,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewOAuth2Client(cred azcore.TokenCredential, options *azcore.ClientOptions) (*OAuth2Client, error) {
+type OAuth2ClientOptions struct {
+	azcore.ClientOptions
+}
+
+func NewOAuth2Client(cred azcore.TokenCredential, options *OAuth2ClientOptions) (*OAuth2Client, error) {
+	if options == nil {
+		options = &OAuth2ClientOptions{}
+	}
 	internal, err := azcore.NewClient("oauth2group", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			runtime.NewBearerTokenPolicy(cred, []string{
@@ -18,7 +25,7 @@ func NewOAuth2Client(cred azcore.TokenCredential, options *azcore.ClientOptions)
 				InsecureAllowCredentialWithHTTP: true,
 			}),
 		},
-	}, options)
+	}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}

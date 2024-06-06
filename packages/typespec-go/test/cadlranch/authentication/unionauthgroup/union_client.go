@@ -9,7 +9,11 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewUnionClient(cred azcore.TokenCredential, options *azcore.ClientOptions) (*UnionClient, error) {
+type UnionClientOptions struct {
+	azcore.ClientOptions
+}
+
+func NewUnionClient(cred azcore.TokenCredential, options *UnionClientOptions) (*UnionClient, error) {
 	return newUnionClient(runtime.NewBearerTokenPolicy(cred, []string{
 		"https://security.microsoft.com/.default",
 	}, &policy.BearerTokenOptions{
@@ -17,16 +21,19 @@ func NewUnionClient(cred azcore.TokenCredential, options *azcore.ClientOptions) 
 	}), options)
 }
 
-func NewUnionClientWithKeyCredential(cred *azcore.KeyCredential, options *azcore.ClientOptions) (*UnionClient, error) {
+func NewUnionClientWithKeyCredential(cred *azcore.KeyCredential, options *UnionClientOptions) (*UnionClient, error) {
 	return newUnionClient(runtime.NewKeyCredentialPolicy(cred, "x-ms-api-key", &runtime.KeyCredentialPolicyOptions{
 		InsecureAllowCredentialWithHTTP: true,
 	}), options)
 }
 
-func newUnionClient(credPolicy policy.Policy, options *azcore.ClientOptions) (*UnionClient, error) {
+func newUnionClient(credPolicy policy.Policy, options *UnionClientOptions) (*UnionClient, error) {
+	if options == nil {
+		options = &UnionClientOptions{}
+	}
 	internal, err := azcore.NewClient("unionauthgroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{credPolicy},
-	}, options)
+	}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}

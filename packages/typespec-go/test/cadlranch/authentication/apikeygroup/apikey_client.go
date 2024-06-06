@@ -9,14 +9,21 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewAPIKeyClientWithKeyCredential(cred *azcore.KeyCredential, options *azcore.ClientOptions) (*APIKeyClient, error) {
+type APIKeyClientOptions struct {
+	azcore.ClientOptions
+}
+
+func NewAPIKeyClientWithKeyCredential(cred *azcore.KeyCredential, options *APIKeyClientOptions) (*APIKeyClient, error) {
+	if options == nil {
+		options = &APIKeyClientOptions{}
+	}
 	internal, err := azcore.NewClient("apikeygroup", "v0.1.0", runtime.PipelineOptions{
 		PerCall: []policy.Policy{
 			runtime.NewKeyCredentialPolicy(cred, "x-ms-api-key", &runtime.KeyCredentialPolicyOptions{
 				InsecureAllowCredentialWithHTTP: true,
 			}),
 		},
-	}, options)
+	}, &options.ClientOptions)
 	if err != nil {
 		return nil, err
 	}
