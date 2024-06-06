@@ -44,7 +44,6 @@ func TestStandardClient_BeginDelete(t *testing.T) {
 }
 
 func TestStandardClient_BeginExport(t *testing.T) {
-	t.Skip("https://github.com/Azure/azure-sdk-for-go/issues/22433")
 	client, err := lrostdgroup.NewStandardClient(nil)
 	require.NoError(t, err)
 	poller, err := client.BeginExport(context.Background(), "madge", "json", nil)
