@@ -6,7 +6,7 @@
 import { serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import * as go from '../../../codemodel.go/src/gocodemodel.js';
+import * as go from '../../../codemodel.go/src/index.js';
 import { generateClientFactory } from '../../../codegen.go/src/clientFactory.js';
 import { generateOperations } from '../../../codegen.go/src/operations.js';
 import { generateModels } from '../../../codegen.go/src/models.js';

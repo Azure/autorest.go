@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/gocodemodel.js';
+import * as go from '../../codemodel.go/src/index.js';
 import { comment } from '@azure-tools/codegen';
 import { contentPreamble, sortAscending } from './helpers.js';
 
