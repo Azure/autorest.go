@@ -15,7 +15,6 @@ import (
 )
 
 func TestRpcClient_BeginLongRunningRPC(t *testing.T) {
-	t.Skip("https://github.com/Azure/azure-sdk-for-go/issues/22433")
 	client, err := lrorpcgroup.NewRPCClient(nil)
 	require.NoError(t, err)
 	poller, err := client.BeginLongRunningRPC(context.Background(), lrorpcgroup.GenerationOptions{
