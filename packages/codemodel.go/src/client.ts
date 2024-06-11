@@ -165,6 +165,26 @@ export function newClientOptions(modelType: pkg.CodeModelType, clientName: strin
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+export class Method implements Method {
+  constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
+    if (statusCodes.length === 0) {
+      throw new Error('statusCodes cannot be empty');
+    }
+    this.apiVersions = new Array<string>();
+    this.client = client;
+    this.httpMethod = httpMethod;
+    this.httpPath = httpPath;
+    this.httpStatusCodes = statusCodes;
+    this.name = name;
+    this.naming = naming;
+    this.parameters = new Array<param.Parameter>();
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Client implements Client {
@@ -202,71 +222,25 @@ export class MethodNaming implements MethodNaming {
   }
 }
 
-export class Method implements Method {
+export class LROMethod extends Method implements LROMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
-    }
-    this.apiVersions = new Array<string>();
-    this.client = client;
-    this.httpMethod = httpMethod;
-    this.httpPath = httpPath;
-    this.httpStatusCodes = statusCodes;
-    this.name = name;
-    this.naming = naming;
-    this.parameters = new Array<param.Parameter>();
-  }
-}
-
-export class LROMethod implements LROMethod {
-  constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
-    }
-    this.apiVersions = new Array<string>();
-    this.client = client;
-    this.httpMethod = httpMethod;
-    this.httpPath = httpPath;
-    this.httpStatusCodes = statusCodes;
+    super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.isLRO = true;
-    this.name = name;
-    this.naming = naming;
-    this.parameters = new Array<param.Parameter>();
   }
 }
 
-export class PageableMethod implements PageableMethod {
+export class PageableMethod extends Method implements PageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
-    }
-    this.apiVersions = new Array<string>();
-    this.client = client;
-    this.httpMethod = httpMethod;
-    this.httpPath = httpPath;
-    this.httpStatusCodes = statusCodes;
+    super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.isPageable = true;
-    this.name = name;
-    this.naming = naming;
-    this.parameters = new Array<param.Parameter>();
   }
 }
 
-export class LROPageableMethod implements LROPageableMethod {
+export class LROPageableMethod extends Method implements LROPageableMethod {
   constructor(name: string, client: Client, httpPath: string, httpMethod: HTTPMethod, statusCodes: Array<number>, naming: MethodNaming) {
-    if (statusCodes.length === 0) {
-      throw new Error('statusCodes cannot be empty');
-    }
-    this.apiVersions = new Array<string>();
-    this.client = client;
-    this.httpMethod = httpMethod;
-    this.httpPath = httpPath;
-    this.httpStatusCodes = statusCodes;
+    super(name, client, httpPath, httpMethod, statusCodes, naming);
     this.isLRO = true;
     this.isPageable = true;
-    this.name = name;
-    this.naming = naming;
-    this.parameters = new Array<param.Parameter>();
   }
 }
 

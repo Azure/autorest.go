@@ -171,7 +171,7 @@ export interface QualifiedType {
 export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' | 'timeRFC3339' | 'timeUnix';
 
 // TimeType is a time.Time type from the standard library with a format specifier.
-export interface TimeType extends QualifiedType {
+export interface TimeType {
   typeName: 'Time';
 
   packageName: 'time';
@@ -331,6 +331,25 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+export class StructField implements StructField {
+  constructor(name: string, type: PossibleType, byValue: boolean) {
+    this.name = name;
+    this.type = type;
+    this.byValue = byValue;
+  }
+}
+
+export class StructType implements StructType {
+  constructor(name: string) {
+    this.fields = new Array<StructField>();
+    this.name = name;
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class ConstantType implements ConstantType {
@@ -357,9 +376,9 @@ export class LiteralValue implements LiteralValue {
   }
 }
 
-export class ModelType implements ModelType {
+export class ModelType extends StructType implements ModelType {
   constructor(name: string, format: ModelFormat, annotations: ModelAnnotations, usage: UsageFlags) {
-    this.name = name;
+    super(name);
     this.format = format;
     this.annotations = annotations;
     this.usage = usage;
@@ -374,11 +393,9 @@ export class ModelAnnotations implements ModelAnnotations {
   }
 }
 
-export class ModelField implements ModelField {
+export class ModelField extends StructField implements ModelField {
   constructor(name: string, type: PossibleType, byValue: boolean, serializedName: string, annotations: ModelFieldAnnotations) {
-    this.name = name;
-    this.type = type;
-    this.byValue = byValue;
+    super(name, type, byValue);
     this.serializedName = serializedName;
     this.annotations = annotations;
   }
@@ -393,28 +410,13 @@ export class ModelFieldAnnotations implements ModelFieldAnnotations {
   }
 }
 
-export class PolymorphicType implements PolymorphicType {
+export class PolymorphicType extends StructType implements PolymorphicType {
   constructor(name: string, iface: InterfaceType, annotations: ModelAnnotations, usage: UsageFlags) {
-    this.name = name;
+    super(name);
     this.interface = iface;
     this.annotations = annotations;
     this.usage = usage;
     this.fields = new Array<ModelField>();
-  }
-}
-
-export class StructType implements StructType {
-  constructor(name: string) {
-    this.fields = new Array<StructField>();
-    this.name = name;
-  }
-}
-
-export class StructField implements StructField {
-  constructor(name: string, type: PossibleType, byValue: boolean) {
-    this.name = name;
-    this.type = type;
-    this.byValue = byValue;
   }
 }
 
