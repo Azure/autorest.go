@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Mon, 22 Apr 2024 09:31:17 GMT and should not be manually modified.
+This log was last generated on Mon, 13 May 2024 07:57:50 GMT and should not be manually modified.
+
+## 4.7.4
+Mon, 13 May 2024 07:57:50 GMT
+
+### Patches
+
+- update oav dependency
 
 ## 4.7.3
 Mon, 22 Apr 2024 09:31:17 GMT
