@@ -405,8 +405,7 @@ func (client *Datetimerfc1123Client) putUTCMaxDateTimeCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := dateTimeRFC1123(datetimeBody)
-	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+	if err := runtime.MarshalAsJSON(req, dateTimeRFC1123(datetimeBody)); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -448,8 +447,7 @@ func (client *Datetimerfc1123Client) putUTCMinDateTimeCreateRequest(ctx context.
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := dateTimeRFC1123(datetimeBody)
-	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+	if err := runtime.MarshalAsJSON(req, dateTimeRFC1123(datetimeBody)); err != nil {
 		return nil, err
 	}
 	return req, nil
