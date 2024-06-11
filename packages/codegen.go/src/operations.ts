@@ -810,16 +810,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         addr = '';
       }
       body = `wrapper{${fieldName}: ${addr}${body}}`;
-    } else if (go.isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'dateType') {
-      // wrap the body in the internal dateType
-      body = `dateType(${body})`;
-    } else if (go.isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat === 'timeRFC3339') {
-      // wrap the body in the internal timeRFC3339 type
-      body = `timeRFC3339(${body})`;
-    } else if (go.isTimeType(bodyParam.type) && (bodyParam.type.dateTimeFormat === 'dateTimeRFC1123' || bodyParam.type.dateTimeFormat === 'timeUnix')) {
-      // wrap the body in the custom time type
-      text += `\taux := ${bodyParam.type.dateTimeFormat}(${body})\n`;
-      body = 'aux';
+    } else if (go.isTimeType(bodyParam.type) && bodyParam.type.dateTimeFormat !== 'dateTimeRFC3339') {
+      // wrap the body in the internal time type
+      // no need for dateTimeRFC3339 as the JSON marshaler defaults to that.
+      body = `${bodyParam.type.dateTimeFormat}(${body})`;
     } else if (isArrayOfDateTimeForMarshalling(bodyParam.type)) {
       const timeInfo = isArrayOfDateTimeForMarshalling(bodyParam.type);
       let elementPtr = '*';

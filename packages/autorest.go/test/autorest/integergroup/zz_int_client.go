@@ -648,8 +648,7 @@ func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBo
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	aux := timeUnix(intBody)
-	if err := runtime.MarshalAsJSON(req, aux); err != nil {
+	if err := runtime.MarshalAsJSON(req, timeUnix(intBody)); err != nil {
 		return nil, err
 	}
 	return req, nil
