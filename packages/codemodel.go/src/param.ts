@@ -251,6 +251,7 @@ export function isLiteralParameter(param: Parameter): boolean {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// base types
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Parameter implements Parameter {
@@ -263,168 +264,115 @@ export class Parameter implements Parameter {
   }
 }
 
-export class BodyParameter implements BodyParameter {
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+export class BodyParameter extends Parameter implements BodyParameter {
   constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.name = name;
+    super(name, type, paramType, byValue, 'method');
     this.bodyFormat = bodyFormat;
     this.contentType = contentType;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = 'method';
   }
 }
 
-export class PartialBodyParameter implements PartialBodyParameter{
+export class PartialBodyParameter extends Parameter implements PartialBodyParameter{
   constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.byValue = byValue;
+    super(name, type, paramType, byValue, 'method');
     this.format = format;
-    this.location = 'method';
-    this.name = name;
-    this.paramType = paramType;
     this.serializedName = serializedName;
-    this.type = type;
   }
 }
 
-export class FormBodyParameter implements FormBodyParameter {
+export class FormBodyParameter extends Parameter implements FormBodyParameter {
   constructor(name: string, formDataName: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.name = name;
+    super(name, type, paramType, byValue, 'method');
     this.formDataName = formDataName;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = 'method';
   }
 }
 
-export class FormBodyCollectionParameter implements FormBodyCollectionParameter {
+export class FormBodyCollectionParameter extends Parameter implements FormBodyCollectionParameter {
   constructor(name: string, formDataName: string, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean) {
-    this.name = name;
+    super(name, type, paramType, byValue, 'method');
     this.formDataName = formDataName;
-    this.type = type;
     this.collectionFormat = collectionFormat;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = 'method';
   }
 }
 
-export class MultipartFormBodyParameter implements MultipartFormBodyParameter {
+export class MultipartFormBodyParameter extends Parameter implements MultipartFormBodyParameter {
   constructor(name: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    this.name = name;
+    super(name, type, paramType, byValue, 'method');
     this.multipartForm = true;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = 'method';
   }
 }
 
-export class HeaderParameter implements HeaderParameter {
+export class HeaderParameter extends Parameter implements HeaderParameter {
   constructor(name: string, headerName: string, type: HeaderType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.headerName = headerName;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class HeaderCollectionParameter implements HeaderCollectionParameter {
+export class HeaderCollectionParameter extends Parameter implements HeaderCollectionParameter {
   constructor(name: string, headerName: string, type: type.SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.headerName = headerName;
-    this.type = type;
     this.collectionFormat = collectionFormat;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class HeaderMapParameter implements HeaderMapParameter {
+export class HeaderMapParameter extends Parameter implements HeaderMapParameter {
   constructor(name: string, headerName: string, type: type.MapType, collectionPrefix: string, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.headerName = headerName;
-    this.type = type;
     this.collectionPrefix = collectionPrefix;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class PathParameter implements PathParameter {
+export class PathParameter extends Parameter implements PathParameter {
   constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class PathCollectionParameter implements PathCollectionParameter {
+export class PathCollectionParameter extends Parameter implements PathCollectionParameter {
   constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
-    this.type = type;
     this.collectionFormat = collectionFormat;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class QueryParameter implements QueryParameter {
+export class QueryParameter extends Parameter implements QueryParameter {
   constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class QueryCollectionParameter implements QueryCollectionParameter {
+export class QueryCollectionParameter extends Parameter implements QueryCollectionParameter {
   constructor(name: string, queryParam: string, isEncoded: boolean, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
-    this.type = type;
     this.collectionFormat = collectionFormat;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class URIParameter implements URIParameter {
+export class URIParameter extends Parameter implements URIParameter {
   constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    this.name = name;
+    super(name, type, paramType, byValue, location);
     this.uriPathSegment = uriPathSegment;
-    this.type = type;
-    this.paramType = paramType;
-    this.byValue = byValue;
-    this.location = location;
   }
 }
 
-export class ResumeTokenParameter implements ResumeTokenParameter {
+export class ResumeTokenParameter extends Parameter implements ResumeTokenParameter {
   constructor() {
+    super('ResumeToken', new type.PrimitiveType('string'), 'optional', true, 'method');
     this.isResumeToken = true;
-    this.name = 'ResumeToken';
-    this.type = new type.PrimitiveType('string');
-    this.paramType = 'optional';
-    this.byValue = true;
-    this.location = 'method';
     this.description = 'Resumes the long-running operation from the provided token.';
   }
 }
