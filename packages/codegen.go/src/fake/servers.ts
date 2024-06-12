@@ -461,7 +461,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
 
     const isMultipartContentType = function(type: go.PossibleType): type is go.QualifiedType {
       type = helpers.recursiveUnwrapMapSlice(type);
-      return (go.isQualifiedType(type) && type.typeName === 'MultipartContent');
+      return (go.isQualifiedType(type) && type.exportName === 'MultipartContent');
     };
 
     const emitCase = function(caseValue: string, paramVar: string, type: go.PossibleType): string {
@@ -472,7 +472,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       if (go.isModelType(helpers.recursiveUnwrapMapSlice(type))) {
         imports.add('encoding/json');
         caseContent += `\t\t\tif err = json.Unmarshal(content, &${paramVar}); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n`;
-      } else if (go.isQualifiedType(type) && type.typeName === 'ReadSeekCloser') {
+      } else if (go.isQualifiedType(type) && type.exportName === 'ReadSeekCloser') {
         imports.add('bytes');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
         assignedValue = 'streaming.NopCloser(bytes.NewReader(content))';
@@ -532,7 +532,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           caseContent += `\t\t\t${paramVar}.Filename = ${filename}\n`;
         }
       } else if (go.isSliceType(type)) {
-        if (go.isQualifiedType(type.elementType) && type.elementType.typeName === 'ReadSeekCloser') {
+        if (go.isQualifiedType(type.elementType) && type.elementType.exportName === 'ReadSeekCloser') {
           imports.add('bytes');
           imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
           assignedValue = `append(${paramVar}, streaming.NopCloser(bytes.NewReader(content)))`;

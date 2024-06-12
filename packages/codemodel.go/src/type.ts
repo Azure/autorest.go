@@ -162,7 +162,7 @@ export interface LiteralValue {
 // QualifiedType is a type from some package, e.g. the Go standard library (excluding time.Time)
 export interface QualifiedType {
   // this is the type name minus any package qualifier (e.g. URL)
-  typeName: string;
+  exportName: string;
 
   // the full name of the package to import (e.g. "net/url")
   packageName: string;
@@ -172,10 +172,6 @@ export type DateTimeFormat = 'dateType' | 'dateTimeRFC1123' | 'dateTimeRFC3339' 
 
 // TimeType is a time.Time type from the standard library with a format specifier.
 export interface TimeType {
-  typeName: 'Time';
-
-  packageName: 'time';
-
   dateTimeFormat: DateTimeFormat;
 
   utc: boolean;
@@ -247,11 +243,11 @@ export function isLiteralValueType(type: PossibleType): type is LiteralValueType
 }
 
 export function isPrimitiveType(type: PossibleType): type is PrimitiveType {
-  return (<PrimitiveType>type).typeName !== undefined && !isQualifiedType(type) && !isTimeType(type);
+  return (<PrimitiveType>type).typeName !== undefined;
 }
 
 export function isQualifiedType(type: PossibleType): type is QualifiedType {
-  return (<QualifiedType>type).packageName !== undefined && !isTimeType(type);
+  return (<QualifiedType>type).exportName !== undefined;
 }
 
 export function isTimeType(type: PossibleType): type is TimeType {
@@ -287,8 +283,12 @@ export function getLiteralValueTypeName(literal: LiteralValueType): string {
     return '[]byte';
   } else if (isConstantType(literal)) {
     return literal.name;
-  } else {
+  } else if (isPrimitiveType(literal)) {
     return literal.typeName;
+  } else if (isTimeType(literal)) {
+    return 'time.Time';
+  } else {
+    throw new Error(`unhandled LiteralValueType ${getTypeDeclaration(literal)}`);
   }
 }
 
@@ -301,7 +301,7 @@ export function getTypeDeclaration(type: PossibleType, pkgName?: string): string
     if (pathChar) {
       pkg = pkg.substring(pathChar+1);
     }
-    return pkg + '.' + type.typeName;
+    return pkg + '.' + type.exportName;
   } else if (isConstantType(type) || isInterfaceType(type) || isModelType(type) || isPolymorphicType(type)) {
     if (pkgName) {
       return `${pkgName}.${type.name}`;
@@ -445,8 +445,8 @@ export class PrimitiveType implements PrimitiveType {
 }
 
 export class QualifiedType implements QualifiedType {
-  constructor(typeName: string, packageName: string) {
-    this.typeName = typeName;
+  constructor(exportName: string, packageName: string) {
+    this.exportName = exportName;
     this.packageName = packageName;
   }
 }
