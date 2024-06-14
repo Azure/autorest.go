@@ -30,7 +30,7 @@ type SharedModel struct {
 
 // abstractModel - Used in internal operations, should be generated but not exported.
 type abstractModel struct {
-	// REQUIRED
+	// REQUIRED; Discriminator property for AbstractModel.
 	Kind *string
 
 	// REQUIRED

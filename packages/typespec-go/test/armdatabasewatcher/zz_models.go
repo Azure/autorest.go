@@ -66,19 +66,19 @@ type ErrorResponse struct {
 	Error *ErrorDetail
 }
 
-// ManagedServiceIdentity - The properties of the managed service identities assigned to this resource.
+// ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The active directory identifier of this principal.
+	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string
 
-	// The Active Directory tenant id of the principal.
+	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
 	TenantID *string
 
 	// The identities assigned to this resource by the user.
-	UserAssignedIdentities *UserAssignedIdentities
+	UserAssignedIdentities map[string]*UserAssignedIdentity
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
@@ -118,9 +118,9 @@ type OperationDisplay struct {
 	Resource *string
 }
 
-// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
-// the next set of results.
-type PagedOperation struct {
+// OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
+// get the next set of results.
+type OperationListResult struct {
 	// REQUIRED; The Operation items on this page
 	Value []*Operation
 
@@ -336,7 +336,7 @@ type SharedPrivateLinkResourceProperties struct {
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
-	// The type of identity that created the resource.
+	// The timestamp of resource creation (UTC).
 	CreatedAt *time.Time
 
 	// The identity that created the resource.
@@ -391,7 +391,7 @@ type TargetProperties struct {
 	// REQUIRED; The type of authentication to use when connecting to a target.
 	TargetAuthenticationType *TargetAuthenticationType
 
-	// REQUIRED
+	// REQUIRED; Discriminator property for TargetProperties.
 	TargetType *string
 
 	// The provisioning state of the resource.
@@ -404,19 +404,12 @@ type TargetProperties struct {
 // GetTargetProperties implements the TargetPropertiesClassification interface for type TargetProperties.
 func (t *TargetProperties) GetTargetProperties() *TargetProperties { return t }
 
-// UserAssignedIdentities - The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary
-// keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
-// The dictionary values can be empty objects ({}) in requests.",
-type UserAssignedIdentities struct {
-	AdditionalProperties map[string]*UserAssignedIdentity
-}
-
-// UserAssignedIdentity - A managed identity assigned by the user.
+// UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The active directory client identifier for this principal.
+	// The client ID of the assigned identity.
 	ClientID *string
 
-	// The active directory identifier for this principal.
+	// The principal ID of the assigned identity.
 	PrincipalID *string
 }
 

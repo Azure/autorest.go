@@ -90,14 +90,14 @@ func PossibleKustoOfferingTypeValues() []KustoOfferingType {
 	}
 }
 
-// ManagedServiceIdentityType - The kind of managed identity assigned to this resource.
+// ManagedServiceIdentityType - Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 type ManagedServiceIdentityType string
 
 const (
 	// ManagedServiceIdentityTypeNone - No managed identity.
 	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
-	// ManagedServiceIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
-	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned, UserAssigned"
+	// ManagedServiceIdentityTypeSystemAndUserAssignedV3 - System and user assigned managed identity.
+	ManagedServiceIdentityTypeSystemAndUserAssignedV3 ManagedServiceIdentityType = "SystemAssigned,UserAssigned"
 	// ManagedServiceIdentityTypeSystemAssigned - System assigned managed identity.
 	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
 	// ManagedServiceIdentityTypeUserAssigned - User assigned managed identity.
@@ -108,7 +108,7 @@ const (
 func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
 	return []ManagedServiceIdentityType{
 		ManagedServiceIdentityTypeNone,
-		ManagedServiceIdentityTypeSystemAndUserAssigned,
+		ManagedServiceIdentityTypeSystemAndUserAssignedV3,
 		ManagedServiceIdentityTypeSystemAssigned,
 		ManagedServiceIdentityTypeUserAssigned,
 	}

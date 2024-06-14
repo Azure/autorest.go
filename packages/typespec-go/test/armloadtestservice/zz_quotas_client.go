@@ -24,7 +24,7 @@ type QuotasClient struct {
 }
 
 // NewQuotasClient creates a new instance of QuotasClient with the specified values.
-//   - subscriptionID - The ID of the target subscription.
+//   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewQuotasClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*QuotasClient, error) {
@@ -43,7 +43,7 @@ func NewQuotasClient(subscriptionID string, credential azcore.TokenCredential, o
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01
-//   - location - The location name.
+//   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - body - The content of the action request
 //   - options - QuotasClientCheckAvailabilityOptions contains the optional parameters for the QuotasClient.CheckAvailability
@@ -113,7 +113,7 @@ func (client *QuotasClient) checkAvailabilityHandleResponse(resp *http.Response)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01
-//   - location - The location name.
+//   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - options - QuotasClientGetOptions contains the optional parameters for the QuotasClient.Get method.
 func (client *QuotasClient) Get(ctx context.Context, location string, quotaBucketName string, options *QuotasClientGetOptions) (QuotasClientGetResponse, error) {
@@ -176,7 +176,7 @@ func (client *QuotasClient) getHandleResponse(resp *http.Response) (QuotasClient
 // NewListPager - List quotas for a given subscription Id.
 //
 // Generated from API version 2022-12-01
-//   - location - The location name.
+//   - location - The name of the Azure region.
 //   - options - QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
 func (client *QuotasClient) NewListPager(location string, options *QuotasClientListOptions) *runtime.Pager[QuotasClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[QuotasClientListResponse]{

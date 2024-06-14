@@ -18,7 +18,7 @@ func (b *Bird) GetBird() *Bird { return b }
 
 // Dinosaur - Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
 type Dinosaur struct {
-	// REQUIRED
+	// REQUIRED; Discriminator property for Dinosaur.
 	Kind *string
 
 	// REQUIRED

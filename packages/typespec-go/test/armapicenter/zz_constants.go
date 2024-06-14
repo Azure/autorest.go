@@ -223,14 +223,14 @@ func PossibleLifecycleStageValues() []LifecycleStage {
 	}
 }
 
-// ManagedServiceIdentityType - The kind of managed identity assigned to this resource.
+// ManagedServiceIdentityType - Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 type ManagedServiceIdentityType string
 
 const (
 	// ManagedServiceIdentityTypeNone - No managed identity.
 	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
 	// ManagedServiceIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
-	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned, UserAssigned"
+	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned,UserAssigned"
 	// ManagedServiceIdentityTypeSystemAssigned - System assigned managed identity.
 	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
 	// ManagedServiceIdentityTypeUserAssigned - User assigned managed identity.

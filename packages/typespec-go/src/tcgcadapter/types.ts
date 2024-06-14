@@ -171,14 +171,21 @@ export class typeAdapter {
       case 'uuid':
         return this.getBuiltInType(type);
       case 'array': {
+        let elementType = type.valueType;
+        let nullable = false;
+        if (elementType.kind === 'nullable') {
+          // unwrap the nullable type
+          elementType = elementType.type;
+          nullable = true;
+        }
         // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
-        const myElementTypeByValue = elementTypeByValue ? true : type.valueType.nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(type.valueType);
-        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, type.valueType, substituteDiscriminator);
+        const myElementTypeByValue = elementTypeByValue ? true : nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(elementType);
+        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, elementType, substituteDiscriminator);
         let arrayType = this.types.get(keyName);
         if (arrayType) {
           return arrayType;
         }
-        arrayType = new go.SliceType(this.getPossibleType(type.valueType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
+        arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
         this.types.set(keyName, arrayType);
         return arrayType;
       }
@@ -230,6 +237,8 @@ export class typeAdapter {
           return this.getInterfaceType(type);
         }
         return this.getModel(type);
+      case 'nullable':
+        return this.getPossibleType(type.type, elementTypeByValue, substituteDiscriminator);
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
@@ -764,6 +773,8 @@ export class typeAdapter {
             }
           }
           break;
+        case 'nullable':
+          return recursiveAddReferencedType(type.type);
       }
     };
 
@@ -844,6 +855,8 @@ export class typeAdapter {
             }
           }
           break;
+        case 'nullable':
+          return recursiveAddReferencedBaseModel(type.type);
       }
     };
 
@@ -942,6 +955,8 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
         return `${root}-${naming.createPolymorphicInterfaceName(obj.name)}`;
       }
       return `${root}-${obj.name}`;
+    case 'nullable':
+      return recursiveKeyName(root, obj.type, substituteDiscriminator);
     case 'plainTime':
       if (obj.encode !== 'rfc3339') {
         throw new Error(`unsupported time encoding ${obj.encode}`);
@@ -953,6 +968,9 @@ function recursiveKeyName(root: string, obj: tcgc.SdkType, substituteDiscriminat
 }
 
 export function isTypePassedByValue(type: tcgc.SdkType): boolean {
+  if (type.kind === 'nullable') {
+    type = type.type;
+  }
   return type.kind === 'any' || type.kind === 'array' ||
   type.kind === 'bytes' || type.kind === 'dict' ||
     (type.kind === 'model' && !!type.discriminatedSubtypes);
