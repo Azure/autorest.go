@@ -201,11 +201,18 @@ type OperationDisplay struct {
 	Resource *string
 }
 
+// OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
+// get the next set of results.
+type OperationListResult struct {
+	// REQUIRED; The Operation items on this page
+	Value []*Operation
+
+	// The link to the next page of items
+	NextLink *string
+}
+
 // OperationStatusResult - The current status of an async operation.
 type OperationStatusResult struct {
-	// REQUIRED; The operations list.
-	Operations []*OperationStatusResult
-
 	// REQUIRED; Operation status.
 	Status *string
 
@@ -221,8 +228,11 @@ type OperationStatusResult struct {
 	// Name of the async operation.
 	Name *string
 
+	// The operations list.
+	Operations []*OperationStatusResult
+
 	// Percent of the operation that is complete.
-	PercentComplete *int32
+	PercentComplete *float64
 
 	// The start time of the operation.
 	StartTime *time.Time
@@ -241,16 +251,6 @@ type OsProfile struct {
 
 	// Specifies version of operating system.
 	Version *string
-}
-
-// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
-// the next set of results.
-type PagedOperation struct {
-	// REQUIRED; The Operation items on this page
-	Value []*Operation
-
-	// The link to the next page of items
-	NextLink *string
 }
 
 // Properties - Describes the properties of an Azure Large Instance.
@@ -332,7 +332,7 @@ type StorageProperties struct {
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
-	// The type of identity that created the resource.
+	// The timestamp of resource creation (UTC).
 	CreatedAt *time.Time
 
 	// The identity that created the resource.

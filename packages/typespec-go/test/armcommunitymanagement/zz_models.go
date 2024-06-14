@@ -154,9 +154,9 @@ type OperationDisplay struct {
 	Resource *string
 }
 
-// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
-// the next set of results.
-type PagedOperation struct {
+// OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
+// get the next set of results.
+type OperationListResult struct {
 	// REQUIRED; The Operation items on this page
 	Value []*Operation
 
@@ -164,9 +164,9 @@ type PagedOperation struct {
 	NextLink *string
 }
 
-// SKU - The SKU (Stock Keeping Unit) assigned to this resource.
+// SKU - The resource model definition representing SKU
 type SKU struct {
-	// REQUIRED; The name of the SKU, usually a combination of letters and numbers, for example, 'P3'
+	// REQUIRED; The name of the SKU. Ex - P3. It is typically a letter+number code
 	Name *string
 
 	// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the
@@ -186,7 +186,7 @@ type SKU struct {
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
-	// The type of identity that created the resource.
+	// The timestamp of resource creation (UTC).
 	CreatedAt *time.Time
 
 	// The identity that created the resource.

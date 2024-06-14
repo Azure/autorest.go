@@ -240,9 +240,9 @@ type OperationDisplay struct {
 	Resource *string
 }
 
-// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
-// the next set of results.
-type PagedOperation struct {
+// OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
+// get the next set of results.
+type OperationListResult struct {
 	// REQUIRED; The Operation items on this page
 	Value []*Operation
 
@@ -291,7 +291,7 @@ type RevokeCertificate struct {
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
-	// The type of identity that created the resource.
+	// The timestamp of resource creation (UTC).
 	CreatedAt *time.Time
 
 	// The identity that created the resource.

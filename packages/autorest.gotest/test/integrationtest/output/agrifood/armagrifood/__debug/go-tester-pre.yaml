@@ -6093,7 +6093,7 @@ operationGroups:
             language:
               default: &ref_217
                 name: ResumeToken
-                description: Resumes the LRO from the provided token.
+                description: ''
                 byValue: true
                 isResumeToken: true
                 paramGroup: &ref_223
@@ -8085,7 +8085,7 @@ operationGroups:
             language:
               default: &ref_298
                 name: ResumeToken
-                description: Resumes the LRO from the provided token.
+                description: ''
                 byValue: true
                 isResumeToken: true
                 paramGroup: &ref_302

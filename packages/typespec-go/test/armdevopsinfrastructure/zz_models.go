@@ -8,7 +8,7 @@ import "time"
 
 // AgentProfile - The agent profile of the machines in the pool.
 type AgentProfile struct {
-	// REQUIRED
+	// REQUIRED; Discriminator property for AgentProfile.
 	Kind *string
 
 	// Defines pool buffer/stand-by agents.
@@ -94,7 +94,7 @@ type DevOpsAzureSKU struct {
 
 // FabricProfile - Defines the type of fabric the agent will run on.
 type FabricProfile struct {
-	// REQUIRED
+	// REQUIRED; Discriminator property for FabricProfile.
 	Kind *string
 }
 
@@ -160,19 +160,19 @@ type ImageVersionProperties struct {
 	Version *string
 }
 
-// ManagedServiceIdentity - The properties of the managed service identities assigned to this resource.
+// ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The active directory identifier of this principal.
+	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
 	PrincipalID *string
 
-	// The Active Directory tenant id of the principal.
+	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
 	TenantID *string
 
 	// The identities assigned to this resource by the user.
-	UserAssignedIdentities *UserAssignedIdentities
+	UserAssignedIdentities map[string]*UserAssignedIdentity
 }
 
 // ManualResourcePredictionsProfile - Customer provides the stand-by agent scheme.
@@ -232,6 +232,16 @@ type OperationDisplay struct {
 	Resource *string
 }
 
+// OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
+// get the next set of results.
+type OperationListResult struct {
+	// REQUIRED; The Operation items on this page
+	Value []*Operation
+
+	// The link to the next page of items
+	NextLink *string
+}
+
 // Organization - Defines an Azure DevOps organization.
 type Organization struct {
 	// REQUIRED; The Azure DevOps organization URL in which the pool should be created.
@@ -246,7 +256,7 @@ type Organization struct {
 
 // OrganizationProfile - Defines the organization in which the pool will be used.
 type OrganizationProfile struct {
-	// REQUIRED
+	// REQUIRED; Discriminator property for OrganizationProfile.
 	Kind *string
 }
 
@@ -260,16 +270,6 @@ type OsProfile struct {
 
 	// The secret management settings of the machines in the pool.
 	SecretsManagementSettings *SecretsManagementSettings
-}
-
-// PagedOperation - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get
-// the next set of results.
-type PagedOperation struct {
-	// REQUIRED; The Operation items on this page
-	Value []*Operation
-
-	// The link to the next page of items
-	NextLink *string
 }
 
 // Pool - Concrete tracked resource types can be created by aliasing this type using a specific property type.
@@ -663,7 +663,7 @@ type StorageProfile struct {
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
-	// The type of identity that created the resource.
+	// The timestamp of resource creation (UTC).
 	CreatedAt *time.Time
 
 	// The identity that created the resource.
@@ -682,19 +682,12 @@ type SystemData struct {
 	LastModifiedByType *CreatedByType
 }
 
-// UserAssignedIdentities - The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary
-// keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
-// The dictionary values can be empty objects ({}) in requests.",
-type UserAssignedIdentities struct {
-	AdditionalProperties map[string]*UserAssignedIdentity
-}
-
-// UserAssignedIdentity - A managed identity assigned by the user.
+// UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The active directory client identifier for this principal.
+	// The client ID of the assigned identity.
 	ClientID *string
 
-	// The active directory identifier for this principal.
+	// The principal ID of the assigned identity.
 	PrincipalID *string
 }
 
