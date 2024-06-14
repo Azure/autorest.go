@@ -10,7 +10,7 @@ import * as type from './type.js';
 // literal - there is no formal parameter, the value is emitted directly in the code (e.g. the Accept header parameter)
 // flag - the value is a literal and emitted in the code, but sent IFF the flag param is not nil (i.e. an optional LiteralValue)
 // ClientSideDefault - the parameter has an emitted default value that's sent if one isn't specified (implies optional)
-export type ParameterType = 'required' | 'optional' | 'literal' | 'flag' | ClientSideDefault;
+export type ParameterKind = 'required' | 'optional' | 'literal' | 'flag' | ClientSideDefault;
 
 export interface ClientSideDefault {
   defaultValue: type.LiteralValue;
@@ -25,8 +25,8 @@ export interface Parameter {
   // NOTE: if the type is a LiteralValue the paramType will either be literal or flag
   type: type.PossibleType;
 
-  // paramType will have value literal or flag when type is a LiteralValue (see above comment).
-  paramType: ParameterType;
+  // kind will have value literal or flag when type is a LiteralValue (see above comment).
+  kind: ParameterKind;
 
   byValue: boolean;
 
@@ -37,8 +37,8 @@ export interface Parameter {
   xml?: type.XMLInfo;
 }
 
-export function isClientSideDefault(paramType: ParameterType): paramType is ClientSideDefault {
-  return (<ClientSideDefault>paramType).defaultValue !== undefined;
+export function isClientSideDefault(kind: ParameterKind): kind is ClientSideDefault {
+  return (<ClientSideDefault>kind).defaultValue !== undefined;
 }
 
 export type ParameterLocation = 'client' | 'method';
@@ -237,17 +237,17 @@ export function isResumeTokenParameter(param: Parameter): param is ResumeTokenPa
 
 export function isRequiredParameter(param: Parameter): boolean {
   // parameters with a client-side default value are always optional
-  if (isClientSideDefault(param.paramType)) {
+  if (isClientSideDefault(param.kind)) {
     return false;
   }
-  return param.paramType === 'required';
+  return param.kind === 'required';
 }
 
 export function isLiteralParameter(param: Parameter): boolean {
-  if (isClientSideDefault(param.paramType)) {
+  if (isClientSideDefault(param.kind)) {
     return false;
   }
-  return param.paramType === 'literal';
+  return param.kind === 'literal';
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,10 +255,10 @@ export function isLiteralParameter(param: Parameter): boolean {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Parameter implements Parameter {
-  constructor(name: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
+  constructor(name: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
     this.name = name;
     this.type = type;
-    this.paramType = paramType;
+    this.kind = kind;
     this.byValue = byValue;
     this.location = location;
   }
@@ -268,77 +268,77 @@ export class Parameter implements Parameter {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class BodyParameter extends Parameter implements BodyParameter {
-  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    super(name, type, paramType, byValue, 'method');
+  constructor(name: string, bodyFormat: BodyFormat, contentType: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
     this.bodyFormat = bodyFormat;
     this.contentType = contentType;
   }
 }
 
 export class PartialBodyParameter extends Parameter implements PartialBodyParameter{
-  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    super(name, type, paramType, byValue, 'method');
+  constructor(name: string, serializedName: string, format: 'JSON' | 'XML', type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
     this.format = format;
     this.serializedName = serializedName;
   }
 }
 
 export class FormBodyParameter extends Parameter implements FormBodyParameter {
-  constructor(name: string, formDataName: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    super(name, type, paramType, byValue, 'method');
+  constructor(name: string, formDataName: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
     this.formDataName = formDataName;
   }
 }
 
 export class FormBodyCollectionParameter extends Parameter implements FormBodyCollectionParameter {
-  constructor(name: string, formDataName: string, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean) {
-    super(name, type, paramType, byValue, 'method');
+  constructor(name: string, formDataName: string, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
     this.formDataName = formDataName;
     this.collectionFormat = collectionFormat;
   }
 }
 
 export class MultipartFormBodyParameter extends Parameter implements MultipartFormBodyParameter {
-  constructor(name: string, type: type.PossibleType, paramType: ParameterType, byValue: boolean) {
-    super(name, type, paramType, byValue, 'method');
+  constructor(name: string, type: type.PossibleType, kind: ParameterKind, byValue: boolean) {
+    super(name, type, kind, byValue, 'method');
     this.multipartForm = true;
   }
 }
 
 export class HeaderParameter extends Parameter implements HeaderParameter {
-  constructor(name: string, headerName: string, type: HeaderType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, headerName: string, type: HeaderType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.headerName = headerName;
   }
 }
 
 export class HeaderCollectionParameter extends Parameter implements HeaderCollectionParameter {
-  constructor(name: string, headerName: string, type: type.SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, headerName: string, type: type.SliceType, collectionFormat: CollectionFormat, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.headerName = headerName;
     this.collectionFormat = collectionFormat;
   }
 }
 
 export class HeaderMapParameter extends Parameter implements HeaderMapParameter {
-  constructor(name: string, headerName: string, type: type.MapType, collectionPrefix: string, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, headerName: string, type: type.MapType, collectionPrefix: string, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.headerName = headerName;
     this.collectionPrefix = collectionPrefix;
   }
 }
 
 export class PathParameter extends Parameter implements PathParameter {
-  constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: PathParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
   }
 }
 
 export class PathCollectionParameter extends Parameter implements PathCollectionParameter {
-  constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.SliceType, collectionFormat: CollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, pathSegment: string, isEncoded: boolean, type: type.SliceType, collectionFormat: CollectionFormat, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.pathSegment = pathSegment;
     this.isEncoded = isEncoded;
     this.collectionFormat = collectionFormat;
@@ -346,16 +346,16 @@ export class PathCollectionParameter extends Parameter implements PathCollection
 }
 
 export class QueryParameter extends Parameter implements QueryParameter {
-  constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: QueryParameterType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
   }
 }
 
 export class QueryCollectionParameter extends Parameter implements QueryCollectionParameter {
-  constructor(name: string, queryParam: string, isEncoded: boolean, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, queryParam: string, isEncoded: boolean, type: type.SliceType, collectionFormat: ExtendedCollectionFormat, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.queryParameter = queryParam;
     this.isEncoded = isEncoded;
     this.collectionFormat = collectionFormat;
@@ -363,8 +363,8 @@ export class QueryCollectionParameter extends Parameter implements QueryCollecti
 }
 
 export class URIParameter extends Parameter implements URIParameter {
-  constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, paramType: ParameterType, byValue: boolean, location: ParameterLocation) {
-    super(name, type, paramType, byValue, location);
+  constructor(name: string, uriPathSegment: string, type: type.ConstantType | type.PrimitiveType, kind: ParameterKind, byValue: boolean, location: ParameterLocation) {
+    super(name, type, kind, byValue, location);
     this.uriPathSegment = uriPathSegment;
   }
 }

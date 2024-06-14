@@ -79,7 +79,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
 
     const isParamPointer = function(param: go.Parameter): boolean {
       // for client params, only optional and flag types are passed by pointer
-      return param.paramType === 'flag' || param.paramType === 'optional';
+      return param.kind === 'flag' || param.kind === 'optional';
     };
 
     // now emit any client params (non parameterized host params case)
@@ -640,9 +640,9 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   }
   const emitQueryParam = function (qp: go.QueryParameter, setter: string): string {
     let qpText = '';
-    if (qp.location === 'method' && go.isClientSideDefault(qp.paramType)) {
-      qpText = emitClientSideDefault(qp, qp.paramType, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
-    } else if (go.isRequiredParameter(qp) || go.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.paramType))) {
+    if (qp.location === 'method' && go.isClientSideDefault(qp.kind)) {
+      qpText = emitClientSideDefault(qp, qp.kind, (name, val) => { return `\treqQP.Set(${name}, ${val})`; }, imports);
+    } else if (go.isRequiredParameter(qp) || go.isLiteralParameter(qp) || (qp.location === 'client' && go.isClientSideDefault(qp.kind))) {
       qpText = `\t${setter}\n`;
     } else if (qp.location === 'client' && !qp.group) {
       // global optional param
@@ -718,8 +718,8 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
   }
   // add specific request headers
   const emitHeaderSet = function (headerParam: go.HeaderParameter, prefix: string): string {
-    if (headerParam.location === 'method' && go.isClientSideDefault(headerParam.paramType)) {
-      return emitClientSideDefault(headerParam, headerParam.paramType, (name, val) => {
+    if (headerParam.location === 'method' && go.isClientSideDefault(headerParam.kind)) {
+      return emitClientSideDefault(headerParam, headerParam.kind, (name, val) => {
         return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
       }, imports);
     } else if (go.isHeaderMapParameter(headerParam)) {
@@ -744,7 +744,7 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
     }
-    if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.paramType)) {
+    if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.kind)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param

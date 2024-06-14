@@ -161,7 +161,7 @@ export class clientAdapter {
     }
     // TODO: follow up with tcgc if serializedName should actually be optional
     return new go.URIParameter(sdkParam.name, sdkParam.serializedName ? sdkParam.serializedName : sdkParam.name, paramType,
-      this.adaptParameterType(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
+      this.adaptParameterKind(sdkParam), isTypePassedByValue(sdkParam.type) || !sdkParam.optional, 'client');
   }
 
   private adaptMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, goClient: go.Client) {
@@ -291,7 +291,7 @@ export class clientAdapter {
 
       let adaptedParam: go.Parameter;
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
-        const goParamType = this.adaptParameterType(opParam);
+        const paramKind = this.adaptParameterKind(opParam);
         const byVal = isTypePassedByValue(opParam.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
@@ -308,14 +308,14 @@ export class clientAdapter {
             if (!serializedName) {
               throw new Error(`didn't find body model property for spread parameter ${param.name}`);
             }
-            adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), goParamType, byVal);
+            adaptedParam = new go.PartialBodyParameter(param.name, serializedName, contentType, this.ta.getPossibleType(param.type, true, true), paramKind, byVal);
             break;
           }
           case 'binary':
             if (opParam.defaultContentType.match(/multipart/i)) {
-              adaptedParam = new go.MultipartFormBodyParameter(param.name, this.ta.getReadSeekCloser(false), goParamType, byVal);
+              adaptedParam = new go.MultipartFormBodyParameter(param.name, this.ta.getReadSeekCloser(false), paramKind, byVal);
             } else {
-              adaptedParam = new go.BodyParameter(param.name, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), goParamType, byVal);
+              adaptedParam = new go.BodyParameter(param.name, contentType, `"${opParam.defaultContentType}"`, this.ta.getReadSeekCloser(false), paramKind, byVal);
             }
             break;
           default:
@@ -387,13 +387,13 @@ export class clientAdapter {
 
     let adaptedParam: go.Parameter;
     const paramName = getEscapedReservedName(ensureNameCase(param.name, true), 'Param');
-    const paramType = this.adaptParameterType(param);
+    const paramKind = this.adaptParameterKind(param);
     const byVal = isTypePassedByValue(param.type);
 
     if (param.kind === 'body') {
       // TODO: form data? (non-multipart)
       if (param.defaultContentType.match(/multipart/i)) {
-        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getPossibleType(param.type, false, true), paramType, byVal);
+        adaptedParam = new go.MultipartFormBodyParameter(paramName, this.ta.getPossibleType(param.type, false, true), paramKind, byVal);
       } else {
         const contentType = this.adaptContentType(param.defaultContentType);
         let bodyType = this.ta.getPossibleType(param.type, false, true);
@@ -401,7 +401,7 @@ export class clientAdapter {
           // tcgc models binary params as 'bytes' but we want an io.ReadSeekCloser
           bodyType = this.ta.getReadSeekCloser(param.type.kind === 'array');
         }
-        adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramType, byVal);
+        adaptedParam = new go.BodyParameter(paramName, contentType, `"${param.defaultContentType}"`, bodyType, paramKind, byVal);
       }
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
@@ -413,12 +413,12 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramType, byVal, location);
+        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramKind, byVal, location);
       } else {
-        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramType, byVal, location);
+        adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramKind, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramType, byVal, location);
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
@@ -426,17 +426,17 @@ export class clientAdapter {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`);
         }
         // TODO: unencoded query param
-        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramType, byVal, location);
+        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramKind, byVal, location);
       } else {
         // TODO: unencoded query param
-        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramType, byVal, location);
+        adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramKind, byVal, location);
       }
     }
 
     if (adaptedParam.location === 'client') {
       // track client parameter for later use
       this.clientParams.set(getClientParamsKey(param), adaptedParam);
-    } else if (paramType !== 'required' && paramType !== 'literal') {
+    } else if (paramKind !== 'required' && paramKind !== 'literal') {
       // add optional method param to the options param group
       if (!optionalGroup) {
         throw new Error(`optional parameter ${param.name} has no optional parameter group`);
@@ -571,10 +571,10 @@ export class clientAdapter {
     const structType = new go.StructType(paramGroup.groupName);
     structType.description = paramGroup.description;
     for (const param of paramGroup.params) {
-      if (param.paramType === 'literal') {
+      if (param.kind === 'literal') {
         continue;
       }
-      let byValue = param.paramType === 'required' || (param.location === 'client' && go.isClientSideDefault(param.paramType));
+      let byValue = param.kind === 'required' || (param.location === 'client' && go.isClientSideDefault(param.kind));
       // if the param isn't required, check if it should be passed by value or not.
       // optional params that are implicitly nil-able shouldn't be pointer-to-type.
       if (!byValue) {
@@ -614,7 +614,7 @@ export class clientAdapter {
     return type;
   }
   
-  private adaptParameterType(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterType {
+  private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
       if (param.optional) {

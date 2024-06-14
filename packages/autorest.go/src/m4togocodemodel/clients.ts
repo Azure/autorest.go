@@ -162,7 +162,7 @@ function adaptClient(type: go.CodeModelType, group: m4.OperationGroup): go.Clien
   if (group.language.go!.hostParams) {
     for (const hostParam of values(<Array<m4.Parameter>>group.language.go!.hostParams)) {
       const uriParam = new go.URIParameter(hostParam.language.go!.name, hostParam.language.go!.serializedName, adaptURIPrameterType(hostParam.schema),
-        adaptParameterType(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
+        adaptParameterKind(hostParam), hostParam.language.go!.byValue, adaptMethodLocation(hostParam.implementation));
       client.parameters.push(uriParam);
     }
   }
@@ -322,22 +322,22 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         }
       }
       const bodyType = adaptPossibleType(param.schema);
-      const paramType = adaptParameterType(param);
+      const placement = adaptParameterKind(param);
       if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Form) {
         const collectionFormat = adaptCollectionFormat(param);
         if (collectionFormat) {
           if (!go.isSliceType(bodyType)) {
             throw new Error(`unexpected type ${go.getTypeDeclaration(bodyType)} for FormBodyCollectionParameter ${param.language.go!.name}`);
           }
-          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, paramType, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyCollectionParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, collectionFormat, placement, param.language.go!.byValue);
         } else {
-          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, paramType, param.language.go!.byValue);
+          adaptedParam = new go.FormBodyParameter(param.language.go!.name, param.language.go!.serializedName, bodyType, placement, param.language.go!.byValue);
         }
       } else if (op.requests![0].protocol.http!.knownMediaType === KnownMediaType.Multipart) {
-        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, paramType, param.language.go!.byValue);
+        adaptedParam = new go.MultipartFormBodyParameter(param.language.go!.name, bodyType, placement, param.language.go!.byValue);
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
-        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, paramType, param.language.go!.byValue);
+        adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, placement, param.language.go!.byValue);
       }
 
       adaptedParam.xml = adaptXMLInfo(param.schema);
@@ -350,18 +350,18 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         if (!go.isMapType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderMapParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, adaptParameterType(param),
+        adaptedParam = new go.HeaderMapParameter(param.language.go!.name, param.language.go!.serializedName, headerType, param.schema.language.go!.headerCollectionPrefix, adaptParameterKind(param),
           param.language.go!.byValue, location);
       } else if (collectionFormat) {
         const headerType = adaptPossibleType(param.schema, true);
         if (!go.isSliceType(headerType)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(headerType)} for HeaderCollectionParameter ${param.language.go!.name}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, adaptParameterType(param),
+        adaptedParam = new go.HeaderCollectionParameter(param.language.go!.name, param.language.go!.serializedName, headerType, collectionFormat, adaptParameterKind(param),
           param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.HeaderParameter(param.language.go!.name, param.language.go!.serializedName, adaptHeaderType(param.schema, true),
-          adaptParameterType(param), param.language.go!.byValue, location);
+          adaptParameterKind(param), param.language.go!.byValue, location);
       }
       break;
     }
@@ -373,10 +373,10 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
           throw new Error(`unexpected type ${go.getTypeDeclaration(pathType)} for PathCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.PathCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          pathType, collectionFormat, adaptParameterType(param), param.language.go!.byValue, location);
+          pathType, collectionFormat, adaptParameterKind(param), param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.PathParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptPathParameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
+          adaptPathParameterType(param.schema), adaptParameterKind(param), param.language.go!.byValue, location);
       }
       break;
     }
@@ -388,16 +388,16 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
           throw new Error(`unexpected type ${go.getTypeDeclaration(queryType)} for QueryCollectionParameter ${param.language.go!.name}`);
         }
         adaptedParam = new go.QueryCollectionParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          queryType, collectionFormat, adaptParameterType(param), param.language.go!.byValue, location);
+          queryType, collectionFormat, adaptParameterKind(param), param.language.go!.byValue, location);
       } else {
         adaptedParam = new go.QueryParameter(param.language.go!.name, param.language.go!.serializedName, !skipURLEncoding(param),
-          adaptQueryParameterType(param.schema), adaptParameterType(param), param.language.go!.byValue, location);
+          adaptQueryParameterType(param.schema), adaptParameterKind(param), param.language.go!.byValue, location);
       }
       break;
     }
     case 'uri':
       adaptedParam = new go.URIParameter(param.language.go!.name, param.language.go!.serializedName, adaptURIPrameterType(param.schema),
-        adaptParameterType(param), param.language.go!.byValue, adaptParameterlocation(param));
+        adaptParameterKind(param), param.language.go!.byValue, adaptParameterlocation(param));
       break;
     default: {
       if (param.protocol.http?.in) {
@@ -408,9 +408,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
         adaptedParam = new go.ResumeTokenParameter();
       } else {
         const type = adaptPossibleType(param.schema);
-        const paramType = adaptParameterType(param);
+        const placement = adaptParameterKind(param);
         const paramLoc = adaptParameterlocation(param);
-        adaptedParam = new go.Parameter(param.language.go!.name, type, paramType, param.language.go!.byValue, paramLoc);
+        adaptedParam = new go.Parameter(param.language.go!.name, type, placement, param.language.go!.byValue, paramLoc);
       }
     }
   }
@@ -430,7 +430,7 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
     if (values(paramGroup.params).where((each: go.Parameter) => { return each.name === adaptedParam.name; }).count() === 0) {
       paramGroup.params.push(adaptedParam);
     }
-    if (adaptedParam.paramType === 'required') {
+    if (adaptedParam.kind === 'required') {
       // if at least one param within a group is required then the group must be required.
       // however, it's possible that the param group was initially created from a non-required
       // param. so we need to be sure to update it as required.
@@ -499,7 +499,7 @@ function adaptParameterlocation(param: m4.Parameter): go.ParameterLocation {
   }
 }
 
-function adaptParameterType(param: m4.Parameter): go.ParameterType {
+function adaptParameterKind(param: m4.Parameter): go.ParameterKind {
   if (param.clientDefaultValue) {
     const adaptedType = adaptPossibleType(param.schema);
     if (!go.isLiteralValueType(adaptedType)) {
