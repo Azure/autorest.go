@@ -118,10 +118,10 @@ function adaptParameterGroup(paramGroup: go.ParameterGroup): go.StructType {
   structType.description = paramGroup.description;
   if (paramGroup.params.length > 0) {
     for (const param of values(paramGroup.params)) {
-      if (param.placement === 'literal') {
+      if (param.kind === 'literal') {
         continue;
       }
-      let byValue = param.placement === 'required' || (param.location === 'client' && go.isClientSideDefault(param.placement));
+      let byValue = param.kind === 'required' || (param.location === 'client' && go.isClientSideDefault(param.kind));
       // if the param isn't required, check if it should be passed by value or not.
       // optional params that are implicitly nil-able shouldn't be pointer-to-type.
       if (!byValue) {

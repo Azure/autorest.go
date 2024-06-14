@@ -58,7 +58,7 @@ export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup,
     }
   } else {
     typeName = go.getTypeDeclaration(param.type, pkgName);
-    if (go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.placement))) {
+    if (go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))) {
       // client parameters with default values aren't emitted as pointer-to-type
       return typeName;
     }
@@ -189,7 +189,7 @@ export function getParamName(param: go.Parameter): string {
     paramName = `client.${paramName}`;
   }
   // client parameters with default values aren't emitted as pointer-to-type
-  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.placement)) && !(isParameter(param) && param.byValue)) {
+  if (!go.isRequiredParameter(param) && !(param.location === 'client' && go.isClientSideDefault(param.kind)) && !(isParameter(param) && param.byValue)) {
     paramName = `*${paramName}`;
   }
   return paramName;
