@@ -8,7 +8,7 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // FirstItem - First item.
 type FirstItem struct {
-	// REQUIRED; The id of the item.
+	// READ-ONLY; The id of the item.
 	ID *int32
 }
 
@@ -47,23 +47,23 @@ type PagedUser struct {
 
 // SecondItem - Second item.
 type SecondItem struct {
-	// REQUIRED; The name of the item.
+	// READ-ONLY; The name of the item.
 	Name *string
 }
 
 // User - Details about a user.
 type User struct {
-	// REQUIRED; The entity tag for this resource.
-	Etag *azcore.ETag
-
-	// REQUIRED; The user's id.
-	ID *int32
-
 	// REQUIRED; The user's name.
 	Name *string
 
 	// The user's order list
 	Orders []*UserOrder
+
+	// READ-ONLY; The entity tag for this resource.
+	Etag *azcore.ETag
+
+	// READ-ONLY; The user's id.
+	ID *int32
 }
 
 type UserListResults struct {
@@ -80,8 +80,8 @@ type UserOrder struct {
 	Detail *string
 
 	// REQUIRED; The user's id.
-	ID *int32
-
-	// REQUIRED; The user's id.
 	UserID *int32
+
+	// READ-ONLY; The user's id.
+	ID *int32
 }

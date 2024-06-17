@@ -15,9 +15,9 @@ type ExportedUser struct {
 
 // User - Details about a user.
 type User struct {
-	// REQUIRED; The name of user.
-	Name *string
-
 	// REQUIRED; The role of user
 	Role *string
+
+	// READ-ONLY; The name of user.
+	Name *string
 }

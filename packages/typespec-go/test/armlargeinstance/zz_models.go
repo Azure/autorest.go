@@ -9,51 +9,51 @@ import "time"
 // AzureLargeInstance - Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 // properties)
 type AzureLargeInstance struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
 	// The resource-specific properties for this resource.
 	Properties *Properties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
+	// Resource tags.
+	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
+	// READ-ONLY; The geo-location where the resource lives
+	Location *string
 
 	// READ-ONLY; Name of the AzureLargeInstance.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
 
-	// Resource tags.
-	Tags map[string]*string
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // AzureLargeStorageInstance info on Azure (ARM properties and
 // AzureLargeStorageInstance properties)
 type AzureLargeStorageInstance struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
 	// The resource-specific properties for this resource.
 	Properties *AzureLargeStorageInstanceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
+	// Resource tags.
+	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
+	// READ-ONLY; The geo-location where the resource lives
+	Location *string
 
 	// READ-ONLY; Name of the AzureLargeStorageInstance.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
 
-	// Resource tags.
-	Tags map[string]*string
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // AzureLargeStorageInstanceListResult - The response of a AzureLargeStorageInstance list operation.
@@ -85,21 +85,21 @@ type Disk struct {
 	// Specifies the size of an empty data disk in gigabytes.
 	DiskSizeGB *int32
 
-	// Specifies the logical unit number of the data disk. This value is used to
+	// The disk name.
+	Name *string
+
+	// READ-ONLY; Specifies the logical unit number of the data disk. This value is used to
 	// identify data disks within the VM and therefore must be unique for each data
 	// disk attached to a VM.
 	Lun *int32
-
-	// The disk name.
-	Name *string
 }
 
 // ErrorAdditionalInfo - The resource management error additional info.
 type ErrorAdditionalInfo struct {
-	// The additional info.
+	// READ-ONLY; The additional info.
 	Info *ErrorAdditionalInfoInfo
 
-	// The additional info type.
+	// READ-ONLY; The additional info type.
 	Type *string
 }
 
@@ -108,19 +108,19 @@ type ErrorAdditionalInfoInfo struct {
 
 // ErrorDetail - The error detail.
 type ErrorDetail struct {
-	// The error additional info.
+	// READ-ONLY; The error additional info.
 	AdditionalInfo []*ErrorAdditionalInfo
 
-	// The error code.
+	// READ-ONLY; The error code.
 	Code *string
 
-	// The error details.
+	// READ-ONLY; The error details.
 	Details []*ErrorDetail
 
-	// The error message.
+	// READ-ONLY; The error message.
 	Message *string
 
-	// The error target.
+	// READ-ONLY; The error target.
 	Target *string
 }
 
@@ -133,10 +133,10 @@ type ForceState struct {
 
 // HardwareProfile - Specifies the hardware settings for the Azure Large Instance.
 type HardwareProfile struct {
-	// Specifies the Azure Large Instance SKU.
+	// READ-ONLY; Specifies the Azure Large Instance SKU.
 	AzureLargeInstanceSize *SizeNamesEnum
 
-	// Name of the hardware type (vendor and/or their product name)
+	// READ-ONLY; Name of the hardware type (vendor and/or their product name)
 	HardwareType *HardwareTypeNamesEnum
 }
 
@@ -157,11 +157,11 @@ type ListResult struct {
 
 // NetworkProfile - Specifies the network settings for the Azure Large Instance disks.
 type NetworkProfile struct {
-	// Specifies the circuit id for connecting to express route.
-	CircuitID *string
-
 	// Specifies the network interfaces for the Azure Large Instance.
 	NetworkInterfaces []*IPAddress
+
+	// READ-ONLY; Specifies the circuit id for connecting to express route.
+	CircuitID *string
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
@@ -172,16 +172,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
@@ -243,26 +243,20 @@ type OsProfile struct {
 	// Specifies the host OS name of the Azure Large Instance.
 	ComputerName *string
 
-	// This property allows you to specify the type of the OS.
-	OSType *string
-
 	// Specifies the SSH public key used to access the operating system.
 	SSHPublicKey *string
 
-	// Specifies version of operating system.
+	// READ-ONLY; This property allows you to specify the type of the OS.
+	OSType *string
+
+	// READ-ONLY; Specifies version of operating system.
 	Version *string
 }
 
 // Properties - Describes the properties of an Azure Large Instance.
 type Properties struct {
-	// Specifies the Azure Large Instance unique ID.
-	AzureLargeInstanceID *string
-
 	// Specifies the hardware settings for the Azure Large Instance.
 	HardwareProfile *HardwareProfile
-
-	// Hardware revision of an Azure Large Instance
-	HwRevision *string
 
 	// Specifies the network settings for the Azure Large Instance.
 	NetworkProfile *NetworkProfile
@@ -274,17 +268,23 @@ type Properties struct {
 	// AzureLargeInstance
 	PartnerNodeID *string
 
-	// Resource power state
-	PowerState *PowerStateEnum
-
-	// State of provisioning of the AzureLargeInstance
-	ProvisioningState *ProvisioningStatesEnum
-
-	// Resource proximity placement group
-	ProximityPlacementGroup *string
-
 	// Specifies the storage settings for the Azure Large Instance disks.
 	StorageProfile *StorageProfile
+
+	// READ-ONLY; Specifies the Azure Large Instance unique ID.
+	AzureLargeInstanceID *string
+
+	// READ-ONLY; Hardware revision of an Azure Large Instance
+	HwRevision *string
+
+	// READ-ONLY; Resource power state
+	PowerState *PowerStateEnum
+
+	// READ-ONLY; State of provisioning of the AzureLargeInstance
+	ProvisioningState *ProvisioningStatesEnum
+
+	// READ-ONLY; Resource proximity placement group
+	ProximityPlacementGroup *string
 }
 
 // StorageBillingProperties - Describes the billing related details of the AzureLargeStorageInstance.
@@ -298,12 +298,12 @@ type StorageBillingProperties struct {
 
 // StorageProfile - Specifies the storage settings for the Azure Large Instance disks.
 type StorageProfile struct {
-	// IP Address to connect to storage.
-	NfsIPAddress *string
-
 	// Specifies information about the operating system disk used by Azure Large
 	// Instance.
 	OSDisks []*Disk
+
+	// READ-ONLY; IP Address to connect to storage.
+	NfsIPAddress *string
 }
 
 // StorageProperties - described the storage properties of the azure large storage instance

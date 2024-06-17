@@ -8,9 +8,6 @@ import "time"
 
 // CommunityTraining - A CommunityProviderHub resource
 type CommunityTraining struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
 	// The resource-specific properties for this resource.
 	Properties *CommunityTrainingProperties
 
@@ -20,16 +17,19 @@ type CommunityTraining struct {
 	// Resource tags.
 	Tags map[string]*string
 
+	// READ-ONLY; The geo-location where the resource lives
+	Location *string
+
 	// READ-ONLY; The name of the Community Training Resource
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
 }
 
@@ -44,28 +44,28 @@ type CommunityTrainingListResult struct {
 
 // CommunityTrainingProperties - Details of the Community CommunityTraining.
 type CommunityTrainingProperties struct {
-	// REQUIRED; To indicate whether the Community Training instance has Disaster Recovery enabled
+	// READ-ONLY; To indicate whether the Community Training instance has Disaster Recovery enabled
 	DisasterRecoveryEnabled *bool
 
-	// REQUIRED; The identity configuration of the Community Training resource
+	// READ-ONLY; The identity configuration of the Community Training resource
 	IdentityConfiguration *IdentityConfigurationProperties
 
-	// REQUIRED; The email address of the portal admin
+	// READ-ONLY; The email address of the portal admin
 	PortalAdminEmailAddress *string
 
-	// REQUIRED; The portal name (website name) of the Community Training instance
+	// READ-ONLY; The portal name (website name) of the Community Training instance
 	PortalName *string
 
-	// REQUIRED; The email address of the portal owner. Will be used as the primary contact
+	// READ-ONLY; The email address of the portal owner. Will be used as the primary contact
 	PortalOwnerEmailAddress *string
 
-	// REQUIRED; The organization name of the portal owner
+	// READ-ONLY; The organization name of the portal owner
 	PortalOwnerOrganizationName *string
 
-	// REQUIRED; To indicate whether the Community Training instance has Zone Redundancy enabled
+	// READ-ONLY; To indicate whether the Community Training instance has Zone Redundancy enabled
 	ZoneRedundancyEnabled *bool
 
-	// The status of the last operation.
+	// READ-ONLY; The status of the last operation.
 	ProvisioningState *ProvisioningState
 }
 
@@ -82,38 +82,38 @@ type CommunityTrainingUpdate struct {
 
 // CommunityTrainingUpdateProperties - The updatable properties of the CommunityTraining.
 type CommunityTrainingUpdateProperties struct {
-	// The identity configuration of the Community Training resource
+	// READ-ONLY; The identity configuration of the Community Training resource
 	IdentityConfiguration *IdentityConfigurationProperties
 }
 
 // IdentityConfigurationProperties - Details of the Community CommunityTraining Identity Configuration
 type IdentityConfigurationProperties struct {
-	// REQUIRED; The clientId of the application registered in the selected identity provider for the Community Training Resource
+	// READ-ONLY; The clientId of the application registered in the selected identity provider for the Community Training Resource
 	ClientID *string
 
-	// REQUIRED; The client secret of the application registered in the selected identity provider for the Community Training
+	// READ-ONLY; The client secret of the application registered in the selected identity provider for the Community Training
 	// Resource
 	ClientSecret *string
 
-	// REQUIRED; The domain name of the selected identity provider for the Community Training Resource
+	// READ-ONLY; The domain name of the selected identity provider for the Community Training Resource
 	DomainName *string
 
-	// REQUIRED; The identity type of the Community Training Resource
+	// READ-ONLY; The identity type of the Community Training Resource
 	IdentityType *string
 
-	// REQUIRED; The tenantId of the selected identity provider for the Community Training Resource
+	// READ-ONLY; The tenantId of the selected identity provider for the Community Training Resource
 	TenantID *string
 
-	// The name of the authentication policy registered in ADB2C for the Community Training Resource
+	// READ-ONLY; The name of the authentication policy registered in ADB2C for the Community Training Resource
 	B2CAuthenticationPolicy *string
 
-	// The name of the password reset policy registered in ADB2C for the Community Training Resource
+	// READ-ONLY; The name of the password reset policy registered in ADB2C for the Community Training Resource
 	B2CPasswordResetPolicy *string
 
-	// The custom login parameters for the Community Training Resource
+	// READ-ONLY; The custom login parameters for the Community Training Resource
 	CustomLoginParameters *string
 
-	// To indicate whether the Community Training Resource has Teams enabled
+	// READ-ONLY; To indicate whether the Community Training Resource has Teams enabled
 	TeamsEnabled *bool
 }
 
@@ -125,16 +125,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 

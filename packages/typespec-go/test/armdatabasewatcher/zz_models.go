@@ -32,10 +32,10 @@ type Datastore struct {
 
 // ErrorAdditionalInfo - The resource management error additional info.
 type ErrorAdditionalInfo struct {
-	// The additional info.
+	// READ-ONLY; The additional info.
 	Info *ErrorAdditionalInfoInfo
 
-	// The additional info type.
+	// READ-ONLY; The additional info type.
 	Type *string
 }
 
@@ -44,19 +44,19 @@ type ErrorAdditionalInfoInfo struct {
 
 // ErrorDetail - The error detail.
 type ErrorDetail struct {
-	// The error additional info.
+	// READ-ONLY; The error additional info.
 	AdditionalInfo []*ErrorAdditionalInfo
 
-	// The error code.
+	// READ-ONLY; The error code.
 	Code *string
 
-	// The error details.
+	// READ-ONLY; The error details.
 	Details []*ErrorDetail
 
-	// The error message.
+	// READ-ONLY; The error message.
 	Message *string
 
-	// The error target.
+	// READ-ONLY; The error target.
 	Target *string
 }
 
@@ -71,14 +71,15 @@ type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	PrincipalID *string
-
-	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	TenantID *string
-
 	// The identities assigned to this resource by the user.
 	UserAssignedIdentities map[string]*UserAssignedIdentity
+
+	// READ-ONLY; The service principal ID of the system assigned identity. This property will only be provided for a system assigned
+	// identity.
+	PrincipalID *string
+
+	// READ-ONLY; The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
@@ -89,16 +90,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
@@ -147,14 +148,14 @@ type SQLDbElasticPoolTargetProperties struct {
 	// Field has constant value "SqlEp", any specified value is ignored.
 	TargetType *string
 
-	// The provisioning state of the resource.
-	ProvisioningState *ResourceProvisioningState
-
 	// Set to true to monitor a high availability replica of specified target, if any.
 	ReadIntent *bool
 
 	// To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored.
 	TargetVault *VaultSecret
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ResourceProvisioningState
 }
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type SQLDbElasticPoolTargetProperties.
@@ -184,14 +185,14 @@ type SQLDbSingleDatabaseTargetProperties struct {
 	// Field has constant value "SqlDb", any specified value is ignored.
 	TargetType *string
 
-	// The provisioning state of the resource.
-	ProvisioningState *ResourceProvisioningState
-
 	// Set to true to monitor a high availability replica of specified target, if any.
 	ReadIntent *bool
 
 	// To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored.
 	TargetVault *VaultSecret
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ResourceProvisioningState
 }
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type SQLDbSingleDatabaseTargetProperties.
@@ -224,14 +225,14 @@ type SQLMiTargetProperties struct {
 	// The TCP port number to optionally use in the connection string when connecting to an Azure SQL Managed Instance target.
 	ConnectionTCPPort *int32
 
-	// The provisioning state of the resource.
-	ProvisioningState *ResourceProvisioningState
-
 	// Set to true to monitor a high availability replica of specified target, if any.
 	ReadIntent *bool
 
 	// To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored.
 	TargetVault *VaultSecret
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ResourceProvisioningState
 }
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type SQLMiTargetProperties.
@@ -264,14 +265,14 @@ type SQLVMTargetProperties struct {
 	// The TCP port number to optionally use in the connection string when connecting to an Azure SQL VM target.
 	ConnectionTCPPort *int32
 
-	// The provisioning state of the resource.
-	ProvisioningState *ResourceProvisioningState
-
 	// The SQL instance name to optionally use in the connection string when connecting to an Azure SQL VM target.
 	SQLNamedInstanceName *string
 
 	// To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored.
 	TargetVault *VaultSecret
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ResourceProvisioningState
 }
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type SQLVMTargetProperties.
@@ -291,17 +292,17 @@ type SharedPrivateLinkResource struct {
 	// The resource-specific properties for this resource.
 	Properties *SharedPrivateLinkResourceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The Shared Private Link resource name.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // SharedPrivateLinkResourceListResult - The response of a SharedPrivateLinkResource list operation.
@@ -327,10 +328,10 @@ type SharedPrivateLinkResourceProperties struct {
 	// The DNS zone to be included in the DNS name of the shared private link. Value is service-specific.
 	DNSZone *string
 
-	// The provisioning state of the resource.
+	// READ-ONLY; The provisioning state of the resource.
 	ProvisioningState *ResourceProvisioningState
 
-	// Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected.
+	// READ-ONLY; Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected.
 	Status *SharedPrivateLinkResourceStatus
 }
 
@@ -360,17 +361,17 @@ type Target struct {
 	// The resource-specific properties for this resource.
 	Properties TargetPropertiesClassification
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The target resource name.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // TargetListResult - The response of a Target list operation.
@@ -394,11 +395,11 @@ type TargetProperties struct {
 	// REQUIRED; Discriminator property for TargetProperties.
 	TargetType *string
 
-	// The provisioning state of the resource.
-	ProvisioningState *ResourceProvisioningState
-
 	// To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored.
 	TargetVault *VaultSecret
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ResourceProvisioningState
 }
 
 // GetTargetProperties implements the TargetPropertiesClassification interface for type TargetProperties.
@@ -406,10 +407,10 @@ func (t *TargetProperties) GetTargetProperties() *TargetProperties { return t }
 
 // UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The client ID of the assigned identity.
+	// READ-ONLY; The client ID of the assigned identity.
 	ClientID *string
 
-	// The principal ID of the assigned identity.
+	// READ-ONLY; The principal ID of the assigned identity.
 	PrincipalID *string
 }
 
@@ -427,14 +428,11 @@ type VaultSecret struct {
 
 // Watcher - The DatabaseWatcherProviderHub resource.
 type Watcher struct {
-	// REQUIRED; The geo-location where the resource lives
+	// READ-ONLY; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; The database watcher name.
 	Name *string
-
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
 
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
@@ -442,13 +440,16 @@ type Watcher struct {
 	// The resource-specific properties for this resource.
 	Properties *WatcherProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
 	// Resource tags.
 	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
 }
 
@@ -466,10 +467,10 @@ type WatcherProperties struct {
 	// The data store for collected monitoring data.
 	Datastore *Datastore
 
-	// The provisioning state of the resource watcher.
+	// READ-ONLY; The provisioning state of the resource watcher.
 	ProvisioningState *DatabaseWatcherProvisioningState
 
-	// The monitoring collection status of the watcher.
+	// READ-ONLY; The monitoring collection status of the watcher.
 	Status *WatcherStatus
 }
 
