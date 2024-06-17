@@ -15,9 +15,9 @@ type VisibilityModel struct {
 	// REQUIRED; Required int32, illustrating a query property.
 	QueryProp *int32
 
-	// REQUIRED; Required string, illustrating a readonly property.
-	ReadProp *string
-
 	// REQUIRED; Required int32[], illustrating a update property.
 	UpdateProp []*int32
+
+	// READ-ONLY; Required string, illustrating a readonly property.
+	ReadProp *string
 }

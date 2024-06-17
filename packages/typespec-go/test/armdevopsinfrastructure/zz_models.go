@@ -132,17 +132,17 @@ type ImageVersion struct {
 	// The resource-specific properties for this resource.
 	Properties *ImageVersionProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the image version.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // ImageVersionListResult - The response of a ImageVersion list operation.
@@ -165,14 +165,15 @@ type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	PrincipalID *string
-
-	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	TenantID *string
-
 	// The identities assigned to this resource by the user.
 	UserAssignedIdentities map[string]*UserAssignedIdentity
+
+	// READ-ONLY; The service principal ID of the system assigned identity. This property will only be provided for a system assigned
+	// identity.
+	PrincipalID *string
+
+	// READ-ONLY; The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string
 }
 
 // ManualResourcePredictionsProfile - Customer provides the stand-by agent scheme.
@@ -203,16 +204,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
@@ -274,14 +275,11 @@ type OsProfile struct {
 
 // Pool - Concrete tracked resource types can be created by aliasing this type using a specific property type.
 type Pool struct {
-	// REQUIRED; The geo-location where the resource lives
+	// READ-ONLY; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; Name of the pool. It needs to be globally unique.
 	Name *string
-
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
 
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
@@ -289,13 +287,16 @@ type Pool struct {
 	// The resource-specific properties for this resource.
 	Properties *PoolProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
 	// Resource tags.
 	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
 }
 
@@ -380,17 +381,17 @@ type Quota struct {
 	// The resource-specific properties for this resource.
 	Properties *QuotaProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the quota.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // QuotaListResult - The response of a Quota list operation.
@@ -431,17 +432,17 @@ type ResourceDetailsObject struct {
 	// The resource-specific properties for this resource.
 	Properties *ResourceDetailsObjectProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the resource.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // ResourceDetailsObjectListResult - The response of a ResourceDetailsObject list operation.
@@ -485,17 +486,17 @@ type ResourceSKU struct {
 	// The resource-specific properties for this resource.
 	Properties *ResourceSKUProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the SKU.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // ResourceSKUCapabilities - Describes The SKU capabilities object.
@@ -684,10 +685,10 @@ type SystemData struct {
 
 // UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The client ID of the assigned identity.
+	// READ-ONLY; The client ID of the assigned identity.
 	ClientID *string
 
-	// The principal ID of the assigned identity.
+	// READ-ONLY; The principal ID of the assigned identity.
 	PrincipalID *string
 }
 

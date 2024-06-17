@@ -11,17 +11,17 @@ type API struct {
 	// The resource-specific properties for this resource.
 	Properties *APIProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the API.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // APIDefinition - API definition entity.
@@ -29,25 +29,25 @@ type APIDefinition struct {
 	// The resource-specific properties for this resource.
 	Properties *APIDefinitionProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the API definition.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // APIDefinitionListResult - The response of a ApiDefinition list operation.
 type APIDefinitionListResult struct {
-	// REQUIRED; The ApiDefinition items on this page
+	// READ-ONLY; The ApiDefinition items on this page
 	Value []*APIDefinition
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -59,7 +59,7 @@ type APIDefinitionProperties struct {
 	// API definition description.
 	Description *string
 
-	// API specification details.
+	// READ-ONLY; API specification details.
 	Specification *APIDefinitionPropertiesSpecification
 }
 
@@ -78,10 +78,10 @@ type APIImportSuccess struct {
 
 // APIListResult - The response of a Api list operation.
 type APIListResult struct {
-	// REQUIRED; The Api items on this page
+	// READ-ONLY; The Api items on this page
 	Value []*API
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -108,14 +108,14 @@ type APIProperties struct {
 	// The license information for the API.
 	License *License
 
-	// Current lifecycle stage of the API.
-	LifecycleStage *LifecycleStage
-
 	// Short description of the API.
 	Summary *string
 
 	// Terms of service for the API.
 	TermsOfService *TermsOfService
+
+	// READ-ONLY; Current lifecycle stage of the API.
+	LifecycleStage *LifecycleStage
 }
 
 // APISpecExportResult - The API specification export result.
@@ -153,25 +153,25 @@ type APIVersion struct {
 	// The resource-specific properties for this resource.
 	Properties *APIVersionProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the API version.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // APIVersionListResult - The response of a ApiVersion list operation.
 type APIVersionListResult struct {
-	// REQUIRED; The ApiVersion items on this page
+	// READ-ONLY; The ApiVersion items on this page
 	Value []*APIVersion
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -205,25 +205,25 @@ type DeletedService struct {
 	// The resource-specific properties for this resource.
 	Properties *DeletedServiceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the deleted service.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // DeletedServiceListResult - The response of a DeletedService list operation.
 type DeletedServiceListResult struct {
-	// REQUIRED; The DeletedService items on this page
+	// READ-ONLY; The DeletedService items on this page
 	Value []*DeletedService
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -243,25 +243,25 @@ type Deployment struct {
 	// The resource-specific properties for this resource.
 	Properties *DeploymentProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the API deployment.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // DeploymentListResult - The response of a Deployment list operation.
 type DeploymentListResult struct {
-	// REQUIRED; The Deployment items on this page
+	// READ-ONLY; The Deployment items on this page
 	Value []*Deployment
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -300,25 +300,25 @@ type Environment struct {
 	// The resource-specific properties for this resource.
 	Properties *EnvironmentProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the environment.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // EnvironmentListResult - The response of a Environment list operation.
 type EnvironmentListResult struct {
-	// REQUIRED; The Environment items on this page
+	// READ-ONLY; The Environment items on this page
 	Value []*Environment
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -383,14 +383,15 @@ type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	PrincipalID *string
-
-	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	TenantID *string
-
 	// The identities assigned to this resource by the user.
 	UserAssignedIdentities map[string]*UserAssignedIdentity
+
+	// READ-ONLY; The service principal ID of the system assigned identity. This property will only be provided for a system assigned
+	// identity.
+	PrincipalID *string
+
+	// READ-ONLY; The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string
 }
 
 // MetadataAssignment - Assignment metadata
@@ -410,17 +411,17 @@ type MetadataSchema struct {
 	// The resource-specific properties for this resource.
 	Properties *MetadataSchemaProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the metadata schema.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // MetadataSchemaExportRequest - The metadata schema export request.
@@ -440,10 +441,10 @@ type MetadataSchemaExportResult struct {
 
 // MetadataSchemaListResult - The response of a MetadataSchema list operation.
 type MetadataSchemaListResult struct {
-	// REQUIRED; The MetadataSchema items on this page
+	// READ-ONLY; The MetadataSchema items on this page
 	Value []*MetadataSchema
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
@@ -473,16 +474,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
@@ -505,23 +506,20 @@ type OperationDisplay struct {
 // OperationListResult - A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to
 // get the next set of results.
 type OperationListResult struct {
-	// REQUIRED; The Operation items on this page
+	// READ-ONLY; The Operation items on this page
 	Value []*Operation
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
 // Service - The service entity.
 type Service struct {
-	// REQUIRED; The geo-location where the resource lives
+	// READ-ONLY; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; The name of Azure API Center service.
 	Name *string
-
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
 
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
@@ -529,32 +527,35 @@ type Service struct {
 	// The resource-specific properties for this resource.
 	Properties *ServiceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
 	// Resource tags.
 	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
 }
 
 // ServiceListResult - The response of a Service list operation.
 type ServiceListResult struct {
-	// REQUIRED; The Service items on this page
+	// READ-ONLY; The Service items on this page
 	Value []*Service
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 
 // ServiceProperties - The properties of the service.
 type ServiceProperties struct {
-	// Provisioning state of the service.
-	ProvisioningState *ProvisioningState
-
 	// Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored.
 	Restore *bool
+
+	// READ-ONLY; Provisioning state of the service.
+	ProvisioningState *ProvisioningState
 }
 
 // ServiceUpdate - The type used for update operations of the Service.
@@ -602,10 +603,10 @@ type TermsOfService struct {
 
 // UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The client ID of the assigned identity.
+	// READ-ONLY; The client ID of the assigned identity.
 	ClientID *string
 
-	// The principal ID of the assigned identity.
+	// READ-ONLY; The principal ID of the assigned identity.
 	PrincipalID *string
 }
 
@@ -614,25 +615,25 @@ type Workspace struct {
 	// The resource-specific properties for this resource.
 	Properties *WorkspaceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The name of the workspace.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // WorkspaceListResult - The response of a Workspace list operation.
 type WorkspaceListResult struct {
-	// REQUIRED; The Workspace items on this page
+	// READ-ONLY; The Workspace items on this page
 	Value []*Workspace
 
-	// The link to the next page of items
+	// READ-ONLY; The link to the next page of items
 	NextLink *string
 }
 

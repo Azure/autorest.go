@@ -8,19 +8,19 @@ import "time"
 
 // CheckQuotaAvailabilityResponse - Check quota availability response object.
 type CheckQuotaAvailabilityResponse struct {
-	// REQUIRED; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// REQUIRED; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
-	// The name of the resource.
-	Name *string
-
 	// Check quota availability response properties.
 	Properties *CheckQuotaAvailabilityResponseProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+
+	// READ-ONLY; The name of the resource.
+	Name *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
 	SystemData *SystemData
 }
 
@@ -56,47 +56,44 @@ type EncryptionPropertiesIdentity struct {
 
 // EndpointDependency - A domain name and connection details used to access a dependency.
 type EndpointDependency struct {
-	// REQUIRED; The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard.
+	// READ-ONLY; The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard.
 	DomainName *string
 
-	// Human-readable supplemental information about the dependency and when it is applicable.
+	// READ-ONLY; Human-readable supplemental information about the dependency and when it is applicable.
 	Description *string
 
-	// The list of connection details for this endpoint.
+	// READ-ONLY; The list of connection details for this endpoint.
 	EndpointDetails []*EndpointDetail
 }
 
 // EndpointDetail - Details about the connection between the Batch service and the endpoint.
 type EndpointDetail struct {
-	// The port an endpoint is connected to.
+	// READ-ONLY; The port an endpoint is connected to.
 	Port *int32
 }
 
 // LoadTestProperties - LoadTest resource properties.
 type LoadTestProperties struct {
-	// Resource data plane URI.
-	DataPlaneURI *string
-
 	// Description of the resource.
 	Description *string
 
 	// CMK Encryption property.
 	Encryption *EncryptionProperties
 
-	// Resource provisioning state.
+	// READ-ONLY; Resource data plane URI.
+	DataPlaneURI *string
+
+	// READ-ONLY; Resource provisioning state.
 	ProvisioningState *ResourceState
 }
 
 // LoadTestResource - LoadTest details.
 type LoadTestResource struct {
-	// REQUIRED; The geo-location where the resource lives
+	// READ-ONLY; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; Load Test name
 	Name *string
-
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
 
 	// The managed service identities assigned to this resource.
 	Identity *ManagedServiceIdentity
@@ -104,13 +101,16 @@ type LoadTestResource struct {
 	// The resource-specific properties for this resource.
 	Properties *LoadTestProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
 	// Resource tags.
 	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
 	Type *string
 }
 
@@ -147,14 +147,15 @@ type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
-	// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	PrincipalID *string
-
-	// The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
-	TenantID *string
-
 	// The identities assigned to this resource by the user.
 	UserAssignedIdentities map[string]*UserAssignedIdentity
+
+	// READ-ONLY; The service principal ID of the system assigned identity. This property will only be provided for a system assigned
+	// identity.
+	PrincipalID *string
+
+	// READ-ONLY; The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
@@ -165,16 +166,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
@@ -207,10 +208,10 @@ type OperationListResult struct {
 // OutboundEnvironmentEndpoint - A collection of related endpoints from the same service for which the Batch service requires
 // outbound access.
 type OutboundEnvironmentEndpoint struct {
-	// The type of service that Azure Load Testing connects to.
+	// READ-ONLY; The type of service that Azure Load Testing connects to.
 	Category *string
 
-	// The endpoints for this service to which the Batch service makes outbound calls.
+	// READ-ONLY; The endpoints for this service to which the Batch service makes outbound calls.
 	Endpoints []*EndpointDependency
 }
 
@@ -258,17 +259,17 @@ type QuotaResource struct {
 	// The resource-specific properties for this resource.
 	Properties *QuotaResourceProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; The quota name.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // QuotaResourceListResult - The response of a QuotaResource list operation.
@@ -285,11 +286,11 @@ type QuotaResourceProperties struct {
 	// Current quota limit of the quota bucket.
 	Limit *int32
 
-	// Resource provisioning state.
-	ProvisioningState *ResourceState
-
 	// Current quota usage of the quota bucket.
 	Usage *int32
+
+	// READ-ONLY; Resource provisioning state.
+	ProvisioningState *ResourceState
 }
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.
@@ -315,9 +316,9 @@ type SystemData struct {
 
 // UserAssignedIdentity - User assigned identity properties
 type UserAssignedIdentity struct {
-	// The client ID of the assigned identity.
+	// READ-ONLY; The client ID of the assigned identity.
 	ClientID *string
 
-	// The principal ID of the assigned identity.
+	// READ-ONLY; The principal ID of the assigned identity.
 	PrincipalID *string
 }

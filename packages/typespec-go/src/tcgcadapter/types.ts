@@ -7,6 +7,7 @@ import * as naming from '../../../naming.go/src/naming.js';
 import * as go from '../../../codemodel.go/src/index.js';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
+import * as http from '@typespec/http';
 import { values } from '@azure-tools/linq';
 import { uncapitalize } from '@azure-tools/codegen';
 
@@ -568,8 +569,18 @@ export class typeAdapter {
     // for multipart/form data containing models, the fields don't need to be pointer-to-type
     const fieldByValue = modelType.isFormDataType ? true : isTypePassedByValue(prop.type);
     let type = this.getPossibleType(prop.type, modelType.isFormDataType, true);
-    if (prop.kind === 'property' && prop.isMultipartFileInput) {
-      type = this.getMultipartContent(prop.type.kind === 'array');
+    if (prop.kind === 'property') {
+      if (prop.isMultipartFileInput) {
+        type = this.getMultipartContent(prop.type.kind === 'array');
+      }
+      if (prop.visibility) {
+        for (const vis of prop.visibility) {
+          if (vis === http.Visibility.Read) {
+            annotations.readOnly = true;
+            break;
+          }
+        }
+      }
     }
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
     field.description = prop.description;

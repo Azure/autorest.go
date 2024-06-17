@@ -8,26 +8,26 @@ import "time"
 
 // Account - Trusted signing account resource.
 type Account struct {
-	// REQUIRED; The geo-location where the resource lives
-	Location *string
-
 	// The resource-specific properties for this resource.
 	Properties *AccountProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
+	// Resource tags.
+	Tags map[string]*string
 
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
+	// READ-ONLY; The geo-location where the resource lives
+	Location *string
 
 	// READ-ONLY; Trusted Signing account name.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
 
-	// Resource tags.
-	Tags map[string]*string
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // AccountListResult - The response of a CodeSigningAccount list operation.
@@ -56,14 +56,14 @@ type AccountPatchProperties struct {
 
 // AccountProperties - Properties of the trusted signing account.
 type AccountProperties struct {
-	// The URI of the trusted signing account which is used during signing files.
-	AccountURI *string
-
-	// Status of the current operation on trusted signing account.
-	ProvisioningState *ProvisioningState
-
 	// SKU of the trusted signing account.
 	SKU *AccountSKU
+
+	// READ-ONLY; The URI of the trusted signing account which is used during signing files.
+	AccountURI *string
+
+	// READ-ONLY; Status of the current operation on trusted signing account.
+	ProvisioningState *ProvisioningState
 }
 
 // AccountSKU - SKU of the trusted signing account.
@@ -101,17 +101,17 @@ type CertificateProfile struct {
 	// The resource-specific properties for this resource.
 	Properties *CertificateProfileProperties
 
-	// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
-
 	// READ-ONLY; Certificate profile name.
 	Name *string
 
-	// Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
 }
 
 // CertificateProfileListResult - The response of a CertificateProfile list operation.
@@ -127,21 +127,6 @@ type CertificateProfileListResult struct {
 type CertificateProfileProperties struct {
 	// REQUIRED; Profile type of the certificate.
 	ProfileType *ProfileType
-
-	// List of renewed certificates.
-	Certificates []*Certificate
-
-	// Used as L in the certificate subject name.
-	City *string
-
-	// Used as CN in the certificate subject name.
-	CommonName *string
-
-	// Used as C in the certificate subject name.
-	Country *string
-
-	// Enhanced key usage of the certificate.
-	EnhancedKeyUsage *string
 
 	// Identity validation id used for the certificate subject name.
 	IdentityValidationID *string
@@ -161,25 +146,40 @@ type CertificateProfileProperties struct {
 	// Whether to include STREET in the certificate subject name.
 	IncludeStreetAddress *bool
 
-	// Used as O in the certificate subject name.
+	// READ-ONLY; List of renewed certificates.
+	Certificates []*Certificate
+
+	// READ-ONLY; Used as L in the certificate subject name.
+	City *string
+
+	// READ-ONLY; Used as CN in the certificate subject name.
+	CommonName *string
+
+	// READ-ONLY; Used as C in the certificate subject name.
+	Country *string
+
+	// READ-ONLY; Enhanced key usage of the certificate.
+	EnhancedKeyUsage *string
+
+	// READ-ONLY; Used as O in the certificate subject name.
 	Organization *string
 
-	// Used as OU in the private trust certificate subject name.
+	// READ-ONLY; Used as OU in the private trust certificate subject name.
 	OrganizationUnit *string
 
-	// Used as PC in the certificate subject name.
+	// READ-ONLY; Used as PC in the certificate subject name.
 	PostalCode *string
 
-	// Status of the current operation on certificate profile.
+	// READ-ONLY; Status of the current operation on certificate profile.
 	ProvisioningState *ProvisioningState
 
-	// Used as S in the certificate subject name.
+	// READ-ONLY; Used as S in the certificate subject name.
 	State *string
 
-	// Status of the certificate profile.
+	// READ-ONLY; Status of the certificate profile.
 	Status *CertificateProfileStatus
 
-	// Used as STREET in the certificate subject name.
+	// READ-ONLY; Used as STREET in the certificate subject name.
 	StreetAddress *string
 }
 
@@ -191,14 +191,14 @@ type CheckNameAvailability struct {
 
 // CheckNameAvailabilityResult - The CheckNameAvailability operation response.
 type CheckNameAvailabilityResult struct {
-	// An error message explaining the Reason value in more detail.
+	// READ-ONLY; An error message explaining the Reason value in more detail.
 	Message *string
 
-	// A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false,
-	// the name has already been taken or is invalid and cannot be used.
+	// READ-ONLY; A boolean value that indicates whether the name is available for you to use. If true, the name is available.
+	// If false, the name has already been taken or is invalid and cannot be used.
 	NameAvailable *bool
 
-	// The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable
+	// READ-ONLY; The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable
 	// is false.
 	Reason *NameUnavailabilityReason
 }
@@ -211,16 +211,16 @@ type Operation struct {
 	// Localized display information for this particular operation.
 	Display *OperationDisplay
 
-	// Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane
-	// operations.
+	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
+	// Resource Manager/control-plane operations.
 	IsDataAction *bool
 
-	// The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
+	// READ-ONLY; The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write",
 	// "Microsoft.Compute/virtualMachines/capture/action"
 	Name *string
 
-	// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is
-	// "user,system"
+	// READ-ONLY; The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+	// value is "user,system"
 	Origin *Origin
 }
 
