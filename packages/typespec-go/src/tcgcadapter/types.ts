@@ -566,9 +566,14 @@ export class typeAdapter {
       throw new Error(`unexpected kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`);
     }
     const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
-    // for multipart/form data containing models, the fields don't need to be pointer-to-type
-    const fieldByValue = modelType.isFormDataType ? true : isTypePassedByValue(prop.type);
-    let type = this.getPossibleType(prop.type, modelType.isFormDataType, true);
+    // for multipart/form data containing models, default to fields not being pointer-to-type as we
+    // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
+    const isMultipartFormData = (modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
+    let fieldByValue = isMultipartFormData ? true : isTypePassedByValue(prop.type);
+    if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
+      fieldByValue = false;
+    }
+    let type = this.getPossibleType(prop.type, isMultipartFormData, true);
     if (prop.kind === 'property') {
       if (prop.isMultipartFileInput) {
         type = this.getMultipartContent(prop.type.kind === 'array');

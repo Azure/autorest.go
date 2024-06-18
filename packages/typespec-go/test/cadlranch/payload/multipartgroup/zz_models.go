@@ -55,7 +55,7 @@ type JSONPartRequest struct {
 type MultiBinaryPartsRequest struct {
 	// REQUIRED
 	ProfileImage streaming.MultipartContent
-	Picture      streaming.MultipartContent
+	Picture      *streaming.MultipartContent
 }
 
 type MultiPartRequest struct {
