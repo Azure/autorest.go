@@ -275,7 +275,7 @@ type OsProfile struct {
 
 // Pool - Concrete tracked resource types can be created by aliasing this type using a specific property type.
 type Pool struct {
-	// READ-ONLY; The geo-location where the resource lives
+	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; Name of the pool. It needs to be globally unique.

@@ -8,14 +8,14 @@ import "time"
 
 // Account - Trusted signing account resource.
 type Account struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
 	// The resource-specific properties for this resource.
 	Properties *AccountProperties
 
 	// Resource tags.
 	Tags map[string]*string
-
-	// READ-ONLY; The geo-location where the resource lives
-	Location *string
 
 	// READ-ONLY; Trusted Signing account name.
 	Name *string

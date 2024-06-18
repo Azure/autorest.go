@@ -8,6 +8,9 @@ import "time"
 
 // CommunityTraining - A CommunityProviderHub resource
 type CommunityTraining struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
 	// The resource-specific properties for this resource.
 	Properties *CommunityTrainingProperties
 
@@ -16,9 +19,6 @@ type CommunityTraining struct {
 
 	// Resource tags.
 	Tags map[string]*string
-
-	// READ-ONLY; The geo-location where the resource lives
-	Location *string
 
 	// READ-ONLY; The name of the Community Training Resource
 	Name *string
@@ -44,25 +44,25 @@ type CommunityTrainingListResult struct {
 
 // CommunityTrainingProperties - Details of the Community CommunityTraining.
 type CommunityTrainingProperties struct {
-	// READ-ONLY; To indicate whether the Community Training instance has Disaster Recovery enabled
+	// REQUIRED; To indicate whether the Community Training instance has Disaster Recovery enabled
 	DisasterRecoveryEnabled *bool
 
-	// READ-ONLY; The identity configuration of the Community Training resource
+	// REQUIRED; The identity configuration of the Community Training resource
 	IdentityConfiguration *IdentityConfigurationProperties
 
-	// READ-ONLY; The email address of the portal admin
+	// REQUIRED; The email address of the portal admin
 	PortalAdminEmailAddress *string
 
-	// READ-ONLY; The portal name (website name) of the Community Training instance
+	// REQUIRED; The portal name (website name) of the Community Training instance
 	PortalName *string
 
-	// READ-ONLY; The email address of the portal owner. Will be used as the primary contact
+	// REQUIRED; The email address of the portal owner. Will be used as the primary contact
 	PortalOwnerEmailAddress *string
 
-	// READ-ONLY; The organization name of the portal owner
+	// REQUIRED; The organization name of the portal owner
 	PortalOwnerOrganizationName *string
 
-	// READ-ONLY; To indicate whether the Community Training instance has Zone Redundancy enabled
+	// REQUIRED; To indicate whether the Community Training instance has Zone Redundancy enabled
 	ZoneRedundancyEnabled *bool
 
 	// READ-ONLY; The status of the last operation.
@@ -82,38 +82,38 @@ type CommunityTrainingUpdate struct {
 
 // CommunityTrainingUpdateProperties - The updatable properties of the CommunityTraining.
 type CommunityTrainingUpdateProperties struct {
-	// READ-ONLY; The identity configuration of the Community Training resource
+	// The identity configuration of the Community Training resource
 	IdentityConfiguration *IdentityConfigurationProperties
 }
 
 // IdentityConfigurationProperties - Details of the Community CommunityTraining Identity Configuration
 type IdentityConfigurationProperties struct {
-	// READ-ONLY; The clientId of the application registered in the selected identity provider for the Community Training Resource
+	// REQUIRED; The clientId of the application registered in the selected identity provider for the Community Training Resource
 	ClientID *string
 
-	// READ-ONLY; The client secret of the application registered in the selected identity provider for the Community Training
+	// REQUIRED; The client secret of the application registered in the selected identity provider for the Community Training
 	// Resource
 	ClientSecret *string
 
-	// READ-ONLY; The domain name of the selected identity provider for the Community Training Resource
+	// REQUIRED; The domain name of the selected identity provider for the Community Training Resource
 	DomainName *string
 
-	// READ-ONLY; The identity type of the Community Training Resource
+	// REQUIRED; The identity type of the Community Training Resource
 	IdentityType *string
 
-	// READ-ONLY; The tenantId of the selected identity provider for the Community Training Resource
+	// REQUIRED; The tenantId of the selected identity provider for the Community Training Resource
 	TenantID *string
 
-	// READ-ONLY; The name of the authentication policy registered in ADB2C for the Community Training Resource
+	// The name of the authentication policy registered in ADB2C for the Community Training Resource
 	B2CAuthenticationPolicy *string
 
-	// READ-ONLY; The name of the password reset policy registered in ADB2C for the Community Training Resource
+	// The name of the password reset policy registered in ADB2C for the Community Training Resource
 	B2CPasswordResetPolicy *string
 
-	// READ-ONLY; The custom login parameters for the Community Training Resource
+	// The custom login parameters for the Community Training Resource
 	CustomLoginParameters *string
 
-	// READ-ONLY; To indicate whether the Community Training Resource has Teams enabled
+	// To indicate whether the Community Training Resource has Teams enabled
 	TeamsEnabled *bool
 }
 

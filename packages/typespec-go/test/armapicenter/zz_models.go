@@ -515,7 +515,7 @@ type OperationListResult struct {
 
 // Service - The service entity.
 type Service struct {
-	// READ-ONLY; The geo-location where the resource lives
+	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; The name of Azure API Center service.

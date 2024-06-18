@@ -565,7 +565,7 @@ export class typeAdapter {
     if (prop.kind !== 'path' && prop.kind !== 'property') {
       throw new Error(`unexpected kind ${prop.kind} for property ${prop.name} in model ${modelType.name}`);
     }
-    const annotations = new go.ModelFieldAnnotations(prop.optional == false, false, false, false);
+    const annotations = new go.ModelFieldAnnotations(prop.optional === false, false, false, false);
     // for multipart/form data containing models, default to fields not being pointer-to-type as we
     // don't have to deal with JSON patch shenanigans. only the optional fields will be pointer-to-type.
     const isMultipartFormData = (modelType.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData;
@@ -579,11 +579,11 @@ export class typeAdapter {
         type = this.getMultipartContent(prop.type.kind === 'array');
       }
       if (prop.visibility) {
-        for (const vis of prop.visibility) {
-          if (vis === http.Visibility.Read) {
-            annotations.readOnly = true;
-            break;
-          }
+        // the field is read-only IFF the only visibility attribute present is Read.
+        // a field can have Read & Create set which means it's required on input and
+        // returned on output.
+        if (prop.visibility.length === 1 && prop.visibility[0] === http.Visibility.Read) {
+          annotations.readOnly = true;
         }
       }
     }

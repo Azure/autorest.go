@@ -9,14 +9,14 @@ import "time"
 // AzureLargeInstance - Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 // properties)
 type AzureLargeInstance struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
 	// The resource-specific properties for this resource.
 	Properties *Properties
 
 	// Resource tags.
 	Tags map[string]*string
-
-	// READ-ONLY; The geo-location where the resource lives
-	Location *string
 
 	// READ-ONLY; Name of the AzureLargeInstance.
 	Name *string
@@ -34,14 +34,14 @@ type AzureLargeInstance struct {
 // AzureLargeStorageInstance info on Azure (ARM properties and
 // AzureLargeStorageInstance properties)
 type AzureLargeStorageInstance struct {
+	// REQUIRED; The geo-location where the resource lives
+	Location *string
+
 	// The resource-specific properties for this resource.
 	Properties *AzureLargeStorageInstanceProperties
 
 	// Resource tags.
 	Tags map[string]*string
-
-	// READ-ONLY; The geo-location where the resource lives
-	Location *string
 
 	// READ-ONLY; Name of the AzureLargeStorageInstance.
 	Name *string
