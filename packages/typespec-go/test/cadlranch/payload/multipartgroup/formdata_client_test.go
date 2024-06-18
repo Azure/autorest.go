@@ -6,6 +6,7 @@ package multipartgroup_test
 import (
 	"bytes"
 	"context"
+	"io"
 	"multipartgroup"
 	"os"
 	"testing"
@@ -162,14 +163,24 @@ func TestFormDataClient_MultiBinaryParts(t *testing.T) {
 	jpgFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer jpgFile.Close()
-	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
-	require.NoError(t, err)
-	defer pngFile.Close()
+
 	resp, err := client.NewMultiPartFormDataClient().MultiBinaryParts(context.Background(), multipartgroup.MultiBinaryPartsRequest{
 		ProfileImage: streaming.MultipartContent{
 			Body: jpgFile,
 		},
-		Picture: streaming.MultipartContent{
+	}, nil)
+	require.NoError(t, err)
+	require.Zero(t, resp)
+
+	jpgFile.Seek(0, io.SeekStart)
+	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
+	require.NoError(t, err)
+	defer pngFile.Close()
+	resp, err = client.NewMultiPartFormDataClient().MultiBinaryParts(context.Background(), multipartgroup.MultiBinaryPartsRequest{
+		ProfileImage: streaming.MultipartContent{
+			Body: jpgFile,
+		},
+		Picture: &streaming.MultipartContent{
 			Body: pngFile,
 		},
 	}, nil)

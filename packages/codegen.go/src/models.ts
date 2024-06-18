@@ -75,6 +75,8 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
     }
   }
   if (needsJSONPopulate) {
+    serdeImports.add('reflect');
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeTextBody += 'func populate(m map[string]any, k string, v any) {\n';
     serdeTextBody += '\tif v == nil {\n';
     serdeTextBody += '\t\treturn\n';
@@ -86,6 +88,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateAny) {
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeTextBody += 'func populateAny(m map[string]any, k string, v any) {\n';
     serdeTextBody += '\tif v == nil {\n';
     serdeTextBody += '\t\treturn\n';
@@ -97,6 +100,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
     serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateByteArray) {
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     serdeTextBody += 'func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {\n';
     serdeTextBody += '\tif azcore.IsNullValue(b) {\n';
@@ -214,13 +218,6 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       generateJSONMarshaller(model, modelDef, serdeImports);
       generateJSONUnmarshaller(model, modelDef, serdeImports, codeModel.options);
     }
-    if (modelDef.SerDe.needsJSONPopulate) {
-      serdeImports.add('reflect');
-      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    }
-    if (modelDef.SerDe.needsJSONPopulateAny || modelDef.SerDe.needsJSONPopulateByteArray) {
-      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-    }
     modelDefs.push(modelDef);
   }
   return modelDefs;
@@ -272,11 +269,20 @@ function generateToMultipartForm(modelDef: ModelDef) {
   method += '\tobjectMap := make(map[string]any)\n';
   for (const field of modelDef.Fields) {
     const fieldType = recursiveUnwrapMapSlice(field.type);
-    if (go.isModelType(fieldType) && !fieldType.annotations.multipartFormData) {
-      method += `\tif err := populateMultipartJSON(objectMap, "${field.serializedName}", ${receiver}.${field.name}); err != nil {\n\t\treturn nil, err\n\t}\n`;
-    } else {
-      method += `\tobjectMap["${field.serializedName}"] = ${receiver}.${field.name}\n`;
+    let setField: string;
+    let star = '';
+    if (!field.byValue) {
+      star = '*';
     }
+    if (go.isModelType(fieldType) && !fieldType.annotations.multipartFormData) {
+      setField = `\tif err := populateMultipartJSON(objectMap, "${field.serializedName}", ${star}${receiver}.${field.name}); err != nil {\n\t\treturn nil, err\n\t}\n`;
+    } else {
+      setField = `\tobjectMap["${field.serializedName}"] = ${star}${receiver}.${field.name}\n`;
+    }
+    if (!field.byValue) {
+      setField = `\tif ${receiver}.${field.name} != nil {\n\t\t${setField}\t}\n`;
+    }
+    method += setField;
   }
   method += '\treturn objectMap, nil\n}\n\n';
   modelDef.SerDe.methods.push({ name: 'toMultipartFormData', desc: `toMultipartFormData converts ${modelDef.Name} to multipart/form data.`, text: method });

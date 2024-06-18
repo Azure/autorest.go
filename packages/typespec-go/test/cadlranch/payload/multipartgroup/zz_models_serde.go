@@ -84,7 +84,9 @@ func (j JSONPartRequest) toMultipartFormData() (map[string]any, error) {
 // toMultipartFormData converts MultiBinaryPartsRequest to multipart/form data.
 func (m MultiBinaryPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	objectMap["picture"] = m.Picture
+	if m.Picture != nil {
+		objectMap["picture"] = *m.Picture
+	}
 	objectMap["profileImage"] = m.ProfileImage
 	return objectMap, nil
 }
