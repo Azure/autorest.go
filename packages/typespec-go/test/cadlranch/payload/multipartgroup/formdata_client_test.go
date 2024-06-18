@@ -172,7 +172,8 @@ func TestFormDataClient_MultiBinaryParts(t *testing.T) {
 	require.NoError(t, err)
 	require.Zero(t, resp)
 
-	jpgFile.Seek(0, io.SeekStart)
+	_, err = jpgFile.Seek(0, io.SeekStart)
+	require.NoError(t, err)
 	pngFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.png", os.O_RDONLY, 0)
 	require.NoError(t, err)
 	defer pngFile.Close()
