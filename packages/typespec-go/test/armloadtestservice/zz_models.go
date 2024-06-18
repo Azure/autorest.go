@@ -89,7 +89,7 @@ type LoadTestProperties struct {
 
 // LoadTestResource - LoadTest details.
 type LoadTestResource struct {
-	// READ-ONLY; The geo-location where the resource lives
+	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; Load Test name

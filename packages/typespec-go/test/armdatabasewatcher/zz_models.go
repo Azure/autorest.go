@@ -428,7 +428,7 @@ type VaultSecret struct {
 
 // Watcher - The DatabaseWatcherProviderHub resource.
 type Watcher struct {
-	// READ-ONLY; The geo-location where the resource lives
+	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
 	// READ-ONLY; The database watcher name.
