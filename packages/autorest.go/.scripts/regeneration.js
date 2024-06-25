@@ -137,6 +137,8 @@ generateFromReadme("armmachinelearning", machineLearning, 'package-2022-02-01-pr
 
 generate("azalias", 'packages/autorest.go/test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --module-version=0.1.0 --openapi-type="data-plane" --generate-fakes --inject-spans --slice-elements-byval --disallow-unknown-fields --single-client');
 
+generate("azarrayofrawjson", 'packages/autorest.go/test/swagger/arrayOfRawJSON.json', 'test/misc/azarrayofrawjson', '--security=AzureKey --module="azarrayofrawjson" --module-version=0.1.0 --openapi-type="data-plane" --rawjson-as-bytes=true');
+
 function should_generate(name) {
   if (filter !== undefined) {
     let re = new RegExp(filter);

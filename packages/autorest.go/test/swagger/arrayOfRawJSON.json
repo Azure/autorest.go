@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Array of raw JSON",
+    "version": "2.0",
+    "description": "Test for array of any as raw JSON"
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "contoso.com",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "Example": {
+      "type": "object",
+      "properties": {
+        "rawslice": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

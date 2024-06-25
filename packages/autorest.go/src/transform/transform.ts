@@ -265,7 +265,9 @@ function schemaTypeToGoType(codeModel: m4.CodeModel, schema: m4.Schema, type: 'P
       const arrayElem = <m4.Schema>arraySchema.elementType;
       if (rawJSONAsBytes && (arrayElem.type === m4.SchemaType.Any || arrayElem.type === m4.SchemaType.AnyObject)) {
         schema.language.go!.rawJSONAsBytes = rawJSONAsBytes;
-        return '[]byte';
+        // propagate the setting to the element type
+        arrayElem.language.go!.rawJSONAsBytes = rawJSONAsBytes;
+        return '[][]byte';
       }
       arraySchema.language.go!.elementIsPtr = !helpers.isTypePassedByValue(arrayElem) && !<boolean>codeModel.language.go!.sliceElementsByValue;
       // passing nil for array elements in headers, paths, and query params
