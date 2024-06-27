@@ -201,6 +201,10 @@ export class clientAdapter {
       }
     } else if (sdkMethod.kind === 'lro') {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
+      const lroOptions = this.hasDecorator('x-ms-long-running-operation-options', sdkMethod.decorators);
+      if (lroOptions) {
+        (<go.LROMethod>method).finalStateVia = lroOptions['final-state-via'];
+      }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }
@@ -208,6 +212,15 @@ export class clientAdapter {
     method.description = sdkMethod.description;
     goClient.methods.push(method);
     this.populateMethod(sdkMethod, method);
+  }
+
+  private hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
+    for (const decorator of decorators) {
+      if (decorator.name === name) {
+        return decorator;
+      }
+    }
+    return undefined;
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
