@@ -69,12 +69,15 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
 
   // ensure that enum, client, and struct type names don't stutter
 
-  for (const sdkClient of sdkPackage.clients) {
-    sdkClient.name = trimPackagePrefix(stutteringPrefix, sdkClient.name);
+  const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+    client.name = trimPackagePrefix(stutteringPrefix, client.name);
 
     // fix up the synthesized type names for page responses
-    for (const sdkMethod of sdkClient.methods) {
-      if (sdkMethod.kind !== 'paging') {
+    for (const sdkMethod of client.methods) {
+      if (sdkMethod.kind === 'clientaccessor') {
+        recursiveWalkClients(sdkMethod.response);
+        continue;
+      } else if (sdkMethod.kind !== 'paging') {
         continue;
       }
 
@@ -86,6 +89,10 @@ function fixStutteringTypeNames(sdkPackage: tcgc.SdkPackage<tcgc.SdkHttpOperatio
         httpResp.type.name = trimPackagePrefix(stutteringPrefix, httpResp.type.name);
       }
     }
+  };
+
+  for (const sdkClient of sdkPackage.clients) {
+    recursiveWalkClients(sdkClient);
   }
 
   // check if the name collides with an existing name. we only do
