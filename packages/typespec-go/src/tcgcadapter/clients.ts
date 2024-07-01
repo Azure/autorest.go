@@ -201,9 +201,9 @@ export class clientAdapter {
       }
     } else if (sdkMethod.kind === 'lro') {
       method = new go.LROMethod(methodName, goClient, sdkMethod.operation.path, sdkMethod.operation.verb, statusCodes, naming);
-      const lroOptions = this.hasDecorator('x-ms-long-running-operation-options', sdkMethod.decorators);
+      const lroOptions = this.hasDecorator('Azure.Core.@useFinalStateVia', sdkMethod.decorators);
       if (lroOptions) {
-        (<go.LROMethod>method).finalStateVia = lroOptions['final-state-via'];
+        (<go.LROMethod>method).finalStateVia = lroOptions['finalState'];
       }
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
@@ -217,7 +217,7 @@ export class clientAdapter {
   private hasDecorator(name: string, decorators: Array<tcgc.DecoratorInfo>): Record<string, any> | undefined {
     for (const decorator of decorators) {
       if (decorator.name === name) {
-        return decorator;
+        return decorator.arguments;
       }
     }
     return undefined;

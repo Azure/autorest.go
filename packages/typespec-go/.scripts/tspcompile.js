@@ -141,6 +141,9 @@ generate('armrandom', armrandom, 'test/armrandom');
 const armcommunitymanagement = pkgRoot + 'test/tsp/Community.Management';
 generate('armcommunitymanagement', armcommunitymanagement, 'test/armcommunitymanagement');
 
+const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
+generate('armmongocluster', armmongocluster, 'test/armmongocluster');
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let perTestOptions;
