@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// LoadTestsClient contains the methods for the Microsoft.LoadTestService namespace.
+// LoadTestsClient contains the methods for the LoadTests group.
 // Don't use this type directly, use NewLoadTestsClient() instead.
 type LoadTestsClient struct {
 	internal       *arm.Client

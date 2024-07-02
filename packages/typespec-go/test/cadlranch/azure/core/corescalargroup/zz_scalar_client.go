@@ -6,7 +6,7 @@ package corescalargroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// ScalarClient contains the methods for the _Specs_.Azure.Core.Scalar namespace.
+// ScalarClient contains the methods for the Scalar group.
 // Don't use this type directly, use a constructor function instead.
 type ScalarClient struct {
 	internal *azcore.Client

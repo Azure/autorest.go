@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesUnionStringLiteralClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesUnionStringLiteralClient contains the methods for the ValueTypesUnionStringLiteral group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionStringLiteralClient] instead.
 type ValueTypesUnionStringLiteralClient struct {
 	internal *azcore.Client

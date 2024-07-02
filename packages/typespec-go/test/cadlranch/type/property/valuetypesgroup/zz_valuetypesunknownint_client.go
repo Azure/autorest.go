@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesUnknownIntClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesUnknownIntClient contains the methods for the ValueTypesUnknownInt group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownIntClient] instead.
 type ValueTypesUnknownIntClient struct {
 	internal *azcore.Client

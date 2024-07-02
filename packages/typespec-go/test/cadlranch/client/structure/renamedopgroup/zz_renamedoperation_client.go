@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// RenamedOperationClient contains the methods for the Client.Structure.Service namespace.
+// RenamedOperationClient contains the methods for the RenamedOperation group.
 // Don't use this type directly, use a constructor function instead.
 type RenamedOperationClient struct {
 	internal *azcore.Client

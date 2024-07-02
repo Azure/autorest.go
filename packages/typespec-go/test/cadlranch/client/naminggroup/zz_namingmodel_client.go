@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// NamingModelClient contains the methods for the Client.Naming namespace.
+// NamingModelClient contains the methods for the NamingModel group.
 // Don't use this type directly, use [NamingClient.NewNamingModelClient] instead.
 type NamingModelClient struct {
 	internal *azcore.Client

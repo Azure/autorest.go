@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// TargetsClient contains the methods for the Microsoft.DatabaseWatcher namespace.
+// TargetsClient contains the methods for the Targets group.
 // Don't use this type directly, use NewTargetsClient() instead.
 type TargetsClient struct {
 	internal       *arm.Client

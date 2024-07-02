@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// BasicExplicitBodyClient contains the methods for the Parameters.Basic namespace.
+// BasicExplicitBodyClient contains the methods for the BasicExplicitBody group.
 // Don't use this type directly, use [BasicClient.NewBasicExplicitBodyClient] instead.
 type BasicExplicitBodyClient struct {
 	internal *azcore.Client

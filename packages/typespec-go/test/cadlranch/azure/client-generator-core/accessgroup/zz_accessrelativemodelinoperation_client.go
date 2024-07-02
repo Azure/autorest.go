@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// AccessRelativeModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access namespace.
+// AccessRelativeModelInOperationClient contains the methods for the AccessRelativeModelInOperation group.
 // Don't use this type directly, use [AccessClient.NewAccessRelativeModelInOperationClient] instead.
 type AccessRelativeModelInOperationClient struct {
 	internal *azcore.Client

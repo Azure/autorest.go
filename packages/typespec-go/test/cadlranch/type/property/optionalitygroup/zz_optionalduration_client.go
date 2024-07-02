@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalDurationClient contains the methods for the Type.Property.Optional namespace.
+// OptionalDurationClient contains the methods for the OptionalDuration group.
 // Don't use this type directly, use [OptionalClient.NewOptionalDurationClient] instead.
 type OptionalDurationClient struct {
 	internal *azcore.Client

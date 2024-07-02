@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesDatetimeClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesDatetimeClient contains the methods for the ValueTypesDatetime group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesDatetimeClient] instead.
 type ValueTypesDatetimeClient struct {
 	internal *azcore.Client

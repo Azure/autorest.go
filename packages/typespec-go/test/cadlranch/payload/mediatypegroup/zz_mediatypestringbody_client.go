@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-// MediaTypeStringBodyClient contains the methods for the Payload.MediaType namespace.
+// MediaTypeStringBodyClient contains the methods for the MediaTypeStringBody group.
 // Don't use this type directly, use [MediaTypeClient.NewMediaTypeStringBodyClient] instead.
 type MediaTypeStringBodyClient struct {
 	internal *azcore.Client

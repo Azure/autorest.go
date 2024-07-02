@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesDecimalClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesDecimalClient contains the methods for the ValueTypesDecimal group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesDecimalClient] instead.
 type ValueTypesDecimalClient struct {
 	internal *azcore.Client

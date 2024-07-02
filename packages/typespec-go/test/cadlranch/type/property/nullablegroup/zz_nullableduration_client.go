@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// NullableDurationClient contains the methods for the Type.Property.Nullable namespace.
+// NullableDurationClient contains the methods for the NullableDuration group.
 // Don't use this type directly, use [NullableClient.NewNullableDurationClient] instead.
 type NullableDurationClient struct {
 	internal *azcore.Client

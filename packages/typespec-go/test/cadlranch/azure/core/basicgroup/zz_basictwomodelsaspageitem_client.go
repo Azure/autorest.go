@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// BasicTwoModelsAsPageItemClient contains the methods for the _Specs_.Azure.Core.Basic namespace.
+// BasicTwoModelsAsPageItemClient contains the methods for the BasicTwoModelsAsPageItem group.
 // Don't use this type directly, use [BasicClient.NewBasicTwoModelsAsPageItemClient] instead.
 type BasicTwoModelsAsPageItemClient struct {
 	internal *azcore.Client

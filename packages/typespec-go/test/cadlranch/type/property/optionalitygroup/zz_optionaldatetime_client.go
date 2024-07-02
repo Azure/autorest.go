@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalDatetimeClient contains the methods for the Type.Property.Optional namespace.
+// OptionalDatetimeClient contains the methods for the OptionalDatetime group.
 // Don't use this type directly, use [OptionalClient.NewOptionalDatetimeClient] instead.
 type OptionalDatetimeClient struct {
 	internal *azcore.Client

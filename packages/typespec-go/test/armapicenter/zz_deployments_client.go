@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// DeploymentsClient contains the methods for the Microsoft.ApiCenter namespace.
+// DeploymentsClient contains the methods for the Deployments group.
 // Don't use this type directly, use NewDeploymentsClient() instead.
 type DeploymentsClient struct {
 	internal       *arm.Client

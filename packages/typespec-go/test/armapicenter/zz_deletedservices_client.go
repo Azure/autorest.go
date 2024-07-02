@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// DeletedServicesClient contains the methods for the Microsoft.ApiCenter namespace.
+// DeletedServicesClient contains the methods for the DeletedServices group.
 // Don't use this type directly, use NewDeletedServicesClient() instead.
 type DeletedServicesClient struct {
 	internal       *arm.Client

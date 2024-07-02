@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// BytesPropertyClient contains the methods for the Encode.Bytes namespace.
+// BytesPropertyClient contains the methods for the BytesProperty group.
 // Don't use this type directly, use [BytesClient.NewBytesPropertyClient] instead.
 type BytesPropertyClient struct {
 	internal *azcore.Client

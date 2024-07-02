@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ScalarAzureLocationScalarClient contains the methods for the _Specs_.Azure.Core.Scalar namespace.
+// ScalarAzureLocationScalarClient contains the methods for the ScalarAzureLocationScalar group.
 // Don't use this type directly, use [ScalarClient.NewScalarAzureLocationScalarClient] instead.
 type ScalarAzureLocationScalarClient struct {
 	internal *azcore.Client

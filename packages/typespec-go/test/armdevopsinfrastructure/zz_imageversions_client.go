@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// ImageVersionsClient contains the methods for the Microsoft.DevOpsInfrastructure namespace.
+// ImageVersionsClient contains the methods for the ImageVersions group.
 // Don't use this type directly, use NewImageVersionsClient() instead.
 type ImageVersionsClient struct {
 	internal       *arm.Client

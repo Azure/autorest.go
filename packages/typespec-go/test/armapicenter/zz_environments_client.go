@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// EnvironmentsClient contains the methods for the Microsoft.ApiCenter namespace.
+// EnvironmentsClient contains the methods for the Environments group.
 // Don't use this type directly, use NewEnvironmentsClient() instead.
 type EnvironmentsClient struct {
 	internal       *arm.Client

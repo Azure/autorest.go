@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// AccountsClient contains the methods for the Microsoft.CodeSigning namespace.
+// AccountsClient contains the methods for the Accounts group.
 // Don't use this type directly, use NewAccountsClient() instead.
 type AccountsClient struct {
 	internal       *arm.Client

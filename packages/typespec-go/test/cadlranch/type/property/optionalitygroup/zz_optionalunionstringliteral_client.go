@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalUnionStringLiteralClient contains the methods for the Type.Property.Optional namespace.
+// OptionalUnionStringLiteralClient contains the methods for the OptionalUnionStringLiteral group.
 // Don't use this type directly, use [OptionalClient.NewOptionalUnionStringLiteralClient] instead.
 type OptionalUnionStringLiteralClient struct {
 	internal *azcore.Client

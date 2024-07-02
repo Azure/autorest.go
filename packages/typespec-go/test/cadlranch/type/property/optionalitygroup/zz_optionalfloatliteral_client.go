@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalFloatLiteralClient contains the methods for the Type.Property.Optional namespace.
+// OptionalFloatLiteralClient contains the methods for the OptionalFloatLiteral group.
 // Don't use this type directly, use [OptionalClient.NewOptionalFloatLiteralClient] instead.
 type OptionalFloatLiteralClient struct {
 	internal *azcore.Client

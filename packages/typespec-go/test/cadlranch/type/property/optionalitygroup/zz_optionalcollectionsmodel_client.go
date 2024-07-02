@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalCollectionsModelClient contains the methods for the Type.Property.Optional namespace.
+// OptionalCollectionsModelClient contains the methods for the OptionalCollectionsModel group.
 // Don't use this type directly, use [OptionalClient.NewOptionalCollectionsModelClient] instead.
 type OptionalCollectionsModelClient struct {
 	internal *azcore.Client

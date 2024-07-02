@@ -6,7 +6,7 @@ package extensiblegroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// ExtensibleClient contains the methods for the Type.Enum.Extensible namespace.
+// ExtensibleClient contains the methods for the Extensible group.
 // Don't use this type directly, use a constructor function instead.
 type ExtensibleClient struct {
 	internal *azcore.Client

@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// NamingUnionEnumClient contains the methods for the Client.Naming namespace.
+// NamingUnionEnumClient contains the methods for the NamingUnionEnum group.
 // Don't use this type directly, use [NamingClient.NewNamingUnionEnumClient] instead.
 type NamingUnionEnumClient struct {
 	internal *azcore.Client

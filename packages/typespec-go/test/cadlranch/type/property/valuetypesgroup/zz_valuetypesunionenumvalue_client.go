@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesUnionEnumValueClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesUnionEnumValueClient contains the methods for the ValueTypesUnionEnumValue group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionEnumValueClient] instead.
 type ValueTypesUnionEnumValueClient struct {
 	internal *azcore.Client

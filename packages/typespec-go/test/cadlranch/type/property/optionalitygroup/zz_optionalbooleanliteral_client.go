@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalBooleanLiteralClient contains the methods for the Type.Property.Optional namespace.
+// OptionalBooleanLiteralClient contains the methods for the OptionalBooleanLiteral group.
 // Don't use this type directly, use [OptionalClient.NewOptionalBooleanLiteralClient] instead.
 type OptionalBooleanLiteralClient struct {
 	internal *azcore.Client

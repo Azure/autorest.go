@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalBytesClient contains the methods for the Type.Property.Optional namespace.
+// OptionalBytesClient contains the methods for the OptionalBytes group.
 // Don't use this type directly, use [OptionalClient.NewOptionalBytesClient] instead.
 type OptionalBytesClient struct {
 	internal *azcore.Client

@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// DatetimePropertyClient contains the methods for the Encode.Datetime namespace.
+// DatetimePropertyClient contains the methods for the DatetimeProperty group.
 // Don't use this type directly, use [DatetimeClient.NewDatetimePropertyClient] instead.
 type DatetimePropertyClient struct {
 	internal *azcore.Client

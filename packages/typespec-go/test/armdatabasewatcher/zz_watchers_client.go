@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// WatchersClient contains the methods for the Microsoft.DatabaseWatcher namespace.
+// WatchersClient contains the methods for the Watchers group.
 // Don't use this type directly, use NewWatchersClient() instead.
 type WatchersClient struct {
 	internal       *arm.Client

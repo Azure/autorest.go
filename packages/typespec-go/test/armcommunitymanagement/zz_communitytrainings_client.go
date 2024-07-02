@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// CommunityTrainingsClient contains the methods for the Microsoft.Community namespace.
+// CommunityTrainingsClient contains the methods for the CommunityTrainings group.
 // Don't use this type directly, use NewCommunityTrainingsClient() instead.
 type CommunityTrainingsClient struct {
 	internal       *arm.Client

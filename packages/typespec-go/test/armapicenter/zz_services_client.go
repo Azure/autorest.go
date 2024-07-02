@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// ServicesClient contains the methods for the Microsoft.ApiCenter namespace.
+// ServicesClient contains the methods for the Services group.
 // Don't use this type directly, use NewServicesClient() instead.
 type ServicesClient struct {
 	internal       *arm.Client

@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesFloatLiteralClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesFloatLiteralClient contains the methods for the ValueTypesFloatLiteral group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesFloatLiteralClient] instead.
 type ValueTypesFloatLiteralClient struct {
 	internal *azcore.Client

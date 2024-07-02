@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// AccessSharedModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access namespace.
+// AccessSharedModelInOperationClient contains the methods for the AccessSharedModelInOperation group.
 // Don't use this type directly, use [AccessClient.NewAccessSharedModelInOperationClient] instead.
 type AccessSharedModelInOperationClient struct {
 	internal *azcore.Client

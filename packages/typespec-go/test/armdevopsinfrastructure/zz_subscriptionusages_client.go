@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// SubscriptionUsagesClient contains the methods for the Microsoft.DevOpsInfrastructure namespace.
+// SubscriptionUsagesClient contains the methods for the SubscriptionUsages group.
 // Don't use this type directly, use NewSubscriptionUsagesClient() instead.
 type SubscriptionUsagesClient struct {
 	internal       *arm.Client

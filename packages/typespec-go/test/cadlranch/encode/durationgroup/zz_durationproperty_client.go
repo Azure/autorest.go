@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// DurationPropertyClient contains the methods for the Encode.Duration namespace.
+// DurationPropertyClient contains the methods for the DurationProperty group.
 // Don't use this type directly, use [DurationClient.NewDurationPropertyClient] instead.
 type DurationPropertyClient struct {
 	internal *azcore.Client

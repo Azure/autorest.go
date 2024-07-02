@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-// SpreadModelClient contains the methods for the Parameters.Spread namespace.
+// SpreadModelClient contains the methods for the SpreadModel group.
 // Don't use this type directly, use [SpreadClient.NewSpreadModelClient] instead.
 type SpreadModelClient struct {
 	internal *azcore.Client

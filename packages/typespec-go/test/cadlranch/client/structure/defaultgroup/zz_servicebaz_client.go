@@ -6,7 +6,7 @@ package defaultgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// ServiceBazClient contains the methods for the Client.Structure.Service namespace.
+// ServiceBazClient contains the methods for the ServiceBaz group.
 // Don't use this type directly, use [ServiceClient.NewServiceBazClient] instead.
 type ServiceBazClient struct {
 	internal *azcore.Client
