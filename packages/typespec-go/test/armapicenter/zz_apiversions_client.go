@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// APIVersionsClient contains the methods for the Microsoft.ApiCenter namespace.
+// APIVersionsClient contains the methods for the APIVersions group.
 // Don't use this type directly, use NewAPIVersionsClient() instead.
 type APIVersionsClient struct {
 	internal       *arm.Client

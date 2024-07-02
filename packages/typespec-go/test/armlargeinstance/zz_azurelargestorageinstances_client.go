@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// AzureLargeStorageInstancesClient contains the methods for the Microsoft.AzureLargeInstance namespace.
+// AzureLargeStorageInstancesClient contains the methods for the AzureLargeStorageInstances group.
 // Don't use this type directly, use NewAzureLargeStorageInstancesClient() instead.
 type AzureLargeStorageInstancesClient struct {
 	internal       *arm.Client

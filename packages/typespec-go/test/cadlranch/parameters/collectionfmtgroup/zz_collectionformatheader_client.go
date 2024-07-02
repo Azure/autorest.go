@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// CollectionFormatHeaderClient contains the methods for the Parameters.CollectionFormat namespace.
+// CollectionFormatHeaderClient contains the methods for the CollectionFormatHeader group.
 // Don't use this type directly, use [CollectionFormatClient.NewCollectionFormatHeaderClient] instead.
 type CollectionFormatHeaderClient struct {
 	internal *azcore.Client

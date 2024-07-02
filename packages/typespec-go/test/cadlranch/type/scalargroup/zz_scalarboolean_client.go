@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ScalarBooleanClient contains the methods for the Type.Scalar namespace.
+// ScalarBooleanClient contains the methods for the ScalarBoolean group.
 // Don't use this type directly, use [ScalarClient.NewScalarBooleanClient] instead.
 type ScalarBooleanClient struct {
 	internal *azcore.Client

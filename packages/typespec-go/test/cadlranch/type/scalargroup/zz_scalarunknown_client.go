@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ScalarUnknownClient contains the methods for the Type.Scalar namespace.
+// ScalarUnknownClient contains the methods for the ScalarUnknown group.
 // Don't use this type directly, use [ScalarClient.NewScalarUnknownClient] instead.
 type ScalarUnknownClient struct {
 	internal *azcore.Client

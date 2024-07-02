@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// NullableBytesClient contains the methods for the Type.Property.Nullable namespace.
+// NullableBytesClient contains the methods for the NullableBytes group.
 // Don't use this type directly, use [NullableClient.NewNullableBytesClient] instead.
 type NullableBytesClient struct {
 	internal *azcore.Client

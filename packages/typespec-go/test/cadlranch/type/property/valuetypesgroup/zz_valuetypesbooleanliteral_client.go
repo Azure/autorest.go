@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesBooleanLiteralClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesBooleanLiteralClient contains the methods for the ValueTypesBooleanLiteral group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesBooleanLiteralClient] instead.
 type ValueTypesBooleanLiteralClient struct {
 	internal *azcore.Client

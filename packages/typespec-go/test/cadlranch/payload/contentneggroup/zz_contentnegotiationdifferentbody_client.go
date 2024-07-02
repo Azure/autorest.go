@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ContentNegotiationDifferentBodyClient contains the methods for the Payload.ContentNegotiation namespace.
+// ContentNegotiationDifferentBodyClient contains the methods for the ContentNegotiationDifferentBody group.
 // Don't use this type directly, use [ContentNegotiationClient.NewContentNegotiationDifferentBodyClient] instead.
 type ContentNegotiationDifferentBodyClient struct {
 	internal *azcore.Client

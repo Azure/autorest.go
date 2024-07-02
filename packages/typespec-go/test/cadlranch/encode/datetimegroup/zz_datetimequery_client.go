@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// DatetimeQueryClient contains the methods for the Encode.Datetime namespace.
+// DatetimeQueryClient contains the methods for the DatetimeQuery group.
 // Don't use this type directly, use [DatetimeClient.NewDatetimeQueryClient] instead.
 type DatetimeQueryClient struct {
 	internal *azcore.Client

@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// APIDefinitionsClient contains the methods for the Microsoft.ApiCenter namespace.
+// APIDefinitionsClient contains the methods for the APIDefinitions group.
 // Don't use this type directly, use NewAPIDefinitionsClient() instead.
 type APIDefinitionsClient struct {
 	internal       *arm.Client

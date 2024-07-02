@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-// SpreadAliasClient contains the methods for the Parameters.Spread namespace.
+// SpreadAliasClient contains the methods for the SpreadAlias group.
 // Don't use this type directly, use [SpreadClient.NewSpreadAliasClient] instead.
 type SpreadAliasClient struct {
 	internal *azcore.Client

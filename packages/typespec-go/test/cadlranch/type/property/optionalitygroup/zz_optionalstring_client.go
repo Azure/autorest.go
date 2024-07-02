@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalStringClient contains the methods for the Type.Property.Optional namespace.
+// OptionalStringClient contains the methods for the OptionalString group.
 // Don't use this type directly, use [OptionalClient.NewOptionalStringClient] instead.
 type OptionalStringClient struct {
 	internal *azcore.Client

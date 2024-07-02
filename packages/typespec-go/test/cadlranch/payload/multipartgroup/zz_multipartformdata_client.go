@@ -13,7 +13,7 @@ import (
 	"net/http"
 )
 
-// MultiPartFormDataClient contains the methods for the Payload.MultiPart namespace.
+// MultiPartFormDataClient contains the methods for the MultiPartFormData group.
 // Don't use this type directly, use [MultiPartClient.NewMultiPartFormDataClient] instead.
 type MultiPartFormDataClient struct {
 	internal *azcore.Client

@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesCollectionsStringClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesCollectionsStringClient contains the methods for the ValueTypesCollectionsString group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesCollectionsStringClient] instead.
 type ValueTypesCollectionsStringClient struct {
 	internal *azcore.Client

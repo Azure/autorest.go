@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// AzureLargeInstancesClient contains the methods for the Microsoft.AzureLargeInstance namespace.
+// AzureLargeInstancesClient contains the methods for the AzureLargeInstances group.
 // Don't use this type directly, use NewAzureLargeInstancesClient() instead.
 type AzureLargeInstancesClient struct {
 	internal       *arm.Client

@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// OptionalIntLiteralClient contains the methods for the Type.Property.Optional namespace.
+// OptionalIntLiteralClient contains the methods for the OptionalIntLiteral group.
 // Don't use this type directly, use [OptionalClient.NewOptionalIntLiteralClient] instead.
 type OptionalIntLiteralClient struct {
 	internal *azcore.Client

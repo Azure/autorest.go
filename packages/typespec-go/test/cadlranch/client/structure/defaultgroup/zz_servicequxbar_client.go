@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// ServiceQuxBarClient contains the methods for the Client.Structure.Service namespace.
+// ServiceQuxBarClient contains the methods for the ServiceQuxBar group.
 // Don't use this type directly, use [ServiceQuxClient.NewServiceQuxBarClient] instead.
 type ServiceQuxBarClient struct {
 	internal *azcore.Client

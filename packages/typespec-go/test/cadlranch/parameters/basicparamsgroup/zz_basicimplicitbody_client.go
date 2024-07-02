@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// BasicImplicitBodyClient contains the methods for the Parameters.Basic namespace.
+// BasicImplicitBodyClient contains the methods for the BasicImplicitBody group.
 // Don't use this type directly, use [BasicClient.NewBasicImplicitBodyClient] instead.
 type BasicImplicitBodyClient struct {
 	internal *azcore.Client

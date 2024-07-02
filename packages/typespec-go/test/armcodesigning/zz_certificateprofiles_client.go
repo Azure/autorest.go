@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// CertificateProfilesClient contains the methods for the Microsoft.CodeSigning namespace.
+// CertificateProfilesClient contains the methods for the CertificateProfiles group.
 // Don't use this type directly, use NewCertificateProfilesClient() instead.
 type CertificateProfilesClient struct {
 	internal       *arm.Client

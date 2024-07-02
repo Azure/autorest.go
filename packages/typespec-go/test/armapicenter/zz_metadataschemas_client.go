@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// MetadataSchemasClient contains the methods for the Microsoft.ApiCenter namespace.
+// MetadataSchemasClient contains the methods for the MetadataSchemas group.
 // Don't use this type directly, use NewMetadataSchemasClient() instead.
 type MetadataSchemasClient struct {
 	internal       *arm.Client
