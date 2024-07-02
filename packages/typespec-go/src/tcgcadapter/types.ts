@@ -119,9 +119,12 @@ export class typeAdapter {
   // returns the synthesized paged response types
   private getPagedResponses(sdkContext: tcgc.SdkContext): Array<tcgc.SdkModelType> {
     const pagedResponses = new Array<tcgc.SdkModelType>();
-    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
-      for (const sdkMethod of sdkClient.methods) {
-        if (sdkMethod.kind !== 'paging') {
+    const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+      for (const sdkMethod of client.methods) {
+        if (sdkMethod.kind === 'clientaccessor') {
+          recursiveWalkClients(sdkMethod.response);
+          continue;
+        } else if (sdkMethod.kind !== 'paging') {
           continue;
         }
 
@@ -135,6 +138,10 @@ export class typeAdapter {
           }
         }
       }
+    };
+
+    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
+      recursiveWalkClients(sdkClient);
     }
     return pagedResponses;
   }
@@ -794,18 +801,10 @@ export class typeAdapter {
       }
     };
 
-    // traverse all client initialization params and methods to find the set of referenced enums and models
-    for (const client of sdkContext.experimental_sdkPackage.clients) {
-      for (const param of client.initialization.properties) {
-        if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
-          for (const templateArg of param.type.templateArguments) {
-            recursiveAddReferencedType(templateArg.type);
-          }
-        }
-      }
-
+    const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
       for (const method of client.methods) {
         if (method.kind === 'clientaccessor') {
+          recursiveWalkClients(method.response);
           continue;
         }
 
@@ -817,6 +816,19 @@ export class typeAdapter {
           recursiveAddReferencedType(method.response.type);
         }
       }
+    };
+
+    // traverse all client initialization params and methods to find the set of referenced enums and models
+    for (const client of sdkContext.experimental_sdkPackage.clients) {
+      for (const param of client.initialization.properties) {
+        if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
+          for (const templateArg of param.type.templateArguments) {
+            recursiveAddReferencedType(templateArg.type);
+          }
+        }
+      }
+
+      recursiveWalkClients(client);
     }
 
     const pagedResponses = this.getPagedResponses(sdkContext);
@@ -893,9 +905,10 @@ export class typeAdapter {
     // traverse all methods to find any references to a base model type.
     // NOTE: it's possible for there to be no base types.
     if (baseModels.size > 0) {
-      for (const client of sdkContext.experimental_sdkPackage.clients) {
+      const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
         for (const method of client.methods) {
           if (method.kind === 'clientaccessor') {
+            recursiveWalkClients(method.response);
             continue;
           }
   
@@ -907,6 +920,10 @@ export class typeAdapter {
             recursiveAddReferencedBaseModel(method.response.type);
           }
         }
+      };
+
+      for (const client of sdkContext.experimental_sdkPackage.clients) {
+        recursiveWalkClients(client);
       }
 
       const pagedResponses = this.getPagedResponses(sdkContext);

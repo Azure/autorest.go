@@ -66,7 +66,7 @@
     "@azure-tools/codegen": "~2.9.2",
     "@azure-tools/linq": "~3.1.0",
     "@azure-tools/typespec-azure-core": ">=0.43.0 <1.0.0",
-    "@azure-tools/typespec-client-generator-core": "0.43.0",
+    "@azure-tools/typespec-client-generator-core": "0.43.1",
     "@typespec/compiler": "0.57.0",
     "@typespec/http": "0.57.0",
     "@typespec/rest": "0.57.0",
