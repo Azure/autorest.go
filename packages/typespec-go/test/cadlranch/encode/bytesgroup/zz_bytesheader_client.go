@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-// BytesHeaderClient contains the methods for the Encode.Bytes namespace.
+// BytesHeaderClient contains the methods for the BytesHeader group.
 // Don't use this type directly, use [BytesClient.NewBytesHeaderClient] instead.
 type BytesHeaderClient struct {
 	internal *azcore.Client

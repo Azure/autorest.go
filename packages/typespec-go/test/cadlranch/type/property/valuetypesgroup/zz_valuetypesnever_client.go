@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesNeverClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesNeverClient contains the methods for the ValueTypesNever group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesNeverClient] instead.
 type ValueTypesNeverClient struct {
 	internal *azcore.Client

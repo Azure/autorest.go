@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// AccessPublicOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Access namespace.
+// AccessPublicOperationClient contains the methods for the AccessPublicOperation group.
 // Don't use this type directly, use [AccessClient.NewAccessPublicOperationClient] instead.
 type AccessPublicOperationClient struct {
 	internal *azcore.Client

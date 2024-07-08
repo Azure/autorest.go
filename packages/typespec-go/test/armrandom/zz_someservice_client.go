@@ -13,7 +13,7 @@ import (
 	"net/http"
 )
 
-// SomeServiceClient contains the methods for the Microsoft.Random namespace.
+// SomeServiceClient contains the methods for the SomeService group.
 // Don't use this type directly, use NewSomeServiceClient() instead.
 type SomeServiceClient struct {
 	internal *arm.Client

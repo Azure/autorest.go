@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// SharedPrivateLinkResourcesClient contains the methods for the Microsoft.DatabaseWatcher namespace.
+// SharedPrivateLinkResourcesClient contains the methods for the SharedPrivateLinkResources group.
 // Don't use this type directly, use NewSharedPrivateLinkResourcesClient() instead.
 type SharedPrivateLinkResourcesClient struct {
 	internal       *arm.Client

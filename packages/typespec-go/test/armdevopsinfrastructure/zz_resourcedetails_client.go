@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// ResourceDetailsClient contains the methods for the Microsoft.DevOpsInfrastructure namespace.
+// ResourceDetailsClient contains the methods for the ResourceDetails group.
 // Don't use this type directly, use NewResourceDetailsClient() instead.
 type ResourceDetailsClient struct {
 	internal       *arm.Client

@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// WorkspacesClient contains the methods for the Microsoft.ApiCenter namespace.
+// WorkspacesClient contains the methods for the Workspaces group.
 // Don't use this type directly, use NewWorkspacesClient() instead.
 type WorkspacesClient struct {
 	internal       *arm.Client

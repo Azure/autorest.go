@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// SKUClient contains the methods for the Microsoft.DevOpsInfrastructure namespace.
+// SKUClient contains the methods for the SKU group.
 // Don't use this type directly, use NewSKUClient() instead.
 type SKUClient struct {
 	internal       *arm.Client

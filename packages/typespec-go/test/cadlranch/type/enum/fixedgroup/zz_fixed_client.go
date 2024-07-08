@@ -6,7 +6,7 @@ package fixedgroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
-// FixedClient contains the methods for the Type.Enum.Fixed namespace.
+// FixedClient contains the methods for the Fixed group.
 // Don't use this type directly, use a constructor function instead.
 type FixedClient struct {
 	internal *azcore.Client

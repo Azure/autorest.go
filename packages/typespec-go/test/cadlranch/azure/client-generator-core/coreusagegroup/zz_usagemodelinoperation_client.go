@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// UsageModelInOperationClient contains the methods for the _Specs_.Azure.ClientGenerator.Core.Usage namespace.
+// UsageModelInOperationClient contains the methods for the UsageModelInOperation group.
 // Don't use this type directly, use [UsageClient.NewUsageModelInOperationClient] instead.
 type UsageModelInOperationClient struct {
 	internal *azcore.Client

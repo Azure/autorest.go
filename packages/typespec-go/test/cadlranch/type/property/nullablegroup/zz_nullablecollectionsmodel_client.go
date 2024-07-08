@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// NullableCollectionsModelClient contains the methods for the Type.Property.Nullable namespace.
+// NullableCollectionsModelClient contains the methods for the NullableCollectionsModel group.
 // Don't use this type directly, use [NullableClient.NewNullableCollectionsModelClient] instead.
 type NullableCollectionsModelClient struct {
 	internal *azcore.Client

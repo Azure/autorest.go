@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// PoolsClient contains the methods for the Microsoft.DevOpsInfrastructure namespace.
+// PoolsClient contains the methods for the Pools group.
 // Don't use this type directly, use NewPoolsClient() instead.
 type PoolsClient struct {
 	internal       *arm.Client

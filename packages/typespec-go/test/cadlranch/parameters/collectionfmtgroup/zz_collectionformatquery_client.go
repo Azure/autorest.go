@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// CollectionFormatQueryClient contains the methods for the Parameters.CollectionFormat namespace.
+// CollectionFormatQueryClient contains the methods for the CollectionFormatQuery group.
 // Don't use this type directly, use [CollectionFormatClient.NewCollectionFormatQueryClient] instead.
 type CollectionFormatQueryClient struct {
 	internal *azcore.Client

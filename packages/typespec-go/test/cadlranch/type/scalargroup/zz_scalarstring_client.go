@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ScalarStringClient contains the methods for the Type.Scalar namespace.
+// ScalarStringClient contains the methods for the ScalarString group.
 // Don't use this type directly, use [ScalarClient.NewScalarStringClient] instead.
 type ScalarStringClient struct {
 	internal *azcore.Client

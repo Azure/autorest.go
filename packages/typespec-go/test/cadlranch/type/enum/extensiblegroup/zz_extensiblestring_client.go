@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ExtensibleStringClient contains the methods for the Type.Enum.Extensible namespace.
+// ExtensibleStringClient contains the methods for the ExtensibleString group.
 // Don't use this type directly, use [ExtensibleClient.NewExtensibleStringClient] instead.
 type ExtensibleStringClient struct {
 	internal *azcore.Client

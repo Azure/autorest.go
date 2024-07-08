@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// ValueTypesExtensibleEnumClient contains the methods for the Type.Property.ValueTypes namespace.
+// ValueTypesExtensibleEnumClient contains the methods for the ValueTypesExtensibleEnum group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesExtensibleEnumClient] instead.
 type ValueTypesExtensibleEnumClient struct {
 	internal *azcore.Client

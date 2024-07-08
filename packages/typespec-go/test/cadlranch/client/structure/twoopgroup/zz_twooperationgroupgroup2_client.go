@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// TwoOperationGroupGroup2Client contains the methods for the Client.Structure.Service namespace.
+// TwoOperationGroupGroup2Client contains the methods for the TwoOperationGroupGroup2 group.
 // Don't use this type directly, use [TwoOperationGroupClient.NewTwoOperationGroupGroup2Client] instead.
 type TwoOperationGroupGroup2Client struct {
 	internal *azcore.Client

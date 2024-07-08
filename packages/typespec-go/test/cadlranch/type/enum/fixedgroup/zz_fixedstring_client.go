@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// FixedStringClient contains the methods for the Type.Enum.Fixed namespace.
+// FixedStringClient contains the methods for the FixedString group.
 // Don't use this type directly, use [FixedClient.NewFixedStringClient] instead.
 type FixedStringClient struct {
 	internal *azcore.Client

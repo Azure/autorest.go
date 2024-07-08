@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-// JSONPropertyClient contains the methods for the Serialization.EncodedName.Json namespace.
+// JSONPropertyClient contains the methods for the JSONProperty group.
 // Don't use this type directly, use [JSONClient.NewJSONPropertyClient] instead.
 type JSONPropertyClient struct {
 	internal *azcore.Client

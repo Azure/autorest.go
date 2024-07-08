@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// ServiceBarClient contains the methods for the Client.Structure.Service namespace.
+// ServiceBarClient contains the methods for the ServiceBar group.
 // Don't use this type directly, use [ServiceClient.NewServiceBarClient] instead.
 type ServiceBarClient struct {
 	internal *azcore.Client

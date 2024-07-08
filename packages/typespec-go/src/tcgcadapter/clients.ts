@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { values } from '@azure-tools/linq';
+import * as tcgc from '@azure-tools/typespec-client-generator-core';
+import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
 import { isTypePassedByValue, typeAdapter } from './types.js';
-import * as go from '../../../codemodel.go/src/index.js';
-import { values } from '@azure-tools/linq';
-import * as tcgc from '@azure-tools/typespec-client-generator-core';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -76,7 +76,9 @@ export class clientAdapter {
     if (sdkClient.description) {
       description = `${clientName} - ${sdkClient.description}`;
     } else {
-      description = `${clientName} contains the methods for the ${sdkClient.nameSpace} namespace.`;
+      // strip clientName's "Client" suffix
+      const groupName = clientName.substring(0, clientName.length - 6);
+      description = `${clientName} contains the methods for the ${groupName} group.`;
     }
 
     const goClient = new go.Client(clientName, description, go.newClientOptions(this.ta.codeModel.type, clientName));
@@ -168,13 +170,13 @@ export class clientAdapter {
     let method: go.Method | go.LROMethod | go.LROPageableMethod | go.PageableMethod;
     const naming = new go.MethodNaming(getEscapedReservedName(uncapitalize(ensureNameCase(sdkMethod.name)), 'Operation'), ensureNameCase(`${sdkMethod.name}CreateRequest`, true),
       ensureNameCase(`${sdkMethod.name}HandleResponse`, true));
-  
-    const getStatusCodes = function(httpOp: tcgc.SdkHttpOperation): Array<number> {
+
+    const getStatusCodes = function (httpOp: tcgc.SdkHttpOperation): Array<number> {
       const statusCodes = new Array<number>();
       for (const statusCode of httpOp.responses.keys()) {
         if (isHttpStatusCodeRange(statusCode)) {
           for (let code = statusCode.start; code <= statusCode.end; ++code) {
-            statusCodes.push(code);  
+            statusCodes.push(code);
           }
         } else {
           statusCodes.push(statusCode);
@@ -208,7 +210,7 @@ export class clientAdapter {
     } else {
       throw new Error(`method kind ${sdkMethod.kind} NYI`);
     }
-  
+
     method.description = sdkMethod.description;
     goClient.methods.push(method);
     this.populateMethod(sdkMethod, method);
@@ -362,7 +364,7 @@ export class clientAdapter {
       contentType = 'XML';
     } else if (contentTypeStr.match(/text/i)) {
       contentType = 'Text';
-    } 
+    }
     return contentType;
   }
 
@@ -384,7 +386,7 @@ export class clientAdapter {
     }
 
     let location: go.ParameterLocation = 'method';
-    const getClientParamsKey = function(param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
+    const getClientParamsKey = function (param: tcgc.SdkBodyParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): string {
       // include the param kind in the key name as a client param can be used
       // in different places across methods (path/query)
       return `${param.name}-${param.kind}`;
@@ -481,12 +483,12 @@ export class clientAdapter {
     if (sdkMethod.access === 'internal') {
       respEnvName = uncapitalize(respEnvName);
     }
-    const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this. getMethodNameForDocComment(method)), method);
+    const respEnv = new go.ResponseEnvelope(respEnvName, createResponseEnvelopeDescription(respEnvName, this.getMethodNameForDocComment(method)), method);
     this.ta.codeModel.responseEnvelopes.push(respEnv);
 
     // add any headers
     const addedHeaders = new Set<string>();
-    for (const httpResp of sdkMethod.operation.responses.values()) { 
+    for (const httpResp of sdkMethod.operation.responses.values()) {
       for (const httpHeader of httpResp.headers) {
         if (addedHeaders.has(httpHeader.serializedName)) {
           continue;
@@ -599,7 +601,7 @@ export class clientAdapter {
     }
     return structType;
   }
-  
+
   private adaptHeaderType(sdkType: tcgc.SdkType, forParam: boolean): go.HeaderType {
     // for header params, we never pass the element type by pointer
     const type = this.ta.getPossibleType(sdkType, forParam, false);
@@ -608,25 +610,25 @@ export class clientAdapter {
     }
     return type;
   }
-  
+
   private adaptPathParameterType(sdkType: tcgc.SdkType): go.PathParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
+    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new Error(`unexpected path parameter type ${sdkType.kind}`);
     }
     return type;
   }
-  
+
   private adaptQueryParameterType(sdkType: tcgc.SdkType): go.QueryParameterType {
     const type = this.ta.getPossibleType(sdkType, false, false);
-    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type)  || go.isQualifiedType(type)) {
+    if (go.isMapType(type) || go.isInterfaceType(type) || go.isModelType(type) || go.isPolymorphicType(type) || go.isSliceType(type) || go.isQualifiedType(type)) {
       throw new Error(`unexpected query parameter type ${sdkType.kind}`);
     } else if (go.isSliceType(type)) {
       type.elementTypeByValue = true;
     }
     return type;
   }
-  
+
   private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {

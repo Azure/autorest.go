@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// QuotasClient contains the methods for the Microsoft.LoadTestService namespace.
+// QuotasClient contains the methods for the Quotas group.
 // Don't use this type directly, use NewQuotasClient() instead.
 type QuotasClient struct {
 	internal       *arm.Client
