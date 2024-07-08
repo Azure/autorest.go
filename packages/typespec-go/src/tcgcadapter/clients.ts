@@ -76,7 +76,9 @@ export class clientAdapter {
     if (sdkClient.description) {
       description = `${clientName} - ${sdkClient.description}`;
     } else {
-      description = `${clientName} contains the methods for the ${clientName.substring(0, clientName.length - 6)} group.`;
+      // strip clientName's "Client" suffix
+      const groupName = clientName.substring(0, clientName.length - 6)
+      description = `${clientName} contains the methods for the ${groupName} group.`;
     }
 
     const goClient = new go.Client(clientName, description, go.newClientOptions(this.ta.codeModel.type, clientName));
