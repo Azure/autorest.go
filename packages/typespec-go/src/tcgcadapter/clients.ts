@@ -77,7 +77,7 @@ export class clientAdapter {
       description = `${clientName} - ${sdkClient.description}`;
     } else {
       // strip clientName's "Client" suffix
-      const groupName = clientName.substring(0, clientName.length - 6)
+      const groupName = clientName.substring(0, clientName.length - 6);
       description = `${clientName} contains the methods for the ${groupName} group.`;
     }
 
