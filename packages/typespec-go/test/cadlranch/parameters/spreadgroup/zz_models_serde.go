@@ -38,37 +38,6 @@ func (b *BodyParameter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type CompositeRequestMix.
-func (c CompositeRequestMix) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "name", c.Name)
-	populate(objectMap, "prop", c.Prop)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type CompositeRequestMix.
-func (c *CompositeRequestMix) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", c, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "name":
-			err = unpopulate(val, "Name", &c.Name)
-			delete(rawMsg, key)
-		case "prop":
-			err = unpopulate(val, "Prop", &c.Prop)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", c, err)
-		}
-	}
-	return nil
-}
-
 func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return

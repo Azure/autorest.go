@@ -40,7 +40,8 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsJPEG(ctx context.Cont
 		err = runtime.NewResponseError(httpResp)
 		return ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse{}, err
 	}
-	return ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse{Body: httpResp.Body}, nil
+	resp, err := client.getAvatarAsJPEGHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAvatarAsJPEGCreateRequest creates the GetAvatarAsJPEG request.
@@ -53,6 +54,15 @@ func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGCreateRequest(ctx
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["accept"] = []string{"image/jpeg"}
 	return req, nil
+}
+
+// getAvatarAsJPEGHandleResponse handles the GetAvatarAsJPEG response.
+func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGHandleResponse(resp *http.Response) (ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse, error) {
+	result := ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse{Body: resp.Body}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
 }
 
 // GetAvatarAsPNG -
@@ -77,7 +87,8 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsPNG(ctx context.Conte
 		err = runtime.NewResponseError(httpResp)
 		return ContentNegotiationSameBodyClientGetAvatarAsPNGResponse{}, err
 	}
-	return ContentNegotiationSameBodyClientGetAvatarAsPNGResponse{Body: httpResp.Body}, nil
+	resp, err := client.getAvatarAsPNGHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAvatarAsPNGCreateRequest creates the GetAvatarAsPNG request.
@@ -90,4 +101,13 @@ func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGCreateRequest(ctx 
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["accept"] = []string{"image/png"}
 	return req, nil
+}
+
+// getAvatarAsPNGHandleResponse handles the GetAvatarAsPNG response.
+func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGHandleResponse(resp *http.Response) (ContentNegotiationSameBodyClientGetAvatarAsPNGResponse, error) {
+	result := ContentNegotiationSameBodyClientGetAvatarAsPNGResponse{Body: resp.Body}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
 }

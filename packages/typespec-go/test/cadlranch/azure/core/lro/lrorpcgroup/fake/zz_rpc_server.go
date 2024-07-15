@@ -19,7 +19,7 @@ import (
 type RPCServer struct {
 	// BeginLongRunningRPC is the fake for method RPCClient.BeginLongRunningRPC
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginLongRunningRPC func(ctx context.Context, generationOptions lrorpcgroup.GenerationOptions, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
+	BeginLongRunningRPC func(ctx context.Context, prompt string, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
 }
 
 // NewRPCServerTransport creates a new instance of RPCServerTransport with the provided implementation.
@@ -70,11 +70,14 @@ func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*ht
 	}
 	beginLongRunningRPC := r.beginLongRunningRPC.get(req)
 	if beginLongRunningRPC == nil {
-		body, err := server.UnmarshalRequestAsJSON[lrorpcgroup.GenerationOptions](req)
+		type partialBodyParams struct {
+			Prompt string `json:"prompt"`
+		}
+		body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginLongRunningRPC(req.Context(), body, nil)
+		respr, errRespr := r.srv.BeginLongRunningRPC(req.Context(), body.Prompt, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

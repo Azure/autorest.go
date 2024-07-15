@@ -87,12 +87,14 @@ type WatchersClientListBySubscriptionResponse struct {
 
 // WatchersClientStartResponse contains the response from method WatchersClient.BeginStart.
 type WatchersClientStartResponse struct {
-	// placeholder for future response values
+	// The DatabaseWatcherProviderHub resource.
+	Watcher
 }
 
 // WatchersClientStopResponse contains the response from method WatchersClient.BeginStop.
 type WatchersClientStopResponse struct {
-	// placeholder for future response values
+	// The DatabaseWatcherProviderHub resource.
+	Watcher
 }
 
 // WatchersClientUpdateResponse contains the response from method WatchersClient.BeginUpdate.

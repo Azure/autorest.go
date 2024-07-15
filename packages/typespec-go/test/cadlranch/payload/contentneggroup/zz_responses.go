@@ -9,22 +9,26 @@ import "io"
 // ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse contains the response from method ContentNegotiationDifferentBodyClient.GetAvatarAsJSON.
 type ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse struct {
 	PNGImageAsJSON
+	ContentType *string
 }
 
 // ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse contains the response from method ContentNegotiationDifferentBodyClient.GetAvatarAsPNG.
 type ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse struct {
 	// Body contains the streaming response.
-	Body io.ReadCloser
+	Body        io.ReadCloser
+	ContentType *string
 }
 
 // ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse contains the response from method ContentNegotiationSameBodyClient.GetAvatarAsJPEG.
 type ContentNegotiationSameBodyClientGetAvatarAsJPEGResponse struct {
 	// Body contains the streaming response.
-	Body io.ReadCloser
+	Body        io.ReadCloser
+	ContentType *string
 }
 
 // ContentNegotiationSameBodyClientGetAvatarAsPNGResponse contains the response from method ContentNegotiationSameBodyClient.GetAvatarAsPNG.
 type ContentNegotiationSameBodyClientGetAvatarAsPNGResponse struct {
 	// Body contains the streaming response.
-	Body io.ReadCloser
+	Body        io.ReadCloser
+	ContentType *string
 }

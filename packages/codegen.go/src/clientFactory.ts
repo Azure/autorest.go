@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
+import * as go from '../../codemodel.go/src/index.js';
 import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, sortParametersByRequired } from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -19,17 +19,8 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   let result = '';
   // the list of packages to import
   const imports = new ImportManager();
-  
-  const allClientParams = new Array<go.Parameter>();
-  for (const clients of codeModel.clients) {
-    for (const clientParam of values(clients.parameters)) {
-      if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
-        continue;
-      }
-      allClientParams.push(clientParam);
-    }
-  }
-  allClientParams.sort(sortParametersByRequired);
+
+  const allClientParams = getAllClientParameters(codeModel);
 
   // add factory type
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
@@ -52,7 +43,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   result += `${formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.')}\n`;
   result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
-  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length > 0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';
@@ -86,4 +77,18 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
 
   result = contentPreamble(codeModel) + imports.text() + result;
   return result;
+}
+
+export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
+  const allClientParams = new Array<go.Parameter>();
+  for (const clients of codeModel.clients) {
+    for (const clientParam of values(clients.parameters)) {
+      if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
+        continue;
+      }
+      allClientParams.push(clientParam);
+    }
+  }
+  allClientParams.sort(sortParametersByRequired);
+  return allClientParams;
 }

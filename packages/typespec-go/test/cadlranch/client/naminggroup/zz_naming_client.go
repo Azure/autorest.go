@@ -34,14 +34,15 @@ func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 
 // Client -
 // If the operation fails it returns an *azcore.ResponseError type.
+//   - clientName - Pass in true
 //   - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
-func (client *NamingClient) Client(ctx context.Context, clientNameModel ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
+func (client *NamingClient) Client(ctx context.Context, clientName bool, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
 	const operationName = "NamingClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, clientNameModel, options)
+	req, err := client.clientCreateRequest(ctx, clientName, options)
 	if err != nil {
 		return NamingClientClientResponse{}, err
 	}
@@ -57,14 +58,19 @@ func (client *NamingClient) Client(ctx context.Context, clientNameModel ClientNa
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingClient) clientCreateRequest(ctx context.Context, clientNameModel ClientNameModel, _ *NamingClientClientOptions) (*policy.Request, error) {
+func (client *NamingClient) clientCreateRequest(ctx context.Context, clientName bool, _ *NamingClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, clientNameModel); err != nil {
+	body := struct {
+		DefaultName bool `json:"defaultName"`
+	}{
+		DefaultName: clientName,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -106,15 +112,16 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *Nami
 
 // CompatibleWithEncodedName -
 // If the operation fails it returns an *azcore.ResponseError type.
+//   - clientName - Pass in true
 //   - options - NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
 //     method.
-func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
+func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clientName bool, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
 	var err error
 	const operationName = "NamingClient.CompatibleWithEncodedName"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, clientNameAndJSONEncodedNameModel, options)
+	req, err := client.compatibleWithEncodedNameCreateRequest(ctx, clientName, options)
 	if err != nil {
 		return NamingClientCompatibleWithEncodedNameResponse{}, err
 	}
@@ -130,14 +137,19 @@ func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, clien
 }
 
 // compatibleWithEncodedNameCreateRequest creates the CompatibleWithEncodedName request.
-func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, clientNameAndJSONEncodedNameModel ClientNameAndJSONEncodedNameModel, _ *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
+func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, clientName bool, _ *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/compatible-with-encoded-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, clientNameAndJSONEncodedNameModel); err != nil {
+	body := struct {
+		WireName bool `json:"wireName"`
+	}{
+		WireName: clientName,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -145,14 +157,15 @@ func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.C
 
 // Language -
 // If the operation fails it returns an *azcore.ResponseError type.
+//   - GoName - Pass in true
 //   - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
-func (client *NamingClient) Language(ctx context.Context, languageClientNameModel LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
+func (client *NamingClient) Language(ctx context.Context, goName bool, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, languageClientNameModel, options)
+	req, err := client.languageCreateRequest(ctx, goName, options)
 	if err != nil {
 		return NamingClientLanguageResponse{}, err
 	}
@@ -168,14 +181,19 @@ func (client *NamingClient) Language(ctx context.Context, languageClientNameMode
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingClient) languageCreateRequest(ctx context.Context, languageClientNameModel LanguageClientNameModel, _ *NamingClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingClient) languageCreateRequest(ctx context.Context, goName bool, _ *NamingClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/property/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, languageClientNameModel); err != nil {
+	body := struct {
+		DefaultName bool `json:"defaultName"`
+	}{
+		DefaultName: goName,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

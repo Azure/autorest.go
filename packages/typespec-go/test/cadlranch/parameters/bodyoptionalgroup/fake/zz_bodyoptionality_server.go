@@ -28,7 +28,7 @@ type BodyOptionalityServer struct {
 
 	// RequiredImplicit is the fake for method BodyOptionalityClient.RequiredImplicit
 	// HTTP status codes to indicate success: http.StatusNoContent
-	RequiredImplicit func(ctx context.Context, bodyModel bodyoptionalgroup.BodyModel, options *bodyoptionalgroup.BodyOptionalityClientRequiredImplicitOptions) (resp azfake.Responder[bodyoptionalgroup.BodyOptionalityClientRequiredImplicitResponse], errResp azfake.ErrorResponder)
+	RequiredImplicit func(ctx context.Context, name string, options *bodyoptionalgroup.BodyOptionalityClientRequiredImplicitOptions) (resp azfake.Responder[bodyoptionalgroup.BodyOptionalityClientRequiredImplicitResponse], errResp azfake.ErrorResponder)
 }
 
 // NewBodyOptionalityServerTransport creates a new instance of BodyOptionalityServerTransport with the provided implementation.
@@ -120,11 +120,14 @@ func (b *BodyOptionalityServerTransport) dispatchRequiredImplicit(req *http.Requ
 	if b.srv.RequiredImplicit == nil {
 		return nil, &nonRetriableError{errors.New("fake for method RequiredImplicit not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[bodyoptionalgroup.BodyModel](req)
+	type partialBodyParams struct {
+		Name string `json:"name"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := b.srv.RequiredImplicit(req.Context(), body, nil)
+	respr, errRespr := b.srv.RequiredImplicit(req.Context(), body.Name, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

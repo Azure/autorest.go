@@ -141,6 +141,9 @@ func (b *BytesResponseBodyServerTransport) dispatchCustomContentType(req *http.R
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "image/png")
+	}
 	return resp, nil
 }
 
@@ -181,6 +184,9 @@ func (b *BytesResponseBodyServerTransport) dispatchOctetStream(req *http.Request
 	})
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/octet-stream")
 	}
 	return resp, nil
 }

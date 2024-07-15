@@ -94,6 +94,9 @@ func (m *MediaTypeStringBodyServerTransport) dispatchGetAsJSON(req *http.Request
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "application/json")
+	}
 	return resp, nil
 }
 
@@ -112,6 +115,9 @@ func (m *MediaTypeStringBodyServerTransport) dispatchGetAsText(req *http.Request
 	resp, err := server.MarshalResponseAsText(respContent, server.GetResponse(respr).Value, req)
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "text/plain")
 	}
 	return resp, nil
 }

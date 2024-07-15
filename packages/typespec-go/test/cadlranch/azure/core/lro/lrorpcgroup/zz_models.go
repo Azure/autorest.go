@@ -4,12 +4,6 @@
 
 package lrorpcgroup
 
-// GenerationOptions - Options for the generation.
-type GenerationOptions struct {
-	// REQUIRED; Prompt.
-	Prompt *string
-}
-
 // GenerationResult - Result of the generation.
 type GenerationResult struct {
 	// REQUIRED; The data.

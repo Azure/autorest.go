@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"jsongroup"
 	"net/http"
+	"strconv"
 )
 
 // JSONPropertyServer is a fake server for instances of the jsongroup.JSONPropertyClient type.
@@ -23,7 +24,7 @@ type JSONPropertyServer struct {
 
 	// Send is the fake for method JSONPropertyClient.Send
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Send func(ctx context.Context, jsonEncodedNameModel jsongroup.JSONEncodedNameModel, options *jsongroup.JSONPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientSendResponse], errResp azfake.ErrorResponder)
+	Send func(ctx context.Context, defaultName bool, options *jsongroup.JSONPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientSendResponse], errResp azfake.ErrorResponder)
 }
 
 // NewJSONPropertyServerTransport creates a new instance of JSONPropertyServerTransport with the provided implementation.
@@ -89,11 +90,18 @@ func (j *JSONPropertyServerTransport) dispatchSend(req *http.Request) (*http.Res
 	if j.srv.Send == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Send not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[jsongroup.JSONEncodedNameModel](req)
+	type partialBodyParams struct {
+		DefaultName bool `json:"wireName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := j.srv.Send(req.Context(), body, nil)
+	defaultNameParam, err := strconv.ParseBool(defaultName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := j.srv.Send(req.Context(), body.DefaultName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

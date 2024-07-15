@@ -14,6 +14,7 @@ import (
 	"naminggroup"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 )
@@ -28,7 +29,7 @@ type NamingServer struct {
 
 	// Client is the fake for method NamingClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, clientNameModel naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, clientName bool, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
 
 	// ClientName is the fake for method NamingClient.ClientName
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -36,11 +37,11 @@ type NamingServer struct {
 
 	// CompatibleWithEncodedName is the fake for method NamingClient.CompatibleWithEncodedName
 	// HTTP status codes to indicate success: http.StatusNoContent
-	CompatibleWithEncodedName func(ctx context.Context, clientNameAndJSONEncodedNameModel naminggroup.ClientNameAndJSONEncodedNameModel, options *naminggroup.NamingClientCompatibleWithEncodedNameOptions) (resp azfake.Responder[naminggroup.NamingClientCompatibleWithEncodedNameResponse], errResp azfake.ErrorResponder)
+	CompatibleWithEncodedName func(ctx context.Context, clientName bool, options *naminggroup.NamingClientCompatibleWithEncodedNameOptions) (resp azfake.Responder[naminggroup.NamingClientCompatibleWithEncodedNameResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method NamingClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, languageClientNameModel naminggroup.LanguageClientNameModel, options *naminggroup.NamingClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, goName bool, options *naminggroup.NamingClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientLanguageResponse], errResp azfake.ErrorResponder)
 
 	// Parameter is the fake for method NamingClient.Parameter
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -137,11 +138,18 @@ func (n *NamingServerTransport) dispatchClient(req *http.Request) (*http.Respons
 	if n.srv.Client == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameModel](req)
+	type partialBodyParams struct {
+		ClientName bool `json:"defaultName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := n.srv.Client(req.Context(), body, nil)
+	clientNameParam, err := strconv.ParseBool(clientName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Client(req.Context(), body.ClientName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -179,11 +187,18 @@ func (n *NamingServerTransport) dispatchCompatibleWithEncodedName(req *http.Requ
 	if n.srv.CompatibleWithEncodedName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CompatibleWithEncodedName not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameAndJSONEncodedNameModel](req)
+	type partialBodyParams struct {
+		ClientName bool `json:"wireName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := n.srv.CompatibleWithEncodedName(req.Context(), body, nil)
+	clientNameParam, err := strconv.ParseBool(clientName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.CompatibleWithEncodedName(req.Context(), body.ClientName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -202,11 +217,18 @@ func (n *NamingServerTransport) dispatchLanguage(req *http.Request) (*http.Respo
 	if n.srv.Language == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[naminggroup.LanguageClientNameModel](req)
+	type partialBodyParams struct {
+		GoName bool `json:"defaultName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := n.srv.Language(req.Context(), body, nil)
+	goNameParam, err := strconv.ParseBool(GoName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Language(req.Context(), body.GoName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

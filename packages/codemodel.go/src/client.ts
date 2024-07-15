@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See License.txt in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { MethodExample } from './examples.js';
 import * as pkg from './package.js';
 import * as param from './param.js';
 import * as result from './result.js';
@@ -72,7 +73,7 @@ export interface Method {
 
   // any modeled parameters. the ones we add to the generated code (context.Context etc) aren't included here
   parameters: Array<param.Parameter>;
-  
+
   optionalParamsGroup: param.ParameterGroup;
 
   responseEnvelope: result.ResponseEnvelope;
@@ -85,6 +86,8 @@ export interface Method {
   naming: MethodNaming;
 
   apiVersions: Array<string>;
+
+  examples: Array<MethodExample>;
 }
 
 export type HTTPMethod = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put';
@@ -117,7 +120,7 @@ export interface PageableMethod extends Method {
 // thus, it's not included in the array of methods for a client.
 export interface NextPageMethod {
   name: string;
- 
+
   httpPath: string;
 
   httpMethod: HTTPMethod;
@@ -181,6 +184,7 @@ export class Method implements Method {
     this.name = name;
     this.naming = naming;
     this.parameters = new Array<param.Parameter>();
+    this.examples = [];
   }
 }
 

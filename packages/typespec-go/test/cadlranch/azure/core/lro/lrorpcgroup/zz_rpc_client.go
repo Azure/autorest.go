@@ -22,11 +22,11 @@ type RPCClient struct {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
-//   - generationOptions - Options for the generation.
+//   - prompt - Prompt.
 //   - options - RPCClientBeginLongRunningRPCOptions contains the optional parameters for the RPCClient.BeginLongRunningRPC method.
-func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
+func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, prompt string, options *RPCClientBeginLongRunningRPCOptions) (*runtime.Poller[RPCClientLongRunningRPCResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.longRunningRPC(ctx, generationOptions, options)
+		resp, err := client.longRunningRPC(ctx, prompt, options)
 		if err != nil {
 			return nil, err
 		}
@@ -45,13 +45,13 @@ func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, generationOpti
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
-func (client *RPCClient) longRunningRPC(ctx context.Context, generationOptions GenerationOptions, options *RPCClientBeginLongRunningRPCOptions) (*http.Response, error) {
+func (client *RPCClient) longRunningRPC(ctx context.Context, prompt string, options *RPCClientBeginLongRunningRPCOptions) (*http.Response, error) {
 	var err error
 	const operationName = "RPCClient.BeginLongRunningRPC"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.longRunningRPCCreateRequest(ctx, generationOptions, options)
+	req, err := client.longRunningRPCCreateRequest(ctx, prompt, options)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (client *RPCClient) longRunningRPC(ctx context.Context, generationOptions G
 }
 
 // longRunningRPCCreateRequest creates the LongRunningRPC request.
-func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, generationOptions GenerationOptions, _ *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
+func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, prompt string, _ *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
 	urlPath := "/azure/core/lro/rpc/generations:submit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -78,7 +78,12 @@ func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, genera
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, generationOptions); err != nil {
+	body := struct {
+		Prompt string `json:"prompt"`
+	}{
+		Prompt: prompt,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -6,12 +6,14 @@ package mediatypegroup
 
 // MediaTypeStringBodyClientGetAsJSONResponse contains the response from method MediaTypeStringBodyClient.GetAsJSON.
 type MediaTypeStringBodyClientGetAsJSONResponse struct {
-	Value *string
+	ContentType *string
+	Value       *string
 }
 
 // MediaTypeStringBodyClientGetAsTextResponse contains the response from method MediaTypeStringBodyClient.GetAsText.
 type MediaTypeStringBodyClientGetAsTextResponse struct {
-	Value *string
+	ContentType *string
+	Value       *string
 }
 
 // MediaTypeStringBodyClientSendAsJSONResponse contains the response from method MediaTypeStringBodyClient.SendAsJSON.

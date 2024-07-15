@@ -3,10 +3,15 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { GoEmitterOptions } from './lib.js';
-import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
+import { EmitContext } from '@typespec/compiler';
+import { existsSync } from 'fs';
+import { mkdir, readFile, writeFile } from 'fs/promises';
+import 'source-map-support/register.js';
 import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
+import { generateExamples } from '../../codegen.go/src/example.js';
+import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
+import { generateServers } from '../../codegen.go/src/fake/servers.js';
 import { generateGoModFile } from '../../codegen.go/src/gomod.js';
 import { generateInterfaces } from '../../codegen.go/src/interfaces.js';
 import { generateModels } from '../../codegen.go/src/models.js';
@@ -15,16 +20,12 @@ import { generateOptions } from '../../codegen.go/src/options.js';
 import { generatePolymorphicHelpers } from '../../codegen.go/src/polymorphics.js';
 import { generateResponses } from '../../codegen.go/src/responses.js';
 import { generateTimeHelpers } from '../../codegen.go/src/time.js';
-import { generateServers } from '../../codegen.go/src/fake/servers.js';
-import { generateServerFactory } from '../../codegen.go/src/fake/factory.js';
-import { existsSync } from 'fs';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { EmitContext } from '@typespec/compiler';
-import 'source-map-support/register.js';
+import { GoEmitterOptions } from './lib.js';
+import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
-  const codeModel = tcgcToGoCodeModel(context);
-  await mkdir(context.emitterOutputDir, {recursive: true});
+  const codeModel = await tcgcToGoCodeModel(context);
+  await mkdir(context.emitterOutputDir, { recursive: true });
 
   // don't overwrite an existing go.mod file, update it if required
   const goModFile = `${context.emitterOutputDir}/go.mod`;
@@ -76,9 +77,23 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     // insert a _ before Client, i.e. Foo_Client
     // if the name isn't simply Client.
     if (fileName !== 'client') {
-      fileName = fileName.substring(0, fileName.length-6) + '_client';
+      fileName = fileName.substring(0, fileName.length - 6) + '_client';
     }
     writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
+  }
+
+  const examples = await generateExamples(codeModel);
+  for (const example of examples) {
+    let fileName = example.name.toLowerCase();
+    // op.name is the client name, e.g. FooClient.
+    // insert a _ before Client, i.e. Foo_Client
+    // if the name isn't simply Client.
+    // and insert _example_test at the end.
+    if (fileName !== 'client') {
+      fileName = fileName.substring(0, fileName.length - 6) + '_client';
+    }
+    fileName += '_example_test';
+    writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
   }
 
   const options = await generateOptions(codeModel);
@@ -108,14 +123,14 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     const serverContent = await generateServers(codeModel);
     if (serverContent.servers.length > 0) {
       const fakesDir = context.emitterOutputDir + '/fake';
-      await mkdir(fakesDir, {recursive: true});
+      await mkdir(fakesDir, { recursive: true });
       for (const op of serverContent.servers) {
         let fileName = op.name.toLowerCase();
         // op.name is the server name, e.g. FooServer.
         // insert a _ before Server, i.e. Foo_Server
         // if the name isn't simply Server.
         if (fileName !== 'server') {
-          fileName = fileName.substring(0, fileName.length-6) + '_server';
+          fileName = fileName.substring(0, fileName.length - 6) + '_server';
         }
         writeFile(`${fakesDir}/${filePrefix}${fileName}.go`, op.content);
       }

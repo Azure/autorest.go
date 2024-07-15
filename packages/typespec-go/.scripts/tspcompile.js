@@ -186,6 +186,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'head-as-boolean=true',
     'remove-unreferenced-types=true',
     'fix-const-stuttering=true',
+    `examples-directory=${input}/examples`
   ];
 
   let allOptions = fixedOptions;

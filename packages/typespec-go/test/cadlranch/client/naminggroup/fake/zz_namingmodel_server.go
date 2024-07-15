@@ -13,17 +13,18 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"naminggroup"
 	"net/http"
+	"strconv"
 )
 
 // NamingModelServer is a fake server for instances of the naminggroup.NamingModelClient type.
 type NamingModelServer struct {
 	// Client is the fake for method NamingModelClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, clientModel naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, defaultName bool, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method NamingModelClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, goModel naminggroup.GoModel, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, defaultName bool, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
 // NewNamingModelServerTransport creates a new instance of NamingModelServerTransport with the provided implementation.
@@ -70,11 +71,18 @@ func (n *NamingModelServerTransport) dispatchClient(req *http.Request) (*http.Re
 	if n.srv.Client == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientModel](req)
+	type partialBodyParams struct {
+		DefaultName bool `json:"defaultName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := n.srv.Client(req.Context(), body, nil)
+	defaultNameParam, err := strconv.ParseBool(defaultName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Client(req.Context(), body.DefaultName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -93,11 +101,18 @@ func (n *NamingModelServerTransport) dispatchLanguage(req *http.Request) (*http.
 	if n.srv.Language == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[naminggroup.GoModel](req)
+	type partialBodyParams struct {
+		DefaultName bool `json:"defaultName"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := n.srv.Language(req.Context(), body, nil)
+	defaultNameParam, err := strconv.ParseBool(defaultName)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Language(req.Context(), body.DefaultName, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
