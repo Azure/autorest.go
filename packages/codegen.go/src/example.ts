@@ -296,11 +296,11 @@ function getTimeValue(type: go.TimeType, value: any, imports?: ImportManager): s
     return `func() time.Time { t, _ := time.Parse("${format}", "${value}"); return t}()`;
   } else if (type.dateTimeFormat === 'dateTimeRFC1123' || type.dateTimeFormat === 'dateTimeRFC3339') {
     if (imports) imports.add('time');
-    let format = 'time.RFC3339Nano';
+    let format = helpers.datetimeRFC3339Format;
     if (type.dateTimeFormat === 'dateTimeRFC1123') {
-      format = 'time.RFC1123';
+      format = helpers.datetimeRFC1123Format;
     }
-    return `func() time.Time { t, _ := time.Parse("${format}", "${value}"); return t}()`;
+    return `func() time.Time { t, _ := time.Parse(${format}, "${value}"); return t}()`;
   } else {
     if (imports) imports.add('strconv');
     if (imports) imports.add('time');
