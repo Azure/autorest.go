@@ -54,8 +54,8 @@ func ExampleEnvironmentsClient_CreateOrUpdate() {
 	// 		ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/environments/public"),
 	// 		Name: to.Ptr("public"),
 	// 		SystemData: &armapicenter.SystemData{
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 	// 		},
 	// 		Properties: &armapicenter.EnvironmentProperties{
 	// 			Title: to.Ptr("Contoso Europe Azure API Management"),
@@ -124,8 +124,8 @@ func ExampleEnvironmentsClient_Get() {
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/environments/public"),
 	// 		Name: to.Ptr("public"),
 	// 		SystemData: &armapicenter.SystemData{
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 	// 		},
 	// 		Properties: &armapicenter.EnvironmentProperties{
 	// 			Title: to.Ptr("Public"),
@@ -198,8 +198,8 @@ func ExampleEnvironmentsClient_NewListPager() {
 		// 				ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/workspaces/default/environments/public"),
 		// 				Name: to.Ptr("public"),
 		// 				SystemData: &armapicenter.SystemData{
-		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 		// 				},
 		// 				Properties: &armapicenter.EnvironmentProperties{
 		// 					Title: to.Ptr("Contoso Europe Azure API Management"),

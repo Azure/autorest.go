@@ -57,8 +57,8 @@ func ExampleDeletedServicesClient_Get() {
 	// 		Name: to.Ptr("contoso"),
 	// 		Type: to.Ptr("Microsoft.ApiCenter/deletedServices"),
 	// 		Properties: &armapicenter.DeletedServiceProperties{
-	// 			SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-03-01T22:15:58.348Z"); return t}()),
-	// 			ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-05-01T22:15:58.348Z"); return t}()),
+	// 			SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-03-01T22:15:58.348Z"); return t}()),
+	// 			ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-05-01T22:15:58.348Z"); return t}()),
 	// 		},
 	// 	},
 	// }
@@ -94,8 +94,8 @@ func ExampleDeletedServicesClient_NewListPager() {
 		// 				Name: to.Ptr("contoso"),
 		// 				Type: to.Ptr("Microsoft.ApiCenter/deletedServices"),
 		// 				Properties: &armapicenter.DeletedServiceProperties{
-		// 					SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-03-01T22:15:58.348Z"); return t}()),
-		// 					ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-05-01T22:15:58.348Z"); return t}()),
+		// 					SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-03-01T22:15:58.348Z"); return t}()),
+		// 					ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-05-01T22:15:58.348Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
@@ -134,8 +134,8 @@ func ExampleDeletedServicesClient_NewListBySubscriptionPager() {
 		// 				Name: to.Ptr("contoso"),
 		// 				Type: to.Ptr("Microsoft.ApiCenter/deletedServices"),
 		// 				Properties: &armapicenter.DeletedServiceProperties{
-		// 					SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-03-01T22:15:58.348Z"); return t}()),
-		// 					ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2024-05-01T22:15:58.348Z"); return t}()),
+		// 					SoftDeletionDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-03-01T22:15:58.348Z"); return t}()),
+		// 					ScheduledPurgeDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2024-05-01T22:15:58.348Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},

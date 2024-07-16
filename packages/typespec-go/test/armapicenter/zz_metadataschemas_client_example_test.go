@@ -46,8 +46,8 @@ func ExampleMetadataSchemasClient_CreateOrUpdate() {
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/metadataSchemas/author"),
 	// 		Name: to.Ptr("author"),
 	// 		SystemData: &armapicenter.SystemData{
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 	// 		},
 	// 		Properties: &armapicenter.MetadataSchemaProperties{
 	// 			AssignedTo: []*armapicenter.MetadataAssignment{
@@ -108,8 +108,8 @@ func ExampleMetadataSchemasClient_Get() {
 	// 		ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/metadataSchemas/author"),
 	// 		Name: to.Ptr("author"),
 	// 		SystemData: &armapicenter.SystemData{
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 	// 		},
 	// 		Properties: &armapicenter.MetadataSchemaProperties{
 	// 			AssignedTo: []*armapicenter.MetadataAssignment{
@@ -176,8 +176,8 @@ func ExampleMetadataSchemasClient_NewListPager() {
 		// 				ID: to.Ptr("/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/contoso-resources/providers/Microsoft.ApiCenter/services/contoso/metadataSchemas/author"),
 		// 				Name: to.Ptr("author"),
 		// 				SystemData: &armapicenter.SystemData{
-		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.128871Z"); return t}()),
-		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2023-07-03T18:27:09.1288716Z"); return t}()),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.128871Z"); return t}()),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2023-07-03T18:27:09.1288716Z"); return t}()),
 		// 				},
 		// 				Properties: &armapicenter.MetadataSchemaProperties{
 		// 					AssignedTo: []*armapicenter.MetadataAssignment{

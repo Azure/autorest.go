@@ -90,10 +90,10 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	// 		SystemData: &armloadtestservice.SystemData{
 	// 			CreatedBy: to.Ptr("userId1001"),
 	// 			CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 			LastModifiedBy: to.Ptr("userId1001"),
 	// 			LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 		},
 	// 	},
 	// }
@@ -155,10 +155,10 @@ func ExampleLoadTestsClient_Get() {
 	// 		SystemData: &armloadtestservice.SystemData{
 	// 			CreatedBy: to.Ptr("userId1001"),
 	// 			CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 			LastModifiedBy: to.Ptr("userId1001"),
 	// 			LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 		},
 	// 	},
 	// }
@@ -205,10 +205,10 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 		// 				SystemData: &armloadtestservice.SystemData{
 		// 					CreatedBy: to.Ptr("userId1001"),
 		// 					CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 		// 					LastModifiedBy: to.Ptr("userId1001"),
 		// 					LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
@@ -258,10 +258,10 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 		// 				SystemData: &armloadtestservice.SystemData{
 		// 					CreatedBy: to.Ptr("userId1001"),
 		// 					CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+		// 					CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 		// 					LastModifiedBy: to.Ptr("userId1001"),
 		// 					LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+		// 					LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 		// 				},
 		// 			},
 		// 		},
@@ -472,10 +472,10 @@ func ExampleLoadTestsClient_BeginUpdate() {
 	// 		SystemData: &armloadtestservice.SystemData{
 	// 			CreatedBy: to.Ptr("userId1001"),
 	// 			CreatedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			CreatedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 			LastModifiedBy: to.Ptr("userId1001"),
 	// 			LastModifiedByType: to.Ptr(armloadtestservice.CreatedByTypeUser),
-	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse("time.RFC3339Nano", "2021-09-28T12:32:33Z"); return t}()),
+	// 			LastModifiedAt: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2021-09-28T12:32:33Z"); return t}()),
 	// 		},
 	// 	},
 	// }

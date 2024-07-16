@@ -226,7 +226,7 @@ export class clientAdapter {
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
-    const paramMapping = new Map<tcgc.SdkHttpParameter, go.Parameter>();
+    const paramMapping = new Map<tcgc.SdkHttpParameter, go.Parameter[]>();
 
     if (go.isMethod(method)) {
       let prefix = method.client.name;
@@ -270,10 +270,10 @@ export class clientAdapter {
     // we must do this after adapting method params as it can add optional params
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 
-    this.adaptExamples(sdkMethod, method, paramMapping);
+    this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter>) {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter[]>) {
     let optionalGroup: go.ParameterGroup | undefined;
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
@@ -351,7 +351,10 @@ export class clientAdapter {
 
       adaptedParam.description = param.description;
       method.parameters.push(adaptedParam);
-      paramMapping.set(opParam, adaptedParam);
+      if (!paramMapping.has(opParam)) {
+        paramMapping.set(opParam, new Array<go.Parameter>());
+      }
+      paramMapping.get(opParam)?.push(adaptedParam);
 
       // we must check via param name and not reference equality. this is because a client param
       // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
@@ -659,20 +662,33 @@ export class clientAdapter {
     }
   }
 
-  private adaptExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter>) {
+  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter[]>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, example.description, example.filePath);
         for (const param of example.parameters) {
-          const goParam = paramMapping.get(param.parameter);
-          if (!goParam) {
+          const goParams = paramMapping.get(param.parameter);
+          if (!goParams) {
             throw new Error(`can not find go param for example param ${param.parameter.name}`);
           }
-          const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(param.value, goParam?.type));
-          if (goParam?.group) {
-            goExample.optionalParamsGroup.push(paramExample);
+          if (goParams.length > 1) {
+            // spread case
+            for (const goParam of goParams) {
+              const propertyValue = (param.value as tcgc.SdkModelExample).value[(goParam as go.PartialBodyParameter).serializedName];
+              const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
+              if (goParam?.group) {
+                goExample.optionalParamsGroup.push(paramExample);
+              } else {
+                goExample.parameters.push(paramExample);
+              }
+            }
           } else {
-            goExample.parameters.push(paramExample);
+            const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
+            if (goParams[0]?.group) {
+              goExample.optionalParamsGroup.push(paramExample);
+            } else {
+              goExample.parameters.push(paramExample);
+            }
           }
         }
         // only handle 200 response
