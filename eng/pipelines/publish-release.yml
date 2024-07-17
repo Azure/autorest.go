@@ -36,10 +36,10 @@ extends:
             os: linux
 
           steps:
-            - template: /eng/steps/set-env.yaml
+            - template: /eng/pipelines/templates/steps/set-env.yaml
 
             - ${{ if eq(parameters.release_typespecgo, true) }}:
-              - template: /eng/steps/build-test-go.yaml
+              - template: /eng/pipelines/templates/steps/build-test-go.yaml
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.go"
@@ -59,7 +59,7 @@ extends:
                   PublishDevVersion: ${{ parameters.publish_dev }}
 
             - ${{ if eq(parameters.release_typespecgo, true) }}: 
-              - template: /eng/steps/build-test-typespec.yaml
+              - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "typespec.go"
