@@ -1,0 +1,62 @@
+trigger: none
+pr: none
+
+parameters:
+- name: release_autorestgo
+  displayName: 'autorest.go'
+  type: boolean
+  default: false
+- name: release_autorestgotest
+  displayName: 'autorest.gotest'
+  type: boolean
+  default: false
+- name: release_typespecgo
+  displayName: 'azure-tools-typespec-go'
+  type: boolean
+  default: false
+
+extends: 
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+    - stage: Release
+
+      variables: 
+        - template: /eng/pipelines/templates/variables/image.yml
+
+      jobs:
+        - job: Release 
+          pool:
+            name: $(LINUXPOOL)
+            image: $(LINUXVMIMAGE)
+            os: linux
+
+          steps:
+            - template: /eng/steps/set-env.yaml
+
+            - ${{ if eq(parameters.release_typespecgo, true) }}:
+              - template: /eng/steps/build-test-go.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "autorest.go"
+                  PackageName: "autorest.go"
+                  ReleaseName: "Autorest for Go v$currentVersion"
+                  ReleaseNotes: "Autorest for Go track 2"
+
+            - ${{ if eq(parameters.release_autorestgotest, true) }}:
+              - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "autorest.gotest"
+                  PackageName: "autorest.gotest"
+                  ReleaseName: "@autorest/gotest_v$currentVersion"
+                  ReleaseNotes: "Go test generation"
+
+            - ${{ if eq(parameters.release_typespecgo, true) }}: 
+              - template: /eng/steps/build-test-typespec.yaml
+              - template: /eng/pipelines/templates/steps/publish-release.yaml
+                parameters:
+                  PackagePath: "typespec.go"
+                  PackageName: "azure-tools-typespec-go"
+                  ReleaseName: "TypeSpec emitter for Go SDKs v$currentVersion"
+                  ReleaseNotes: "TypeSpec emitter for Go SDKs"
