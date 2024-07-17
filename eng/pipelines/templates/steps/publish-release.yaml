@@ -24,9 +24,9 @@ steps:
         --token $(azuresdk-github-pat) `
         --repo autorest.go `
         --owner azure `
-        --name '${{ parameters.ReleaseName }}' `
+        --name "${{ parameters.ReleaseName }}" `
         --tag v$currentVersion `
-        --notes='$releaseNotes' `
+        --notes="$releaseNotes" `
         --prerelease `
         --editRelease false `
         --assets ${{ parameters.PackageName }}-$currentVersion.tgz `
