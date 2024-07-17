@@ -43,7 +43,7 @@ extends:
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.go"
-                  PackageName: "autorest-go"
+                  PackageFileName: "autorest-go"
                   ReleaseName: "Autorest for Go v$currentVersion"
                   ReleaseNotes: "Autorest for Go track 2"
                   PublishDevVersion: ${{ parameters.publish_dev }}
@@ -53,7 +53,7 @@ extends:
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.gotest"
-                  PackageName: "autorest-gotest"
+                  PackageFileName: "autorest-gotest"
                   ReleaseName: "@autorest/gotest_v$currentVersion"
                   ReleaseNotes: "Go test generation"
                   PublishDevVersion: ${{ parameters.publish_dev }}
@@ -63,7 +63,7 @@ extends:
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "typespec-go"
-                  PackageName: "azure-tools-typespec-go"
+                  PackageFileName: "azure-tools-typespec-go"
                   ReleaseName: "TypeSpec emitter for Go SDKs v$currentVersion"
                   ReleaseNotes: "TypeSpec emitter for Go SDKs"
                   PublishDevVersion: ${{ parameters.publish_dev }}

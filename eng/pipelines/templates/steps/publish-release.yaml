@@ -1,6 +1,6 @@
 parameters:
   PackagePath: "not-specified"
-  PackageName: "not-specfied"
+  PackageFileName: "not-specfied"
   ReleaseName: "not-specified"
   ReleaseNotes: "not-specfied"
   PublishDevVersion: true
@@ -16,7 +16,7 @@ steps:
       cd packages/${{ parameters.PackagePath }}
       npm version --no-git-tag-version $currentVersion
       npm pack
-      npm install -g ${{ parameters.PackageName }}-$currentVersion.tgz
+      npm install -g ${{ parameters.PackageFileName }}-$currentVersion.tgz
       if ($LASTEXITCODE) {
         exit $LASTEXITCODE
       }
@@ -29,7 +29,7 @@ steps:
         --notes="$releaseNotes" `
         --prerelease `
         --editRelease false `
-        --assets ${{ parameters.PackageName }}-$currentVersion.tgz `
+        --assets ${{ parameters.PackageFileName }}-$currentVersion.tgz `
         --target_commitish $(Build.SourceBranchName);
     displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
 
