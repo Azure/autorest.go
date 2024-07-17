@@ -7,15 +7,15 @@ parameters:
   type: boolean
   default: true
 - name: release_autorestgo
-  displayName: 'autorest.go'
+  displayName: '@autorest/go'
   type: boolean
   default: false
 - name: release_autorestgotest
-  displayName: 'autorest.gotest'
+  displayName: '@autorest/gotest'
   type: boolean
   default: false
 - name: release_typespecgo
-  displayName: 'azure-tools-typespec-go'
+  displayName: '@azure-tools/typespec-go'
   type: boolean
   default: false
 
@@ -38,12 +38,12 @@ extends:
           steps:
             - template: /eng/pipelines/templates/steps/set-env.yaml
 
-            - ${{ if eq(parameters.release_typespecgo, true) }}:
+            - ${{ if eq(parameters.release_autorestgo, true) }}:
               - template: /eng/pipelines/templates/steps/build-test-go.yaml
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.go"
-                  PackageName: "autorest.go"
+                  PackageName: "autorest-go"
                   ReleaseName: "Autorest for Go v$currentVersion"
                   ReleaseNotes: "Autorest for Go track 2"
                   PublishDevVersion: ${{ parameters.publish_dev }}
@@ -53,7 +53,7 @@ extends:
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
                   PackagePath: "autorest.gotest"
-                  PackageName: "autorest.gotest"
+                  PackageName: "autorest-gotest"
                   ReleaseName: "@autorest/gotest_v$currentVersion"
                   ReleaseNotes: "Go test generation"
                   PublishDevVersion: ${{ parameters.publish_dev }}
