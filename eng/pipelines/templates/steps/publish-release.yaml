@@ -3,10 +3,16 @@ parameters:
   PackageName: "not-specfied"
   ReleaseName: "not-specified"
   ReleaseNotes: "not-specfied"
+  PublishDevVersion: true
 
 steps:
   - pwsh: |
-      $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version";
+      $currentVersion = node -p -e "require('./packages/${{ parameters.PackagePath }}/package.json').version"
+      $releaseNotes = ${{ parameters.ReleaseNotes }}
+      if (${{ parameters.PublishDevVersion }} -eq 'true') {
+        $currentVersion="$currentVersion-$(Build.BuildNumber)"
+        $releaseNotes = "Preview version of ${{ parameters.ReleaseNotes }}"
+      }
       cd packages/${{ parameters.PackagePath }}
       npm version --no-git-tag-version $currentVersion
       npm pack
@@ -20,15 +26,16 @@ steps:
         --owner azure `
         --name "${{ parameters.ReleaseName }}" `
         --tag v$currentVersion `
-        --notes='${{ parameters.ReleaseNotes }}' `
+        --notes=$releaseNotes `
         --prerelease `
         --editRelease false `
         --assets ${{ parameters.PackageName }}-$currentVersion.tgz `
         --target_commitish $(Build.SourceBranchName);
     displayName: "Publish GitHub Release ${{ parameters.PackagePath }}"
 
-  - script: |
-      cd packages/${{ parameters.PackagePath }}
-      echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
-      npm publish --access public
-    displayName: "Publish to npm ${{ parameters.PackagePath }}"
+  - ${{ if ne(parameters.PublishDevVersion, true) }}:
+    - script: |
+        cd packages/${{ parameters.PackagePath }}
+        echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
+        npm publish --access public
+      displayName: "Publish to npm ${{ parameters.PackagePath }}"

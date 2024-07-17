@@ -2,6 +2,10 @@ trigger: none
 pr: none
 
 parameters:
+- name: publish_dev
+  displayName: 'Publish Dev Release only'
+  type: boolean
+  default: true
 - name: release_autorestgo
   displayName: 'autorest.go'
   type: boolean
@@ -42,6 +46,7 @@ extends:
                   PackageName: "autorest.go"
                   ReleaseName: "Autorest for Go v$currentVersion"
                   ReleaseNotes: "Autorest for Go track 2"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
 
             - ${{ if eq(parameters.release_autorestgotest, true) }}:
               - template: /eng/pipelines/templates/steps/build-test-gotest.yaml
@@ -51,6 +56,7 @@ extends:
                   PackageName: "autorest.gotest"
                   ReleaseName: "@autorest/gotest_v$currentVersion"
                   ReleaseNotes: "Go test generation"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
 
             - ${{ if eq(parameters.release_typespecgo, true) }}: 
               - template: /eng/steps/build-test-typespec.yaml
@@ -60,3 +66,4 @@ extends:
                   PackageName: "azure-tools-typespec-go"
                   ReleaseName: "TypeSpec emitter for Go SDKs v$currentVersion"
                   ReleaseNotes: "TypeSpec emitter for Go SDKs"
+                  PublishDevVersion: ${{ parameters.publish_dev }}
