@@ -62,7 +62,7 @@ extends:
               - template: /eng/pipelines/templates/steps/build-test-typespec.yaml
               - template: /eng/pipelines/templates/steps/publish-release.yaml
                 parameters:
-                  PackagePath: "typespec.go"
+                  PackagePath: "typespec-go"
                   PackageName: "azure-tools-typespec-go"
                   ReleaseName: "TypeSpec emitter for Go SDKs v$currentVersion"
                   ReleaseNotes: "TypeSpec emitter for Go SDKs"
