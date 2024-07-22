@@ -15,7 +15,6 @@ import (
 	"net/url"
 	"regexp"
 	"spreadgroup"
-	"strconv"
 )
 
 // SpreadAliasServer is a fake server for instances of the spreadgroup.SpreadAliasClient type.
@@ -171,16 +170,6 @@ func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerAlias(req *
 	if err != nil {
 		return nil, err
 	}
-	ageParam, err := parseWithCast(age, func(v string) (int32, error) {
-		p, parseErr := strconv.ParseInt(v, 10, 32)
-		if parseErr != nil {
-			return 0, parseErr
-		}
-		return int32(p), nil
-	})
-	if err != nil {
-		return nil, err
-	}
 	respr, errRespr := s.srv.SpreadParameterWithInnerAlias(req.Context(), idParam, body.Name, body.Age, getHeaderValue(req.Header, "x-ms-test-header"), nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
@@ -253,16 +242,6 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 		return nil, err
 	}
 	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
-	if err != nil {
-		return nil, err
-	}
-	optionalIntParam, err := parseWithCast(optionalInt, func(v string) (int32, error) {
-		p, parseErr := strconv.ParseInt(v, 10, 32)
-		if parseErr != nil {
-			return 0, parseErr
-		}
-		return int32(p), nil
-	})
 	if err != nil {
 		return nil, err
 	}
