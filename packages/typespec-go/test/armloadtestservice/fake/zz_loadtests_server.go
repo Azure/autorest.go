@@ -46,7 +46,7 @@ type LoadTestsServer struct {
 
 	// BeginUpdate is the fake for method LoadTestsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResourceUpdate, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResource, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewLoadTestsServerTransport creates a new instance of LoadTestsServerTransport with the provided implementation.
@@ -361,7 +361,7 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResourceUpdate](req)
+		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResource](req)
 		if err != nil {
 			return nil, err
 		}

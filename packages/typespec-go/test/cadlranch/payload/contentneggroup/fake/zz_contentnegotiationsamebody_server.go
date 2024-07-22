@@ -85,6 +85,9 @@ func (c *ContentNegotiationSameBodyServerTransport) dispatchGetAvatarAsJPEG(req 
 	if err != nil {
 		return nil, err
 	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "image/jpeg")
+	}
 	return resp, nil
 }
 
@@ -106,6 +109,9 @@ func (c *ContentNegotiationSameBodyServerTransport) dispatchGetAvatarAsPNG(req *
 	})
 	if err != nil {
 		return nil, err
+	}
+	if val := server.GetResponse(respr).ContentType; val != nil {
+		resp.Header.Set("content-type", "image/png")
 	}
 	return resp, nil
 }

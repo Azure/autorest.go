@@ -4,6 +4,15 @@
 
 package visibilitygroup
 
+// ReadOnlyModel - RoundTrip model with readonly optional properties.
+type ReadOnlyModel struct {
+	// READ-ONLY; Optional readonly nullable int list.
+	OptionalNullableIntList []*int32
+
+	// READ-ONLY; Optional readonly string dictionary.
+	OptionalStringRecord map[string]*string
+}
+
 // VisibilityModel - Output model with visibility properties.
 type VisibilityModel struct {
 	// REQUIRED; Required string[], illustrating a create property.

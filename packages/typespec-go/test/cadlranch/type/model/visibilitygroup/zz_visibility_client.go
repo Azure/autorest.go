@@ -254,3 +254,53 @@ func (client *VisibilityClient) putModelCreateRequest(ctx context.Context, input
 	}
 	return req, nil
 }
+
+// PutReadOnlyModel -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - VisibilityClientPutReadOnlyModelOptions contains the optional parameters for the VisibilityClient.PutReadOnlyModel
+//     method.
+func (client *VisibilityClient) PutReadOnlyModel(ctx context.Context, input ReadOnlyModel, options *VisibilityClientPutReadOnlyModelOptions) (VisibilityClientPutReadOnlyModelResponse, error) {
+	var err error
+	const operationName = "VisibilityClient.PutReadOnlyModel"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.putReadOnlyModelCreateRequest(ctx, input, options)
+	if err != nil {
+		return VisibilityClientPutReadOnlyModelResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return VisibilityClientPutReadOnlyModelResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return VisibilityClientPutReadOnlyModelResponse{}, err
+	}
+	resp, err := client.putReadOnlyModelHandleResponse(httpResp)
+	return resp, err
+}
+
+// putReadOnlyModelCreateRequest creates the PutReadOnlyModel request.
+func (client *VisibilityClient) putReadOnlyModelCreateRequest(ctx context.Context, input ReadOnlyModel, _ *VisibilityClientPutReadOnlyModelOptions) (*policy.Request, error) {
+	urlPath := "/type/model/visibility/readonlyroundtrip"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, input); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// putReadOnlyModelHandleResponse handles the PutReadOnlyModel response.
+func (client *VisibilityClient) putReadOnlyModelHandleResponse(resp *http.Response) (VisibilityClientPutReadOnlyModelResponse, error) {
+	result := VisibilityClientPutReadOnlyModelResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ReadOnlyModel); err != nil {
+		return VisibilityClientPutReadOnlyModelResponse{}, err
+	}
+	return result, nil
+}

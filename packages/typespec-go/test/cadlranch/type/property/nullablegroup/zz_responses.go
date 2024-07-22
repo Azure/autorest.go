@@ -70,6 +70,28 @@ type NullableCollectionsModelClientPatchNullResponse struct {
 	// placeholder for future response values
 }
 
+// NullableCollectionsStringClientGetNonNullResponse contains the response from method NullableCollectionsStringClient.GetNonNull.
+type NullableCollectionsStringClientGetNonNullResponse struct {
+	// Model with collection string properties
+	CollectionsStringProperty
+}
+
+// NullableCollectionsStringClientGetNullResponse contains the response from method NullableCollectionsStringClient.GetNull.
+type NullableCollectionsStringClientGetNullResponse struct {
+	// Model with collection string properties
+	CollectionsStringProperty
+}
+
+// NullableCollectionsStringClientPatchNonNullResponse contains the response from method NullableCollectionsStringClient.PatchNonNull.
+type NullableCollectionsStringClientPatchNonNullResponse struct {
+	// placeholder for future response values
+}
+
+// NullableCollectionsStringClientPatchNullResponse contains the response from method NullableCollectionsStringClient.PatchNull.
+type NullableCollectionsStringClientPatchNullResponse struct {
+	// placeholder for future response values
+}
+
 // NullableDatetimeClientGetNonNullResponse contains the response from method NullableDatetimeClient.GetNonNull.
 type NullableDatetimeClientGetNonNullResponse struct {
 	// Model with a datetime property

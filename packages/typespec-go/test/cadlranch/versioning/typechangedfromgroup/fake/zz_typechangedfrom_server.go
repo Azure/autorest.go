@@ -20,7 +20,7 @@ import (
 type TypeChangedFromServer struct {
 	// Test is the fake for method TypeChangedFromClient.Test
 	// HTTP status codes to indicate success: http.StatusOK
-	Test func(ctx context.Context, param string, body typechangedfromgroup.TestModel, options *typechangedfromgroup.TypeChangedFromClientTestOptions) (resp azfake.Responder[typechangedfromgroup.TypeChangedFromClientTestResponse], errResp azfake.ErrorResponder)
+	Test func(ctx context.Context, body typechangedfromgroup.TestModel, param string, options *typechangedfromgroup.TypeChangedFromClientTestOptions) (resp azfake.Responder[typechangedfromgroup.TypeChangedFromClientTestResponse], errResp azfake.ErrorResponder)
 }
 
 // NewTypeChangedFromServerTransport creates a new instance of TypeChangedFromServerTransport with the provided implementation.
@@ -74,7 +74,7 @@ func (t *TypeChangedFromServerTransport) dispatchTest(req *http.Request) (*http.
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := t.srv.Test(req.Context(), paramParam, body, nil)
+	respr, errRespr := t.srv.Test(req.Context(), body, paramParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

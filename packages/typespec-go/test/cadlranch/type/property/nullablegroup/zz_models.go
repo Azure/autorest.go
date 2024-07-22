@@ -34,6 +34,15 @@ type CollectionsModelProperty struct {
 	RequiredProperty *string
 }
 
+// CollectionsStringProperty - Model with collection string properties
+type CollectionsStringProperty struct {
+	// REQUIRED; Property
+	NullableProperty []*string
+
+	// REQUIRED; Required property
+	RequiredProperty *string
+}
+
 // DatetimeProperty - Model with a datetime property
 type DatetimeProperty struct {
 	// REQUIRED; Property

@@ -9,12 +9,3 @@ type BodyParameter struct {
 	// REQUIRED
 	Name *string
 }
-
-// CompositeRequestMix - This is a model with non-body http request decorator.
-type CompositeRequestMix struct {
-	// REQUIRED
-	Prop *string
-
-	// READ-ONLY
-	Name *string
-}

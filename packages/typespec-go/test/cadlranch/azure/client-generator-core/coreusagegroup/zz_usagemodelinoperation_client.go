@@ -62,6 +62,69 @@ func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx c
 	return req, nil
 }
 
+// ModelInReadOnlyProperty - "ResultModel" should be usage=output, as it is read-only and does not exist in request body.
+// Expected body parameter:
+// ```json
+// {
+// }
+// ```
+// Expected response body:
+// ```json
+// {
+// "result": {
+// "name": <any string>
+// }
+// }
+// ```
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - UsageModelInOperationClientModelInReadOnlyPropertyOptions contains the optional parameters for the UsageModelInOperationClient.ModelInReadOnlyProperty
+//     method.
+func (client *UsageModelInOperationClient) ModelInReadOnlyProperty(ctx context.Context, body RoundTripModel, options *UsageModelInOperationClientModelInReadOnlyPropertyOptions) (UsageModelInOperationClientModelInReadOnlyPropertyResponse, error) {
+	var err error
+	const operationName = "UsageModelInOperationClient.ModelInReadOnlyProperty"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.modelInReadOnlyPropertyCreateRequest(ctx, body, options)
+	if err != nil {
+		return UsageModelInOperationClientModelInReadOnlyPropertyResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return UsageModelInOperationClientModelInReadOnlyPropertyResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return UsageModelInOperationClientModelInReadOnlyPropertyResponse{}, err
+	}
+	resp, err := client.modelInReadOnlyPropertyHandleResponse(httpResp)
+	return resp, err
+}
+
+// modelInReadOnlyPropertyCreateRequest creates the ModelInReadOnlyProperty request.
+func (client *UsageModelInOperationClient) modelInReadOnlyPropertyCreateRequest(ctx context.Context, body RoundTripModel, _ *UsageModelInOperationClientModelInReadOnlyPropertyOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/usage/modelInReadOnlyProperty"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// modelInReadOnlyPropertyHandleResponse handles the ModelInReadOnlyProperty response.
+func (client *UsageModelInOperationClient) modelInReadOnlyPropertyHandleResponse(resp *http.Response) (UsageModelInOperationClientModelInReadOnlyPropertyResponse, error) {
+	result := UsageModelInOperationClientModelInReadOnlyPropertyResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RoundTripModel); err != nil {
+		return UsageModelInOperationClientModelInReadOnlyPropertyResponse{}, err
+	}
+	return result, nil
+}
+
 // OutputToInputOutput - Expected response body:
 // ```json
 // {

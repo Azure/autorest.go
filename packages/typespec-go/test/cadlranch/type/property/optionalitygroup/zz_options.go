@@ -180,6 +180,46 @@ type OptionalIntLiteralClientPutDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
+// OptionalPlainDateClientGetAllOptions contains the optional parameters for the OptionalPlainDateClient.GetAll method.
+type OptionalPlainDateClientGetAllOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainDateClientGetDefaultOptions contains the optional parameters for the OptionalPlainDateClient.GetDefault method.
+type OptionalPlainDateClientGetDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainDateClientPutAllOptions contains the optional parameters for the OptionalPlainDateClient.PutAll method.
+type OptionalPlainDateClientPutAllOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainDateClientPutDefaultOptions contains the optional parameters for the OptionalPlainDateClient.PutDefault method.
+type OptionalPlainDateClientPutDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainTimeClientGetAllOptions contains the optional parameters for the OptionalPlainTimeClient.GetAll method.
+type OptionalPlainTimeClientGetAllOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainTimeClientGetDefaultOptions contains the optional parameters for the OptionalPlainTimeClient.GetDefault method.
+type OptionalPlainTimeClientGetDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainTimeClientPutAllOptions contains the optional parameters for the OptionalPlainTimeClient.PutAll method.
+type OptionalPlainTimeClientPutAllOptions struct {
+	// placeholder for future optional parameters
+}
+
+// OptionalPlainTimeClientPutDefaultOptions contains the optional parameters for the OptionalPlainTimeClient.PutDefault method.
+type OptionalPlainTimeClientPutDefaultOptions struct {
+	// placeholder for future optional parameters
+}
+
 // OptionalRequiredAndOptionalClientGetAllOptions contains the optional parameters for the OptionalRequiredAndOptionalClient.GetAll
 // method.
 type OptionalRequiredAndOptionalClientGetAllOptions struct {

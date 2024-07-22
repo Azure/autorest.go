@@ -24,13 +24,13 @@ type TypeChangedFromClient struct {
 // Test -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - TypeChangedFromClientTestOptions contains the optional parameters for the TypeChangedFromClient.Test method.
-func (client *TypeChangedFromClient) Test(ctx context.Context, param string, body TestModel, options *TypeChangedFromClientTestOptions) (TypeChangedFromClientTestResponse, error) {
+func (client *TypeChangedFromClient) Test(ctx context.Context, body TestModel, param string, options *TypeChangedFromClientTestOptions) (TypeChangedFromClientTestResponse, error) {
 	var err error
 	const operationName = "TypeChangedFromClient.Test"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.testCreateRequest(ctx, param, body, options)
+	req, err := client.testCreateRequest(ctx, body, param, options)
 	if err != nil {
 		return TypeChangedFromClientTestResponse{}, err
 	}
@@ -47,7 +47,7 @@ func (client *TypeChangedFromClient) Test(ctx context.Context, param string, bod
 }
 
 // testCreateRequest creates the Test request.
-func (client *TypeChangedFromClient) testCreateRequest(ctx context.Context, param string, body TestModel, _ *TypeChangedFromClientTestOptions) (*policy.Request, error) {
+func (client *TypeChangedFromClient) testCreateRequest(ctx context.Context, body TestModel, param string, _ *TypeChangedFromClientTestOptions) (*policy.Request, error) {
 	host := "{endpoint}/versioning/type-changed-from/api-version:{version}"
 	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	host = strings.ReplaceAll(host, "{version}", string(client.version))

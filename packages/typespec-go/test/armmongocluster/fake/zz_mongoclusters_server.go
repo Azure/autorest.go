@@ -50,7 +50,7 @@ type MongoClustersServer struct {
 
 	// BeginUpdate is the fake for method MongoClustersClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, mongoClusterName string, properties armmongocluster.Update, options *armmongocluster.MongoClustersClientBeginUpdateOptions) (resp azfake.PollerResponder[armmongocluster.MongoClustersClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, mongoClusterName string, properties armmongocluster.MongoCluster, options *armmongocluster.MongoClustersClientBeginUpdateOptions) (resp azfake.PollerResponder[armmongocluster.MongoClustersClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewMongoClustersServerTransport creates a new instance of MongoClustersServerTransport with the provided implementation.
@@ -390,7 +390,7 @@ func (m *MongoClustersServerTransport) dispatchBeginUpdate(req *http.Request) (*
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armmongocluster.Update](req)
+		body, err := server.UnmarshalRequestAsJSON[armmongocluster.MongoCluster](req)
 		if err != nil {
 			return nil, err
 		}

@@ -23,16 +23,15 @@ type SpreadModelClient struct {
 
 // SpreadAsRequestBody -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - bodyParameter - This is a simple model.
 //   - options - SpreadModelClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadModelClient.SpreadAsRequestBody
 //     method.
-func (client *SpreadModelClient) SpreadAsRequestBody(ctx context.Context, bodyParameter BodyParameter, options *SpreadModelClientSpreadAsRequestBodyOptions) (SpreadModelClientSpreadAsRequestBodyResponse, error) {
+func (client *SpreadModelClient) SpreadAsRequestBody(ctx context.Context, name string, options *SpreadModelClientSpreadAsRequestBodyOptions) (SpreadModelClientSpreadAsRequestBodyResponse, error) {
 	var err error
 	const operationName = "SpreadModelClient.SpreadAsRequestBody"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.spreadAsRequestBodyCreateRequest(ctx, bodyParameter, options)
+	req, err := client.spreadAsRequestBodyCreateRequest(ctx, name, options)
 	if err != nil {
 		return SpreadModelClientSpreadAsRequestBodyResponse{}, err
 	}
@@ -48,14 +47,19 @@ func (client *SpreadModelClient) SpreadAsRequestBody(ctx context.Context, bodyPa
 }
 
 // spreadAsRequestBodyCreateRequest creates the SpreadAsRequestBody request.
-func (client *SpreadModelClient) spreadAsRequestBodyCreateRequest(ctx context.Context, bodyParameter BodyParameter, _ *SpreadModelClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
+func (client *SpreadModelClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, _ *SpreadModelClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/model/request-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, bodyParameter); err != nil {
+	body := struct {
+		Name string `json:"name"`
+	}{
+		Name: name,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -107,16 +111,15 @@ func (client *SpreadModelClient) spreadCompositeRequestCreateRequest(ctx context
 
 // SpreadCompositeRequestMix -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - compositeRequestMix - This is a model with non-body http request decorator.
 //   - options - SpreadModelClientSpreadCompositeRequestMixOptions contains the optional parameters for the SpreadModelClient.SpreadCompositeRequestMix
 //     method.
-func (client *SpreadModelClient) SpreadCompositeRequestMix(ctx context.Context, name string, testHeader string, compositeRequestMix CompositeRequestMix, options *SpreadModelClientSpreadCompositeRequestMixOptions) (SpreadModelClientSpreadCompositeRequestMixResponse, error) {
+func (client *SpreadModelClient) SpreadCompositeRequestMix(ctx context.Context, name string, testHeader string, prop string, options *SpreadModelClientSpreadCompositeRequestMixOptions) (SpreadModelClientSpreadCompositeRequestMixResponse, error) {
 	var err error
 	const operationName = "SpreadModelClient.SpreadCompositeRequestMix"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.spreadCompositeRequestMixCreateRequest(ctx, name, testHeader, compositeRequestMix, options)
+	req, err := client.spreadCompositeRequestMixCreateRequest(ctx, name, testHeader, prop, options)
 	if err != nil {
 		return SpreadModelClientSpreadCompositeRequestMixResponse{}, err
 	}
@@ -132,7 +135,7 @@ func (client *SpreadModelClient) SpreadCompositeRequestMix(ctx context.Context, 
 }
 
 // spreadCompositeRequestMixCreateRequest creates the SpreadCompositeRequestMix request.
-func (client *SpreadModelClient) spreadCompositeRequestMixCreateRequest(ctx context.Context, name string, testHeader string, compositeRequestMix CompositeRequestMix, _ *SpreadModelClientSpreadCompositeRequestMixOptions) (*policy.Request, error) {
+func (client *SpreadModelClient) spreadCompositeRequestMixCreateRequest(ctx context.Context, name string, testHeader string, prop string, _ *SpreadModelClientSpreadCompositeRequestMixOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/model/composite-request-mix/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -144,7 +147,12 @@ func (client *SpreadModelClient) spreadCompositeRequestMixCreateRequest(ctx cont
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	req.Raw().Header["test-header"] = []string{testHeader}
-	if err := runtime.MarshalAsJSON(req, compositeRequestMix); err != nil {
+	body := struct {
+		Prop string `json:"prop"`
+	}{
+		Prop: prop,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

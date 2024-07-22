@@ -21,7 +21,7 @@ import (
 type SpreadModelServer struct {
 	// SpreadAsRequestBody is the fake for method SpreadModelClient.SpreadAsRequestBody
 	// HTTP status codes to indicate success: http.StatusNoContent
-	SpreadAsRequestBody func(ctx context.Context, bodyParameter spreadgroup.BodyParameter, options *spreadgroup.SpreadModelClientSpreadAsRequestBodyOptions) (resp azfake.Responder[spreadgroup.SpreadModelClientSpreadAsRequestBodyResponse], errResp azfake.ErrorResponder)
+	SpreadAsRequestBody func(ctx context.Context, name string, options *spreadgroup.SpreadModelClientSpreadAsRequestBodyOptions) (resp azfake.Responder[spreadgroup.SpreadModelClientSpreadAsRequestBodyResponse], errResp azfake.ErrorResponder)
 
 	// SpreadCompositeRequest is the fake for method SpreadModelClient.SpreadCompositeRequest
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -29,7 +29,7 @@ type SpreadModelServer struct {
 
 	// SpreadCompositeRequestMix is the fake for method SpreadModelClient.SpreadCompositeRequestMix
 	// HTTP status codes to indicate success: http.StatusNoContent
-	SpreadCompositeRequestMix func(ctx context.Context, name string, testHeader string, compositeRequestMix spreadgroup.CompositeRequestMix, options *spreadgroup.SpreadModelClientSpreadCompositeRequestMixOptions) (resp azfake.Responder[spreadgroup.SpreadModelClientSpreadCompositeRequestMixResponse], errResp azfake.ErrorResponder)
+	SpreadCompositeRequestMix func(ctx context.Context, name string, testHeader string, prop string, options *spreadgroup.SpreadModelClientSpreadCompositeRequestMixOptions) (resp azfake.Responder[spreadgroup.SpreadModelClientSpreadCompositeRequestMixResponse], errResp azfake.ErrorResponder)
 
 	// SpreadCompositeRequestOnlyWithBody is the fake for method SpreadModelClient.SpreadCompositeRequestOnlyWithBody
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -90,11 +90,14 @@ func (s *SpreadModelServerTransport) dispatchSpreadAsRequestBody(req *http.Reque
 	if s.srv.SpreadAsRequestBody == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadAsRequestBody not implemented")}
 	}
-	body, err := server.UnmarshalRequestAsJSON[spreadgroup.BodyParameter](req)
+	type partialBodyParams struct {
+		Name string `json:"name"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.SpreadAsRequestBody(req.Context(), body, nil)
+	respr, errRespr := s.srv.SpreadAsRequestBody(req.Context(), body.Name, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -152,7 +155,10 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestMix(req *http
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[spreadgroup.CompositeRequestMix](req)
+	type partialBodyParams struct {
+		Prop string `json:"prop"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +166,7 @@ func (s *SpreadModelServerTransport) dispatchSpreadCompositeRequestMix(req *http
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.SpreadCompositeRequestMix(req.Context(), nameParam, getHeaderValue(req.Header, "test-header"), body, nil)
+	respr, errRespr := s.srv.SpreadCompositeRequestMix(req.Context(), nameParam, getHeaderValue(req.Header, "test-header"), body.Prop, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

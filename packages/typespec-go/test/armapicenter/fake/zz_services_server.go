@@ -46,7 +46,7 @@ type ServicesServer struct {
 
 	// Update is the fake for method ServicesClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.ServiceUpdate, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, serviceName string, payload armapicenter.Service, options *armapicenter.ServicesClientUpdateOptions) (resp azfake.Responder[armapicenter.ServicesClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewServicesServerTransport creates a new instance of ServicesServerTransport with the provided implementation.
@@ -338,7 +338,7 @@ func (s *ServicesServerTransport) dispatchUpdate(req *http.Request) (*http.Respo
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[armapicenter.ServiceUpdate](req)
+	body, err := server.UnmarshalRequestAsJSON[armapicenter.Service](req)
 	if err != nil {
 		return nil, err
 	}

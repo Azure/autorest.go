@@ -123,25 +123,6 @@ type LoadTestResourceListResult struct {
 	NextLink *string
 }
 
-// LoadTestResourceUpdate - The type used for update operations of the LoadTestResource.
-type LoadTestResourceUpdate struct {
-	// The managed service identities assigned to this resource.
-	Identity   *ManagedServiceIdentity
-	Properties *LoadTestResourceUpdateProperties
-
-	// Resource tags.
-	Tags map[string]*string
-}
-
-// LoadTestResourceUpdateProperties - The updatable properties of the LoadTestResource.
-type LoadTestResourceUpdateProperties struct {
-	// Description of the resource.
-	Description *string
-
-	// CMK Encryption property.
-	Encryption *EncryptionProperties
-}
-
 // ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
 type ManagedServiceIdentity struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
@@ -163,7 +144,7 @@ type Operation struct {
 	// Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
 
-	// Localized display information for this particular operation.
+	// READ-ONLY; Localized display information for this particular operation.
 	Display *OperationDisplay
 
 	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
@@ -181,17 +162,19 @@ type Operation struct {
 
 // OperationDisplay - Localized display information for and operation.
 type OperationDisplay struct {
-	// The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+	// READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string
 
-	// The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine",
-	// "Restart Virtual Machine".
+	// READ-ONLY; The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual
+	// Machine", "Restart Virtual Machine".
 	Operation *string
 
-	// The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+	// READ-ONLY; The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft
+	// Compute".
 	Provider *string
 
-	// The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
+	// READ-ONLY; The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job
+	// Schedule Collections".
 	Resource *string
 }
 
@@ -215,8 +198,8 @@ type OutboundEnvironmentEndpoint struct {
 	Endpoints []*EndpointDependency
 }
 
-// PagedOutboundEnvironmentEndpoint - Values returned by the List operation.
-type PagedOutboundEnvironmentEndpoint struct {
+// OutboundEnvironmentEndpointCollection - Values returned by the List operation.
+type OutboundEnvironmentEndpointCollection struct {
 	// REQUIRED; The OutboundEnvironmentEndpoint items on this page
 	Value []*OutboundEnvironmentEndpoint
 

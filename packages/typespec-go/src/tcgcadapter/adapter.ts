@@ -41,13 +41,13 @@ export function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>): go.Co
     codeModel.options.sliceElementsByval = true;
   }
 
-  fixStutteringTypeNames(sdkContext.experimental_sdkPackage, codeModel, context.options);
+  fixStutteringTypeNames(sdkContext.sdkPackage, codeModel, context.options);
 
   const ta = new typeAdapter(codeModel);
   ta.adaptTypes(sdkContext, context.options['remove-unreferenced-types'] === true);
 
   const ca = new clientAdapter(ta, context.options);
-  ca.adaptClients(sdkContext.experimental_sdkPackage);
+  ca.adaptClients(sdkContext.sdkPackage);
   codeModel.sortContent();
   return codeModel;
 }

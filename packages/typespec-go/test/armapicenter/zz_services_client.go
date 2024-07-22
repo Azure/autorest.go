@@ -430,7 +430,7 @@ func (client *ServicesClient) listBySubscriptionHandleResponse(resp *http.Respon
 //   - serviceName - The name of Azure API Center service.
 //   - payload - The resource properties to be updated.
 //   - options - ServicesClientUpdateOptions contains the optional parameters for the ServicesClient.Update method.
-func (client *ServicesClient) Update(ctx context.Context, resourceGroupName string, serviceName string, payload ServiceUpdate, options *ServicesClientUpdateOptions) (ServicesClientUpdateResponse, error) {
+func (client *ServicesClient) Update(ctx context.Context, resourceGroupName string, serviceName string, payload Service, options *ServicesClientUpdateOptions) (ServicesClientUpdateResponse, error) {
 	var err error
 	const operationName = "ServicesClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -453,7 +453,7 @@ func (client *ServicesClient) Update(ctx context.Context, resourceGroupName stri
 }
 
 // updateCreateRequest creates the Update request.
-func (client *ServicesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload ServiceUpdate, _ *ServicesClientUpdateOptions) (*policy.Request, error) {
+func (client *ServicesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, serviceName string, payload Service, _ *ServicesClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -68,6 +68,20 @@ func (client *OptionalClient) NewOptionalIntLiteralClient() *OptionalIntLiteralC
 	}
 }
 
+// NewOptionalPlainDateClient creates a new instance of [OptionalPlainDateClient].
+func (client *OptionalClient) NewOptionalPlainDateClient() *OptionalPlainDateClient {
+	return &OptionalPlainDateClient{
+		internal: client.internal,
+	}
+}
+
+// NewOptionalPlainTimeClient creates a new instance of [OptionalPlainTimeClient].
+func (client *OptionalClient) NewOptionalPlainTimeClient() *OptionalPlainTimeClient {
+	return &OptionalPlainTimeClient{
+		internal: client.internal,
+	}
+}
+
 // NewOptionalRequiredAndOptionalClient creates a new instance of [OptionalRequiredAndOptionalClient].
 func (client *OptionalClient) NewOptionalRequiredAndOptionalClient() *OptionalRequiredAndOptionalClient {
 	return &OptionalRequiredAndOptionalClient{

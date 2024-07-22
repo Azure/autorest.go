@@ -122,6 +122,37 @@ func (c *CollectionsModelProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CollectionsStringProperty.
+func (c CollectionsStringProperty) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "nullableProperty", c.NullableProperty)
+	populate(objectMap, "requiredProperty", c.RequiredProperty)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CollectionsStringProperty.
+func (c *CollectionsStringProperty) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "nullableProperty":
+			err = unpopulate(val, "NullableProperty", &c.NullableProperty)
+			delete(rawMsg, key)
+		case "requiredProperty":
+			err = unpopulate(val, "RequiredProperty", &c.RequiredProperty)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type DatetimeProperty.
 func (d DatetimeProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

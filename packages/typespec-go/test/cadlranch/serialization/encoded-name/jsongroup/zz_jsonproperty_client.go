@@ -66,13 +66,13 @@ func (client *JSONPropertyClient) getHandleResponse(resp *http.Response) (JSONPr
 // Send -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - JSONPropertyClientSendOptions contains the optional parameters for the JSONPropertyClient.Send method.
-func (client *JSONPropertyClient) Send(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (JSONPropertyClientSendResponse, error) {
+func (client *JSONPropertyClient) Send(ctx context.Context, body JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (JSONPropertyClientSendResponse, error) {
 	var err error
 	const operationName = "JSONPropertyClient.Send"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.sendCreateRequest(ctx, jsonEncodedNameModel, options)
+	req, err := client.sendCreateRequest(ctx, body, options)
 	if err != nil {
 		return JSONPropertyClientSendResponse{}, err
 	}
@@ -88,14 +88,14 @@ func (client *JSONPropertyClient) Send(ctx context.Context, jsonEncodedNameModel
 }
 
 // sendCreateRequest creates the Send request.
-func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, jsonEncodedNameModel JSONEncodedNameModel, _ *JSONPropertyClientSendOptions) (*policy.Request, error) {
+func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, body JSONEncodedNameModel, _ *JSONPropertyClientSendOptions) (*policy.Request, error) {
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, jsonEncodedNameModel); err != nil {
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

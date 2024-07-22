@@ -76,6 +76,16 @@ type ArrayModelValueClientPutResponse struct {
 	// placeholder for future response values
 }
 
+// ArrayNullableBooleanValueClientGetResponse contains the response from method ArrayNullableBooleanValueClient.Get.
+type ArrayNullableBooleanValueClientGetResponse struct {
+	Value []*bool
+}
+
+// ArrayNullableBooleanValueClientPutResponse contains the response from method ArrayNullableBooleanValueClient.Put.
+type ArrayNullableBooleanValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
 // ArrayNullableFloatValueClientGetResponse contains the response from method ArrayNullableFloatValueClient.Get.
 type ArrayNullableFloatValueClientGetResponse struct {
 	Value []*float32
@@ -83,6 +93,36 @@ type ArrayNullableFloatValueClientGetResponse struct {
 
 // ArrayNullableFloatValueClientPutResponse contains the response from method ArrayNullableFloatValueClient.Put.
 type ArrayNullableFloatValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// ArrayNullableInt32ValueClientGetResponse contains the response from method ArrayNullableInt32ValueClient.Get.
+type ArrayNullableInt32ValueClientGetResponse struct {
+	Value []*int32
+}
+
+// ArrayNullableInt32ValueClientPutResponse contains the response from method ArrayNullableInt32ValueClient.Put.
+type ArrayNullableInt32ValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// ArrayNullableModelValueClientGetResponse contains the response from method ArrayNullableModelValueClient.Get.
+type ArrayNullableModelValueClientGetResponse struct {
+	Value []*InnerModel
+}
+
+// ArrayNullableModelValueClientPutResponse contains the response from method ArrayNullableModelValueClient.Put.
+type ArrayNullableModelValueClientPutResponse struct {
+	// placeholder for future response values
+}
+
+// ArrayNullableStringValueClientGetResponse contains the response from method ArrayNullableStringValueClient.Get.
+type ArrayNullableStringValueClientGetResponse struct {
+	Value []*string
+}
+
+// ArrayNullableStringValueClientPutResponse contains the response from method ArrayNullableStringValueClient.Put.
+type ArrayNullableStringValueClientPutResponse struct {
 	// placeholder for future response values
 }
 

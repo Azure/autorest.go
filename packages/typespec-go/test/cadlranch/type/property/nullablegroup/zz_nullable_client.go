@@ -33,6 +33,13 @@ func (client *NullableClient) NewNullableCollectionsModelClient() *NullableColle
 	}
 }
 
+// NewNullableCollectionsStringClient creates a new instance of [NullableCollectionsStringClient].
+func (client *NullableClient) NewNullableCollectionsStringClient() *NullableCollectionsStringClient {
+	return &NullableCollectionsStringClient{
+		internal: client.internal,
+	}
+}
+
 // NewNullableDatetimeClient creates a new instance of [NullableDatetimeClient].
 func (client *NullableClient) NewNullableDatetimeClient() *NullableDatetimeClient {
 	return &NullableDatetimeClient{

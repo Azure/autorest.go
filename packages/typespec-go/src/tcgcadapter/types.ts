@@ -41,7 +41,7 @@ export class typeAdapter {
       this.flagUnreferencedBaseModels(sdkContext);
     }
 
-    for (const enumType of sdkContext.experimental_sdkPackage.enums) {
+    for (const enumType of sdkContext.sdkPackage.enums) {
       if (enumType.usage === tcgc.UsageFlags.ApiVersionEnum) {
         // we have a pipeline policy for controlling the api-version
         continue;
@@ -56,7 +56,7 @@ export class typeAdapter {
     // we must adapt all interface/model types first. this is because models can contain cyclic references
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
-    for (const modelType of sdkContext.experimental_sdkPackage.models) {
+    for (const modelType of sdkContext.sdkPackage.models) {
       if (this.unreferencedModels.has(modelType.name)) {
         // skip unreferenced type
         continue;
@@ -140,7 +140,7 @@ export class typeAdapter {
       }
     };
 
-    for (const sdkClient of sdkContext.experimental_sdkPackage.clients) {
+    for (const sdkClient of sdkContext.sdkPackage.clients) {
       recursiveWalkClients(sdkClient);
     }
     return pagedResponses;
@@ -417,9 +417,6 @@ export class typeAdapter {
         return stringType;
       }
       case 'plainTime': {
-        if (type.encode !== 'rfc3339') {
-          throw new Error(`unsupported time encoding ${type.encode}`);
-        }
         const encoding = 'timeRFC3339';
         let time = this.types.get(encoding);
         if (time) {
@@ -819,7 +816,7 @@ export class typeAdapter {
     };
 
     // traverse all client initialization params and methods to find the set of referenced enums and models
-    for (const client of sdkContext.experimental_sdkPackage.clients) {
+    for (const client of sdkContext.sdkPackage.clients) {
       for (const param of client.initialization.properties) {
         if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
           for (const templateArg of param.type.templateArguments) {
@@ -837,13 +834,13 @@ export class typeAdapter {
     }
 
     // now that we have the referenced set, update the unreferenced set
-    for (const sdkEnum of sdkContext.experimental_sdkPackage.enums) {
+    for (const sdkEnum of sdkContext.sdkPackage.enums) {
       if (!referencedEnums.has(sdkEnum.name)) {
         this.unreferencedEnums.add(sdkEnum.name);
       }
     }
 
-    for (const model of sdkContext.experimental_sdkPackage.models) {
+    for (const model of sdkContext.sdkPackage.models) {
       if (!referencedModels.has(model.name)) {
         this.unreferencedModels.add(model.name);
       }
@@ -889,7 +886,7 @@ export class typeAdapter {
     };
 
     // collect all the base model types
-    for (const model of sdkContext.experimental_sdkPackage.models) {
+    for (const model of sdkContext.sdkPackage.models) {
       let parent = model.baseModel;
       while (parent) {
         // exclude any polymorphic root type from the check
@@ -922,7 +919,7 @@ export class typeAdapter {
         }
       };
 
-      for (const client of sdkContext.experimental_sdkPackage.clients) {
+      for (const client of sdkContext.sdkPackage.clients) {
         recursiveWalkClients(client);
       }
 

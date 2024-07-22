@@ -433,7 +433,7 @@ func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsCreateRequest
 // outboundNetworkDependenciesEndpointsHandleResponse handles the OutboundNetworkDependenciesEndpoints response.
 func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsHandleResponse(resp *http.Response) (LoadTestsClientOutboundNetworkDependenciesEndpointsResponse, error) {
 	result := LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.PagedOutboundEnvironmentEndpoint); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.OutboundEnvironmentEndpointCollection); err != nil {
 		return LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{}, err
 	}
 	return result, nil
@@ -447,7 +447,7 @@ func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsHandleRespons
 //   - loadTestName - Load Test name
 //   - properties - The resource properties to be updated.
 //   - options - LoadTestsClientBeginUpdateOptions contains the optional parameters for the LoadTestsClient.BeginUpdate method.
-func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, options *LoadTestsClientBeginUpdateOptions) (*runtime.Poller[LoadTestsClientUpdateResponse], error) {
+func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, options *LoadTestsClientBeginUpdateOptions) (*runtime.Poller[LoadTestsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, loadTestName, properties, options)
 		if err != nil {
@@ -468,7 +468,7 @@ func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01
-func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, options *LoadTestsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, options *LoadTestsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestsClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -490,7 +490,7 @@ func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName str
 }
 
 // updateCreateRequest creates the Update request.
-func (client *LoadTestsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, _ *LoadTestsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *LoadTestsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, _ *LoadTestsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

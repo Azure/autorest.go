@@ -24,6 +24,9 @@ type NullableServer struct {
 	// NullableCollectionsModelServer contains the fakes for client NullableCollectionsModelClient
 	NullableCollectionsModelServer NullableCollectionsModelServer
 
+	// NullableCollectionsStringServer contains the fakes for client NullableCollectionsStringClient
+	NullableCollectionsStringServer NullableCollectionsStringServer
+
 	// NullableDatetimeServer contains the fakes for client NullableDatetimeClient
 	NullableDatetimeServer NullableDatetimeServer
 
@@ -44,14 +47,15 @@ func NewNullableServerTransport(srv *NullableServer) *NullableServerTransport {
 // NullableServerTransport connects instances of nullablegroup.NullableClient to instances of NullableServer.
 // Don't use this type directly, use NewNullableServerTransport instead.
 type NullableServerTransport struct {
-	srv                              *NullableServer
-	trMu                             sync.Mutex
-	trNullableBytesServer            *NullableBytesServerTransport
-	trNullableCollectionsByteServer  *NullableCollectionsByteServerTransport
-	trNullableCollectionsModelServer *NullableCollectionsModelServerTransport
-	trNullableDatetimeServer         *NullableDatetimeServerTransport
-	trNullableDurationServer         *NullableDurationServerTransport
-	trNullableStringServer           *NullableStringServerTransport
+	srv                               *NullableServer
+	trMu                              sync.Mutex
+	trNullableBytesServer             *NullableBytesServerTransport
+	trNullableCollectionsByteServer   *NullableCollectionsByteServerTransport
+	trNullableCollectionsModelServer  *NullableCollectionsModelServerTransport
+	trNullableCollectionsStringServer *NullableCollectionsStringServerTransport
+	trNullableDatetimeServer          *NullableDatetimeServerTransport
+	trNullableDurationServer          *NullableDurationServerTransport
+	trNullableStringServer            *NullableStringServerTransport
 }
 
 // Do implements the policy.Transporter interface for NullableServerTransport.
@@ -85,6 +89,11 @@ func (n *NullableServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewNullableCollectionsModelServerTransport(&n.srv.NullableCollectionsModelServer)
 		})
 		resp, err = n.trNullableCollectionsModelServer.Do(req)
+	case "NullableCollectionsStringClient":
+		initServer(&n.trMu, &n.trNullableCollectionsStringServer, func() *NullableCollectionsStringServerTransport {
+			return NewNullableCollectionsStringServerTransport(&n.srv.NullableCollectionsStringServer)
+		})
+		resp, err = n.trNullableCollectionsStringServer.Do(req)
 	case "NullableDatetimeClient":
 		initServer(&n.trMu, &n.trNullableDatetimeServer, func() *NullableDatetimeServerTransport {
 			return NewNullableDatetimeServerTransport(&n.srv.NullableDatetimeServer)

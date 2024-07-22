@@ -382,7 +382,7 @@ func (client *PoolsClient) listBySubscriptionHandleResponse(resp *http.Response)
 //   - poolName - Name of the pool. It needs to be globally unique.
 //   - properties - The resource properties to be updated.
 //   - options - PoolsClientBeginUpdateOptions contains the optional parameters for the PoolsClient.BeginUpdate method.
-func (client *PoolsClient) BeginUpdate(ctx context.Context, resourceGroupName string, poolName string, properties PoolUpdate, options *PoolsClientBeginUpdateOptions) (*runtime.Poller[PoolsClientUpdateResponse], error) {
+func (client *PoolsClient) BeginUpdate(ctx context.Context, resourceGroupName string, poolName string, properties Pool, options *PoolsClientBeginUpdateOptions) (*runtime.Poller[PoolsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, poolName, properties, options)
 		if err != nil {
@@ -403,7 +403,7 @@ func (client *PoolsClient) BeginUpdate(ctx context.Context, resourceGroupName st
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2024-04-04-preview
-func (client *PoolsClient) update(ctx context.Context, resourceGroupName string, poolName string, properties PoolUpdate, options *PoolsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *PoolsClient) update(ctx context.Context, resourceGroupName string, poolName string, properties Pool, options *PoolsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "PoolsClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -425,7 +425,7 @@ func (client *PoolsClient) update(ctx context.Context, resourceGroupName string,
 }
 
 // updateCreateRequest creates the Update request.
-func (client *PoolsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, poolName string, properties PoolUpdate, _ *PoolsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *PoolsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, poolName string, properties Pool, _ *PoolsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

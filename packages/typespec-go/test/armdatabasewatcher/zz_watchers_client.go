@@ -532,7 +532,7 @@ func (client *WatchersClient) stopCreateRequest(ctx context.Context, resourceGro
 //   - watcherName - The database watcher name.
 //   - properties - The resource properties to be updated.
 //   - options - WatchersClientBeginUpdateOptions contains the optional parameters for the WatchersClient.BeginUpdate method.
-func (client *WatchersClient) BeginUpdate(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*runtime.Poller[WatchersClientUpdateResponse], error) {
+func (client *WatchersClient) BeginUpdate(ctx context.Context, resourceGroupName string, watcherName string, properties Watcher, options *WatchersClientBeginUpdateOptions) (*runtime.Poller[WatchersClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, watcherName, properties, options)
 		if err != nil {
@@ -553,7 +553,7 @@ func (client *WatchersClient) BeginUpdate(ctx context.Context, resourceGroupName
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-09-01-preview
-func (client *WatchersClient) update(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, options *WatchersClientBeginUpdateOptions) (*http.Response, error) {
+func (client *WatchersClient) update(ctx context.Context, resourceGroupName string, watcherName string, properties Watcher, options *WatchersClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "WatchersClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -575,7 +575,7 @@ func (client *WatchersClient) update(ctx context.Context, resourceGroupName stri
 }
 
 // updateCreateRequest creates the Update request.
-func (client *WatchersClient) updateCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, properties WatcherUpdate, _ *WatchersClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *WatchersClient) updateCreateRequest(ctx context.Context, resourceGroupName string, watcherName string, properties Watcher, _ *WatchersClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

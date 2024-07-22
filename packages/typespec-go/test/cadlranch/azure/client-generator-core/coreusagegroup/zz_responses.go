@@ -9,6 +9,11 @@ type UsageModelInOperationClientInputToInputOutputResponse struct {
 	// placeholder for future response values
 }
 
+// UsageModelInOperationClientModelInReadOnlyPropertyResponse contains the response from method UsageModelInOperationClient.ModelInReadOnlyProperty.
+type UsageModelInOperationClientModelInReadOnlyPropertyResponse struct {
+	RoundTripModel
+}
+
 // UsageModelInOperationClientOutputToInputOutputResponse contains the response from method UsageModelInOperationClient.OutputToInputOutput.
 type UsageModelInOperationClientOutputToInputOutputResponse struct {
 	// Usage override to roundtrip.

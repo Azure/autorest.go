@@ -61,9 +61,37 @@ func (client *ArrayClient) NewArrayModelValueClient() *ArrayModelValueClient {
 	}
 }
 
+// NewArrayNullableBooleanValueClient creates a new instance of [ArrayNullableBooleanValueClient].
+func (client *ArrayClient) NewArrayNullableBooleanValueClient() *ArrayNullableBooleanValueClient {
+	return &ArrayNullableBooleanValueClient{
+		internal: client.internal,
+	}
+}
+
 // NewArrayNullableFloatValueClient creates a new instance of [ArrayNullableFloatValueClient].
 func (client *ArrayClient) NewArrayNullableFloatValueClient() *ArrayNullableFloatValueClient {
 	return &ArrayNullableFloatValueClient{
+		internal: client.internal,
+	}
+}
+
+// NewArrayNullableInt32ValueClient creates a new instance of [ArrayNullableInt32ValueClient].
+func (client *ArrayClient) NewArrayNullableInt32ValueClient() *ArrayNullableInt32ValueClient {
+	return &ArrayNullableInt32ValueClient{
+		internal: client.internal,
+	}
+}
+
+// NewArrayNullableModelValueClient creates a new instance of [ArrayNullableModelValueClient].
+func (client *ArrayClient) NewArrayNullableModelValueClient() *ArrayNullableModelValueClient {
+	return &ArrayNullableModelValueClient{
+		internal: client.internal,
+	}
+}
+
+// NewArrayNullableStringValueClient creates a new instance of [ArrayNullableStringValueClient].
+func (client *ArrayClient) NewArrayNullableStringValueClient() *ArrayNullableStringValueClient {
+	return &ArrayNullableStringValueClient{
 		internal: client.internal,
 	}
 }

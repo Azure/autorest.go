@@ -36,7 +36,7 @@ type LoadTestsClientListBySubscriptionResponse struct {
 // LoadTestsClientOutboundNetworkDependenciesEndpointsResponse contains the response from method LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager.
 type LoadTestsClientOutboundNetworkDependenciesEndpointsResponse struct {
 	// Values returned by the List operation.
-	PagedOutboundEnvironmentEndpoint
+	OutboundEnvironmentEndpointCollection
 }
 
 // LoadTestsClientUpdateResponse contains the response from method LoadTestsClient.BeginUpdate.
