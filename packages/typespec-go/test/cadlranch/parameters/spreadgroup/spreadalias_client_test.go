@@ -30,7 +30,7 @@ func TestSpreadAliasClient_SpreadAsRequestParameter(t *testing.T) {
 func TestSpreadAliasClient_SpreadWithMultipleParameters(t *testing.T) {
 	client, err := spreadgroup.NewSpreadClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), "1", "bar", "foo1", "foo2", "foo3", "foo4", "foo5", "foo6", nil)
+	resp, err := client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), "1", "bar", "foo", 1, []int32{1, 2}, []string{"foo", "bar"}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

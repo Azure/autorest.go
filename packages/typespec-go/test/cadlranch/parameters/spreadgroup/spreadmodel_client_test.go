@@ -15,9 +15,7 @@ import (
 func TestSpreadModelClient_SpreadAsRequestBody(t *testing.T) {
 	client, err := spreadgroup.NewSpreadClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSpreadModelClient().SpreadAsRequestBody(context.Background(), spreadgroup.BodyParameter{
-		Name: to.Ptr("foo"),
-	}, nil)
+	resp, err := client.NewSpreadModelClient().SpreadAsRequestBody(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -35,9 +33,7 @@ func TestSpreadModelClient_SpreadCompositeRequest(t *testing.T) {
 func TestSpreadModelClient_SpreadCompositeRequestMix(t *testing.T) {
 	client, err := spreadgroup.NewSpreadClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSpreadModelClient().SpreadCompositeRequestMix(context.Background(), "foo", "bar", spreadgroup.CompositeRequestMix{
-		Prop: to.Ptr("foo"),
-	}, nil)
+	resp, err := client.NewSpreadModelClient().SpreadCompositeRequestMix(context.Background(), "foo", "bar", "foo", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
