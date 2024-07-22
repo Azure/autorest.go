@@ -68,13 +68,13 @@ func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - BodyOptionalityClientRequiredImplicitOptions contains the optional parameters for the BodyOptionalityClient.RequiredImplicit
 //     method.
-func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, bodyModel BodyModel, options *BodyOptionalityClientRequiredImplicitOptions) (BodyOptionalityClientRequiredImplicitResponse, error) {
+func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, name string, options *BodyOptionalityClientRequiredImplicitOptions) (BodyOptionalityClientRequiredImplicitResponse, error) {
 	var err error
 	const operationName = "BodyOptionalityClient.RequiredImplicit"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.requiredImplicitCreateRequest(ctx, bodyModel, options)
+	req, err := client.requiredImplicitCreateRequest(ctx, name, options)
 	if err != nil {
 		return BodyOptionalityClientRequiredImplicitResponse{}, err
 	}
@@ -90,14 +90,19 @@ func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, bodyM
 }
 
 // requiredImplicitCreateRequest creates the RequiredImplicit request.
-func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.Context, bodyModel BodyModel, _ *BodyOptionalityClientRequiredImplicitOptions) (*policy.Request, error) {
+func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.Context, name string, _ *BodyOptionalityClientRequiredImplicitOptions) (*policy.Request, error) {
 	urlPath := "/parameters/body-optionality/required-implicit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, bodyModel); err != nil {
+	body := struct {
+		Name string `json:"name"`
+	}{
+		Name: name,
+	}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

@@ -58,6 +58,9 @@ func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONCreateReques
 // getAvatarAsJSONHandleResponse handles the GetAvatarAsJSON response.
 func (client *ContentNegotiationDifferentBodyClient) getAvatarAsJSONHandleResponse(resp *http.Response) (ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse, error) {
 	result := ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse{}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PNGImageAsJSON); err != nil {
 		return ContentNegotiationDifferentBodyClientGetAvatarAsJSONResponse{}, err
 	}
@@ -86,7 +89,8 @@ func (client *ContentNegotiationDifferentBodyClient) GetAvatarAsPNG(ctx context.
 		err = runtime.NewResponseError(httpResp)
 		return ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse{}, err
 	}
-	return ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse{Body: httpResp.Body}, nil
+	resp, err := client.getAvatarAsPNGHandleResponse(httpResp)
+	return resp, err
 }
 
 // getAvatarAsPNGCreateRequest creates the GetAvatarAsPNG request.
@@ -99,4 +103,13 @@ func (client *ContentNegotiationDifferentBodyClient) getAvatarAsPNGCreateRequest
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["accept"] = []string{"image/png"}
 	return req, nil
+}
+
+// getAvatarAsPNGHandleResponse handles the GetAvatarAsPNG response.
+func (client *ContentNegotiationDifferentBodyClient) getAvatarAsPNGHandleResponse(resp *http.Response) (ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse, error) {
+	result := ContentNegotiationDifferentBodyClientGetAvatarAsPNGResponse{Body: resp.Body}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
 }

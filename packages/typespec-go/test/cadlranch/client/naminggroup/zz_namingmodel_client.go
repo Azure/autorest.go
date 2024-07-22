@@ -21,13 +21,13 @@ type NamingModelClient struct {
 // Client -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
-func (client *NamingModelClient) Client(ctx context.Context, clientModel ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
+func (client *NamingModelClient) Client(ctx context.Context, body ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.clientCreateRequest(ctx, clientModel, options)
+	req, err := client.clientCreateRequest(ctx, body, options)
 	if err != nil {
 		return NamingModelClientClientResponse{}, err
 	}
@@ -43,14 +43,14 @@ func (client *NamingModelClient) Client(ctx context.Context, clientModel ClientM
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingModelClient) clientCreateRequest(ctx context.Context, clientModel ClientModel, _ *NamingModelClientClientOptions) (*policy.Request, error) {
+func (client *NamingModelClient) clientCreateRequest(ctx context.Context, body ClientModel, _ *NamingModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, clientModel); err != nil {
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -59,13 +59,13 @@ func (client *NamingModelClient) clientCreateRequest(ctx context.Context, client
 // Language -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
-func (client *NamingModelClient) Language(ctx context.Context, goModel GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
+func (client *NamingModelClient) Language(ctx context.Context, body GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
 	var err error
 	const operationName = "NamingModelClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.languageCreateRequest(ctx, goModel, options)
+	req, err := client.languageCreateRequest(ctx, body, options)
 	if err != nil {
 		return NamingModelClientLanguageResponse{}, err
 	}
@@ -81,14 +81,14 @@ func (client *NamingModelClient) Language(ctx context.Context, goModel GoModel, 
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingModelClient) languageCreateRequest(ctx context.Context, goModel GoModel, _ *NamingModelClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingModelClient) languageCreateRequest(ctx context.Context, body GoModel, _ *NamingModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, goModel); err != nil {
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
 	return req, nil

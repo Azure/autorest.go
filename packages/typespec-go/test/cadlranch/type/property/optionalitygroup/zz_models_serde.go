@@ -251,6 +251,60 @@ func (i *IntLiteralProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PlainDateProperty.
+func (p PlainDateProperty) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populateDateType(objectMap, "property", p.Property)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PlainDateProperty.
+func (p *PlainDateProperty) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "property":
+			err = unpopulateDateType(val, "Property", &p.Property)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PlainTimeProperty.
+func (p PlainTimeProperty) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populateTimeRFC3339(objectMap, "property", p.Property)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PlainTimeProperty.
+func (p *PlainTimeProperty) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "property":
+			err = unpopulateTimeRFC3339(val, "Property", &p.Property)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type RequiredAndOptionalProperty.
 func (r RequiredAndOptionalProperty) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

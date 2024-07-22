@@ -50,7 +50,7 @@ type WatchersServer struct {
 
 	// BeginUpdate is the fake for method WatchersClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, watcherName string, properties armdatabasewatcher.WatcherUpdate, options *armdatabasewatcher.WatchersClientBeginUpdateOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, watcherName string, properties armdatabasewatcher.Watcher, options *armdatabasewatcher.WatchersClientBeginUpdateOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewWatchersServerTransport creates a new instance of WatchersServerTransport with the provided implementation.
@@ -416,7 +416,7 @@ func (w *WatchersServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armdatabasewatcher.WatcherUpdate](req)
+		body, err := server.UnmarshalRequestAsJSON[armdatabasewatcher.Watcher](req)
 		if err != nil {
 			return nil, err
 		}

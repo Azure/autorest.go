@@ -44,7 +44,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 
 // getCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (*policy.Request, error) {
-	urlPath := "/azure/special-headers/x-ms-client-request-id"
+	urlPath := "/azure/special-headers/x-ms-client-request-id/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err

@@ -33,3 +33,8 @@ type VisibilityClientPostModelOptions struct {
 type VisibilityClientPutModelOptions struct {
 	// placeholder for future optional parameters
 }
+
+// VisibilityClientPutReadOnlyModelOptions contains the optional parameters for the VisibilityClient.PutReadOnlyModel method.
+type VisibilityClientPutReadOnlyModelOptions struct {
+	// placeholder for future optional parameters
+}

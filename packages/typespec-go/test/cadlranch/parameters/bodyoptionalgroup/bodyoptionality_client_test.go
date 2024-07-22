@@ -28,9 +28,7 @@ func TestBodyOptionalityClient_RequiredExplicit(t *testing.T) {
 func TestBodyOptionalityClient_RequiredImplicit(t *testing.T) {
 	client, err := bodyoptionalgroup.NewBodyOptionalityClient(nil)
 	require.NoError(t, err)
-	resp, err := client.RequiredImplicit(context.Background(), bodyoptionalgroup.BodyModel{
-		Name: to.Ptr("foo"),
-	}, nil)
+	resp, err := client.RequiredImplicit(context.Background(), "foo", nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

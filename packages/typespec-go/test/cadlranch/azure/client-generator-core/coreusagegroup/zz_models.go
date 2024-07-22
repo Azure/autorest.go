@@ -15,3 +15,13 @@ type OutputModel struct {
 	// REQUIRED
 	Name *string
 }
+
+type ResultModel struct {
+	// REQUIRED
+	Name *string
+}
+
+type RoundTripModel struct {
+	// READ-ONLY
+	Result *ResultModel
+}

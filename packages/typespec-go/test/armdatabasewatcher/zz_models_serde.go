@@ -1003,68 +1003,6 @@ func (w *WatcherProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type WatcherUpdate.
-func (w WatcherUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "identity", w.Identity)
-	populate(objectMap, "properties", w.Properties)
-	populate(objectMap, "tags", w.Tags)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type WatcherUpdate.
-func (w *WatcherUpdate) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", w, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "identity":
-			err = unpopulate(val, "Identity", &w.Identity)
-			delete(rawMsg, key)
-		case "properties":
-			err = unpopulate(val, "Properties", &w.Properties)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, "Tags", &w.Tags)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", w, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type WatcherUpdateProperties.
-func (w WatcherUpdateProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "datastore", w.Datastore)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type WatcherUpdateProperties.
-func (w *WatcherUpdateProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", w, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "datastore":
-			err = unpopulate(val, "Datastore", &w.Datastore)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", w, err)
-		}
-	}
-	return nil
-}
-
 func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return

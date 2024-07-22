@@ -334,72 +334,6 @@ func (l *LoadTestResourceListResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type LoadTestResourceUpdate.
-func (l LoadTestResourceUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "identity", l.Identity)
-	populate(objectMap, "properties", l.Properties)
-	populate(objectMap, "tags", l.Tags)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LoadTestResourceUpdate.
-func (l *LoadTestResourceUpdate) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", l, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "identity":
-			err = unpopulate(val, "Identity", &l.Identity)
-			delete(rawMsg, key)
-		case "properties":
-			err = unpopulate(val, "Properties", &l.Properties)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, "Tags", &l.Tags)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", l, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type LoadTestResourceUpdateProperties.
-func (l LoadTestResourceUpdateProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]any)
-	populate(objectMap, "description", l.Description)
-	populate(objectMap, "encryption", l.Encryption)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LoadTestResourceUpdateProperties.
-func (l *LoadTestResourceUpdateProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", l, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "description":
-			err = unpopulate(val, "Description", &l.Description)
-			delete(rawMsg, key)
-		case "encryption":
-			err = unpopulate(val, "Encryption", &l.Encryption)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", l, err)
-		}
-	}
-	return nil
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ManagedServiceIdentity.
 func (m ManagedServiceIdentity) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
@@ -583,32 +517,32 @@ func (o *OutboundEnvironmentEndpoint) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PagedOutboundEnvironmentEndpoint.
-func (p PagedOutboundEnvironmentEndpoint) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type OutboundEnvironmentEndpointCollection.
+func (o OutboundEnvironmentEndpointCollection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)
-	populate(objectMap, "nextLink", p.NextLink)
-	populate(objectMap, "value", p.Value)
+	populate(objectMap, "nextLink", o.NextLink)
+	populate(objectMap, "value", o.Value)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type PagedOutboundEnvironmentEndpoint.
-func (p *PagedOutboundEnvironmentEndpoint) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type OutboundEnvironmentEndpointCollection.
+func (o *OutboundEnvironmentEndpointCollection) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		return fmt.Errorf("unmarshalling type %T: %v", o, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "nextLink":
-			err = unpopulate(val, "NextLink", &p.NextLink)
+			err = unpopulate(val, "NextLink", &o.NextLink)
 			delete(rawMsg, key)
 		case "value":
-			err = unpopulate(val, "Value", &p.Value)
+			err = unpopulate(val, "Value", &o.Value)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+			return fmt.Errorf("unmarshalling type %T: %v", o, err)
 		}
 	}
 	return nil

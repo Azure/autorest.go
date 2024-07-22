@@ -27,9 +27,17 @@ type SpreadAliasServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	SpreadAsRequestParameter func(ctx context.Context, id string, xMSTestHeader string, name string, options *spreadgroup.SpreadAliasClientSpreadAsRequestParameterOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadAsRequestParameterResponse], errResp azfake.ErrorResponder)
 
+	// SpreadParameterWithInnerAlias is the fake for method SpreadAliasClient.SpreadParameterWithInnerAlias
+	// HTTP status codes to indicate success: http.StatusNoContent
+	SpreadParameterWithInnerAlias func(ctx context.Context, id string, name string, age int32, xMSTestHeader string, options *spreadgroup.SpreadAliasClientSpreadParameterWithInnerAliasOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadParameterWithInnerAliasResponse], errResp azfake.ErrorResponder)
+
+	// SpreadParameterWithInnerModel is the fake for method SpreadAliasClient.SpreadParameterWithInnerModel
+	// HTTP status codes to indicate success: http.StatusNoContent
+	SpreadParameterWithInnerModel func(ctx context.Context, id string, name string, xMSTestHeader string, options *spreadgroup.SpreadAliasClientSpreadParameterWithInnerModelOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadParameterWithInnerModelResponse], errResp azfake.ErrorResponder)
+
 	// SpreadWithMultipleParameters is the fake for method SpreadAliasClient.SpreadWithMultipleParameters
 	// HTTP status codes to indicate success: http.StatusNoContent
-	SpreadWithMultipleParameters func(ctx context.Context, id string, xMSTestHeader string, prop1 string, prop2 string, prop3 string, prop4 string, prop5 string, prop6 string, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder)
+	SpreadWithMultipleParameters func(ctx context.Context, id string, xMSTestHeader string, requiredString string, optionalInt int32, requiredIntList []int32, optionalStringList []string, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSpreadAliasServerTransport creates a new instance of SpreadAliasServerTransport with the provided implementation.
@@ -65,6 +73,10 @@ func (s *SpreadAliasServerTransport) dispatchToMethodFake(req *http.Request, met
 		resp, err = s.dispatchSpreadAsRequestBody(req)
 	case "SpreadAliasClient.SpreadAsRequestParameter":
 		resp, err = s.dispatchSpreadAsRequestParameter(req)
+	case "SpreadAliasClient.SpreadParameterWithInnerAlias":
+		resp, err = s.dispatchSpreadParameterWithInnerAlias(req)
+	case "SpreadAliasClient.SpreadParameterWithInnerModel":
+		resp, err = s.dispatchSpreadParameterWithInnerModel(req)
 	case "SpreadAliasClient.SpreadWithMultipleParameters":
 		resp, err = s.dispatchSpreadWithMultipleParameters(req)
 	default:
@@ -136,6 +148,79 @@ func (s *SpreadAliasServerTransport) dispatchSpreadAsRequestParameter(req *http.
 	return resp, nil
 }
 
+func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerAlias(req *http.Request) (*http.Response, error) {
+	if s.srv.SpreadParameterWithInnerAlias == nil {
+		return nil, &nonRetriableError{errors.New("fake for method SpreadParameterWithInnerAlias not implemented")}
+	}
+	const regexStr = `/parameters/spread/alias/inner-alias-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 1 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	type partialBodyParams struct {
+		Name string `json:"name"`
+		Age  int32  `json:"age"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	if err != nil {
+		return nil, err
+	}
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.SpreadParameterWithInnerAlias(req.Context(), idParam, body.Name, body.Age, getHeaderValue(req.Header, "x-ms-test-header"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *SpreadAliasServerTransport) dispatchSpreadParameterWithInnerModel(req *http.Request) (*http.Response, error) {
+	if s.srv.SpreadParameterWithInnerModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method SpreadParameterWithInnerModel not implemented")}
+	}
+	const regexStr = `/parameters/spread/alias/inner-model-parameter/(?P<id>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 1 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	type partialBodyParams struct {
+		Name string `json:"name"`
+	}
+	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	if err != nil {
+		return nil, err
+	}
+	idParam, err := url.PathUnescape(matches[regex.SubexpIndex("id")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := s.srv.SpreadParameterWithInnerModel(req.Context(), idParam, body.Name, getHeaderValue(req.Header, "x-ms-test-header"), nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *http.Request) (*http.Response, error) {
 	if s.srv.SpreadWithMultipleParameters == nil {
 		return nil, &nonRetriableError{errors.New("fake for method SpreadWithMultipleParameters not implemented")}
@@ -147,12 +232,10 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
 	type partialBodyParams struct {
-		Prop1 string `json:"prop1"`
-		Prop2 string `json:"prop2"`
-		Prop3 string `json:"prop3"`
-		Prop4 string `json:"prop4"`
-		Prop5 string `json:"prop5"`
-		Prop6 string `json:"prop6"`
+		RequiredString     string   `json:"requiredString"`
+		OptionalInt        int32    `json:"optionalInt"`
+		RequiredIntList    []int32  `json:"requiredIntList"`
+		OptionalStringList []string `json:"optionalStringList"`
 	}
 	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
 	if err != nil {
@@ -162,7 +245,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.SpreadWithMultipleParameters(req.Context(), idParam, getHeaderValue(req.Header, "x-ms-test-header"), body.Prop1, body.Prop2, body.Prop3, body.Prop4, body.Prop5, body.Prop6, nil)
+	respr, errRespr := s.srv.SpreadWithMultipleParameters(req.Context(), idParam, getHeaderValue(req.Header, "x-ms-test-header"), body.RequiredString, body.OptionalInt, body.RequiredIntList, body.OptionalStringList, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

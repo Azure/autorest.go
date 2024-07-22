@@ -42,7 +42,7 @@ type CommunityTrainingsServer struct {
 
 	// BeginUpdate is the fake for method CommunityTrainingsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, communityTrainingName string, properties armcommunitymanagement.CommunityTrainingUpdate, options *armcommunitymanagement.CommunityTrainingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcommunitymanagement.CommunityTrainingsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, communityTrainingName string, properties armcommunitymanagement.CommunityTraining, options *armcommunitymanagement.CommunityTrainingsClientBeginUpdateOptions) (resp azfake.PollerResponder[armcommunitymanagement.CommunityTrainingsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewCommunityTrainingsServerTransport creates a new instance of CommunityTrainingsServerTransport with the provided implementation.
@@ -312,7 +312,7 @@ func (c *CommunityTrainingsServerTransport) dispatchBeginUpdate(req *http.Reques
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armcommunitymanagement.CommunityTrainingUpdate](req)
+		body, err := server.UnmarshalRequestAsJSON[armcommunitymanagement.CommunityTraining](req)
 		if err != nil {
 			return nil, err
 		}

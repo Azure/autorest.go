@@ -132,7 +132,8 @@ func (client *BytesResponseBodyClient) CustomContentType(ctx context.Context, op
 		err = runtime.NewResponseError(httpResp)
 		return BytesResponseBodyClientCustomContentTypeResponse{}, err
 	}
-	return BytesResponseBodyClientCustomContentTypeResponse{Body: httpResp.Body}, nil
+	resp, err := client.customContentTypeHandleResponse(httpResp)
+	return resp, err
 }
 
 // customContentTypeCreateRequest creates the CustomContentType request.
@@ -145,6 +146,15 @@ func (client *BytesResponseBodyClient) customContentTypeCreateRequest(ctx contex
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"image/png"}
 	return req, nil
+}
+
+// customContentTypeHandleResponse handles the CustomContentType response.
+func (client *BytesResponseBodyClient) customContentTypeHandleResponse(resp *http.Response) (BytesResponseBodyClientCustomContentTypeResponse, error) {
+	result := BytesResponseBodyClientCustomContentTypeResponse{Body: resp.Body}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
 }
 
 // Default -
@@ -215,7 +225,8 @@ func (client *BytesResponseBodyClient) OctetStream(ctx context.Context, options 
 		err = runtime.NewResponseError(httpResp)
 		return BytesResponseBodyClientOctetStreamResponse{}, err
 	}
-	return BytesResponseBodyClientOctetStreamResponse{Body: httpResp.Body}, nil
+	resp, err := client.octetStreamHandleResponse(httpResp)
+	return resp, err
 }
 
 // octetStreamCreateRequest creates the OctetStream request.
@@ -228,4 +239,13 @@ func (client *BytesResponseBodyClient) octetStreamCreateRequest(ctx context.Cont
 	runtime.SkipBodyDownload(req)
 	req.Raw().Header["Accept"] = []string{"application/octet-stream"}
 	return req, nil
+}
+
+// octetStreamHandleResponse handles the OctetStream response.
+func (client *BytesResponseBodyClient) octetStreamHandleResponse(resp *http.Response) (BytesResponseBodyClientOctetStreamResponse, error) {
+	result := BytesResponseBodyClientOctetStreamResponse{Body: resp.Body}
+	if val := resp.Header.Get("content-type"); val != "" {
+		result.ContentType = &val
+	}
+	return result, nil
 }

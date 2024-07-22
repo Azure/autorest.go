@@ -39,6 +39,12 @@ type OptionalServer struct {
 	// OptionalIntLiteralServer contains the fakes for client OptionalIntLiteralClient
 	OptionalIntLiteralServer OptionalIntLiteralServer
 
+	// OptionalPlainDateServer contains the fakes for client OptionalPlainDateClient
+	OptionalPlainDateServer OptionalPlainDateServer
+
+	// OptionalPlainTimeServer contains the fakes for client OptionalPlainTimeClient
+	OptionalPlainTimeServer OptionalPlainTimeServer
+
 	// OptionalRequiredAndOptionalServer contains the fakes for client OptionalRequiredAndOptionalClient
 	OptionalRequiredAndOptionalServer OptionalRequiredAndOptionalServer
 
@@ -78,6 +84,8 @@ type OptionalServerTransport struct {
 	trOptionalDurationServer            *OptionalDurationServerTransport
 	trOptionalFloatLiteralServer        *OptionalFloatLiteralServerTransport
 	trOptionalIntLiteralServer          *OptionalIntLiteralServerTransport
+	trOptionalPlainDateServer           *OptionalPlainDateServerTransport
+	trOptionalPlainTimeServer           *OptionalPlainTimeServerTransport
 	trOptionalRequiredAndOptionalServer *OptionalRequiredAndOptionalServerTransport
 	trOptionalStringServer              *OptionalStringServerTransport
 	trOptionalStringLiteralServer       *OptionalStringLiteralServerTransport
@@ -142,6 +150,16 @@ func (o *OptionalServerTransport) dispatchToClientFake(req *http.Request, client
 			return NewOptionalIntLiteralServerTransport(&o.srv.OptionalIntLiteralServer)
 		})
 		resp, err = o.trOptionalIntLiteralServer.Do(req)
+	case "OptionalPlainDateClient":
+		initServer(&o.trMu, &o.trOptionalPlainDateServer, func() *OptionalPlainDateServerTransport {
+			return NewOptionalPlainDateServerTransport(&o.srv.OptionalPlainDateServer)
+		})
+		resp, err = o.trOptionalPlainDateServer.Do(req)
+	case "OptionalPlainTimeClient":
+		initServer(&o.trMu, &o.trOptionalPlainTimeServer, func() *OptionalPlainTimeServerTransport {
+			return NewOptionalPlainTimeServerTransport(&o.srv.OptionalPlainTimeServer)
+		})
+		resp, err = o.trOptionalPlainTimeServer.Do(req)
 	case "OptionalRequiredAndOptionalClient":
 		initServer(&o.trMu, &o.trOptionalRequiredAndOptionalServer, func() *OptionalRequiredAndOptionalServerTransport {
 			return NewOptionalRequiredAndOptionalServerTransport(&o.srv.OptionalRequiredAndOptionalServer)

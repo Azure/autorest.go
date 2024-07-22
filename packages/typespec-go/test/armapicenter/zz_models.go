@@ -471,7 +471,7 @@ type Operation struct {
 	// Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
 	ActionType *ActionType
 
-	// Localized display information for this particular operation.
+	// READ-ONLY; Localized display information for this particular operation.
 	Display *OperationDisplay
 
 	// READ-ONLY; Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure
@@ -489,17 +489,19 @@ type Operation struct {
 
 // OperationDisplay - Localized display information for and operation.
 type OperationDisplay struct {
-	// The short, localized friendly description of the operation; suitable for tool tips and detailed views.
+	// READ-ONLY; The short, localized friendly description of the operation; suitable for tool tips and detailed views.
 	Description *string
 
-	// The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine",
-	// "Restart Virtual Machine".
+	// READ-ONLY; The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual
+	// Machine", "Restart Virtual Machine".
 	Operation *string
 
-	// The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute".
+	// READ-ONLY; The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft
+	// Compute".
 	Provider *string
 
-	// The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections".
+	// READ-ONLY; The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job
+	// Schedule Collections".
 	Resource *string
 }
 
@@ -556,22 +558,6 @@ type ServiceProperties struct {
 
 	// READ-ONLY; Provisioning state of the service.
 	ProvisioningState *ProvisioningState
-}
-
-// ServiceUpdate - The type used for update operations of the Service.
-type ServiceUpdate struct {
-	// The managed service identities assigned to this resource.
-	Identity   *ManagedServiceIdentity
-	Properties *ServiceUpdateProperties
-
-	// Resource tags.
-	Tags map[string]*string
-}
-
-// ServiceUpdateProperties - The updatable properties of the Service.
-type ServiceUpdateProperties struct {
-	// Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored.
-	Restore *bool
 }
 
 // SystemData - Metadata pertaining to creation and last modification of the resource.

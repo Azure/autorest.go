@@ -40,6 +40,10 @@ type VisibilityServer struct {
 	// PutModel is the fake for method VisibilityClient.PutModel
 	// HTTP status codes to indicate success: http.StatusNoContent
 	PutModel func(ctx context.Context, input visibilitygroup.VisibilityModel, options *visibilitygroup.VisibilityClientPutModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientPutModelResponse], errResp azfake.ErrorResponder)
+
+	// PutReadOnlyModel is the fake for method VisibilityClient.PutReadOnlyModel
+	// HTTP status codes to indicate success: http.StatusOK
+	PutReadOnlyModel func(ctx context.Context, input visibilitygroup.ReadOnlyModel, options *visibilitygroup.VisibilityClientPutReadOnlyModelOptions) (resp azfake.Responder[visibilitygroup.VisibilityClientPutReadOnlyModelResponse], errResp azfake.ErrorResponder)
 }
 
 // NewVisibilityServerTransport creates a new instance of VisibilityServerTransport with the provided implementation.
@@ -83,6 +87,8 @@ func (v *VisibilityServerTransport) dispatchToMethodFake(req *http.Request, meth
 		resp, err = v.dispatchPostModel(req)
 	case "VisibilityClient.PutModel":
 		resp, err = v.dispatchPutModel(req)
+	case "VisibilityClient.PutReadOnlyModel":
+		resp, err = v.dispatchPutReadOnlyModel(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -222,6 +228,29 @@ func (v *VisibilityServerTransport) dispatchPutModel(req *http.Request) (*http.R
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
 	}
 	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (v *VisibilityServerTransport) dispatchPutReadOnlyModel(req *http.Request) (*http.Response, error) {
+	if v.srv.PutReadOnlyModel == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PutReadOnlyModel not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[visibilitygroup.ReadOnlyModel](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := v.srv.PutReadOnlyModel(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).ReadOnlyModel, req)
 	if err != nil {
 		return nil, err
 	}
