@@ -583,3 +583,84 @@ export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType 
 export function star(param: go.Parameter): string {
   return go.isRequiredParameter(param) || param.byValue ? '' : '*';
 }
+
+export type SerDeFormat = 'JSON' | 'XML';
+
+// used by getSerDeFormat to cache results
+const serDeFormatCache = new Map<string, SerDeFormat>();
+
+// returns the wire format for the named model.
+// at present this assumes the formats to be mutually exclusive.
+export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeModel: go.CodeModel): SerDeFormat {
+  let serDeFormat = serDeFormatCache.get(model.name);
+  if (serDeFormat) {
+    return serDeFormat;
+  }
+
+  // for model-only builds we assume the format to be JSON
+  if (codeModel.clients.length === 0) {
+    return 'JSON';
+  }
+
+  // recursively walks the fields in model, updating serDeFormatCache with the model name and specified format
+  const recursiveWalkModelFields = function(type: go.PossibleType, serDeFormat: SerDeFormat): void {
+    type = recursiveUnwrapMapSlice(type);
+    if (go.isInterfaceType(type)) {
+      recursiveWalkModelFields(type.rootType, serDeFormat);
+      for (const possibleType of type.possibleTypes) {
+        recursiveWalkModelFields(possibleType, serDeFormat);
+      }
+    } else if (go.isPolymorphicType(type) || go.isModelType(type)) {
+      if (serDeFormatCache.has(type.name)) {
+        // we've already processed this type, don't do it again
+        return;
+      }
+
+      serDeFormatCache.set(type.name, serDeFormat);
+      for (const field of type.fields) {
+        const fieldType = recursiveUnwrapMapSlice(field.type);
+        recursiveWalkModelFields(fieldType, serDeFormat);
+      }
+    }
+  };
+
+  // walk the methods, indexing the model formats
+  for (const client of codeModel.clients) {
+    for (const method of client.methods) {
+      for (const param of method.parameters) {
+        if (!go.isBodyParameter(param) || (param.bodyFormat !== 'JSON' && param.bodyFormat !== 'XML')) {
+          continue;
+        }
+
+        recursiveWalkModelFields(param.type, param.bodyFormat);
+      }
+
+      if (method.responseEnvelope.result) {
+        const resultType = method.responseEnvelope.result;
+        if (go.isAnyResult(resultType) && (resultType.format === 'JSON' || resultType.format === 'XML')) {
+          for (const type of Object.values(resultType.httpStatusCodeType)) {
+            recursiveWalkModelFields(type, resultType.format);
+          }
+        } else if (go.isPolymorphicResult(resultType)) {
+          recursiveWalkModelFields(resultType.interfaceType, resultType.format);
+        } else if (go.isModelResult(resultType)) {
+          recursiveWalkModelFields(resultType.modelType, resultType.format);
+        } else if (go.isMonomorphicResult(resultType) && (resultType.format === 'JSON' || resultType.format === 'XML')) {
+          recursiveWalkModelFields(resultType.monomorphicType, resultType.format);
+        }
+      }
+    }
+  }
+
+  serDeFormat = serDeFormatCache.get(model.name);
+  if (!serDeFormat) {
+    // if we get here there are two possibilities
+    //  - we have a bug in the above indexing
+    //  - the model type is unreferenced by any operation
+    //
+    // while the former is possible, the latter has the potential to be real.
+    // regardless of the cause, we will just assume the format to be JSON.
+    serDeFormat = 'JSON';
+  }
+  return serDeFormat;
+}

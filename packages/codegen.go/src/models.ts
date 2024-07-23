@@ -6,7 +6,7 @@
 import * as go from '../../codemodel.go/src/index.js';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, contentPreamble, formatLiteralValue, recursiveUnwrapMapSlice, sortAscending } from './helpers.js';
+import { commentLength, contentPreamble, formatLiteralValue, getSerDeFormat, recursiveUnwrapMapSlice, SerDeFormat, sortAscending } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 export interface ModelsSerDe {
@@ -176,12 +176,13 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       field.description = descriptionMods.join('; ');
     }
 
-    const modelDef = new ModelDef(model.name, model.format, model.fields, model.description);
+    const serDeFormat = getSerDeFormat(model, codeModel);
+    const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.description);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
     }
 
-    if (go.isModelType(model) && model.format === 'xml' && !model.annotations.omitSerDeMethods) {
+    if (go.isModelType(model) && serDeFormat === 'XML' && !model.annotations.omitSerDeMethods) {
       serdeImports.add('encoding/xml');
       let needsDateTimeMarshalling = false;
       let byteArrayFormat = false;
@@ -686,13 +687,13 @@ function generateAliasType(modelType: go.ModelType, receiver: string, forMarshal
   for (const field of values(modelType.fields)) {
     const sn = getXMLSerialization(field, false);
     if (go.isTimeType(field.type)) {
-      text += `\t\t${field.name} *${field.type.dateTimeFormat} \`${modelType.format}:"${sn}"\`\n`;
+      text += `\t\t${field.name} *${field.type.dateTimeFormat} \`xml:"${sn}"\`\n`;
     } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
-      text += `\t\t${field.name} additionalProperties \`${modelType.format}:"${sn}"\`\n`;
+      text += `\t\t${field.name} additionalProperties \`xml:"${sn}"\`\n`;
     } else if (go.isSliceType(field.type)) {
-      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type)} \`${modelType.format}:"${sn}"\`\n`;
+      text += `\t\t${field.name} *${go.getTypeDeclaration(field.type)} \`xml:"${sn}"\`\n`;
     } else if (go.isBytesType(field.type)) {
-      text += `\t\t${field.name} *string \`${modelType.format}:"${sn}"\`\n`;
+      text += `\t\t${field.name} *string \`xml:"${sn}"\`\n`;
     }
   }
   text += '\t}{\n';
@@ -742,13 +743,13 @@ class SerDeInfo {
 // represents model definition as a Go struct
 class ModelDef {
   readonly Name: string;
-  readonly Format: go.ModelFormat;
+  readonly Format: SerDeFormat;
   readonly Description?: string;
   readonly Fields: Array<go.ModelField>;
   readonly SerDe: SerDeInfo;
   readonly Methods: Array<ModelMethod>;
 
-  constructor(name: string, format: go.ModelFormat, fields: Array<go.ModelField>, description?: string) {
+  constructor(name: string, format: SerDeFormat, fields: Array<go.ModelField>, description?: string) {
     this.Name = name;
     this.Format = format;
     this.Description = description;
@@ -793,15 +794,15 @@ class ModelDef {
         typeName = go.getLiteralValueTypeName(field.type.type);
       }
       let serialization = field.serializedName;
-      if (this.Format === 'json') {
+      if (this.Format === 'JSON') {
         serialization += ',omitempty';
-      } else if (this.Format === 'xml') {
+      } else if (this.Format === 'XML') {
         serialization = getXMLSerialization(field, false);
       }
       let tag = '';
       // only emit tags for XML; JSON uses custom marshallers/unmarshallers
-      if (this.Format === 'xml' && !field.annotations.isAdditionalProperties) {
-        tag = ` \`${this.Format}:"${serialization}"\``;
+      if (this.Format === 'XML' && !field.annotations.isAdditionalProperties) {
+        tag = ` \`xml:"${serialization}"\``;
       }
       text += `\t${field.name} ${getStar(field.byValue)}${typeName}${tag}\n`;
       first = false;

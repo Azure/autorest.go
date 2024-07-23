@@ -14,17 +14,9 @@ export interface StructType {
   fields: Array<StructField>;
 }
 
-// ModelFormat indicates what format a model is sent/received as.
-export type ModelFormat = 'json' | 'xml';
-
 // ModelType is a struct that participates in serialization over the wire.
 export interface ModelType extends StructType {
   fields: Array<ModelField>;
-
-  // format is propagated to models purely as a convenience when determining
-  // what marshaller/unmarshaller to generate. technically, a model could
-  // participate in both JSON and XML formats. this hasn't been a problem yet
-  format: ModelFormat;
 
   annotations: ModelAnnotations;
 
@@ -55,8 +47,6 @@ export enum UsageFlags {
 // PolymorphicType is a discriminated type
 export interface PolymorphicType extends StructType {
   fields: Array<ModelField>;
-
-  format: 'json';
 
   annotations: ModelAnnotations;
 
@@ -259,7 +249,7 @@ export function isMapType(type: PossibleType): type is MapType {
 }
 
 export function isModelType(type: PossibleType): type is ModelType {
-  return (<ModelType>type).format !== undefined;
+  return (<ModelType>type).fields !== undefined;
 }
 
 export function isPolymorphicType(type: PossibleType): type is PolymorphicType {
@@ -377,9 +367,8 @@ export class LiteralValue implements LiteralValue {
 }
 
 export class ModelType extends StructType implements ModelType {
-  constructor(name: string, format: ModelFormat, annotations: ModelAnnotations, usage: UsageFlags) {
+  constructor(name: string, annotations: ModelAnnotations, usage: UsageFlags) {
     super(name);
-    this.format = format;
     this.annotations = annotations;
     this.usage = usage;
     this.fields = new Array<ModelField>();
