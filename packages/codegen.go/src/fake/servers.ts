@@ -1220,6 +1220,9 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
       // since headers aren't escaped, we cast required, string-based enums inline
       return `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
+  } else if (go.isPartialBodyParameter(param)) {
+    // use the value from the unmarshaled, intermediate struct type
+    return `body.${capitalize(param.name)}`;
   }
 
   return paramValue;

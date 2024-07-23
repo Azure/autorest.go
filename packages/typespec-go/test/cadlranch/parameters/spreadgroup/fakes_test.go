@@ -20,18 +20,20 @@ func TestFake_SpreadWithMultipleParameters(t *testing.T) {
 		idVal              = "id"
 		header             = "header"
 		requiredString     = "prop1"
-		optionalInt        = 1
+		optionalInt        = int32(1)
 		requiredIntList    = []int32{1, 2}
 		optionalStringList = []string{"a", "b"}
 	)
 	server := fake.SpreadAliasServer{
-		SpreadWithMultipleParameters: func(ctx context.Context, id string, xMSTestHeader string, requiredString string, optionalInt int32, requiredIntList []int32, optionalStringList []string, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder) {
+		SpreadWithMultipleParameters: func(ctx context.Context, id string, xMSTestHeader string, requiredString string, requiredIntList []int32, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder) {
 			require.EqualValues(t, idVal, id)
 			require.EqualValues(t, header, xMSTestHeader)
 			require.EqualValues(t, requiredString, requiredString)
-			require.EqualValues(t, optionalInt, optionalInt)
 			require.EqualValues(t, requiredIntList, requiredIntList)
-			require.EqualValues(t, optionalStringList, optionalStringList)
+			require.NotNil(t, options)
+			require.NotNil(t, options.OptionalInt)
+			require.EqualValues(t, optionalInt, *options.OptionalInt)
+			require.EqualValues(t, optionalStringList, options.OptionalStringList)
 			resp.SetResponse(http.StatusNoContent, spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse{}, nil)
 			return
 		},
@@ -41,6 +43,9 @@ func TestFake_SpreadWithMultipleParameters(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	_, err = client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), idVal, header, requiredString, int32(optionalInt), requiredIntList, optionalStringList, nil)
+	_, err = client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), idVal, header, requiredString, requiredIntList, &spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions{
+		OptionalInt:        &optionalInt,
+		OptionalStringList: optionalStringList,
+	})
 	require.NoError(t, err)
 }

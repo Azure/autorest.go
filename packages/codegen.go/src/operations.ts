@@ -772,14 +772,21 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       text += `\t\t${capitalize(partialBodyParam.serializedName)} ${helpers.star(partialBodyParam)}${go.getTypeDeclaration(partialBodyParam.type)} \`${partialBodyParam.format.toLowerCase()}:"${partialBodyParam.serializedName}"\`\n`;
     }
     text += '\t}{\n';
+    // required params are emitted as initializers in the struct literal
     for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
-      let addr = '&';
       if (go.isRequiredParameter(partialBodyParam)) {
-        addr = '';
+        text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${uncapitalize(partialBodyParam.name)},\n`;
       }
-      text += `\t\t${capitalize(partialBodyParam.serializedName)}: ${addr}${uncapitalize(partialBodyParam.name)},\n`;
     }
-    text += '\t}\n\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
+    text += '\t}\n';
+    // now populate any optional params from the options type
+    for (const partialBodyParam of <Array<go.PartialBodyParameter>>partialBodyParams) {
+      if (!go.isRequiredParameter(partialBodyParam)) {
+        text += emitParamGroupCheck(partialBodyParam);
+        text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
+      }
+    }
+    text += '\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
     text += '\treturn req, nil\n';
   } else if (!bodyParam) {
     text += '\treturn req, nil\n';
