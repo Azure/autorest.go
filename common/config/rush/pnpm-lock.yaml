@@ -230,15 +230,12 @@ importers:
       '@azure-tools/cadl-ranch':
         specifier: ~0.13.4
         version: 0.13.4(@typespec/versioning@0.58.0)
-      '@azure-tools/cadl-ranch-api':
-        specifier: ~0.4.4
-        version: 0.4.4
       '@azure-tools/cadl-ranch-expect':
         specifier: ~0.14.1
         version: 0.14.1(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0)
       '@azure-tools/cadl-ranch-specs':
-        specifier: 0.34.8
-        version: 0.34.8(@azure-tools/cadl-ranch-expect@0.14.1)(@azure-tools/typespec-azure-core@0.44.0)(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0)
+        specifier: 0.34.9
+        version: 0.34.9(@azure-tools/cadl-ranch-expect@0.14.1)(@azure-tools/typespec-azure-core@0.44.0)(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0)
       '@azure-tools/typespec-autorest':
         specifier: 0.44.0
         version: 0.44.0(@azure-tools/typespec-azure-core@0.44.0)(@azure-tools/typespec-azure-resource-manager@0.44.0)(@azure-tools/typespec-client-generator-core@0.44.1)(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/openapi@0.57.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0)
@@ -424,8 +421,8 @@ packages:
       '@typespec/versioning': 0.58.0(@typespec/compiler@0.58.0)
     dev: true
 
-  /@azure-tools/cadl-ranch-specs@0.34.8(@azure-tools/cadl-ranch-expect@0.14.1)(@azure-tools/typespec-azure-core@0.44.0)(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0):
-    resolution: {integrity: sha512-fnXYv5BbOi1ddeVeZggE8W9U3Z79aFnCpjC+2r9R7U8xgf7pNrWvw5b4fRXu1QN7/b3Kcl6us4LCgxfPVTGnQw==}
+  /@azure-tools/cadl-ranch-specs@0.34.9(@azure-tools/cadl-ranch-expect@0.14.1)(@azure-tools/typespec-azure-core@0.44.0)(@typespec/compiler@0.58.0)(@typespec/http@0.58.0)(@typespec/rest@0.58.0)(@typespec/versioning@0.58.0):
+    resolution: {integrity: sha512-eRW3o0xHVb62t2KELp3MSHGcSjknYFmTuGoys6ZEME3HmBXfpnfC1cIAIE+sCR+8o/oCJIpn77fpC7U4nVzstw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@azure-tools/cadl-ranch-expect': ~0.14.1
