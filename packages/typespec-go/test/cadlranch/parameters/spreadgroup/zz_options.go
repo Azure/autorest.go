@@ -31,7 +31,11 @@ type SpreadAliasClientSpreadParameterWithInnerModelOptions struct {
 // SpreadAliasClientSpreadWithMultipleParametersOptions contains the optional parameters for the SpreadAliasClient.SpreadWithMultipleParameters
 // method.
 type SpreadAliasClientSpreadWithMultipleParametersOptions struct {
-	// placeholder for future optional parameters
+	// optional int
+	OptionalInt *int32
+
+	// optional string
+	OptionalStringList []string
 }
 
 // SpreadModelClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadModelClient.SpreadAsRequestBody

@@ -219,18 +219,16 @@ func (client *SpreadAliasClient) spreadParameterWithInnerModelCreateRequest(ctx 
 // SpreadWithMultipleParameters -
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - requiredString - required string
-//   - optionalInt - optional int
 //   - requiredIntList - required int
-//   - optionalStringList - optional string
 //   - options - SpreadAliasClientSpreadWithMultipleParametersOptions contains the optional parameters for the SpreadAliasClient.SpreadWithMultipleParameters
 //     method.
-func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Context, id string, xMSTestHeader string, requiredString string, optionalInt int32, requiredIntList []int32, optionalStringList []string, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (SpreadAliasClientSpreadWithMultipleParametersResponse, error) {
+func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Context, id string, xMSTestHeader string, requiredString string, requiredIntList []int32, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (SpreadAliasClientSpreadWithMultipleParametersResponse, error) {
 	var err error
 	const operationName = "SpreadAliasClient.SpreadWithMultipleParameters"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.spreadWithMultipleParametersCreateRequest(ctx, id, xMSTestHeader, requiredString, optionalInt, requiredIntList, optionalStringList, options)
+	req, err := client.spreadWithMultipleParametersCreateRequest(ctx, id, xMSTestHeader, requiredString, requiredIntList, options)
 	if err != nil {
 		return SpreadAliasClientSpreadWithMultipleParametersResponse{}, err
 	}
@@ -246,7 +244,7 @@ func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Contex
 }
 
 // spreadWithMultipleParametersCreateRequest creates the SpreadWithMultipleParameters request.
-func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx context.Context, id string, xMSTestHeader string, requiredString string, optionalInt int32, requiredIntList []int32, optionalStringList []string, _ *SpreadAliasClientSpreadWithMultipleParametersOptions) (*policy.Request, error) {
+func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx context.Context, id string, xMSTestHeader string, requiredString string, requiredIntList []int32, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (*policy.Request, error) {
 	urlPath := "/parameters/spread/alias/multiple-parameters/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -260,14 +258,18 @@ func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx c
 	req.Raw().Header["x-ms-test-header"] = []string{xMSTestHeader}
 	body := struct {
 		RequiredString     string   `json:"requiredString"`
-		OptionalInt        int32    `json:"optionalInt"`
+		OptionalInt        *int32   `json:"optionalInt"`
 		RequiredIntList    []int32  `json:"requiredIntList"`
 		OptionalStringList []string `json:"optionalStringList"`
 	}{
-		RequiredString:     requiredString,
-		OptionalInt:        optionalInt,
-		RequiredIntList:    requiredIntList,
-		OptionalStringList: optionalStringList,
+		RequiredString:  requiredString,
+		RequiredIntList: requiredIntList,
+	}
+	if options != nil && options.OptionalInt != nil {
+		body.OptionalInt = options.OptionalInt
+	}
+	if options != nil && options.OptionalStringList != nil {
+		body.OptionalStringList = options.OptionalStringList
 	}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err

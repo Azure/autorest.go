@@ -37,7 +37,7 @@ type SpreadAliasServer struct {
 
 	// SpreadWithMultipleParameters is the fake for method SpreadAliasClient.SpreadWithMultipleParameters
 	// HTTP status codes to indicate success: http.StatusNoContent
-	SpreadWithMultipleParameters func(ctx context.Context, id string, xMSTestHeader string, requiredString string, optionalInt int32, requiredIntList []int32, optionalStringList []string, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder)
+	SpreadWithMultipleParameters func(ctx context.Context, id string, xMSTestHeader string, requiredString string, requiredIntList []int32, options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions) (resp azfake.Responder[spreadgroup.SpreadAliasClientSpreadWithMultipleParametersResponse], errResp azfake.ErrorResponder)
 }
 
 // NewSpreadAliasServerTransport creates a new instance of SpreadAliasServerTransport with the provided implementation.
@@ -233,7 +233,7 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 	}
 	type partialBodyParams struct {
 		RequiredString     string   `json:"requiredString"`
-		OptionalInt        int32    `json:"optionalInt"`
+		OptionalInt        *int32   `json:"optionalInt"`
 		RequiredIntList    []int32  `json:"requiredIntList"`
 		OptionalStringList []string `json:"optionalStringList"`
 	}
@@ -245,7 +245,14 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := s.srv.SpreadWithMultipleParameters(req.Context(), idParam, getHeaderValue(req.Header, "x-ms-test-header"), body.RequiredString, body.OptionalInt, body.RequiredIntList, body.OptionalStringList, nil)
+	var options *spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions
+	if body.OptionalInt != nil || len(body.OptionalStringList) > 0 {
+		options = &spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions{
+			OptionalInt:        body.OptionalInt,
+			OptionalStringList: body.OptionalStringList,
+		}
+	}
+	respr, errRespr := s.srv.SpreadWithMultipleParameters(req.Context(), idParam, getHeaderValue(req.Header, "x-ms-test-header"), body.RequiredString, body.RequiredIntList, options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

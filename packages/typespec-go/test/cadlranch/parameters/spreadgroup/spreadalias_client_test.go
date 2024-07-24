@@ -8,6 +8,7 @@ import (
 	"spreadgroup"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -30,7 +31,10 @@ func TestSpreadAliasClient_SpreadAsRequestParameter(t *testing.T) {
 func TestSpreadAliasClient_SpreadWithMultipleParameters(t *testing.T) {
 	client, err := spreadgroup.NewSpreadClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), "1", "bar", "foo", 1, []int32{1, 2}, []string{"foo", "bar"}, nil)
+	resp, err := client.NewSpreadAliasClient().SpreadWithMultipleParameters(context.Background(), "1", "bar", "foo", []int32{1, 2}, &spreadgroup.SpreadAliasClientSpreadWithMultipleParametersOptions{
+		OptionalInt:        to.Ptr[int32](1),
+		OptionalStringList: []string{"foo", "bar"},
+	})
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
