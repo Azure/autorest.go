@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_CreateOrUpdate.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_CreateOrUpdate.json
 func ExampleServicesClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -64,7 +64,7 @@ func ExampleServicesClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Delete.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Delete.json
 func ExampleServicesClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -86,7 +86,7 @@ func ExampleServicesClient_Delete() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ExportMetadataSchema.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ExportMetadataSchema.json
 func ExampleServicesClient_BeginExportMetadataSchema() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -117,7 +117,7 @@ func ExampleServicesClient_BeginExportMetadataSchema() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Get.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Get.json
 func ExampleServicesClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -160,7 +160,7 @@ func ExampleServicesClient_Get() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ListByResourceGroup.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ListByResourceGroup.json
 func ExampleServicesClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -212,7 +212,7 @@ func ExampleServicesClient_NewListByResourceGroupPager() {
 	}
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ListBySubscription.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_ListBySubscription.json
 func ExampleServicesClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -264,7 +264,7 @@ func ExampleServicesClient_NewListBySubscriptionPager() {
 	}
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Update.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Services_Update.json
 func ExampleServicesClient_Update() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_CreateOrUpdate_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_CreateOrUpdate_200.json
 func ExampleTargetsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -52,7 +52,7 @@ func ExampleTargetsClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_Delete_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_Delete_200.json
 func ExampleTargetsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -74,7 +74,7 @@ func ExampleTargetsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_Get_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_Get_200.json
 func ExampleTargetsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -107,7 +107,7 @@ func ExampleTargetsClient_Get() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_ListByWatcher_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Targets_ListByWatcher_200.json
 func ExampleTargetsClient_NewListByWatcherPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

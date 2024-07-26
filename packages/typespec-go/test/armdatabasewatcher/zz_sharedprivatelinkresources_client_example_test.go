@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Create_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Create_200.json
 func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -57,7 +57,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginCreate() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Delete_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Delete_200.json
 func ExampleSharedPrivateLinkResourcesClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -78,7 +78,7 @@ func ExampleSharedPrivateLinkResourcesClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Get_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_Get_200.json
 func ExampleSharedPrivateLinkResourcesClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -112,7 +112,7 @@ func ExampleSharedPrivateLinkResourcesClient_Get() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_ListByWatcher_200.json
+// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/SharedPrivateLinkResources_ListByWatcher_200.json
 func ExampleSharedPrivateLinkResourcesClient_NewListByWatcherPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

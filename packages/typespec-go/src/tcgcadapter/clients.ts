@@ -667,7 +667,10 @@ export class clientAdapter {
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
-        const goExample = new go.MethodExample(example.name, example.description, example.filePath);
+        const regex = /(\/specification\/|\/tsp\/).*/;
+        const match = example.filePath.match(regex);
+        const filePath = match ? match[0] : example.filePath;
+        const goExample = new go.MethodExample(example.name, example.description, filePath);
         for (const param of example.parameters) {
           const goParams = paramMapping.get(param.parameter);
           if (!goParams) {

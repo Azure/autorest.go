@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/AzureLargeInstance.Management/examples/2023-07-20-preview/AzureLargeInstanceOperations_List.json
+// Generated from example definition: /tsp/AzureLargeInstance.Management/examples/2023-07-20-preview/AzureLargeInstanceOperations_List.json
 func ExampleOperationsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

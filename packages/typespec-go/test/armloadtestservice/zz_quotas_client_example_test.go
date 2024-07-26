@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/LoadTestService.Management/examples/2022-12-01/Quotas_CheckAvailability.json
+// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/Quotas_CheckAvailability.json
 func ExampleQuotasClient_CheckAvailability() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -53,7 +53,7 @@ func ExampleQuotasClient_CheckAvailability() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/LoadTestService.Management/examples/2022-12-01/Quotas_Get.json
+// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/Quotas_Get.json
 func ExampleQuotasClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -84,7 +84,7 @@ func ExampleQuotasClient_Get() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/LoadTestService.Management/examples/2022-12-01/Quotas_List.json
+// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/Quotas_List.json
 func ExampleQuotasClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

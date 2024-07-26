@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_CreateOrUpdate.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_CreateOrUpdate.json
 func ExampleEnvironmentsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -78,7 +78,7 @@ func ExampleEnvironmentsClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Delete.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Delete.json
 func ExampleEnvironmentsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -100,7 +100,7 @@ func ExampleEnvironmentsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Get.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Get.json
 func ExampleEnvironmentsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -146,7 +146,7 @@ func ExampleEnvironmentsClient_Get() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Head.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_Head.json
 func ExampleEnvironmentsClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -168,7 +168,7 @@ func ExampleEnvironmentsClient_Head() {
 	// }
 }
 
-// Generated from example definition: D:/w/t/autorest.go/packages/typespec-go/test/tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_List.json
+// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Environments_List.json
 func ExampleEnvironmentsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
