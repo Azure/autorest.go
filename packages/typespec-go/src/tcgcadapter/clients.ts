@@ -704,17 +704,17 @@ export class clientAdapter {
             }
             goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
           }
-          if (response.value) {
+          if (response.bodyValue) {
             if (go.isAnyResult(method.responseEnvelope.result!)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.value, new go.PrimitiveType('any'));
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
             } else if (go.isModelResult(method.responseEnvelope.result!)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.value, method.responseEnvelope.result.modelType);
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
             } else if (go.isBinaryResult(method.responseEnvelope.result!)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.value, new go.PrimitiveType('byte'));
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
             } else if (go.isMonomorphicResult(method.responseEnvelope.result!)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.value, method.responseEnvelope.result.monomorphicType);
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
             } else if (go.isPolymorphicResult(method.responseEnvelope.result!)) {
-              goExample.responseEnvelope.result = this.adaptExampleType(response.value, method.responseEnvelope.result.interfaceType);
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
             }
           }
         }
@@ -780,9 +780,9 @@ export class clientAdapter {
             const field = concreteType.fields.find(f => f.serializedName === k)!;
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
-          if (exampleType.additionalProperties) {
+          if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
-            for (const [k, v] of Object.entries(exampleType.additionalProperties)) {
+            for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
               ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)?.type!);
             }
           }

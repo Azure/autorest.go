@@ -293,7 +293,7 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 		}
 		// If the HTTP response code is 200 as defined in example definition, your page structure would look as follows. Please pay attention that all the values in the output are fake values for just demo purposes.
 		// page = armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{
-		// 	PagedOutboundEnvironmentEndpoint: armloadtestservice.PagedOutboundEnvironmentEndpoint{
+		// 	OutboundEnvironmentEndpointCollection: armloadtestservice.OutboundEnvironmentEndpointCollection{
 		// 		Value: []*armloadtestservice.OutboundEnvironmentEndpoint{
 		// 			{
 		// 				Category: to.Ptr("Azure Batch"),
@@ -404,7 +404,7 @@ func ExampleLoadTestsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewLoadTestsClient().BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResourceUpdate{
+	poller, err := clientFactory.NewLoadTestsClient().BeginUpdate(ctx, "dummyrg", "myLoadTest", armloadtestservice.LoadTestResource{
 		Tags: map[string]*string{
 			"Team":     to.Ptr("Dev Exp"),
 			"Division": to.Ptr("LT"),
@@ -415,7 +415,7 @@ func ExampleLoadTestsClient_BeginUpdate() {
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": &armloadtestservice.UserAssignedIdentity{},
 			},
 		},
-		Properties: &armloadtestservice.LoadTestResourceUpdateProperties{
+		Properties: &armloadtestservice.LoadTestProperties{
 			Description: to.Ptr("This is new load test resource"),
 			Encryption: &armloadtestservice.EncryptionProperties{
 				Identity: &armloadtestservice.EncryptionPropertiesIdentity{

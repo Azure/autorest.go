@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"jsongroup"
 	"net/http"
-	"strconv"
 )
 
 // JSONPropertyServer is a fake server for instances of the jsongroup.JSONPropertyClient type.
@@ -90,18 +89,11 @@ func (j *JSONPropertyServerTransport) dispatchSend(req *http.Request) (*http.Res
 	if j.srv.Send == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Send not implemented")}
 	}
-	type partialBodyParams struct {
-		DefaultName bool `json:"wireName"`
-	}
-	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	body, err := server.UnmarshalRequestAsJSON[jsongroup.JSONEncodedNameModel](req)
 	if err != nil {
 		return nil, err
 	}
-	defaultNameParam, err := strconv.ParseBool(defaultName)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := j.srv.Send(req.Context(), body.DefaultName, nil)
+	respr, errRespr := j.srv.Send(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

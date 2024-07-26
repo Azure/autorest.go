@@ -19,64 +19,64 @@ import (
 	"regexp"
 )
 
-// AzureLargeInstancesServer is a fake server for instances of the armlargeinstance.AzureLargeInstancesClient type.
-type AzureLargeInstancesServer struct {
-	// Get is the fake for method AzureLargeInstancesClient.Get
+// AzureLargeInstanceServer is a fake server for instances of the armlargeinstance.AzureLargeInstanceClient type.
+type AzureLargeInstanceServer struct {
+	// Get is the fake for method AzureLargeInstanceClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientGetResponse], errResp azfake.ErrorResponder)
 
-	// NewListByResourceGroupPager is the fake for method AzureLargeInstancesClient.NewListByResourceGroupPager
+	// NewListByResourceGroupPager is the fake for method AzureLargeInstanceClient.NewListByResourceGroupPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListByResourceGroupPager func(resourceGroupName string, options *armlargeinstance.AzureLargeInstancesClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse])
+	NewListByResourceGroupPager func(resourceGroupName string, options *armlargeinstance.AzureLargeInstanceClientListByResourceGroupOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListByResourceGroupResponse])
 
-	// NewListBySubscriptionPager is the fake for method AzureLargeInstancesClient.NewListBySubscriptionPager
+	// NewListBySubscriptionPager is the fake for method AzureLargeInstanceClient.NewListBySubscriptionPager
 	// HTTP status codes to indicate success: http.StatusOK
-	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeInstancesClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse])
+	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeInstanceClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse])
 
-	// BeginRestart is the fake for method AzureLargeInstancesClient.BeginRestart
+	// BeginRestart is the fake for method AzureLargeInstanceClient.BeginRestart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginRestart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse], errResp azfake.ErrorResponder)
+	BeginRestart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientRestartResponse], errResp azfake.ErrorResponder)
 
-	// BeginShutdown is the fake for method AzureLargeInstancesClient.BeginShutdown
+	// BeginShutdown is the fake for method AzureLargeInstanceClient.BeginShutdown
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginShutdown func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse], errResp azfake.ErrorResponder)
+	BeginShutdown func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientBeginShutdownOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientShutdownResponse], errResp azfake.ErrorResponder)
 
-	// BeginStart is the fake for method AzureLargeInstancesClient.BeginStart
+	// BeginStart is the fake for method AzureLargeInstanceClient.BeginStart
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginStart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstancesClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse], errResp azfake.ErrorResponder)
+	BeginStart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientBeginStartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientStartResponse], errResp azfake.ErrorResponder)
 
-	// Update is the fake for method AzureLargeInstancesClient.Update
+	// Update is the fake for method AzureLargeInstanceClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
-	Update func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.TagsUpdate, options *armlargeinstance.AzureLargeInstancesClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstancesClientUpdateResponse], errResp azfake.ErrorResponder)
+	Update func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties armlargeinstance.TagsUpdate, options *armlargeinstance.AzureLargeInstanceClientUpdateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
-// NewAzureLargeInstancesServerTransport creates a new instance of AzureLargeInstancesServerTransport with the provided implementation.
-// The returned AzureLargeInstancesServerTransport instance is connected to an instance of armlargeinstance.AzureLargeInstancesClient via the
+// NewAzureLargeInstanceServerTransport creates a new instance of AzureLargeInstanceServerTransport with the provided implementation.
+// The returned AzureLargeInstanceServerTransport instance is connected to an instance of armlargeinstance.AzureLargeInstanceClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewAzureLargeInstancesServerTransport(srv *AzureLargeInstancesServer) *AzureLargeInstancesServerTransport {
-	return &AzureLargeInstancesServerTransport{
+func NewAzureLargeInstanceServerTransport(srv *AzureLargeInstanceServer) *AzureLargeInstanceServerTransport {
+	return &AzureLargeInstanceServerTransport{
 		srv:                         srv,
-		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse]](),
-		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse]](),
-		beginRestart:                newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse]](),
-		beginShutdown:               newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse]](),
-		beginStart:                  newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse]](),
+		newListByResourceGroupPager: newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListByResourceGroupResponse]](),
+		newListBySubscriptionPager:  newTracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse]](),
+		beginRestart:                newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientRestartResponse]](),
+		beginShutdown:               newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientShutdownResponse]](),
+		beginStart:                  newTracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientStartResponse]](),
 	}
 }
 
-// AzureLargeInstancesServerTransport connects instances of armlargeinstance.AzureLargeInstancesClient to instances of AzureLargeInstancesServer.
-// Don't use this type directly, use NewAzureLargeInstancesServerTransport instead.
-type AzureLargeInstancesServerTransport struct {
-	srv                         *AzureLargeInstancesServer
-	newListByResourceGroupPager *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse]]
-	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse]]
-	beginRestart                *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientRestartResponse]]
-	beginShutdown               *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientShutdownResponse]]
-	beginStart                  *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstancesClientStartResponse]]
+// AzureLargeInstanceServerTransport connects instances of armlargeinstance.AzureLargeInstanceClient to instances of AzureLargeInstanceServer.
+// Don't use this type directly, use NewAzureLargeInstanceServerTransport instead.
+type AzureLargeInstanceServerTransport struct {
+	srv                         *AzureLargeInstanceServer
+	newListByResourceGroupPager *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListByResourceGroupResponse]]
+	newListBySubscriptionPager  *tracker[azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse]]
+	beginRestart                *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientRestartResponse]]
+	beginShutdown               *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientShutdownResponse]]
+	beginStart                  *tracker[azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientStartResponse]]
 }
 
-// Do implements the policy.Transporter interface for AzureLargeInstancesServerTransport.
-func (a *AzureLargeInstancesServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for AzureLargeInstanceServerTransport.
+func (a *AzureLargeInstanceServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -86,24 +86,24 @@ func (a *AzureLargeInstancesServerTransport) Do(req *http.Request) (*http.Respon
 	return a.dispatchToMethodFake(req, method)
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "AzureLargeInstancesClient.Get":
+	case "AzureLargeInstanceClient.Get":
 		resp, err = a.dispatchGet(req)
-	case "AzureLargeInstancesClient.NewListByResourceGroupPager":
+	case "AzureLargeInstanceClient.NewListByResourceGroupPager":
 		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeInstancesClient.NewListBySubscriptionPager":
+	case "AzureLargeInstanceClient.NewListBySubscriptionPager":
 		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeInstancesClient.BeginRestart":
+	case "AzureLargeInstanceClient.BeginRestart":
 		resp, err = a.dispatchBeginRestart(req)
-	case "AzureLargeInstancesClient.BeginShutdown":
+	case "AzureLargeInstanceClient.BeginShutdown":
 		resp, err = a.dispatchBeginShutdown(req)
-	case "AzureLargeInstancesClient.BeginStart":
+	case "AzureLargeInstanceClient.BeginStart":
 		resp, err = a.dispatchBeginStart(req)
-	case "AzureLargeInstancesClient.Update":
+	case "AzureLargeInstanceClient.Update":
 		resp, err = a.dispatchUpdate(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -112,7 +112,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchToMethodFake(req *http.Requ
 	return resp, err
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if a.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
@@ -145,7 +145,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchGet(req *http.Request) (*ht
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchNewListByResourceGroupPager(req *http.Request) (*http.Response, error) {
 	if a.srv.NewListByResourceGroupPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListByResourceGroupPager not implemented")}
 	}
@@ -164,7 +164,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListByResourceGroupPager
 		resp := a.srv.NewListByResourceGroupPager(resourceGroupNameParam, nil)
 		newListByResourceGroupPager = &resp
 		a.newListByResourceGroupPager.add(req, newListByResourceGroupPager)
-		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeInstancesClientListByResourceGroupResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListByResourceGroupPager, req, func(page *armlargeinstance.AzureLargeInstanceClientListByResourceGroupResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -182,7 +182,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListByResourceGroupPager
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchNewListBySubscriptionPager(req *http.Request) (*http.Response, error) {
 	if a.srv.NewListBySubscriptionPager == nil {
 		return nil, &nonRetriableError{errors.New("fake for method NewListBySubscriptionPager not implemented")}
 	}
@@ -197,7 +197,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListBySubscriptionPager(
 		resp := a.srv.NewListBySubscriptionPager(nil)
 		newListBySubscriptionPager = &resp
 		a.newListBySubscriptionPager.add(req, newListBySubscriptionPager)
-		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeInstancesClientListBySubscriptionResponse, createLink func() string) {
+		server.PagerResponderInjectNextLinks(newListBySubscriptionPager, req, func(page *armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse, createLink func() string) {
 			page.NextLink = to.Ptr(createLink())
 		})
 	}
@@ -215,7 +215,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchNewListBySubscriptionPager(
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchBeginRestart(req *http.Request) (*http.Response, error) {
 	if a.srv.BeginRestart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginRestart not implemented")}
 	}
@@ -239,9 +239,9 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Requ
 		if err != nil {
 			return nil, err
 		}
-		var options *armlargeinstance.AzureLargeInstancesClientBeginRestartOptions
+		var options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions
 		if !reflect.ValueOf(body).IsZero() {
-			options = &armlargeinstance.AzureLargeInstancesClientBeginRestartOptions{
+			options = &armlargeinstance.AzureLargeInstanceClientBeginRestartOptions{
 				ForceParameter: &body,
 			}
 		}
@@ -269,7 +269,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginRestart(req *http.Requ
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchBeginShutdown(req *http.Request) (*http.Response, error) {
 	if a.srv.BeginShutdown == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginShutdown not implemented")}
 	}
@@ -313,7 +313,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginShutdown(req *http.Req
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchBeginStart(req *http.Request) (*http.Response, error) {
 	if a.srv.BeginStart == nil {
 		return nil, &nonRetriableError{errors.New("fake for method BeginStart not implemented")}
 	}
@@ -357,7 +357,7 @@ func (a *AzureLargeInstancesServerTransport) dispatchBeginStart(req *http.Reques
 	return resp, nil
 }
 
-func (a *AzureLargeInstancesServerTransport) dispatchUpdate(req *http.Request) (*http.Response, error) {
+func (a *AzureLargeInstanceServerTransport) dispatchUpdate(req *http.Request) (*http.Response, error) {
 	if a.srv.Update == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Update not implemented")}
 	}

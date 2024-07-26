@@ -152,17 +152,13 @@ export class typeAdapter {
   getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
       case 'any':
-      case 'armId':
-      case 'azureLocation':
       case 'boolean':
       case 'bytes':
       case 'decimal':
       case 'decimal128':
-      case 'eTag':
       case 'float':
       case 'float32':
       case 'float64':
-      case 'guid':
       case 'int8':
       case 'int16':
       case 'int32':
@@ -174,9 +170,7 @@ export class typeAdapter {
       case 'plainDate':
       case 'plainTime':
       case 'string':
-      case 'uri':
       case 'url':
-      case 'uuid':
         return this.getBuiltInType(type);
       case 'array': {
         let elementType = type.valueType;
@@ -352,16 +346,6 @@ export class typeAdapter {
         this.types.set(decimalKey, decimalType);
         return decimalType;
       }
-      case 'eTag': {
-        const etagKey = 'etag';
-        let etag = this.types.get(etagKey);
-        if (etag) {
-          return etag;
-        }
-        etag = new go.QualifiedType('ETag', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
-        this.types.set(etagKey, etag);
-        return etag;
-      }
       case 'float': // C# and Java define float as 32 bits so we're following suit
       case 'float32': {
         const float32Key = 'float32';
@@ -400,13 +384,19 @@ export class typeAdapter {
         this.types.set(keyName, intType);
         return intType;
       }
-      case 'armId':
-      case 'azureLocation':
-      case 'guid':
       case 'string':
-      case 'uuid':
-      case 'uri':
       case 'url': {
+        if (type.crossLanguageDefinitionId === "Azure.Core.eTag") {
+          const etagKey = 'etag';
+          let etag = this.types.get(etagKey);
+          if (etag) {
+            return etag;
+          }
+          etag = new go.QualifiedType('ETag', 'github.com/Azure/azure-sdk-for-go/sdk/azcore');
+          this.types.set(etagKey, etag);
+          return etag;
+        }
+
         const stringKey = 'string';
         let stringType = this.types.get(stringKey);
         if (stringType) {
@@ -735,9 +725,6 @@ export class typeAdapter {
         return literalFloat;
       }
       case 'string':
-      case 'guid':
-      case 'uuid':
-      case 'uri':
       case 'url': {
         const keyName = `literal-string-${constType.value}`;
         let literalString = this.types.get(keyName);

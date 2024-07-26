@@ -18,9 +18,9 @@ type NamingClient struct {
 	internal *azcore.Client
 }
 
-// NewNamingModelClient creates a new instance of [NamingModelClient].
-func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
-	return &NamingModelClient{
+// NewNamingClientModelClient creates a new instance of [NamingClientModelClient].
+func (client *NamingClient) NewNamingClientModelClient() *NamingClientModelClient {
+	return &NamingClientModelClient{
 		internal: client.internal,
 	}
 }
@@ -34,7 +34,6 @@ func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 
 // Client -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - clientName - Pass in true
 //   - options - NamingClientClientOptions contains the optional parameters for the NamingClient.Client method.
 func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, options *NamingClientClientOptions) (NamingClientClientResponse, error) {
 	var err error
@@ -107,7 +106,6 @@ func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *Nami
 
 // CompatibleWithEncodedName -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - clientName - Pass in true
 //   - options - NamingClientCompatibleWithEncodedNameOptions contains the optional parameters for the NamingClient.CompatibleWithEncodedName
 //     method.
 func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body ClientNameAndJSONEncodedNameModel, options *NamingClientCompatibleWithEncodedNameOptions) (NamingClientCompatibleWithEncodedNameResponse, error) {
@@ -147,7 +145,6 @@ func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.C
 
 // Language -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - GoName - Pass in true
 //   - options - NamingClientLanguageOptions contains the optional parameters for the NamingClient.Language method.
 func (client *NamingClient) Language(ctx context.Context, body LanguageClientNameModel, options *NamingClientLanguageOptions) (NamingClientLanguageResponse, error) {
 	var err error

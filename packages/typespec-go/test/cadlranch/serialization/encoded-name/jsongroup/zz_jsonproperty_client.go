@@ -65,7 +65,6 @@ func (client *JSONPropertyClient) getHandleResponse(resp *http.Response) (JSONPr
 
 // Send -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - defaultName - Pass in true
 //   - options - JSONPropertyClientSendOptions contains the optional parameters for the JSONPropertyClient.Send method.
 func (client *JSONPropertyClient) Send(ctx context.Context, body JSONEncodedNameModel, options *JSONPropertyClientSendOptions) (JSONPropertyClientSendResponse, error) {
 	var err error

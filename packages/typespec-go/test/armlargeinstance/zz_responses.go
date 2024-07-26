@@ -4,70 +4,70 @@
 
 package armlargeinstance
 
-// AzureLargeInstancesClientGetResponse contains the response from method AzureLargeInstancesClient.Get.
-type AzureLargeInstancesClientGetResponse struct {
+// AzureLargeInstanceClientGetResponse contains the response from method AzureLargeInstanceClient.Get.
+type AzureLargeInstanceClientGetResponse struct {
 	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 	// properties)
 	AzureLargeInstance
 }
 
-// AzureLargeInstancesClientListByResourceGroupResponse contains the response from method AzureLargeInstancesClient.NewListByResourceGroupPager.
-type AzureLargeInstancesClientListByResourceGroupResponse struct {
+// AzureLargeInstanceClientListByResourceGroupResponse contains the response from method AzureLargeInstanceClient.NewListByResourceGroupPager.
+type AzureLargeInstanceClientListByResourceGroupResponse struct {
 	// The response of a AzureLargeInstance list operation.
 	ListResult
 }
 
-// AzureLargeInstancesClientListBySubscriptionResponse contains the response from method AzureLargeInstancesClient.NewListBySubscriptionPager.
-type AzureLargeInstancesClientListBySubscriptionResponse struct {
+// AzureLargeInstanceClientListBySubscriptionResponse contains the response from method AzureLargeInstanceClient.NewListBySubscriptionPager.
+type AzureLargeInstanceClientListBySubscriptionResponse struct {
 	// The response of a AzureLargeInstance list operation.
 	ListResult
 }
 
-// AzureLargeInstancesClientRestartResponse contains the response from method AzureLargeInstancesClient.BeginRestart.
-type AzureLargeInstancesClientRestartResponse struct {
+// AzureLargeInstanceClientRestartResponse contains the response from method AzureLargeInstanceClient.BeginRestart.
+type AzureLargeInstanceClientRestartResponse struct {
 	// placeholder for future response values
 }
 
-// AzureLargeInstancesClientShutdownResponse contains the response from method AzureLargeInstancesClient.BeginShutdown.
-type AzureLargeInstancesClientShutdownResponse struct {
+// AzureLargeInstanceClientShutdownResponse contains the response from method AzureLargeInstanceClient.BeginShutdown.
+type AzureLargeInstanceClientShutdownResponse struct {
 	// The current status of an async operation.
 	OperationStatusResult
 }
 
-// AzureLargeInstancesClientStartResponse contains the response from method AzureLargeInstancesClient.BeginStart.
-type AzureLargeInstancesClientStartResponse struct {
+// AzureLargeInstanceClientStartResponse contains the response from method AzureLargeInstanceClient.BeginStart.
+type AzureLargeInstanceClientStartResponse struct {
 	// The current status of an async operation.
 	OperationStatusResult
 }
 
-// AzureLargeInstancesClientUpdateResponse contains the response from method AzureLargeInstancesClient.Update.
-type AzureLargeInstancesClientUpdateResponse struct {
+// AzureLargeInstanceClientUpdateResponse contains the response from method AzureLargeInstanceClient.Update.
+type AzureLargeInstanceClientUpdateResponse struct {
 	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 	// properties)
 	AzureLargeInstance
 }
 
-// AzureLargeStorageInstancesClientGetResponse contains the response from method AzureLargeStorageInstancesClient.Get.
-type AzureLargeStorageInstancesClientGetResponse struct {
+// AzureLargeStorageInstanceClientGetResponse contains the response from method AzureLargeStorageInstanceClient.Get.
+type AzureLargeStorageInstanceClientGetResponse struct {
 	// AzureLargeStorageInstance info on Azure (ARM properties and
 	// AzureLargeStorageInstance properties)
 	AzureLargeStorageInstance
 }
 
-// AzureLargeStorageInstancesClientListByResourceGroupResponse contains the response from method AzureLargeStorageInstancesClient.NewListByResourceGroupPager.
-type AzureLargeStorageInstancesClientListByResourceGroupResponse struct {
+// AzureLargeStorageInstanceClientListByResourceGroupResponse contains the response from method AzureLargeStorageInstanceClient.NewListByResourceGroupPager.
+type AzureLargeStorageInstanceClientListByResourceGroupResponse struct {
 	// The response of a AzureLargeStorageInstance list operation.
 	AzureLargeStorageInstanceListResult
 }
 
-// AzureLargeStorageInstancesClientListBySubscriptionResponse contains the response from method AzureLargeStorageInstancesClient.NewListBySubscriptionPager.
-type AzureLargeStorageInstancesClientListBySubscriptionResponse struct {
+// AzureLargeStorageInstanceClientListBySubscriptionResponse contains the response from method AzureLargeStorageInstanceClient.NewListBySubscriptionPager.
+type AzureLargeStorageInstanceClientListBySubscriptionResponse struct {
 	// The response of a AzureLargeStorageInstance list operation.
 	AzureLargeStorageInstanceListResult
 }
 
-// AzureLargeStorageInstancesClientUpdateResponse contains the response from method AzureLargeStorageInstancesClient.Update.
-type AzureLargeStorageInstancesClientUpdateResponse struct {
+// AzureLargeStorageInstanceClientUpdateResponse contains the response from method AzureLargeStorageInstanceClient.Update.
+type AzureLargeStorageInstanceClientUpdateResponse struct {
 	// AzureLargeStorageInstance info on Azure (ARM properties and
 	// AzureLargeStorageInstance properties)
 	AzureLargeStorageInstance

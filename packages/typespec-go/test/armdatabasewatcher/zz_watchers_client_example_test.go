@@ -323,11 +323,11 @@ func ExampleWatchersClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewWatchersClient().BeginUpdate(ctx, "apiTest-lzect6", "databasemohkp6fn", armdatabasewatcher.WatcherUpdate{
+	poller, err := clientFactory.NewWatchersClient().BeginUpdate(ctx, "apiTest-lzect6", "databasemohkp6fn", armdatabasewatcher.Watcher{
 		Identity: &armdatabasewatcher.ManagedServiceIdentity{
 			Type: to.Ptr(armdatabasewatcher.ManagedServiceIdentityTypeSystemAssigned),
 		},
-		Properties: &armdatabasewatcher.WatcherUpdateProperties{
+		Properties: &armdatabasewatcher.WatcherProperties{
 			Datastore: &armdatabasewatcher.Datastore{
 				AdxClusterResourceID:    to.Ptr("/subscriptions/6f53185c-ea09-4fc3-9075-318dec805303/resourceGroups/apiTest/providers/Microsoft.Kusto/clusters/apiTestKusto"),
 				KustoClusterURI:         to.Ptr("https://kustouri-adx.eastus.kusto.windows.net"),

@@ -70,14 +70,11 @@ func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*ht
 	}
 	beginLongRunningRPC := r.beginLongRunningRPC.get(req)
 	if beginLongRunningRPC == nil {
-		type partialBodyParams struct {
-			Prompt string `json:"prompt"`
-		}
-		body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+		body, err := server.UnmarshalRequestAsJSON[lrorpcgroup.GenerationOptions](req)
 		if err != nil {
 			return nil, err
 		}
-		respr, errRespr := r.srv.BeginLongRunningRPC(req.Context(), body.Prompt, nil)
+		respr, errRespr := r.srv.BeginLongRunningRPC(req.Context(), body, nil)
 		if respErr := server.GetError(errRespr, req); respErr != nil {
 			return nil, respErr
 		}

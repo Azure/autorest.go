@@ -16,23 +16,23 @@ import (
 	"strings"
 )
 
-// AzureLargeInstancesClient contains the methods for the AzureLargeInstances group.
-// Don't use this type directly, use NewAzureLargeInstancesClient() instead.
-type AzureLargeInstancesClient struct {
+// AzureLargeInstanceClient contains the methods for the AzureLargeInstance group.
+// Don't use this type directly, use NewAzureLargeInstanceClient() instead.
+type AzureLargeInstanceClient struct {
 	internal       *arm.Client
 	subscriptionID string
 }
 
-// NewAzureLargeInstancesClient creates a new instance of AzureLargeInstancesClient with the specified values.
+// NewAzureLargeInstanceClient creates a new instance of AzureLargeInstanceClient with the specified values.
 //   - subscriptionID - The ID of the target subscription. The value must be an UUID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
-func NewAzureLargeInstancesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeInstancesClient, error) {
+func NewAzureLargeInstanceClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureLargeInstanceClient, error) {
 	cl, err := arm.NewClient(moduleName, moduleVersion, credential, options)
 	if err != nil {
 		return nil, err
 	}
-	client := &AzureLargeInstancesClient{
+	client := &AzureLargeInstanceClient{
 		subscriptionID: subscriptionID,
 		internal:       cl,
 	}
@@ -46,31 +46,31 @@ func NewAzureLargeInstancesClient(subscriptionID string, credential azcore.Token
 // Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientGetOptions contains the optional parameters for the AzureLargeInstancesClient.Get method.
-func (client *AzureLargeInstancesClient) Get(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientGetOptions) (AzureLargeInstancesClientGetResponse, error) {
+//   - options - AzureLargeInstanceClientGetOptions contains the optional parameters for the AzureLargeInstanceClient.Get method.
+func (client *AzureLargeInstanceClient) Get(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientGetOptions) (AzureLargeInstanceClientGetResponse, error) {
 	var err error
-	const operationName = "AzureLargeInstancesClient.Get"
+	const operationName = "AzureLargeInstanceClient.Get"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.getCreateRequest(ctx, resourceGroupName, azureLargeInstanceName, options)
 	if err != nil {
-		return AzureLargeInstancesClientGetResponse{}, err
+		return AzureLargeInstanceClientGetResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AzureLargeInstancesClientGetResponse{}, err
+		return AzureLargeInstanceClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return AzureLargeInstancesClientGetResponse{}, err
+		return AzureLargeInstanceClientGetResponse{}, err
 	}
 	resp, err := client.getHandleResponse(httpResp)
 	return resp, err
 }
 
 // getCreateRequest creates the Get request.
-func (client *AzureLargeInstancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientGetOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstanceClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -96,10 +96,10 @@ func (client *AzureLargeInstancesClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *AzureLargeInstancesClient) getHandleResponse(resp *http.Response) (AzureLargeInstancesClientGetResponse, error) {
-	result := AzureLargeInstancesClientGetResponse{}
+func (client *AzureLargeInstanceClient) getHandleResponse(resp *http.Response) (AzureLargeInstanceClientGetResponse, error) {
+	result := AzureLargeInstanceClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeInstance); err != nil {
-		return AzureLargeInstancesClientGetResponse{}, err
+		return AzureLargeInstanceClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -109,15 +109,15 @@ func (client *AzureLargeInstancesClient) getHandleResponse(resp *http.Response) 
 //
 // Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
-//   - options - AzureLargeInstancesClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstancesClient.NewListByResourceGroupPager
+//   - options - AzureLargeInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstanceClient.NewListByResourceGroupPager
 //     method.
-func (client *AzureLargeInstancesClient) NewListByResourceGroupPager(resourceGroupName string, options *AzureLargeInstancesClientListByResourceGroupOptions) *runtime.Pager[AzureLargeInstancesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstancesClientListByResourceGroupResponse]{
-		More: func(page AzureLargeInstancesClientListByResourceGroupResponse) bool {
+func (client *AzureLargeInstanceClient) NewListByResourceGroupPager(resourceGroupName string, options *AzureLargeInstanceClientListByResourceGroupOptions) *runtime.Pager[AzureLargeInstanceClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstanceClientListByResourceGroupResponse]{
+		More: func(page AzureLargeInstanceClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *AzureLargeInstancesClientListByResourceGroupResponse) (AzureLargeInstancesClientListByResourceGroupResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstancesClient.NewListByResourceGroupPager")
+		Fetcher: func(ctx context.Context, page *AzureLargeInstanceClientListByResourceGroupResponse) (AzureLargeInstanceClientListByResourceGroupResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstanceClient.NewListByResourceGroupPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -126,7 +126,7 @@ func (client *AzureLargeInstancesClient) NewListByResourceGroupPager(resourceGro
 				return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 			}, nil)
 			if err != nil {
-				return AzureLargeInstancesClientListByResourceGroupResponse{}, err
+				return AzureLargeInstanceClientListByResourceGroupResponse{}, err
 			}
 			return client.listByResourceGroupHandleResponse(resp)
 		},
@@ -135,7 +135,7 @@ func (client *AzureLargeInstancesClient) NewListByResourceGroupPager(resourceGro
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AzureLargeInstancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *AzureLargeInstancesClientListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, _ *AzureLargeInstanceClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -157,10 +157,10 @@ func (client *AzureLargeInstancesClient) listByResourceGroupCreateRequest(ctx co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AzureLargeInstancesClient) listByResourceGroupHandleResponse(resp *http.Response) (AzureLargeInstancesClientListByResourceGroupResponse, error) {
-	result := AzureLargeInstancesClientListByResourceGroupResponse{}
+func (client *AzureLargeInstanceClient) listByResourceGroupHandleResponse(resp *http.Response) (AzureLargeInstanceClientListByResourceGroupResponse, error) {
+	result := AzureLargeInstanceClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResult); err != nil {
-		return AzureLargeInstancesClientListByResourceGroupResponse{}, err
+		return AzureLargeInstanceClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -169,15 +169,15 @@ func (client *AzureLargeInstancesClient) listByResourceGroupHandleResponse(resp 
 // operations returns various properties of each Azure Large Instance.
 //
 // Generated from API version 2023-07-20-preview
-//   - options - AzureLargeInstancesClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstancesClient.NewListBySubscriptionPager
+//   - options - AzureLargeInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstanceClient.NewListBySubscriptionPager
 //     method.
-func (client *AzureLargeInstancesClient) NewListBySubscriptionPager(options *AzureLargeInstancesClientListBySubscriptionOptions) *runtime.Pager[AzureLargeInstancesClientListBySubscriptionResponse] {
-	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstancesClientListBySubscriptionResponse]{
-		More: func(page AzureLargeInstancesClientListBySubscriptionResponse) bool {
+func (client *AzureLargeInstanceClient) NewListBySubscriptionPager(options *AzureLargeInstanceClientListBySubscriptionOptions) *runtime.Pager[AzureLargeInstanceClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PagingHandler[AzureLargeInstanceClientListBySubscriptionResponse]{
+		More: func(page AzureLargeInstanceClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *AzureLargeInstancesClientListBySubscriptionResponse) (AzureLargeInstancesClientListBySubscriptionResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstancesClient.NewListBySubscriptionPager")
+		Fetcher: func(ctx context.Context, page *AzureLargeInstanceClientListBySubscriptionResponse) (AzureLargeInstanceClientListBySubscriptionResponse, error) {
+			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "AzureLargeInstanceClient.NewListBySubscriptionPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -186,7 +186,7 @@ func (client *AzureLargeInstancesClient) NewListBySubscriptionPager(options *Azu
 				return client.listBySubscriptionCreateRequest(ctx, options)
 			}, nil)
 			if err != nil {
-				return AzureLargeInstancesClientListBySubscriptionResponse{}, err
+				return AzureLargeInstanceClientListBySubscriptionResponse{}, err
 			}
 			return client.listBySubscriptionHandleResponse(resp)
 		},
@@ -195,7 +195,7 @@ func (client *AzureLargeInstancesClient) NewListBySubscriptionPager(options *Azu
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AzureLargeInstancesClient) listBySubscriptionCreateRequest(ctx context.Context, _ *AzureLargeInstancesClientListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) listBySubscriptionCreateRequest(ctx context.Context, _ *AzureLargeInstanceClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.AzureLargeInstance/azureLargeInstances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -213,10 +213,10 @@ func (client *AzureLargeInstancesClient) listBySubscriptionCreateRequest(ctx con
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *http.Response) (AzureLargeInstancesClientListBySubscriptionResponse, error) {
-	result := AzureLargeInstancesClientListBySubscriptionResponse{}
+func (client *AzureLargeInstanceClient) listBySubscriptionHandleResponse(resp *http.Response) (AzureLargeInstanceClientListBySubscriptionResponse, error) {
+	result := AzureLargeInstanceClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResult); err != nil {
-		return AzureLargeInstancesClientListBySubscriptionResponse{}, err
+		return AzureLargeInstanceClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -227,20 +227,20 @@ func (client *AzureLargeInstancesClient) listBySubscriptionHandleResponse(resp *
 // Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginRestartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginRestart
+//   - options - AzureLargeInstanceClientBeginRestartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginRestart
 //     method.
-func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*runtime.Poller[AzureLargeInstancesClientRestartResponse], error) {
+func (client *AzureLargeInstanceClient) BeginRestart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginRestartOptions) (*runtime.Poller[AzureLargeInstanceClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.restart(ctx, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstancesClientRestartResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstanceClientRestartResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstancesClientRestartResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstanceClientRestartResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -250,9 +250,9 @@ func (client *AzureLargeInstancesClient) BeginRestart(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-07-20-preview
-func (client *AzureLargeInstancesClient) restart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*http.Response, error) {
+func (client *AzureLargeInstanceClient) restart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginRestartOptions) (*http.Response, error) {
 	var err error
-	const operationName = "AzureLargeInstancesClient.BeginRestart"
+	const operationName = "AzureLargeInstanceClient.BeginRestart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -272,7 +272,7 @@ func (client *AzureLargeInstancesClient) restart(ctx context.Context, resourceGr
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginRestartOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) restartCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/restart"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -310,20 +310,20 @@ func (client *AzureLargeInstancesClient) restartCreateRequest(ctx context.Contex
 // Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstancesClient.BeginShutdown
+//   - options - AzureLargeInstanceClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstanceClient.BeginShutdown
 //     method.
-func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*runtime.Poller[AzureLargeInstancesClientShutdownResponse], error) {
+func (client *AzureLargeInstanceClient) BeginShutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginShutdownOptions) (*runtime.Poller[AzureLargeInstanceClientShutdownResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.shutdown(ctx, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstancesClientShutdownResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstanceClientShutdownResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstancesClientShutdownResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstanceClientShutdownResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -333,9 +333,9 @@ func (client *AzureLargeInstancesClient) BeginShutdown(ctx context.Context, reso
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-07-20-preview
-func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginShutdownOptions) (*http.Response, error) {
+func (client *AzureLargeInstanceClient) shutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginShutdownOptions) (*http.Response, error) {
 	var err error
-	const operationName = "AzureLargeInstancesClient.BeginShutdown"
+	const operationName = "AzureLargeInstanceClient.BeginShutdown"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -355,7 +355,7 @@ func (client *AzureLargeInstancesClient) shutdown(ctx context.Context, resourceG
 }
 
 // shutdownCreateRequest creates the Shutdown request.
-func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientBeginShutdownOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) shutdownCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstanceClientBeginShutdownOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/shutdown"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -386,20 +386,20 @@ func (client *AzureLargeInstancesClient) shutdownCreateRequest(ctx context.Conte
 // Generated from API version 2023-07-20-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
-//   - options - AzureLargeInstancesClientBeginStartOptions contains the optional parameters for the AzureLargeInstancesClient.BeginStart
+//   - options - AzureLargeInstanceClientBeginStartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginStart
 //     method.
-func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*runtime.Poller[AzureLargeInstancesClientStartResponse], error) {
+func (client *AzureLargeInstanceClient) BeginStart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginStartOptions) (*runtime.Poller[AzureLargeInstanceClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.start(ctx, resourceGroupName, azureLargeInstanceName, options)
 		if err != nil {
 			return nil, err
 		}
-		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstancesClientStartResponse]{
+		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[AzureLargeInstanceClientStartResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
-		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstancesClientStartResponse]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.internal.Pipeline(), &runtime.NewPollerFromResumeTokenOptions[AzureLargeInstanceClientStartResponse]{
 			Tracer: client.internal.Tracer(),
 		})
 	}
@@ -409,9 +409,9 @@ func (client *AzureLargeInstancesClient) BeginStart(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-07-20-preview
-func (client *AzureLargeInstancesClient) start(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstancesClientBeginStartOptions) (*http.Response, error) {
+func (client *AzureLargeInstanceClient) start(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginStartOptions) (*http.Response, error) {
 	var err error
-	const operationName = "AzureLargeInstancesClient.BeginStart"
+	const operationName = "AzureLargeInstanceClient.BeginStart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
@@ -431,7 +431,7 @@ func (client *AzureLargeInstancesClient) start(ctx context.Context, resourceGrou
 }
 
 // startCreateRequest creates the Start request.
-func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstancesClientBeginStartOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) startCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstanceClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}/start"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -464,32 +464,32 @@ func (client *AzureLargeInstancesClient) startCreateRequest(ctx context.Context,
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - properties - The resource properties to be updated.
-//   - options - AzureLargeInstancesClientUpdateOptions contains the optional parameters for the AzureLargeInstancesClient.Update
+//   - options - AzureLargeInstanceClientUpdateOptions contains the optional parameters for the AzureLargeInstanceClient.Update
 //     method.
-func (client *AzureLargeInstancesClient) Update(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, options *AzureLargeInstancesClientUpdateOptions) (AzureLargeInstancesClientUpdateResponse, error) {
+func (client *AzureLargeInstanceClient) Update(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, options *AzureLargeInstanceClientUpdateOptions) (AzureLargeInstanceClientUpdateResponse, error) {
 	var err error
-	const operationName = "AzureLargeInstancesClient.Update"
+	const operationName = "AzureLargeInstanceClient.Update"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, azureLargeInstanceName, properties, options)
 	if err != nil {
-		return AzureLargeInstancesClientUpdateResponse{}, err
+		return AzureLargeInstanceClientUpdateResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return AzureLargeInstancesClientUpdateResponse{}, err
+		return AzureLargeInstanceClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return AzureLargeInstancesClientUpdateResponse{}, err
+		return AzureLargeInstanceClientUpdateResponse{}, err
 	}
 	resp, err := client.updateHandleResponse(httpResp)
 	return resp, err
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, _ *AzureLargeInstancesClientUpdateOptions) (*policy.Request, error) {
+func (client *AzureLargeInstanceClient) updateCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, properties TagsUpdate, _ *AzureLargeInstanceClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -519,10 +519,10 @@ func (client *AzureLargeInstancesClient) updateCreateRequest(ctx context.Context
 }
 
 // updateHandleResponse handles the Update response.
-func (client *AzureLargeInstancesClient) updateHandleResponse(resp *http.Response) (AzureLargeInstancesClientUpdateResponse, error) {
-	result := AzureLargeInstancesClientUpdateResponse{}
+func (client *AzureLargeInstanceClient) updateHandleResponse(resp *http.Response) (AzureLargeInstanceClientUpdateResponse, error) {
+	result := AzureLargeInstanceClientUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeInstance); err != nil {
-		return AzureLargeInstancesClientUpdateResponse{}, err
+		return AzureLargeInstanceClientUpdateResponse{}, err
 	}
 	return result, nil
 }

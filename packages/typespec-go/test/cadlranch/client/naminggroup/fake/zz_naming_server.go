@@ -14,15 +14,14 @@ import (
 	"naminggroup"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 	"sync"
 )
 
 // NamingServer is a fake server for instances of the naminggroup.NamingClient type.
 type NamingServer struct {
-	// NamingModelServer contains the fakes for client NamingModelClient
-	NamingModelServer NamingModelServer
+	// NamingClientModelServer contains the fakes for client NamingClientModelClient
+	NamingClientModelServer NamingClientModelServer
 
 	// NamingUnionEnumServer contains the fakes for client NamingUnionEnumClient
 	NamingUnionEnumServer NamingUnionEnumServer
@@ -66,10 +65,10 @@ func NewNamingServerTransport(srv *NamingServer) *NamingServerTransport {
 // NamingServerTransport connects instances of naminggroup.NamingClient to instances of NamingServer.
 // Don't use this type directly, use NewNamingServerTransport instead.
 type NamingServerTransport struct {
-	srv                     *NamingServer
-	trMu                    sync.Mutex
-	trNamingModelServer     *NamingModelServerTransport
-	trNamingUnionEnumServer *NamingUnionEnumServerTransport
+	srv                       *NamingServer
+	trMu                      sync.Mutex
+	trNamingClientModelServer *NamingClientModelServerTransport
+	trNamingUnionEnumServer   *NamingUnionEnumServerTransport
 }
 
 // Do implements the policy.Transporter interface for NamingServerTransport.
@@ -91,11 +90,11 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 	var err error
 
 	switch client {
-	case "NamingModelClient":
-		initServer(&n.trMu, &n.trNamingModelServer, func() *NamingModelServerTransport {
-			return NewNamingModelServerTransport(&n.srv.NamingModelServer)
+	case "NamingClientModelClient":
+		initServer(&n.trMu, &n.trNamingClientModelServer, func() *NamingClientModelServerTransport {
+			return NewNamingClientModelServerTransport(&n.srv.NamingClientModelServer)
 		})
-		resp, err = n.trNamingModelServer.Do(req)
+		resp, err = n.trNamingClientModelServer.Do(req)
 	case "NamingUnionEnumClient":
 		initServer(&n.trMu, &n.trNamingUnionEnumServer, func() *NamingUnionEnumServerTransport {
 			return NewNamingUnionEnumServerTransport(&n.srv.NamingUnionEnumServer)
@@ -138,18 +137,11 @@ func (n *NamingServerTransport) dispatchClient(req *http.Request) (*http.Respons
 	if n.srv.Client == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
 	}
-	type partialBodyParams struct {
-		ClientName bool `json:"defaultName"`
-	}
-	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameModel](req)
 	if err != nil {
 		return nil, err
 	}
-	clientNameParam, err := strconv.ParseBool(clientName)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := n.srv.Client(req.Context(), body.ClientName, nil)
+	respr, errRespr := n.srv.Client(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -187,18 +179,11 @@ func (n *NamingServerTransport) dispatchCompatibleWithEncodedName(req *http.Requ
 	if n.srv.CompatibleWithEncodedName == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CompatibleWithEncodedName not implemented")}
 	}
-	type partialBodyParams struct {
-		ClientName bool `json:"wireName"`
-	}
-	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.ClientNameAndJSONEncodedNameModel](req)
 	if err != nil {
 		return nil, err
 	}
-	clientNameParam, err := strconv.ParseBool(clientName)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := n.srv.CompatibleWithEncodedName(req.Context(), body.ClientName, nil)
+	respr, errRespr := n.srv.CompatibleWithEncodedName(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -217,18 +202,11 @@ func (n *NamingServerTransport) dispatchLanguage(req *http.Request) (*http.Respo
 	if n.srv.Language == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
 	}
-	type partialBodyParams struct {
-		GoName bool `json:"defaultName"`
-	}
-	body, err := server.UnmarshalRequestAsJSON[partialBodyParams](req)
+	body, err := server.UnmarshalRequestAsJSON[naminggroup.LanguageClientNameModel](req)
 	if err != nil {
 		return nil, err
 	}
-	goNameParam, err := strconv.ParseBool(GoName)
-	if err != nil {
-		return nil, err
-	}
-	respr, errRespr := n.srv.Language(req.Context(), body.GoName, nil)
+	respr, errRespr := n.srv.Language(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

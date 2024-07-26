@@ -524,8 +524,8 @@ func ExampleMongoClustersClient_BeginUpdate_updatesTheDiskSizeOnAMongoClusterRes
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.Update{
-		Properties: &armmongocluster.UpdateProperties{
+	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.MongoCluster{
+		Properties: &armmongocluster.Properties{
 			NodeGroupSpecs: []*armmongocluster.NodeGroupSpec{
 				{
 					Kind:       to.Ptr(armmongocluster.NodeKindShard),
@@ -589,8 +589,8 @@ func ExampleMongoClustersClient_BeginUpdate_disablesPublicNetworkAccessOnAMongoC
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.Update{
-		Properties: &armmongocluster.UpdateProperties{
+	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.MongoCluster{
+		Properties: &armmongocluster.Properties{
 			PublicNetworkAccess: to.Ptr(armmongocluster.PublicNetworkAccessDisabled),
 		},
 	}, nil)
@@ -675,8 +675,8 @@ func ExampleMongoClustersClient_BeginUpdate_updatesAMongoClusterResource() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.Update{
-		Properties: &armmongocluster.UpdateProperties{
+	poller, err := clientFactory.NewMongoClustersClient().BeginUpdate(ctx, "TestResourceGroup", "myMongoCluster", armmongocluster.MongoCluster{
+		Properties: &armmongocluster.Properties{
 			AdministratorLogin:         to.Ptr("mongoAdmin"),
 			AdministratorLoginPassword: to.Ptr("password"),
 			ServerVersion:              to.Ptr("5.0"),
