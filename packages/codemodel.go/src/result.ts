@@ -97,9 +97,12 @@ export interface PolymorphicResult {
 
   interfaceType: type.InterfaceType;
 
-  // the format in which the result is returned
+  // the format in which the result is returned.
+  // only JSON is supported for polymorphic types.
   format: 'JSON';
 }
+
+export type ModelResultFormat = 'JSON' | 'XML';
 
 // ModelResult is a standard schema response.
 // The type is anonymously embedded in the response envelope.
@@ -109,7 +112,7 @@ export interface ModelResult {
   modelType: type.ModelType;
 
   // the format in which the result is returned
-  format: ResultFormat;
+  format: ModelResultFormat;
 }
 
 export function isAnyResult(resultType: ResultType): resultType is AnyResult {
@@ -262,7 +265,7 @@ export class PolymorphicResult implements PolymorphicResult {
 }
 
 export class ModelResult implements ModelResult {
-  constructor(type: type.ModelType, format: ResultFormat) {
+  constructor(type: type.ModelType, format: ModelResultFormat) {
     this.modelType = type;
     this.format = format;
   }

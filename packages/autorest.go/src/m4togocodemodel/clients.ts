@@ -261,7 +261,11 @@ function adaptResponseEnvelope(m4CodeModel: m4.CodeModel, codeModel: go.CodeMode
     if (!modelType) {
       throw new Error(`didn't find type name ${resultProp.schema.language.go!.name} for response envelope ${respEnv.name}`);
     }
-    respEnv.result = new go.ModelResult(modelType, adaptResultFormat(helpers.getSchemaResponse(op)!.protocol));
+    const resultFormat = adaptResultFormat(helpers.getSchemaResponse(op)!.protocol);
+    if (resultFormat !== 'JSON' && resultFormat !== 'XML') {
+      throw new Error(`unexpected result format ${resultFormat} for model ${modelType.name}`);
+    }
+    respEnv.result = new go.ModelResult(modelType, resultFormat);
   } else {
     throw new Error(`unhandled result type for operation ${op.language.go!.name}`);
   }

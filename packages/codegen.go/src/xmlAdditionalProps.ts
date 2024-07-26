@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as go from '../../codemodel.go/src/index.js';
-import { contentPreamble } from './helpers.js';
+import { contentPreamble, getSerDeFormat } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content for required additional properties XML marshalling helpers.
@@ -13,7 +13,7 @@ export async function generateXMLAdditionalPropsHelpers(codeModel: go.CodeModel)
   // check if any models need this helper
   let required = false;
   for (const model of codeModel.models) {
-    if (model.format !== 'xml') {
+    if (getSerDeFormat(model, codeModel) !== 'XML') {
       continue;
     }
     for (const field of model.fields) {

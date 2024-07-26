@@ -5,7 +5,7 @@
 
 import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
-import { contentPreamble, recursiveUnwrapMapSlice } from './helpers.js';
+import { contentPreamble, getSerDeFormat, recursiveUnwrapMapSlice } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // represents the generated content for an operation group
@@ -90,7 +90,7 @@ export async function generateTimeHelpers(codeModel: go.CodeModel, packageName?:
       if (!go.isTimeType(unwrappedField)) {
         continue;
       }
-      if (model.format === 'json') {
+      if (getSerDeFormat(model, codeModel) === 'JSON') {
         // needsSerDeHelpers helpers are for JSON only
         needsSerDeHelpers = true;
       }
