@@ -386,7 +386,7 @@ export class typeAdapter {
       }
       case 'string':
       case 'url': {
-        if (type.crossLanguageDefinitionId === "Azure.Core.eTag") {
+        if (type.crossLanguageDefinitionId === 'Azure.Core.eTag') {
           const etagKey = 'etag';
           let etag = this.types.get(etagKey);
           if (etag) {

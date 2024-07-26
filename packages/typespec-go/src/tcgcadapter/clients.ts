@@ -226,7 +226,7 @@ export class clientAdapter {
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
-    const paramMapping = new Map<tcgc.SdkHttpParameter, go.Parameter[]>();
+    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
 
     if (go.isMethod(method)) {
       let prefix = method.client.name;
@@ -273,7 +273,7 @@ export class clientAdapter {
     this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter[]>) {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     let optionalGroup: go.ParameterGroup | undefined;
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
@@ -664,7 +664,7 @@ export class clientAdapter {
     }
   }
 
-  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, go.Parameter[]>) {
+  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, example.description, example.filePath);
@@ -676,7 +676,7 @@ export class clientAdapter {
           if (goParams.length > 1) {
             // spread case
             for (const goParam of goParams) {
-              const propertyValue = (param.value as tcgc.SdkModelExample).value[(goParam as go.PartialBodyParameter).serializedName];
+              const propertyValue = (<tcgc.SdkModelExample>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
               const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
               if (goParam?.group) {
                 goExample.optionalParamsGroup.push(paramExample);
@@ -743,7 +743,7 @@ export class clientAdapter {
       case 'null':
         return new go.NullExample(goType);
       case 'any':
-        if (go.isPrimitiveType(goType) && goType.typeName === "any") {
+        if (go.isPrimitiveType(goType) && goType.typeName === 'any') {
           return new go.AnyExample(exampleType.value);
         }
         break;
@@ -766,7 +766,7 @@ export class clientAdapter {
         }
         break;
       case 'union':
-        throw new Error(`go could not support union for now`);
+        throw new Error('go could not support union for now');
       case 'model':
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType;
@@ -783,7 +783,7 @@ export class clientAdapter {
           if (exampleType.additionalPropertiesValue) {
             ret.additionalProperties = {};
             for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
-              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)?.type!);
+              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type!);
             }
           }
           return ret;
