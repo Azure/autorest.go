@@ -237,9 +237,11 @@ func (m *MultiPartFormDataServerTransport) dispatchBinaryArrayParts(req *http.Re
 			if err != nil {
 				return nil, err
 			}
-			body.Pictures.Body = streaming.NopCloser(bytes.NewReader(content))
-			body.Pictures.ContentType = part.Header.Get("Content-Type")
-			body.Pictures.Filename = part.FileName()
+			body.Pictures = append(body.Pictures, streaming.MultipartContent{
+				Body:        streaming.NopCloser(bytes.NewReader(content)),
+				ContentType: part.Header.Get("Content-Type"),
+				Filename:    part.FileName(),
+			})
 		default:
 			return nil, fmt.Errorf("unexpected part %s", fn)
 		}
@@ -351,9 +353,11 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 			if err != nil {
 				return nil, err
 			}
-			body.Pictures.Body = streaming.NopCloser(bytes.NewReader(content))
-			body.Pictures.ContentType = part.Header.Get("Content-Type")
-			body.Pictures.Filename = part.FileName()
+			body.Pictures = append(body.Pictures, streaming.MultipartContent{
+				Body:        streaming.NopCloser(bytes.NewReader(content)),
+				ContentType: part.Header.Get("Content-Type"),
+				Filename:    part.FileName(),
+			})
 		case "previousAddresses":
 			content, err = io.ReadAll(part)
 			if err != nil {

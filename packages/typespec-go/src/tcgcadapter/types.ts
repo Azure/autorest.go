@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as naming from '../../../naming.go/src/naming.js';
-import * as go from '../../../codemodel.go/src/index.js';
+import { uncapitalize } from '@azure-tools/codegen';
+import { values } from '@azure-tools/linq';
 import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as tsp from '@typespec/compiler';
 import * as http from '@typespec/http';
-import { values } from '@azure-tools/linq';
-import { uncapitalize } from '@azure-tools/codegen';
+import * as go from '../../../codemodel.go/src/index.js';
+import * as naming from '../../../naming.go/src/naming.js';
 
 // used to convert SDK types to Go code model types
 export class typeAdapter {
@@ -23,7 +23,7 @@ export class typeAdapter {
   // contains the names of referenced types
   private unreferencedEnums: Set<string>;
   private unreferencedModels: Set<string>;
-  
+
   constructor(codeModel: go.CodeModel) {
     this.codeModel = codeModel;
     this.types = new Map<string, go.PossibleType>();
@@ -65,13 +65,13 @@ export class typeAdapter {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
         this.codeModel.interfaceTypes.push(iface);
-        ifaceTypes.push({go: iface, tcgc: modelType});
+        ifaceTypes.push({ go: iface, tcgc: modelType });
       }
       // TODO: what's the equivalent of x-ms-external?
       const model = this.getModel(modelType);
-      modelTypes.push({go: model, tcgc: modelType});
+      modelTypes.push({ go: model, tcgc: modelType });
     }
-  
+
     // add the synthesized models from TCGC for paged results
     const pagedResponses = this.getPagedResponses(sdkContext);
     for (const pagedResponse of pagedResponses) {
@@ -80,7 +80,7 @@ export class typeAdapter {
         continue;
       }
       const model = this.getModel(pagedResponse);
-      modelTypes.push({go: model, tcgc: pagedResponse});
+      modelTypes.push({ go: model, tcgc: pagedResponse });
     }
 
 
@@ -119,7 +119,7 @@ export class typeAdapter {
   // returns the synthesized paged response types
   private getPagedResponses(sdkContext: tcgc.SdkContext): Array<tcgc.SdkModelType> {
     const pagedResponses = new Array<tcgc.SdkModelType>();
-    const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+    const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
       for (const sdkMethod of client.methods) {
         if (sdkMethod.kind === 'clientaccessor') {
           recursiveWalkClients(sdkMethod.response);
@@ -149,7 +149,11 @@ export class typeAdapter {
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
+  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean, isMulti: boolean = false): go.PossibleType {
+    if (isMulti) {
+      return this.getArrayType(type, elementTypeByValue, substituteDiscriminator);
+    }
+
     switch (type.kind) {
       case 'any':
       case 'boolean':
@@ -173,23 +177,7 @@ export class typeAdapter {
       case 'url':
         return this.getBuiltInType(type);
       case 'array': {
-        let elementType = type.valueType;
-        let nullable = false;
-        if (elementType.kind === 'nullable') {
-          // unwrap the nullable type
-          elementType = elementType.type;
-          nullable = true;
-        }
-        // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
-        const myElementTypeByValue = elementTypeByValue ? true : nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(elementType);
-        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, elementType, substituteDiscriminator);
-        let arrayType = this.types.get(keyName);
-        if (arrayType) {
-          return arrayType;
-        }
-        arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
-        this.types.set(keyName, arrayType);
-        return arrayType;
+        return this.getArrayType(type.valueType, elementTypeByValue, substituteDiscriminator);
       }
       case 'endpoint': {
         const stringKey = 'string';
@@ -244,6 +232,25 @@ export class typeAdapter {
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
+  }
+
+  getArrayType(elementType: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
+    let nullable = false;
+    if (elementType.kind === 'nullable') {
+      // unwrap the nullable type
+      elementType = elementType.type;
+      nullable = true;
+    }
+    // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
+    const myElementTypeByValue = elementTypeByValue ? true : nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(elementType);
+    const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, elementType, substituteDiscriminator);
+    let arrayType = this.types.get(keyName);
+    if (arrayType) {
+      return arrayType;
+    }
+    arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
+    this.types.set(keyName, arrayType);
+    return arrayType;
   }
 
   private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.TimeType {
@@ -415,7 +422,7 @@ export class typeAdapter {
         time = new go.TimeType(encoding, false);
         this.types.set(encoding, time);
         return time;
-      
+
       }
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
@@ -487,7 +494,7 @@ export class typeAdapter {
     if (modelType) {
       return <go.ModelType | go.PolymorphicType>modelType;
     }
-  
+
     let usage = go.UsageFlags.None;
     if (model.usage & tsp.UsageFlags.Input) {
       usage = go.UsageFlags.Input;
@@ -567,10 +574,10 @@ export class typeAdapter {
     if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
       fieldByValue = false;
     }
-    let type = this.getPossibleType(prop.type, isMultipartFormData, true);
+    let type = this.getPossibleType(prop.type, isMultipartFormData, true, prop.kind === 'property' && prop.multipartOptions?.isMulti);
     if (prop.kind === 'property') {
       if (prop.isMultipartFileInput) {
-        type = this.getMultipartContent(prop.type.kind === 'array');
+        type = this.getMultipartContent(prop.type.kind === 'array' || (prop.multipartOptions?.isMulti ?? false));
       }
       if (prop.visibility) {
         // the field is read-only IFF the only visibility attribute present is Read.
@@ -594,10 +601,10 @@ export class typeAdapter {
       annotations.isDiscriminator = true;
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
-  
+
     // TODO: XMLInfo
     //field.xml = adaptXMLInfo(prop.schema);
-  
+
     return field;
   }
 
@@ -738,7 +745,7 @@ export class typeAdapter {
       default:
         throw new Error(`unsupported kind ${constType.valueType.kind} for LiteralValue`);
     }
-  
+
     // TODO: tcgc doesn't support duration as a literal value
   }
 
@@ -747,7 +754,7 @@ export class typeAdapter {
     const referencedEnums = new Set<string>();
     const referencedModels = new Set<string>();
 
-    const recursiveAddReferencedType = function(type: tcgc.SdkType): void {
+    const recursiveAddReferencedType = function (type: tcgc.SdkType): void {
       switch (type.kind) {
         case 'array':
         case 'dict':
@@ -785,7 +792,7 @@ export class typeAdapter {
       }
     };
 
-    const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+    const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
       for (const method of client.methods) {
         if (method.kind === 'clientaccessor') {
           recursiveWalkClients(method.response);
@@ -840,7 +847,7 @@ export class typeAdapter {
     const referencedBaseModels = new Set<string>();
     const visitedModels = new Set<string>(); // avoids infinite recursion
 
-    const recursiveAddReferencedBaseModel = function(type: tcgc.SdkType): void {
+    const recursiveAddReferencedBaseModel = function (type: tcgc.SdkType): void {
       switch (type.kind) {
         case 'array':
         case 'dict':
@@ -889,17 +896,17 @@ export class typeAdapter {
     // traverse all methods to find any references to a base model type.
     // NOTE: it's possible for there to be no base types.
     if (baseModels.size > 0) {
-      const recursiveWalkClients = function(client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
+      const recursiveWalkClients = function (client: tcgc.SdkClientType<tcgc.SdkHttpOperation>): void {
         for (const method of client.methods) {
           if (method.kind === 'clientaccessor') {
             recursiveWalkClients(method.response);
             continue;
           }
-  
+
           for (const param of method.parameters) {
             recursiveAddReferencedBaseModel(param.type);
           }
-  
+
           if (method.response.type) {
             recursiveAddReferencedBaseModel(method.response.type);
           }
@@ -989,7 +996,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
     type = type.type;
   }
   return type.kind === 'any' || type.kind === 'array' ||
-  type.kind === 'bytes' || type.kind === 'dict' ||
+    type.kind === 'bytes' || type.kind === 'dict' ||
     (type.kind === 'model' && !!type.discriminatedSubtypes);
 }
 
@@ -1005,7 +1012,7 @@ interface InterfaceTypeSdkModelType {
 
 // aggregate the properties from the provided type and its parent types.
 // this includes any inherited additional properties.
-function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType} {
+function aggregateProperties(model: tcgc.SdkModelType): { props: Array<tcgc.SdkModelPropertyType>, addlProps?: tcgc.SdkType } {
   const allProps = new Array<tcgc.SdkModelPropertyType>();
   for (const prop of model.properties) {
     allProps.push(prop);
@@ -1029,5 +1036,5 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
     }
     parent = parent.baseModel;
   }
-  return {props: allProps, addlProps: addlProps};
+  return { props: allProps, addlProps: addlProps };
 }
