@@ -149,7 +149,7 @@ export class typeAdapter {
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean, isMulti: boolean = false): go.PossibleType {
+  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean, isMulti = false): go.PossibleType {
     if (isMulti) {
       return this.getArrayType(type, elementTypeByValue, substituteDiscriminator);
     }
