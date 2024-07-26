@@ -72,6 +72,30 @@ type NullableCollectionsModelClientPatchNullOptions struct {
 	// placeholder for future optional parameters
 }
 
+// NullableCollectionsStringClientGetNonNullOptions contains the optional parameters for the NullableCollectionsStringClient.GetNonNull
+// method.
+type NullableCollectionsStringClientGetNonNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableCollectionsStringClientGetNullOptions contains the optional parameters for the NullableCollectionsStringClient.GetNull
+// method.
+type NullableCollectionsStringClientGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableCollectionsStringClientPatchNonNullOptions contains the optional parameters for the NullableCollectionsStringClient.PatchNonNull
+// method.
+type NullableCollectionsStringClientPatchNonNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NullableCollectionsStringClientPatchNullOptions contains the optional parameters for the NullableCollectionsStringClient.PatchNull
+// method.
+type NullableCollectionsStringClientPatchNullOptions struct {
+	// placeholder for future optional parameters
+}
+
 // NullableDatetimeClientGetNonNullOptions contains the optional parameters for the NullableDatetimeClient.GetNonNull method.
 type NullableDatetimeClientGetNonNullOptions struct {
 	// placeholder for future optional parameters

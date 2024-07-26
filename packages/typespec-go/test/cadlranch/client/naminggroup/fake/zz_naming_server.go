@@ -29,7 +29,7 @@ type NamingServer struct {
 
 	// Client is the fake for method NamingClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, clientName bool, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, body naminggroup.ClientNameModel, options *naminggroup.NamingClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientClientResponse], errResp azfake.ErrorResponder)
 
 	// ClientName is the fake for method NamingClient.ClientName
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -37,11 +37,11 @@ type NamingServer struct {
 
 	// CompatibleWithEncodedName is the fake for method NamingClient.CompatibleWithEncodedName
 	// HTTP status codes to indicate success: http.StatusNoContent
-	CompatibleWithEncodedName func(ctx context.Context, clientName bool, options *naminggroup.NamingClientCompatibleWithEncodedNameOptions) (resp azfake.Responder[naminggroup.NamingClientCompatibleWithEncodedNameResponse], errResp azfake.ErrorResponder)
+	CompatibleWithEncodedName func(ctx context.Context, body naminggroup.ClientNameAndJSONEncodedNameModel, options *naminggroup.NamingClientCompatibleWithEncodedNameOptions) (resp azfake.Responder[naminggroup.NamingClientCompatibleWithEncodedNameResponse], errResp azfake.ErrorResponder)
 
 	// Language is the fake for method NamingClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, goName bool, options *naminggroup.NamingClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, body naminggroup.LanguageClientNameModel, options *naminggroup.NamingClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientLanguageResponse], errResp azfake.ErrorResponder)
 
 	// Parameter is the fake for method NamingClient.Parameter
 	// HTTP status codes to indicate success: http.StatusNoContent

@@ -19,7 +19,7 @@ import (
 type RPCServer struct {
 	// BeginLongRunningRPC is the fake for method RPCClient.BeginLongRunningRPC
 	// HTTP status codes to indicate success: http.StatusAccepted
-	BeginLongRunningRPC func(ctx context.Context, prompt string, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
+	BeginLongRunningRPC func(ctx context.Context, body lrorpcgroup.GenerationOptions, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
 }
 
 // NewRPCServerTransport creates a new instance of RPCServerTransport with the provided implementation.

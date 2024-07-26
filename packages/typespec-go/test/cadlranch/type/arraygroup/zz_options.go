@@ -74,6 +74,18 @@ type ArrayModelValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ArrayNullableBooleanValueClientGetOptions contains the optional parameters for the ArrayNullableBooleanValueClient.Get
+// method.
+type ArrayNullableBooleanValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableBooleanValueClientPutOptions contains the optional parameters for the ArrayNullableBooleanValueClient.Put
+// method.
+type ArrayNullableBooleanValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ArrayNullableFloatValueClientGetOptions contains the optional parameters for the ArrayNullableFloatValueClient.Get method.
 type ArrayNullableFloatValueClientGetOptions struct {
 	// placeholder for future optional parameters
@@ -81,6 +93,36 @@ type ArrayNullableFloatValueClientGetOptions struct {
 
 // ArrayNullableFloatValueClientPutOptions contains the optional parameters for the ArrayNullableFloatValueClient.Put method.
 type ArrayNullableFloatValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableInt32ValueClientGetOptions contains the optional parameters for the ArrayNullableInt32ValueClient.Get method.
+type ArrayNullableInt32ValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableInt32ValueClientPutOptions contains the optional parameters for the ArrayNullableInt32ValueClient.Put method.
+type ArrayNullableInt32ValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableModelValueClientGetOptions contains the optional parameters for the ArrayNullableModelValueClient.Get method.
+type ArrayNullableModelValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableModelValueClientPutOptions contains the optional parameters for the ArrayNullableModelValueClient.Put method.
+type ArrayNullableModelValueClientPutOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableStringValueClientGetOptions contains the optional parameters for the ArrayNullableStringValueClient.Get method.
+type ArrayNullableStringValueClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ArrayNullableStringValueClientPutOptions contains the optional parameters for the ArrayNullableStringValueClient.Put method.
+type ArrayNullableStringValueClientPutOptions struct {
 	// placeholder for future optional parameters
 }
 

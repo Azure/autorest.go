@@ -417,9 +417,6 @@ export class typeAdapter {
         return stringType;
       }
       case 'plainTime': {
-        if (type.encode !== 'rfc3339') {
-          throw new Error(`unsupported time encoding ${type.encode}`);
-        }
         const encoding = 'timeRFC3339';
         let time = this.types.get(encoding);
         if (time) {

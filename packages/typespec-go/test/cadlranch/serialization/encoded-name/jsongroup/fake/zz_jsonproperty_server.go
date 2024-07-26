@@ -24,7 +24,7 @@ type JSONPropertyServer struct {
 
 	// Send is the fake for method JSONPropertyClient.Send
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Send func(ctx context.Context, defaultName bool, options *jsongroup.JSONPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientSendResponse], errResp azfake.ErrorResponder)
+	Send func(ctx context.Context, body jsongroup.JSONEncodedNameModel, options *jsongroup.JSONPropertyClientSendOptions) (resp azfake.Responder[jsongroup.JSONPropertyClientSendResponse], errResp azfake.ErrorResponder)
 }
 
 // NewJSONPropertyServerTransport creates a new instance of JSONPropertyServerTransport with the provided implementation.

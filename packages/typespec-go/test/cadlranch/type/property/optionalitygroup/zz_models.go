@@ -58,6 +58,18 @@ type IntLiteralProperty struct {
 	Property *int32
 }
 
+// PlainDateProperty - Model with a plainDate property
+type PlainDateProperty struct {
+	// Property
+	Property *time.Time
+}
+
+// PlainTimeProperty - Model with a plainTime property
+type PlainTimeProperty struct {
+	// Property
+	Property *time.Time
+}
+
 // RequiredAndOptionalProperty - Model with required and optional properties
 type RequiredAndOptionalProperty struct {
 	// REQUIRED; required int property

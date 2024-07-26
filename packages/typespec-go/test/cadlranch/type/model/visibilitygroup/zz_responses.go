@@ -35,3 +35,9 @@ type VisibilityClientPostModelResponse struct {
 type VisibilityClientPutModelResponse struct {
 	// placeholder for future response values
 }
+
+// VisibilityClientPutReadOnlyModelResponse contains the response from method VisibilityClient.PutReadOnlyModel.
+type VisibilityClientPutReadOnlyModelResponse struct {
+	// RoundTrip model with readonly optional properties.
+	ReadOnlyModel
+}

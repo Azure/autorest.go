@@ -15,10 +15,10 @@ import (
 func Test_Test(t *testing.T) {
 	client, err := typechangedfromgroup.NewTypeChangedFromClient(nil)
 	require.NoError(t, err)
-	resp, err := client.Test(context.Background(), "baz", typechangedfromgroup.TestModel{
+	resp, err := client.Test(context.Background(), typechangedfromgroup.TestModel{
 		Prop:        to.Ptr("foo"),
 		ChangedProp: to.Ptr("bar"),
-	}, nil)
+	}, "baz", nil)
 	require.NoError(t, err)
 	require.Equal(t, typechangedfromgroup.TypeChangedFromClientTestResponse{
 		TestModel: typechangedfromgroup.TestModel{

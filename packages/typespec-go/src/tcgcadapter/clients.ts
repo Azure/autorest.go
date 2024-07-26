@@ -315,8 +315,8 @@ export class clientAdapter {
 
       let adaptedParam: go.Parameter;
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
-        const paramKind = this.adaptParameterKind(opParam);
-        const byVal = isTypePassedByValue(opParam.type);
+        const paramKind = this.adaptParameterKind(param);
+        const byVal = isTypePassedByValue(param.type);
         const contentType = this.adaptContentType(opParam.defaultContentType);
         switch (contentType) {
           case 'JSON':
@@ -356,13 +356,22 @@ export class clientAdapter {
       }
       paramMapping.get(opParam)?.push(adaptedParam);
 
-      // we must check via param name and not reference equality. this is because a client param
-      // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
-      // in one method and a query param in another.
-      if (adaptedParam.location === 'client' && !method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
-        return v.name === adaptedParam.name;
-      })) {
-        method.client.parameters.push(adaptedParam);
+      if (adaptedParam.location === 'client') {
+        // we must check via param name and not reference equality. this is because a client param
+        // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
+        // in one method and a query param in another.
+        if (!method.client.parameters.find((v: go.Parameter, i: number, o: Array<go.Parameter>) => {
+          return v.name === adaptedParam.name;
+        })) {
+          method.client.parameters.push(adaptedParam);
+        }
+      } else if (adaptedParam.kind !== 'required' && adaptedParam.kind !== 'literal') {
+        // add optional method param to the options param group
+        if (!optionalGroup) {
+          throw new Error(`optional parameter ${param.name} has no optional parameter group`);
+        }
+        adaptedParam.group = optionalGroup;
+        optionalGroup.params.push(adaptedParam);
       }
     }
   }
@@ -464,13 +473,6 @@ export class clientAdapter {
     if (adaptedParam.location === 'client') {
       // track client parameter for later use
       this.clientParams.set(getClientParamsKey(param), adaptedParam);
-    } else if (paramKind !== 'required' && paramKind !== 'literal') {
-      // add optional method param to the options param group
-      if (!optionalGroup) {
-        throw new Error(`optional parameter ${param.name} has no optional parameter group`);
-      }
-      adaptedParam.group = optionalGroup;
-      optionalGroup.params.push(adaptedParam);
     }
 
     return adaptedParam;
@@ -642,7 +644,7 @@ export class clientAdapter {
     return type;
   }
 
-  private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
+  private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
       if (param.optional) {

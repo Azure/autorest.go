@@ -14,6 +14,16 @@ type SpreadAliasClientSpreadAsRequestParameterResponse struct {
 	// placeholder for future response values
 }
 
+// SpreadAliasClientSpreadParameterWithInnerAliasResponse contains the response from method SpreadAliasClient.SpreadParameterWithInnerAlias.
+type SpreadAliasClientSpreadParameterWithInnerAliasResponse struct {
+	// placeholder for future response values
+}
+
+// SpreadAliasClientSpreadParameterWithInnerModelResponse contains the response from method SpreadAliasClient.SpreadParameterWithInnerModel.
+type SpreadAliasClientSpreadParameterWithInnerModelResponse struct {
+	// placeholder for future response values
+}
+
 // SpreadAliasClientSpreadWithMultipleParametersResponse contains the response from method SpreadAliasClient.SpreadWithMultipleParameters.
 type SpreadAliasClientSpreadWithMultipleParametersResponse struct {
 	// placeholder for future response values

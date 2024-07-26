@@ -10,6 +10,12 @@ type UsageModelInOperationClientInputToInputOutputOptions struct {
 	// placeholder for future optional parameters
 }
 
+// UsageModelInOperationClientModelInReadOnlyPropertyOptions contains the optional parameters for the UsageModelInOperationClient.ModelInReadOnlyProperty
+// method.
+type UsageModelInOperationClientModelInReadOnlyPropertyOptions struct {
+	// placeholder for future optional parameters
+}
+
 // UsageModelInOperationClientOutputToInputOutputOptions contains the optional parameters for the UsageModelInOperationClient.OutputToInputOutput
 // method.
 type UsageModelInOperationClientOutputToInputOutputOptions struct {

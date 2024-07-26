@@ -14,7 +14,7 @@ interface SharedPrivateLinkResources {
   get is ArmResourceRead<SharedPrivateLinkResource>;
   create is ArmResourceCreateOrUpdateAsync<SharedPrivateLinkResource>;
   delete is ArmResourceDeleteWithoutOkAsync<SharedPrivateLinkResource>;
-  listByParent is ArmResourceListByParent<SharedPrivateLinkResource>;
+  listByWatcher is ArmResourceListByParent<SharedPrivateLinkResource>;
 }
 
 @parentResource(Watcher)

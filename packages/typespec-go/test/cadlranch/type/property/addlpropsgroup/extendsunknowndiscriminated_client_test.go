@@ -29,7 +29,7 @@ func TestExtendsUnknownDiscriminatedClient_Get(t *testing.T) {
 			"prop2": true,
 			"prop3": "abc",
 		},
-		Age: to.Ptr[float32](2.71828),
+		Age: to.Ptr[float32](2.71875),
 	}, resp.ExtendsUnknownAdditionalPropertiesDiscriminatedClassification)
 }
 
@@ -45,7 +45,7 @@ func TestExtendsUnknownDiscriminatedClient_Put(t *testing.T) {
 			"prop2": true,
 			"prop3": "abc",
 		},
-		Age: to.Ptr[float32](2.71828),
+		Age: to.Ptr[float32](2.71875),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)

@@ -180,6 +180,50 @@ type OptionalIntLiteralClientPutDefaultResponse struct {
 	// placeholder for future response values
 }
 
+// OptionalPlainDateClientGetAllResponse contains the response from method OptionalPlainDateClient.GetAll.
+type OptionalPlainDateClientGetAllResponse struct {
+	// Model with a plainDate property
+	PlainDateProperty
+}
+
+// OptionalPlainDateClientGetDefaultResponse contains the response from method OptionalPlainDateClient.GetDefault.
+type OptionalPlainDateClientGetDefaultResponse struct {
+	// Model with a plainDate property
+	PlainDateProperty
+}
+
+// OptionalPlainDateClientPutAllResponse contains the response from method OptionalPlainDateClient.PutAll.
+type OptionalPlainDateClientPutAllResponse struct {
+	// placeholder for future response values
+}
+
+// OptionalPlainDateClientPutDefaultResponse contains the response from method OptionalPlainDateClient.PutDefault.
+type OptionalPlainDateClientPutDefaultResponse struct {
+	// placeholder for future response values
+}
+
+// OptionalPlainTimeClientGetAllResponse contains the response from method OptionalPlainTimeClient.GetAll.
+type OptionalPlainTimeClientGetAllResponse struct {
+	// Model with a plainTime property
+	PlainTimeProperty
+}
+
+// OptionalPlainTimeClientGetDefaultResponse contains the response from method OptionalPlainTimeClient.GetDefault.
+type OptionalPlainTimeClientGetDefaultResponse struct {
+	// Model with a plainTime property
+	PlainTimeProperty
+}
+
+// OptionalPlainTimeClientPutAllResponse contains the response from method OptionalPlainTimeClient.PutAll.
+type OptionalPlainTimeClientPutAllResponse struct {
+	// placeholder for future response values
+}
+
+// OptionalPlainTimeClientPutDefaultResponse contains the response from method OptionalPlainTimeClient.PutDefault.
+type OptionalPlainTimeClientPutDefaultResponse struct {
+	// placeholder for future response values
+}
+
 // OptionalRequiredAndOptionalClientGetAllResponse contains the response from method OptionalRequiredAndOptionalClient.GetAll.
 type OptionalRequiredAndOptionalClientGetAllResponse struct {
 	// Model with required and optional properties

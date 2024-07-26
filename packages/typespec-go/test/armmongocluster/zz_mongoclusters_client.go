@@ -518,7 +518,7 @@ func (client *MongoClustersClient) listConnectionStringsHandleResponse(resp *htt
 //   - properties - The resource properties to be updated.
 //   - options - MongoClustersClientBeginUpdateOptions contains the optional parameters for the MongoClustersClient.BeginUpdate
 //     method.
-func (client *MongoClustersClient) BeginUpdate(ctx context.Context, resourceGroupName string, mongoClusterName string, properties Update, options *MongoClustersClientBeginUpdateOptions) (*runtime.Poller[MongoClustersClientUpdateResponse], error) {
+func (client *MongoClustersClient) BeginUpdate(ctx context.Context, resourceGroupName string, mongoClusterName string, properties MongoCluster, options *MongoClustersClientBeginUpdateOptions) (*runtime.Poller[MongoClustersClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, mongoClusterName, properties, options)
 		if err != nil {
@@ -540,7 +540,7 @@ func (client *MongoClustersClient) BeginUpdate(ctx context.Context, resourceGrou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2024-03-01-preview
-func (client *MongoClustersClient) update(ctx context.Context, resourceGroupName string, mongoClusterName string, properties Update, options *MongoClustersClientBeginUpdateOptions) (*http.Response, error) {
+func (client *MongoClustersClient) update(ctx context.Context, resourceGroupName string, mongoClusterName string, properties MongoCluster, options *MongoClustersClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "MongoClustersClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -562,7 +562,7 @@ func (client *MongoClustersClient) update(ctx context.Context, resourceGroupName
 }
 
 // updateCreateRequest creates the Update request.
-func (client *MongoClustersClient) updateCreateRequest(ctx context.Context, resourceGroupName string, mongoClusterName string, properties Update, _ *MongoClustersClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *MongoClustersClient) updateCreateRequest(ctx context.Context, resourceGroupName string, mongoClusterName string, properties MongoCluster, _ *MongoClustersClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

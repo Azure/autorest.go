@@ -16,10 +16,26 @@ type SpreadAliasClientSpreadAsRequestParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
+// SpreadAliasClientSpreadParameterWithInnerAliasOptions contains the optional parameters for the SpreadAliasClient.SpreadParameterWithInnerAlias
+// method.
+type SpreadAliasClientSpreadParameterWithInnerAliasOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SpreadAliasClientSpreadParameterWithInnerModelOptions contains the optional parameters for the SpreadAliasClient.SpreadParameterWithInnerModel
+// method.
+type SpreadAliasClientSpreadParameterWithInnerModelOptions struct {
+	// placeholder for future optional parameters
+}
+
 // SpreadAliasClientSpreadWithMultipleParametersOptions contains the optional parameters for the SpreadAliasClient.SpreadWithMultipleParameters
 // method.
 type SpreadAliasClientSpreadWithMultipleParametersOptions struct {
-	// placeholder for future optional parameters
+	// optional int
+	OptionalInt *int32
+
+	// optional string
+	OptionalStringList []string
 }
 
 // SpreadModelClientSpreadAsRequestBodyOptions contains the optional parameters for the SpreadModelClient.SpreadAsRequestBody

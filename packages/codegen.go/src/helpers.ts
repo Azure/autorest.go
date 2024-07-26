@@ -585,5 +585,5 @@ export function recursiveUnwrapMapSlice(item: go.PossibleType): go.PossibleType 
 
 // returns a * for optional params
 export function star(param: go.Parameter): string {
-  return go.isRequiredParameter(param) ? '' : '*';
+  return go.isRequiredParameter(param) || param.byValue ? '' : '*';
 }

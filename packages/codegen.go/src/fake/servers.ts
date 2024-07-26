@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
+import * as go from '../../../codemodel.go/src/index.js';
 import * as helpers from '../helpers.js';
-import { fixUpMethodName } from '../operations.js';
 import { ImportManager } from '../imports.js';
+import { fixUpMethodName } from '../operations.js';
 import { generateServerInternal, RequiredHelpers } from './internal.js';
 
 // contains the generated content for all servers and the required helpers
@@ -49,7 +49,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
   const operations = new Array<OperationGroupContent>();
   const clientPkg = codeModel.packageName;
   for (const client of values(codeModel.clients)) {
-    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return isMethodInternal(method)})) {
+    if (client.clientAccessors.length === 0 && values(client.methods).all(method => { return isMethodInternal(method) })) {
       // client has no client accessors and no exported methods, skip it
       continue;
     }
@@ -78,7 +78,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
     // we might remove some clients from the list
     const finalSubClients = new Array<go.Client>();
     for (const clientAccessor of client.clientAccessors) {
-      if (values(clientAccessor.subClient.methods).all(method => { return isMethodInternal(method)})) {
+      if (values(clientAccessor.subClient.methods).all(method => { return isMethodInternal(method) })) {
         // client has no exported methods, skip it
         continue;
       }
@@ -194,7 +194,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
           respType = `azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]`;
         }
         requiredHelpers.tracker = true;
-        content +=`\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
+        content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PollerResponder[${respType}]]\n`;
       } else if (go.isPageableMethod(method)) {
         requiredHelpers.tracker = true;
         content += `\t${uncapitalize(fixUpMethodName(method))} *tracker[azfake.PagerResponder[${clientPkg}.${method.responseEnvelope.name}]]\n`;
@@ -428,7 +428,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     // specify boolTarget if parsing bools happens in place.
     // in this case, the err check is omitted and assumed to happen elsewhere.
     // the parsed value is in a local var named parsed.
-    const parsePrimitiveType = function(typeName: go.PrimitiveTypeName, boolTarget?: string): string {
+    const parsePrimitiveType = function (typeName: go.PrimitiveTypeName, boolTarget?: string): string {
       const parseResults = 'parsed, parseErr';
       let parsingCode = '';
       imports.add('strconv');
@@ -459,12 +459,12 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
       return parsingCode;
     };
 
-    const isMultipartContentType = function(type: go.PossibleType): type is go.QualifiedType {
+    const isMultipartContentType = function (type: go.PossibleType): type is go.QualifiedType {
       type = helpers.recursiveUnwrapMapSlice(type);
       return (go.isQualifiedType(type) && type.exportName === 'MultipartContent');
     };
 
-    const emitCase = function(caseValue: string, paramVar: string, type: go.PossibleType): string {
+    const emitCase = function (caseValue: string, paramVar: string, type: go.PossibleType): string {
       let caseContent = `\t\tcase "${caseValue}":\n`;
       caseContent += '\t\t\tcontent, err = io.ReadAll(part)\n';
       caseContent += '\t\t\tif err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n';
@@ -756,13 +756,13 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
   let content = '';
   const paramValues = new Map<string, string>();
 
-  const createLocalVariableName = function(param: go.Parameter, suffix: string): string {
+  const createLocalVariableName = function (param: go.Parameter, suffix: string): string {
     const paramName = `${uncapitalize(param.name)}${suffix}`;
     paramValues.set(param.name, paramName);
     return paramName;
   };
 
-  const emitNumericConversion = function(src: string, type: 'float32' | 'float64' | 'int32' | 'int64'): string {
+  const emitNumericConversion = function (src: string, type: 'float32' | 'float64' | 'int32' | 'int64'): string {
     imports.add('strconv');
     let precision: '32' | '64' = '32';
     if (type === 'float64' || type === 'int64') {
@@ -801,7 +801,7 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
       params!.push(param);
     }
 
-    if (go.isBodyParameter(param) || go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param)) {
+    if (go.isBodyParameter(param) || go.isFormBodyParameter(param) || go.isMultipartFormBodyParameter(param) || go.isPartialBodyParameter(param)) {
       // body params will be unmarshalled, no need for parsing.
       continue;
     }
@@ -851,8 +851,8 @@ function parseHeaderPathQueryParams(clientPkg: string, method: go.Method, import
         content += `\t\treturn ${go.getTypeDeclaration(param.type, clientPkg)}(p), nil\n\t})\n`;
       } else {
         if (go.isRequiredParameter(param) &&
-        ((go.isPrimitiveType(param.type) && param.type.typeName === 'string') ||
-          (go.isSliceType(param.type) && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
+          ((go.isPrimitiveType(param.type) && param.type.typeName === 'string') ||
+            (go.isSliceType(param.type) && go.isPrimitiveType(param.type.elementType) && param.type.elementType.typeName === 'string'))) {
           // by convention, if the value is in its "final form" (i.e. no parsing required)
           // then its var is to have the "Param" suffix. the only case is string, everything
           // else requires some amount of parsing/conversion.
@@ -1175,7 +1175,7 @@ function getRawParamValue(param: go.Parameter): string {
     }
     return `qp.Get("${param.queryParameter}")`;
   } else if (go.isHeaderParameter(param)) {
-    if (go.isHeaderMapParameter(param) ) {
+    if (go.isHeaderMapParameter(param)) {
       return 'req.Header';
     }
     // use req
@@ -1220,6 +1220,9 @@ function getFinalParamValue(clientPkg: string, param: go.Parameter, paramValues:
       // since headers aren't escaped, we cast required, string-based enums inline
       return `${go.getTypeDeclaration(param.type, clientPkg)}(${paramValue})`;
     }
+  } else if (go.isPartialBodyParameter(param)) {
+    // use the value from the unmarshaled, intermediate struct type
+    return `body.${capitalize(param.name)}`;
   }
 
   return paramValue;
