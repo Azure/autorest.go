@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// NamingModelServer is a fake server for instances of the naminggroup.NamingModelClient type.
-type NamingModelServer struct {
-	// Client is the fake for method NamingModelClient.Client
+// NamingClientModelServer is a fake server for instances of the naminggroup.NamingClientModelClient type.
+type NamingClientModelServer struct {
+	// Client is the fake for method NamingClientModelClient.Client
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Client func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingModelClientClientResponse], errResp azfake.ErrorResponder)
+	Client func(ctx context.Context, body naminggroup.ClientModel, options *naminggroup.NamingClientModelClientClientOptions) (resp azfake.Responder[naminggroup.NamingClientModelClientClientResponse], errResp azfake.ErrorResponder)
 
-	// Language is the fake for method NamingModelClient.Language
+	// Language is the fake for method NamingClientModelClient.Language
 	// HTTP status codes to indicate success: http.StatusNoContent
-	Language func(ctx context.Context, body naminggroup.GoModel, options *naminggroup.NamingModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingModelClientLanguageResponse], errResp azfake.ErrorResponder)
+	Language func(ctx context.Context, body naminggroup.GoModel, options *naminggroup.NamingClientModelClientLanguageOptions) (resp azfake.Responder[naminggroup.NamingClientModelClientLanguageResponse], errResp azfake.ErrorResponder)
 }
 
-// NewNamingModelServerTransport creates a new instance of NamingModelServerTransport with the provided implementation.
-// The returned NamingModelServerTransport instance is connected to an instance of naminggroup.NamingModelClient via the
+// NewNamingClientModelServerTransport creates a new instance of NamingClientModelServerTransport with the provided implementation.
+// The returned NamingClientModelServerTransport instance is connected to an instance of naminggroup.NamingClientModelClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewNamingModelServerTransport(srv *NamingModelServer) *NamingModelServerTransport {
-	return &NamingModelServerTransport{srv: srv}
+func NewNamingClientModelServerTransport(srv *NamingClientModelServer) *NamingClientModelServerTransport {
+	return &NamingClientModelServerTransport{srv: srv}
 }
 
-// NamingModelServerTransport connects instances of naminggroup.NamingModelClient to instances of NamingModelServer.
-// Don't use this type directly, use NewNamingModelServerTransport instead.
-type NamingModelServerTransport struct {
-	srv *NamingModelServer
+// NamingClientModelServerTransport connects instances of naminggroup.NamingClientModelClient to instances of NamingClientModelServer.
+// Don't use this type directly, use NewNamingClientModelServerTransport instead.
+type NamingClientModelServerTransport struct {
+	srv *NamingClientModelServer
 }
 
-// Do implements the policy.Transporter interface for NamingModelServerTransport.
-func (n *NamingModelServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for NamingClientModelServerTransport.
+func (n *NamingClientModelServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,14 +50,14 @@ func (n *NamingModelServerTransport) Do(req *http.Request) (*http.Response, erro
 	return n.dispatchToMethodFake(req, method)
 }
 
-func (n *NamingModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (n *NamingClientModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "NamingModelClient.Client":
+	case "NamingClientModelClient.Client":
 		resp, err = n.dispatchClient(req)
-	case "NamingModelClient.Language":
+	case "NamingClientModelClient.Language":
 		resp, err = n.dispatchLanguage(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -66,7 +66,7 @@ func (n *NamingModelServerTransport) dispatchToMethodFake(req *http.Request, met
 	return resp, err
 }
 
-func (n *NamingModelServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
+func (n *NamingClientModelServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {
 	if n.srv.Client == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Client not implemented")}
 	}
@@ -89,7 +89,7 @@ func (n *NamingModelServerTransport) dispatchClient(req *http.Request) (*http.Re
 	return resp, nil
 }
 
-func (n *NamingModelServerTransport) dispatchLanguage(req *http.Request) (*http.Response, error) {
+func (n *NamingClientModelServerTransport) dispatchLanguage(req *http.Request) (*http.Response, error) {
 	if n.srv.Language == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Language not implemented")}
 	}

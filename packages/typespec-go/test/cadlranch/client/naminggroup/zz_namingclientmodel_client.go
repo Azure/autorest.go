@@ -12,38 +12,39 @@ import (
 	"net/http"
 )
 
-// NamingModelClient contains the methods for the NamingModel group.
-// Don't use this type directly, use [NamingClient.NewNamingModelClient] instead.
-type NamingModelClient struct {
+// NamingClientModelClient contains the methods for the NamingClientModel group.
+// Don't use this type directly, use [NamingClient.NewNamingClientModelClient] instead.
+type NamingClientModelClient struct {
 	internal *azcore.Client
 }
 
 // Client -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
-func (client *NamingModelClient) Client(ctx context.Context, body ClientModel, options *NamingModelClientClientOptions) (NamingModelClientClientResponse, error) {
+//   - options - NamingClientModelClientClientOptions contains the optional parameters for the NamingClientModelClient.Client
+//     method.
+func (client *NamingClientModelClient) Client(ctx context.Context, body ClientModel, options *NamingClientModelClientClientOptions) (NamingClientModelClientClientResponse, error) {
 	var err error
-	const operationName = "NamingModelClient.Client"
+	const operationName = "NamingClientModelClient.Client"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.clientCreateRequest(ctx, body, options)
 	if err != nil {
-		return NamingModelClientClientResponse{}, err
+		return NamingClientModelClientClientResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NamingModelClientClientResponse{}, err
+		return NamingClientModelClientClientResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return NamingModelClientClientResponse{}, err
+		return NamingClientModelClientClientResponse{}, err
 	}
-	return NamingModelClientClientResponse{}, nil
+	return NamingClientModelClientClientResponse{}, nil
 }
 
 // clientCreateRequest creates the Client request.
-func (client *NamingModelClient) clientCreateRequest(ctx context.Context, body ClientModel, _ *NamingModelClientClientOptions) (*policy.Request, error) {
+func (client *NamingClientModelClient) clientCreateRequest(ctx context.Context, body ClientModel, _ *NamingClientModelClientClientOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -58,30 +59,31 @@ func (client *NamingModelClient) clientCreateRequest(ctx context.Context, body C
 
 // Language -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
-func (client *NamingModelClient) Language(ctx context.Context, body GoModel, options *NamingModelClientLanguageOptions) (NamingModelClientLanguageResponse, error) {
+//   - options - NamingClientModelClientLanguageOptions contains the optional parameters for the NamingClientModelClient.Language
+//     method.
+func (client *NamingClientModelClient) Language(ctx context.Context, body GoModel, options *NamingClientModelClientLanguageOptions) (NamingClientModelClientLanguageResponse, error) {
 	var err error
-	const operationName = "NamingModelClient.Language"
+	const operationName = "NamingClientModelClient.Language"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.languageCreateRequest(ctx, body, options)
 	if err != nil {
-		return NamingModelClientLanguageResponse{}, err
+		return NamingClientModelClientLanguageResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return NamingModelClientLanguageResponse{}, err
+		return NamingClientModelClientLanguageResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return NamingModelClientLanguageResponse{}, err
+		return NamingClientModelClientLanguageResponse{}, err
 	}
-	return NamingModelClientLanguageResponse{}, nil
+	return NamingClientModelClientLanguageResponse{}, nil
 }
 
 // languageCreateRequest creates the Language request.
-func (client *NamingModelClient) languageCreateRequest(ctx context.Context, body GoModel, _ *NamingModelClientLanguageOptions) (*policy.Request, error) {
+func (client *NamingClientModelClient) languageCreateRequest(ctx context.Context, body GoModel, _ *NamingClientModelClientLanguageOptions) (*policy.Request, error) {
 	urlPath := "/client/naming/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

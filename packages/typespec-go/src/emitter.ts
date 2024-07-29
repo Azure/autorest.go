@@ -23,7 +23,7 @@ import { EmitContext } from '@typespec/compiler';
 import 'source-map-support/register.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
-  const codeModel = tcgcToGoCodeModel(context);
+  const codeModel = await tcgcToGoCodeModel(context);
   await mkdir(context.emitterOutputDir, {recursive: true});
 
   // don't overwrite an existing go.mod file, update it if required

@@ -15,7 +15,7 @@ import (
 func TestModelClient_Client(t *testing.T) {
 	client, err := naminggroup.NewNamingClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewNamingModelClient().Client(context.Background(), naminggroup.ClientModel{
+	resp, err := client.NewNamingClientModelClient().Client(context.Background(), naminggroup.ClientModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)
@@ -25,7 +25,7 @@ func TestModelClient_Client(t *testing.T) {
 func TestModelClient_Language(t *testing.T) {
 	client, err := naminggroup.NewNamingClient(nil)
 	require.NoError(t, err)
-	resp, err := client.NewNamingModelClient().Language(context.Background(), naminggroup.GoModel{
+	resp, err := client.NewNamingClientModelClient().Language(context.Background(), naminggroup.GoModel{
 		DefaultName: to.Ptr(true),
 	}, nil)
 	require.NoError(t, err)

@@ -32,17 +32,17 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
-// NewAzureLargeInstancesClient creates a new instance of AzureLargeInstancesClient.
-func (c *ClientFactory) NewAzureLargeInstancesClient() *AzureLargeInstancesClient {
-	return &AzureLargeInstancesClient{
+// NewAzureLargeInstanceClient creates a new instance of AzureLargeInstanceClient.
+func (c *ClientFactory) NewAzureLargeInstanceClient() *AzureLargeInstanceClient {
+	return &AzureLargeInstanceClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
 }
 
-// NewAzureLargeStorageInstancesClient creates a new instance of AzureLargeStorageInstancesClient.
-func (c *ClientFactory) NewAzureLargeStorageInstancesClient() *AzureLargeStorageInstancesClient {
-	return &AzureLargeStorageInstancesClient{
+// NewAzureLargeStorageInstanceClient creates a new instance of AzureLargeStorageInstanceClient.
+func (c *ClientFactory) NewAzureLargeStorageInstanceClient() *AzureLargeStorageInstanceClient {
+	return &AzureLargeStorageInstanceClient{
 		subscriptionID: c.subscriptionID,
 		internal:       c.internal,
 	}
