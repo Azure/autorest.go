@@ -1,5 +1,11 @@
 # Release History
 
+## 0.2.1 (Unreleased)
+
+### Other Changes
+
+* Upgraded default azcore version to v1.13.0
+
 ## 0.2.0 (2024-07-30)
 
 ## Breaking Changes
