@@ -82,18 +82,20 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
   }
 
-  const examples = await generateExamples(codeModel);
-  for (const example of examples) {
-    let fileName = example.name.toLowerCase();
-    // op.name is the client name, e.g. FooClient.
-    // insert a _ before Client, i.e. Foo_Client
-    // if the name isn't simply Client.
-    // and insert _example_test at the end.
-    if (fileName !== 'client') {
-      fileName = fileName.substring(0, fileName.length - 6) + '_client';
+  if (codeModel.options.generateExamples) {
+    const examples = await generateExamples(codeModel);
+    for (const example of examples) {
+      let fileName = example.name.toLowerCase();
+      // op.name is the client name, e.g. FooClient.
+      // insert a _ before Client, i.e. Foo_Client
+      // if the name isn't simply Client.
+      // and insert _example_test at the end.
+      if (fileName !== 'client') {
+        fileName = fileName.substring(0, fileName.length - 6) + '_client';
+      }
+      fileName += '_example_test';
+      writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
     }
-    fileName += '_example_test';
-    writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
   }
 
   const options = await generateOptions(codeModel);
@@ -119,7 +121,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
   }
 
-  if (context.options['generate-fakes'] === true) {
+  if (codeModel.options.generateFakes) {
     const serverContent = await generateServers(codeModel);
     if (serverContent.servers.length > 0) {
       const fakesDir = context.emitterOutputDir + '/fake';

@@ -226,8 +226,6 @@ export class clientAdapter {
   }
 
   private populateMethod(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
-    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
-
     if (go.isMethod(method)) {
       let prefix = method.client.name;
       if (this.opts['single-client']) {
@@ -265,7 +263,7 @@ export class clientAdapter {
       }
     }
 
-    this.adaptMethodParameters(sdkMethod, method, paramMapping);
+    const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
     // we must do this after adapting method params as it can add optional params
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
@@ -273,7 +271,9 @@ export class clientAdapter {
     this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {
+    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
+
     let optionalGroup: go.ParameterGroup | undefined;
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
@@ -374,6 +374,8 @@ export class clientAdapter {
         optionalGroup.params.push(adaptedParam);
       }
     }
+
+    return paramMapping;
   }
 
   private adaptContentType(contentTypeStr: string): 'binary' | 'JSON' | 'Text' | 'XML' {

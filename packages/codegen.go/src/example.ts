@@ -5,7 +5,6 @@
 
 import { camelCase } from '@azure-tools/codegen';
 import * as go from '../../codemodel.go/src/index.js';
-import { getAllClientParameters } from './clientFactory.js';
 import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { fixUpMethodName } from './operations.js';
@@ -43,7 +42,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
       imports.add(codeModel.options.module!.name);
     }
 
-    const allClientParams = getAllClientParameters(codeModel);
+    const allClientParams = helpers.getAllClientParameters(codeModel);
 
     let exampleText = '';
     for (const method of client.methods) {

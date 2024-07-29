@@ -25,7 +25,8 @@ export async function m4ToGoCodeModel(host: AutorestExtensionHost) {
       await session.getValue('header-text', 'MISSING LICENSE HEADER'), 
       await session.getValue('generate-fakes', session.model.language.go!.azureARM), 
       await session.getValue('inject-spans', session.model.language.go!.azureARM),
-      await session.getValue('disallow-unknown-fields', false));
+      await session.getValue('disallow-unknown-fields', false),
+      await session.getValue('generate-sdk-example', false));
     const azcoreVersion = await session.getValue('azcore-version', '');
     if (azcoreVersion !== '') {
       options.azcoreVersion = azcoreVersion;
