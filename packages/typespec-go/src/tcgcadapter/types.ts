@@ -537,8 +537,7 @@ export class typeAdapter {
       modelType = new go.PolymorphicType(modelName, iface, annotations, usage);
       (<go.PolymorphicType>modelType).discriminatorValue = discriminatorLiteral;
     } else {
-      // TODO: hard-coded format
-      modelType = new go.ModelType(modelName, 'json', annotations, usage);
+      modelType = new go.ModelType(modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
       // TODO: XMLInfo
     }

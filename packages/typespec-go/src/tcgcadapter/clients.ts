@@ -585,6 +585,9 @@ export class clientAdapter {
       if (go.isPolymorphicType(modelType)) {
         respEnv.result = new go.PolymorphicResult(modelType.interface);
       } else {
+        if (contentType !== 'JSON' && contentType !== 'XML') {
+          throw new Error(`unexpected content type ${contentType} for model ${modelType.name}`);
+        }
         respEnv.result = new go.ModelResult(modelType, contentType);
       }
       respEnv.result.description = sdkResponseType.description;

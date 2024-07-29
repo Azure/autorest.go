@@ -112,7 +112,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
       (<go.PolymorphicType>modelType).discriminatorValue = getDiscriminatorLiteral(obj.discriminatorValue);
     }
   } else {
-    modelType = new go.ModelType(obj.language.go!.name, adaptModelFormat(obj), annotations, adaptUsage(obj));
+    modelType = new go.ModelType(obj.language.go!.name, annotations, adaptUsage(obj));
     // polymorphic types don't have XMLInfo
     modelType.xml = adaptXMLInfo(obj);
   }
@@ -224,16 +224,6 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
   field.xml = adaptXMLInfo(prop.schema);
 
   return field;
-}
-
-function adaptModelFormat(obj: m4.ObjectSchema): go.ModelFormat {
-  if (obj.language.go!.marshallingFormat === 'json') {
-    return 'json';
-  } else if (obj.language.go!.marshallingFormat === 'xml') {
-    return 'xml';
-  } else {
-    throw new Error(`unsupported marshalling format ${obj.language.go!.marshallingFormat}`);
-  }
 }
 
 export function adaptXMLInfo(obj: m4.Schema): go.XMLInfo | undefined {
