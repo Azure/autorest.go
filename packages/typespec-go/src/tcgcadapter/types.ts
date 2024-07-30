@@ -149,11 +149,7 @@ export class typeAdapter {
   // returns the Go code model type for the specified SDK type.
   // the operation is idempotent, so getting the same type multiple times
   // returns the same instance of the converted type.
-  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean, isMulti = false): go.PossibleType {
-    if (isMulti) {
-      return this.getArrayType(type, elementTypeByValue, substituteDiscriminator);
-    }
-
+  getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
       case 'any':
       case 'boolean':
@@ -177,7 +173,23 @@ export class typeAdapter {
       case 'url':
         return this.getBuiltInType(type);
       case 'array': {
-        return this.getArrayType(type.valueType, elementTypeByValue, substituteDiscriminator);
+        let elementType = type.valueType;
+        let nullable = false;
+        if (elementType.kind === 'nullable') {
+          // unwrap the nullable type
+          elementType = elementType.type;
+          nullable = true;
+        }
+        // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
+        const myElementTypeByValue = elementTypeByValue ? true : nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(elementType);
+        const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, elementType, substituteDiscriminator);
+        let arrayType = this.types.get(keyName);
+        if (arrayType) {
+          return arrayType;
+        }
+        arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
+        this.types.set(keyName, arrayType);
+        return arrayType;
       }
       case 'endpoint': {
         const stringKey = 'string';
@@ -232,25 +244,6 @@ export class typeAdapter {
       default:
         throw new Error(`unhandled property kind ${type.kind}`);
     }
-  }
-
-  getArrayType(elementType: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
-    let nullable = false;
-    if (elementType.kind === 'nullable') {
-      // unwrap the nullable type
-      elementType = elementType.type;
-      nullable = true;
-    }
-    // prefer elementTypeByValue. if false, then if the array elements have been explicitly marked as nullable then prefer that, else fall back to our usual algorithm
-    const myElementTypeByValue = elementTypeByValue ? true : nullable ? false : this.codeModel.options.sliceElementsByval || isTypePassedByValue(elementType);
-    const keyName = recursiveKeyName(`array-${myElementTypeByValue}`, elementType, substituteDiscriminator);
-    let arrayType = this.types.get(keyName);
-    if (arrayType) {
-      return arrayType;
-    }
-    arrayType = new go.SliceType(this.getPossibleType(elementType, elementTypeByValue, substituteDiscriminator), myElementTypeByValue);
-    this.types.set(keyName, arrayType);
-    return arrayType;
   }
 
   private getTimeType(encode: tsp.DateTimeKnownEncoding, utc: boolean): go.TimeType {
@@ -573,10 +566,10 @@ export class typeAdapter {
     if (isMultipartFormData && prop.kind === 'property' && prop.optional) {
       fieldByValue = false;
     }
-    let type = this.getPossibleType(prop.type, isMultipartFormData, true, prop.kind === 'property' && prop.multipartOptions?.isMulti);
+    let type = this.getPossibleType(prop.type, isMultipartFormData, true);
     if (prop.kind === 'property') {
       if (prop.isMultipartFileInput) {
-        type = this.getMultipartContent(prop.type.kind === 'array' || (prop.multipartOptions?.isMulti ?? false));
+        type = this.getMultipartContent(prop.type.kind === 'array');
       }
       if (prop.visibility) {
         // the field is read-only IFF the only visibility attribute present is Read.
