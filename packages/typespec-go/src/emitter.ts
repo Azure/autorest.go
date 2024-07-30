@@ -25,7 +25,7 @@ import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
 
 export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
   const codeModel = await tcgcToGoCodeModel(context);
-  await mkdir(context.emitterOutputDir, { recursive: true });
+  await mkdir(context.emitterOutputDir, {recursive: true});
 
   // don't overwrite an existing go.mod file, update it if required
   const goModFile = `${context.emitterOutputDir}/go.mod`;
