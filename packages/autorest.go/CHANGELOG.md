@@ -1,5 +1,18 @@
 # Release History
 
+## 4.0.0-preview.67 (2024-07-30)
+
+## Bugs Fixed
+
+* Fixed a rare issue causing some method doc comments to be omitted.
+* Fixed bad codegen for slices of raw JSON objects.
+
+### Other Changes
+
+* Emit unused params in helper methods with the `_` name.
+* Removed unnecessary `aux` variable for some corner-cases.
+* Upgraded default `azcore` version to `v1.13.0`.
+
 ## 4.0.0-preview.66 (2024-04-25)
 
 ### Bugs Fixed
