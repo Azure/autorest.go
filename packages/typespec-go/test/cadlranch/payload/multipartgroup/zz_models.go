@@ -16,7 +16,7 @@ type BinaryArrayPartsRequest struct {
 	ID string
 
 	// REQUIRED
-	Pictures streaming.MultipartContent
+	Pictures []streaming.MultipartContent
 }
 
 type ComplexPartsRequest struct {
@@ -27,10 +27,10 @@ type ComplexPartsRequest struct {
 	ID string
 
 	// REQUIRED
-	Pictures streaming.MultipartContent
+	Pictures []streaming.MultipartContent
 
 	// REQUIRED
-	PreviousAddresses Address
+	PreviousAddresses []Address
 
 	// REQUIRED
 	ProfileImage streaming.MultipartContent
@@ -38,7 +38,7 @@ type ComplexPartsRequest struct {
 
 type JSONArrayPartsRequest struct {
 	// REQUIRED
-	PreviousAddresses Address
+	PreviousAddresses []Address
 
 	// REQUIRED
 	ProfileImage streaming.MultipartContent
