@@ -15,11 +15,11 @@ import (
 
 // ServerFactory is a fake server for instances of the armlargeinstance.ClientFactory type.
 type ServerFactory struct {
-	// AzureLargeInstancesServer contains the fakes for client AzureLargeInstancesClient
-	AzureLargeInstancesServer AzureLargeInstancesServer
+	// AzureLargeInstanceServer contains the fakes for client AzureLargeInstanceClient
+	AzureLargeInstanceServer AzureLargeInstanceServer
 
-	// AzureLargeStorageInstancesServer contains the fakes for client AzureLargeStorageInstancesClient
-	AzureLargeStorageInstancesServer AzureLargeStorageInstancesServer
+	// AzureLargeStorageInstanceServer contains the fakes for client AzureLargeStorageInstanceClient
+	AzureLargeStorageInstanceServer AzureLargeStorageInstanceServer
 
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
@@ -37,11 +37,11 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of armlargeinstance.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv                                *ServerFactory
-	trMu                               sync.Mutex
-	trAzureLargeInstancesServer        *AzureLargeInstancesServerTransport
-	trAzureLargeStorageInstancesServer *AzureLargeStorageInstancesServerTransport
-	trOperationsServer                 *OperationsServerTransport
+	srv                               *ServerFactory
+	trMu                              sync.Mutex
+	trAzureLargeInstanceServer        *AzureLargeInstanceServerTransport
+	trAzureLargeStorageInstanceServer *AzureLargeStorageInstanceServerTransport
+	trOperationsServer                *OperationsServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -57,16 +57,16 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
-	case "AzureLargeInstancesClient":
-		initServer(s, &s.trAzureLargeInstancesServer, func() *AzureLargeInstancesServerTransport {
-			return NewAzureLargeInstancesServerTransport(&s.srv.AzureLargeInstancesServer)
+	case "AzureLargeInstanceClient":
+		initServer(s, &s.trAzureLargeInstanceServer, func() *AzureLargeInstanceServerTransport {
+			return NewAzureLargeInstanceServerTransport(&s.srv.AzureLargeInstanceServer)
 		})
-		resp, err = s.trAzureLargeInstancesServer.Do(req)
-	case "AzureLargeStorageInstancesClient":
-		initServer(s, &s.trAzureLargeStorageInstancesServer, func() *AzureLargeStorageInstancesServerTransport {
-			return NewAzureLargeStorageInstancesServerTransport(&s.srv.AzureLargeStorageInstancesServer)
+		resp, err = s.trAzureLargeInstanceServer.Do(req)
+	case "AzureLargeStorageInstanceClient":
+		initServer(s, &s.trAzureLargeStorageInstanceServer, func() *AzureLargeStorageInstanceServerTransport {
+			return NewAzureLargeStorageInstanceServerTransport(&s.srv.AzureLargeStorageInstanceServer)
 		})
-		resp, err = s.trAzureLargeStorageInstancesServer.Do(req)
+		resp, err = s.trAzureLargeStorageInstanceServer.Do(req)
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)

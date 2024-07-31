@@ -25,6 +25,16 @@ type NamingClientLanguageOptions struct {
 	// placeholder for future optional parameters
 }
 
+// NamingClientModelClientClientOptions contains the optional parameters for the NamingClientModelClient.Client method.
+type NamingClientModelClientClientOptions struct {
+	// placeholder for future optional parameters
+}
+
+// NamingClientModelClientLanguageOptions contains the optional parameters for the NamingClientModelClient.Language method.
+type NamingClientModelClientLanguageOptions struct {
+	// placeholder for future optional parameters
+}
+
 // NamingClientParameterOptions contains the optional parameters for the NamingClient.Parameter method.
 type NamingClientParameterOptions struct {
 	// placeholder for future optional parameters
@@ -37,16 +47,6 @@ type NamingClientRequestOptions struct {
 
 // NamingClientResponseOptions contains the optional parameters for the NamingClient.Response method.
 type NamingClientResponseOptions struct {
-	// placeholder for future optional parameters
-}
-
-// NamingModelClientClientOptions contains the optional parameters for the NamingModelClient.Client method.
-type NamingModelClientClientOptions struct {
-	// placeholder for future optional parameters
-}
-
-// NamingModelClientLanguageOptions contains the optional parameters for the NamingModelClient.Language method.
-type NamingModelClientLanguageOptions struct {
 	// placeholder for future optional parameters
 }
 

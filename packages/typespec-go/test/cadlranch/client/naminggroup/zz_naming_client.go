@@ -18,9 +18,9 @@ type NamingClient struct {
 	internal *azcore.Client
 }
 
-// NewNamingModelClient creates a new instance of [NamingModelClient].
-func (client *NamingClient) NewNamingModelClient() *NamingModelClient {
-	return &NamingModelClient{
+// NewNamingClientModelClient creates a new instance of [NamingClientModelClient].
+func (client *NamingClient) NewNamingClientModelClient() *NamingClientModelClient {
+	return &NamingClientModelClient{
 		internal: client.internal,
 	}
 }
