@@ -120,7 +120,7 @@ export interface PageableMethod extends Method {
 // thus, it's not included in the array of methods for a client.
 export interface NextPageMethod {
   name: string;
-
+ 
   httpPath: string;
 
   httpMethod: HTTPMethod;

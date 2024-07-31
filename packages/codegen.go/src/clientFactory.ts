@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
+import { values } from '@azure-tools/linq';
 import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, getAllClientParameters } from './helpers.js';
 import { ImportManager } from './imports.js';
 
@@ -43,7 +43,7 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   result += `${formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.')}\n`;
   result += `${formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
 
-  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length > 0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
+  result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
   result += '\tif err != nil {\n';
   result += '\t\treturn nil, err\n';

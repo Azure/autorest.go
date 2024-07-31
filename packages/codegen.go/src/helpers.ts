@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
-import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
+import { values } from '@azure-tools/linq';
+import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { ImportManager } from './imports.js';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -213,7 +213,7 @@ export function formatParamValue(param: go.FormBodyParameter | go.HeaderParamete
     if (param.collectionFormat === 'multi') {
       throw new Error('multi collection format should have been previously handled');
     }
-    const emitConvertOver = function (paramName: string, format: string): string {
+    const emitConvertOver = function(paramName: string, format: string): string {
       const encodedVar = `encoded${capitalize(paramName)}`;
       let content = 'strings.Join(func() []string {\n';
       content += `\t\t${encodedVar} := make([]string, len(${paramName}))\n`;
