@@ -1,6 +1,5 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/autorest.go/test"
-  PublishAutorestCoverage: false
 
 steps:
   - script: |
