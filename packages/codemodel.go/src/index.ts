@@ -8,3 +8,4 @@ export * from './package.js';
 export * from './param.js';
 export * from './result.js';
 export * from './type.js';
+export * from './examples.js';

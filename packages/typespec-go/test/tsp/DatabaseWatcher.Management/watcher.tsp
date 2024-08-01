@@ -113,34 +113,10 @@ interface Watchers {
   listBySubscription is ArmListBySubscription<Watcher>;
 
   @doc("The action to start monitoring all targets configured for a database watcher.")
-  @action
-  @post
-  @armResourceAction(Watcher)
-  @extension("x-ms-long-running-operation", true)
-  @extension(
-    "x-ms-long-running-operation-options",
-    {
-      `final-state-via`: "azure-async-operation",
-    }
-  )
-  start(
-    ...ResourceInstanceParameters<Watcher>,
-  ): ArmAcceptedLroResponse | ArmResponse<Watcher> | ErrorResponse;
+  start is ArmResourceActionAsync<Watcher, void, Watcher>;
 
   @doc("The action to stop monitoring all targets configured for a database watcher.")
-  @action
-  @post
-  @armResourceAction(Watcher)
-  @extension("x-ms-long-running-operation", true)
-  @extension(
-    "x-ms-long-running-operation-options",
-    {
-      `final-state-via`: "azure-async-operation",
-    }
-  )
-  stop(
-    ...ResourceInstanceParameters<Watcher>,
-  ): ArmAcceptedLroResponse | ArmResponse<Watcher> | ErrorResponse;
+  stop is ArmResourceActionAsync<Watcher, void, Watcher>;
 }
 
 @doc("The monitoring collection status of a watcher.")

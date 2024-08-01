@@ -72,6 +72,8 @@ export interface Options {
   rawJSONAsBytes: boolean;
 
   sliceElementsByval: boolean;
+
+  generateExamples: boolean;
 }
 
 export interface Module {
@@ -92,11 +94,12 @@ export class Info implements Info {
 }
 
 export class Options implements Options {
-  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean) {
+  constructor(headerText: string, generateFakes: boolean, injectSpans: boolean, disallowUnknownFields: boolean, generateExamples: boolean) {
     this.headerText = headerText;
     this.generateFakes = generateFakes;
     this.injectSpans = injectSpans;
     this.disallowUnknownFields = disallowUnknownFields;
+    this.generateExamples = generateExamples;
   }
 }
 

@@ -20,6 +20,7 @@ export interface GoEmitterOptions {
   'stutter'?: string;
   'fix-const-stuttering'?: boolean;
   'remove-unreferenced-types'?: boolean;
+  'generate-examples'?: boolean;
 }
 
 const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
@@ -40,6 +41,7 @@ const EmitterOptionsSchema: JSONSchemaType<GoEmitterOptions> = {
     'stutter': { type: 'string', nullable: true },
     'fix-const-stuttering': { type: 'boolean', nullable: true },
     'remove-unreferenced-types': { type: 'boolean', nullable: true },
+    'generate-examples': { type: 'boolean', nullable: true },
   },
   required: [],
 };

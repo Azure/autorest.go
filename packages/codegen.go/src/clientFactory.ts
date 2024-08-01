@@ -5,7 +5,7 @@
 
 import * as go from '../../codemodel.go/src/index.js';
 import { values } from '@azure-tools/linq';
-import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, sortParametersByRequired } from './helpers.js';
+import { contentPreamble, formatCommentAsBulletItem, formatParameterTypeName, getAllClientParameters } from './helpers.js';
 import { ImportManager } from './imports.js';
 
 
@@ -19,17 +19,8 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   let result = '';
   // the list of packages to import
   const imports = new ImportManager();
-  
-  const allClientParams = new Array<go.Parameter>();
-  for (const clients of codeModel.clients) {
-    for (const clientParam of values(clients.parameters)) {
-      if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
-        continue;
-      }
-      allClientParams.push(clientParam);
-    }
-  }
-  allClientParams.sort(sortParametersByRequired);
+
+  const allClientParams = getAllClientParameters(codeModel);
 
   // add factory type
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');

@@ -58,12 +58,16 @@ export function formatParameterTypeName(param: go.Parameter | go.ParameterGroup,
     }
   } else {
     typeName = go.getTypeDeclaration(param.type, pkgName);
-    if (go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))) {
+    if (parameterByValue(param)) {
       // client parameters with default values aren't emitted as pointer-to-type
       return typeName;
     }
   }
   return `*${typeName}`;
+}
+
+export function parameterByValue(param: go.Parameter): boolean {
+  return go.isRequiredParameter(param) || (param.location === 'client' && go.isClientSideDefault(param.kind))
 }
 
 // sorts parameters by their required state, ordering required before optional
@@ -663,4 +667,19 @@ export function getSerDeFormat(model: go.ModelType | go.PolymorphicType, codeMod
     serDeFormat = 'JSON';
   }
   return serDeFormat;
+}
+
+// return combined client parameters for all the clients
+export function getAllClientParameters(codeModel: go.CodeModel): Array<go.Parameter> {
+  const allClientParams = new Array<go.Parameter>();
+  for (const clients of codeModel.clients) {
+    for (const clientParam of values(clients.parameters)) {
+      if (values(allClientParams).where(param => param.name === clientParam.name).any()) {
+        continue;
+      }
+      allClientParams.push(clientParam);
+    }
+  }
+  allClientParams.sort(sortParametersByRequired);
+  return allClientParams;
 }

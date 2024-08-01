@@ -41,7 +41,8 @@ type LoadTestsClientOutboundNetworkDependenciesEndpointsResponse struct {
 
 // LoadTestsClientUpdateResponse contains the response from method LoadTestsClient.BeginUpdate.
 type LoadTestsClientUpdateResponse struct {
-	// placeholder for future response values
+	// LoadTest details.
+	LoadTestResource
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.

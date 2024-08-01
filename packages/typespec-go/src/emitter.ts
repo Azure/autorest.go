@@ -7,6 +7,7 @@ import { GoEmitterOptions } from './lib.js';
 import { tcgcToGoCodeModel } from './tcgcadapter/adapter.js';
 import { generateClientFactory } from '../../codegen.go/src/clientFactory.js';
 import { generateConstants } from '../../codegen.go/src/constants.js';
+import { generateExamples } from '../../codegen.go/src/example.js';
 import { generateGoModFile } from '../../codegen.go/src/gomod.js';
 import { generateInterfaces } from '../../codegen.go/src/interfaces.js';
 import { generateModels } from '../../codegen.go/src/models.js';
@@ -81,6 +82,22 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, op.content);
   }
 
+  if (codeModel.options.generateExamples) {
+    const examples = await generateExamples(codeModel);
+    for (const example of examples) {
+      let fileName = example.name.toLowerCase();
+      // op.name is the client name, e.g. FooClient.
+      // insert a _ before Client, i.e. Foo_Client
+      // if the name isn't simply Client.
+      // and insert _example_test at the end.
+      if (fileName !== 'client') {
+        fileName = fileName.substring(0, fileName.length - 6) + '_client';
+      }
+      fileName += '_example_test';
+      writeFile(`${context.emitterOutputDir}/${filePrefix}${fileName}.go`, example.content);
+    }
+  }
+
   const options = await generateOptions(codeModel);
   if (options.length > 0) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}options.go`, options);
@@ -104,7 +121,7 @@ export async function $onEmit(context: EmitContext<GoEmitterOptions>) {
     writeFile(`${context.emitterOutputDir}/${filePrefix}${helper.name.toLowerCase()}.go`, helper.content);
   }
 
-  if (context.options['generate-fakes'] === true) {
+  if (codeModel.options.generateFakes) {
     const serverContent = await generateServers(codeModel);
     if (serverContent.servers.length > 0) {
       const fakesDir = context.emitterOutputDir + '/fake';

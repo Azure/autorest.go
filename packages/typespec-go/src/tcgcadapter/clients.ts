@@ -263,13 +263,17 @@ export class clientAdapter {
       }
     }
 
-    this.adaptMethodParameters(sdkMethod, method);
+    const paramMapping = this.adaptMethodParameters(sdkMethod, method);
 
     // we must do this after adapting method params as it can add optional params
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
+
+    this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
   }
 
-  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod) {
+  private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {
+    const paramMapping = new Map<tcgc.SdkHttpParameter, Array<go.Parameter>>();
+
     let optionalGroup: go.ParameterGroup | undefined;
     if (go.isMethod(method)) {
       // NextPageMethods don't have optional params
@@ -347,6 +351,10 @@ export class clientAdapter {
 
       adaptedParam.description = param.description;
       method.parameters.push(adaptedParam);
+      if (!paramMapping.has(opParam)) {
+        paramMapping.set(opParam, new Array<go.Parameter>());
+      }
+      paramMapping.get(opParam)?.push(adaptedParam);
 
       if (adaptedParam.location === 'client') {
         // we must check via param name and not reference equality. this is because a client param
@@ -366,6 +374,8 @@ export class clientAdapter {
         optionalGroup.params.push(adaptedParam);
       }
     }
+
+    return paramMapping;
   }
 
   private adaptContentType(contentTypeStr: string): 'binary' | 'JSON' | 'Text' | 'XML' {
@@ -657,6 +667,138 @@ export class clientAdapter {
     } else {
       return 'required';
     }
+  }
+
+  private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
+    if (sdkMethod.operation.examples) {
+      for (const example of sdkMethod.operation.examples) {
+        const regex = /(\/specification\/|\/tsp\/).*/;
+        const match = example.filePath.match(regex);
+        const filePath = match ? match[0] : example.filePath;
+        const goExample = new go.MethodExample(example.name, example.description, filePath);
+        for (const param of example.parameters) {
+          const goParams = paramMapping.get(param.parameter);
+          if (!goParams) {
+            throw new Error(`can not find go param for example param ${param.parameter.name}`);
+          }
+          if (goParams.length > 1) {
+            // spread case
+            for (const goParam of goParams) {
+              const propertyValue = (<tcgc.SdkModelExample>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
+              const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
+              if (goParam?.group) {
+                goExample.optionalParamsGroup.push(paramExample);
+              } else {
+                goExample.parameters.push(paramExample);
+              }
+            }
+          } else {
+            const paramExample = new go.ParameterExample(goParams[0], this.adaptExampleType(param.value, goParams[0]?.type));
+            if (goParams[0]?.group) {
+              goExample.optionalParamsGroup.push(paramExample);
+            } else {
+              goExample.parameters.push(paramExample);
+            }
+          }
+        }
+        // only handle 200 response
+        const response = example.responses.get(200);
+        if (response) {
+          goExample.responseEnvelope = new go.ResponseEnvelopeExample(method.responseEnvelope);
+          for (const header of response.headers) {
+            const goHeader = method.responseEnvelope.headers.find(h => h.headerName === header.header.serializedName);
+            if (!goHeader) {
+              throw new Error(`can not find go header for example header ${header.header.serializedName}`);
+            }
+            goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
+          }
+          if (response.bodyValue) {
+            if (go.isAnyResult(method.responseEnvelope.result!)) {
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
+            } else if (go.isModelResult(method.responseEnvelope.result!)) {
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
+            } else if (go.isBinaryResult(method.responseEnvelope.result!)) {
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
+            } else if (go.isMonomorphicResult(method.responseEnvelope.result!)) {
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
+            } else if (go.isPolymorphicResult(method.responseEnvelope.result!)) {
+              goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
+            }
+          }
+        }
+        method.examples.push(goExample);
+      }
+    }
+  }
+
+  private adaptExampleType(exampleType: tcgc.SdkTypeExample, goType: go.PossibleType): go.ExampleType {
+    switch (exampleType.kind) {
+      case 'string':
+        if (go.isConstantType(goType) || go.isBytesType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
+          return new go.StringExample(exampleType.value, goType);
+        }
+        break;
+      case 'number':
+        if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isTimeType(goType) || go.isPrimitiveType(goType)) {
+          return new go.NumberExample(exampleType.value, goType);
+        }
+        break;
+      case 'boolean':
+        if (go.isConstantType(goType) || go.isLiteralValue(goType) || go.isPrimitiveType(goType)) {
+          return new go.BooleanExample(exampleType.value, goType);
+        }
+        break;
+      case 'null':
+        return new go.NullExample(goType);
+      case 'any':
+        if (go.isPrimitiveType(goType) && goType.typeName === 'any') {
+          return new go.AnyExample(exampleType.value);
+        }
+        break;
+      case 'array':
+        if (go.isSliceType(goType)) {
+          const ret = new go.ArrayExample(goType);
+          for (const v of exampleType.value) {
+            ret.value.push(this.adaptExampleType(v, goType.elementType));
+          }
+          return ret;
+        }
+        break;
+      case 'dict':
+        if (go.isMapType(goType)) {
+          const ret = new go.DictionaryExample(goType);
+          for (const [k, v] of Object.entries(exampleType.value)) {
+            ret.value[k] = this.adaptExampleType(v, goType.valueType);
+          }
+          return ret;
+        }
+        break;
+      case 'union':
+        throw new Error('go could not support union for now');
+      case 'model':
+        if (go.isModelType(goType) || go.isInterfaceType(goType)) {
+          let concreteType: go.ModelType | go.PolymorphicType;
+          if (go.isInterfaceType(goType)) {
+            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue)!;
+          } else {
+            concreteType = goType;
+          }
+          const ret = new go.StructExample(concreteType);
+          for (const [k, v] of Object.entries(exampleType.value)) {
+            const field = concreteType.fields.find(f => f.serializedName === k)!;
+            ret.value[field.name] = this.adaptExampleType(v, field.type);
+          }
+          if (exampleType.additionalPropertiesValue) {
+            ret.additionalProperties = {};
+            for (const [k, v] of Object.entries(exampleType.additionalPropertiesValue)) {
+              ret.additionalProperties[k] = this.adaptExampleType(v, concreteType.fields.find(f => f.annotations.isAdditionalProperties)!.type!);
+            }
+          }
+          return ret;
+        }
+        break;
+    }
+    throw new Error(`can not map go type into example type ${exampleType.kind}`);
   }
 }
 
