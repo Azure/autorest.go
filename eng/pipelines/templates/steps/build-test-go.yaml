@@ -1,6 +1,5 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/autorest.go/test"
-  PublishAutorestCoverage: false
 
 steps:
   - script: |
@@ -129,12 +128,3 @@ steps:
       testRunner: JUnit
       testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
       failTaskOnFailedTests: true
-
-  - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.PublishAutorestCoverage, true))}}:
-      - pwsh: |
-          $currentVersion = node -p -e "require('./src/package.json').version";
-          $currentVersion="$currentVersion-$(Build.BuildNumber)";
-          cd ./node_modules/@microsoft.azure/autorest.testserver;
-          npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
-        displayName: "Publish AutoRest Test Server Coverage Report"
-        workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.go

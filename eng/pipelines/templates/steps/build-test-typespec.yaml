@@ -1,6 +1,5 @@
 parameters:
   GoTestPath: "$(System.DefaultWorkingDirectory)/packages/typespec-go/test"
-  PublishAutorestCoverage: false
 
 steps:
   - script: |

@@ -46,5 +46,3 @@ extends:
                   GoVersion: "1.21.4"
 
               - template: /eng/pipelines/templates/steps/build-test-go.yaml
-                parameters:
-                  PublishAutorestCoverage: true
