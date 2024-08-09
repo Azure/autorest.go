@@ -4,6 +4,7 @@
 package resources_test
 
 import (
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -14,28 +15,28 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestTopLevelTrackedResources(t *testing.T) {
-	// TopLevelTrackedResources Get
-	expectedTopLevelTrackedResourcesClientGetResponse := resources.TopLevelTrackedResourcesClientGetResponse{
-		TopLevelTrackedResource: resources.TopLevelTrackedResource{
-			ID:       to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top"),
-			Name:     to.Ptr("top"),
-			Type:     to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources"),
-			Location: to.Ptr("eastus"),
-			Properties: &resources.TopLevelTrackedResourceProperties{
-				Description:       to.Ptr("valid"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
+var (
+	validTopLevelResource = resources.TopLevelTrackedResource{
+		ID:       to.Ptr(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top", subscriptionIdExpected, resourceGroupExpected)),
+		Name:     to.Ptr("top"),
+		Type:     to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources"),
+		Location: to.Ptr("eastus"),
+		Properties: &resources.TopLevelTrackedResourceProperties{
+			Description:       to.Ptr("valid"),
+			ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
+		},
+		SystemData: &resources.SystemData{
+			CreatedBy:          to.Ptr("AzureSDK"),
+			CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
+			CreatedAt:          to.Ptr(time.Now()),
+			LastModifiedBy:     to.Ptr("AzureSDK"),
+			LastModifiedAt:     to.Ptr(time.Now()),
+			LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
 		},
 	}
+)
+
+func TestTopLevelTrackedResourcesClient_Get(t *testing.T) {
 	topLevelTrackedResourcesClientGetResponse, err := clientFactory.NewTopLevelTrackedResourcesClient().Get(
 		ctx,
 		"test-rg",
@@ -43,31 +44,12 @@ func TestTopLevelTrackedResources(t *testing.T) {
 		nil,
 	)
 	require.NoError(t, err)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientGetResponse.ID, *topLevelTrackedResourcesClientGetResponse.ID)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientGetResponse.Name, *topLevelTrackedResourcesClientGetResponse.Name)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientGetResponse.Type, *topLevelTrackedResourcesClientGetResponse.Type)
+	require.Equal(t, *validTopLevelResource.ID, *topLevelTrackedResourcesClientGetResponse.ID)
+	require.Equal(t, *validTopLevelResource.Name, *topLevelTrackedResourcesClientGetResponse.Name)
+	require.Equal(t, *validTopLevelResource.Type, *topLevelTrackedResourcesClientGetResponse.Type)
+}
 
-	// TopLevelTrackedResources CreateOrReplace
-	expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse := resources.TopLevelTrackedResourcesClientCreateOrReplaceResponse{
-		TopLevelTrackedResource: resources.TopLevelTrackedResource{
-			ID:       to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top"),
-			Name:     to.Ptr("top"),
-			Type:     to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources"),
-			Location: to.Ptr("eastus"),
-			Properties: &resources.TopLevelTrackedResourceProperties{
-				Description:       to.Ptr("valid"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
-		},
-	}
+func TestTopLevelTrackedResourcesClient_CreateOrReplace(t *testing.T) {
 	topLevelTrackedResourcesClientCreateOrReplaceResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginCreateOrReplace(
 		ctx,
 		"test-rg",
@@ -83,33 +65,14 @@ func TestTopLevelTrackedResources(t *testing.T) {
 	require.NoError(t, err)
 	topLevelTrackedResourcesClientCreateOrReplaceResponse, err := topLevelTrackedResourcesClientCreateOrReplaceResponsePoller.PollUntilDone(ctx, nil)
 	require.NoError(t, err)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse.ID, *topLevelTrackedResourcesClientCreateOrReplaceResponse.ID)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse.Name, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Name)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse.Type, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Type)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse.Location, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Location)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientCreateOrReplaceResponse.Properties.Description, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Properties.Description)
+	require.Equal(t, *validTopLevelResource.ID, *topLevelTrackedResourcesClientCreateOrReplaceResponse.ID)
+	require.Equal(t, *validTopLevelResource.Name, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Name)
+	require.Equal(t, *validTopLevelResource.Type, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Type)
+	require.Equal(t, *validTopLevelResource.Location, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Location)
+	require.Equal(t, *validTopLevelResource.Properties.Description, *topLevelTrackedResourcesClientCreateOrReplaceResponse.Properties.Description)
+}
 
-	// TopLevelTrackedResources Update
-	expectedTopLevelTrackedResourcesClientUpdateResponse := resources.TopLevelTrackedResourcesClientUpdateResponse{
-		TopLevelTrackedResource: resources.TopLevelTrackedResource{
-			ID:       to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top"),
-			Name:     to.Ptr("top"),
-			Type:     to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources"),
-			Location: to.Ptr("eastus"),
-			Properties: &resources.TopLevelTrackedResourceProperties{
-				Description:       to.Ptr("valid2"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
-		},
-	}
+func TestTopLevelTrackedResourcesClient_BeginUpdate(t *testing.T) {
 	topLevelTrackedResourcesClientUpdateResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginUpdate(
 		ctx,
 		"test-rg",
@@ -124,13 +87,14 @@ func TestTopLevelTrackedResources(t *testing.T) {
 	require.NoError(t, err)
 	topLevelTrackedResourcesClientUpdateResponse, err := topLevelTrackedResourcesClientUpdateResponsePoller.PollUntilDone(ctx, nil)
 	require.NoError(t, err)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientUpdateResponse.ID, *topLevelTrackedResourcesClientUpdateResponse.ID)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientUpdateResponse.Name, *topLevelTrackedResourcesClientUpdateResponse.Name)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientUpdateResponse.Type, *topLevelTrackedResourcesClientUpdateResponse.Type)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientUpdateResponse.Location, *topLevelTrackedResourcesClientUpdateResponse.Location)
-	require.Equal(t, *expectedTopLevelTrackedResourcesClientUpdateResponse.Properties.Description, *topLevelTrackedResourcesClientUpdateResponse.Properties.Description)
+	require.Equal(t, *validTopLevelResource.ID, *topLevelTrackedResourcesClientUpdateResponse.ID)
+	require.Equal(t, *validTopLevelResource.Name, *topLevelTrackedResourcesClientUpdateResponse.Name)
+	require.Equal(t, *validTopLevelResource.Type, *topLevelTrackedResourcesClientUpdateResponse.Type)
+	require.Equal(t, *validTopLevelResource.Location, *topLevelTrackedResourcesClientUpdateResponse.Location)
+	require.Equal(t, "valid2", *topLevelTrackedResourcesClientUpdateResponse.Properties.Description)
+}
 
-	// TopLevelTrackedResources Delete
+func TestTopLevelTrackedResourcesClient_BeginDelete(t *testing.T) {
 	topLevelTrackedResourcesClientDeleteResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginDelete(
 		ctx,
 		"test-rg",
@@ -141,18 +105,28 @@ func TestTopLevelTrackedResources(t *testing.T) {
 	topLevelTrackedResourcesClientDeleteResponse, err := topLevelTrackedResourcesClientDeleteResponsePoller.Poll(ctx)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusNoContent, topLevelTrackedResourcesClientDeleteResponse.StatusCode)
+}
 
-	// TopLevelTrackedResources ListByResourceGroup
+func TestTopLevelTrackedResourcesClient_NewListByResourceGroupPager(t *testing.T) {
 	topLevelTrackedResourcesClientListByResourceGroupResponsePager := clientFactory.NewTopLevelTrackedResourcesClient().NewListByResourceGroupPager("test-rg", nil)
 	require.True(t, topLevelTrackedResourcesClientListByResourceGroupResponsePager.More())
 	topLevelTrackedResourcesClientListByResourceGroupResponse, err := topLevelTrackedResourcesClientListByResourceGroupResponsePager.NextPage(ctx)
 	require.NoError(t, err)
 	require.Len(t, topLevelTrackedResourcesClientListByResourceGroupResponse.Value, 1)
+	require.Equal(t, *validTopLevelResource.ID, *topLevelTrackedResourcesClientListByResourceGroupResponse.Value[0].ID)
+	require.Equal(t, *validTopLevelResource.Name, *topLevelTrackedResourcesClientListByResourceGroupResponse.Value[0].Name)
+	require.Equal(t, *validTopLevelResource.Type, *topLevelTrackedResourcesClientListByResourceGroupResponse.Value[0].Type)
+	require.Equal(t, *validTopLevelResource.Location, *topLevelTrackedResourcesClientListByResourceGroupResponse.Value[0].Location)
+}
 
-	// TopLevelTrackedResources List
+func TestTopLevelTrackedResourcesClient_NewListBySubscriptionPager(t *testing.T) {
 	TopLevelTrackedResourcesClientListBySubscriptionResponsePager := clientFactory.NewTopLevelTrackedResourcesClient().NewListBySubscriptionPager(nil)
 	require.True(t, TopLevelTrackedResourcesClientListBySubscriptionResponsePager.More())
 	TopLevelTrackedResourcesClientListBySubscriptionResponse, err := TopLevelTrackedResourcesClientListBySubscriptionResponsePager.NextPage(ctx)
 	require.NoError(t, err)
 	require.Len(t, TopLevelTrackedResourcesClientListBySubscriptionResponse.Value, 1)
+	require.Equal(t, *validTopLevelResource.ID, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].ID)
+	require.Equal(t, *validTopLevelResource.Name, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].Name)
+	require.Equal(t, *validTopLevelResource.Type, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].Type)
+	require.Equal(t, *validTopLevelResource.Location, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].Location)
 }

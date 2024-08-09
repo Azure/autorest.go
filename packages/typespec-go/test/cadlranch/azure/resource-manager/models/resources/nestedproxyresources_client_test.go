@@ -13,27 +13,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNestedProxyResourcesClient(t *testing.T) {
-	// NestedProxyResources Get
-	expectedNestedProxyResourcesClientGetResponse := resources.NestedProxyResourcesClientGetResponse{
-		NestedProxyResource: resources.NestedProxyResource{
-			ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources/nested"),
-			Name: to.Ptr("nested"),
-			Type: to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources"),
-			Properties: &resources.NestedProxyResourceProperties{
-				Description:       to.Ptr("valid"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
+var (
+	validNestedResource = resources.NestedProxyResource{
+		ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources/nested"),
+		Name: to.Ptr("nested"),
+		Type: to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources"),
+		Properties: &resources.NestedProxyResourceProperties{
+			Description:       to.Ptr("valid"),
+			ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
+		},
+		SystemData: &resources.SystemData{
+			CreatedBy:          to.Ptr("AzureSDK"),
+			CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
+			CreatedAt:          to.Ptr(time.Now()),
+			LastModifiedBy:     to.Ptr("AzureSDK"),
+			LastModifiedAt:     to.Ptr(time.Now()),
+			LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
 		},
 	}
+)
+
+func TestNestedProxyResourcesClient_Get(t *testing.T) {
 	nestedProxyResourcesClientGetResponse, err := clientFactory.NewNestedProxyResourcesClient().Get(
 		ctx,
 		"test-rg",
@@ -42,30 +42,12 @@ func TestNestedProxyResourcesClient(t *testing.T) {
 		nil,
 	)
 	require.NoError(t, err)
-	require.Equal(t, *expectedNestedProxyResourcesClientGetResponse.ID, *nestedProxyResourcesClientGetResponse.ID)
-	require.Equal(t, *expectedNestedProxyResourcesClientGetResponse.Name, *nestedProxyResourcesClientGetResponse.Name)
-	require.Equal(t, *expectedNestedProxyResourcesClientGetResponse.Type, *nestedProxyResourcesClientGetResponse.Type)
+	require.Equal(t, *validNestedResource.ID, *nestedProxyResourcesClientGetResponse.ID)
+	require.Equal(t, *validNestedResource.Name, *nestedProxyResourcesClientGetResponse.Name)
+	require.Equal(t, *validNestedResource.Type, *nestedProxyResourcesClientGetResponse.Type)
+}
 
-	// NestedProxyResources CreateOrReplace
-	expectedNestedProxyResourcesClientCreateOrReplaceResponse := resources.NestedProxyResourcesClientCreateOrReplaceResponse{
-		NestedProxyResource: resources.NestedProxyResource{
-			ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources/nested"),
-			Name: to.Ptr("nested"),
-			Type: to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources"),
-			Properties: &resources.NestedProxyResourceProperties{
-				Description:       to.Ptr("valid"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
-		},
-	}
+func TestNestedProxyResourcesClient_CreateOrReplase(t *testing.T) {
 	nestedProxyResourcesClientCreateOrReplaceResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginCreateOrReplace(
 		ctx,
 		"test-rg",
@@ -81,31 +63,13 @@ func TestNestedProxyResourcesClient(t *testing.T) {
 	require.NoError(t, err)
 	nestedProxyResourcesClientCreateOrReplaceResponse, err := nestedProxyResourcesClientCreateOrReplaceResponsePoller.PollUntilDone(ctx, nil)
 	require.NoError(t, err)
-	require.Equal(t, *expectedNestedProxyResourcesClientCreateOrReplaceResponse.ID, *nestedProxyResourcesClientCreateOrReplaceResponse.ID)
-	require.Equal(t, *expectedNestedProxyResourcesClientCreateOrReplaceResponse.Name, *nestedProxyResourcesClientCreateOrReplaceResponse.Name)
-	require.Equal(t, *expectedNestedProxyResourcesClientCreateOrReplaceResponse.Type, *nestedProxyResourcesClientCreateOrReplaceResponse.Type)
-	require.Equal(t, *expectedNestedProxyResourcesClientCreateOrReplaceResponse.Properties.Description, *nestedProxyResourcesClientCreateOrReplaceResponse.Properties.Description)
+	require.Equal(t, *validNestedResource.ID, *nestedProxyResourcesClientCreateOrReplaceResponse.ID)
+	require.Equal(t, *validNestedResource.Name, *nestedProxyResourcesClientCreateOrReplaceResponse.Name)
+	require.Equal(t, *validNestedResource.Type, *nestedProxyResourcesClientCreateOrReplaceResponse.Type)
+	require.Equal(t, *validNestedResource.Properties.Description, *nestedProxyResourcesClientCreateOrReplaceResponse.Properties.Description)
+}
 
-	// NestedProxyResources Update
-	expectedNestedProxyResourcesClientUpdateResponse := resources.NestedProxyResourcesClientUpdateResponse{
-		NestedProxyResource: resources.NestedProxyResource{
-			ID:   to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources/nested"),
-			Name: to.Ptr("nested"),
-			Type: to.Ptr("Azure.ResourceManager.Models.Resources/topLevelTrackedResources/top/nestedProxyResources"),
-			Properties: &resources.NestedProxyResourceProperties{
-				Description:       to.Ptr("valid2"),
-				ProvisioningState: to.Ptr(resources.ProvisioningStateSucceeded),
-			},
-			SystemData: &resources.SystemData{
-				CreatedBy:          to.Ptr("AzureSDK"),
-				CreatedByType:      to.Ptr(resources.CreatedByTypeUser),
-				CreatedAt:          to.Ptr(time.Now()),
-				LastModifiedBy:     to.Ptr("AzureSDK"),
-				LastModifiedAt:     to.Ptr(time.Now()),
-				LastModifiedByType: to.Ptr(resources.CreatedByTypeUser),
-			},
-		},
-	}
+func TestNestedProxyResourcesClient_BeginUpdate(t *testing.T) {
 	nestedProxyResourcesClientUpdateResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginUpdate(
 		ctx,
 		"test-rg",
@@ -121,22 +85,27 @@ func TestNestedProxyResourcesClient(t *testing.T) {
 	require.NoError(t, err)
 	nestedProxyResourcesClientUpdateResponse, err := nestedProxyResourcesClientUpdateResponsePoller.PollUntilDone(ctx, nil)
 	require.NoError(t, err)
-	require.Equal(t, *expectedNestedProxyResourcesClientUpdateResponse.ID, *nestedProxyResourcesClientUpdateResponse.ID)
-	require.Equal(t, *expectedNestedProxyResourcesClientUpdateResponse.Name, *nestedProxyResourcesClientUpdateResponse.Name)
-	require.Equal(t, *expectedNestedProxyResourcesClientUpdateResponse.Type, *nestedProxyResourcesClientUpdateResponse.Type)
-	require.Equal(t, *expectedNestedProxyResourcesClientUpdateResponse.Properties.Description, *nestedProxyResourcesClientUpdateResponse.Properties.Description)
+	require.Equal(t, *validNestedResource.ID, *nestedProxyResourcesClientUpdateResponse.ID)
+	require.Equal(t, *validNestedResource.Name, *nestedProxyResourcesClientUpdateResponse.Name)
+	require.Equal(t, *validNestedResource.Type, *nestedProxyResourcesClientUpdateResponse.Type)
+	require.Equal(t, "valid2", *nestedProxyResourcesClientUpdateResponse.Properties.Description)
+}
 
-	// NestedProxyResources Delete
+func TestNestedProxyResourcesClient_BeginDelete(t *testing.T) {
 	nestedProxyResourcesClientDeleteResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginDelete(ctx, "test-rg", "top", "nested", nil)
 	require.NoError(t, err)
 	nestedProxyResourcesClientDeleteResponse, err := nestedProxyResourcesClientDeleteResponsePoller.Poll(ctx)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusNoContent, nestedProxyResourcesClientDeleteResponse.StatusCode)
+}
 
-	// NestedProxyResources ListByTopLevelTrackedResourc
+func TestNestedProxyResourcesClient_NewListByTopLevelTrackedResourcePager(t *testing.T) {
 	nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager := clientFactory.NewNestedProxyResourcesClient().NewListByTopLevelTrackedResourcePager("test-rg", "top", nil)
 	require.True(t, nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager.More())
 	nestedProxyResourcesClientListByTopLevelTrackedResourceResponse, err := nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager.NextPage(ctx)
 	require.NoError(t, err)
 	require.Len(t, nestedProxyResourcesClientListByTopLevelTrackedResourceResponse.Value, 1)
+	require.Equal(t, *validNestedResource.ID, *nestedProxyResourcesClientListByTopLevelTrackedResourceResponse.Value[0].ID)
+	require.Equal(t, *validNestedResource.Name, *nestedProxyResourcesClientListByTopLevelTrackedResourceResponse.Value[0].Name)
+	require.Equal(t, *validNestedResource.Type, *nestedProxyResourcesClientListByTopLevelTrackedResourceResponse.Value[0].Type)
 }

@@ -18,15 +18,16 @@ import (
 )
 
 var (
-	ctx            context.Context
-	subscriptionId string
-	clientFactory  *resources.ClientFactory
+	ctx           context.Context
+	clientFactory *resources.ClientFactory
+
+	subscriptionIdExpected = "00000000-0000-0000-0000-000000000000"
+	resourceGroupExpected  = "test-rg"
 )
 
 func TestMain(m *testing.M) {
 	ctx = context.Background()
-	subscriptionId = "00000000-0000-0000-0000-000000000000"
-	clientFactory, _ = resources.NewClientFactory(subscriptionId, &azfake.TokenCredential{}, &arm.ClientOptions{
+	clientFactory, _ = resources.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			InsecureAllowCredentialWithHTTP: true,
 			PerCallPolicies: []policy.Policy{
