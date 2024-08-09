@@ -27,6 +27,8 @@ const cadlRanch = {
   'lrorpcgroup': ['azure/core/lro/rpc'],
   'lrostdgroup': ['azure/core/lro/standard'],
   'corescalargroup': ['azure/core/scalar'],
+  'managed_identity': ['azure/resource-manager/models/common-types/managed-identity'],
+  'resources': ['azure/resource-manager/models/resources'],
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
