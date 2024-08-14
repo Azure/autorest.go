@@ -144,6 +144,9 @@ generate('armcommunitymanagement', armcommunitymanagement, 'test/armcommunityman
 const armmongocluster = pkgRoot + 'test/tsp/MongoCluster.Management';
 generate('armmongocluster', armmongocluster, 'test/armmongocluster');
 
+const azmodelsonly = pkgRoot + 'test/tsp/ModelsOnlyWithBaseTypes';
+generate('azmodelsonly', azmodelsonly, 'test/azmodelsonly', ['remove-unreferenced-types=false']);
+
 for (const module in cadlRanch) {
   const values = cadlRanch[module];
   let perTestOptions;

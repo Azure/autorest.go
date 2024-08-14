@@ -878,7 +878,9 @@ export class typeAdapter {
         // exclude any polymorphic root type from the check
         // as we always need to include the root type even
         // if it's not referenced.
-        if (!parent.discriminatedSubtypes && !baseModels.has(parent.name)) {
+        // also exclude types that have been explicitly annotated
+        // as output types.
+        if (!parent.discriminatedSubtypes && (model.usage & tsp.UsageFlags.Output) !== tsp.UsageFlags.Output && !baseModels.has(parent.name)) {
           baseModels.add(parent.name);
         }
         parent = parent.baseModel;
