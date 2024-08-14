@@ -880,7 +880,7 @@ export class typeAdapter {
         // if it's not referenced.
         // also exclude types that have been explicitly annotated
         // as output types.
-        if (!parent.discriminatedSubtypes && (model.usage & tsp.UsageFlags.Output) !== tsp.UsageFlags.Output && !baseModels.has(parent.name)) {
+        if (!parent.discriminatedSubtypes && (model.usage & tcgc.UsageFlags.Output) !== tcgc.UsageFlags.Output && !baseModels.has(parent.name)) {
           baseModels.add(parent.name);
         }
         parent = parent.baseModel;
