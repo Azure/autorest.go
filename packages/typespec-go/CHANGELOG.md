@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.1 (2024-08-14)
+
+### Bugs Fixed
+
+* Don't prune base models that have been marked as output.
+
 ## 0.3.0 (2024-08-06)
 
 ### Features Added
