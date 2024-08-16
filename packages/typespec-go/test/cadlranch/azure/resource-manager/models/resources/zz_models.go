@@ -42,6 +42,15 @@ type NestedProxyResourceProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
+// NotificationDetails - The details of a user notification.
+type NotificationDetails struct {
+	// REQUIRED; The notification message.
+	Message *string
+
+	// REQUIRED; If true, the notification is urgent.
+	Urgent *bool
+}
+
 // SystemData - Metadata pertaining to creation and last modification of the resource.
 type SystemData struct {
 	// The timestamp of resource creation (UTC).

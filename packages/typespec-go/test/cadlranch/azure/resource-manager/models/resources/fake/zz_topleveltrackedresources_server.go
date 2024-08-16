@@ -20,6 +20,10 @@ import (
 
 // TopLevelTrackedResourcesServer is a fake server for instances of the resources.TopLevelTrackedResourcesClient type.
 type TopLevelTrackedResourcesServer struct {
+	// ActionSync is the fake for method TopLevelTrackedResourcesClient.ActionSync
+	// HTTP status codes to indicate success: http.StatusNoContent
+	ActionSync func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body resources.NotificationDetails, options *resources.TopLevelTrackedResourcesClientActionSyncOptions) (resp azfake.Responder[resources.TopLevelTrackedResourcesClientActionSyncResponse], errResp azfake.ErrorResponder)
+
 	// BeginCreateOrReplace is the fake for method TopLevelTrackedResourcesClient.BeginCreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, resource resources.TopLevelTrackedResource, options *resources.TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.TopLevelTrackedResourcesClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
@@ -86,6 +90,8 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchToMethodFake(req *http
 	var err error
 
 	switch method {
+	case "TopLevelTrackedResourcesClient.ActionSync":
+		resp, err = t.dispatchActionSync(req)
 	case "TopLevelTrackedResourcesClient.BeginCreateOrReplace":
 		resp, err = t.dispatchBeginCreateOrReplace(req)
 	case "TopLevelTrackedResourcesClient.BeginDelete":
@@ -103,6 +109,43 @@ func (t *TopLevelTrackedResourcesServerTransport) dispatchToMethodFake(req *http
 	}
 
 	return resp, err
+}
+
+func (t *TopLevelTrackedResourcesServerTransport) dispatchActionSync(req *http.Request) (*http.Response, error) {
+	if t.srv.ActionSync == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ActionSync not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.Resources/topLevelTrackedResources/(?P<topLevelTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/actionSync`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[resources.NotificationDetails](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	topLevelTrackedResourceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("topLevelTrackedResourceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := t.srv.ActionSync(req.Context(), resourceGroupNameParam, topLevelTrackedResourceNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (t *TopLevelTrackedResourcesServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {

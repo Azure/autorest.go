@@ -33,6 +33,11 @@ type NestedProxyResourcesClientUpdateResponse struct {
 	NestedProxyResource
 }
 
+// TopLevelTrackedResourcesClientActionSyncResponse contains the response from method TopLevelTrackedResourcesClient.ActionSync.
+type TopLevelTrackedResourcesClientActionSyncResponse struct {
+	// placeholder for future response values
+}
+
 // TopLevelTrackedResourcesClientCreateOrReplaceResponse contains the response from method TopLevelTrackedResourcesClient.BeginCreateOrReplace.
 type TopLevelTrackedResourcesClientCreateOrReplaceResponse struct {
 	// Concrete tracked resource types can be created by aliasing this type using a specific property type.
