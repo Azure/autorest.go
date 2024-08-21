@@ -10,6 +10,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -17,6 +18,7 @@ import (
 // Don't use this type directly, use [DictionaryClient.NewDictionaryDatetimeValueClient] instead.
 type DictionaryDatetimeValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -47,6 +49,8 @@ func (client *DictionaryDatetimeValueClient) Get(ctx context.Context, options *D
 
 // getCreateRequest creates the Get request.
 func (client *DictionaryDatetimeValueClient) getCreateRequest(ctx context.Context, _ *DictionaryDatetimeValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -98,6 +102,8 @@ func (client *DictionaryDatetimeValueClient) Put(ctx context.Context, body map[s
 
 // putCreateRequest creates the Put request.
 func (client *DictionaryDatetimeValueClient) putCreateRequest(ctx context.Context, body map[string]*time.Time, _ *DictionaryDatetimeValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

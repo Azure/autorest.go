@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // NamingClientModelClient contains the methods for the NamingClientModel group.
 // Don't use this type directly, use [NamingClient.NewNamingClientModelClient] instead.
 type NamingClientModelClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Client -
@@ -45,6 +47,8 @@ func (client *NamingClientModelClient) Client(ctx context.Context, body ClientMo
 
 // clientCreateRequest creates the Client request.
 func (client *NamingClientModelClient) clientCreateRequest(ctx context.Context, body ClientModel, _ *NamingClientModelClientClientOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/model/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,6 +88,8 @@ func (client *NamingClientModelClient) Language(ctx context.Context, body GoMode
 
 // languageCreateRequest creates the Language request.
 func (client *NamingClientModelClient) languageCreateRequest(ctx context.Context, body GoModel, _ *NamingClientModelClientLanguageOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/model/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

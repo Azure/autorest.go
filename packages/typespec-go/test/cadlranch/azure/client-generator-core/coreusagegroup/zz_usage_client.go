@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type UsageClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewUsageModelInOperationClient creates a new instance of [UsageModelInOperationClient].
 func (client *UsageClient) NewUsageModelInOperationClient() *UsageModelInOperationClient {
 	return &UsageModelInOperationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

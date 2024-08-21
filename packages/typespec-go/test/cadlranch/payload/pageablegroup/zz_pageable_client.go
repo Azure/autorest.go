@@ -11,12 +11,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // PageableClient - Test describing pageable.
 // Don't use this type directly, use a constructor function instead.
 type PageableClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewListPager - List users
@@ -46,6 +48,8 @@ func (client *PageableClient) NewListPager(options *PageableClientListOptions) *
 
 // listCreateRequest creates the List request.
 func (client *PageableClient) listCreateRequest(ctx context.Context, options *PageableClientListOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/payload/pageable"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // FlattenClient - Illustrates the model flatten cases.
 // Don't use this type directly, use a constructor function instead.
 type FlattenClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // PutFlattenModel -
@@ -45,6 +47,8 @@ func (client *FlattenClient) PutFlattenModel(ctx context.Context, input FlattenM
 
 // putFlattenModelCreateRequest creates the PutFlattenModel request.
 func (client *FlattenClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, _ *FlattenClientPutFlattenModelOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/flatten/flattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,6 +99,8 @@ func (client *FlattenClient) PutNestedFlattenModel(ctx context.Context, input Ne
 
 // putNestedFlattenModelCreateRequest creates the PutNestedFlattenModel request.
 func (client *FlattenClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, _ *FlattenClientPutNestedFlattenModelOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/flatten/nestedFlattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

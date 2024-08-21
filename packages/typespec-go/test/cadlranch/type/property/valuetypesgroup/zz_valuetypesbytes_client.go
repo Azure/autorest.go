@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ValueTypesBytesClient contains the methods for the ValueTypesBytes group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesBytesClient] instead.
 type ValueTypesBytesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -45,6 +47,8 @@ func (client *ValueTypesBytesClient) Get(ctx context.Context, options *ValueType
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesBytesClient) getCreateRequest(ctx context.Context, _ *ValueTypesBytesClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,6 +94,8 @@ func (client *ValueTypesBytesClient) Put(ctx context.Context, body BytesProperty
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesBytesClient) putCreateRequest(ctx context.Context, body BytesProperty, _ *ValueTypesBytesClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/bytes"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

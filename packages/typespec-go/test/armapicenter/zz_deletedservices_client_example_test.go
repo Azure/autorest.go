@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/DeletedServices_Delete.json
+// Generated from example definition: 2024-03-15-preview/DeletedServices_Delete.json
 func ExampleDeletedServicesClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -33,7 +33,7 @@ func ExampleDeletedServicesClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/DeletedServices_Get.json
+// Generated from example definition: 2024-03-15-preview/DeletedServices_Get.json
 func ExampleDeletedServicesClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -64,7 +64,7 @@ func ExampleDeletedServicesClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/DeletedServices_ListBySubscription.json
+// Generated from example definition: 2024-03-15-preview/DeletedServices_ListBySubscription.json
 func ExampleDeletedServicesClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -104,7 +104,7 @@ func ExampleDeletedServicesClient_NewListPager() {
 	}
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/DeletedServices_List.json
+// Generated from example definition: 2024-03-15-preview/DeletedServices_List.json
 func ExampleDeletedServicesClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

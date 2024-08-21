@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // DictionaryInt32ValueClient - Dictionary of int32 values
 // Don't use this type directly, use [DictionaryClient.NewDictionaryInt32ValueClient] instead.
 type DictionaryInt32ValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,6 +48,8 @@ func (client *DictionaryInt32ValueClient) Get(ctx context.Context, options *Dict
 
 // getCreateRequest creates the Get request.
 func (client *DictionaryInt32ValueClient) getCreateRequest(ctx context.Context, _ *DictionaryInt32ValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +95,8 @@ func (client *DictionaryInt32ValueClient) Put(ctx context.Context, body map[stri
 
 // putCreateRequest creates the Put request.
 func (client *DictionaryInt32ValueClient) putCreateRequest(ctx context.Context, body map[string]*int32, _ *DictionaryInt32ValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

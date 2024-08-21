@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiVersions_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/ApiVersions_CreateOrUpdate.json
 func ExampleAPIVersionsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -52,7 +52,7 @@ func ExampleAPIVersionsClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiVersions_Delete.json
+// Generated from example definition: 2024-03-15-preview/ApiVersions_Delete.json
 func ExampleAPIVersionsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -74,7 +74,7 @@ func ExampleAPIVersionsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiVersions_Get.json
+// Generated from example definition: 2024-03-15-preview/ApiVersions_Get.json
 func ExampleAPIVersionsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -109,7 +109,7 @@ func ExampleAPIVersionsClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiVersions_Head.json
+// Generated from example definition: 2024-03-15-preview/ApiVersions_Head.json
 func ExampleAPIVersionsClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -131,7 +131,7 @@ func ExampleAPIVersionsClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiVersions_List.json
+// Generated from example definition: 2024-03-15-preview/ApiVersions_List.json
 func ExampleAPIVersionsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

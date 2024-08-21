@@ -10,11 +10,13 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type FixedClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewFixedStringClient creates a new instance of [FixedStringClient].
 func (client *FixedClient) NewFixedStringClient() *FixedStringClient {
 	return &FixedStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

@@ -46,12 +46,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type SpecialWordsClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewSpecialWordsModelPropertiesClient creates a new instance of [SpecialWordsModelPropertiesClient].
 func (client *SpecialWordsClient) NewSpecialWordsModelPropertiesClient() *SpecialWordsModelPropertiesClient {
 	return &SpecialWordsModelPropertiesClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -59,6 +61,7 @@ func (client *SpecialWordsClient) NewSpecialWordsModelPropertiesClient() *Specia
 func (client *SpecialWordsClient) NewSpecialWordsModelsClient() *SpecialWordsModelsClient {
 	return &SpecialWordsModelsClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -66,6 +69,7 @@ func (client *SpecialWordsClient) NewSpecialWordsModelsClient() *SpecialWordsMod
 func (client *SpecialWordsClient) NewSpecialWordsOperationsClient() *SpecialWordsOperationsClient {
 	return &SpecialWordsOperationsClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -73,5 +77,6 @@ func (client *SpecialWordsClient) NewSpecialWordsOperationsClient() *SpecialWord
 func (client *SpecialWordsClient) NewSpecialWordsParametersClient() *SpecialWordsParametersClient {
 	return &SpecialWordsParametersClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

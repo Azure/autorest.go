@@ -19,12 +19,14 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type BasicClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewBasicTwoModelsAsPageItemClient creates a new instance of [BasicTwoModelsAsPageItemClient].
 func (client *BasicClient) NewBasicTwoModelsAsPageItemClient() *BasicTwoModelsAsPageItemClient {
 	return &BasicTwoModelsAsPageItemClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -59,6 +61,8 @@ func (client *BasicClient) CreateOrReplace(ctx context.Context, id int32, resour
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
 func (client *BasicClient) createOrReplaceCreateRequest(ctx context.Context, id int32, resource User, _ *BasicClientCreateOrReplaceOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
@@ -116,6 +120,8 @@ func (client *BasicClient) CreateOrUpdate(ctx context.Context, id int32, resourc
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *BasicClient) createOrUpdateCreateRequest(ctx context.Context, id int32, resource User, _ *BasicClientCreateOrUpdateOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
@@ -171,6 +177,8 @@ func (client *BasicClient) Delete(ctx context.Context, id int32, options *BasicC
 
 // deleteCreateRequest creates the Delete request.
 func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ *BasicClientDeleteOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
@@ -215,6 +223,8 @@ func (client *BasicClient) Export(ctx context.Context, id int32, formatParam str
 
 // exportCreateRequest creates the Export request.
 func (client *BasicClient) exportCreateRequest(ctx context.Context, id int32, formatParam string, _ *BasicClientExportOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users/{id}:export"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
@@ -268,6 +278,8 @@ func (client *BasicClient) Get(ctx context.Context, id int32, options *BasicClie
 
 // getCreateRequest creates the Get request.
 func (client *BasicClient) getCreateRequest(ctx context.Context, id int32, _ *BasicClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users/{id}"
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -319,6 +331,8 @@ func (client *BasicClient) NewListPager(options *BasicClientListOptions) *runtim
 
 // listCreateRequest creates the List request.
 func (client *BasicClient) listCreateRequest(ctx context.Context, options *BasicClientListOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/users"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -397,6 +411,8 @@ func (client *BasicClient) NewListWithCustomPageModelPager(options *BasicClientL
 
 // listWithCustomPageModelCreateRequest creates the ListWithCustomPageModel request.
 func (client *BasicClient) listWithCustomPageModelCreateRequest(ctx context.Context, _ *BasicClientListWithCustomPageModelOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/custom-page"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -447,6 +463,8 @@ func (client *BasicClient) NewListWithPagePager(options *BasicClientListWithPage
 
 // listWithPageCreateRequest creates the ListWithPage request.
 func (client *BasicClient) listWithPageCreateRequest(ctx context.Context, _ *BasicClientListWithPageOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/page"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -499,6 +517,8 @@ func (client *BasicClient) NewListWithParametersPager(bodyInput ListItemInputBod
 
 // listWithParametersCreateRequest creates the ListWithParameters request.
 func (client *BasicClient) listWithParametersCreateRequest(ctx context.Context, bodyInput ListItemInputBody, options *BasicClientListWithParametersOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/parameters"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

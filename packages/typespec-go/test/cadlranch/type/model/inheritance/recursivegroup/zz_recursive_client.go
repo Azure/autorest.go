@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // RecursiveClient - Illustrates inheritance recursion
 // Don't use this type directly, use a constructor function instead.
 type RecursiveClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -45,6 +47,8 @@ func (client *RecursiveClient) Get(ctx context.Context, options *RecursiveClient
 
 // getCreateRequest creates the Get request.
 func (client *RecursiveClient) getCreateRequest(ctx context.Context, _ *RecursiveClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/inheritance/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,6 +93,8 @@ func (client *RecursiveClient) Put(ctx context.Context, input Extension, options
 
 // putCreateRequest creates the Put request.
 func (client *RecursiveClient) putCreateRequest(ctx context.Context, input Extension, _ *RecursiveClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/inheritance/recursive"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

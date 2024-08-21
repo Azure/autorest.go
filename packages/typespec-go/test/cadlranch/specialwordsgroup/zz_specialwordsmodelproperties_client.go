@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // SpecialWordsModelPropertiesClient - Verify model names
 // Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsModelPropertiesClient] instead.
 type SpecialWordsModelPropertiesClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // SameAsModel -
@@ -45,6 +47,8 @@ func (client *SpecialWordsModelPropertiesClient) SameAsModel(ctx context.Context
 
 // sameAsModelCreateRequest creates the SameAsModel request.
 func (client *SpecialWordsModelPropertiesClient) sameAsModelCreateRequest(ctx context.Context, body SameAsModel, _ *SpecialWordsModelPropertiesClientSameAsModelOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/model-properties/same-as-model"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ScalarStringClient contains the methods for the ScalarString group.
 // Don't use this type directly, use [ScalarClient.NewScalarStringClient] instead.
 type ScalarStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - get string value
@@ -45,6 +47,8 @@ func (client *ScalarStringClient) Get(ctx context.Context, options *ScalarString
 
 // getCreateRequest creates the Get request.
 func (client *ScalarStringClient) getCreateRequest(ctx context.Context, _ *ScalarStringClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -90,6 +94,8 @@ func (client *ScalarStringClient) Put(ctx context.Context, body string, options 
 
 // putCreateRequest creates the Put request.
 func (client *ScalarStringClient) putCreateRequest(ctx context.Context, body string, _ *ScalarStringClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

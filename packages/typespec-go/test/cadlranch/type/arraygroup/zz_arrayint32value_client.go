@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayInt32ValueClient - Array of int32 values
 // Don't use this type directly, use [ArrayClient.NewArrayInt32ValueClient] instead.
 type ArrayInt32ValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -45,6 +47,8 @@ func (client *ArrayInt32ValueClient) Get(ctx context.Context, options *ArrayInt3
 
 // getCreateRequest creates the Get request.
 func (client *ArrayInt32ValueClient) getCreateRequest(ctx context.Context, _ *ArrayInt32ValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,6 +93,8 @@ func (client *ArrayInt32ValueClient) Put(ctx context.Context, body []int32, opti
 
 // putCreateRequest creates the Put request.
 func (client *ArrayInt32ValueClient) putCreateRequest(ctx context.Context, body []int32, _ *ArrayInt32ValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/int32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

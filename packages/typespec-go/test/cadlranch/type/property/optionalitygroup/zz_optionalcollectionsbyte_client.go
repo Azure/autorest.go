@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // OptionalCollectionsByteClient contains the methods for the OptionalCollectionsByte group.
 // Don't use this type directly, use [OptionalClient.NewOptionalCollectionsByteClient] instead.
 type OptionalCollectionsByteClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -46,6 +48,8 @@ func (client *OptionalCollectionsByteClient) GetAll(ctx context.Context, options
 
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalCollectionsByteClient) getAllCreateRequest(ctx context.Context, _ *OptionalCollectionsByteClientGetAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/bytes/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *OptionalCollectionsByteClient) GetDefault(ctx context.Context, opt
 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalCollectionsByteClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalCollectionsByteClientGetDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/bytes/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,6 +143,8 @@ func (client *OptionalCollectionsByteClient) PutAll(ctx context.Context, body Co
 
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalCollectionsByteClient) putAllCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *OptionalCollectionsByteClientPutAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/bytes/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,6 +184,8 @@ func (client *OptionalCollectionsByteClient) PutDefault(ctx context.Context, bod
 
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalCollectionsByteClient) putDefaultCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *OptionalCollectionsByteClientPutDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/bytes/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

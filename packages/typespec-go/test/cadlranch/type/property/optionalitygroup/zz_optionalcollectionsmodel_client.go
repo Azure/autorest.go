@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // OptionalCollectionsModelClient contains the methods for the OptionalCollectionsModel group.
 // Don't use this type directly, use [OptionalClient.NewOptionalCollectionsModelClient] instead.
 type OptionalCollectionsModelClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -46,6 +48,8 @@ func (client *OptionalCollectionsModelClient) GetAll(ctx context.Context, option
 
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalCollectionsModelClient) getAllCreateRequest(ctx context.Context, _ *OptionalCollectionsModelClientGetAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/model/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *OptionalCollectionsModelClient) GetDefault(ctx context.Context, op
 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalCollectionsModelClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalCollectionsModelClientGetDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/model/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,6 +143,8 @@ func (client *OptionalCollectionsModelClient) PutAll(ctx context.Context, body C
 
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalCollectionsModelClient) putAllCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *OptionalCollectionsModelClientPutAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/model/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,6 +184,8 @@ func (client *OptionalCollectionsModelClient) PutDefault(ctx context.Context, bo
 
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalCollectionsModelClient) putDefaultCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *OptionalCollectionsModelClientPutDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/collections/model/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

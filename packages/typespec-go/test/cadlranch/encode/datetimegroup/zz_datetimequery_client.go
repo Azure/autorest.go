@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use [DatetimeClient.NewDatetimeQueryClient] instead.
 type DatetimeQueryClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Default -
@@ -46,6 +47,8 @@ func (client *DatetimeQueryClient) Default(ctx context.Context, value time.Time,
 
 // defaultCreateRequest creates the Default request.
 func (client *DatetimeQueryClient) defaultCreateRequest(ctx context.Context, value time.Time, _ *DatetimeQueryClientDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/query/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -83,6 +86,8 @@ func (client *DatetimeQueryClient) RFC3339(ctx context.Context, value time.Time,
 
 // rfc3339CreateRequest creates the RFC3339 request.
 func (client *DatetimeQueryClient) rfc3339CreateRequest(ctx context.Context, value time.Time, _ *DatetimeQueryClientRFC3339Options) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/query/rfc3339"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -120,6 +125,8 @@ func (client *DatetimeQueryClient) RFC7231(ctx context.Context, value time.Time,
 
 // rfc7231CreateRequest creates the RFC7231 request.
 func (client *DatetimeQueryClient) rfc7231CreateRequest(ctx context.Context, value time.Time, _ *DatetimeQueryClientRFC7231Options) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/query/rfc7231"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -158,6 +165,8 @@ func (client *DatetimeQueryClient) UnixTimestamp(ctx context.Context, value time
 
 // unixTimestampCreateRequest creates the UnixTimestamp request.
 func (client *DatetimeQueryClient) unixTimestampCreateRequest(ctx context.Context, value time.Time, _ *DatetimeQueryClientUnixTimestampOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/query/unix-timestamp"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -196,6 +205,8 @@ func (client *DatetimeQueryClient) UnixTimestampArray(ctx context.Context, value
 
 // unixTimestampArrayCreateRequest creates the UnixTimestampArray request.
 func (client *DatetimeQueryClient) unixTimestampArrayCreateRequest(ctx context.Context, value []time.Time, _ *DatetimeQueryClientUnixTimestampArrayOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/query/unix-timestamp-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

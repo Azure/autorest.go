@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // BasicExplicitBodyClient contains the methods for the BasicExplicitBody group.
 // Don't use this type directly, use [BasicClient.NewBasicExplicitBodyClient] instead.
 type BasicExplicitBodyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Simple -
@@ -45,6 +47,8 @@ func (client *BasicExplicitBodyClient) Simple(ctx context.Context, body User, op
 
 // simpleCreateRequest creates the Simple request.
 func (client *BasicExplicitBodyClient) simpleCreateRequest(ctx context.Context, body User, _ *BasicExplicitBodyClientSimpleOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/basic/explicit-body/simple"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

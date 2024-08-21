@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // BasicTwoModelsAsPageItemClient contains the methods for the BasicTwoModelsAsPageItem group.
 // Don't use this type directly, use [BasicClient.NewBasicTwoModelsAsPageItemClient] instead.
 type BasicTwoModelsAsPageItemClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewListFirstItemPager - Two operations with two different page item types should be successfully generated. Should generate
@@ -49,6 +51,8 @@ func (client *BasicTwoModelsAsPageItemClient) NewListFirstItemPager(options *Bas
 
 // listFirstItemCreateRequest creates the ListFirstItem request.
 func (client *BasicTwoModelsAsPageItemClient) listFirstItemCreateRequest(ctx context.Context, _ *BasicTwoModelsAsPageItemClientListFirstItemOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/first-item"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -101,6 +105,8 @@ func (client *BasicTwoModelsAsPageItemClient) NewListSecondItemPager(options *Ba
 
 // listSecondItemCreateRequest creates the ListSecondItem request.
 func (client *BasicTwoModelsAsPageItemClient) listSecondItemCreateRequest(ctx context.Context, _ *BasicTwoModelsAsPageItemClientListSecondItemOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/basic/second-item"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

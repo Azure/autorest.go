@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayDurationValueClient - Array of duration values
 // Don't use this type directly, use [ArrayClient.NewArrayDurationValueClient] instead.
 type ArrayDurationValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -45,6 +47,8 @@ func (client *ArrayDurationValueClient) Get(ctx context.Context, options *ArrayD
 
 // getCreateRequest creates the Get request.
 func (client *ArrayDurationValueClient) getCreateRequest(ctx context.Context, _ *ArrayDurationValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,6 +93,8 @@ func (client *ArrayDurationValueClient) Put(ctx context.Context, body []string, 
 
 // putCreateRequest creates the Put request.
 func (client *ArrayDurationValueClient) putCreateRequest(ctx context.Context, body []string, _ *ArrayDurationValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

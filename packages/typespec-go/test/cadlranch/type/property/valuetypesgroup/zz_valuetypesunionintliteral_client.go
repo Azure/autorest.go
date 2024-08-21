@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ValueTypesUnionIntLiteralClient contains the methods for the ValueTypesUnionIntLiteral group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionIntLiteralClient] instead.
 type ValueTypesUnionIntLiteralClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,6 +48,8 @@ func (client *ValueTypesUnionIntLiteralClient) Get(ctx context.Context, options 
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnionIntLiteralClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnionIntLiteralClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/union/int/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *ValueTypesUnionIntLiteralClient) Put(ctx context.Context, body Uni
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnionIntLiteralClient) putCreateRequest(ctx context.Context, body UnionIntLiteralProperty, _ *ValueTypesUnionIntLiteralClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/union/int/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

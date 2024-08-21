@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // UsageClient - Illustrates usage of Record in different places(Operation parameters, return type or both).
 // Don't use this type directly, use a constructor function instead.
 type UsageClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Input -
@@ -44,6 +46,8 @@ func (client *UsageClient) Input(ctx context.Context, input InputRecord, options
 
 // inputCreateRequest creates the Input request.
 func (client *UsageClient) inputCreateRequest(ctx context.Context, input InputRecord, _ *UsageClientInputOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/usage/input"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -83,6 +87,8 @@ func (client *UsageClient) InputAndOutput(ctx context.Context, body InputOutputR
 
 // inputAndOutputCreateRequest creates the InputAndOutput request.
 func (client *UsageClient) inputAndOutputCreateRequest(ctx context.Context, body InputOutputRecord, _ *UsageClientInputAndOutputOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/usage/input-output"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -132,6 +138,8 @@ func (client *UsageClient) Output(ctx context.Context, options *UsageClientOutpu
 
 // outputCreateRequest creates the Output request.
 func (client *UsageClient) outputCreateRequest(ctx context.Context, _ *UsageClientOutputOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/usage/output"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

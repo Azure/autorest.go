@@ -10,12 +10,14 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type OptionalClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewOptionalBooleanLiteralClient creates a new instance of [OptionalBooleanLiteralClient].
 func (client *OptionalClient) NewOptionalBooleanLiteralClient() *OptionalBooleanLiteralClient {
 	return &OptionalBooleanLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -23,6 +25,7 @@ func (client *OptionalClient) NewOptionalBooleanLiteralClient() *OptionalBoolean
 func (client *OptionalClient) NewOptionalBytesClient() *OptionalBytesClient {
 	return &OptionalBytesClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -30,6 +33,7 @@ func (client *OptionalClient) NewOptionalBytesClient() *OptionalBytesClient {
 func (client *OptionalClient) NewOptionalCollectionsByteClient() *OptionalCollectionsByteClient {
 	return &OptionalCollectionsByteClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -37,6 +41,7 @@ func (client *OptionalClient) NewOptionalCollectionsByteClient() *OptionalCollec
 func (client *OptionalClient) NewOptionalCollectionsModelClient() *OptionalCollectionsModelClient {
 	return &OptionalCollectionsModelClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -44,6 +49,7 @@ func (client *OptionalClient) NewOptionalCollectionsModelClient() *OptionalColle
 func (client *OptionalClient) NewOptionalDatetimeClient() *OptionalDatetimeClient {
 	return &OptionalDatetimeClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -51,6 +57,7 @@ func (client *OptionalClient) NewOptionalDatetimeClient() *OptionalDatetimeClien
 func (client *OptionalClient) NewOptionalDurationClient() *OptionalDurationClient {
 	return &OptionalDurationClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -58,6 +65,7 @@ func (client *OptionalClient) NewOptionalDurationClient() *OptionalDurationClien
 func (client *OptionalClient) NewOptionalFloatLiteralClient() *OptionalFloatLiteralClient {
 	return &OptionalFloatLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -65,6 +73,7 @@ func (client *OptionalClient) NewOptionalFloatLiteralClient() *OptionalFloatLite
 func (client *OptionalClient) NewOptionalIntLiteralClient() *OptionalIntLiteralClient {
 	return &OptionalIntLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -72,6 +81,7 @@ func (client *OptionalClient) NewOptionalIntLiteralClient() *OptionalIntLiteralC
 func (client *OptionalClient) NewOptionalPlainDateClient() *OptionalPlainDateClient {
 	return &OptionalPlainDateClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -79,6 +89,7 @@ func (client *OptionalClient) NewOptionalPlainDateClient() *OptionalPlainDateCli
 func (client *OptionalClient) NewOptionalPlainTimeClient() *OptionalPlainTimeClient {
 	return &OptionalPlainTimeClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -86,6 +97,7 @@ func (client *OptionalClient) NewOptionalPlainTimeClient() *OptionalPlainTimeCli
 func (client *OptionalClient) NewOptionalRequiredAndOptionalClient() *OptionalRequiredAndOptionalClient {
 	return &OptionalRequiredAndOptionalClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -93,6 +105,7 @@ func (client *OptionalClient) NewOptionalRequiredAndOptionalClient() *OptionalRe
 func (client *OptionalClient) NewOptionalStringClient() *OptionalStringClient {
 	return &OptionalStringClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -100,6 +113,7 @@ func (client *OptionalClient) NewOptionalStringClient() *OptionalStringClient {
 func (client *OptionalClient) NewOptionalStringLiteralClient() *OptionalStringLiteralClient {
 	return &OptionalStringLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -107,6 +121,7 @@ func (client *OptionalClient) NewOptionalStringLiteralClient() *OptionalStringLi
 func (client *OptionalClient) NewOptionalUnionFloatLiteralClient() *OptionalUnionFloatLiteralClient {
 	return &OptionalUnionFloatLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -114,6 +129,7 @@ func (client *OptionalClient) NewOptionalUnionFloatLiteralClient() *OptionalUnio
 func (client *OptionalClient) NewOptionalUnionIntLiteralClient() *OptionalUnionIntLiteralClient {
 	return &OptionalUnionIntLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -121,5 +137,6 @@ func (client *OptionalClient) NewOptionalUnionIntLiteralClient() *OptionalUnionI
 func (client *OptionalClient) NewOptionalUnionStringLiteralClient() *OptionalUnionStringLiteralClient {
 	return &OptionalUnionStringLiteralClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }

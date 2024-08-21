@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/MetadataSchemas_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/MetadataSchemas_CreateOrUpdate.json
 func ExampleMetadataSchemasClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleMetadataSchemasClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/MetadataSchemas_Delete.json
+// Generated from example definition: 2024-03-15-preview/MetadataSchemas_Delete.json
 func ExampleMetadataSchemasClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -84,7 +84,7 @@ func ExampleMetadataSchemasClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/MetadataSchemas_Get.json
+// Generated from example definition: 2024-03-15-preview/MetadataSchemas_Get.json
 func ExampleMetadataSchemasClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -124,7 +124,7 @@ func ExampleMetadataSchemasClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/MetadataSchemas_Head.json
+// Generated from example definition: 2024-03-15-preview/MetadataSchemas_Head.json
 func ExampleMetadataSchemasClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -146,7 +146,7 @@ func ExampleMetadataSchemasClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/MetadataSchemas_List.json
+// Generated from example definition: 2024-03-15-preview/MetadataSchemas_List.json
 func ExampleMetadataSchemasClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

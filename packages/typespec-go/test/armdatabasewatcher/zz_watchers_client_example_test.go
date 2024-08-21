@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_CreateOrUpdate_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_CreateOrUpdate_200.json
 func ExampleWatchersClient_BeginCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -49,7 +49,7 @@ func ExampleWatchersClient_BeginCreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_Delete_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_Delete_200.json
 func ExampleWatchersClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -70,7 +70,7 @@ func ExampleWatchersClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_Get_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_Get_200.json
 func ExampleWatchersClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -101,7 +101,7 @@ func ExampleWatchersClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_ListByResourceGroup_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_ListByResourceGroup_200.json
 func ExampleWatchersClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -141,7 +141,7 @@ func ExampleWatchersClient_NewListByResourceGroupPager() {
 	}
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_ListBySubscription_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_ListBySubscription_200.json
 func ExampleWatchersClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -242,7 +242,7 @@ func ExampleWatchersClient_NewListBySubscriptionPager() {
 	}
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_Start_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_Start_200.json
 func ExampleWatchersClient_BeginStart() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -277,7 +277,7 @@ func ExampleWatchersClient_BeginStart() {
 	// }
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_Stop_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_Stop_200.json
 func ExampleWatchersClient_BeginStop() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -312,7 +312,7 @@ func ExampleWatchersClient_BeginStop() {
 	// }
 }
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Watchers_Update_200.json
+// Generated from example definition: 2023-09-01-preview/Watchers_Update_200.json
 func ExampleWatchersClient_BeginUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

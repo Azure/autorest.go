@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayNullableInt32ValueClient - Array of nullable int32 values
 // Don't use this type directly, use [ArrayClient.NewArrayNullableInt32ValueClient] instead.
 type ArrayNullableInt32ValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,6 +48,8 @@ func (client *ArrayNullableInt32ValueClient) Get(ctx context.Context, options *A
 
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableInt32ValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableInt32ValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-int32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +95,8 @@ func (client *ArrayNullableInt32ValueClient) Put(ctx context.Context, body []*in
 
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableInt32ValueClient) putCreateRequest(ctx context.Context, body []*int32, _ *ArrayNullableInt32ValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-int32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

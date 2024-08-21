@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ValueTypesUnknownStringClient contains the methods for the ValueTypesUnknownString group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnknownStringClient] instead.
 type ValueTypesUnknownStringClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,6 +48,8 @@ func (client *ValueTypesUnknownStringClient) Get(ctx context.Context, options *V
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnknownStringClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnknownStringClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/unknown/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *ValueTypesUnknownStringClient) Put(ctx context.Context, body Unkno
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnknownStringClient) putCreateRequest(ctx context.Context, body UnknownStringProperty, _ *ValueTypesUnknownStringClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/unknown/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

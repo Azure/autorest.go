@@ -18,6 +18,7 @@ import (
 // Don't use this type directly, use [DatetimeClient.NewDatetimeHeaderClient] instead.
 type DatetimeHeaderClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Default -
@@ -46,6 +47,8 @@ func (client *DatetimeHeaderClient) Default(ctx context.Context, value time.Time
 
 // defaultCreateRequest creates the Default request.
 func (client *DatetimeHeaderClient) defaultCreateRequest(ctx context.Context, value time.Time, _ *DatetimeHeaderClientDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/header/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,6 +84,8 @@ func (client *DatetimeHeaderClient) RFC3339(ctx context.Context, value time.Time
 
 // rfc3339CreateRequest creates the RFC3339 request.
 func (client *DatetimeHeaderClient) rfc3339CreateRequest(ctx context.Context, value time.Time, _ *DatetimeHeaderClientRFC3339Options) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/header/rfc3339"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -116,6 +121,8 @@ func (client *DatetimeHeaderClient) RFC7231(ctx context.Context, value time.Time
 
 // rfc7231CreateRequest creates the RFC7231 request.
 func (client *DatetimeHeaderClient) rfc7231CreateRequest(ctx context.Context, value time.Time, _ *DatetimeHeaderClientRFC7231Options) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/header/rfc7231"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -152,6 +159,8 @@ func (client *DatetimeHeaderClient) UnixTimestamp(ctx context.Context, value tim
 
 // unixTimestampCreateRequest creates the UnixTimestamp request.
 func (client *DatetimeHeaderClient) unixTimestampCreateRequest(ctx context.Context, value time.Time, _ *DatetimeHeaderClientUnixTimestampOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/header/unix-timestamp"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -188,6 +197,8 @@ func (client *DatetimeHeaderClient) UnixTimestampArray(ctx context.Context, valu
 
 // unixTimestampArrayCreateRequest creates the UnixTimestampArray request.
 func (client *DatetimeHeaderClient) unixTimestampArrayCreateRequest(ctx context.Context, value []time.Time, _ *DatetimeHeaderClientUnixTimestampArrayOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/header/unix-timestamp-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

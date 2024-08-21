@@ -11,12 +11,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // ScalarDecimalTypeClient - Decimal type
 // Don't use this type directly, use [ScalarClient.NewScalarDecimalTypeClient] instead.
 type ScalarDecimalTypeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // RequestBody -
@@ -46,6 +48,8 @@ func (client *ScalarDecimalTypeClient) RequestBody(ctx context.Context, body flo
 
 // requestBodyCreateRequest creates the RequestBody request.
 func (client *ScalarDecimalTypeClient) requestBodyCreateRequest(ctx context.Context, body float64, _ *ScalarDecimalTypeClientRequestBodyOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/decimal/resquest_body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -85,6 +89,8 @@ func (client *ScalarDecimalTypeClient) RequestParameter(ctx context.Context, val
 
 // requestParameterCreateRequest creates the RequestParameter request.
 func (client *ScalarDecimalTypeClient) requestParameterCreateRequest(ctx context.Context, value float64, _ *ScalarDecimalTypeClientRequestParameterOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/decimal/request_parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -124,6 +130,8 @@ func (client *ScalarDecimalTypeClient) ResponseBody(ctx context.Context, options
 
 // responseBodyCreateRequest creates the ResponseBody request.
 func (client *ScalarDecimalTypeClient) responseBodyCreateRequest(ctx context.Context, _ *ScalarDecimalTypeClientResponseBodyOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/decimal/response_body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

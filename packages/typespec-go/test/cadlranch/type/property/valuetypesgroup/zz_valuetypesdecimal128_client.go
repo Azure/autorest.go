@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ValueTypesDecimal128Client contains the methods for the ValueTypesDecimal128 group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesDecimal128Client] instead.
 type ValueTypesDecimal128Client struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get - Get call
@@ -46,6 +48,8 @@ func (client *ValueTypesDecimal128Client) Get(ctx context.Context, options *Valu
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesDecimal128Client) getCreateRequest(ctx context.Context, _ *ValueTypesDecimal128ClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/decimal128"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *ValueTypesDecimal128Client) Put(ctx context.Context, body Decimal1
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesDecimal128Client) putCreateRequest(ctx context.Context, body Decimal128Property, _ *ValueTypesDecimal128ClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/decimal128"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

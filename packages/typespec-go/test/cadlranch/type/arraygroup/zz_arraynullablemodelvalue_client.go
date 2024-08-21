@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayNullableModelValueClient - Array of nullable model values
 // Don't use this type directly, use [ArrayClient.NewArrayNullableModelValueClient] instead.
 type ArrayNullableModelValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,6 +48,8 @@ func (client *ArrayNullableModelValueClient) Get(ctx context.Context, options *A
 
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableModelValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableModelValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-model"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +95,8 @@ func (client *ArrayNullableModelValueClient) Put(ctx context.Context, body []*In
 
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableModelValueClient) putCreateRequest(ctx context.Context, body []*InnerModel, _ *ArrayNullableModelValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-model"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayNullableBooleanValueClient - Array of nullable boolean values
 // Don't use this type directly, use [ArrayClient.NewArrayNullableBooleanValueClient] instead.
 type ArrayNullableBooleanValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,6 +48,8 @@ func (client *ArrayNullableBooleanValueClient) Get(ctx context.Context, options 
 
 // getCreateRequest creates the Get request.
 func (client *ArrayNullableBooleanValueClient) getCreateRequest(ctx context.Context, _ *ArrayNullableBooleanValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +95,8 @@ func (client *ArrayNullableBooleanValueClient) Put(ctx context.Context, body []*
 
 // putCreateRequest creates the Put request.
 func (client *ArrayNullableBooleanValueClient) putCreateRequest(ctx context.Context, body []*bool, _ *ArrayNullableBooleanValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/nullable-boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

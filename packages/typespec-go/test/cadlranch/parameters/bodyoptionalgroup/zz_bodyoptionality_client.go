@@ -10,18 +10,21 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // BodyOptionalityClient - Test describing optionality of the request body.
 // Don't use this type directly, use a constructor function instead.
 type BodyOptionalityClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // NewBodyOptionalityOptionalExplicitClient creates a new instance of [BodyOptionalityOptionalExplicitClient].
 func (client *BodyOptionalityClient) NewBodyOptionalityOptionalExplicitClient() *BodyOptionalityOptionalExplicitClient {
 	return &BodyOptionalityOptionalExplicitClient{
 		internal: client.internal,
+		endpoint: client.endpoint,
 	}
 }
 
@@ -52,6 +55,8 @@ func (client *BodyOptionalityClient) RequiredExplicit(ctx context.Context, body 
 
 // requiredExplicitCreateRequest creates the RequiredExplicit request.
 func (client *BodyOptionalityClient) requiredExplicitCreateRequest(ctx context.Context, body BodyModel, _ *BodyOptionalityClientRequiredExplicitOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/body-optionality/required-explicit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +96,8 @@ func (client *BodyOptionalityClient) RequiredImplicit(ctx context.Context, name 
 
 // requiredImplicitCreateRequest creates the RequiredImplicit request.
 func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.Context, name string, _ *BodyOptionalityClientRequiredImplicitOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/body-optionality/required-implicit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

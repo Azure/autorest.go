@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ConditionalRequestClient - Illustrates conditional request headers
 // Don't use this type directly, use a constructor function instead.
 type ConditionalRequestClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // PostIfMatch - Check when only If-Match in header is defined.
@@ -45,6 +47,8 @@ func (client *ConditionalRequestClient) PostIfMatch(ctx context.Context, options
 
 // postIfMatchCreateRequest creates the PostIfMatch request.
 func (client *ConditionalRequestClient) postIfMatchCreateRequest(ctx context.Context, options *ConditionalRequestClientPostIfMatchOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-headers/conditional-request/if-match"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -83,6 +87,8 @@ func (client *ConditionalRequestClient) PostIfNoneMatch(ctx context.Context, opt
 
 // postIfNoneMatchCreateRequest creates the PostIfNoneMatch request.
 func (client *ConditionalRequestClient) postIfNoneMatchCreateRequest(ctx context.Context, options *ConditionalRequestClientPostIfNoneMatchOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-headers/conditional-request/if-none-match"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

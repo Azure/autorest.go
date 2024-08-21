@@ -19,6 +19,7 @@ import (
 // Don't use this type directly, use [SpreadClient.NewSpreadModelClient] instead.
 type SpreadModelClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // SpreadAsRequestBody -
@@ -48,6 +49,8 @@ func (client *SpreadModelClient) SpreadAsRequestBody(ctx context.Context, name s
 
 // spreadAsRequestBodyCreateRequest creates the SpreadAsRequestBody request.
 func (client *SpreadModelClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, _ *SpreadModelClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/model/request-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +95,8 @@ func (client *SpreadModelClient) SpreadCompositeRequest(ctx context.Context, nam
 
 // spreadCompositeRequestCreateRequest creates the SpreadCompositeRequest request.
 func (client *SpreadModelClient) spreadCompositeRequestCreateRequest(ctx context.Context, name string, testHeader string, body BodyParameter, _ *SpreadModelClientSpreadCompositeRequestOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/model/composite-request/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -136,6 +141,8 @@ func (client *SpreadModelClient) SpreadCompositeRequestMix(ctx context.Context, 
 
 // spreadCompositeRequestMixCreateRequest creates the SpreadCompositeRequestMix request.
 func (client *SpreadModelClient) spreadCompositeRequestMixCreateRequest(ctx context.Context, name string, testHeader string, prop string, _ *SpreadModelClientSpreadCompositeRequestMixOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/model/composite-request-mix/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -185,6 +192,8 @@ func (client *SpreadModelClient) SpreadCompositeRequestOnlyWithBody(ctx context.
 
 // spreadCompositeRequestOnlyWithBodyCreateRequest creates the SpreadCompositeRequestOnlyWithBody request.
 func (client *SpreadModelClient) spreadCompositeRequestOnlyWithBodyCreateRequest(ctx context.Context, body BodyParameter, _ *SpreadModelClientSpreadCompositeRequestOnlyWithBodyOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/model/composite-request-only-with-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -224,6 +233,8 @@ func (client *SpreadModelClient) SpreadCompositeRequestWithoutBody(ctx context.C
 
 // spreadCompositeRequestWithoutBodyCreateRequest creates the SpreadCompositeRequestWithoutBody request.
 func (client *SpreadModelClient) spreadCompositeRequestWithoutBodyCreateRequest(ctx context.Context, name string, testHeader string, _ *SpreadModelClientSpreadCompositeRequestWithoutBodyOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/model/composite-request-without-body/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")

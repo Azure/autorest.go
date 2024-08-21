@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // APIKeyClient - Illustrates clients generated with ApiKey authentication.
 // Don't use this type directly, use a constructor function instead.
 type APIKeyClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Invalid - Check whether client is authenticated.
@@ -44,6 +46,8 @@ func (client *APIKeyClient) Invalid(ctx context.Context, options *APIKeyClientIn
 
 // invalidCreateRequest creates the Invalid request.
 func (client *APIKeyClient) invalidCreateRequest(ctx context.Context, _ *APIKeyClientInvalidOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/api-key/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -79,6 +83,8 @@ func (client *APIKeyClient) Valid(ctx context.Context, options *APIKeyClientVali
 
 // validCreateRequest creates the Valid request.
 func (client *APIKeyClient) validCreateRequest(ctx context.Context, _ *APIKeyClientValidOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/api-key/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

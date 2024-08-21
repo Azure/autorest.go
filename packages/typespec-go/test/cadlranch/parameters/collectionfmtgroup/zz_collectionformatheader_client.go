@@ -17,6 +17,7 @@ import (
 // Don't use this type directly, use [CollectionFormatClient.NewCollectionFormatHeaderClient] instead.
 type CollectionFormatHeaderClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // CSV -
@@ -47,6 +48,8 @@ func (client *CollectionFormatHeaderClient) CSV(ctx context.Context, colors []st
 
 // csvCreateRequest creates the CSV request.
 func (client *CollectionFormatHeaderClient) csvCreateRequest(ctx context.Context, colors []string, _ *CollectionFormatHeaderClientCSVOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/collection-format/header/csv"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

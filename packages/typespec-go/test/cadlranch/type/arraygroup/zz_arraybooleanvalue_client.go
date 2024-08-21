@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // ArrayBooleanValueClient - Array of boolean values
 // Don't use this type directly, use [ArrayClient.NewArrayBooleanValueClient] instead.
 type ArrayBooleanValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -45,6 +47,8 @@ func (client *ArrayBooleanValueClient) Get(ctx context.Context, options *ArrayBo
 
 // getCreateRequest creates the Get request.
 func (client *ArrayBooleanValueClient) getCreateRequest(ctx context.Context, _ *ArrayBooleanValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -89,6 +93,8 @@ func (client *ArrayBooleanValueClient) Put(ctx context.Context, body []bool, opt
 
 // putCreateRequest creates the Put request.
 func (client *ArrayBooleanValueClient) putCreateRequest(ctx context.Context, body []bool, _ *ArrayBooleanValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/boolean"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // NullableDatetimeClient contains the methods for the NullableDatetime group.
 // Don't use this type directly, use [NullableClient.NewNullableDatetimeClient] instead.
 type NullableDatetimeClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -46,6 +48,8 @@ func (client *NullableDatetimeClient) GetNonNull(ctx context.Context, options *N
 
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableDatetimeClient) getNonNullCreateRequest(ctx context.Context, _ *NullableDatetimeClientGetNonNullOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/datetime/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *NullableDatetimeClient) GetNull(ctx context.Context, options *Null
 
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableDatetimeClient) getNullCreateRequest(ctx context.Context, _ *NullableDatetimeClientGetNullOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/datetime/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,6 +143,8 @@ func (client *NullableDatetimeClient) PatchNonNull(ctx context.Context, body Dat
 
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableDatetimeClient) patchNonNullCreateRequest(ctx context.Context, body DatetimeProperty, _ *NullableDatetimeClientPatchNonNullOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/datetime/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,6 +184,8 @@ func (client *NullableDatetimeClient) PatchNull(ctx context.Context, body Dateti
 
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableDatetimeClient) patchNullCreateRequest(ctx context.Context, body DatetimeProperty, _ *NullableDatetimeClientPatchNullOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/datetime/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {

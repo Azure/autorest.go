@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // OptionalPlainDateClient contains the methods for the OptionalPlainDate group.
 // Don't use this type directly, use [OptionalClient.NewOptionalPlainDateClient] instead.
 type OptionalPlainDateClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -46,6 +48,8 @@ func (client *OptionalPlainDateClient) GetAll(ctx context.Context, options *Opti
 
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalPlainDateClient) getAllCreateRequest(ctx context.Context, _ *OptionalPlainDateClientGetAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/plainDate/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *OptionalPlainDateClient) GetDefault(ctx context.Context, options *
 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalPlainDateClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalPlainDateClientGetDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/plainDate/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,6 +143,8 @@ func (client *OptionalPlainDateClient) PutAll(ctx context.Context, body PlainDat
 
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalPlainDateClient) putAllCreateRequest(ctx context.Context, body PlainDateProperty, _ *OptionalPlainDateClientPutAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/plainDate/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,6 +184,8 @@ func (client *OptionalPlainDateClient) PutDefault(ctx context.Context, body Plai
 
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalPlainDateClient) putDefaultCreateRequest(ctx context.Context, body PlainDateProperty, _ *OptionalPlainDateClientPutDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/plainDate/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

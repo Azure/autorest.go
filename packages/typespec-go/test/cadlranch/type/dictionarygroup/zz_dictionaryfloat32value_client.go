@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // DictionaryFloat32ValueClient - Dictionary of float values
 // Don't use this type directly, use [DictionaryClient.NewDictionaryFloat32ValueClient] instead.
 type DictionaryFloat32ValueClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // Get -
@@ -46,6 +48,8 @@ func (client *DictionaryFloat32ValueClient) Get(ctx context.Context, options *Di
 
 // getCreateRequest creates the Get request.
 func (client *DictionaryFloat32ValueClient) getCreateRequest(ctx context.Context, _ *DictionaryFloat32ValueClientGetOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,6 +95,8 @@ func (client *DictionaryFloat32ValueClient) Put(ctx context.Context, body map[st
 
 // putCreateRequest creates the Put request.
 func (client *DictionaryFloat32ValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, _ *DictionaryFloat32ValueClientPutOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/float32"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

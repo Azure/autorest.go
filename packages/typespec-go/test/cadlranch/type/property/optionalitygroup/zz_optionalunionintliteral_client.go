@@ -10,12 +10,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 // OptionalUnionIntLiteralClient contains the methods for the OptionalUnionIntLiteral group.
 // Don't use this type directly, use [OptionalClient.NewOptionalUnionIntLiteralClient] instead.
 type OptionalUnionIntLiteralClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -46,6 +48,8 @@ func (client *OptionalUnionIntLiteralClient) GetAll(ctx context.Context, options
 
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalUnionIntLiteralClient) getAllCreateRequest(ctx context.Context, _ *OptionalUnionIntLiteralClientGetAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/union/int/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -92,6 +96,8 @@ func (client *OptionalUnionIntLiteralClient) GetDefault(ctx context.Context, opt
 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalUnionIntLiteralClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalUnionIntLiteralClientGetDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/union/int/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -137,6 +143,8 @@ func (client *OptionalUnionIntLiteralClient) PutAll(ctx context.Context, body Un
 
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalUnionIntLiteralClient) putAllCreateRequest(ctx context.Context, body UnionIntLiteralProperty, _ *OptionalUnionIntLiteralClientPutAllOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/union/int/literal/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,6 +184,8 @@ func (client *OptionalUnionIntLiteralClient) PutDefault(ctx context.Context, bod
 
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalUnionIntLiteralClient) putDefaultCreateRequest(ctx context.Context, body UnionIntLiteralProperty, _ *OptionalUnionIntLiteralClientPutDefaultOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/union/int/literal/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

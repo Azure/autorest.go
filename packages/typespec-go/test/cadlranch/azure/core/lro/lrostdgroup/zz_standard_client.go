@@ -19,6 +19,7 @@ import (
 // Don't use this type directly, use a constructor function instead.
 type StandardClient struct {
 	internal *azcore.Client
+	endpoint string
 }
 
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.
@@ -73,6 +74,8 @@ func (client *StandardClient) createOrReplace(ctx context.Context, name string, 
 
 // createOrReplaceCreateRequest creates the CreateOrReplace request.
 func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, name string, resource User, _ *StandardClientBeginCreateOrReplaceOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/lro/standard/users/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -143,6 +146,8 @@ func (client *StandardClient) deleteOperation(ctx context.Context, name string, 
 
 // deleteCreateRequest creates the Delete request.
 func (client *StandardClient) deleteCreateRequest(ctx context.Context, name string, _ *StandardClientBeginDeleteOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/lro/standard/users/{name}"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -210,6 +215,8 @@ func (client *StandardClient) export(ctx context.Context, name string, formatPar
 
 // exportCreateRequest creates the Export request.
 func (client *StandardClient) exportCreateRequest(ctx context.Context, name string, formatParam string, _ *StandardClientBeginExportOptions) (*policy.Request, error) {
+	host := "{endpoint}"
+	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/lro/standard/users/{name}:export"
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
