@@ -21,6 +21,7 @@ func NewRPCClient(options *azcore.ClientOptions) (*RPCClient, error) {
 	}
 	return &RPCClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }
 
