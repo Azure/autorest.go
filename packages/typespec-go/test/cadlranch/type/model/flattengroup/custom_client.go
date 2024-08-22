@@ -15,5 +15,6 @@ func NewFlattenClient(options *azcore.ClientOptions) (*FlattenClient, error) {
 	}
 	return &FlattenClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

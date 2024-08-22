@@ -18,5 +18,6 @@ func NewDatetimeClient(options *azcore.ClientOptions) (*DatetimeClient, error) {
 	}
 	return &DatetimeClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

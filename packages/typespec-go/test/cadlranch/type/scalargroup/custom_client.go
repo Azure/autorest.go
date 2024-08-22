@@ -18,5 +18,6 @@ func NewScalarClient(options *azcore.ClientOptions) (*ScalarClient, error) {
 	}
 	return &ScalarClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

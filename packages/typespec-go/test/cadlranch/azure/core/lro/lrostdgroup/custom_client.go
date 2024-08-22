@@ -21,6 +21,7 @@ func NewStandardClient(options *azcore.ClientOptions) (*StandardClient, error) {
 	}
 	return &StandardClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }
 

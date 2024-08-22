@@ -15,5 +15,6 @@ func NewAccessClient(options *azcore.ClientOptions) (*AccessClient, error) {
 	}
 	return &AccessClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

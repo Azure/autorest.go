@@ -15,5 +15,6 @@ func NewContentNegotiationClient(options *azcore.ClientOptions) (*ContentNegotia
 	}
 	return &ContentNegotiationClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

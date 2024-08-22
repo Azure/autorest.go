@@ -18,5 +18,6 @@ func NewVisibilityClient(options *azcore.ClientOptions) (*VisibilityClient, erro
 	}
 	return &VisibilityClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

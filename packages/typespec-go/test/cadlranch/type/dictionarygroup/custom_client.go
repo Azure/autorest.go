@@ -18,5 +18,6 @@ func NewDictionaryClient(options *azcore.ClientOptions) (*DictionaryClient, erro
 	}
 	return &DictionaryClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

@@ -15,5 +15,6 @@ func NewJSONMergePatchClient(options *azcore.ClientOptions) (*JSONMergePatchClie
 	}
 	return &JSONMergePatchClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

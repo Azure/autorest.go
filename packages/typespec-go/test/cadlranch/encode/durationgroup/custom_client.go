@@ -18,5 +18,6 @@ func NewDurationClient(options *azcore.ClientOptions) (*DurationClient, error) {
 	}
 	return &DurationClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

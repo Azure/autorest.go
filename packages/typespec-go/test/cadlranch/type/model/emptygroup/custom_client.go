@@ -18,5 +18,6 @@ func NewEmptyClient(options *azcore.ClientOptions) (*EmptyClient, error) {
 	}
 	return &EmptyClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

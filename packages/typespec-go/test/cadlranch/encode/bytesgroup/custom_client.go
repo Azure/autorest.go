@@ -18,5 +18,6 @@ func NewBytesClient(options *azcore.ClientOptions) (*BytesClient, error) {
 	}
 	return &BytesClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

@@ -18,5 +18,6 @@ func NewEnumDiscriminatorClient(options *azcore.ClientOptions) (*EnumDiscriminat
 	}
 	return &EnumDiscriminatorClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

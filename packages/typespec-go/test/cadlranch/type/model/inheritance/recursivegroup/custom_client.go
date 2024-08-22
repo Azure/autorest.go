@@ -18,5 +18,6 @@ func NewRecursiveClient(options *azcore.ClientOptions) (*RecursiveClient, error)
 	}
 	return &RecursiveClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

@@ -15,5 +15,6 @@ func NewMultiPartClient(options *azcore.ClientOptions) (*MultiPartClient, error)
 	}
 	return &MultiPartClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

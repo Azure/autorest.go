@@ -15,5 +15,6 @@ func NewMediaTypeClient(options *azcore.ClientOptions) (*MediaTypeClient, error)
 	}
 	return &MediaTypeClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

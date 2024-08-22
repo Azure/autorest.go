@@ -18,5 +18,6 @@ func NewCollectionFormatClient(options *azcore.ClientOptions) (*CollectionFormat
 	}
 	return &CollectionFormatClient{
 		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }
