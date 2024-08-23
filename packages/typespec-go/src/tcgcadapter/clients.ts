@@ -8,7 +8,7 @@ import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
-import { isTypePassedByValue, typeAdapter } from './types.js';
+import { getEndpointType, isTypePassedByValue, typeAdapter } from './types.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -91,13 +91,7 @@ export class clientAdapter {
           // skip this for now as we don't generate client constructors
           continue;
         } else if (param.kind === 'endpoint') {
-          // for multiple endpoint, we only generate the first one
-          let paramType;
-          if (param.type.kind === 'endpoint') {
-            paramType = param.type;
-          } else {
-            paramType = param.type.values[0];
-          }
+          let paramType = getEndpointType(param);
           // this will either be a fixed or templated host
           // don't set the fixed host for ARM as it isn't used
           if (this.ta.codeModel.type !== 'azure-arm') {

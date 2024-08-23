@@ -804,14 +804,8 @@ export class typeAdapter {
     // traverse all client initialization params and methods to find the set of referenced enums and models
     for (const client of sdkContext.sdkPackage.clients) {
       for (const param of client.initialization.properties) {
-        // for multiple endpoint, we only generate the first one
         if (param.kind === 'endpoint') {
-          let endpointType;
-          if (param.type.kind === 'endpoint') {
-            endpointType = param.type;
-          } else {
-            endpointType = param.type.values[0];
-          }
+          let endpointType = getEndpointType(param);
           for (const templateArg of endpointType.templateArguments) {
             recursiveAddReferencedType(templateArg.type);
           }
@@ -930,6 +924,15 @@ export class typeAdapter {
         this.unreferencedModels.add(baseModel);
       }
     }
+  }
+}
+
+export function getEndpointType(param: tcgc.SdkEndpointParameter) {
+  // for multiple endpoint, we only generate the first one
+  if (param.type.kind === 'endpoint') {
+    return param.type;
+  } else {
+    return param.type.values[0];
   }
 }
 
