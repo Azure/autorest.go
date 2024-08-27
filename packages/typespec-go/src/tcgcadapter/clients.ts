@@ -91,7 +91,7 @@ export class clientAdapter {
           // skip this for now as we don't generate client constructors
           continue;
         } else if (param.kind === 'endpoint') {
-          let paramType = getEndpointType(param);
+          const paramType = getEndpointType(param);
           // this will either be a fixed or templated host
           // don't set the fixed host for ARM as it isn't used
           if (this.ta.codeModel.type !== 'azure-arm') {

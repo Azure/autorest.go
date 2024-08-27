@@ -805,7 +805,7 @@ export class typeAdapter {
     for (const client of sdkContext.sdkPackage.clients) {
       for (const param of client.initialization.properties) {
         if (param.kind === 'endpoint') {
-          let endpointType = getEndpointType(param);
+          const endpointType = getEndpointType(param);
           for (const templateArg of endpointType.templateArguments) {
             recursiveAddReferencedType(templateArg.type);
           }
