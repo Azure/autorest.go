@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Workspaces_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/Workspaces_CreateOrUpdate.json
 func ExampleWorkspacesClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -50,7 +50,7 @@ func ExampleWorkspacesClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Workspaces_Delete.json
+// Generated from example definition: 2024-03-15-preview/Workspaces_Delete.json
 func ExampleWorkspacesClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -72,7 +72,7 @@ func ExampleWorkspacesClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Workspaces_Get.json
+// Generated from example definition: 2024-03-15-preview/Workspaces_Get.json
 func ExampleWorkspacesClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -106,7 +106,7 @@ func ExampleWorkspacesClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Workspaces_Head.json
+// Generated from example definition: 2024-03-15-preview/Workspaces_Head.json
 func ExampleWorkspacesClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -128,7 +128,7 @@ func ExampleWorkspacesClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Workspaces_List.json
+// Generated from example definition: 2024-03-15-preview/Workspaces_List.json
 func ExampleWorkspacesClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

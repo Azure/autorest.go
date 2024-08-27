@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Operations_List.json
+// Generated from example definition: 2024-03-15-preview/Operations_List.json
 func ExampleOperationsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

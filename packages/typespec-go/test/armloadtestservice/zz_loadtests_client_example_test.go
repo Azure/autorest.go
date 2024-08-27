@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_CreateOrUpdate.json
+// Generated from example definition: 2022-12-01/LoadTests_CreateOrUpdate.json
 func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -99,7 +99,7 @@ func ExampleLoadTestsClient_BeginCreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_Delete.json
+// Generated from example definition: 2022-12-01/LoadTests_Delete.json
 func ExampleLoadTestsClient_BeginDelete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -120,7 +120,7 @@ func ExampleLoadTestsClient_BeginDelete() {
 	}
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_Get.json
+// Generated from example definition: 2022-12-01/LoadTests_Get.json
 func ExampleLoadTestsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -164,7 +164,7 @@ func ExampleLoadTestsClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_ListByResourceGroup.json
+// Generated from example definition: 2022-12-01/LoadTests_ListByResourceGroup.json
 func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -217,7 +217,7 @@ func ExampleLoadTestsClient_NewListByResourceGroupPager() {
 	}
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_ListBySubscription.json
+// Generated from example definition: 2022-12-01/LoadTests_ListBySubscription.json
 func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -270,7 +270,7 @@ func ExampleLoadTestsClient_NewListBySubscriptionPager() {
 	}
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
+// Generated from example definition: 2022-12-01/LoadTests_ListOutboundNetworkDependenciesEndpoints.json
 func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -393,7 +393,7 @@ func ExampleLoadTestsClient_NewOutboundNetworkDependenciesEndpointsPager() {
 	}
 }
 
-// Generated from example definition: /tsp/LoadTestService.Management/examples/2022-12-01/LoadTests_Update.json
+// Generated from example definition: 2022-12-01/LoadTests_Update.json
 func ExampleLoadTestsClient_BeginUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

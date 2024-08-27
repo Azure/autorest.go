@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Apis_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/Apis_CreateOrUpdate.json
 func ExampleApisClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -83,7 +83,7 @@ func ExampleApisClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Apis_Delete.json
+// Generated from example definition: 2024-03-15-preview/Apis_Delete.json
 func ExampleApisClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -105,7 +105,7 @@ func ExampleApisClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Apis_Get.json
+// Generated from example definition: 2024-03-15-preview/Apis_Get.json
 func ExampleApisClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -156,7 +156,7 @@ func ExampleApisClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Apis_Head.json
+// Generated from example definition: 2024-03-15-preview/Apis_Head.json
 func ExampleApisClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -178,7 +178,7 @@ func ExampleApisClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Apis_List.json
+// Generated from example definition: 2024-03-15-preview/Apis_List.json
 func ExampleApisClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

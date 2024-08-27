@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Deployments_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/Deployments_CreateOrUpdate.json
 func ExampleDeploymentsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -68,7 +68,7 @@ func ExampleDeploymentsClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Deployments_Delete.json
+// Generated from example definition: 2024-03-15-preview/Deployments_Delete.json
 func ExampleDeploymentsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -90,7 +90,7 @@ func ExampleDeploymentsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Deployments_Get.json
+// Generated from example definition: 2024-03-15-preview/Deployments_Get.json
 func ExampleDeploymentsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -133,7 +133,7 @@ func ExampleDeploymentsClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Deployments_Head.json
+// Generated from example definition: 2024-03-15-preview/Deployments_Head.json
 func ExampleDeploymentsClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -155,7 +155,7 @@ func ExampleDeploymentsClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/Deployments_List.json
+// Generated from example definition: 2024-03-15-preview/Deployments_List.json
 func ExampleDeploymentsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

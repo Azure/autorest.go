@@ -43,7 +43,7 @@ func NewMongoClustersClient(subscriptionID string, credential azcore.TokenCreden
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2024-03-01-preview
-//   - location - The location name.
+//   - location - The name of the Azure region.
 //   - body - The CheckAvailability request
 //   - options - MongoClustersClientCheckNameAvailabilityOptions contains the optional parameters for the MongoClustersClient.CheckNameAvailability
 //     method.
