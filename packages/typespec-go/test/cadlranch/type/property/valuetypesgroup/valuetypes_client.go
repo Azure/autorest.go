@@ -15,6 +15,5 @@ func NewValueTypesClient(options *azcore.ClientOptions) (*ValueTypesClient, erro
 	}
 	return &ValueTypesClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

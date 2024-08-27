@@ -15,6 +15,5 @@ func NewJSONClient(options *azcore.ClientOptions) (*JSONClient, error) {
 	}
 	return &JSONClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

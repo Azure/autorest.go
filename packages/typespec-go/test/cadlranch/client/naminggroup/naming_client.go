@@ -15,6 +15,5 @@ func NewNamingClient(options *azcore.ClientOptions) (*NamingClient, error) {
 	}
 	return &NamingClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

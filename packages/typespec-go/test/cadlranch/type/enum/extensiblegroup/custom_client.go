@@ -18,6 +18,5 @@ func NewExtensibleClient(options *azcore.ClientOptions) (*ExtensibleClient, erro
 	}
 	return &ExtensibleClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

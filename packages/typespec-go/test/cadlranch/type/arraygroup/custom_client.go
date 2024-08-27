@@ -18,6 +18,5 @@ func NewArrayClient(options *azcore.ClientOptions) (*ArrayClient, error) {
 	}
 	return &ArrayClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

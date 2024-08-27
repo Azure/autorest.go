@@ -18,6 +18,5 @@ func NewSpecialWordsClient(options *azcore.ClientOptions) (*SpecialWordsClient, 
 	}
 	return &SpecialWordsClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

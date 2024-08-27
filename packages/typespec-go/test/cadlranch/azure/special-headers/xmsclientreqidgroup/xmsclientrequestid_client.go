@@ -22,7 +22,6 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) (*XMSClientReque
 	}
 	return &XMSClientRequestIDClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }
 

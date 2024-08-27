@@ -18,6 +18,5 @@ func NewNullableClient(options *azcore.ClientOptions) (*NullableClient, error) {
 	}
 	return &NullableClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

@@ -18,6 +18,5 @@ func NewNotDiscriminatedClient(options *azcore.ClientOptions) (*NotDiscriminated
 	}
 	return &NotDiscriminatedClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

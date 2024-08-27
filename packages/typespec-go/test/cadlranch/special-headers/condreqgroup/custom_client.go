@@ -18,6 +18,5 @@ func NewConditionalRequestClient(options *azcore.ClientOptions) (*ConditionalReq
 	}
 	return &ConditionalRequestClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

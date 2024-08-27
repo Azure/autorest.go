@@ -18,6 +18,5 @@ func NewSingleDiscriminatorClient(options *azcore.ClientOptions) (*SingleDiscrim
 	}
 	return &SingleDiscriminatorClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

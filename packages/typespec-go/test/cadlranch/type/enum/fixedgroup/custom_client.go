@@ -18,6 +18,5 @@ func NewFixedClient(options *azcore.ClientOptions) (*FixedClient, error) {
 	}
 	return &FixedClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

@@ -18,6 +18,5 @@ func NewBodyOptionalityClient(options *azcore.ClientOptions) (*BodyOptionalityCl
 	}
 	return &BodyOptionalityClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }

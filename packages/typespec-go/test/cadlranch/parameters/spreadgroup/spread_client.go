@@ -15,6 +15,5 @@ func NewSpreadClient(options *azcore.ClientOptions) (*SpreadClient, error) {
 	}
 	return &SpreadClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }
