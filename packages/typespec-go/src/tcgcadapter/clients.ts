@@ -458,7 +458,7 @@ export class clientAdapter {
         adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramKind, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode || param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode || !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
