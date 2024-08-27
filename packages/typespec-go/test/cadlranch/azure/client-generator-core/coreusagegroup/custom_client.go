@@ -15,6 +15,5 @@ func NewUsageClient(options *azcore.ClientOptions) (*UsageClient, error) {
 	}
 	return &UsageClient{
 		internal: internal,
-		endpoint: "http://localhost:3000",
 	}, nil
 }
