@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // AccessSharedModelInOperationClient contains the methods for the AccessSharedModelInOperation group.
 // Don't use this type directly, use [AccessClient.NewAccessSharedModelInOperationClient] instead.
 type AccessSharedModelInOperationClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Public -
@@ -48,8 +46,6 @@ func (client *AccessSharedModelInOperationClient) Public(ctx context.Context, na
 
 // publicCreateRequest creates the Public request.
 func (client *AccessSharedModelInOperationClient) publicCreateRequest(ctx context.Context, name string, _ *AccessSharedModelInOperationClientPublicOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/public"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -99,8 +95,6 @@ func (client *AccessSharedModelInOperationClient) internalMethod(ctx context.Con
 
 // internalCreateRequest creates the internalMethod request.
 func (client *AccessSharedModelInOperationClient) internalCreateRequest(ctx context.Context, name string, _ *accessSharedModelInOperationClientinternalMethodOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/access/sharedModelInOperation/internal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

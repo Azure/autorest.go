@@ -10,13 +10,11 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ScalarClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewScalarAzureLocationScalarClient creates a new instance of [ScalarAzureLocationScalarClient].
 func (client *ScalarClient) NewScalarAzureLocationScalarClient() *ScalarAzureLocationScalarClient {
 	return &ScalarAzureLocationScalarClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

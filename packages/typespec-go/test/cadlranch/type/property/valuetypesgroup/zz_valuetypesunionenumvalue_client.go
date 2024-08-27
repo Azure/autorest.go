@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ValueTypesUnionEnumValueClient contains the methods for the ValueTypesUnionEnumValue group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesUnionEnumValueClient] instead.
 type ValueTypesUnionEnumValueClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get call
@@ -48,8 +46,6 @@ func (client *ValueTypesUnionEnumValueClient) Get(ctx context.Context, options *
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesUnionEnumValueClient) getCreateRequest(ctx context.Context, _ *ValueTypesUnionEnumValueClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/union-enum-value"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *ValueTypesUnionEnumValueClient) Put(ctx context.Context, body Unio
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesUnionEnumValueClient) putCreateRequest(ctx context.Context, body UnionEnumValueProperty, _ *ValueTypesUnionEnumValueClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/union-enum-value"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

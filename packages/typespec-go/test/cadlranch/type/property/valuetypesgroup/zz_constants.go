@@ -4,6 +4,8 @@
 
 package valuetypesgroup
 
+const host = "http://localhost:3000"
+
 type ExtendedEnum string
 
 const (

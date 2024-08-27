@@ -105,11 +105,9 @@ export class clientAdapter {
               throw new Error(`client ${goClient.name} has a conflicting host ${goClient.host}`);
             }
           } else {
-            if (this.ta.codeModel.type !== 'azure-arm') {
-              goClient.templatedHost = true;
-              for (const templateArg of paramType.templateArguments) {
-                goClient.parameters.push(this.adaptURIParam(templateArg));
-              }
+            goClient.templatedHost = true;
+            for (const templateArg of paramType.templateArguments) {
+              goClient.parameters.push(this.adaptURIParam(templateArg));
             }
           }
           continue;

@@ -19,7 +19,6 @@ import (
 // Don't use this type directly, use [SpreadClient.NewSpreadAliasClient] instead.
 type SpreadAliasClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // SpreadAsRequestBody -
@@ -49,8 +48,6 @@ func (client *SpreadAliasClient) SpreadAsRequestBody(ctx context.Context, name s
 
 // spreadAsRequestBodyCreateRequest creates the SpreadAsRequestBody request.
 func (client *SpreadAliasClient) spreadAsRequestBodyCreateRequest(ctx context.Context, name string, _ *SpreadAliasClientSpreadAsRequestBodyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/alias/request-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,8 +92,6 @@ func (client *SpreadAliasClient) SpreadAsRequestParameter(ctx context.Context, i
 
 // spreadAsRequestParameterCreateRequest creates the SpreadAsRequestParameter request.
 func (client *SpreadAliasClient) spreadAsRequestParameterCreateRequest(ctx context.Context, id string, xMSTestHeader string, name string, _ *SpreadAliasClientSpreadAsRequestParameterOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/alias/request-parameter/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -148,8 +143,6 @@ func (client *SpreadAliasClient) SpreadParameterWithInnerAlias(ctx context.Conte
 
 // spreadParameterWithInnerAliasCreateRequest creates the SpreadParameterWithInnerAlias request.
 func (client *SpreadAliasClient) spreadParameterWithInnerAliasCreateRequest(ctx context.Context, id string, name string, age int32, xMSTestHeader string, _ *SpreadAliasClientSpreadParameterWithInnerAliasOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/alias/inner-alias-parameter/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -201,8 +194,6 @@ func (client *SpreadAliasClient) SpreadParameterWithInnerModel(ctx context.Conte
 
 // spreadParameterWithInnerModelCreateRequest creates the SpreadParameterWithInnerModel request.
 func (client *SpreadAliasClient) spreadParameterWithInnerModelCreateRequest(ctx context.Context, id string, name string, xMSTestHeader string, _ *SpreadAliasClientSpreadParameterWithInnerModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/alias/inner-model-parameter/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")
@@ -254,8 +245,6 @@ func (client *SpreadAliasClient) SpreadWithMultipleParameters(ctx context.Contex
 
 // spreadWithMultipleParametersCreateRequest creates the SpreadWithMultipleParameters request.
 func (client *SpreadAliasClient) spreadWithMultipleParametersCreateRequest(ctx context.Context, id string, xMSTestHeader string, requiredString string, requiredIntList []int32, options *SpreadAliasClientSpreadWithMultipleParametersOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/spread/alias/multiple-parameters/{id}"
 	if id == "" {
 		return nil, errors.New("parameter id cannot be empty")

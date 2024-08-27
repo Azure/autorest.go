@@ -4,6 +4,8 @@
 
 package basicgroup
 
+const host = "http://localhost:3000"
+
 // ListItemInputExtensibleEnum - An extensible enum input parameter.
 type ListItemInputExtensibleEnum string
 

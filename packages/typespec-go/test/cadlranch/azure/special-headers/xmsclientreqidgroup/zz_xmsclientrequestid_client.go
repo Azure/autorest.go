@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // XMSClientRequestIDClient - Azure client request id header configurations.
 // Don't use this type directly, use a constructor function instead.
 type XMSClientRequestIDClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get operation with azure `x-ms-client-request-id` header.
@@ -46,8 +44,6 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 
 // getCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/special-headers/x-ms-client-request-id/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

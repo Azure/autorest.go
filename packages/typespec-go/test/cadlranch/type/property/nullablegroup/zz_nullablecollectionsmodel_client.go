@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // NullableCollectionsModelClient contains the methods for the NullableCollectionsModel group.
 // Don't use this type directly, use [NullableClient.NewNullableCollectionsModelClient] instead.
 type NullableCollectionsModelClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -48,8 +46,6 @@ func (client *NullableCollectionsModelClient) GetNonNull(ctx context.Context, op
 
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableCollectionsModelClient) getNonNullCreateRequest(ctx context.Context, _ *NullableCollectionsModelClientGetNonNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/model/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *NullableCollectionsModelClient) GetNull(ctx context.Context, optio
 
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableCollectionsModelClient) getNullCreateRequest(ctx context.Context, _ *NullableCollectionsModelClientGetNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/model/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -143,8 +137,6 @@ func (client *NullableCollectionsModelClient) PatchNonNull(ctx context.Context, 
 
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableCollectionsModelClient) patchNonNullCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *NullableCollectionsModelClientPatchNonNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/model/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -184,8 +176,6 @@ func (client *NullableCollectionsModelClient) PatchNull(ctx context.Context, bod
 
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableCollectionsModelClient) patchNullCreateRequest(ctx context.Context, body CollectionsModelProperty, _ *NullableCollectionsModelClientPatchNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/model/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {

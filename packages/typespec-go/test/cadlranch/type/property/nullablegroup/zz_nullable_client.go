@@ -10,14 +10,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type NullableClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewNullableBytesClient creates a new instance of [NullableBytesClient].
 func (client *NullableClient) NewNullableBytesClient() *NullableBytesClient {
 	return &NullableBytesClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -25,7 +23,6 @@ func (client *NullableClient) NewNullableBytesClient() *NullableBytesClient {
 func (client *NullableClient) NewNullableCollectionsByteClient() *NullableCollectionsByteClient {
 	return &NullableCollectionsByteClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -33,7 +30,6 @@ func (client *NullableClient) NewNullableCollectionsByteClient() *NullableCollec
 func (client *NullableClient) NewNullableCollectionsModelClient() *NullableCollectionsModelClient {
 	return &NullableCollectionsModelClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -41,7 +37,6 @@ func (client *NullableClient) NewNullableCollectionsModelClient() *NullableColle
 func (client *NullableClient) NewNullableCollectionsStringClient() *NullableCollectionsStringClient {
 	return &NullableCollectionsStringClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -49,7 +44,6 @@ func (client *NullableClient) NewNullableCollectionsStringClient() *NullableColl
 func (client *NullableClient) NewNullableDatetimeClient() *NullableDatetimeClient {
 	return &NullableDatetimeClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -57,7 +51,6 @@ func (client *NullableClient) NewNullableDatetimeClient() *NullableDatetimeClien
 func (client *NullableClient) NewNullableDurationClient() *NullableDurationClient {
 	return &NullableDurationClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -65,6 +58,5 @@ func (client *NullableClient) NewNullableDurationClient() *NullableDurationClien
 func (client *NullableClient) NewNullableStringClient() *NullableStringClient {
 	return &NullableStringClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

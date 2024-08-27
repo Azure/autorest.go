@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // DatetimePropertyClient contains the methods for the DatetimeProperty group.
 // Don't use this type directly, use [DatetimeClient.NewDatetimePropertyClient] instead.
 type DatetimePropertyClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Default -
@@ -48,8 +46,6 @@ func (client *DatetimePropertyClient) Default(ctx context.Context, body DefaultD
 
 // defaultCreateRequest creates the Default request.
 func (client *DatetimePropertyClient) defaultCreateRequest(ctx context.Context, body DefaultDatetimeProperty, _ *DatetimePropertyClientDefaultOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/property/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -100,8 +96,6 @@ func (client *DatetimePropertyClient) RFC3339(ctx context.Context, body RFC3339D
 
 // rfc3339CreateRequest creates the RFC3339 request.
 func (client *DatetimePropertyClient) rfc3339CreateRequest(ctx context.Context, body RFC3339DatetimeProperty, _ *DatetimePropertyClientRFC3339Options) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/property/rfc3339"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -152,8 +146,6 @@ func (client *DatetimePropertyClient) RFC7231(ctx context.Context, body RFC7231D
 
 // rfc7231CreateRequest creates the RFC7231 request.
 func (client *DatetimePropertyClient) rfc7231CreateRequest(ctx context.Context, body RFC7231DatetimeProperty, _ *DatetimePropertyClientRFC7231Options) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/property/rfc7231"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -204,8 +196,6 @@ func (client *DatetimePropertyClient) UnixTimestamp(ctx context.Context, body Un
 
 // unixTimestampCreateRequest creates the UnixTimestamp request.
 func (client *DatetimePropertyClient) unixTimestampCreateRequest(ctx context.Context, body UnixTimestampDatetimeProperty, _ *DatetimePropertyClientUnixTimestampOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/property/unix-timestamp"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -256,8 +246,6 @@ func (client *DatetimePropertyClient) UnixTimestampArray(ctx context.Context, bo
 
 // unixTimestampArrayCreateRequest creates the UnixTimestampArray request.
 func (client *DatetimePropertyClient) unixTimestampArrayCreateRequest(ctx context.Context, body UnixTimestampArrayDatetimeProperty, _ *DatetimePropertyClientUnixTimestampArrayOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/datetime/property/unix-timestamp-array"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

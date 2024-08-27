@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // DictionaryNullableFloatValueClient - Dictionary of nullable float values
 // Don't use this type directly, use [DictionaryClient.NewDictionaryNullableFloatValueClient] instead.
 type DictionaryNullableFloatValueClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get -
@@ -48,8 +46,6 @@ func (client *DictionaryNullableFloatValueClient) Get(ctx context.Context, optio
 
 // getCreateRequest creates the Get request.
 func (client *DictionaryNullableFloatValueClient) getCreateRequest(ctx context.Context, _ *DictionaryNullableFloatValueClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,8 +91,6 @@ func (client *DictionaryNullableFloatValueClient) Put(ctx context.Context, body 
 
 // putCreateRequest creates the Put request.
 func (client *DictionaryNullableFloatValueClient) putCreateRequest(ctx context.Context, body map[string]*float32, _ *DictionaryNullableFloatValueClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/dictionary/nullable-float"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

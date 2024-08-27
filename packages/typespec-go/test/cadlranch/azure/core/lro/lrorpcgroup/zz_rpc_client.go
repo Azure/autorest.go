@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // RPCClient - Illustrates bodies templated with Azure Core with long-running RPC operation
 // Don't use this type directly, use a constructor function instead.
 type RPCClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // BeginLongRunningRPC - Generate data.
@@ -70,8 +68,6 @@ func (client *RPCClient) longRunningRPC(ctx context.Context, body GenerationOpti
 
 // longRunningRPCCreateRequest creates the LongRunningRPC request.
 func (client *RPCClient) longRunningRPCCreateRequest(ctx context.Context, body GenerationOptions, _ *RPCClientBeginLongRunningRPCOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/lro/rpc/generations:submit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

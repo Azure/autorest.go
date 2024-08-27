@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ArrayStringValueClient - Array of string values
 // Don't use this type directly, use [ArrayClient.NewArrayStringValueClient] instead.
 type ArrayStringValueClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get -
@@ -47,8 +45,6 @@ func (client *ArrayStringValueClient) Get(ctx context.Context, options *ArrayStr
 
 // getCreateRequest creates the Get request.
 func (client *ArrayStringValueClient) getCreateRequest(ctx context.Context, _ *ArrayStringValueClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -93,8 +89,6 @@ func (client *ArrayStringValueClient) Put(ctx context.Context, body []string, op
 
 // putCreateRequest creates the Put request.
 func (client *ArrayStringValueClient) putCreateRequest(ctx context.Context, body []string, _ *ArrayStringValueClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/array/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -10,14 +10,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type SpreadClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewSpreadAliasClient creates a new instance of [SpreadAliasClient].
 func (client *SpreadClient) NewSpreadAliasClient() *SpreadAliasClient {
 	return &SpreadAliasClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -25,6 +23,5 @@ func (client *SpreadClient) NewSpreadAliasClient() *SpreadAliasClient {
 func (client *SpreadClient) NewSpreadModelClient() *SpreadModelClient {
 	return &SpreadModelClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

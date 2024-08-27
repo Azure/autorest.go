@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ContentNegotiationSameBodyClient contains the methods for the ContentNegotiationSameBody group.
 // Don't use this type directly, use [ContentNegotiationClient.NewContentNegotiationSameBodyClient] instead.
 type ContentNegotiationSameBodyClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // GetAvatarAsJPEG -
@@ -48,8 +46,6 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsJPEG(ctx context.Cont
 
 // getAvatarAsJPEGCreateRequest creates the GetAvatarAsJPEG request.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsJPEGCreateRequest(ctx context.Context, _ *ContentNegotiationSameBodyClientGetAvatarAsJPEGOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/content-negotiation/same-body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -97,8 +93,6 @@ func (client *ContentNegotiationSameBodyClient) GetAvatarAsPNG(ctx context.Conte
 
 // getAvatarAsPNGCreateRequest creates the GetAvatarAsPNG request.
 func (client *ContentNegotiationSameBodyClient) getAvatarAsPNGCreateRequest(ctx context.Context, _ *ContentNegotiationSameBodyClientGetAvatarAsPNGOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/content-negotiation/same-body"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

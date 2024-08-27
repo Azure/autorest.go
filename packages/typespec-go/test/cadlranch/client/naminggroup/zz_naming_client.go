@@ -10,21 +10,18 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // NamingClient - Describe changing names of types in a client with `@clientName`
 // Don't use this type directly, use a constructor function instead.
 type NamingClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewNamingClientModelClient creates a new instance of [NamingClientModelClient].
 func (client *NamingClient) NewNamingClientModelClient() *NamingClientModelClient {
 	return &NamingClientModelClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -32,7 +29,6 @@ func (client *NamingClient) NewNamingClientModelClient() *NamingClientModelClien
 func (client *NamingClient) NewNamingUnionEnumClient() *NamingUnionEnumClient {
 	return &NamingUnionEnumClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -62,8 +58,6 @@ func (client *NamingClient) Client(ctx context.Context, body ClientNameModel, op
 
 // clientCreateRequest creates the Client request.
 func (client *NamingClient) clientCreateRequest(ctx context.Context, body ClientNameModel, _ *NamingClientClientOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/property/client"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -102,8 +96,6 @@ func (client *NamingClient) ClientName(ctx context.Context, options *NamingClien
 
 // clientNameCreateRequest creates the ClientName request.
 func (client *NamingClient) clientNameCreateRequest(ctx context.Context, _ *NamingClientClientNameOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/operation"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -139,8 +131,6 @@ func (client *NamingClient) CompatibleWithEncodedName(ctx context.Context, body 
 
 // compatibleWithEncodedNameCreateRequest creates the CompatibleWithEncodedName request.
 func (client *NamingClient) compatibleWithEncodedNameCreateRequest(ctx context.Context, body ClientNameAndJSONEncodedNameModel, _ *NamingClientCompatibleWithEncodedNameOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/property/compatible-with-encoded-name"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -179,8 +169,6 @@ func (client *NamingClient) Language(ctx context.Context, body LanguageClientNam
 
 // languageCreateRequest creates the Language request.
 func (client *NamingClient) languageCreateRequest(ctx context.Context, body LanguageClientNameModel, _ *NamingClientLanguageOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/property/language"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,8 +207,6 @@ func (client *NamingClient) Parameter(ctx context.Context, clientName string, op
 
 // parameterCreateRequest creates the Parameter request.
 func (client *NamingClient) parameterCreateRequest(ctx context.Context, clientName string, _ *NamingClientParameterOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -258,8 +244,6 @@ func (client *NamingClient) Request(ctx context.Context, clientName string, opti
 
 // requestCreateRequest creates the Request request.
 func (client *NamingClient) requestCreateRequest(ctx context.Context, clientName string, _ *NamingClientRequestOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -296,8 +280,6 @@ func (client *NamingClient) Response(ctx context.Context, options *NamingClientR
 
 // responseCreateRequest creates the Response request.
 func (client *NamingClient) responseCreateRequest(ctx context.Context, _ *NamingClientResponseOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/client/naming/header"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

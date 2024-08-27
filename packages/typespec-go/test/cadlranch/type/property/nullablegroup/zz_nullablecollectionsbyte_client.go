@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // NullableCollectionsByteClient contains the methods for the NullableCollectionsByte group.
 // Don't use this type directly, use [NullableClient.NewNullableCollectionsByteClient] instead.
 type NullableCollectionsByteClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // GetNonNull - Get models that will return all properties in the model
@@ -48,8 +46,6 @@ func (client *NullableCollectionsByteClient) GetNonNull(ctx context.Context, opt
 
 // getNonNullCreateRequest creates the GetNonNull request.
 func (client *NullableCollectionsByteClient) getNonNullCreateRequest(ctx context.Context, _ *NullableCollectionsByteClientGetNonNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/bytes/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *NullableCollectionsByteClient) GetNull(ctx context.Context, option
 
 // getNullCreateRequest creates the GetNull request.
 func (client *NullableCollectionsByteClient) getNullCreateRequest(ctx context.Context, _ *NullableCollectionsByteClientGetNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/bytes/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -143,8 +137,6 @@ func (client *NullableCollectionsByteClient) PatchNonNull(ctx context.Context, b
 
 // patchNonNullCreateRequest creates the PatchNonNull request.
 func (client *NullableCollectionsByteClient) patchNonNullCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *NullableCollectionsByteClientPatchNonNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/bytes/non-null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -184,8 +176,6 @@ func (client *NullableCollectionsByteClient) PatchNull(ctx context.Context, body
 
 // patchNullCreateRequest creates the PatchNull request.
 func (client *NullableCollectionsByteClient) patchNullCreateRequest(ctx context.Context, body CollectionsByteProperty, _ *NullableCollectionsByteClientPatchNullOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/nullable/collections/bytes/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {

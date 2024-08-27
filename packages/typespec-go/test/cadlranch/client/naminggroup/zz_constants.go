@@ -4,6 +4,8 @@
 
 package naminggroup
 
+const host = "http://localhost:3000"
+
 type ClientExtensibleEnum string
 
 const (

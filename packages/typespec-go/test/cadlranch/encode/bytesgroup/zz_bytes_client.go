@@ -10,14 +10,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type BytesClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewBytesHeaderClient creates a new instance of [BytesHeaderClient].
 func (client *BytesClient) NewBytesHeaderClient() *BytesHeaderClient {
 	return &BytesHeaderClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -25,7 +23,6 @@ func (client *BytesClient) NewBytesHeaderClient() *BytesHeaderClient {
 func (client *BytesClient) NewBytesPropertyClient() *BytesPropertyClient {
 	return &BytesPropertyClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -33,7 +30,6 @@ func (client *BytesClient) NewBytesPropertyClient() *BytesPropertyClient {
 func (client *BytesClient) NewBytesQueryClient() *BytesQueryClient {
 	return &BytesQueryClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -41,7 +37,6 @@ func (client *BytesClient) NewBytesQueryClient() *BytesQueryClient {
 func (client *BytesClient) NewBytesRequestBodyClient() *BytesRequestBodyClient {
 	return &BytesRequestBodyClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -49,6 +44,5 @@ func (client *BytesClient) NewBytesRequestBodyClient() *BytesRequestBodyClient {
 func (client *BytesClient) NewBytesResponseBodyClient() *BytesResponseBodyClient {
 	return &BytesResponseBodyClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

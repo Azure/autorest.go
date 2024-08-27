@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // OAuth2Client - Illustrates clients generated with OAuth2 authentication.
 // Don't use this type directly, use a constructor function instead.
 type OAuth2Client struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Invalid - Check whether client is authenticated. Will return an invalid bearer error.
@@ -46,8 +44,6 @@ func (client *OAuth2Client) Invalid(ctx context.Context, options *OAuth2ClientIn
 
 // invalidCreateRequest creates the Invalid request.
 func (client *OAuth2Client) invalidCreateRequest(ctx context.Context, _ *OAuth2ClientInvalidOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/oauth2/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -83,8 +79,6 @@ func (client *OAuth2Client) Valid(ctx context.Context, options *OAuth2ClientVali
 
 // validCreateRequest creates the Valid request.
 func (client *OAuth2Client) validCreateRequest(ctx context.Context, _ *OAuth2ClientValidOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/oauth2/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

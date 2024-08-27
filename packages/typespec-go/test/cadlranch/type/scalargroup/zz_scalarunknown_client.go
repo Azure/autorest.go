@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ScalarUnknownClient contains the methods for the ScalarUnknown group.
 // Don't use this type directly, use [ScalarClient.NewScalarUnknownClient] instead.
 type ScalarUnknownClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - get unknown value
@@ -47,8 +45,6 @@ func (client *ScalarUnknownClient) Get(ctx context.Context, options *ScalarUnkno
 
 // getCreateRequest creates the Get request.
 func (client *ScalarUnknownClient) getCreateRequest(ctx context.Context, _ *ScalarUnknownClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -94,8 +90,6 @@ func (client *ScalarUnknownClient) Put(ctx context.Context, body any, options *S
 
 // putCreateRequest creates the Put request.
 func (client *ScalarUnknownClient) putCreateRequest(ctx context.Context, body any, _ *ScalarUnknownClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/unknown"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

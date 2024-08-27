@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ScalarDecimal128VerifyClient - Decimal128 type verification
 // Don't use this type directly, use [ScalarClient.NewScalarDecimal128VerifyClient] instead.
 type ScalarDecimal128VerifyClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // PrepareVerify -
@@ -48,8 +46,6 @@ func (client *ScalarDecimal128VerifyClient) PrepareVerify(ctx context.Context, o
 
 // prepareVerifyCreateRequest creates the PrepareVerify request.
 func (client *ScalarDecimal128VerifyClient) prepareVerifyCreateRequest(ctx context.Context, _ *ScalarDecimal128VerifyClientPrepareVerifyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/decimal128/prepare_verify"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,8 +91,6 @@ func (client *ScalarDecimal128VerifyClient) Verify(ctx context.Context, body flo
 
 // verifyCreateRequest creates the Verify request.
 func (client *ScalarDecimal128VerifyClient) verifyCreateRequest(ctx context.Context, body float64, _ *ScalarDecimal128VerifyClientVerifyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/scalar/decimal128/verify"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

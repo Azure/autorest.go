@@ -4,6 +4,8 @@
 
 package fixedgroup
 
+const host = "http://localhost:3000"
+
 // DaysOfWeekEnum - Days of the week
 type DaysOfWeekEnum string
 

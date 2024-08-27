@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ValueTypesFloatLiteralClient contains the methods for the ValueTypesFloatLiteral group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesFloatLiteralClient] instead.
 type ValueTypesFloatLiteralClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get call
@@ -48,8 +46,6 @@ func (client *ValueTypesFloatLiteralClient) Get(ctx context.Context, options *Va
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesFloatLiteralClient) getCreateRequest(ctx context.Context, _ *ValueTypesFloatLiteralClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/float/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *ValueTypesFloatLiteralClient) Put(ctx context.Context, body FloatL
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesFloatLiteralClient) putCreateRequest(ctx context.Context, body FloatLiteralProperty, _ *ValueTypesFloatLiteralClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/float/literal"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

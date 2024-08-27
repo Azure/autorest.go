@@ -10,14 +10,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type DatetimeClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewDatetimeHeaderClient creates a new instance of [DatetimeHeaderClient].
 func (client *DatetimeClient) NewDatetimeHeaderClient() *DatetimeHeaderClient {
 	return &DatetimeHeaderClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -25,7 +23,6 @@ func (client *DatetimeClient) NewDatetimeHeaderClient() *DatetimeHeaderClient {
 func (client *DatetimeClient) NewDatetimePropertyClient() *DatetimePropertyClient {
 	return &DatetimePropertyClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -33,7 +30,6 @@ func (client *DatetimeClient) NewDatetimePropertyClient() *DatetimePropertyClien
 func (client *DatetimeClient) NewDatetimeQueryClient() *DatetimeQueryClient {
 	return &DatetimeQueryClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -41,6 +37,5 @@ func (client *DatetimeClient) NewDatetimeQueryClient() *DatetimeQueryClient {
 func (client *DatetimeClient) NewDatetimeResponseHeaderClient() *DatetimeResponseHeaderClient {
 	return &DatetimeResponseHeaderClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

@@ -10,13 +10,11 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type JSONClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewJSONPropertyClient creates a new instance of [JSONPropertyClient].
 func (client *JSONClient) NewJSONPropertyClient() *JSONPropertyClient {
 	return &JSONPropertyClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

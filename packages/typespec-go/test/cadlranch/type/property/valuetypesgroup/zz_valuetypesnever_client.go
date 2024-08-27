@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ValueTypesNeverClient contains the methods for the ValueTypesNever group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesNeverClient] instead.
 type ValueTypesNeverClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get call
@@ -47,8 +45,6 @@ func (client *ValueTypesNeverClient) Get(ctx context.Context, options *ValueType
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesNeverClient) getCreateRequest(ctx context.Context, _ *ValueTypesNeverClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/never"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -94,8 +90,6 @@ func (client *ValueTypesNeverClient) Put(ctx context.Context, body NeverProperty
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesNeverClient) putCreateRequest(ctx context.Context, body NeverProperty, _ *ValueTypesNeverClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/never"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

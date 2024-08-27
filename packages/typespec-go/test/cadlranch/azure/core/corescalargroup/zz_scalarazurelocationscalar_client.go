@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ScalarAzureLocationScalarClient contains the methods for the ScalarAzureLocationScalar group.
 // Don't use this type directly, use [ScalarClient.NewScalarAzureLocationScalarClient] instead.
 type ScalarAzureLocationScalarClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - get azureLocation value
@@ -48,8 +46,6 @@ func (client *ScalarAzureLocationScalarClient) Get(ctx context.Context, options 
 
 // getCreateRequest creates the Get request.
 func (client *ScalarAzureLocationScalarClient) getCreateRequest(ctx context.Context, _ *ScalarAzureLocationScalarClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/scalar/azureLocation"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *ScalarAzureLocationScalarClient) Header(ctx context.Context, regio
 
 // headerCreateRequest creates the Header request.
 func (client *ScalarAzureLocationScalarClient) headerCreateRequest(ctx context.Context, region string, _ *ScalarAzureLocationScalarClientHeaderOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/scalar/azureLocation/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -136,8 +130,6 @@ func (client *ScalarAzureLocationScalarClient) Post(ctx context.Context, body Az
 
 // postCreateRequest creates the Post request.
 func (client *ScalarAzureLocationScalarClient) postCreateRequest(ctx context.Context, body AzureLocationModel, _ *ScalarAzureLocationScalarClientPostOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/scalar/azureLocation"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -188,8 +180,6 @@ func (client *ScalarAzureLocationScalarClient) Put(ctx context.Context, body str
 
 // putCreateRequest creates the Put request.
 func (client *ScalarAzureLocationScalarClient) putCreateRequest(ctx context.Context, body string, _ *ScalarAzureLocationScalarClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/scalar/azureLocation"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -230,8 +220,6 @@ func (client *ScalarAzureLocationScalarClient) Query(ctx context.Context, region
 
 // queryCreateRequest creates the Query request.
 func (client *ScalarAzureLocationScalarClient) queryCreateRequest(ctx context.Context, region string, _ *ScalarAzureLocationScalarClientQueryOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/core/scalar/azureLocation/query"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

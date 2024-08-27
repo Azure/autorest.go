@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // UnionClient - Illustrates clients generated with ApiKey and OAuth2 authentication.
 // Don't use this type directly, use a constructor function instead.
 type UnionClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // ValidKey - Check whether client is authenticated
@@ -46,8 +44,6 @@ func (client *UnionClient) ValidKey(ctx context.Context, options *UnionClientVal
 
 // validKeyCreateRequest creates the ValidKey request.
 func (client *UnionClient) validKeyCreateRequest(ctx context.Context, _ *UnionClientValidKeyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/union/validkey"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -82,8 +78,6 @@ func (client *UnionClient) ValidToken(ctx context.Context, options *UnionClientV
 
 // validTokenCreateRequest creates the ValidToken request.
 func (client *UnionClient) validTokenCreateRequest(ctx context.Context, _ *UnionClientValidTokenOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/authentication/union/validtoken"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

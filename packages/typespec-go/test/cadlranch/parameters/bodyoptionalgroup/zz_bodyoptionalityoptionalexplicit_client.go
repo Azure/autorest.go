@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // BodyOptionalityOptionalExplicitClient contains the methods for the BodyOptionalityOptionalExplicit group.
 // Don't use this type directly, use [BodyOptionalityClient.NewBodyOptionalityOptionalExplicitClient] instead.
 type BodyOptionalityOptionalExplicitClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Omit -
@@ -47,8 +45,6 @@ func (client *BodyOptionalityOptionalExplicitClient) Omit(ctx context.Context, o
 
 // omitCreateRequest creates the Omit request.
 func (client *BodyOptionalityOptionalExplicitClient) omitCreateRequest(ctx context.Context, options *BodyOptionalityOptionalExplicitClientOmitOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/body-optionality/optional-explicit/omit"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,8 +87,6 @@ func (client *BodyOptionalityOptionalExplicitClient) Set(ctx context.Context, op
 
 // setCreateRequest creates the Set request.
 func (client *BodyOptionalityOptionalExplicitClient) setCreateRequest(ctx context.Context, options *BodyOptionalityOptionalExplicitClientSetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/parameters/body-optionality/optional-explicit/set"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

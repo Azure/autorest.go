@@ -4,6 +4,8 @@
 
 package enumdiscgroup
 
+const host = "http://localhost:3000"
+
 // DogKind - extensible enum type for discriminator
 type DogKind string
 

@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // SpecialWordsModelsClient - Verify model names
 // Don't use this type directly, use [SpecialWordsClient.NewSpecialWordsModelsClient] instead.
 type SpecialWordsModelsClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // WithAnd -
@@ -47,8 +45,6 @@ func (client *SpecialWordsModelsClient) WithAnd(ctx context.Context, body And, o
 
 // withAndCreateRequest creates the WithAnd request.
 func (client *SpecialWordsModelsClient) withAndCreateRequest(ctx context.Context, body And, _ *SpecialWordsModelsClientWithAndOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/and"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,8 +84,6 @@ func (client *SpecialWordsModelsClient) WithAs(ctx context.Context, body As, opt
 
 // withAsCreateRequest creates the WithAs request.
 func (client *SpecialWordsModelsClient) withAsCreateRequest(ctx context.Context, body As, _ *SpecialWordsModelsClientWithAsOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/as"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -129,8 +123,6 @@ func (client *SpecialWordsModelsClient) WithAssert(ctx context.Context, body Ass
 
 // withAssertCreateRequest creates the WithAssert request.
 func (client *SpecialWordsModelsClient) withAssertCreateRequest(ctx context.Context, body Assert, _ *SpecialWordsModelsClientWithAssertOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/assert"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -170,8 +162,6 @@ func (client *SpecialWordsModelsClient) WithAsync(ctx context.Context, body Asyn
 
 // withAsyncCreateRequest creates the WithAsync request.
 func (client *SpecialWordsModelsClient) withAsyncCreateRequest(ctx context.Context, body Async, _ *SpecialWordsModelsClientWithAsyncOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/async"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -211,8 +201,6 @@ func (client *SpecialWordsModelsClient) WithAwait(ctx context.Context, body Awai
 
 // withAwaitCreateRequest creates the WithAwait request.
 func (client *SpecialWordsModelsClient) withAwaitCreateRequest(ctx context.Context, body Await, _ *SpecialWordsModelsClientWithAwaitOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/await"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -252,8 +240,6 @@ func (client *SpecialWordsModelsClient) WithBreak(ctx context.Context, body Brea
 
 // withBreakCreateRequest creates the WithBreak request.
 func (client *SpecialWordsModelsClient) withBreakCreateRequest(ctx context.Context, body Break, _ *SpecialWordsModelsClientWithBreakOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/break"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -293,8 +279,6 @@ func (client *SpecialWordsModelsClient) WithClass(ctx context.Context, body Clas
 
 // withClassCreateRequest creates the WithClass request.
 func (client *SpecialWordsModelsClient) withClassCreateRequest(ctx context.Context, body Class, _ *SpecialWordsModelsClientWithClassOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/class"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -334,8 +318,6 @@ func (client *SpecialWordsModelsClient) WithConstructor(ctx context.Context, bod
 
 // withConstructorCreateRequest creates the WithConstructor request.
 func (client *SpecialWordsModelsClient) withConstructorCreateRequest(ctx context.Context, body Constructor, _ *SpecialWordsModelsClientWithConstructorOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/constructor"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -375,8 +357,6 @@ func (client *SpecialWordsModelsClient) WithContinue(ctx context.Context, body C
 
 // withContinueCreateRequest creates the WithContinue request.
 func (client *SpecialWordsModelsClient) withContinueCreateRequest(ctx context.Context, body Continue, _ *SpecialWordsModelsClientWithContinueOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/continue"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -416,8 +396,6 @@ func (client *SpecialWordsModelsClient) WithDef(ctx context.Context, body Def, o
 
 // withDefCreateRequest creates the WithDef request.
 func (client *SpecialWordsModelsClient) withDefCreateRequest(ctx context.Context, body Def, _ *SpecialWordsModelsClientWithDefOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/def"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -457,8 +435,6 @@ func (client *SpecialWordsModelsClient) WithDel(ctx context.Context, body Del, o
 
 // withDelCreateRequest creates the WithDel request.
 func (client *SpecialWordsModelsClient) withDelCreateRequest(ctx context.Context, body Del, _ *SpecialWordsModelsClientWithDelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/del"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -498,8 +474,6 @@ func (client *SpecialWordsModelsClient) WithElif(ctx context.Context, body Elif,
 
 // withElifCreateRequest creates the WithElif request.
 func (client *SpecialWordsModelsClient) withElifCreateRequest(ctx context.Context, body Elif, _ *SpecialWordsModelsClientWithElifOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/elif"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -539,8 +513,6 @@ func (client *SpecialWordsModelsClient) WithElse(ctx context.Context, body Else,
 
 // withElseCreateRequest creates the WithElse request.
 func (client *SpecialWordsModelsClient) withElseCreateRequest(ctx context.Context, body Else, _ *SpecialWordsModelsClientWithElseOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/else"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -580,8 +552,6 @@ func (client *SpecialWordsModelsClient) WithExcept(ctx context.Context, body Exc
 
 // withExceptCreateRequest creates the WithExcept request.
 func (client *SpecialWordsModelsClient) withExceptCreateRequest(ctx context.Context, body Except, _ *SpecialWordsModelsClientWithExceptOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/except"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -621,8 +591,6 @@ func (client *SpecialWordsModelsClient) WithExec(ctx context.Context, body Exec,
 
 // withExecCreateRequest creates the WithExec request.
 func (client *SpecialWordsModelsClient) withExecCreateRequest(ctx context.Context, body Exec, _ *SpecialWordsModelsClientWithExecOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/exec"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -662,8 +630,6 @@ func (client *SpecialWordsModelsClient) WithFinally(ctx context.Context, body Fi
 
 // withFinallyCreateRequest creates the WithFinally request.
 func (client *SpecialWordsModelsClient) withFinallyCreateRequest(ctx context.Context, body Finally, _ *SpecialWordsModelsClientWithFinallyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/finally"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -703,8 +669,6 @@ func (client *SpecialWordsModelsClient) WithFor(ctx context.Context, body For, o
 
 // withForCreateRequest creates the WithFor request.
 func (client *SpecialWordsModelsClient) withForCreateRequest(ctx context.Context, body For, _ *SpecialWordsModelsClientWithForOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/for"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -744,8 +708,6 @@ func (client *SpecialWordsModelsClient) WithFrom(ctx context.Context, body From,
 
 // withFromCreateRequest creates the WithFrom request.
 func (client *SpecialWordsModelsClient) withFromCreateRequest(ctx context.Context, body From, _ *SpecialWordsModelsClientWithFromOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/from"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -785,8 +747,6 @@ func (client *SpecialWordsModelsClient) WithGlobal(ctx context.Context, body Glo
 
 // withGlobalCreateRequest creates the WithGlobal request.
 func (client *SpecialWordsModelsClient) withGlobalCreateRequest(ctx context.Context, body Global, _ *SpecialWordsModelsClientWithGlobalOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/global"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -826,8 +786,6 @@ func (client *SpecialWordsModelsClient) WithIf(ctx context.Context, body If, opt
 
 // withIfCreateRequest creates the WithIf request.
 func (client *SpecialWordsModelsClient) withIfCreateRequest(ctx context.Context, body If, _ *SpecialWordsModelsClientWithIfOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/if"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -867,8 +825,6 @@ func (client *SpecialWordsModelsClient) WithImport(ctx context.Context, body Imp
 
 // withImportCreateRequest creates the WithImport request.
 func (client *SpecialWordsModelsClient) withImportCreateRequest(ctx context.Context, body Import, _ *SpecialWordsModelsClientWithImportOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/import"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -908,8 +864,6 @@ func (client *SpecialWordsModelsClient) WithIn(ctx context.Context, body In, opt
 
 // withInCreateRequest creates the WithIn request.
 func (client *SpecialWordsModelsClient) withInCreateRequest(ctx context.Context, body In, _ *SpecialWordsModelsClientWithInOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/in"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -949,8 +903,6 @@ func (client *SpecialWordsModelsClient) WithIs(ctx context.Context, body Is, opt
 
 // withIsCreateRequest creates the WithIs request.
 func (client *SpecialWordsModelsClient) withIsCreateRequest(ctx context.Context, body Is, _ *SpecialWordsModelsClientWithIsOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/is"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -990,8 +942,6 @@ func (client *SpecialWordsModelsClient) WithLambda(ctx context.Context, body Lam
 
 // withLambdaCreateRequest creates the WithLambda request.
 func (client *SpecialWordsModelsClient) withLambdaCreateRequest(ctx context.Context, body Lambda, _ *SpecialWordsModelsClientWithLambdaOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/lambda"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1031,8 +981,6 @@ func (client *SpecialWordsModelsClient) WithNot(ctx context.Context, body Not, o
 
 // withNotCreateRequest creates the WithNot request.
 func (client *SpecialWordsModelsClient) withNotCreateRequest(ctx context.Context, body Not, _ *SpecialWordsModelsClientWithNotOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/not"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1072,8 +1020,6 @@ func (client *SpecialWordsModelsClient) WithOr(ctx context.Context, body Or, opt
 
 // withOrCreateRequest creates the WithOr request.
 func (client *SpecialWordsModelsClient) withOrCreateRequest(ctx context.Context, body Or, _ *SpecialWordsModelsClientWithOrOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/or"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1113,8 +1059,6 @@ func (client *SpecialWordsModelsClient) WithPass(ctx context.Context, body Pass,
 
 // withPassCreateRequest creates the WithPass request.
 func (client *SpecialWordsModelsClient) withPassCreateRequest(ctx context.Context, body Pass, _ *SpecialWordsModelsClientWithPassOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/pass"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1154,8 +1098,6 @@ func (client *SpecialWordsModelsClient) WithRaise(ctx context.Context, body Rais
 
 // withRaiseCreateRequest creates the WithRaise request.
 func (client *SpecialWordsModelsClient) withRaiseCreateRequest(ctx context.Context, body Raise, _ *SpecialWordsModelsClientWithRaiseOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/raise"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1195,8 +1137,6 @@ func (client *SpecialWordsModelsClient) WithReturn(ctx context.Context, body Ret
 
 // withReturnCreateRequest creates the WithReturn request.
 func (client *SpecialWordsModelsClient) withReturnCreateRequest(ctx context.Context, body Return, _ *SpecialWordsModelsClientWithReturnOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/return"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1236,8 +1176,6 @@ func (client *SpecialWordsModelsClient) WithTry(ctx context.Context, body Try, o
 
 // withTryCreateRequest creates the WithTry request.
 func (client *SpecialWordsModelsClient) withTryCreateRequest(ctx context.Context, body Try, _ *SpecialWordsModelsClientWithTryOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/try"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1277,8 +1215,6 @@ func (client *SpecialWordsModelsClient) WithWhile(ctx context.Context, body Whil
 
 // withWhileCreateRequest creates the WithWhile request.
 func (client *SpecialWordsModelsClient) withWhileCreateRequest(ctx context.Context, body While, _ *SpecialWordsModelsClientWithWhileOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/while"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1318,8 +1254,6 @@ func (client *SpecialWordsModelsClient) WithWith(ctx context.Context, body With,
 
 // withWithCreateRequest creates the WithWith request.
 func (client *SpecialWordsModelsClient) withWithCreateRequest(ctx context.Context, body With, _ *SpecialWordsModelsClientWithWithOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/with"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1359,8 +1293,6 @@ func (client *SpecialWordsModelsClient) WithYield(ctx context.Context, body Yiel
 
 // withYieldCreateRequest creates the WithYield request.
 func (client *SpecialWordsModelsClient) withYieldCreateRequest(ctx context.Context, body Yield, _ *SpecialWordsModelsClientWithYieldOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/special-words/models/yield"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

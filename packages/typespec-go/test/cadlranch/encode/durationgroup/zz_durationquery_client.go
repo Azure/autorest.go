@@ -19,7 +19,6 @@ import (
 // Don't use this type directly, use [DurationClient.NewDurationQueryClient] instead.
 type DurationQueryClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Default -
@@ -48,8 +47,6 @@ func (client *DurationQueryClient) Default(ctx context.Context, input string, op
 
 // defaultCreateRequest creates the Default request.
 func (client *DurationQueryClient) defaultCreateRequest(ctx context.Context, input string, _ *DurationQueryClientDefaultOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,8 +85,6 @@ func (client *DurationQueryClient) Float64Seconds(ctx context.Context, input flo
 
 // float64SecondsCreateRequest creates the Float64Seconds request.
 func (client *DurationQueryClient) float64SecondsCreateRequest(ctx context.Context, input float64, _ *DurationQueryClientFloat64SecondsOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/float64-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -128,8 +123,6 @@ func (client *DurationQueryClient) FloatSeconds(ctx context.Context, input float
 
 // floatSecondsCreateRequest creates the FloatSeconds request.
 func (client *DurationQueryClient) floatSecondsCreateRequest(ctx context.Context, input float32, _ *DurationQueryClientFloatSecondsOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/float-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -167,8 +160,6 @@ func (client *DurationQueryClient) ISO8601(ctx context.Context, input string, op
 
 // iso8601CreateRequest creates the ISO8601 request.
 func (client *DurationQueryClient) iso8601CreateRequest(ctx context.Context, input string, _ *DurationQueryClientISO8601Options) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/iso8601"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -207,8 +198,6 @@ func (client *DurationQueryClient) Int32Seconds(ctx context.Context, input int32
 
 // int32SecondsCreateRequest creates the Int32Seconds request.
 func (client *DurationQueryClient) int32SecondsCreateRequest(ctx context.Context, input int32, _ *DurationQueryClientInt32SecondsOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/int32-seconds"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -247,8 +236,6 @@ func (client *DurationQueryClient) Int32SecondsArray(ctx context.Context, input 
 
 // int32SecondsArrayCreateRequest creates the Int32SecondsArray request.
 func (client *DurationQueryClient) int32SecondsArrayCreateRequest(ctx context.Context, input []int32, _ *DurationQueryClientInt32SecondsArrayOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/duration/query/int32-seconds-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

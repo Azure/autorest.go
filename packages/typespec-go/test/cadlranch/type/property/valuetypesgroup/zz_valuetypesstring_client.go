@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ValueTypesStringClient contains the methods for the ValueTypesString group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesStringClient] instead.
 type ValueTypesStringClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get call
@@ -47,8 +45,6 @@ func (client *ValueTypesStringClient) Get(ctx context.Context, options *ValueTyp
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesStringClient) getCreateRequest(ctx context.Context, _ *ValueTypesStringClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -94,8 +90,6 @@ func (client *ValueTypesStringClient) Put(ctx context.Context, body StringProper
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesStringClient) putCreateRequest(ctx context.Context, body StringProperty, _ *ValueTypesStringClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

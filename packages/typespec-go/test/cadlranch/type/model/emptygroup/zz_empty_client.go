@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // EmptyClient - Illustrates usage of empty model used in operation's parameters and responses.
 // Don't use this type directly, use a constructor function instead.
 type EmptyClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // GetEmpty -
@@ -47,8 +45,6 @@ func (client *EmptyClient) GetEmpty(ctx context.Context, options *GetEmptyOption
 
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *EmptyClient) getEmptyCreateRequest(ctx context.Context, _ *GetEmptyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -94,8 +90,6 @@ func (client *EmptyClient) PostRoundTripEmpty(ctx context.Context, body EmptyInp
 
 // postRoundTripEmptyCreateRequest creates the PostRoundTripEmpty request.
 func (client *EmptyClient) postRoundTripEmptyCreateRequest(ctx context.Context, body EmptyInputOutput, _ *PostRoundTripEmptyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/empty/round-trip"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -144,8 +138,6 @@ func (client *EmptyClient) PutEmpty(ctx context.Context, input EmptyInput, optio
 
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *EmptyClient) putEmptyCreateRequest(ctx context.Context, input EmptyInput, _ *PutEmptyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/empty/alone"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

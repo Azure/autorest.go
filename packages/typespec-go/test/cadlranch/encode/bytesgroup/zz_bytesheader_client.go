@@ -18,7 +18,6 @@ import (
 // Don't use this type directly, use [BytesClient.NewBytesHeaderClient] instead.
 type BytesHeaderClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Base64 -
@@ -47,8 +46,6 @@ func (client *BytesHeaderClient) Base64(ctx context.Context, value []byte, optio
 
 // base64CreateRequest creates the Base64 request.
 func (client *BytesHeaderClient) base64CreateRequest(ctx context.Context, value []byte, _ *BytesHeaderClientBase64Options) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/bytes/header/base64"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -84,8 +81,6 @@ func (client *BytesHeaderClient) Base64URL(ctx context.Context, value []byte, op
 
 // base64URLCreateRequest creates the Base64URL request.
 func (client *BytesHeaderClient) base64URLCreateRequest(ctx context.Context, value []byte, _ *BytesHeaderClientBase64URLOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/bytes/header/base64url"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -122,8 +117,6 @@ func (client *BytesHeaderClient) Base64URLArray(ctx context.Context, value [][]b
 
 // base64URLArrayCreateRequest creates the Base64URLArray request.
 func (client *BytesHeaderClient) base64URLArrayCreateRequest(ctx context.Context, value [][]byte, _ *BytesHeaderClientBase64URLArrayOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/bytes/header/base64url-array"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -165,8 +158,6 @@ func (client *BytesHeaderClient) Default(ctx context.Context, value []byte, opti
 
 // defaultCreateRequest creates the Default request.
 func (client *BytesHeaderClient) defaultCreateRequest(ctx context.Context, value []byte, _ *BytesHeaderClientDefaultOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/encode/bytes/header/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

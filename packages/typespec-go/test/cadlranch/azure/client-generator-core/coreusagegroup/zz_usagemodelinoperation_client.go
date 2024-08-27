@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // UsageModelInOperationClient contains the methods for the UsageModelInOperation group.
 // Don't use this type directly, use [UsageClient.NewUsageModelInOperationClient] instead.
 type UsageModelInOperationClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // InputToInputOutput - Expected body parameter:
@@ -52,8 +50,6 @@ func (client *UsageModelInOperationClient) InputToInputOutput(ctx context.Contex
 
 // inputToInputOutputCreateRequest creates the InputToInputOutput request.
 func (client *UsageModelInOperationClient) inputToInputOutputCreateRequest(ctx context.Context, body InputModel, _ *UsageModelInOperationClientInputToInputOutputOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/usage/inputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -107,8 +103,6 @@ func (client *UsageModelInOperationClient) ModelInReadOnlyProperty(ctx context.C
 
 // modelInReadOnlyPropertyCreateRequest creates the ModelInReadOnlyProperty request.
 func (client *UsageModelInOperationClient) modelInReadOnlyPropertyCreateRequest(ctx context.Context, body RoundTripModel, _ *UsageModelInOperationClientModelInReadOnlyPropertyOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/usage/modelInReadOnlyProperty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -164,8 +158,6 @@ func (client *UsageModelInOperationClient) OutputToInputOutput(ctx context.Conte
 
 // outputToInputOutputCreateRequest creates the OutputToInputOutput request.
 func (client *UsageModelInOperationClient) outputToInputOutputCreateRequest(ctx context.Context, _ *UsageModelInOperationClientOutputToInputOutputOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/usage/outputToInputOutput"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

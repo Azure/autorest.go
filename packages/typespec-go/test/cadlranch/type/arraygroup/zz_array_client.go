@@ -10,14 +10,12 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ArrayClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewArrayBooleanValueClient creates a new instance of [ArrayBooleanValueClient].
 func (client *ArrayClient) NewArrayBooleanValueClient() *ArrayBooleanValueClient {
 	return &ArrayBooleanValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -25,7 +23,6 @@ func (client *ArrayClient) NewArrayBooleanValueClient() *ArrayBooleanValueClient
 func (client *ArrayClient) NewArrayDatetimeValueClient() *ArrayDatetimeValueClient {
 	return &ArrayDatetimeValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -33,7 +30,6 @@ func (client *ArrayClient) NewArrayDatetimeValueClient() *ArrayDatetimeValueClie
 func (client *ArrayClient) NewArrayDurationValueClient() *ArrayDurationValueClient {
 	return &ArrayDurationValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -41,7 +37,6 @@ func (client *ArrayClient) NewArrayDurationValueClient() *ArrayDurationValueClie
 func (client *ArrayClient) NewArrayFloat32ValueClient() *ArrayFloat32ValueClient {
 	return &ArrayFloat32ValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -49,7 +44,6 @@ func (client *ArrayClient) NewArrayFloat32ValueClient() *ArrayFloat32ValueClient
 func (client *ArrayClient) NewArrayInt32ValueClient() *ArrayInt32ValueClient {
 	return &ArrayInt32ValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -57,7 +51,6 @@ func (client *ArrayClient) NewArrayInt32ValueClient() *ArrayInt32ValueClient {
 func (client *ArrayClient) NewArrayInt64ValueClient() *ArrayInt64ValueClient {
 	return &ArrayInt64ValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -65,7 +58,6 @@ func (client *ArrayClient) NewArrayInt64ValueClient() *ArrayInt64ValueClient {
 func (client *ArrayClient) NewArrayModelValueClient() *ArrayModelValueClient {
 	return &ArrayModelValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -73,7 +65,6 @@ func (client *ArrayClient) NewArrayModelValueClient() *ArrayModelValueClient {
 func (client *ArrayClient) NewArrayNullableBooleanValueClient() *ArrayNullableBooleanValueClient {
 	return &ArrayNullableBooleanValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -81,7 +72,6 @@ func (client *ArrayClient) NewArrayNullableBooleanValueClient() *ArrayNullableBo
 func (client *ArrayClient) NewArrayNullableFloatValueClient() *ArrayNullableFloatValueClient {
 	return &ArrayNullableFloatValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -89,7 +79,6 @@ func (client *ArrayClient) NewArrayNullableFloatValueClient() *ArrayNullableFloa
 func (client *ArrayClient) NewArrayNullableInt32ValueClient() *ArrayNullableInt32ValueClient {
 	return &ArrayNullableInt32ValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -97,7 +86,6 @@ func (client *ArrayClient) NewArrayNullableInt32ValueClient() *ArrayNullableInt3
 func (client *ArrayClient) NewArrayNullableModelValueClient() *ArrayNullableModelValueClient {
 	return &ArrayNullableModelValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -105,7 +93,6 @@ func (client *ArrayClient) NewArrayNullableModelValueClient() *ArrayNullableMode
 func (client *ArrayClient) NewArrayNullableStringValueClient() *ArrayNullableStringValueClient {
 	return &ArrayNullableStringValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -113,7 +100,6 @@ func (client *ArrayClient) NewArrayNullableStringValueClient() *ArrayNullableStr
 func (client *ArrayClient) NewArrayStringValueClient() *ArrayStringValueClient {
 	return &ArrayStringValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
 
@@ -121,6 +107,5 @@ func (client *ArrayClient) NewArrayStringValueClient() *ArrayStringValueClient {
 func (client *ArrayClient) NewArrayUnknownValueClient() *ArrayUnknownValueClient {
 	return &ArrayUnknownValueClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

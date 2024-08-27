@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // ValueTypesExtensibleEnumClient contains the methods for the ValueTypesExtensibleEnum group.
 // Don't use this type directly, use [ValueTypesClient.NewValueTypesExtensibleEnumClient] instead.
 type ValueTypesExtensibleEnumClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get - Get call
@@ -48,8 +46,6 @@ func (client *ValueTypesExtensibleEnumClient) Get(ctx context.Context, options *
 
 // getCreateRequest creates the Get request.
 func (client *ValueTypesExtensibleEnumClient) getCreateRequest(ctx context.Context, _ *ValueTypesExtensibleEnumClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/extensible-enum"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -96,8 +92,6 @@ func (client *ValueTypesExtensibleEnumClient) Put(ctx context.Context, body Exte
 
 // putCreateRequest creates the Put request.
 func (client *ValueTypesExtensibleEnumClient) putCreateRequest(ctx context.Context, body ExtensibleEnumProperty, _ *ValueTypesExtensibleEnumClientPutOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/value-types/extensible-enum"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

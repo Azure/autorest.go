@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // OptionalDatetimeClient contains the methods for the OptionalDatetime group.
 // Don't use this type directly, use [OptionalClient.NewOptionalDatetimeClient] instead.
 type OptionalDatetimeClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // GetAll - Get models that will return all properties in the model
@@ -47,8 +45,6 @@ func (client *OptionalDatetimeClient) GetAll(ctx context.Context, options *Optio
 
 // getAllCreateRequest creates the GetAll request.
 func (client *OptionalDatetimeClient) getAllCreateRequest(ctx context.Context, _ *OptionalDatetimeClientGetAllOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/datetime/all"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -95,8 +91,6 @@ func (client *OptionalDatetimeClient) GetDefault(ctx context.Context, options *O
 
 // getDefaultCreateRequest creates the GetDefault request.
 func (client *OptionalDatetimeClient) getDefaultCreateRequest(ctx context.Context, _ *OptionalDatetimeClientGetDefaultOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/datetime/default"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -141,8 +135,6 @@ func (client *OptionalDatetimeClient) PutAll(ctx context.Context, body DatetimeP
 
 // putAllCreateRequest creates the PutAll request.
 func (client *OptionalDatetimeClient) putAllCreateRequest(ctx context.Context, body DatetimeProperty, _ *OptionalDatetimeClientPutAllOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/datetime/all"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -182,8 +174,6 @@ func (client *OptionalDatetimeClient) PutDefault(ctx context.Context, body Datet
 
 // putDefaultCreateRequest creates the PutDefault request.
 func (client *OptionalDatetimeClient) putDefaultCreateRequest(ctx context.Context, body DatetimeProperty, _ *OptionalDatetimeClientPutDefaultOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/property/optional/datetime/default"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

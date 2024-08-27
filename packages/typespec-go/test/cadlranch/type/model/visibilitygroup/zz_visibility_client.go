@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // VisibilityClient - Illustrates models with visibility properties.
 // Don't use this type directly, use a constructor function instead.
 type VisibilityClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // DeleteModel -
@@ -46,8 +44,6 @@ func (client *VisibilityClient) DeleteModel(ctx context.Context, input Visibilit
 
 // deleteModelCreateRequest creates the DeleteModel request.
 func (client *VisibilityClient) deleteModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientDeleteModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -87,8 +83,6 @@ func (client *VisibilityClient) GetModel(ctx context.Context, input VisibilityMo
 
 // getModelCreateRequest creates the GetModel request.
 func (client *VisibilityClient) getModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientGetModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -135,8 +129,6 @@ func (client *VisibilityClient) HeadModel(ctx context.Context, input VisibilityM
 
 // headModelCreateRequest creates the HeadModel request.
 func (client *VisibilityClient) headModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientHeadModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -175,8 +167,6 @@ func (client *VisibilityClient) PatchModel(ctx context.Context, input Visibility
 
 // patchModelCreateRequest creates the PatchModel request.
 func (client *VisibilityClient) patchModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientPatchModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -215,8 +205,6 @@ func (client *VisibilityClient) PostModel(ctx context.Context, input VisibilityM
 
 // postModelCreateRequest creates the PostModel request.
 func (client *VisibilityClient) postModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientPostModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -255,8 +243,6 @@ func (client *VisibilityClient) PutModel(ctx context.Context, input VisibilityMo
 
 // putModelCreateRequest creates the PutModel request.
 func (client *VisibilityClient) putModelCreateRequest(ctx context.Context, input VisibilityModel, _ *VisibilityClientPutModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -297,8 +283,6 @@ func (client *VisibilityClient) PutReadOnlyModel(ctx context.Context, input Read
 
 // putReadOnlyModelCreateRequest creates the PutReadOnlyModel request.
 func (client *VisibilityClient) putReadOnlyModelCreateRequest(ctx context.Context, input ReadOnlyModel, _ *VisibilityClientPutReadOnlyModelOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/type/model/visibility/readonlyroundtrip"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

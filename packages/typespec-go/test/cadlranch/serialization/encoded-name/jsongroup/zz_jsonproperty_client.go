@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // JSONPropertyClient contains the methods for the JSONProperty group.
 // Don't use this type directly, use [JSONClient.NewJSONPropertyClient] instead.
 type JSONPropertyClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // Get -
@@ -47,8 +45,6 @@ func (client *JSONPropertyClient) Get(ctx context.Context, options *JSONProperty
 
 // getCreateRequest creates the Get request.
 func (client *JSONPropertyClient) getCreateRequest(ctx context.Context, _ *JSONPropertyClientGetOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -93,8 +89,6 @@ func (client *JSONPropertyClient) Send(ctx context.Context, body JSONEncodedName
 
 // sendCreateRequest creates the Send request.
 func (client *JSONPropertyClient) sendCreateRequest(ctx context.Context, body JSONEncodedNameModel, _ *JSONPropertyClientSendOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/serialization/encoded-name/json/property"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

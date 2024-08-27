@@ -4,6 +4,8 @@
 
 package extensiblegroup
 
+const host = "http://localhost:3000"
+
 // DaysOfWeekExtensibleEnum - Days of the week
 type DaysOfWeekExtensibleEnum string
 

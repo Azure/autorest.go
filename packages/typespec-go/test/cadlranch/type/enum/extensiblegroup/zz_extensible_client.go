@@ -10,13 +10,11 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type ExtensibleClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewExtensibleStringClient creates a new instance of [ExtensibleStringClient].
 func (client *ExtensibleClient) NewExtensibleStringClient() *ExtensibleStringClient {
 	return &ExtensibleStringClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }

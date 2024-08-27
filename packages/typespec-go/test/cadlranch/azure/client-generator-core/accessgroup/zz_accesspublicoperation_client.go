@@ -10,14 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"strings"
 )
 
 // AccessPublicOperationClient contains the methods for the AccessPublicOperation group.
 // Don't use this type directly, use [AccessClient.NewAccessPublicOperationClient] instead.
 type AccessPublicOperationClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NoDecoratorInPublic -
@@ -48,8 +46,6 @@ func (client *AccessPublicOperationClient) NoDecoratorInPublic(ctx context.Conte
 
 // noDecoratorInPublicCreateRequest creates the NoDecoratorInPublic request.
 func (client *AccessPublicOperationClient) noDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientNoDecoratorInPublicOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/access/publicOperation/noDecoratorInPublic"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -99,8 +95,6 @@ func (client *AccessPublicOperationClient) PublicDecoratorInPublic(ctx context.C
 
 // publicDecoratorInPublicCreateRequest creates the PublicDecoratorInPublic request.
 func (client *AccessPublicOperationClient) publicDecoratorInPublicCreateRequest(ctx context.Context, name string, _ *AccessPublicOperationClientPublicDecoratorInPublicOptions) (*policy.Request, error) {
-	host := "{endpoint}"
-	host = strings.ReplaceAll(host, "{endpoint}", client.endpoint)
 	urlPath := "/azure/client-generator-core/access/publicOperation/publicDecoratorInPublic"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

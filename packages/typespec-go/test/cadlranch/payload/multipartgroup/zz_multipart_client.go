@@ -10,13 +10,11 @@ import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 // Don't use this type directly, use a constructor function instead.
 type MultiPartClient struct {
 	internal *azcore.Client
-	endpoint string
 }
 
 // NewMultiPartFormDataClient creates a new instance of [MultiPartFormDataClient].
 func (client *MultiPartClient) NewMultiPartFormDataClient() *MultiPartFormDataClient {
 	return &MultiPartFormDataClient{
 		internal: client.internal,
-		endpoint: client.endpoint,
 	}
 }
