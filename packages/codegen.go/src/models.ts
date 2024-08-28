@@ -493,7 +493,8 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += `\t\t\t\tvar aux string\n`;
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
       unmarshalBody += `\t\t\t\tif err == nil {\n`;
-      unmarshalBody += `\t\t\t\t\tv, err := strconv.${field.type.typeName.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
+      unmarshalBody += `\t\t\t\t\tvar v ${field.type.typeName.startsWith('int') ? 'int64' : 'uint64'}\n`;
+      unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.typeName.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
       unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
       if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
         unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.typeName}(v))\n`;

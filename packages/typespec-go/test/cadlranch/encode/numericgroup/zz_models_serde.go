@@ -33,7 +33,8 @@ func (s *SafeintAsStringProperty) UnmarshalJSON(data []byte) error {
 			var aux string
 			err = unpopulate(val, "Value", &aux)
 			if err == nil {
-				v, err := strconv.ParseInt(aux, 10, 0)
+				var v int64
+				v, err = strconv.ParseInt(aux, 10, 0)
 				if err == nil {
 					s.Value = to.Ptr(v)
 				}
@@ -67,7 +68,8 @@ func (u *Uint32AsStringProperty) UnmarshalJSON(data []byte) error {
 			var aux string
 			err = unpopulate(val, "Value", &aux)
 			if err == nil {
-				v, err := strconv.ParseUint(aux, 10, 0)
+				var v uint64
+				v, err = strconv.ParseUint(aux, 10, 0)
 				if err == nil {
 					u.Value = to.Ptr(uint32(v))
 				}
