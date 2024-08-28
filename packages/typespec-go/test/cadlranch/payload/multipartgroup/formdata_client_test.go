@@ -102,38 +102,7 @@ func TestFormDataClient_Complex(t *testing.T) {
 				Body: streaming.NopCloser(bytes.NewReader(pngFile)),
 			},
 		},
-		PreviousAddresses: []multipartgroup.Address{
-			{
-				City: to.Ptr("Y"),
-			},
-			{
-				City: to.Ptr("Z"),
-			},
-		},
 		ProfileImage: streaming.MultipartContent{Body: jpgFile},
-	}, nil)
-	require.NoError(t, err)
-	require.Zero(t, resp)
-}
-
-func TestFormDataClient_JSONArrayParts(t *testing.T) {
-	client, err := multipartgroup.NewMultiPartClient(nil)
-	require.NoError(t, err)
-	jpgFile, err := os.OpenFile("../../../../node_modules/@azure-tools/cadl-ranch-specs/assets/image.jpg", os.O_RDONLY, 0)
-	require.NoError(t, err)
-	defer jpgFile.Close()
-	resp, err := client.NewMultiPartFormDataClient().JSONArrayParts(context.Background(), multipartgroup.JSONArrayPartsRequest{
-		PreviousAddresses: []multipartgroup.Address{
-			{
-				City: to.Ptr("Y"),
-			},
-			{
-				City: to.Ptr("Z"),
-			},
-		},
-		ProfileImage: streaming.MultipartContent{
-			Body: jpgFile,
-		},
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
