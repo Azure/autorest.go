@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestFlattenClient_PutFlattenModel(t *testing.T) {
-	client, err := flattengroup.NewFlattenClient(nil)
+func TestFlattenPropertyClient_PutFlattenModel(t *testing.T) {
+	client, err := flattengroup.NewFlattenPropertyClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutFlattenModel(context.Background(), flattengroup.FlattenModel{
 		Name: to.Ptr("foo"),
@@ -32,8 +32,8 @@ func TestFlattenClient_PutFlattenModel(t *testing.T) {
 	}, resp.FlattenModel)
 }
 
-func TestFlattenClient_PutNestedFlattenModel(t *testing.T) {
-	client, err := flattengroup.NewFlattenClient(nil)
+func TestFlattenPropertyClient_PutNestedFlattenModel(t *testing.T) {
+	client, err := flattengroup.NewFlattenPropertyClient(nil)
 	require.NoError(t, err)
 	resp, err := client.PutNestedFlattenModel(context.Background(), flattengroup.NestedFlattenModel{
 		Name: to.Ptr("foo"),

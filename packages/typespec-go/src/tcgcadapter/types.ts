@@ -167,6 +167,7 @@ export class typeAdapter {
       case 'uint16':
       case 'uint32':
       case 'uint64':
+      case 'safeint':
       case 'plainDate':
       case 'plainTime':
       case 'string':
@@ -375,14 +376,24 @@ export class typeAdapter {
       case 'uint16':
       case 'uint32':
       case 'uint64': {
-        const keyName = type.kind;
+        const keyName = type.encode === 'string' ? `${type.kind}-string` : type.kind;
         let intType = this.types.get(keyName);
         if (intType) {
           return intType;
         }
-        intType = new go.PrimitiveType(type.kind);
+        intType = new go.PrimitiveType(type.kind, type.encode === 'string');
         this.types.set(keyName, intType);
         return intType;
+      }
+      case 'safeint': {
+        const safeintkey = type.encode === 'string' ? 'int64-string' : 'int64';
+        let int64 = this.types.get(safeintkey);
+        if (int64) {
+          return int64;
+        }
+        int64 = new go.PrimitiveType('int64', type.encode === 'string');
+        this.types.set(safeintkey, int64);
+        return int64;
       }
       case 'string':
       case 'url': {

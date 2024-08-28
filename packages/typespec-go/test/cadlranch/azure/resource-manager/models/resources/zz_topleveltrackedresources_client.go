@@ -39,6 +39,66 @@ func NewTopLevelTrackedResourcesClient(subscriptionID string, credential azcore.
 	return client, nil
 }
 
+// ActionSync - A synchronous resource action that returns no content.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2023-12-01-preview
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - topLevelTrackedResourceName - arm resource name for path
+//   - body - The content of the action request
+//   - options - TopLevelTrackedResourcesClientActionSyncOptions contains the optional parameters for the TopLevelTrackedResourcesClient.ActionSync
+//     method.
+func (client *TopLevelTrackedResourcesClient) ActionSync(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, options *TopLevelTrackedResourcesClientActionSyncOptions) (TopLevelTrackedResourcesClientActionSyncResponse, error) {
+	var err error
+	const operationName = "TopLevelTrackedResourcesClient.ActionSync"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.actionSyncCreateRequest(ctx, resourceGroupName, topLevelTrackedResourceName, body, options)
+	if err != nil {
+		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return TopLevelTrackedResourcesClientActionSyncResponse{}, err
+	}
+	return TopLevelTrackedResourcesClientActionSyncResponse{}, nil
+}
+
+// actionSyncCreateRequest creates the ActionSync request.
+func (client *TopLevelTrackedResourcesClient) actionSyncCreateRequest(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, body NotificationDetails, _ *TopLevelTrackedResourcesClientActionSyncOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Models.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}/actionSync"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if topLevelTrackedResourceName == "" {
+		return nil, errors.New("parameter topLevelTrackedResourceName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{topLevelTrackedResourceName}", url.PathEscape(topLevelTrackedResourceName))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2023-12-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, body); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // BeginCreateOrReplace - Create a TopLevelTrackedResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //

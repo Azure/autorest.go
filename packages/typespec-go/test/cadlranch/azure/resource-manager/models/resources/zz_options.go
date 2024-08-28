@@ -36,6 +36,12 @@ type NestedProxyResourcesClientListByTopLevelTrackedResourceOptions struct {
 	// placeholder for future optional parameters
 }
 
+// TopLevelTrackedResourcesClientActionSyncOptions contains the optional parameters for the TopLevelTrackedResourcesClient.ActionSync
+// method.
+type TopLevelTrackedResourcesClientActionSyncOptions struct {
+	// placeholder for future optional parameters
+}
+
 // TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions contains the optional parameters for the TopLevelTrackedResourcesClient.BeginCreateOrReplace
 // method.
 type TopLevelTrackedResourcesClientBeginCreateOrReplaceOptions struct {

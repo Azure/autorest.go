@@ -32,9 +32,27 @@ type MultiPartFormDataClientComplexOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultiPartFormDataClientJSONArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.JSONArrayParts
+// MultiPartFormDataClientComplexWithHTTPPartOptions contains the optional parameters for the MultiPartFormDataClient.ComplexWithHTTPPart
 // method.
-type MultiPartFormDataClientJSONArrayPartsOptions struct {
+type MultiPartFormDataClientComplexWithHTTPPartOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartOptionalContentType
+// method.
+type MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartRequiredContentType
+// method.
+type MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartSpecificContentType
+// method.
+type MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions struct {
 	// placeholder for future optional parameters
 }
 

@@ -130,6 +130,8 @@ export type PrimitiveTypeName = 'any' | 'bool' | 'byte' | 'float32' | 'float64' 
 
 export type BytesEncoding = 'Std' | 'URL';
 
+export type PrimitiveEncoding = 'string';
+
 // BytesType is a base-64 encoded sequence of bytes
 export interface BytesType {
   encoding: BytesEncoding;
@@ -138,6 +140,7 @@ export interface BytesType {
 // PrimitiveType is a Go integral type
 export interface PrimitiveType {
   typeName: PrimitiveTypeName;
+  encodeAsString?: boolean;
 }
 
 export type LiteralValueType = BytesType | ConstantType | PrimitiveType | TimeType;
@@ -428,8 +431,9 @@ export class BytesType implements BytesType {
 }
 
 export class PrimitiveType implements PrimitiveType {
-  constructor(typeName: PrimitiveTypeName) {
+  constructor(typeName: PrimitiveTypeName, encodeAsString?: boolean) {
     this.typeName = typeName;
+    this.encodeAsString = encodeAsString;
   }
 }
 

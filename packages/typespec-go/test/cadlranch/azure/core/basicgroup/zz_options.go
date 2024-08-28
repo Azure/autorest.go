@@ -52,32 +52,3 @@ type BasicClientListOptions struct {
 	// The number of result items to return.
 	Top *int32
 }
-
-// BasicClientListWithCustomPageModelOptions contains the optional parameters for the BasicClient.NewListWithCustomPageModelPager
-// method.
-type BasicClientListWithCustomPageModelOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BasicClientListWithPageOptions contains the optional parameters for the BasicClient.NewListWithPagePager method.
-type BasicClientListWithPageOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BasicClientListWithParametersOptions contains the optional parameters for the BasicClient.NewListWithParametersPager method.
-type BasicClientListWithParametersOptions struct {
-	// Another query parameter.
-	Another *ListItemInputExtensibleEnum
-}
-
-// BasicTwoModelsAsPageItemClientListFirstItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListFirstItemPager
-// method.
-type BasicTwoModelsAsPageItemClientListFirstItemOptions struct {
-	// placeholder for future optional parameters
-}
-
-// BasicTwoModelsAsPageItemClientListSecondItemOptions contains the optional parameters for the BasicTwoModelsAsPageItemClient.NewListSecondItemPager
-// method.
-type BasicTwoModelsAsPageItemClientListSecondItemOptions struct {
-	// placeholder for future optional parameters
-}

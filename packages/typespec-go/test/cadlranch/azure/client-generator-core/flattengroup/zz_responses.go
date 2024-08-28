@@ -4,14 +4,14 @@
 
 package flattengroup
 
-// FlattenClientPutFlattenModelResponse contains the response from method FlattenClient.PutFlattenModel.
-type FlattenClientPutFlattenModelResponse struct {
+// FlattenPropertyClientPutFlattenModelResponse contains the response from method FlattenPropertyClient.PutFlattenModel.
+type FlattenPropertyClientPutFlattenModelResponse struct {
 	// This is the model with one level of flattening.
 	FlattenModel
 }
 
-// FlattenClientPutNestedFlattenModelResponse contains the response from method FlattenClient.PutNestedFlattenModel.
-type FlattenClientPutNestedFlattenModelResponse struct {
+// FlattenPropertyClientPutNestedFlattenModelResponse contains the response from method FlattenPropertyClient.PutNestedFlattenModel.
+type FlattenPropertyClientPutNestedFlattenModelResponse struct {
 	// This is the model with two levels of flattening.
 	NestedFlattenModel
 }
