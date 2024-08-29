@@ -373,6 +373,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
         modelDef.SerDe.needsJSONPopulate = true;
       }
       if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+        // TODO: need to handle map and slice type with underlying int as string type
         imports.add('strconv');
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
         if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
@@ -489,6 +490,7 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
       unmarshalBody += '\t\t\tif string(val) != "null" {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
     } else if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+      // TODO: need to handle map and slice type with underlying int as string type
       imports.add('strconv');
       unmarshalBody += `\t\t\t\tvar aux string\n`;
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
