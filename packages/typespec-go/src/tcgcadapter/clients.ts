@@ -8,7 +8,7 @@ import * as tcgc from '@azure-tools/typespec-client-generator-core';
 import * as go from '../../../codemodel.go/src/index.js';
 import { capitalize, createOptionsTypeDescription, createResponseEnvelopeDescription, ensureNameCase, getEscapedReservedName, uncapitalize } from '../../../naming.go/src/naming.js';
 import { GoEmitterOptions } from '../lib.js';
-import { isTypePassedByValue, typeAdapter } from './types.js';
+import { getEndpointType, isTypePassedByValue, typeAdapter } from './types.js';
 
 // used to convert SDK clients and their methods to Go code model types
 export class clientAdapter {
@@ -90,13 +90,14 @@ export class clientAdapter {
         if (param.kind === 'credential') {
           // skip this for now as we don't generate client constructors
           continue;
-        } else if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
+        } else if (param.kind === 'endpoint') {
+          const paramType = getEndpointType(param);
           // this will either be a fixed or templated host
           // don't set the fixed host for ARM as it isn't used
           if (this.ta.codeModel.type !== 'azure-arm') {
-            goClient.host = param.type.serverUrl;
+            goClient.host = paramType.serverUrl;
           }
-          if (param.type.templateArguments.length === 0) {
+          if (paramType.templateArguments.length === 0) {
             // this is the param for the fixed host, don't create a param for it
             if (!this.ta.codeModel.host) {
               this.ta.codeModel.host = goClient.host;
@@ -105,7 +106,7 @@ export class clientAdapter {
             }
           } else {
             goClient.templatedHost = true;
-            for (const templateArg of param.type.templateArguments) {
+            for (const templateArg of paramType.templateArguments) {
               goClient.parameters.push(this.adaptURIParam(templateArg));
             }
           }
@@ -444,7 +445,7 @@ export class clientAdapter {
       }
     } else if (param.kind === 'header') {
       if (param.collectionFormat) {
-        if (param.collectionFormat === 'multi') {
+        if (param.collectionFormat === 'multi' || param.collectionFormat === 'form') {
           throw new Error('unexpected collection format multi for HeaderCollectionParameter');
         }
         // TODO: is hard-coded false for element type by value correct?
@@ -452,12 +453,12 @@ export class clientAdapter {
         if (!go.isSliceType(type)) {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for HeaderCollectionParameter ${param.name}`);
         }
-        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat, paramKind, byVal, location);
+        adaptedParam = new go.HeaderCollectionParameter(paramName, param.serializedName, type, param.collectionFormat === 'simple' ? 'csv' : param.collectionFormat, paramKind, byVal, location);
       } else {
         adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramKind, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode, this.adaptPathParameterType(param.type), paramKind, byVal, location);
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode || !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
@@ -465,7 +466,7 @@ export class clientAdapter {
           throw new Error(`unexpected type ${go.getTypeDeclaration(type)} for QueryCollectionParameter ${param.name}`);
         }
         // TODO: unencoded query param
-        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat, paramKind, byVal, location);
+        adaptedParam = new go.QueryCollectionParameter(paramName, param.serializedName, true, type, param.collectionFormat === 'simple' ? 'csv' : (param.collectionFormat === 'form' ? 'multi' : param.collectionFormat), paramKind, byVal, location);
       } else {
         // TODO: unencoded query param
         adaptedParam = new go.QueryParameter(paramName, param.serializedName, true, this.adaptQueryParameterType(param.type), paramKind, byVal, location);
@@ -672,10 +673,7 @@ export class clientAdapter {
   private adaptHttpOperationExamples(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method, paramMapping: Map<tcgc.SdkHttpParameter, Array<go.Parameter>>) {
     if (sdkMethod.operation.examples) {
       for (const example of sdkMethod.operation.examples) {
-        const regex = /(\/specification\/|\/tsp\/).*/;
-        const match = example.filePath.match(regex);
-        const filePath = match ? match[0] : example.filePath;
-        const goExample = new go.MethodExample(example.name, example.description, filePath);
+        const goExample = new go.MethodExample(example.name, example.description, example.filePath);
         for (const param of example.parameters) {
           const goParams = paramMapping.get(param.parameter);
           if (!goParams) {

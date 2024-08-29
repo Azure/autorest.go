@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/MongoCluster.Management/examples/2024-03-01-preview/MongoClusters_PrivateLinkResourceList.json
+// Generated from example definition: 2024-03-01-preview/MongoClusters_PrivateLinkResourceList.json
 func ExamplePrivateLinksClient_NewListByMongoClusterPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

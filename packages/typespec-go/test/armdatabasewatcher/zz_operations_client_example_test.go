@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/DatabaseWatcher.Management/examples/2023-09-01-preview/Operations_List_200.json
+// Generated from example definition: 2023-09-01-preview/Operations_List_200.json
 func ExampleOperationsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {

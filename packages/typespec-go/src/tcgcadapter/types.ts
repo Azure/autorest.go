@@ -804,8 +804,9 @@ export class typeAdapter {
     // traverse all client initialization params and methods to find the set of referenced enums and models
     for (const client of sdkContext.sdkPackage.clients) {
       for (const param of client.initialization.properties) {
-        if (param.kind === 'endpoint' && param.type.kind === 'endpoint') {
-          for (const templateArg of param.type.templateArguments) {
+        if (param.kind === 'endpoint') {
+          const endpointType = getEndpointType(param);
+          for (const templateArg of endpointType.templateArguments) {
             recursiveAddReferencedType(templateArg.type);
           }
         }
@@ -924,6 +925,22 @@ export class typeAdapter {
       }
     }
   }
+}
+
+export function getEndpointType(param: tcgc.SdkEndpointParameter) {
+  // for multiple endpoint, currently we only generate the first one
+  let endpointType: tcgc.SdkEndpointType;
+  if (param.type.kind === 'endpoint') {
+    endpointType = param.type;
+  } else {
+    endpointType = param.type.values[0];
+  }
+  // for endpoint with only a template argument with default value, we fall back to constant endpoint
+  if (endpointType.templateArguments.length === 1 && endpointType.templateArguments[0].clientDefaultValue) {
+    endpointType.serverUrl = endpointType.templateArguments[0].clientDefaultValue;
+    endpointType.templateArguments = [];
+  }
+  return endpointType;
 }
 
 function getPrimitiveType(kind: tcgc.SdkBuiltInKinds): 'bool' | 'float32' | 'float64' | 'int32' | 'int64' | 'string' {

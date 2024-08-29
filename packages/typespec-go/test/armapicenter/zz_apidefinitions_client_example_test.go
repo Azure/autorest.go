@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_CreateOrUpdate.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_CreateOrUpdate.json
 func ExampleAPIDefinitionsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -56,7 +56,7 @@ func ExampleAPIDefinitionsClient_CreateOrUpdate() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_Delete.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_Delete.json
 func ExampleAPIDefinitionsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -78,7 +78,7 @@ func ExampleAPIDefinitionsClient_Delete() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_ExportSpecification.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_ExportSpecification.json
 func ExampleAPIDefinitionsClient_BeginExportSpecification() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -108,7 +108,7 @@ func ExampleAPIDefinitionsClient_BeginExportSpecification() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_Get.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_Get.json
 func ExampleAPIDefinitionsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -147,7 +147,7 @@ func ExampleAPIDefinitionsClient_Get() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_Head.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_Head.json
 func ExampleAPIDefinitionsClient_Head() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -169,7 +169,7 @@ func ExampleAPIDefinitionsClient_Head() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_ImportSpecification.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_ImportSpecification.json
 func ExampleAPIDefinitionsClient_BeginImportSpecification() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
@@ -202,7 +202,7 @@ func ExampleAPIDefinitionsClient_BeginImportSpecification() {
 	// }
 }
 
-// Generated from example definition: /tsp/ApiCenter.Management/examples/2024-03-15-preview/ApiDefinitions_List.json
+// Generated from example definition: 2024-03-15-preview/ApiDefinitions_List.json
 func ExampleAPIDefinitionsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
