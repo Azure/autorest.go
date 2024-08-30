@@ -35,23 +35,12 @@ func getOptional[T any](v T) *T {
 	return &v
 }
 
-func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
-	if v == "" {
-		return nil, nil
+func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {
+	mu.Lock()
+	if *dst == nil {
+		*dst = src()
 	}
-	t, err := parse(v)
-	if err != nil {
-		return nil, err
-	}
-	return &t, err
-}
-
-func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) {
-	t, err := parse(v)
-	if err != nil {
-		return *new(T), err
-	}
-	return t, err
+	mu.Unlock()
 }
 
 func newTracker[T any]() *tracker[T] {

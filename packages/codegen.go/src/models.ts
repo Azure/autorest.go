@@ -372,7 +372,18 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       } else {
         modelDef.SerDe.needsJSONPopulate = true;
       }
-      marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.name})\n`;
+      if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+        // TODO: need to handle map and slice type with underlying int as string type
+        imports.add('strconv');
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+        if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
+          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.typeName.startsWith('int') ? 'FormatInt' : 'FormatUint'}(${field.type.typeName.startsWith('int') ? 'int64' : 'uint64'}(*${receiver}.${field.name}), 10)))\n`;
+        } else {
+          marshaller += `\t${populate}(objectMap, "${field.serializedName}", to.Ptr(strconv.${field.type.typeName.startsWith('int') ? 'FormatInt' : 'FormatUint'}(*${receiver}.${field.name}, 10)))\n`;
+        }
+      } else {
+        marshaller += `\t${populate}(objectMap, "${field.serializedName}", ${receiver}.${field.name})\n`;
+      }
     }
   }
   if (addlProps) {
@@ -478,6 +489,23 @@ function generateJSONUnmarshallerBody(modelType: go.ModelType | go.PolymorphicTy
     } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
       unmarshalBody += '\t\t\tif string(val) != "null" {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${field.name} = val\n\t\t\t}\n`;
+    } else if (go.isPrimitiveType(field.type) && (field.type.typeName.startsWith('uint') || field.type.typeName.startsWith('int')) && field.type.encodeAsString) {
+      // TODO: need to handle map and slice type with underlying int as string type
+      imports.add('strconv');
+      unmarshalBody += `\t\t\t\tvar aux string\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &aux)\n`;
+      unmarshalBody += `\t\t\t\tif err == nil {\n`;
+      unmarshalBody += `\t\t\t\t\tvar v ${field.type.typeName.startsWith('int') ? 'int64' : 'uint64'}\n`;
+      unmarshalBody += `\t\t\t\t\tv, err = strconv.${field.type.typeName.startsWith('int') ? 'ParseInt' : 'ParseUint'}(aux, 10, 0)\n`;
+      unmarshalBody += `\t\t\t\t\tif err == nil {\n`;
+      if (field.type.typeName.startsWith('uint') && field.type.typeName !== 'uint64' || field.type.typeName.startsWith('int') && field.type.typeName !== 'int64') {
+        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(${field.type.typeName}(v))\n`;
+      } else {
+        unmarshalBody += `\t\t\t\t\t\t${receiver}.${field.name} = to.Ptr(v)\n`;
+      }
+      unmarshalBody += '\t\t\t\t\t}\n';
+      unmarshalBody += '\t\t\t\t}\n';
+      modelDef.SerDe.needsJSONUnpopulate = true;
     } else {
       unmarshalBody += `\t\t\t\terr = unpopulate(val, "${field.name}", &${receiver}.${field.name})\n`;
       modelDef.SerDe.needsJSONUnpopulate = true;

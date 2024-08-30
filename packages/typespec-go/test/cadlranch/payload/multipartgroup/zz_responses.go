@@ -29,8 +29,23 @@ type MultiPartFormDataClientComplexResponse struct {
 	// placeholder for future response values
 }
 
-// MultiPartFormDataClientJSONArrayPartsResponse contains the response from method MultiPartFormDataClient.JSONArrayParts.
-type MultiPartFormDataClientJSONArrayPartsResponse struct {
+// MultiPartFormDataClientComplexWithHTTPPartResponse contains the response from method MultiPartFormDataClient.ComplexWithHTTPPart.
+type MultiPartFormDataClientComplexWithHTTPPartResponse struct {
+	// placeholder for future response values
+}
+
+// MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse contains the response from method MultiPartFormDataClient.FileWithHTTPPartOptionalContentType.
+type MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse struct {
+	// placeholder for future response values
+}
+
+// MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse contains the response from method MultiPartFormDataClient.FileWithHTTPPartRequiredContentType.
+type MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse struct {
+	// placeholder for future response values
+}
+
+// MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse contains the response from method MultiPartFormDataClient.FileWithHTTPPartSpecificContentType.
+type MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse struct {
 	// placeholder for future response values
 }
 

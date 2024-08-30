@@ -17,15 +17,10 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
-	"strings"
-	"sync"
 )
 
 // BasicServer is a fake server for instances of the basicgroup.BasicClient type.
 type BasicServer struct {
-	// BasicTwoModelsAsPageItemServer contains the fakes for client BasicTwoModelsAsPageItemClient
-	BasicTwoModelsAsPageItemServer BasicTwoModelsAsPageItemServer
-
 	// CreateOrReplace is the fake for method BasicClient.CreateOrReplace
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrReplace func(ctx context.Context, id int32, resource basicgroup.User, options *basicgroup.BasicClientCreateOrReplaceOptions) (resp azfake.Responder[basicgroup.BasicClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
@@ -49,18 +44,6 @@ type BasicServer struct {
 	// NewListPager is the fake for method BasicClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(options *basicgroup.BasicClientListOptions) (resp azfake.PagerResponder[basicgroup.BasicClientListResponse])
-
-	// NewListWithCustomPageModelPager is the fake for method BasicClient.NewListWithCustomPageModelPager
-	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithCustomPageModelPager func(options *basicgroup.BasicClientListWithCustomPageModelOptions) (resp azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse])
-
-	// NewListWithPagePager is the fake for method BasicClient.NewListWithPagePager
-	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithPagePager func(options *basicgroup.BasicClientListWithPageOptions) (resp azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse])
-
-	// NewListWithParametersPager is the fake for method BasicClient.NewListWithParametersPager
-	// HTTP status codes to indicate success: http.StatusOK
-	NewListWithParametersPager func(bodyInput basicgroup.ListItemInputBody, options *basicgroup.BasicClientListWithParametersOptions) (resp azfake.PagerResponder[basicgroup.BasicClientListWithParametersResponse])
 }
 
 // NewBasicServerTransport creates a new instance of BasicServerTransport with the provided implementation.
@@ -68,24 +51,16 @@ type BasicServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewBasicServerTransport(srv *BasicServer) *BasicServerTransport {
 	return &BasicServerTransport{
-		srv:                             srv,
-		newListPager:                    newTracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]](),
-		newListWithCustomPageModelPager: newTracker[azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse]](),
-		newListWithPagePager:            newTracker[azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse]](),
-		newListWithParametersPager:      newTracker[azfake.PagerResponder[basicgroup.BasicClientListWithParametersResponse]](),
+		srv:          srv,
+		newListPager: newTracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]](),
 	}
 }
 
 // BasicServerTransport connects instances of basicgroup.BasicClient to instances of BasicServer.
 // Don't use this type directly, use NewBasicServerTransport instead.
 type BasicServerTransport struct {
-	srv                              *BasicServer
-	trMu                             sync.Mutex
-	trBasicTwoModelsAsPageItemServer *BasicTwoModelsAsPageItemServerTransport
-	newListPager                     *tracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]]
-	newListWithCustomPageModelPager  *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithCustomPageModelResponse]]
-	newListWithPagePager             *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithPageResponse]]
-	newListWithParametersPager       *tracker[azfake.PagerResponder[basicgroup.BasicClientListWithParametersResponse]]
+	srv          *BasicServer
+	newListPager *tracker[azfake.PagerResponder[basicgroup.BasicClientListResponse]]
 }
 
 // Do implements the policy.Transporter interface for BasicServerTransport.
@@ -96,27 +71,7 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 		return nil, nonRetriableError{errors.New("unable to dispatch request, missing value for CtxAPINameKey")}
 	}
 
-	if client := method[:strings.Index(method, ".")]; client != "BasicClient" {
-		return b.dispatchToClientFake(req, client)
-	}
 	return b.dispatchToMethodFake(req, method)
-}
-
-func (b *BasicServerTransport) dispatchToClientFake(req *http.Request, client string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
-
-	switch client {
-	case "BasicTwoModelsAsPageItemClient":
-		initServer(&b.trMu, &b.trBasicTwoModelsAsPageItemServer, func() *BasicTwoModelsAsPageItemServerTransport {
-			return NewBasicTwoModelsAsPageItemServerTransport(&b.srv.BasicTwoModelsAsPageItemServer)
-		})
-		resp, err = b.trBasicTwoModelsAsPageItemServer.Do(req)
-	default:
-		err = fmt.Errorf("unhandled client %s", client)
-	}
-
-	return resp, err
 }
 
 func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
@@ -136,12 +91,6 @@ func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method st
 		resp, err = b.dispatchGet(req)
 	case "BasicClient.NewListPager":
 		resp, err = b.dispatchNewListPager(req)
-	case "BasicClient.NewListWithCustomPageModelPager":
-		resp, err = b.dispatchNewListWithCustomPageModelPager(req)
-	case "BasicClient.NewListWithPagePager":
-		resp, err = b.dispatchNewListWithPagePager(req)
-	case "BasicClient.NewListWithParametersPager":
-		resp, err = b.dispatchNewListWithParametersPager(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -467,103 +416,6 @@ func (b *BasicServerTransport) dispatchNewListPager(req *http.Request) (*http.Re
 	}
 	if !server.PagerResponderMore(newListPager) {
 		b.newListPager.remove(req)
-	}
-	return resp, nil
-}
-
-func (b *BasicServerTransport) dispatchNewListWithCustomPageModelPager(req *http.Request) (*http.Response, error) {
-	if b.srv.NewListWithCustomPageModelPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewListWithCustomPageModelPager not implemented")}
-	}
-	newListWithCustomPageModelPager := b.newListWithCustomPageModelPager.get(req)
-	if newListWithCustomPageModelPager == nil {
-		resp := b.srv.NewListWithCustomPageModelPager(nil)
-		newListWithCustomPageModelPager = &resp
-		b.newListWithCustomPageModelPager.add(req, newListWithCustomPageModelPager)
-		server.PagerResponderInjectNextLinks(newListWithCustomPageModelPager, req, func(page *basicgroup.BasicClientListWithCustomPageModelResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newListWithCustomPageModelPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		b.newListWithCustomPageModelPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newListWithCustomPageModelPager) {
-		b.newListWithCustomPageModelPager.remove(req)
-	}
-	return resp, nil
-}
-
-func (b *BasicServerTransport) dispatchNewListWithPagePager(req *http.Request) (*http.Response, error) {
-	if b.srv.NewListWithPagePager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewListWithPagePager not implemented")}
-	}
-	newListWithPagePager := b.newListWithPagePager.get(req)
-	if newListWithPagePager == nil {
-		resp := b.srv.NewListWithPagePager(nil)
-		newListWithPagePager = &resp
-		b.newListWithPagePager.add(req, newListWithPagePager)
-		server.PagerResponderInjectNextLinks(newListWithPagePager, req, func(page *basicgroup.BasicClientListWithPageResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newListWithPagePager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		b.newListWithPagePager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newListWithPagePager) {
-		b.newListWithPagePager.remove(req)
-	}
-	return resp, nil
-}
-
-func (b *BasicServerTransport) dispatchNewListWithParametersPager(req *http.Request) (*http.Response, error) {
-	if b.srv.NewListWithParametersPager == nil {
-		return nil, &nonRetriableError{errors.New("fake for method NewListWithParametersPager not implemented")}
-	}
-	newListWithParametersPager := b.newListWithParametersPager.get(req)
-	if newListWithParametersPager == nil {
-		qp := req.URL.Query()
-		body, err := server.UnmarshalRequestAsJSON[basicgroup.ListItemInputBody](req)
-		if err != nil {
-			return nil, err
-		}
-		anotherUnescaped, err := url.QueryUnescape(qp.Get("another"))
-		if err != nil {
-			return nil, err
-		}
-		anotherParam := getOptional(basicgroup.ListItemInputExtensibleEnum(anotherUnescaped))
-		var options *basicgroup.BasicClientListWithParametersOptions
-		if anotherParam != nil {
-			options = &basicgroup.BasicClientListWithParametersOptions{
-				Another: anotherParam,
-			}
-		}
-		resp := b.srv.NewListWithParametersPager(body, options)
-		newListWithParametersPager = &resp
-		b.newListWithParametersPager.add(req, newListWithParametersPager)
-		server.PagerResponderInjectNextLinks(newListWithParametersPager, req, func(page *basicgroup.BasicClientListWithParametersResponse, createLink func() string) {
-			page.NextLink = to.Ptr(createLink())
-		})
-	}
-	resp, err := server.PagerResponderNext(newListWithParametersPager, req)
-	if err != nil {
-		return nil, err
-	}
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
-		b.newListWithParametersPager.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
-	}
-	if !server.PagerResponderMore(newListWithParametersPager) {
-		b.newListWithParametersPager.remove(req)
 	}
 	return resp, nil
 }

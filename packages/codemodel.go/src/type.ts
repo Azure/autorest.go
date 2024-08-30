@@ -138,6 +138,7 @@ export interface BytesType {
 // PrimitiveType is a Go integral type
 export interface PrimitiveType {
   typeName: PrimitiveTypeName;
+  encodeAsString: boolean;
 }
 
 export type LiteralValueType = BytesType | ConstantType | PrimitiveType | TimeType;
@@ -428,8 +429,9 @@ export class BytesType implements BytesType {
 }
 
 export class PrimitiveType implements PrimitiveType {
-  constructor(typeName: PrimitiveTypeName) {
+  constructor(typeName: PrimitiveTypeName, encodeAsString?: boolean) {
     this.typeName = typeName;
+    this.encodeAsString = encodeAsString ?? false;
   }
 }
 

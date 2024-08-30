@@ -43,9 +43,21 @@ type MultiPartFormDataServer struct {
 	// HTTP status codes to indicate success: http.StatusNoContent
 	Complex func(ctx context.Context, body multipartgroup.ComplexPartsRequest, options *multipartgroup.MultiPartFormDataClientComplexOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientComplexResponse], errResp azfake.ErrorResponder)
 
-	// JSONArrayParts is the fake for method MultiPartFormDataClient.JSONArrayParts
+	// ComplexWithHTTPPart is the fake for method MultiPartFormDataClient.ComplexWithHTTPPart
 	// HTTP status codes to indicate success: http.StatusNoContent
-	JSONArrayParts func(ctx context.Context, body multipartgroup.JSONArrayPartsRequest, options *multipartgroup.MultiPartFormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder)
+	ComplexWithHTTPPart func(ctx context.Context, body multipartgroup.ComplexHTTPPartsModelRequest, options *multipartgroup.MultiPartFormDataClientComplexWithHTTPPartOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientComplexWithHTTPPartResponse], errResp azfake.ErrorResponder)
+
+	// FileWithHTTPPartOptionalContentType is the fake for method MultiPartFormDataClient.FileWithHTTPPartOptionalContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	FileWithHTTPPartOptionalContentType func(ctx context.Context, body multipartgroup.FileWithHTTPPartOptionalContentTypeRequest, options *multipartgroup.MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse], errResp azfake.ErrorResponder)
+
+	// FileWithHTTPPartRequiredContentType is the fake for method MultiPartFormDataClient.FileWithHTTPPartRequiredContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	FileWithHTTPPartRequiredContentType func(ctx context.Context, body multipartgroup.FileWithHTTPPartRequiredContentTypeRequest, options *multipartgroup.MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse], errResp azfake.ErrorResponder)
+
+	// FileWithHTTPPartSpecificContentType is the fake for method MultiPartFormDataClient.FileWithHTTPPartSpecificContentType
+	// HTTP status codes to indicate success: http.StatusNoContent
+	FileWithHTTPPartSpecificContentType func(ctx context.Context, body multipartgroup.FileWithHTTPPartSpecificContentTypeRequest, options *multipartgroup.MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse], errResp azfake.ErrorResponder)
 
 	// JSONPart is the fake for method MultiPartFormDataClient.JSONPart
 	// HTTP status codes to indicate success: http.StatusNoContent
@@ -95,8 +107,14 @@ func (m *MultiPartFormDataServerTransport) dispatchToMethodFake(req *http.Reques
 		resp, err = m.dispatchCheckFileNameAndContentType(req)
 	case "MultiPartFormDataClient.Complex":
 		resp, err = m.dispatchComplex(req)
-	case "MultiPartFormDataClient.JSONArrayParts":
-		resp, err = m.dispatchJSONArrayParts(req)
+	case "MultiPartFormDataClient.ComplexWithHTTPPart":
+		resp, err = m.dispatchComplexWithHTTPPart(req)
+	case "MultiPartFormDataClient.FileWithHTTPPartOptionalContentType":
+		resp, err = m.dispatchFileWithHTTPPartOptionalContentType(req)
+	case "MultiPartFormDataClient.FileWithHTTPPartRequiredContentType":
+		resp, err = m.dispatchFileWithHTTPPartRequiredContentType(req)
+	case "MultiPartFormDataClient.FileWithHTTPPartSpecificContentType":
+		resp, err = m.dispatchFileWithHTTPPartSpecificContentType(req)
 	case "MultiPartFormDataClient.JSONPart":
 		resp, err = m.dispatchJSONPart(req)
 	case "MultiPartFormDataClient.MultiBinaryParts":
@@ -358,14 +376,6 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 				ContentType: part.Header.Get("Content-Type"),
 				Filename:    part.FileName(),
 			})
-		case "previousAddresses":
-			content, err = io.ReadAll(part)
-			if err != nil {
-				return nil, err
-			}
-			if err = json.Unmarshal(content, &body.PreviousAddresses); err != nil {
-				return nil, err
-			}
 		case "profileImage":
 			content, err = io.ReadAll(part)
 			if err != nil {
@@ -393,16 +403,16 @@ func (m *MultiPartFormDataServerTransport) dispatchComplex(req *http.Request) (*
 	return resp, nil
 }
 
-func (m *MultiPartFormDataServerTransport) dispatchJSONArrayParts(req *http.Request) (*http.Response, error) {
-	if m.srv.JSONArrayParts == nil {
-		return nil, &nonRetriableError{errors.New("fake for method JSONArrayParts not implemented")}
+func (m *MultiPartFormDataServerTransport) dispatchComplexWithHTTPPart(req *http.Request) (*http.Response, error) {
+	if m.srv.ComplexWithHTTPPart == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ComplexWithHTTPPart not implemented")}
 	}
 	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
 	if err != nil {
 		return nil, err
 	}
 	reader := multipart.NewReader(req.Body, params["boundary"])
-	var body multipartgroup.JSONArrayPartsRequest
+	var body multipartgroup.ComplexHTTPPartsModelRequest
 	for {
 		var part *multipart.Part
 		part, err = reader.NextPart()
@@ -413,6 +423,30 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONArrayParts(req *http.Requ
 		}
 		var content []byte
 		switch fn := part.FormName(); fn {
+		case "address":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			if err = json.Unmarshal(content, &body.Address); err != nil {
+				return nil, err
+			}
+		case "id":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ID = string(content)
+		case "pictures":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.Pictures = append(body.Pictures, streaming.MultipartContent{
+				Body:        streaming.NopCloser(bytes.NewReader(content)),
+				ContentType: part.Header.Get("Content-Type"),
+				Filename:    part.FileName(),
+			})
 		case "previousAddresses":
 			content, err = io.ReadAll(part)
 			if err != nil {
@@ -433,7 +467,148 @@ func (m *MultiPartFormDataServerTransport) dispatchJSONArrayParts(req *http.Requ
 			return nil, fmt.Errorf("unexpected part %s", fn)
 		}
 	}
-	respr, errRespr := m.srv.JSONArrayParts(req.Context(), body, nil)
+	respr, errRespr := m.srv.ComplexWithHTTPPart(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MultiPartFormDataServerTransport) dispatchFileWithHTTPPartOptionalContentType(req *http.Request) (*http.Response, error) {
+	if m.srv.FileWithHTTPPartOptionalContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FileWithHTTPPartOptionalContentType not implemented")}
+	}
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.FileWithHTTPPartOptionalContentTypeRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.FileWithHTTPPartOptionalContentType(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MultiPartFormDataServerTransport) dispatchFileWithHTTPPartRequiredContentType(req *http.Request) (*http.Response, error) {
+	if m.srv.FileWithHTTPPartRequiredContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FileWithHTTPPartRequiredContentType not implemented")}
+	}
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.FileWithHTTPPartRequiredContentTypeRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.FileWithHTTPPartRequiredContentType(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (m *MultiPartFormDataServerTransport) dispatchFileWithHTTPPartSpecificContentType(req *http.Request) (*http.Response, error) {
+	if m.srv.FileWithHTTPPartSpecificContentType == nil {
+		return nil, &nonRetriableError{errors.New("fake for method FileWithHTTPPartSpecificContentType not implemented")}
+	}
+	_, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
+	if err != nil {
+		return nil, err
+	}
+	reader := multipart.NewReader(req.Body, params["boundary"])
+	var body multipartgroup.FileWithHTTPPartSpecificContentTypeRequest
+	for {
+		var part *multipart.Part
+		part, err = reader.NextPart()
+		if errors.Is(err, io.EOF) {
+			break
+		} else if err != nil {
+			return nil, err
+		}
+		var content []byte
+		switch fn := part.FormName(); fn {
+		case "profileImage":
+			content, err = io.ReadAll(part)
+			if err != nil {
+				return nil, err
+			}
+			body.ProfileImage.Body = streaming.NopCloser(bytes.NewReader(content))
+			body.ProfileImage.ContentType = part.Header.Get("Content-Type")
+			body.ProfileImage.Filename = part.FileName()
+		default:
+			return nil, fmt.Errorf("unexpected part %s", fn)
+		}
+	}
+	respr, errRespr := m.srv.FileWithHTTPPartSpecificContentType(req.Context(), body, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

@@ -12,40 +12,41 @@ import (
 	"net/http"
 )
 
-// FlattenClient - Illustrates the model flatten cases.
+// FlattenPropertyClient - Illustrates the model flatten cases.
 // Don't use this type directly, use a constructor function instead.
-type FlattenClient struct {
+type FlattenPropertyClient struct {
 	internal *azcore.Client
 }
 
 // PutFlattenModel -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - FlattenClientPutFlattenModelOptions contains the optional parameters for the FlattenClient.PutFlattenModel method.
-func (client *FlattenClient) PutFlattenModel(ctx context.Context, input FlattenModel, options *FlattenClientPutFlattenModelOptions) (FlattenClientPutFlattenModelResponse, error) {
+//   - options - FlattenPropertyClientPutFlattenModelOptions contains the optional parameters for the FlattenPropertyClient.PutFlattenModel
+//     method.
+func (client *FlattenPropertyClient) PutFlattenModel(ctx context.Context, input FlattenModel, options *FlattenPropertyClientPutFlattenModelOptions) (FlattenPropertyClientPutFlattenModelResponse, error) {
 	var err error
-	const operationName = "FlattenClient.PutFlattenModel"
+	const operationName = "FlattenPropertyClient.PutFlattenModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putFlattenModelCreateRequest(ctx, input, options)
 	if err != nil {
-		return FlattenClientPutFlattenModelResponse{}, err
+		return FlattenPropertyClientPutFlattenModelResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FlattenClientPutFlattenModelResponse{}, err
+		return FlattenPropertyClientPutFlattenModelResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return FlattenClientPutFlattenModelResponse{}, err
+		return FlattenPropertyClientPutFlattenModelResponse{}, err
 	}
 	resp, err := client.putFlattenModelHandleResponse(httpResp)
 	return resp, err
 }
 
 // putFlattenModelCreateRequest creates the PutFlattenModel request.
-func (client *FlattenClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, _ *FlattenClientPutFlattenModelOptions) (*policy.Request, error) {
-	urlPath := "/type/model/flatten/flattenModel"
+func (client *FlattenPropertyClient) putFlattenModelCreateRequest(ctx context.Context, input FlattenModel, _ *FlattenPropertyClientPutFlattenModelOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/flatten-property/flattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
@@ -59,43 +60,43 @@ func (client *FlattenClient) putFlattenModelCreateRequest(ctx context.Context, i
 }
 
 // putFlattenModelHandleResponse handles the PutFlattenModel response.
-func (client *FlattenClient) putFlattenModelHandleResponse(resp *http.Response) (FlattenClientPutFlattenModelResponse, error) {
-	result := FlattenClientPutFlattenModelResponse{}
+func (client *FlattenPropertyClient) putFlattenModelHandleResponse(resp *http.Response) (FlattenPropertyClientPutFlattenModelResponse, error) {
+	result := FlattenPropertyClientPutFlattenModelResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlattenModel); err != nil {
-		return FlattenClientPutFlattenModelResponse{}, err
+		return FlattenPropertyClientPutFlattenModelResponse{}, err
 	}
 	return result, nil
 }
 
 // PutNestedFlattenModel -
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - FlattenClientPutNestedFlattenModelOptions contains the optional parameters for the FlattenClient.PutNestedFlattenModel
+//   - options - FlattenPropertyClientPutNestedFlattenModelOptions contains the optional parameters for the FlattenPropertyClient.PutNestedFlattenModel
 //     method.
-func (client *FlattenClient) PutNestedFlattenModel(ctx context.Context, input NestedFlattenModel, options *FlattenClientPutNestedFlattenModelOptions) (FlattenClientPutNestedFlattenModelResponse, error) {
+func (client *FlattenPropertyClient) PutNestedFlattenModel(ctx context.Context, input NestedFlattenModel, options *FlattenPropertyClientPutNestedFlattenModelOptions) (FlattenPropertyClientPutNestedFlattenModelResponse, error) {
 	var err error
-	const operationName = "FlattenClient.PutNestedFlattenModel"
+	const operationName = "FlattenPropertyClient.PutNestedFlattenModel"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
 	req, err := client.putNestedFlattenModelCreateRequest(ctx, input, options)
 	if err != nil {
-		return FlattenClientPutNestedFlattenModelResponse{}, err
+		return FlattenPropertyClientPutNestedFlattenModelResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return FlattenClientPutNestedFlattenModelResponse{}, err
+		return FlattenPropertyClientPutNestedFlattenModelResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
 		err = runtime.NewResponseError(httpResp)
-		return FlattenClientPutNestedFlattenModelResponse{}, err
+		return FlattenPropertyClientPutNestedFlattenModelResponse{}, err
 	}
 	resp, err := client.putNestedFlattenModelHandleResponse(httpResp)
 	return resp, err
 }
 
 // putNestedFlattenModelCreateRequest creates the PutNestedFlattenModel request.
-func (client *FlattenClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, _ *FlattenClientPutNestedFlattenModelOptions) (*policy.Request, error) {
-	urlPath := "/type/model/flatten/nestedFlattenModel"
+func (client *FlattenPropertyClient) putNestedFlattenModelCreateRequest(ctx context.Context, input NestedFlattenModel, _ *FlattenPropertyClientPutNestedFlattenModelOptions) (*policy.Request, error) {
+	urlPath := "/azure/client-generator-core/flatten-property/nestedFlattenModel"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
@@ -109,10 +110,10 @@ func (client *FlattenClient) putNestedFlattenModelCreateRequest(ctx context.Cont
 }
 
 // putNestedFlattenModelHandleResponse handles the PutNestedFlattenModel response.
-func (client *FlattenClient) putNestedFlattenModelHandleResponse(resp *http.Response) (FlattenClientPutNestedFlattenModelResponse, error) {
-	result := FlattenClientPutNestedFlattenModelResponse{}
+func (client *FlattenPropertyClient) putNestedFlattenModelHandleResponse(resp *http.Response) (FlattenPropertyClientPutNestedFlattenModelResponse, error) {
+	result := FlattenPropertyClientPutNestedFlattenModelResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NestedFlattenModel); err != nil {
-		return FlattenClientPutNestedFlattenModelResponse{}, err
+		return FlattenPropertyClientPutNestedFlattenModelResponse{}, err
 	}
 	return result, nil
 }
