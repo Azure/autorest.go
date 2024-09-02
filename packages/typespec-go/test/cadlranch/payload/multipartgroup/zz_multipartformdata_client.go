@@ -231,34 +231,163 @@ func (client *MultiPartFormDataClient) complexCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// JSONArrayParts - Test content-type: multipart/form-data for scenario contains multi json parts
+// ComplexWithHTTPPart - Test content-type: multipart/form-data for mixed scenarios
 // If the operation fails it returns an *azcore.ResponseError type.
-//   - options - MultiPartFormDataClientJSONArrayPartsOptions contains the optional parameters for the MultiPartFormDataClient.JSONArrayParts
+//   - options - MultiPartFormDataClientComplexWithHTTPPartOptions contains the optional parameters for the MultiPartFormDataClient.ComplexWithHTTPPart
 //     method.
-func (client *MultiPartFormDataClient) JSONArrayParts(ctx context.Context, body JSONArrayPartsRequest, options *MultiPartFormDataClientJSONArrayPartsOptions) (MultiPartFormDataClientJSONArrayPartsResponse, error) {
+func (client *MultiPartFormDataClient) ComplexWithHTTPPart(ctx context.Context, body ComplexHTTPPartsModelRequest, options *MultiPartFormDataClientComplexWithHTTPPartOptions) (MultiPartFormDataClientComplexWithHTTPPartResponse, error) {
 	var err error
-	const operationName = "MultiPartFormDataClient.JSONArrayParts"
+	const operationName = "MultiPartFormDataClient.ComplexWithHTTPPart"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.jsonArrayPartsCreateRequest(ctx, body, options)
+	req, err := client.complexWithHTTPPartCreateRequest(ctx, body, options)
 	if err != nil {
-		return MultiPartFormDataClientJSONArrayPartsResponse{}, err
+		return MultiPartFormDataClientComplexWithHTTPPartResponse{}, err
 	}
 	httpResp, err := client.internal.Pipeline().Do(req)
 	if err != nil {
-		return MultiPartFormDataClientJSONArrayPartsResponse{}, err
+		return MultiPartFormDataClientComplexWithHTTPPartResponse{}, err
 	}
 	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
 		err = runtime.NewResponseError(httpResp)
-		return MultiPartFormDataClientJSONArrayPartsResponse{}, err
+		return MultiPartFormDataClientComplexWithHTTPPartResponse{}, err
 	}
-	return MultiPartFormDataClientJSONArrayPartsResponse{}, nil
+	return MultiPartFormDataClientComplexWithHTTPPartResponse{}, nil
 }
 
-// jsonArrayPartsCreateRequest creates the JSONArrayParts request.
-func (client *MultiPartFormDataClient) jsonArrayPartsCreateRequest(ctx context.Context, body JSONArrayPartsRequest, _ *MultiPartFormDataClientJSONArrayPartsOptions) (*policy.Request, error) {
-	urlPath := "/multipart/form-data/json-array-parts"
+// complexWithHTTPPartCreateRequest creates the ComplexWithHTTPPart request.
+func (client *MultiPartFormDataClient) complexWithHTTPPartCreateRequest(ctx context.Context, body ComplexHTTPPartsModelRequest, _ *MultiPartFormDataClientComplexWithHTTPPartOptions) (*policy.Request, error) {
+	urlPath := "/multipart/form-data/complex-parts-with-httppart"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
+	formData, err := body.toMultipartFormData()
+	if err != nil {
+		return nil, err
+	}
+	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// FileWithHTTPPartOptionalContentType - Test content-type: multipart/form-data for optional content type
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartOptionalContentType
+//     method.
+func (client *MultiPartFormDataClient) FileWithHTTPPartOptionalContentType(ctx context.Context, body FileWithHTTPPartOptionalContentTypeRequest, options *MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions) (MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse, error) {
+	var err error
+	const operationName = "MultiPartFormDataClient.FileWithHTTPPartOptionalContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.fileWithHTTPPartOptionalContentTypeCreateRequest(ctx, body, options)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse{}, err
+	}
+	return MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeResponse{}, nil
+}
+
+// fileWithHTTPPartOptionalContentTypeCreateRequest creates the FileWithHTTPPartOptionalContentType request.
+func (client *MultiPartFormDataClient) fileWithHTTPPartOptionalContentTypeCreateRequest(ctx context.Context, body FileWithHTTPPartOptionalContentTypeRequest, _ *MultiPartFormDataClientFileWithHTTPPartOptionalContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/multipart/form-data/file-with-http-part-optional-content-type"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
+	formData, err := body.toMultipartFormData()
+	if err != nil {
+		return nil, err
+	}
+	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// FileWithHTTPPartRequiredContentType - Test content-type: multipart/form-data
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartRequiredContentType
+//     method.
+func (client *MultiPartFormDataClient) FileWithHTTPPartRequiredContentType(ctx context.Context, body FileWithHTTPPartRequiredContentTypeRequest, options *MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions) (MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse, error) {
+	var err error
+	const operationName = "MultiPartFormDataClient.FileWithHTTPPartRequiredContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.fileWithHTTPPartRequiredContentTypeCreateRequest(ctx, body, options)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse{}, err
+	}
+	return MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeResponse{}, nil
+}
+
+// fileWithHTTPPartRequiredContentTypeCreateRequest creates the FileWithHTTPPartRequiredContentType request.
+func (client *MultiPartFormDataClient) fileWithHTTPPartRequiredContentTypeCreateRequest(ctx context.Context, body FileWithHTTPPartRequiredContentTypeRequest, _ *MultiPartFormDataClientFileWithHTTPPartRequiredContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/multipart/form-data/check-filename-and-required-content-type-with-httppart"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{"multipart/form-data"}
+	formData, err := body.toMultipartFormData()
+	if err != nil {
+		return nil, err
+	}
+	if err := runtime.SetMultipartFormData(req, formData); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// FileWithHTTPPartSpecificContentType - Test content-type: multipart/form-data
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions contains the optional parameters for the MultiPartFormDataClient.FileWithHTTPPartSpecificContentType
+//     method.
+func (client *MultiPartFormDataClient) FileWithHTTPPartSpecificContentType(ctx context.Context, body FileWithHTTPPartSpecificContentTypeRequest, options *MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions) (MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse, error) {
+	var err error
+	const operationName = "MultiPartFormDataClient.FileWithHTTPPartSpecificContentType"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.fileWithHTTPPartSpecificContentTypeCreateRequest(ctx, body, options)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse{}, err
+	}
+	return MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeResponse{}, nil
+}
+
+// fileWithHTTPPartSpecificContentTypeCreateRequest creates the FileWithHTTPPartSpecificContentType request.
+func (client *MultiPartFormDataClient) fileWithHTTPPartSpecificContentTypeCreateRequest(ctx context.Context, body FileWithHTTPPartSpecificContentTypeRequest, _ *MultiPartFormDataClientFileWithHTTPPartSpecificContentTypeOptions) (*policy.Request, error) {
+	urlPath := "/multipart/form-data/check-filename-and-specific-content-type-with-httppart"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err

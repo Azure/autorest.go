@@ -4,10 +4,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package basicgroup_test
+package azurepagegroup_test
 
 import (
-	"basicgroup"
+	"azurepagegroup"
 	"context"
 	"testing"
 
@@ -16,14 +16,14 @@ import (
 )
 
 func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := azurepagegroup.NewPageClient(nil)
 	require.NoError(t, err)
-	pager := client.NewBasicTwoModelsAsPageItemClient().NewListFirstItemPager(nil)
+	pager := client.NewPageTwoModelsAsPageItemClient().NewListFirstItemPager(nil)
 	pages := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.EqualValues(t, []*basicgroup.FirstItem{
+		require.EqualValues(t, []*azurepagegroup.FirstItem{
 			{
 				ID: to.Ptr[int32](1),
 			},
@@ -34,14 +34,14 @@ func TestTwoModelsAsPageItemClient_NewListFirstItemPager(t *testing.T) {
 }
 
 func TestTwoModelsAsPageItemClient_NewListSecondItemPager(t *testing.T) {
-	client, err := basicgroup.NewBasicClient(nil)
+	client, err := azurepagegroup.NewPageClient(nil)
 	require.NoError(t, err)
-	pager := client.NewBasicTwoModelsAsPageItemClient().NewListSecondItemPager(nil)
+	pager := client.NewPageTwoModelsAsPageItemClient().NewListSecondItemPager(nil)
 	pages := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
 		require.NoError(t, err)
-		require.EqualValues(t, []*basicgroup.SecondItem{
+		require.EqualValues(t, []*azurepagegroup.SecondItem{
 			{
 				Name: to.Ptr("Madge"),
 			},

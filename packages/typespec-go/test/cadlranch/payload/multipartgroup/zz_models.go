@@ -19,7 +19,7 @@ type BinaryArrayPartsRequest struct {
 	Pictures []streaming.MultipartContent
 }
 
-type ComplexPartsRequest struct {
+type ComplexHTTPPartsModelRequest struct {
 	// REQUIRED
 	Address Address
 
@@ -36,10 +36,62 @@ type ComplexPartsRequest struct {
 	ProfileImage streaming.MultipartContent
 }
 
-type JSONArrayPartsRequest struct {
+type ComplexPartsRequest struct {
 	// REQUIRED
-	PreviousAddresses []Address
+	Address Address
 
+	// REQUIRED
+	ID string
+
+	// REQUIRED
+	Pictures []streaming.MultipartContent
+
+	// REQUIRED
+	ProfileImage streaming.MultipartContent
+}
+
+type FileOptionalContentType struct {
+	// REQUIRED
+	Contents []byte
+
+	// REQUIRED
+	Filename    *string
+	ContentType *string
+}
+
+type FileRequiredMetaData struct {
+	// REQUIRED
+	ContentType *string
+
+	// REQUIRED
+	Contents []byte
+
+	// REQUIRED
+	Filename *string
+}
+
+type FileSpecificContentType struct {
+	// CONSTANT; undefinedField has constant value "image/jpg", any specified value is ignored.
+	ContentType *string
+
+	// REQUIRED
+	Contents []byte
+
+	// REQUIRED
+	Filename *string
+}
+
+type FileWithHTTPPartOptionalContentTypeRequest struct {
+	// REQUIRED
+	ProfileImage streaming.MultipartContent
+}
+
+type FileWithHTTPPartRequiredContentTypeRequest struct {
+	// REQUIRED
+	ProfileImage streaming.MultipartContent
+}
+
+type FileWithHTTPPartSpecificContentTypeRequest struct {
 	// REQUIRED
 	ProfileImage streaming.MultipartContent
 }

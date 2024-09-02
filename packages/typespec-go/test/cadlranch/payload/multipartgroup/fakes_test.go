@@ -15,7 +15,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -144,45 +143,6 @@ func TestFakeFormDataClientJSONPart(t *testing.T) {
 		Address: multipartgroup.Address{
 			City: &city,
 		},
-		ProfileImage: streaming.MultipartContent{
-			Body:        streaming.NopCloser(bytes.NewReader(bodyContent)),
-			ContentType: contentType,
-			Filename:    filename,
-		},
-	}, nil)
-	require.NoError(t, err)
-}
-
-func TestFakeFormDataClientJSONArrayParts(t *testing.T) {
-	previous := []multipartgroup.Address{
-		{
-			City: to.Ptr("City1"),
-		},
-		{
-			City: to.Ptr("CitwTwo"),
-		},
-	}
-	bodyContent := []byte{1, 2, 3, 4, 5}
-	contentType := "binary"
-	filename := "data.bin"
-	server := fake.MultiPartFormDataServer{
-		JSONArrayParts: func(ctx context.Context, body multipartgroup.JSONArrayPartsRequest, options *multipartgroup.MultiPartFormDataClientJSONArrayPartsOptions) (resp azfake.Responder[multipartgroup.MultiPartFormDataClientJSONArrayPartsResponse], errResp azfake.ErrorResponder) {
-			require.EqualValues(t, previous, body.PreviousAddresses)
-			b, err := io.ReadAll(body.ProfileImage.Body)
-			require.NoError(t, err)
-			require.Equal(t, bodyContent, b)
-			require.Equal(t, contentType, body.ProfileImage.ContentType)
-			require.Equal(t, filename, body.ProfileImage.Filename)
-			resp.SetResponse(http.StatusNoContent, multipartgroup.MultiPartFormDataClientJSONArrayPartsResponse{}, nil)
-			return
-		},
-	}
-	client, err := multipartgroup.NewMultiPartClient(&azcore.ClientOptions{
-		Transport: fake.NewMultiPartFormDataServerTransport(&server),
-	})
-	require.NoError(t, err)
-	_, err = client.NewMultiPartFormDataClient().JSONArrayParts(context.Background(), multipartgroup.JSONArrayPartsRequest{
-		PreviousAddresses: previous,
 		ProfileImage: streaming.MultipartContent{
 			Body:        streaming.NopCloser(bytes.NewReader(bodyContent)),
 			ContentType: contentType,

@@ -15,32 +15,32 @@ import (
 	"net/http"
 )
 
-// FlattenServer is a fake server for instances of the flattengroup.FlattenClient type.
-type FlattenServer struct {
-	// PutFlattenModel is the fake for method FlattenClient.PutFlattenModel
+// FlattenPropertyServer is a fake server for instances of the flattengroup.FlattenPropertyClient type.
+type FlattenPropertyServer struct {
+	// PutFlattenModel is the fake for method FlattenPropertyClient.PutFlattenModel
 	// HTTP status codes to indicate success: http.StatusOK
-	PutFlattenModel func(ctx context.Context, input flattengroup.FlattenModel, options *flattengroup.FlattenClientPutFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenClientPutFlattenModelResponse], errResp azfake.ErrorResponder)
+	PutFlattenModel func(ctx context.Context, input flattengroup.FlattenModel, options *flattengroup.FlattenPropertyClientPutFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutFlattenModelResponse], errResp azfake.ErrorResponder)
 
-	// PutNestedFlattenModel is the fake for method FlattenClient.PutNestedFlattenModel
+	// PutNestedFlattenModel is the fake for method FlattenPropertyClient.PutNestedFlattenModel
 	// HTTP status codes to indicate success: http.StatusOK
-	PutNestedFlattenModel func(ctx context.Context, input flattengroup.NestedFlattenModel, options *flattengroup.FlattenClientPutNestedFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenClientPutNestedFlattenModelResponse], errResp azfake.ErrorResponder)
+	PutNestedFlattenModel func(ctx context.Context, input flattengroup.NestedFlattenModel, options *flattengroup.FlattenPropertyClientPutNestedFlattenModelOptions) (resp azfake.Responder[flattengroup.FlattenPropertyClientPutNestedFlattenModelResponse], errResp azfake.ErrorResponder)
 }
 
-// NewFlattenServerTransport creates a new instance of FlattenServerTransport with the provided implementation.
-// The returned FlattenServerTransport instance is connected to an instance of flattengroup.FlattenClient via the
+// NewFlattenPropertyServerTransport creates a new instance of FlattenPropertyServerTransport with the provided implementation.
+// The returned FlattenPropertyServerTransport instance is connected to an instance of flattengroup.FlattenPropertyClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewFlattenServerTransport(srv *FlattenServer) *FlattenServerTransport {
-	return &FlattenServerTransport{srv: srv}
+func NewFlattenPropertyServerTransport(srv *FlattenPropertyServer) *FlattenPropertyServerTransport {
+	return &FlattenPropertyServerTransport{srv: srv}
 }
 
-// FlattenServerTransport connects instances of flattengroup.FlattenClient to instances of FlattenServer.
-// Don't use this type directly, use NewFlattenServerTransport instead.
-type FlattenServerTransport struct {
-	srv *FlattenServer
+// FlattenPropertyServerTransport connects instances of flattengroup.FlattenPropertyClient to instances of FlattenPropertyServer.
+// Don't use this type directly, use NewFlattenPropertyServerTransport instead.
+type FlattenPropertyServerTransport struct {
+	srv *FlattenPropertyServer
 }
 
-// Do implements the policy.Transporter interface for FlattenServerTransport.
-func (f *FlattenServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for FlattenPropertyServerTransport.
+func (f *FlattenPropertyServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -50,14 +50,14 @@ func (f *FlattenServerTransport) Do(req *http.Request) (*http.Response, error) {
 	return f.dispatchToMethodFake(req, method)
 }
 
-func (f *FlattenServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (f *FlattenPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	var resp *http.Response
 	var err error
 
 	switch method {
-	case "FlattenClient.PutFlattenModel":
+	case "FlattenPropertyClient.PutFlattenModel":
 		resp, err = f.dispatchPutFlattenModel(req)
-	case "FlattenClient.PutNestedFlattenModel":
+	case "FlattenPropertyClient.PutNestedFlattenModel":
 		resp, err = f.dispatchPutNestedFlattenModel(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
@@ -66,7 +66,7 @@ func (f *FlattenServerTransport) dispatchToMethodFake(req *http.Request, method 
 	return resp, err
 }
 
-func (f *FlattenServerTransport) dispatchPutFlattenModel(req *http.Request) (*http.Response, error) {
+func (f *FlattenPropertyServerTransport) dispatchPutFlattenModel(req *http.Request) (*http.Response, error) {
 	if f.srv.PutFlattenModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutFlattenModel not implemented")}
 	}
@@ -89,7 +89,7 @@ func (f *FlattenServerTransport) dispatchPutFlattenModel(req *http.Request) (*ht
 	return resp, nil
 }
 
-func (f *FlattenServerTransport) dispatchPutNestedFlattenModel(req *http.Request) (*http.Response, error) {
+func (f *FlattenPropertyServerTransport) dispatchPutNestedFlattenModel(req *http.Request) (*http.Response, error) {
 	if f.srv.PutNestedFlattenModel == nil {
 		return nil, &nonRetriableError{errors.New("fake for method PutNestedFlattenModel not implemented")}
 	}

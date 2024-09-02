@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 )
 
@@ -46,8 +47,8 @@ func (b BinaryArrayPartsRequest) toMultipartFormData() (map[string]any, error) {
 	return objectMap, nil
 }
 
-// toMultipartFormData converts ComplexPartsRequest to multipart/form data.
-func (c ComplexPartsRequest) toMultipartFormData() (map[string]any, error) {
+// toMultipartFormData converts ComplexHTTPPartsModelRequest to multipart/form data.
+func (c ComplexHTTPPartsModelRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
 	if err := populateMultipartJSON(objectMap, "address", c.Address); err != nil {
 		return nil, err
@@ -61,13 +62,153 @@ func (c ComplexPartsRequest) toMultipartFormData() (map[string]any, error) {
 	return objectMap, nil
 }
 
-// toMultipartFormData converts JSONArrayPartsRequest to multipart/form data.
-func (j JSONArrayPartsRequest) toMultipartFormData() (map[string]any, error) {
+// toMultipartFormData converts ComplexPartsRequest to multipart/form data.
+func (c ComplexPartsRequest) toMultipartFormData() (map[string]any, error) {
 	objectMap := make(map[string]any)
-	if err := populateMultipartJSON(objectMap, "previousAddresses", j.PreviousAddresses); err != nil {
+	if err := populateMultipartJSON(objectMap, "address", c.Address); err != nil {
 		return nil, err
 	}
-	objectMap["profileImage"] = j.ProfileImage
+	objectMap["id"] = c.ID
+	objectMap["pictures"] = c.Pictures
+	objectMap["profileImage"] = c.ProfileImage
+	return objectMap, nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileOptionalContentType.
+func (f FileOptionalContentType) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "contentType", f.ContentType)
+	populateByteArray(objectMap, "contents", f.Contents, func() any {
+		return runtime.EncodeByteArray(f.Contents, runtime.Base64StdFormat)
+	})
+	populate(objectMap, "filename", f.Filename)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileOptionalContentType.
+func (f *FileOptionalContentType) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "contentType":
+			err = unpopulate(val, "ContentType", &f.ContentType)
+			delete(rawMsg, key)
+		case "contents":
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &f.Contents, runtime.Base64StdFormat)
+			}
+			delete(rawMsg, key)
+		case "filename":
+			err = unpopulate(val, "Filename", &f.Filename)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileRequiredMetaData.
+func (f FileRequiredMetaData) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "contentType", f.ContentType)
+	populateByteArray(objectMap, "contents", f.Contents, func() any {
+		return runtime.EncodeByteArray(f.Contents, runtime.Base64StdFormat)
+	})
+	populate(objectMap, "filename", f.Filename)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileRequiredMetaData.
+func (f *FileRequiredMetaData) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "contentType":
+			err = unpopulate(val, "ContentType", &f.ContentType)
+			delete(rawMsg, key)
+		case "contents":
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &f.Contents, runtime.Base64StdFormat)
+			}
+			delete(rawMsg, key)
+		case "filename":
+			err = unpopulate(val, "Filename", &f.Filename)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FileSpecificContentType.
+func (f FileSpecificContentType) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	objectMap["contentType"] = "image/jpg"
+	populateByteArray(objectMap, "contents", f.Contents, func() any {
+		return runtime.EncodeByteArray(f.Contents, runtime.Base64StdFormat)
+	})
+	populate(objectMap, "filename", f.Filename)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FileSpecificContentType.
+func (f *FileSpecificContentType) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "contentType":
+			err = unpopulate(val, "ContentType", &f.ContentType)
+			delete(rawMsg, key)
+		case "contents":
+			if val != nil && string(val) != "null" {
+				err = runtime.DecodeByteArray(string(val), &f.Contents, runtime.Base64StdFormat)
+			}
+			delete(rawMsg, key)
+		case "filename":
+			err = unpopulate(val, "Filename", &f.Filename)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
+		}
+	}
+	return nil
+}
+
+// toMultipartFormData converts FileWithHTTPPartOptionalContentTypeRequest to multipart/form data.
+func (f FileWithHTTPPartOptionalContentTypeRequest) toMultipartFormData() (map[string]any, error) {
+	objectMap := make(map[string]any)
+	objectMap["profileImage"] = f.ProfileImage
+	return objectMap, nil
+}
+
+// toMultipartFormData converts FileWithHTTPPartRequiredContentTypeRequest to multipart/form data.
+func (f FileWithHTTPPartRequiredContentTypeRequest) toMultipartFormData() (map[string]any, error) {
+	objectMap := make(map[string]any)
+	objectMap["profileImage"] = f.ProfileImage
+	return objectMap, nil
+}
+
+// toMultipartFormData converts FileWithHTTPPartSpecificContentTypeRequest to multipart/form data.
+func (f FileWithHTTPPartSpecificContentTypeRequest) toMultipartFormData() (map[string]any, error) {
+	objectMap := make(map[string]any)
+	objectMap["profileImage"] = f.ProfileImage
 	return objectMap, nil
 }
 
@@ -106,6 +247,16 @@ func populate(m map[string]any, k string, v any) {
 		m[k] = nil
 	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
+	}
+}
+
+func populateByteArray[T any](m map[string]any, k string, b []T, convert func() any) {
+	if azcore.IsNullValue(b) {
+		m[k] = nil
+	} else if len(b) == 0 {
+		return
+	} else {
+		m[k] = convert()
 	}
 }
 
