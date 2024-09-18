@@ -315,6 +315,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
 
   switch (param.protocol.http?.in) {
     case 'body': {
+      if (!op.requests![0].protocol.http!.mediaTypes) {
+        throw new Error(`no media types defined for operation ${op.operationId}`);
+      }
       let contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
       if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
         for (const param of values(op.requests![0].parameters)) {
