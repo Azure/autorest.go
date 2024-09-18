@@ -1,8 +1,14 @@
 # Release History
 
+## 4.0.0-preview.68 (Unreleased)
+
+### Bugs Fixed
+
+* Throw an error when an operation doesn't define any media types. This is indicative of an authoring error.
+
 ## 4.0.0-preview.67 (2024-07-30)
 
-## Bugs Fixed
+### Bugs Fixed
 
 * Fixed a rare issue causing some method doc comments to be omitted.
 * Fixed bad codegen for slices of raw JSON objects.
