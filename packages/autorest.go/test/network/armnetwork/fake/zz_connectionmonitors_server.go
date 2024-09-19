@@ -92,31 +92,40 @@ func (c *ConnectionMonitorsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (c *ConnectionMonitorsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ConnectionMonitorsClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "ConnectionMonitorsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "ConnectionMonitorsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "ConnectionMonitorsClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	case "ConnectionMonitorsClient.BeginQuery":
-		resp, err = c.dispatchBeginQuery(req)
-	case "ConnectionMonitorsClient.BeginStart":
-		resp, err = c.dispatchBeginStart(req)
-	case "ConnectionMonitorsClient.BeginStop":
-		resp, err = c.dispatchBeginStop(req)
-	case "ConnectionMonitorsClient.UpdateTags":
-		resp, err = c.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ConnectionMonitorsClient.BeginCreateOrUpdate":
+			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+		case "ConnectionMonitorsClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "ConnectionMonitorsClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "ConnectionMonitorsClient.NewListPager":
+			res.resp, res.err = c.dispatchNewListPager(req)
+		case "ConnectionMonitorsClient.BeginQuery":
+			res.resp, res.err = c.dispatchBeginQuery(req)
+		case "ConnectionMonitorsClient.BeginStart":
+			res.resp, res.err = c.dispatchBeginStart(req)
+		case "ConnectionMonitorsClient.BeginStop":
+			res.resp, res.err = c.dispatchBeginStop(req)
+		case "ConnectionMonitorsClient.UpdateTags":
+			res.resp, res.err = c.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ConnectionMonitorsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

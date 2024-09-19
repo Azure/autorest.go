@@ -59,19 +59,28 @@ func (l *LoadBalancerOutboundRulesServerTransport) Do(req *http.Request) (*http.
 }
 
 func (l *LoadBalancerOutboundRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "LoadBalancerOutboundRulesClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadBalancerOutboundRulesClient.NewListPager":
-		resp, err = l.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LoadBalancerOutboundRulesClient.Get":
+			res.resp, res.err = l.dispatchGet(req)
+		case "LoadBalancerOutboundRulesClient.NewListPager":
+			res.resp, res.err = l.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadBalancerOutboundRulesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

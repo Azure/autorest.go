@@ -68,27 +68,36 @@ func (b *BoolServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *BoolServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "BoolClient.GetFalse":
-		resp, err = b.dispatchGetFalse(req)
-	case "BoolClient.GetInvalid":
-		resp, err = b.dispatchGetInvalid(req)
-	case "BoolClient.GetNull":
-		resp, err = b.dispatchGetNull(req)
-	case "BoolClient.GetTrue":
-		resp, err = b.dispatchGetTrue(req)
-	case "BoolClient.PutFalse":
-		resp, err = b.dispatchPutFalse(req)
-	case "BoolClient.PutTrue":
-		resp, err = b.dispatchPutTrue(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BoolClient.GetFalse":
+			res.resp, res.err = b.dispatchGetFalse(req)
+		case "BoolClient.GetInvalid":
+			res.resp, res.err = b.dispatchGetInvalid(req)
+		case "BoolClient.GetNull":
+			res.resp, res.err = b.dispatchGetNull(req)
+		case "BoolClient.GetTrue":
+			res.resp, res.err = b.dispatchGetTrue(req)
+		case "BoolClient.PutFalse":
+			res.resp, res.err = b.dispatchPutFalse(req)
+		case "BoolClient.PutTrue":
+			res.resp, res.err = b.dispatchPutTrue(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BoolServerTransport) dispatchGetFalse(req *http.Request) (*http.Response, error) {

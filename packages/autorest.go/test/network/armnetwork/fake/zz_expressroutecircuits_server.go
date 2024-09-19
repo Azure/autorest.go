@@ -107,37 +107,46 @@ func (e *ExpressRouteCircuitsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (e *ExpressRouteCircuitsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ExpressRouteCircuitsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteCircuitsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRouteCircuitsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteCircuitsClient.GetPeeringStats":
-		resp, err = e.dispatchGetPeeringStats(req)
-	case "ExpressRouteCircuitsClient.GetStats":
-		resp, err = e.dispatchGetStats(req)
-	case "ExpressRouteCircuitsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	case "ExpressRouteCircuitsClient.NewListAllPager":
-		resp, err = e.dispatchNewListAllPager(req)
-	case "ExpressRouteCircuitsClient.BeginListArpTable":
-		resp, err = e.dispatchBeginListArpTable(req)
-	case "ExpressRouteCircuitsClient.BeginListRoutesTable":
-		resp, err = e.dispatchBeginListRoutesTable(req)
-	case "ExpressRouteCircuitsClient.BeginListRoutesTableSummary":
-		resp, err = e.dispatchBeginListRoutesTableSummary(req)
-	case "ExpressRouteCircuitsClient.UpdateTags":
-		resp, err = e.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteCircuitsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRouteCircuitsClient.BeginDelete":
+			res.resp, res.err = e.dispatchBeginDelete(req)
+		case "ExpressRouteCircuitsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRouteCircuitsClient.GetPeeringStats":
+			res.resp, res.err = e.dispatchGetPeeringStats(req)
+		case "ExpressRouteCircuitsClient.GetStats":
+			res.resp, res.err = e.dispatchGetStats(req)
+		case "ExpressRouteCircuitsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		case "ExpressRouteCircuitsClient.NewListAllPager":
+			res.resp, res.err = e.dispatchNewListAllPager(req)
+		case "ExpressRouteCircuitsClient.BeginListArpTable":
+			res.resp, res.err = e.dispatchBeginListArpTable(req)
+		case "ExpressRouteCircuitsClient.BeginListRoutesTable":
+			res.resp, res.err = e.dispatchBeginListRoutesTable(req)
+		case "ExpressRouteCircuitsClient.BeginListRoutesTableSummary":
+			res.resp, res.err = e.dispatchBeginListRoutesTableSummary(req)
+		case "ExpressRouteCircuitsClient.UpdateTags":
+			res.resp, res.err = e.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteCircuitsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

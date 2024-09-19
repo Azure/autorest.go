@@ -47,17 +47,26 @@ func (b *BasicImplicitBodyServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (b *BasicImplicitBodyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "BasicImplicitBodyClient.Simple":
-		resp, err = b.dispatchSimple(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BasicImplicitBodyClient.Simple":
+			res.resp, res.err = b.dispatchSimple(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BasicImplicitBodyServerTransport) dispatchSimple(req *http.Request) (*http.Response, error) {

@@ -100,33 +100,42 @@ func (v *VirtualHubsServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (v *VirtualHubsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualHubsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualHubsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualHubsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
-		resp, err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
-	case "VirtualHubsClient.BeginGetInboundRoutes":
-		resp, err = v.dispatchBeginGetInboundRoutes(req)
-	case "VirtualHubsClient.BeginGetOutboundRoutes":
-		resp, err = v.dispatchBeginGetOutboundRoutes(req)
-	case "VirtualHubsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualHubsClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	case "VirtualHubsClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualHubsClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualHubsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualHubsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
+			res.resp, res.err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
+		case "VirtualHubsClient.BeginGetInboundRoutes":
+			res.resp, res.err = v.dispatchBeginGetInboundRoutes(req)
+		case "VirtualHubsClient.BeginGetOutboundRoutes":
+			res.resp, res.err = v.dispatchBeginGetOutboundRoutes(req)
+		case "VirtualHubsClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualHubsClient.NewListByResourceGroupPager":
+			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+		case "VirtualHubsClient.UpdateTags":
+			res.resp, res.err = v.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

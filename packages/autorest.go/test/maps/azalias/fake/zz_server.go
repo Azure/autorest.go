@@ -94,31 +94,40 @@ func (s *ServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "Client.Create":
-		resp, err = s.dispatchCreate(req)
-	case "Client.GetScript":
-		resp, err = s.dispatchGetScript(req)
-	case "Client.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "Client.BeginListLRO":
-		resp, err = s.dispatchBeginListLRO(req)
-	case "Client.NewListWithSharedNextOnePager":
-		resp, err = s.dispatchNewListWithSharedNextOnePager(req)
-	case "Client.NewListWithSharedNextTwoPager":
-		resp, err = s.dispatchNewListWithSharedNextTwoPager(req)
-	case "Client.PolicyAssignment":
-		resp, err = s.dispatchPolicyAssignment(req)
-	case "Client.UploadForm":
-		resp, err = s.dispatchUploadForm(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "Client.Create":
+			res.resp, res.err = s.dispatchCreate(req)
+		case "Client.GetScript":
+			res.resp, res.err = s.dispatchGetScript(req)
+		case "Client.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		case "Client.BeginListLRO":
+			res.resp, res.err = s.dispatchBeginListLRO(req)
+		case "Client.NewListWithSharedNextOnePager":
+			res.resp, res.err = s.dispatchNewListWithSharedNextOnePager(req)
+		case "Client.NewListWithSharedNextTwoPager":
+			res.resp, res.err = s.dispatchNewListWithSharedNextTwoPager(req)
+		case "Client.PolicyAssignment":
+			res.resp, res.err = s.dispatchPolicyAssignment(req)
+		case "Client.UploadForm":
+			res.resp, res.err = s.dispatchUploadForm(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {

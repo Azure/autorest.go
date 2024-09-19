@@ -83,27 +83,36 @@ func (g *GalleriesServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (g *GalleriesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "GalleriesClient.BeginCreateOrUpdate":
-		resp, err = g.dispatchBeginCreateOrUpdate(req)
-	case "GalleriesClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GalleriesClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GalleriesClient.NewListPager":
-		resp, err = g.dispatchNewListPager(req)
-	case "GalleriesClient.NewListByResourceGroupPager":
-		resp, err = g.dispatchNewListByResourceGroupPager(req)
-	case "GalleriesClient.BeginUpdate":
-		resp, err = g.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "GalleriesClient.BeginCreateOrUpdate":
+			res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+		case "GalleriesClient.BeginDelete":
+			res.resp, res.err = g.dispatchBeginDelete(req)
+		case "GalleriesClient.Get":
+			res.resp, res.err = g.dispatchGet(req)
+		case "GalleriesClient.NewListPager":
+			res.resp, res.err = g.dispatchNewListPager(req)
+		case "GalleriesClient.NewListByResourceGroupPager":
+			res.resp, res.err = g.dispatchNewListByResourceGroupPager(req)
+		case "GalleriesClient.BeginUpdate":
+			res.resp, res.err = g.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GalleriesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

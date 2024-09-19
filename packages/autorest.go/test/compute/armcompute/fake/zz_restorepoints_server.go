@@ -64,21 +64,30 @@ func (r *RestorePointsServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (r *RestorePointsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "RestorePointsClient.BeginCreate":
-		resp, err = r.dispatchBeginCreate(req)
-	case "RestorePointsClient.BeginDelete":
-		resp, err = r.dispatchBeginDelete(req)
-	case "RestorePointsClient.Get":
-		resp, err = r.dispatchGet(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RestorePointsClient.BeginCreate":
+			res.resp, res.err = r.dispatchBeginCreate(req)
+		case "RestorePointsClient.BeginDelete":
+			res.resp, res.err = r.dispatchBeginDelete(req)
+		case "RestorePointsClient.Get":
+			res.resp, res.err = r.dispatchGet(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RestorePointsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {

@@ -55,21 +55,30 @@ func (n *NotDiscriminatedServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (n *NotDiscriminatedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "NotDiscriminatedClient.GetValid":
-		resp, err = n.dispatchGetValid(req)
-	case "NotDiscriminatedClient.PostValid":
-		resp, err = n.dispatchPostValid(req)
-	case "NotDiscriminatedClient.PutValid":
-		resp, err = n.dispatchPutValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NotDiscriminatedClient.GetValid":
+			res.resp, res.err = n.dispatchGetValid(req)
+		case "NotDiscriminatedClient.PostValid":
+			res.resp, res.err = n.dispatchPostValid(req)
+		case "NotDiscriminatedClient.PutValid":
+			res.resp, res.err = n.dispatchPutValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NotDiscriminatedServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {

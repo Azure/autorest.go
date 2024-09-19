@@ -76,25 +76,34 @@ func (n *NestedProxyResourcesServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (n *NestedProxyResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "NestedProxyResourcesClient.BeginCreateOrReplace":
-		resp, err = n.dispatchBeginCreateOrReplace(req)
-	case "NestedProxyResourcesClient.BeginDelete":
-		resp, err = n.dispatchBeginDelete(req)
-	case "NestedProxyResourcesClient.Get":
-		resp, err = n.dispatchGet(req)
-	case "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager":
-		resp, err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
-	case "NestedProxyResourcesClient.BeginUpdate":
-		resp, err = n.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NestedProxyResourcesClient.BeginCreateOrReplace":
+			res.resp, res.err = n.dispatchBeginCreateOrReplace(req)
+		case "NestedProxyResourcesClient.BeginDelete":
+			res.resp, res.err = n.dispatchBeginDelete(req)
+		case "NestedProxyResourcesClient.Get":
+			res.resp, res.err = n.dispatchGet(req)
+		case "NestedProxyResourcesClient.NewListByTopLevelTrackedResourcePager":
+			res.resp, res.err = n.dispatchNewListByTopLevelTrackedResourcePager(req)
+		case "NestedProxyResourcesClient.BeginUpdate":
+			res.resp, res.err = n.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NestedProxyResourcesServerTransport) dispatchBeginCreateOrReplace(req *http.Request) (*http.Response, error) {

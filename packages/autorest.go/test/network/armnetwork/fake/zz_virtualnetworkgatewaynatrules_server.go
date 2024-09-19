@@ -71,23 +71,32 @@ func (v *VirtualNetworkGatewayNatRulesServerTransport) Do(req *http.Request) (*h
 }
 
 func (v *VirtualNetworkGatewayNatRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualNetworkGatewayNatRulesClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualNetworkGatewayNatRulesClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualNetworkGatewayNatRulesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualNetworkGatewayNatRulesClient.NewListByVirtualNetworkGatewayPager":
-		resp, err = v.dispatchNewListByVirtualNetworkGatewayPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualNetworkGatewayNatRulesClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualNetworkGatewayNatRulesClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualNetworkGatewayNatRulesClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualNetworkGatewayNatRulesClient.NewListByVirtualNetworkGatewayPager":
+			res.resp, res.err = v.dispatchNewListByVirtualNetworkGatewayPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualNetworkGatewayNatRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

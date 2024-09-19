@@ -59,23 +59,32 @@ func (o *OptionalRequiredAndOptionalServerTransport) Do(req *http.Request) (*htt
 }
 
 func (o *OptionalRequiredAndOptionalServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "OptionalRequiredAndOptionalClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalRequiredAndOptionalClient.GetRequiredOnly":
-		resp, err = o.dispatchGetRequiredOnly(req)
-	case "OptionalRequiredAndOptionalClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalRequiredAndOptionalClient.PutRequiredOnly":
-		resp, err = o.dispatchPutRequiredOnly(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "OptionalRequiredAndOptionalClient.GetAll":
+			res.resp, res.err = o.dispatchGetAll(req)
+		case "OptionalRequiredAndOptionalClient.GetRequiredOnly":
+			res.resp, res.err = o.dispatchGetRequiredOnly(req)
+		case "OptionalRequiredAndOptionalClient.PutAll":
+			res.resp, res.err = o.dispatchPutAll(req)
+		case "OptionalRequiredAndOptionalClient.PutRequiredOnly":
+			res.resp, res.err = o.dispatchPutRequiredOnly(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalRequiredAndOptionalServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {

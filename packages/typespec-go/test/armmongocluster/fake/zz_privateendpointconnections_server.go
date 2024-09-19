@@ -70,23 +70,32 @@ func (p *PrivateEndpointConnectionsServerTransport) Do(req *http.Request) (*http
 }
 
 func (p *PrivateEndpointConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "PrivateEndpointConnectionsClient.BeginCreate":
-		resp, err = p.dispatchBeginCreate(req)
-	case "PrivateEndpointConnectionsClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PrivateEndpointConnectionsClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PrivateEndpointConnectionsClient.NewListByMongoClusterPager":
-		resp, err = p.dispatchNewListByMongoClusterPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PrivateEndpointConnectionsClient.BeginCreate":
+			res.resp, res.err = p.dispatchBeginCreate(req)
+		case "PrivateEndpointConnectionsClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "PrivateEndpointConnectionsClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "PrivateEndpointConnectionsClient.NewListByMongoClusterPager":
+			res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PrivateEndpointConnectionsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {

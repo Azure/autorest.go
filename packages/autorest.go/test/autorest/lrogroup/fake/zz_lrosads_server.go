@@ -203,67 +203,76 @@ func (l *LROSADsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (l *LROSADsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "LROSADsClient.BeginDelete202NonRetry400":
-		resp, err = l.dispatchBeginDelete202NonRetry400(req)
-	case "LROSADsClient.BeginDelete202RetryInvalidHeader":
-		resp, err = l.dispatchBeginDelete202RetryInvalidHeader(req)
-	case "LROSADsClient.BeginDelete204Succeeded":
-		resp, err = l.dispatchBeginDelete204Succeeded(req)
-	case "LROSADsClient.BeginDeleteAsyncRelativeRetry400":
-		resp, err = l.dispatchBeginDeleteAsyncRelativeRetry400(req)
-	case "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader":
-		resp, err = l.dispatchBeginDeleteAsyncRelativeRetryInvalidHeader(req)
-	case "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling":
-		resp, err = l.dispatchBeginDeleteAsyncRelativeRetryInvalidJSONPolling(req)
-	case "LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus":
-		resp, err = l.dispatchBeginDeleteAsyncRelativeRetryNoStatus(req)
-	case "LROSADsClient.BeginDeleteNonRetry400":
-		resp, err = l.dispatchBeginDeleteNonRetry400(req)
-	case "LROSADsClient.BeginPost202NoLocation":
-		resp, err = l.dispatchBeginPost202NoLocation(req)
-	case "LROSADsClient.BeginPost202NonRetry400":
-		resp, err = l.dispatchBeginPost202NonRetry400(req)
-	case "LROSADsClient.BeginPost202RetryInvalidHeader":
-		resp, err = l.dispatchBeginPost202RetryInvalidHeader(req)
-	case "LROSADsClient.BeginPostAsyncRelativeRetry400":
-		resp, err = l.dispatchBeginPostAsyncRelativeRetry400(req)
-	case "LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader":
-		resp, err = l.dispatchBeginPostAsyncRelativeRetryInvalidHeader(req)
-	case "LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling":
-		resp, err = l.dispatchBeginPostAsyncRelativeRetryInvalidJSONPolling(req)
-	case "LROSADsClient.BeginPostAsyncRelativeRetryNoPayload":
-		resp, err = l.dispatchBeginPostAsyncRelativeRetryNoPayload(req)
-	case "LROSADsClient.BeginPostNonRetry400":
-		resp, err = l.dispatchBeginPostNonRetry400(req)
-	case "LROSADsClient.BeginPut200InvalidJSON":
-		resp, err = l.dispatchBeginPut200InvalidJSON(req)
-	case "LROSADsClient.BeginPutAsyncRelativeRetry400":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetry400(req)
-	case "LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetryInvalidHeader(req)
-	case "LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetryInvalidJSONPolling(req)
-	case "LROSADsClient.BeginPutAsyncRelativeRetryNoStatus":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetryNoStatus(req)
-	case "LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetryNoStatusPayload(req)
-	case "LROSADsClient.BeginPutError201NoProvisioningStatePayload":
-		resp, err = l.dispatchBeginPutError201NoProvisioningStatePayload(req)
-	case "LROSADsClient.BeginPutNonRetry201Creating400":
-		resp, err = l.dispatchBeginPutNonRetry201Creating400(req)
-	case "LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON":
-		resp, err = l.dispatchBeginPutNonRetry201Creating400InvalidJSON(req)
-	case "LROSADsClient.BeginPutNonRetry400":
-		resp, err = l.dispatchBeginPutNonRetry400(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LROSADsClient.BeginDelete202NonRetry400":
+			res.resp, res.err = l.dispatchBeginDelete202NonRetry400(req)
+		case "LROSADsClient.BeginDelete202RetryInvalidHeader":
+			res.resp, res.err = l.dispatchBeginDelete202RetryInvalidHeader(req)
+		case "LROSADsClient.BeginDelete204Succeeded":
+			res.resp, res.err = l.dispatchBeginDelete204Succeeded(req)
+		case "LROSADsClient.BeginDeleteAsyncRelativeRetry400":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetry400(req)
+		case "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetryInvalidHeader(req)
+		case "LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetryInvalidJSONPolling(req)
+		case "LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetryNoStatus(req)
+		case "LROSADsClient.BeginDeleteNonRetry400":
+			res.resp, res.err = l.dispatchBeginDeleteNonRetry400(req)
+		case "LROSADsClient.BeginPost202NoLocation":
+			res.resp, res.err = l.dispatchBeginPost202NoLocation(req)
+		case "LROSADsClient.BeginPost202NonRetry400":
+			res.resp, res.err = l.dispatchBeginPost202NonRetry400(req)
+		case "LROSADsClient.BeginPost202RetryInvalidHeader":
+			res.resp, res.err = l.dispatchBeginPost202RetryInvalidHeader(req)
+		case "LROSADsClient.BeginPostAsyncRelativeRetry400":
+			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetry400(req)
+		case "LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader":
+			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetryInvalidHeader(req)
+		case "LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling":
+			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetryInvalidJSONPolling(req)
+		case "LROSADsClient.BeginPostAsyncRelativeRetryNoPayload":
+			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetryNoPayload(req)
+		case "LROSADsClient.BeginPostNonRetry400":
+			res.resp, res.err = l.dispatchBeginPostNonRetry400(req)
+		case "LROSADsClient.BeginPut200InvalidJSON":
+			res.resp, res.err = l.dispatchBeginPut200InvalidJSON(req)
+		case "LROSADsClient.BeginPutAsyncRelativeRetry400":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetry400(req)
+		case "LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetryInvalidHeader(req)
+		case "LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetryInvalidJSONPolling(req)
+		case "LROSADsClient.BeginPutAsyncRelativeRetryNoStatus":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetryNoStatus(req)
+		case "LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetryNoStatusPayload(req)
+		case "LROSADsClient.BeginPutError201NoProvisioningStatePayload":
+			res.resp, res.err = l.dispatchBeginPutError201NoProvisioningStatePayload(req)
+		case "LROSADsClient.BeginPutNonRetry201Creating400":
+			res.resp, res.err = l.dispatchBeginPutNonRetry201Creating400(req)
+		case "LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON":
+			res.resp, res.err = l.dispatchBeginPutNonRetry201Creating400InvalidJSON(req)
+		case "LROSADsClient.BeginPutNonRetry400":
+			res.resp, res.err = l.dispatchBeginPutNonRetry400(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LROSADsServerTransport) dispatchBeginDelete202NonRetry400(req *http.Request) (*http.Response, error) {

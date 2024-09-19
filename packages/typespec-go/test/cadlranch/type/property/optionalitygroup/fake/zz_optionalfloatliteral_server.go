@@ -59,23 +59,32 @@ func (o *OptionalFloatLiteralServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (o *OptionalFloatLiteralServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "OptionalFloatLiteralClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalFloatLiteralClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalFloatLiteralClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalFloatLiteralClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "OptionalFloatLiteralClient.GetAll":
+			res.resp, res.err = o.dispatchGetAll(req)
+		case "OptionalFloatLiteralClient.GetDefault":
+			res.resp, res.err = o.dispatchGetDefault(req)
+		case "OptionalFloatLiteralClient.PutAll":
+			res.resp, res.err = o.dispatchPutAll(req)
+		case "OptionalFloatLiteralClient.PutDefault":
+			res.resp, res.err = o.dispatchPutDefault(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalFloatLiteralServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {

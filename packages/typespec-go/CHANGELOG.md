@@ -1,5 +1,11 @@
 # Release History
 
+## 0.3.2 (Unreleased)
+
+### Bugs Fixed
+
+* Fake servers will honor the caller's context in the `*http.Request`.
+
 ## 0.3.1 (2024-08-14)
 
 ### Bugs Fixed

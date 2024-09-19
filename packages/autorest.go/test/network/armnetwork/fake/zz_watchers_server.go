@@ -148,51 +148,60 @@ func (w *WatchersServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (w *WatchersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "WatchersClient.BeginCheckConnectivity":
-		resp, err = w.dispatchBeginCheckConnectivity(req)
-	case "WatchersClient.CreateOrUpdate":
-		resp, err = w.dispatchCreateOrUpdate(req)
-	case "WatchersClient.BeginDelete":
-		resp, err = w.dispatchBeginDelete(req)
-	case "WatchersClient.Get":
-		resp, err = w.dispatchGet(req)
-	case "WatchersClient.BeginGetAzureReachabilityReport":
-		resp, err = w.dispatchBeginGetAzureReachabilityReport(req)
-	case "WatchersClient.BeginGetFlowLogStatus":
-		resp, err = w.dispatchBeginGetFlowLogStatus(req)
-	case "WatchersClient.BeginGetNetworkConfigurationDiagnostic":
-		resp, err = w.dispatchBeginGetNetworkConfigurationDiagnostic(req)
-	case "WatchersClient.BeginGetNextHop":
-		resp, err = w.dispatchBeginGetNextHop(req)
-	case "WatchersClient.GetTopology":
-		resp, err = w.dispatchGetTopology(req)
-	case "WatchersClient.BeginGetTroubleshooting":
-		resp, err = w.dispatchBeginGetTroubleshooting(req)
-	case "WatchersClient.BeginGetTroubleshootingResult":
-		resp, err = w.dispatchBeginGetTroubleshootingResult(req)
-	case "WatchersClient.BeginGetVMSecurityRules":
-		resp, err = w.dispatchBeginGetVMSecurityRules(req)
-	case "WatchersClient.NewListPager":
-		resp, err = w.dispatchNewListPager(req)
-	case "WatchersClient.NewListAllPager":
-		resp, err = w.dispatchNewListAllPager(req)
-	case "WatchersClient.BeginListAvailableProviders":
-		resp, err = w.dispatchBeginListAvailableProviders(req)
-	case "WatchersClient.BeginSetFlowLogConfiguration":
-		resp, err = w.dispatchBeginSetFlowLogConfiguration(req)
-	case "WatchersClient.UpdateTags":
-		resp, err = w.dispatchUpdateTags(req)
-	case "WatchersClient.BeginVerifyIPFlow":
-		resp, err = w.dispatchBeginVerifyIPFlow(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "WatchersClient.BeginCheckConnectivity":
+			res.resp, res.err = w.dispatchBeginCheckConnectivity(req)
+		case "WatchersClient.CreateOrUpdate":
+			res.resp, res.err = w.dispatchCreateOrUpdate(req)
+		case "WatchersClient.BeginDelete":
+			res.resp, res.err = w.dispatchBeginDelete(req)
+		case "WatchersClient.Get":
+			res.resp, res.err = w.dispatchGet(req)
+		case "WatchersClient.BeginGetAzureReachabilityReport":
+			res.resp, res.err = w.dispatchBeginGetAzureReachabilityReport(req)
+		case "WatchersClient.BeginGetFlowLogStatus":
+			res.resp, res.err = w.dispatchBeginGetFlowLogStatus(req)
+		case "WatchersClient.BeginGetNetworkConfigurationDiagnostic":
+			res.resp, res.err = w.dispatchBeginGetNetworkConfigurationDiagnostic(req)
+		case "WatchersClient.BeginGetNextHop":
+			res.resp, res.err = w.dispatchBeginGetNextHop(req)
+		case "WatchersClient.GetTopology":
+			res.resp, res.err = w.dispatchGetTopology(req)
+		case "WatchersClient.BeginGetTroubleshooting":
+			res.resp, res.err = w.dispatchBeginGetTroubleshooting(req)
+		case "WatchersClient.BeginGetTroubleshootingResult":
+			res.resp, res.err = w.dispatchBeginGetTroubleshootingResult(req)
+		case "WatchersClient.BeginGetVMSecurityRules":
+			res.resp, res.err = w.dispatchBeginGetVMSecurityRules(req)
+		case "WatchersClient.NewListPager":
+			res.resp, res.err = w.dispatchNewListPager(req)
+		case "WatchersClient.NewListAllPager":
+			res.resp, res.err = w.dispatchNewListAllPager(req)
+		case "WatchersClient.BeginListAvailableProviders":
+			res.resp, res.err = w.dispatchBeginListAvailableProviders(req)
+		case "WatchersClient.BeginSetFlowLogConfiguration":
+			res.resp, res.err = w.dispatchBeginSetFlowLogConfiguration(req)
+		case "WatchersClient.UpdateTags":
+			res.resp, res.err = w.dispatchUpdateTags(req)
+		case "WatchersClient.BeginVerifyIPFlow":
+			res.resp, res.err = w.dispatchBeginVerifyIPFlow(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (w *WatchersServerTransport) dispatchBeginCheckConnectivity(req *http.Request) (*http.Response, error) {

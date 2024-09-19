@@ -68,27 +68,36 @@ func (e *EnumServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (e *EnumServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "EnumClient.GetNotExpandable":
-		resp, err = e.dispatchGetNotExpandable(req)
-	case "EnumClient.GetReferenced":
-		resp, err = e.dispatchGetReferenced(req)
-	case "EnumClient.GetReferencedConstant":
-		resp, err = e.dispatchGetReferencedConstant(req)
-	case "EnumClient.PutNotExpandable":
-		resp, err = e.dispatchPutNotExpandable(req)
-	case "EnumClient.PutReferenced":
-		resp, err = e.dispatchPutReferenced(req)
-	case "EnumClient.PutReferencedConstant":
-		resp, err = e.dispatchPutReferencedConstant(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "EnumClient.GetNotExpandable":
+			res.resp, res.err = e.dispatchGetNotExpandable(req)
+		case "EnumClient.GetReferenced":
+			res.resp, res.err = e.dispatchGetReferenced(req)
+		case "EnumClient.GetReferencedConstant":
+			res.resp, res.err = e.dispatchGetReferencedConstant(req)
+		case "EnumClient.PutNotExpandable":
+			res.resp, res.err = e.dispatchPutNotExpandable(req)
+		case "EnumClient.PutReferenced":
+			res.resp, res.err = e.dispatchPutReferenced(req)
+		case "EnumClient.PutReferencedConstant":
+			res.resp, res.err = e.dispatchPutReferencedConstant(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EnumServerTransport) dispatchGetNotExpandable(req *http.Request) (*http.Response, error) {

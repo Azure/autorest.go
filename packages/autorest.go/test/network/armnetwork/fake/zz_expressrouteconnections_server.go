@@ -68,23 +68,32 @@ func (e *ExpressRouteConnectionsServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (e *ExpressRouteConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ExpressRouteConnectionsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteConnectionsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRouteConnectionsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteConnectionsClient.List":
-		resp, err = e.dispatchList(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteConnectionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRouteConnectionsClient.BeginDelete":
+			res.resp, res.err = e.dispatchBeginDelete(req)
+		case "ExpressRouteConnectionsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRouteConnectionsClient.List":
+			res.resp, res.err = e.dispatchList(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteConnectionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

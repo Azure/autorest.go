@@ -51,19 +51,28 @@ func (s *ServiceFooServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (s *ServiceFooServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ServiceFooClient.Four":
-		resp, err = s.dispatchFour(req)
-	case "ServiceFooClient.Three":
-		resp, err = s.dispatchThree(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ServiceFooClient.Four":
+			res.resp, res.err = s.dispatchFour(req)
+		case "ServiceFooClient.Three":
+			res.resp, res.err = s.dispatchThree(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceFooServerTransport) dispatchFour(req *http.Request) (*http.Response, error) {

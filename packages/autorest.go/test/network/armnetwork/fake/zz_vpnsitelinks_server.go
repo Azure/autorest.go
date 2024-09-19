@@ -59,19 +59,28 @@ func (v *VPNSiteLinksServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (v *VPNSiteLinksServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VPNSiteLinksClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VPNSiteLinksClient.NewListByVPNSitePager":
-		resp, err = v.dispatchNewListByVPNSitePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VPNSiteLinksClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VPNSiteLinksClient.NewListByVPNSitePager":
+			res.resp, res.err = v.dispatchNewListByVPNSitePager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNSiteLinksServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

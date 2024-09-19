@@ -54,17 +54,26 @@ func (a *ApplicationGatewayWafDynamicManifestsServerTransport) Do(req *http.Requ
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ApplicationGatewayWafDynamicManifestsClient.NewGetPager":
-		resp, err = a.dispatchNewGetPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ApplicationGatewayWafDynamicManifestsClient.NewGetPager":
+			res.resp, res.err = a.dispatchNewGetPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsServerTransport) dispatchNewGetPager(req *http.Request) (*http.Response, error) {

@@ -75,31 +75,40 @@ func (e *EnumDiscriminatorServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (e *EnumDiscriminatorServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "EnumDiscriminatorClient.GetExtensibleModel":
-		resp, err = e.dispatchGetExtensibleModel(req)
-	case "EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator":
-		resp, err = e.dispatchGetExtensibleModelMissingDiscriminator(req)
-	case "EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator":
-		resp, err = e.dispatchGetExtensibleModelWrongDiscriminator(req)
-	case "EnumDiscriminatorClient.GetFixedModel":
-		resp, err = e.dispatchGetFixedModel(req)
-	case "EnumDiscriminatorClient.GetFixedModelMissingDiscriminator":
-		resp, err = e.dispatchGetFixedModelMissingDiscriminator(req)
-	case "EnumDiscriminatorClient.GetFixedModelWrongDiscriminator":
-		resp, err = e.dispatchGetFixedModelWrongDiscriminator(req)
-	case "EnumDiscriminatorClient.PutExtensibleModel":
-		resp, err = e.dispatchPutExtensibleModel(req)
-	case "EnumDiscriminatorClient.PutFixedModel":
-		resp, err = e.dispatchPutFixedModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "EnumDiscriminatorClient.GetExtensibleModel":
+			res.resp, res.err = e.dispatchGetExtensibleModel(req)
+		case "EnumDiscriminatorClient.GetExtensibleModelMissingDiscriminator":
+			res.resp, res.err = e.dispatchGetExtensibleModelMissingDiscriminator(req)
+		case "EnumDiscriminatorClient.GetExtensibleModelWrongDiscriminator":
+			res.resp, res.err = e.dispatchGetExtensibleModelWrongDiscriminator(req)
+		case "EnumDiscriminatorClient.GetFixedModel":
+			res.resp, res.err = e.dispatchGetFixedModel(req)
+		case "EnumDiscriminatorClient.GetFixedModelMissingDiscriminator":
+			res.resp, res.err = e.dispatchGetFixedModelMissingDiscriminator(req)
+		case "EnumDiscriminatorClient.GetFixedModelWrongDiscriminator":
+			res.resp, res.err = e.dispatchGetFixedModelWrongDiscriminator(req)
+		case "EnumDiscriminatorClient.PutExtensibleModel":
+			res.resp, res.err = e.dispatchPutExtensibleModel(req)
+		case "EnumDiscriminatorClient.PutFixedModel":
+			res.resp, res.err = e.dispatchPutFixedModel(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EnumDiscriminatorServerTransport) dispatchGetExtensibleModel(req *http.Request) (*http.Response, error) {

@@ -127,47 +127,56 @@ func (d *DevicesServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (d *DevicesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DevicesClient.CreateOrUpdate":
-		resp, err = d.dispatchCreateOrUpdate(req)
-	case "DevicesClient.BeginCreateOrUpdateSecuritySettings":
-		resp, err = d.dispatchBeginCreateOrUpdateSecuritySettings(req)
-	case "DevicesClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DevicesClient.BeginDownloadUpdates":
-		resp, err = d.dispatchBeginDownloadUpdates(req)
-	case "DevicesClient.GenerateCertificate":
-		resp, err = d.dispatchGenerateCertificate(req)
-	case "DevicesClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DevicesClient.GetExtendedInformation":
-		resp, err = d.dispatchGetExtendedInformation(req)
-	case "DevicesClient.GetNetworkSettings":
-		resp, err = d.dispatchGetNetworkSettings(req)
-	case "DevicesClient.GetUpdateSummary":
-		resp, err = d.dispatchGetUpdateSummary(req)
-	case "DevicesClient.BeginInstallUpdates":
-		resp, err = d.dispatchBeginInstallUpdates(req)
-	case "DevicesClient.NewListByResourceGroupPager":
-		resp, err = d.dispatchNewListByResourceGroupPager(req)
-	case "DevicesClient.NewListBySubscriptionPager":
-		resp, err = d.dispatchNewListBySubscriptionPager(req)
-	case "DevicesClient.BeginScanForUpdates":
-		resp, err = d.dispatchBeginScanForUpdates(req)
-	case "DevicesClient.Update":
-		resp, err = d.dispatchUpdate(req)
-	case "DevicesClient.UpdateExtendedInformation":
-		resp, err = d.dispatchUpdateExtendedInformation(req)
-	case "DevicesClient.UploadCertificate":
-		resp, err = d.dispatchUploadCertificate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DevicesClient.CreateOrUpdate":
+			res.resp, res.err = d.dispatchCreateOrUpdate(req)
+		case "DevicesClient.BeginCreateOrUpdateSecuritySettings":
+			res.resp, res.err = d.dispatchBeginCreateOrUpdateSecuritySettings(req)
+		case "DevicesClient.BeginDelete":
+			res.resp, res.err = d.dispatchBeginDelete(req)
+		case "DevicesClient.BeginDownloadUpdates":
+			res.resp, res.err = d.dispatchBeginDownloadUpdates(req)
+		case "DevicesClient.GenerateCertificate":
+			res.resp, res.err = d.dispatchGenerateCertificate(req)
+		case "DevicesClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DevicesClient.GetExtendedInformation":
+			res.resp, res.err = d.dispatchGetExtendedInformation(req)
+		case "DevicesClient.GetNetworkSettings":
+			res.resp, res.err = d.dispatchGetNetworkSettings(req)
+		case "DevicesClient.GetUpdateSummary":
+			res.resp, res.err = d.dispatchGetUpdateSummary(req)
+		case "DevicesClient.BeginInstallUpdates":
+			res.resp, res.err = d.dispatchBeginInstallUpdates(req)
+		case "DevicesClient.NewListByResourceGroupPager":
+			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+		case "DevicesClient.NewListBySubscriptionPager":
+			res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+		case "DevicesClient.BeginScanForUpdates":
+			res.resp, res.err = d.dispatchBeginScanForUpdates(req)
+		case "DevicesClient.Update":
+			res.resp, res.err = d.dispatchUpdate(req)
+		case "DevicesClient.UpdateExtendedInformation":
+			res.resp, res.err = d.dispatchUpdateExtendedInformation(req)
+		case "DevicesClient.UploadCertificate":
+			res.resp, res.err = d.dispatchUploadCertificate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DevicesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

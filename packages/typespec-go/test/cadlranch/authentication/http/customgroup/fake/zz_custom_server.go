@@ -51,19 +51,28 @@ func (c *CustomServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (c *CustomServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "CustomClient.Invalid":
-		resp, err = c.dispatchInvalid(req)
-	case "CustomClient.Valid":
-		resp, err = c.dispatchValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CustomClient.Invalid":
+			res.resp, res.err = c.dispatchInvalid(req)
+		case "CustomClient.Valid":
+			res.resp, res.err = c.dispatchValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CustomServerTransport) dispatchInvalid(req *http.Request) (*http.Response, error) {

@@ -89,29 +89,38 @@ func (l *LRORetrysServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (l *LRORetrysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "LRORetrysClient.BeginDelete202Retry200":
-		resp, err = l.dispatchBeginDelete202Retry200(req)
-	case "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded":
-		resp, err = l.dispatchBeginDeleteAsyncRelativeRetrySucceeded(req)
-	case "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded":
-		resp, err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
-	case "LRORetrysClient.BeginPost202Retry200":
-		resp, err = l.dispatchBeginPost202Retry200(req)
-	case "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded":
-		resp, err = l.dispatchBeginPostAsyncRelativeRetrySucceeded(req)
-	case "LRORetrysClient.BeginPut201CreatingSucceeded200":
-		resp, err = l.dispatchBeginPut201CreatingSucceeded200(req)
-	case "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded":
-		resp, err = l.dispatchBeginPutAsyncRelativeRetrySucceeded(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LRORetrysClient.BeginDelete202Retry200":
+			res.resp, res.err = l.dispatchBeginDelete202Retry200(req)
+		case "LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRelativeRetrySucceeded(req)
+		case "LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded":
+			res.resp, res.err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
+		case "LRORetrysClient.BeginPost202Retry200":
+			res.resp, res.err = l.dispatchBeginPost202Retry200(req)
+		case "LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPostAsyncRelativeRetrySucceeded(req)
+		case "LRORetrysClient.BeginPut201CreatingSucceeded200":
+			res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
+		case "LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPutAsyncRelativeRetrySucceeded(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LRORetrysServerTransport) dispatchBeginDelete202Retry200(req *http.Request) (*http.Response, error) {

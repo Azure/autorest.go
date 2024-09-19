@@ -71,23 +71,32 @@ func (e *ExpressRouteCircuitPeeringsServerTransport) Do(req *http.Request) (*htt
 }
 
 func (e *ExpressRouteCircuitPeeringsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteCircuitPeeringsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRouteCircuitPeeringsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteCircuitPeeringsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRouteCircuitPeeringsClient.BeginDelete":
+			res.resp, res.err = e.dispatchBeginDelete(req)
+		case "ExpressRouteCircuitPeeringsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRouteCircuitPeeringsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteCircuitPeeringsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

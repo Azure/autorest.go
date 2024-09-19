@@ -77,25 +77,34 @@ func (g *GalleryApplicationsServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (g *GalleryApplicationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "GalleryApplicationsClient.BeginCreateOrUpdate":
-		resp, err = g.dispatchBeginCreateOrUpdate(req)
-	case "GalleryApplicationsClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GalleryApplicationsClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GalleryApplicationsClient.NewListByGalleryPager":
-		resp, err = g.dispatchNewListByGalleryPager(req)
-	case "GalleryApplicationsClient.BeginUpdate":
-		resp, err = g.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "GalleryApplicationsClient.BeginCreateOrUpdate":
+			res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+		case "GalleryApplicationsClient.BeginDelete":
+			res.resp, res.err = g.dispatchBeginDelete(req)
+		case "GalleryApplicationsClient.Get":
+			res.resp, res.err = g.dispatchGet(req)
+		case "GalleryApplicationsClient.NewListByGalleryPager":
+			res.resp, res.err = g.dispatchNewListByGalleryPager(req)
+		case "GalleryApplicationsClient.BeginUpdate":
+			res.resp, res.err = g.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GalleryApplicationsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -74,25 +74,34 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) Do(req *http.Request
 }
 
 func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualMachineScaleSetVMExtensionsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualMachineScaleSetVMExtensionsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineScaleSetVMExtensionsClient.List":
-		resp, err = v.dispatchList(req)
-	case "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate":
-		resp, err = v.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualMachineScaleSetVMExtensionsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualMachineScaleSetVMExtensionsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualMachineScaleSetVMExtensionsClient.List":
+			res.resp, res.err = v.dispatchList(req)
+		case "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate":
+			res.resp, res.err = v.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

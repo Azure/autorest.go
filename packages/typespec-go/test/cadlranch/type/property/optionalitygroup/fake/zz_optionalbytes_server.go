@@ -59,23 +59,32 @@ func (o *OptionalBytesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (o *OptionalBytesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "OptionalBytesClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalBytesClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalBytesClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalBytesClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "OptionalBytesClient.GetAll":
+			res.resp, res.err = o.dispatchGetAll(req)
+		case "OptionalBytesClient.GetDefault":
+			res.resp, res.err = o.dispatchGetDefault(req)
+		case "OptionalBytesClient.PutAll":
+			res.resp, res.err = o.dispatchPutAll(req)
+		case "OptionalBytesClient.PutDefault":
+			res.resp, res.err = o.dispatchPutDefault(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalBytesServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {

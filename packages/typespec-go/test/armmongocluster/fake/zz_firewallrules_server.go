@@ -70,23 +70,32 @@ func (f *FirewallRulesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (f *FirewallRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "FirewallRulesClient.BeginCreateOrUpdate":
-		resp, err = f.dispatchBeginCreateOrUpdate(req)
-	case "FirewallRulesClient.BeginDelete":
-		resp, err = f.dispatchBeginDelete(req)
-	case "FirewallRulesClient.Get":
-		resp, err = f.dispatchGet(req)
-	case "FirewallRulesClient.NewListByMongoClusterPager":
-		resp, err = f.dispatchNewListByMongoClusterPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FirewallRulesClient.BeginCreateOrUpdate":
+			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+		case "FirewallRulesClient.BeginDelete":
+			res.resp, res.err = f.dispatchBeginDelete(req)
+		case "FirewallRulesClient.Get":
+			res.resp, res.err = f.dispatchGet(req)
+		case "FirewallRulesClient.NewListByMongoClusterPager":
+			res.resp, res.err = f.dispatchNewListByMongoClusterPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FirewallRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -89,29 +89,38 @@ func (d *DiskEncryptionSetsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (d *DiskEncryptionSetsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DiskEncryptionSetsClient.BeginCreateOrUpdate":
-		resp, err = d.dispatchBeginCreateOrUpdate(req)
-	case "DiskEncryptionSetsClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DiskEncryptionSetsClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DiskEncryptionSetsClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	case "DiskEncryptionSetsClient.NewListAssociatedResourcesPager":
-		resp, err = d.dispatchNewListAssociatedResourcesPager(req)
-	case "DiskEncryptionSetsClient.NewListByResourceGroupPager":
-		resp, err = d.dispatchNewListByResourceGroupPager(req)
-	case "DiskEncryptionSetsClient.BeginUpdate":
-		resp, err = d.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DiskEncryptionSetsClient.BeginCreateOrUpdate":
+			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+		case "DiskEncryptionSetsClient.BeginDelete":
+			res.resp, res.err = d.dispatchBeginDelete(req)
+		case "DiskEncryptionSetsClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DiskEncryptionSetsClient.NewListPager":
+			res.resp, res.err = d.dispatchNewListPager(req)
+		case "DiskEncryptionSetsClient.NewListAssociatedResourcesPager":
+			res.resp, res.err = d.dispatchNewListAssociatedResourcesPager(req)
+		case "DiskEncryptionSetsClient.NewListByResourceGroupPager":
+			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+		case "DiskEncryptionSetsClient.BeginUpdate":
+			res.resp, res.err = d.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DiskEncryptionSetsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

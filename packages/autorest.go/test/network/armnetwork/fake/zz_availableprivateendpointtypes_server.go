@@ -60,19 +60,28 @@ func (a *AvailablePrivateEndpointTypesServerTransport) Do(req *http.Request) (*h
 }
 
 func (a *AvailablePrivateEndpointTypesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "AvailablePrivateEndpointTypesClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AvailablePrivateEndpointTypesClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		case "AvailablePrivateEndpointTypesClient.NewListByResourceGroupPager":
+			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AvailablePrivateEndpointTypesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {

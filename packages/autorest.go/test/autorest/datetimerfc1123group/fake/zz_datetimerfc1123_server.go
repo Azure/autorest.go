@@ -81,33 +81,42 @@ func (d *Datetimerfc1123ServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (d *Datetimerfc1123ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "Datetimerfc1123Client.GetInvalid":
-		resp, err = d.dispatchGetInvalid(req)
-	case "Datetimerfc1123Client.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "Datetimerfc1123Client.GetOverflow":
-		resp, err = d.dispatchGetOverflow(req)
-	case "Datetimerfc1123Client.GetUTCLowercaseMaxDateTime":
-		resp, err = d.dispatchGetUTCLowercaseMaxDateTime(req)
-	case "Datetimerfc1123Client.GetUTCMinDateTime":
-		resp, err = d.dispatchGetUTCMinDateTime(req)
-	case "Datetimerfc1123Client.GetUTCUppercaseMaxDateTime":
-		resp, err = d.dispatchGetUTCUppercaseMaxDateTime(req)
-	case "Datetimerfc1123Client.GetUnderflow":
-		resp, err = d.dispatchGetUnderflow(req)
-	case "Datetimerfc1123Client.PutUTCMaxDateTime":
-		resp, err = d.dispatchPutUTCMaxDateTime(req)
-	case "Datetimerfc1123Client.PutUTCMinDateTime":
-		resp, err = d.dispatchPutUTCMinDateTime(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "Datetimerfc1123Client.GetInvalid":
+			res.resp, res.err = d.dispatchGetInvalid(req)
+		case "Datetimerfc1123Client.GetNull":
+			res.resp, res.err = d.dispatchGetNull(req)
+		case "Datetimerfc1123Client.GetOverflow":
+			res.resp, res.err = d.dispatchGetOverflow(req)
+		case "Datetimerfc1123Client.GetUTCLowercaseMaxDateTime":
+			res.resp, res.err = d.dispatchGetUTCLowercaseMaxDateTime(req)
+		case "Datetimerfc1123Client.GetUTCMinDateTime":
+			res.resp, res.err = d.dispatchGetUTCMinDateTime(req)
+		case "Datetimerfc1123Client.GetUTCUppercaseMaxDateTime":
+			res.resp, res.err = d.dispatchGetUTCUppercaseMaxDateTime(req)
+		case "Datetimerfc1123Client.GetUnderflow":
+			res.resp, res.err = d.dispatchGetUnderflow(req)
+		case "Datetimerfc1123Client.PutUTCMaxDateTime":
+			res.resp, res.err = d.dispatchPutUTCMaxDateTime(req)
+		case "Datetimerfc1123Client.PutUTCMinDateTime":
+			res.resp, res.err = d.dispatchPutUTCMinDateTime(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *Datetimerfc1123ServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {

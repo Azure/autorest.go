@@ -56,21 +56,30 @@ func (j *JSONMergePatchServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (j *JSONMergePatchServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "JSONMergePatchClient.CreateResource":
-		resp, err = j.dispatchCreateResource(req)
-	case "JSONMergePatchClient.UpdateOptionalResource":
-		resp, err = j.dispatchUpdateOptionalResource(req)
-	case "JSONMergePatchClient.UpdateResource":
-		resp, err = j.dispatchUpdateResource(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "JSONMergePatchClient.CreateResource":
+			res.resp, res.err = j.dispatchCreateResource(req)
+		case "JSONMergePatchClient.UpdateOptionalResource":
+			res.resp, res.err = j.dispatchUpdateOptionalResource(req)
+		case "JSONMergePatchClient.UpdateResource":
+			res.resp, res.err = j.dispatchUpdateResource(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (j *JSONMergePatchServerTransport) dispatchCreateResource(req *http.Request) (*http.Response, error) {

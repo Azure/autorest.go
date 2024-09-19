@@ -52,19 +52,28 @@ func (d *DictionaryDatetimeValueServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (d *DictionaryDatetimeValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DictionaryDatetimeValueClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DictionaryDatetimeValueClient.Put":
-		resp, err = d.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DictionaryDatetimeValueClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DictionaryDatetimeValueClient.Put":
+			res.resp, res.err = d.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryDatetimeValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

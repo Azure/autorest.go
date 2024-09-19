@@ -71,23 +71,32 @@ func (s *SecurityRulesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *SecurityRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SecurityRulesClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "SecurityRulesClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SecurityRulesClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SecurityRulesClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SecurityRulesClient.BeginCreateOrUpdate":
+			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+		case "SecurityRulesClient.BeginDelete":
+			res.resp, res.err = s.dispatchBeginDelete(req)
+		case "SecurityRulesClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "SecurityRulesClient.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SecurityRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

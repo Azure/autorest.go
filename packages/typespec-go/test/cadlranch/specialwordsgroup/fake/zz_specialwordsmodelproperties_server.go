@@ -47,17 +47,26 @@ func (s *SpecialWordsModelPropertiesServerTransport) Do(req *http.Request) (*htt
 }
 
 func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SpecialWordsModelPropertiesClient.SameAsModel":
-		resp, err = s.dispatchSameAsModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SpecialWordsModelPropertiesClient.SameAsModel":
+			res.resp, res.err = s.dispatchSameAsModel(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SpecialWordsModelPropertiesServerTransport) dispatchSameAsModel(req *http.Request) (*http.Response, error) {

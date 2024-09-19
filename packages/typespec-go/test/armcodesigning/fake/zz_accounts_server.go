@@ -86,29 +86,38 @@ func (a *AccountsServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (a *AccountsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "AccountsClient.CheckNameAvailability":
-		resp, err = a.dispatchCheckNameAvailability(req)
-	case "AccountsClient.BeginCreate":
-		resp, err = a.dispatchBeginCreate(req)
-	case "AccountsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "AccountsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AccountsClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AccountsClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AccountsClient.BeginUpdate":
-		resp, err = a.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AccountsClient.CheckNameAvailability":
+			res.resp, res.err = a.dispatchCheckNameAvailability(req)
+		case "AccountsClient.BeginCreate":
+			res.resp, res.err = a.dispatchBeginCreate(req)
+		case "AccountsClient.BeginDelete":
+			res.resp, res.err = a.dispatchBeginDelete(req)
+		case "AccountsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AccountsClient.NewListByResourceGroupPager":
+			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+		case "AccountsClient.NewListBySubscriptionPager":
+			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+		case "AccountsClient.BeginUpdate":
+			res.resp, res.err = a.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AccountsServerTransport) dispatchCheckNameAvailability(req *http.Request) (*http.Response, error) {

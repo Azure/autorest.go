@@ -82,21 +82,30 @@ func (r *RenamedOperationServerTransport) dispatchToClientFake(req *http.Request
 }
 
 func (r *RenamedOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "RenamedOperationClient.RenamedFive":
-		resp, err = r.dispatchRenamedFive(req)
-	case "RenamedOperationClient.RenamedOne":
-		resp, err = r.dispatchRenamedOne(req)
-	case "RenamedOperationClient.RenamedThree":
-		resp, err = r.dispatchRenamedThree(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RenamedOperationClient.RenamedFive":
+			res.resp, res.err = r.dispatchRenamedFive(req)
+		case "RenamedOperationClient.RenamedOne":
+			res.resp, res.err = r.dispatchRenamedOne(req)
+		case "RenamedOperationClient.RenamedThree":
+			res.resp, res.err = r.dispatchRenamedThree(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RenamedOperationServerTransport) dispatchRenamedFive(req *http.Request) (*http.Response, error) {

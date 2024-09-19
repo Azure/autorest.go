@@ -70,23 +70,32 @@ func (a *AdminRuleCollectionsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (a *AdminRuleCollectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "AdminRuleCollectionsClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "AdminRuleCollectionsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "AdminRuleCollectionsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AdminRuleCollectionsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AdminRuleCollectionsClient.CreateOrUpdate":
+			res.resp, res.err = a.dispatchCreateOrUpdate(req)
+		case "AdminRuleCollectionsClient.BeginDelete":
+			res.resp, res.err = a.dispatchBeginDelete(req)
+		case "AdminRuleCollectionsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AdminRuleCollectionsClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AdminRuleCollectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -71,23 +71,32 @@ func (v *VirtualHubRouteTableV2SServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (v *VirtualHubRouteTableV2SServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualHubRouteTableV2SClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualHubRouteTableV2SClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualHubRouteTableV2SClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualHubRouteTableV2SClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualHubRouteTableV2SClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualHubRouteTableV2SClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualHubRouteTableV2SClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualHubRouteTableV2SClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubRouteTableV2SServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

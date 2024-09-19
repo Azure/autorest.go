@@ -62,21 +62,30 @@ func (q *QuotasServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (q *QuotasServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "QuotasClient.CheckAvailability":
-		resp, err = q.dispatchCheckAvailability(req)
-	case "QuotasClient.Get":
-		resp, err = q.dispatchGet(req)
-	case "QuotasClient.NewListPager":
-		resp, err = q.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "QuotasClient.CheckAvailability":
+			res.resp, res.err = q.dispatchCheckAvailability(req)
+		case "QuotasClient.Get":
+			res.resp, res.err = q.dispatchGet(req)
+		case "QuotasClient.NewListPager":
+			res.resp, res.err = q.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (q *QuotasServerTransport) dispatchCheckAvailability(req *http.Request) (*http.Response, error) {

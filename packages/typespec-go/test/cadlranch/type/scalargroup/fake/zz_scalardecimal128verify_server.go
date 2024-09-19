@@ -51,19 +51,28 @@ func (s *ScalarDecimal128VerifyServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (s *ScalarDecimal128VerifyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ScalarDecimal128VerifyClient.PrepareVerify":
-		resp, err = s.dispatchPrepareVerify(req)
-	case "ScalarDecimal128VerifyClient.Verify":
-		resp, err = s.dispatchVerify(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ScalarDecimal128VerifyClient.PrepareVerify":
+			res.resp, res.err = s.dispatchPrepareVerify(req)
+		case "ScalarDecimal128VerifyClient.Verify":
+			res.resp, res.err = s.dispatchVerify(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarDecimal128VerifyServerTransport) dispatchPrepareVerify(req *http.Request) (*http.Response, error) {

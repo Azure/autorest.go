@@ -67,27 +67,36 @@ func (d *DurationPropertyServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (d *DurationPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DurationPropertyClient.Default":
-		resp, err = d.dispatchDefault(req)
-	case "DurationPropertyClient.Float64Seconds":
-		resp, err = d.dispatchFloat64Seconds(req)
-	case "DurationPropertyClient.FloatSeconds":
-		resp, err = d.dispatchFloatSeconds(req)
-	case "DurationPropertyClient.FloatSecondsArray":
-		resp, err = d.dispatchFloatSecondsArray(req)
-	case "DurationPropertyClient.ISO8601":
-		resp, err = d.dispatchISO8601(req)
-	case "DurationPropertyClient.Int32Seconds":
-		resp, err = d.dispatchInt32Seconds(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DurationPropertyClient.Default":
+			res.resp, res.err = d.dispatchDefault(req)
+		case "DurationPropertyClient.Float64Seconds":
+			res.resp, res.err = d.dispatchFloat64Seconds(req)
+		case "DurationPropertyClient.FloatSeconds":
+			res.resp, res.err = d.dispatchFloatSeconds(req)
+		case "DurationPropertyClient.FloatSecondsArray":
+			res.resp, res.err = d.dispatchFloatSecondsArray(req)
+		case "DurationPropertyClient.ISO8601":
+			res.resp, res.err = d.dispatchISO8601(req)
+		case "DurationPropertyClient.Int32Seconds":
+			res.resp, res.err = d.dispatchInt32Seconds(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DurationPropertyServerTransport) dispatchDefault(req *http.Request) (*http.Response, error) {

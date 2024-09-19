@@ -82,27 +82,36 @@ func (p *PacketCapturesServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (p *PacketCapturesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "PacketCapturesClient.BeginCreate":
-		resp, err = p.dispatchBeginCreate(req)
-	case "PacketCapturesClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PacketCapturesClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PacketCapturesClient.BeginGetStatus":
-		resp, err = p.dispatchBeginGetStatus(req)
-	case "PacketCapturesClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "PacketCapturesClient.BeginStop":
-		resp, err = p.dispatchBeginStop(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PacketCapturesClient.BeginCreate":
+			res.resp, res.err = p.dispatchBeginCreate(req)
+		case "PacketCapturesClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "PacketCapturesClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "PacketCapturesClient.BeginGetStatus":
+			res.resp, res.err = p.dispatchBeginGetStatus(req)
+		case "PacketCapturesClient.NewListPager":
+			res.resp, res.err = p.dispatchNewListPager(req)
+		case "PacketCapturesClient.BeginStop":
+			res.resp, res.err = p.dispatchBeginStop(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PacketCapturesServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {

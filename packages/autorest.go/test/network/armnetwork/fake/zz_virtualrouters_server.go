@@ -77,25 +77,34 @@ func (v *VirtualRoutersServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (v *VirtualRoutersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualRoutersClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualRoutersClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualRoutersClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualRoutersClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualRoutersClient.NewListByResourceGroupPager":
-		resp, err = v.dispatchNewListByResourceGroupPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualRoutersClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualRoutersClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualRoutersClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualRoutersClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualRoutersClient.NewListByResourceGroupPager":
+			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualRoutersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

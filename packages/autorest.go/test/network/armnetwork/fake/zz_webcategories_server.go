@@ -59,19 +59,28 @@ func (w *WebCategoriesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (w *WebCategoriesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "WebCategoriesClient.Get":
-		resp, err = w.dispatchGet(req)
-	case "WebCategoriesClient.NewListBySubscriptionPager":
-		resp, err = w.dispatchNewListBySubscriptionPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "WebCategoriesClient.Get":
+			res.resp, res.err = w.dispatchGet(req)
+		case "WebCategoriesClient.NewListBySubscriptionPager":
+			res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (w *WebCategoriesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

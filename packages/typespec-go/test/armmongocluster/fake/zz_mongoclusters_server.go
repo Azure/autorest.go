@@ -90,31 +90,40 @@ func (m *MongoClustersServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (m *MongoClustersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "MongoClustersClient.CheckNameAvailability":
-		resp, err = m.dispatchCheckNameAvailability(req)
-	case "MongoClustersClient.BeginCreateOrUpdate":
-		resp, err = m.dispatchBeginCreateOrUpdate(req)
-	case "MongoClustersClient.BeginDelete":
-		resp, err = m.dispatchBeginDelete(req)
-	case "MongoClustersClient.Get":
-		resp, err = m.dispatchGet(req)
-	case "MongoClustersClient.NewListPager":
-		resp, err = m.dispatchNewListPager(req)
-	case "MongoClustersClient.NewListByResourceGroupPager":
-		resp, err = m.dispatchNewListByResourceGroupPager(req)
-	case "MongoClustersClient.ListConnectionStrings":
-		resp, err = m.dispatchListConnectionStrings(req)
-	case "MongoClustersClient.BeginUpdate":
-		resp, err = m.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MongoClustersClient.CheckNameAvailability":
+			res.resp, res.err = m.dispatchCheckNameAvailability(req)
+		case "MongoClustersClient.BeginCreateOrUpdate":
+			res.resp, res.err = m.dispatchBeginCreateOrUpdate(req)
+		case "MongoClustersClient.BeginDelete":
+			res.resp, res.err = m.dispatchBeginDelete(req)
+		case "MongoClustersClient.Get":
+			res.resp, res.err = m.dispatchGet(req)
+		case "MongoClustersClient.NewListPager":
+			res.resp, res.err = m.dispatchNewListPager(req)
+		case "MongoClustersClient.NewListByResourceGroupPager":
+			res.resp, res.err = m.dispatchNewListByResourceGroupPager(req)
+		case "MongoClustersClient.ListConnectionStrings":
+			res.resp, res.err = m.dispatchListConnectionStrings(req)
+		case "MongoClustersClient.BeginUpdate":
+			res.resp, res.err = m.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MongoClustersServerTransport) dispatchCheckNameAvailability(req *http.Request) (*http.Response, error) {

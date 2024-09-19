@@ -275,19 +275,27 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
 
   const receiverName = serverTransport[0].toLowerCase();
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
-  content += '\tvar resp *http.Response\n';
-  content += '\tvar err error\n\n';
-  content += '\tswitch method {\n';
+  content += '\tresultChan := make(chan result)\n\n';
+  content += '\tgo func() {\n\t\tvar res result\n';
+  content += '\t\tswitch method {\n';
 
   for (const method of values(finalMethods)) {
     const operationName = fixUpMethodName(method);
-    content += `\tcase "${client.name}.${operationName}":\n`;
-    content += `\t\tresp, err = ${receiverName}.dispatch${operationName}(req)\n`;
+    content += `\t\tcase "${client.name}.${operationName}":\n`;
+    content += `\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
 
-  content += '\tdefault:\n\t\terr = fmt.Errorf("unhandled API %s", method)\n';
-  content += '\t}\n\n'; // end switch
-  content += '\treturn resp, err\n}\n\n';
+  content += '\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
+  content += '\t\t}\n\n'; // end switch
+  content += '\t\tresultChan <- res\n\t}()\n\n'
+
+  content += '\tselect {\n';
+  content += '\tcase <-req.Context().Done():\n';
+  content += '\t\treturn nil, req.Context().Err()\n';
+  content += '\tcase res := <-resultChan:\n';
+  content += '\t\treturn res.resp, res.err\n';
+  content += '\t}\n}\n\n';
+
   return content;
 }
 

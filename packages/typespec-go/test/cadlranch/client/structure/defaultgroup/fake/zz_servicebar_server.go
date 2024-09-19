@@ -51,19 +51,28 @@ func (s *ServiceBarServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (s *ServiceBarServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ServiceBarClient.Five":
-		resp, err = s.dispatchFive(req)
-	case "ServiceBarClient.Six":
-		resp, err = s.dispatchSix(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ServiceBarClient.Five":
+			res.resp, res.err = s.dispatchFive(req)
+		case "ServiceBarClient.Six":
+			res.resp, res.err = s.dispatchSix(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceBarServerTransport) dispatchFive(req *http.Request) (*http.Response, error) {

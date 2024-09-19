@@ -70,25 +70,34 @@ func (e *EnvironmentsServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (e *EnvironmentsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "EnvironmentsClient.CreateOrUpdate":
-		resp, err = e.dispatchCreateOrUpdate(req)
-	case "EnvironmentsClient.Delete":
-		resp, err = e.dispatchDelete(req)
-	case "EnvironmentsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "EnvironmentsClient.Head":
-		resp, err = e.dispatchHead(req)
-	case "EnvironmentsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "EnvironmentsClient.CreateOrUpdate":
+			res.resp, res.err = e.dispatchCreateOrUpdate(req)
+		case "EnvironmentsClient.Delete":
+			res.resp, res.err = e.dispatchDelete(req)
+		case "EnvironmentsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "EnvironmentsClient.Head":
+			res.resp, res.err = e.dispatchHead(req)
+		case "EnvironmentsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EnvironmentsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

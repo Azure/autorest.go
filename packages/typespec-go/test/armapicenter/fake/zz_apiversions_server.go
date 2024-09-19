@@ -70,25 +70,34 @@ func (a *APIVersionsServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (a *APIVersionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "APIVersionsClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "APIVersionsClient.Delete":
-		resp, err = a.dispatchDelete(req)
-	case "APIVersionsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "APIVersionsClient.Head":
-		resp, err = a.dispatchHead(req)
-	case "APIVersionsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "APIVersionsClient.CreateOrUpdate":
+			res.resp, res.err = a.dispatchCreateOrUpdate(req)
+		case "APIVersionsClient.Delete":
+			res.resp, res.err = a.dispatchDelete(req)
+		case "APIVersionsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "APIVersionsClient.Head":
+			res.resp, res.err = a.dispatchHead(req)
+		case "APIVersionsClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *APIVersionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

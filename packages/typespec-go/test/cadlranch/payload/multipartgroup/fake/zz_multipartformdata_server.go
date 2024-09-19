@@ -93,37 +93,46 @@ func (m *MultiPartFormDataServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (m *MultiPartFormDataServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "MultiPartFormDataClient.AnonymousModel":
-		resp, err = m.dispatchAnonymousModel(req)
-	case "MultiPartFormDataClient.Basic":
-		resp, err = m.dispatchBasic(req)
-	case "MultiPartFormDataClient.BinaryArrayParts":
-		resp, err = m.dispatchBinaryArrayParts(req)
-	case "MultiPartFormDataClient.CheckFileNameAndContentType":
-		resp, err = m.dispatchCheckFileNameAndContentType(req)
-	case "MultiPartFormDataClient.Complex":
-		resp, err = m.dispatchComplex(req)
-	case "MultiPartFormDataClient.ComplexWithHTTPPart":
-		resp, err = m.dispatchComplexWithHTTPPart(req)
-	case "MultiPartFormDataClient.FileWithHTTPPartOptionalContentType":
-		resp, err = m.dispatchFileWithHTTPPartOptionalContentType(req)
-	case "MultiPartFormDataClient.FileWithHTTPPartRequiredContentType":
-		resp, err = m.dispatchFileWithHTTPPartRequiredContentType(req)
-	case "MultiPartFormDataClient.FileWithHTTPPartSpecificContentType":
-		resp, err = m.dispatchFileWithHTTPPartSpecificContentType(req)
-	case "MultiPartFormDataClient.JSONPart":
-		resp, err = m.dispatchJSONPart(req)
-	case "MultiPartFormDataClient.MultiBinaryParts":
-		resp, err = m.dispatchMultiBinaryParts(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MultiPartFormDataClient.AnonymousModel":
+			res.resp, res.err = m.dispatchAnonymousModel(req)
+		case "MultiPartFormDataClient.Basic":
+			res.resp, res.err = m.dispatchBasic(req)
+		case "MultiPartFormDataClient.BinaryArrayParts":
+			res.resp, res.err = m.dispatchBinaryArrayParts(req)
+		case "MultiPartFormDataClient.CheckFileNameAndContentType":
+			res.resp, res.err = m.dispatchCheckFileNameAndContentType(req)
+		case "MultiPartFormDataClient.Complex":
+			res.resp, res.err = m.dispatchComplex(req)
+		case "MultiPartFormDataClient.ComplexWithHTTPPart":
+			res.resp, res.err = m.dispatchComplexWithHTTPPart(req)
+		case "MultiPartFormDataClient.FileWithHTTPPartOptionalContentType":
+			res.resp, res.err = m.dispatchFileWithHTTPPartOptionalContentType(req)
+		case "MultiPartFormDataClient.FileWithHTTPPartRequiredContentType":
+			res.resp, res.err = m.dispatchFileWithHTTPPartRequiredContentType(req)
+		case "MultiPartFormDataClient.FileWithHTTPPartSpecificContentType":
+			res.resp, res.err = m.dispatchFileWithHTTPPartSpecificContentType(req)
+		case "MultiPartFormDataClient.JSONPart":
+			res.resp, res.err = m.dispatchJSONPart(req)
+		case "MultiPartFormDataClient.MultiBinaryParts":
+			res.resp, res.err = m.dispatchMultiBinaryParts(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MultiPartFormDataServerTransport) dispatchAnonymousModel(req *http.Request) (*http.Response, error) {

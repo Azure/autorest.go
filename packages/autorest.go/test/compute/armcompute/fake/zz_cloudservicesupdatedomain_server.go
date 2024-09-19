@@ -66,21 +66,30 @@ func (c *CloudServicesUpdateDomainServerTransport) Do(req *http.Request) (*http.
 }
 
 func (c *CloudServicesUpdateDomainServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "CloudServicesUpdateDomainClient.GetUpdateDomain":
-		resp, err = c.dispatchGetUpdateDomain(req)
-	case "CloudServicesUpdateDomainClient.NewListUpdateDomainsPager":
-		resp, err = c.dispatchNewListUpdateDomainsPager(req)
-	case "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain":
-		resp, err = c.dispatchBeginWalkUpdateDomain(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CloudServicesUpdateDomainClient.GetUpdateDomain":
+			res.resp, res.err = c.dispatchGetUpdateDomain(req)
+		case "CloudServicesUpdateDomainClient.NewListUpdateDomainsPager":
+			res.resp, res.err = c.dispatchNewListUpdateDomainsPager(req)
+		case "CloudServicesUpdateDomainClient.BeginWalkUpdateDomain":
+			res.resp, res.err = c.dispatchBeginWalkUpdateDomain(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CloudServicesUpdateDomainServerTransport) dispatchGetUpdateDomain(req *http.Request) (*http.Response, error) {

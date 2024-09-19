@@ -56,21 +56,30 @@ func (n *NotVersionedServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (n *NotVersionedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "NotVersionedClient.WithPathAPIVersion":
-		resp, err = n.dispatchWithPathAPIVersion(req)
-	case "NotVersionedClient.WithQueryAPIVersion":
-		resp, err = n.dispatchWithQueryAPIVersion(req)
-	case "NotVersionedClient.WithoutAPIVersion":
-		resp, err = n.dispatchWithoutAPIVersion(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NotVersionedClient.WithPathAPIVersion":
+			res.resp, res.err = n.dispatchWithPathAPIVersion(req)
+		case "NotVersionedClient.WithQueryAPIVersion":
+			res.resp, res.err = n.dispatchWithQueryAPIVersion(req)
+		case "NotVersionedClient.WithoutAPIVersion":
+			res.resp, res.err = n.dispatchWithoutAPIVersion(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NotVersionedServerTransport) dispatchWithPathAPIVersion(req *http.Request) (*http.Response, error) {

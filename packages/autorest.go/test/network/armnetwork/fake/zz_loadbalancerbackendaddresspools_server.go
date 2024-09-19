@@ -71,23 +71,32 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) Do(req *http.Request) (
 }
 
 func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LoadBalancerBackendAddressPoolsClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LoadBalancerBackendAddressPoolsClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadBalancerBackendAddressPoolsClient.NewListPager":
-		resp, err = l.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate":
+			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+		case "LoadBalancerBackendAddressPoolsClient.BeginDelete":
+			res.resp, res.err = l.dispatchBeginDelete(req)
+		case "LoadBalancerBackendAddressPoolsClient.Get":
+			res.resp, res.err = l.dispatchGet(req)
+		case "LoadBalancerBackendAddressPoolsClient.NewListPager":
+			res.resp, res.err = l.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

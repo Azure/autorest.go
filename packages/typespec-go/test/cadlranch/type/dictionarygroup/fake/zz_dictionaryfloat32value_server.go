@@ -51,19 +51,28 @@ func (d *DictionaryFloat32ValueServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (d *DictionaryFloat32ValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DictionaryFloat32ValueClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DictionaryFloat32ValueClient.Put":
-		resp, err = d.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DictionaryFloat32ValueClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DictionaryFloat32ValueClient.Put":
+			res.resp, res.err = d.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryFloat32ValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

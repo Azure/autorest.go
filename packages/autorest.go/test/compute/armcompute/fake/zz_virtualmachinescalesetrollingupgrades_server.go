@@ -70,23 +70,32 @@ func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) Do(req *http.Requ
 }
 
 func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualMachineScaleSetRollingUpgradesClient.BeginCancel":
-		resp, err = v.dispatchBeginCancel(req)
-	case "VirtualMachineScaleSetRollingUpgradesClient.GetLatest":
-		resp, err = v.dispatchGetLatest(req)
-	case "VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade":
-		resp, err = v.dispatchBeginStartExtensionUpgrade(req)
-	case "VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade":
-		resp, err = v.dispatchBeginStartOSUpgrade(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineScaleSetRollingUpgradesClient.BeginCancel":
+			res.resp, res.err = v.dispatchBeginCancel(req)
+		case "VirtualMachineScaleSetRollingUpgradesClient.GetLatest":
+			res.resp, res.err = v.dispatchGetLatest(req)
+		case "VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade":
+			res.resp, res.err = v.dispatchBeginStartExtensionUpgrade(req)
+		case "VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade":
+			res.resp, res.err = v.dispatchBeginStartOSUpgrade(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineScaleSetRollingUpgradesServerTransport) dispatchBeginCancel(req *http.Request) (*http.Response, error) {

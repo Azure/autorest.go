@@ -81,27 +81,36 @@ func (s *SecurityGroupsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (s *SecurityGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SecurityGroupsClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "SecurityGroupsClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SecurityGroupsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SecurityGroupsClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "SecurityGroupsClient.NewListAllPager":
-		resp, err = s.dispatchNewListAllPager(req)
-	case "SecurityGroupsClient.UpdateTags":
-		resp, err = s.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SecurityGroupsClient.BeginCreateOrUpdate":
+			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+		case "SecurityGroupsClient.BeginDelete":
+			res.resp, res.err = s.dispatchBeginDelete(req)
+		case "SecurityGroupsClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "SecurityGroupsClient.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		case "SecurityGroupsClient.NewListAllPager":
+			res.resp, res.err = s.dispatchNewListAllPager(req)
+		case "SecurityGroupsClient.UpdateTags":
+			res.resp, res.err = s.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SecurityGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

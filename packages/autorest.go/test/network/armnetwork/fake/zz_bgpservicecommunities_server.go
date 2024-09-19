@@ -53,17 +53,26 @@ func (b *BgpServiceCommunitiesServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (b *BgpServiceCommunitiesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "BgpServiceCommunitiesClient.NewListPager":
-		resp, err = b.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BgpServiceCommunitiesClient.NewListPager":
+			res.resp, res.err = b.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BgpServiceCommunitiesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {

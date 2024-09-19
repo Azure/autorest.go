@@ -68,27 +68,36 @@ func (d *DictionaryServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (d *DictionaryServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DictionaryClient.GetEmpty":
-		resp, err = d.dispatchGetEmpty(req)
-	case "DictionaryClient.GetNotProvided":
-		resp, err = d.dispatchGetNotProvided(req)
-	case "DictionaryClient.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "DictionaryClient.GetValid":
-		resp, err = d.dispatchGetValid(req)
-	case "DictionaryClient.PutEmpty":
-		resp, err = d.dispatchPutEmpty(req)
-	case "DictionaryClient.PutValid":
-		resp, err = d.dispatchPutValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DictionaryClient.GetEmpty":
+			res.resp, res.err = d.dispatchGetEmpty(req)
+		case "DictionaryClient.GetNotProvided":
+			res.resp, res.err = d.dispatchGetNotProvided(req)
+		case "DictionaryClient.GetNull":
+			res.resp, res.err = d.dispatchGetNull(req)
+		case "DictionaryClient.GetValid":
+			res.resp, res.err = d.dispatchGetValid(req)
+		case "DictionaryClient.PutEmpty":
+			res.resp, res.err = d.dispatchPutEmpty(req)
+		case "DictionaryClient.PutValid":
+			res.resp, res.err = d.dispatchPutValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DictionaryServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {

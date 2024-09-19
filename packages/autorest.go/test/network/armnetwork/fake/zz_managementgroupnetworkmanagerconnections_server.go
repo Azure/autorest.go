@@ -68,23 +68,32 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) Do(req *http.R
 }
 
 func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
-		resp, err = m.dispatchCreateOrUpdate(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.Delete":
-		resp, err = m.dispatchDelete(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.Get":
-		resp, err = m.dispatchGet(req)
-	case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
-		resp, err = m.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
+			res.resp, res.err = m.dispatchCreateOrUpdate(req)
+		case "ManagementGroupNetworkManagerConnectionsClient.Delete":
+			res.resp, res.err = m.dispatchDelete(req)
+		case "ManagementGroupNetworkManagerConnectionsClient.Get":
+			res.resp, res.err = m.dispatchGet(req)
+		case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
+			res.resp, res.err = m.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

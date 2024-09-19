@@ -66,23 +66,32 @@ func (t *TargetsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (t *TargetsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "TargetsClient.CreateOrUpdate":
-		resp, err = t.dispatchCreateOrUpdate(req)
-	case "TargetsClient.Delete":
-		resp, err = t.dispatchDelete(req)
-	case "TargetsClient.Get":
-		resp, err = t.dispatchGet(req)
-	case "TargetsClient.NewListByWatcherPager":
-		resp, err = t.dispatchNewListByWatcherPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "TargetsClient.CreateOrUpdate":
+			res.resp, res.err = t.dispatchCreateOrUpdate(req)
+		case "TargetsClient.Delete":
+			res.resp, res.err = t.dispatchDelete(req)
+		case "TargetsClient.Get":
+			res.resp, res.err = t.dispatchGet(req)
+		case "TargetsClient.NewListByWatcherPager":
+			res.resp, res.err = t.dispatchNewListByWatcherPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (t *TargetsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

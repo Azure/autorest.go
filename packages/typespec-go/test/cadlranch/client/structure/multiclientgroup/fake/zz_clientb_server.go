@@ -55,21 +55,30 @@ func (c *ClientBServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (c *ClientBServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ClientBClient.RenamedFour":
-		resp, err = c.dispatchRenamedFour(req)
-	case "ClientBClient.RenamedSix":
-		resp, err = c.dispatchRenamedSix(req)
-	case "ClientBClient.RenamedTwo":
-		resp, err = c.dispatchRenamedTwo(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ClientBClient.RenamedFour":
+			res.resp, res.err = c.dispatchRenamedFour(req)
+		case "ClientBClient.RenamedSix":
+			res.resp, res.err = c.dispatchRenamedSix(req)
+		case "ClientBClient.RenamedTwo":
+			res.resp, res.err = c.dispatchRenamedTwo(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ClientBServerTransport) dispatchRenamedFour(req *http.Request) (*http.Response, error) {

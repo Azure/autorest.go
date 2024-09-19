@@ -71,27 +71,36 @@ func (p *ParameterGroupingServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (p *ParameterGroupingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ParameterGroupingClient.GroupWithConstant":
-		resp, err = p.dispatchGroupWithConstant(req)
-	case "ParameterGroupingClient.PostMultiParamGroups":
-		resp, err = p.dispatchPostMultiParamGroups(req)
-	case "ParameterGroupingClient.PostOptional":
-		resp, err = p.dispatchPostOptional(req)
-	case "ParameterGroupingClient.PostRequired":
-		resp, err = p.dispatchPostRequired(req)
-	case "ParameterGroupingClient.PostReservedWords":
-		resp, err = p.dispatchPostReservedWords(req)
-	case "ParameterGroupingClient.PostSharedParameterGroupObject":
-		resp, err = p.dispatchPostSharedParameterGroupObject(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ParameterGroupingClient.GroupWithConstant":
+			res.resp, res.err = p.dispatchGroupWithConstant(req)
+		case "ParameterGroupingClient.PostMultiParamGroups":
+			res.resp, res.err = p.dispatchPostMultiParamGroups(req)
+		case "ParameterGroupingClient.PostOptional":
+			res.resp, res.err = p.dispatchPostOptional(req)
+		case "ParameterGroupingClient.PostRequired":
+			res.resp, res.err = p.dispatchPostRequired(req)
+		case "ParameterGroupingClient.PostReservedWords":
+			res.resp, res.err = p.dispatchPostReservedWords(req)
+		case "ParameterGroupingClient.PostSharedParameterGroupObject":
+			res.resp, res.err = p.dispatchPostSharedParameterGroupObject(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *ParameterGroupingServerTransport) dispatchGroupWithConstant(req *http.Request) (*http.Response, error) {

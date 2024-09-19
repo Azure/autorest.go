@@ -75,27 +75,36 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "BasicClient.CreateOrReplace":
-		resp, err = b.dispatchCreateOrReplace(req)
-	case "BasicClient.CreateOrUpdate":
-		resp, err = b.dispatchCreateOrUpdate(req)
-	case "BasicClient.Delete":
-		resp, err = b.dispatchDelete(req)
-	case "BasicClient.Export":
-		resp, err = b.dispatchExport(req)
-	case "BasicClient.Get":
-		resp, err = b.dispatchGet(req)
-	case "BasicClient.NewListPager":
-		resp, err = b.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BasicClient.CreateOrReplace":
+			res.resp, res.err = b.dispatchCreateOrReplace(req)
+		case "BasicClient.CreateOrUpdate":
+			res.resp, res.err = b.dispatchCreateOrUpdate(req)
+		case "BasicClient.Delete":
+			res.resp, res.err = b.dispatchDelete(req)
+		case "BasicClient.Export":
+			res.resp, res.err = b.dispatchExport(req)
+		case "BasicClient.Get":
+			res.resp, res.err = b.dispatchGet(req)
+		case "BasicClient.NewListPager":
+			res.resp, res.err = b.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BasicServerTransport) dispatchCreateOrReplace(req *http.Request) (*http.Response, error) {

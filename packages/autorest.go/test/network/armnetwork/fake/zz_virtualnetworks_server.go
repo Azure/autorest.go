@@ -98,33 +98,42 @@ func (v *VirtualNetworksServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (v *VirtualNetworksServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualNetworksClient.CheckIPAddressAvailability":
-		resp, err = v.dispatchCheckIPAddressAvailability(req)
-	case "VirtualNetworksClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualNetworksClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualNetworksClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualNetworksClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualNetworksClient.NewListAllPager":
-		resp, err = v.dispatchNewListAllPager(req)
-	case "VirtualNetworksClient.BeginListDdosProtectionStatus":
-		resp, err = v.dispatchBeginListDdosProtectionStatus(req)
-	case "VirtualNetworksClient.NewListUsagePager":
-		resp, err = v.dispatchNewListUsagePager(req)
-	case "VirtualNetworksClient.UpdateTags":
-		resp, err = v.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualNetworksClient.CheckIPAddressAvailability":
+			res.resp, res.err = v.dispatchCheckIPAddressAvailability(req)
+		case "VirtualNetworksClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualNetworksClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualNetworksClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualNetworksClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualNetworksClient.NewListAllPager":
+			res.resp, res.err = v.dispatchNewListAllPager(req)
+		case "VirtualNetworksClient.BeginListDdosProtectionStatus":
+			res.resp, res.err = v.dispatchBeginListDdosProtectionStatus(req)
+		case "VirtualNetworksClient.NewListUsagePager":
+			res.resp, res.err = v.dispatchNewListUsagePager(req)
+		case "VirtualNetworksClient.UpdateTags":
+			res.resp, res.err = v.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualNetworksServerTransport) dispatchCheckIPAddressAvailability(req *http.Request) (*http.Response, error) {

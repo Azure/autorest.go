@@ -81,27 +81,36 @@ func (a *ApplicationSecurityGroupsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (a *ApplicationSecurityGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ApplicationSecurityGroupsClient.BeginCreateOrUpdate":
-		resp, err = a.dispatchBeginCreateOrUpdate(req)
-	case "ApplicationSecurityGroupsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "ApplicationSecurityGroupsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ApplicationSecurityGroupsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "ApplicationSecurityGroupsClient.NewListAllPager":
-		resp, err = a.dispatchNewListAllPager(req)
-	case "ApplicationSecurityGroupsClient.UpdateTags":
-		resp, err = a.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ApplicationSecurityGroupsClient.BeginCreateOrUpdate":
+			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+		case "ApplicationSecurityGroupsClient.BeginDelete":
+			res.resp, res.err = a.dispatchBeginDelete(req)
+		case "ApplicationSecurityGroupsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "ApplicationSecurityGroupsClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		case "ApplicationSecurityGroupsClient.NewListAllPager":
+			res.resp, res.err = a.dispatchNewListAllPager(req)
+		case "ApplicationSecurityGroupsClient.UpdateTags":
+			res.resp, res.err = a.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationSecurityGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

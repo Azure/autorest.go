@@ -71,23 +71,32 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) Do(req *http.Request
 }
 
 func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "FirewallPolicyRuleCollectionGroupsClient.BeginCreateOrUpdate":
-		resp, err = f.dispatchBeginCreateOrUpdate(req)
-	case "FirewallPolicyRuleCollectionGroupsClient.BeginDelete":
-		resp, err = f.dispatchBeginDelete(req)
-	case "FirewallPolicyRuleCollectionGroupsClient.Get":
-		resp, err = f.dispatchGet(req)
-	case "FirewallPolicyRuleCollectionGroupsClient.NewListPager":
-		resp, err = f.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FirewallPolicyRuleCollectionGroupsClient.BeginCreateOrUpdate":
+			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+		case "FirewallPolicyRuleCollectionGroupsClient.BeginDelete":
+			res.resp, res.err = f.dispatchBeginDelete(req)
+		case "FirewallPolicyRuleCollectionGroupsClient.Get":
+			res.resp, res.err = f.dispatchGet(req)
+		case "FirewallPolicyRuleCollectionGroupsClient.NewListPager":
+			res.resp, res.err = f.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

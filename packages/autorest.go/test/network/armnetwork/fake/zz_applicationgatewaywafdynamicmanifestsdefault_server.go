@@ -50,17 +50,26 @@ func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) Do(req *ht
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ApplicationGatewayWafDynamicManifestsDefaultClient.Get":
-		resp, err = a.dispatchGet(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ApplicationGatewayWafDynamicManifestsDefaultClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationGatewayWafDynamicManifestsDefaultServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

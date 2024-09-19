@@ -93,31 +93,40 @@ func (e *ExpressRouteCrossConnectionsServerTransport) Do(req *http.Request) (*ht
 }
 
 func (e *ExpressRouteCrossConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteCrossConnectionsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteCrossConnectionsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	case "ExpressRouteCrossConnectionsClient.BeginListArpTable":
-		resp, err = e.dispatchBeginListArpTable(req)
-	case "ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager":
-		resp, err = e.dispatchNewListByResourceGroupPager(req)
-	case "ExpressRouteCrossConnectionsClient.BeginListRoutesTable":
-		resp, err = e.dispatchBeginListRoutesTable(req)
-	case "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary":
-		resp, err = e.dispatchBeginListRoutesTableSummary(req)
-	case "ExpressRouteCrossConnectionsClient.UpdateTags":
-		resp, err = e.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRouteCrossConnectionsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRouteCrossConnectionsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		case "ExpressRouteCrossConnectionsClient.BeginListArpTable":
+			res.resp, res.err = e.dispatchBeginListArpTable(req)
+		case "ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager":
+			res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
+		case "ExpressRouteCrossConnectionsClient.BeginListRoutesTable":
+			res.resp, res.err = e.dispatchBeginListRoutesTable(req)
+		case "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary":
+			res.resp, res.err = e.dispatchBeginListRoutesTableSummary(req)
+		case "ExpressRouteCrossConnectionsClient.UpdateTags":
+			res.resp, res.err = e.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteCrossConnectionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

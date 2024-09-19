@@ -51,19 +51,28 @@ func (f *FlattenPropertyServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (f *FlattenPropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "FlattenPropertyClient.PutFlattenModel":
-		resp, err = f.dispatchPutFlattenModel(req)
-	case "FlattenPropertyClient.PutNestedFlattenModel":
-		resp, err = f.dispatchPutNestedFlattenModel(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FlattenPropertyClient.PutFlattenModel":
+			res.resp, res.err = f.dispatchPutFlattenModel(req)
+		case "FlattenPropertyClient.PutNestedFlattenModel":
+			res.resp, res.err = f.dispatchPutNestedFlattenModel(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FlattenPropertyServerTransport) dispatchPutFlattenModel(req *http.Request) (*http.Response, error) {

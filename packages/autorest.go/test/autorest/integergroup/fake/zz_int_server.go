@@ -101,43 +101,52 @@ func (i *IntServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (i *IntServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "IntClient.GetInvalid":
-		resp, err = i.dispatchGetInvalid(req)
-	case "IntClient.GetInvalidUnixTime":
-		resp, err = i.dispatchGetInvalidUnixTime(req)
-	case "IntClient.GetNull":
-		resp, err = i.dispatchGetNull(req)
-	case "IntClient.GetNullUnixTime":
-		resp, err = i.dispatchGetNullUnixTime(req)
-	case "IntClient.GetOverflowInt32":
-		resp, err = i.dispatchGetOverflowInt32(req)
-	case "IntClient.GetOverflowInt64":
-		resp, err = i.dispatchGetOverflowInt64(req)
-	case "IntClient.GetUnderflowInt32":
-		resp, err = i.dispatchGetUnderflowInt32(req)
-	case "IntClient.GetUnderflowInt64":
-		resp, err = i.dispatchGetUnderflowInt64(req)
-	case "IntClient.GetUnixTime":
-		resp, err = i.dispatchGetUnixTime(req)
-	case "IntClient.PutMax32":
-		resp, err = i.dispatchPutMax32(req)
-	case "IntClient.PutMax64":
-		resp, err = i.dispatchPutMax64(req)
-	case "IntClient.PutMin32":
-		resp, err = i.dispatchPutMin32(req)
-	case "IntClient.PutMin64":
-		resp, err = i.dispatchPutMin64(req)
-	case "IntClient.PutUnixTimeDate":
-		resp, err = i.dispatchPutUnixTimeDate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "IntClient.GetInvalid":
+			res.resp, res.err = i.dispatchGetInvalid(req)
+		case "IntClient.GetInvalidUnixTime":
+			res.resp, res.err = i.dispatchGetInvalidUnixTime(req)
+		case "IntClient.GetNull":
+			res.resp, res.err = i.dispatchGetNull(req)
+		case "IntClient.GetNullUnixTime":
+			res.resp, res.err = i.dispatchGetNullUnixTime(req)
+		case "IntClient.GetOverflowInt32":
+			res.resp, res.err = i.dispatchGetOverflowInt32(req)
+		case "IntClient.GetOverflowInt64":
+			res.resp, res.err = i.dispatchGetOverflowInt64(req)
+		case "IntClient.GetUnderflowInt32":
+			res.resp, res.err = i.dispatchGetUnderflowInt32(req)
+		case "IntClient.GetUnderflowInt64":
+			res.resp, res.err = i.dispatchGetUnderflowInt64(req)
+		case "IntClient.GetUnixTime":
+			res.resp, res.err = i.dispatchGetUnixTime(req)
+		case "IntClient.PutMax32":
+			res.resp, res.err = i.dispatchPutMax32(req)
+		case "IntClient.PutMax64":
+			res.resp, res.err = i.dispatchPutMax64(req)
+		case "IntClient.PutMin32":
+			res.resp, res.err = i.dispatchPutMin32(req)
+		case "IntClient.PutMin64":
+			res.resp, res.err = i.dispatchPutMin64(req)
+		case "IntClient.PutUnixTimeDate":
+			res.resp, res.err = i.dispatchPutUnixTimeDate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (i *IntServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {

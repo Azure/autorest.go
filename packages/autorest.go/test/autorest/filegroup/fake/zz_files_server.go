@@ -56,21 +56,30 @@ func (f *FilesServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (f *FilesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "FilesClient.GetEmptyFile":
-		resp, err = f.dispatchGetEmptyFile(req)
-	case "FilesClient.GetFile":
-		resp, err = f.dispatchGetFile(req)
-	case "FilesClient.GetFileLarge":
-		resp, err = f.dispatchGetFileLarge(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FilesClient.GetEmptyFile":
+			res.resp, res.err = f.dispatchGetEmptyFile(req)
+		case "FilesClient.GetFile":
+			res.resp, res.err = f.dispatchGetFile(req)
+		case "FilesClient.GetFileLarge":
+			res.resp, res.err = f.dispatchGetFileLarge(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FilesServerTransport) dispatchGetEmptyFile(req *http.Request) (*http.Response, error) {

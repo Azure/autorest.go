@@ -54,17 +54,26 @@ func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) Do(req 
 }
 
 func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList":
-		resp, err = v.dispatchBeginList(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList":
+			res.resp, res.err = v.dispatchBeginList(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNServerConfigurationsAssociatedWithVirtualWanServerTransport) dispatchBeginList(req *http.Request) (*http.Response, error) {

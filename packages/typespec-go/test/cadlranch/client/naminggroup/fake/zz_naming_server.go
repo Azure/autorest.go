@@ -108,29 +108,38 @@ func (n *NamingServerTransport) dispatchToClientFake(req *http.Request, client s
 }
 
 func (n *NamingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "NamingClient.Client":
-		resp, err = n.dispatchClient(req)
-	case "NamingClient.ClientName":
-		resp, err = n.dispatchClientName(req)
-	case "NamingClient.CompatibleWithEncodedName":
-		resp, err = n.dispatchCompatibleWithEncodedName(req)
-	case "NamingClient.Language":
-		resp, err = n.dispatchLanguage(req)
-	case "NamingClient.Parameter":
-		resp, err = n.dispatchParameter(req)
-	case "NamingClient.Request":
-		resp, err = n.dispatchRequest(req)
-	case "NamingClient.Response":
-		resp, err = n.dispatchResponse(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NamingClient.Client":
+			res.resp, res.err = n.dispatchClient(req)
+		case "NamingClient.ClientName":
+			res.resp, res.err = n.dispatchClientName(req)
+		case "NamingClient.CompatibleWithEncodedName":
+			res.resp, res.err = n.dispatchCompatibleWithEncodedName(req)
+		case "NamingClient.Language":
+			res.resp, res.err = n.dispatchLanguage(req)
+		case "NamingClient.Parameter":
+			res.resp, res.err = n.dispatchParameter(req)
+		case "NamingClient.Request":
+			res.resp, res.err = n.dispatchRequest(req)
+		case "NamingClient.Response":
+			res.resp, res.err = n.dispatchResponse(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NamingServerTransport) dispatchClient(req *http.Request) (*http.Response, error) {

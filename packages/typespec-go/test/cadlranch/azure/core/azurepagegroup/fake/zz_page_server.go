@@ -91,21 +91,30 @@ func (p *PageServerTransport) dispatchToClientFake(req *http.Request, client str
 }
 
 func (p *PageServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "PageClient.NewListWithCustomPageModelPager":
-		resp, err = p.dispatchNewListWithCustomPageModelPager(req)
-	case "PageClient.NewListWithPagePager":
-		resp, err = p.dispatchNewListWithPagePager(req)
-	case "PageClient.NewListWithParametersPager":
-		resp, err = p.dispatchNewListWithParametersPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PageClient.NewListWithCustomPageModelPager":
+			res.resp, res.err = p.dispatchNewListWithCustomPageModelPager(req)
+		case "PageClient.NewListWithPagePager":
+			res.resp, res.err = p.dispatchNewListWithPagePager(req)
+		case "PageClient.NewListWithParametersPager":
+			res.resp, res.err = p.dispatchNewListWithParametersPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PageServerTransport) dispatchNewListWithCustomPageModelPager(req *http.Request) (*http.Response, error) {

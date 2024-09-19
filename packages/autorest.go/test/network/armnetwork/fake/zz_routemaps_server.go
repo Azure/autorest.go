@@ -71,23 +71,32 @@ func (r *RouteMapsServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (r *RouteMapsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "RouteMapsClient.BeginCreateOrUpdate":
-		resp, err = r.dispatchBeginCreateOrUpdate(req)
-	case "RouteMapsClient.BeginDelete":
-		resp, err = r.dispatchBeginDelete(req)
-	case "RouteMapsClient.Get":
-		resp, err = r.dispatchGet(req)
-	case "RouteMapsClient.NewListPager":
-		resp, err = r.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RouteMapsClient.BeginCreateOrUpdate":
+			res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+		case "RouteMapsClient.BeginDelete":
+			res.resp, res.err = r.dispatchBeginDelete(req)
+		case "RouteMapsClient.Get":
+			res.resp, res.err = r.dispatchGet(req)
+		case "RouteMapsClient.NewListPager":
+			res.resp, res.err = r.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RouteMapsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

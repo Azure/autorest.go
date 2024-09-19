@@ -135,49 +135,58 @@ func (a *ApplicationGatewaysServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (a *ApplicationGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ApplicationGatewaysClient.BeginBackendHealth":
-		resp, err = a.dispatchBeginBackendHealth(req)
-	case "ApplicationGatewaysClient.BeginBackendHealthOnDemand":
-		resp, err = a.dispatchBeginBackendHealthOnDemand(req)
-	case "ApplicationGatewaysClient.BeginCreateOrUpdate":
-		resp, err = a.dispatchBeginCreateOrUpdate(req)
-	case "ApplicationGatewaysClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "ApplicationGatewaysClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ApplicationGatewaysClient.GetSSLPredefinedPolicy":
-		resp, err = a.dispatchGetSSLPredefinedPolicy(req)
-	case "ApplicationGatewaysClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "ApplicationGatewaysClient.NewListAllPager":
-		resp, err = a.dispatchNewListAllPager(req)
-	case "ApplicationGatewaysClient.ListAvailableRequestHeaders":
-		resp, err = a.dispatchListAvailableRequestHeaders(req)
-	case "ApplicationGatewaysClient.ListAvailableResponseHeaders":
-		resp, err = a.dispatchListAvailableResponseHeaders(req)
-	case "ApplicationGatewaysClient.ListAvailableSSLOptions":
-		resp, err = a.dispatchListAvailableSSLOptions(req)
-	case "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager":
-		resp, err = a.dispatchNewListAvailableSSLPredefinedPoliciesPager(req)
-	case "ApplicationGatewaysClient.ListAvailableServerVariables":
-		resp, err = a.dispatchListAvailableServerVariables(req)
-	case "ApplicationGatewaysClient.ListAvailableWafRuleSets":
-		resp, err = a.dispatchListAvailableWafRuleSets(req)
-	case "ApplicationGatewaysClient.BeginStart":
-		resp, err = a.dispatchBeginStart(req)
-	case "ApplicationGatewaysClient.BeginStop":
-		resp, err = a.dispatchBeginStop(req)
-	case "ApplicationGatewaysClient.UpdateTags":
-		resp, err = a.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ApplicationGatewaysClient.BeginBackendHealth":
+			res.resp, res.err = a.dispatchBeginBackendHealth(req)
+		case "ApplicationGatewaysClient.BeginBackendHealthOnDemand":
+			res.resp, res.err = a.dispatchBeginBackendHealthOnDemand(req)
+		case "ApplicationGatewaysClient.BeginCreateOrUpdate":
+			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+		case "ApplicationGatewaysClient.BeginDelete":
+			res.resp, res.err = a.dispatchBeginDelete(req)
+		case "ApplicationGatewaysClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "ApplicationGatewaysClient.GetSSLPredefinedPolicy":
+			res.resp, res.err = a.dispatchGetSSLPredefinedPolicy(req)
+		case "ApplicationGatewaysClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		case "ApplicationGatewaysClient.NewListAllPager":
+			res.resp, res.err = a.dispatchNewListAllPager(req)
+		case "ApplicationGatewaysClient.ListAvailableRequestHeaders":
+			res.resp, res.err = a.dispatchListAvailableRequestHeaders(req)
+		case "ApplicationGatewaysClient.ListAvailableResponseHeaders":
+			res.resp, res.err = a.dispatchListAvailableResponseHeaders(req)
+		case "ApplicationGatewaysClient.ListAvailableSSLOptions":
+			res.resp, res.err = a.dispatchListAvailableSSLOptions(req)
+		case "ApplicationGatewaysClient.NewListAvailableSSLPredefinedPoliciesPager":
+			res.resp, res.err = a.dispatchNewListAvailableSSLPredefinedPoliciesPager(req)
+		case "ApplicationGatewaysClient.ListAvailableServerVariables":
+			res.resp, res.err = a.dispatchListAvailableServerVariables(req)
+		case "ApplicationGatewaysClient.ListAvailableWafRuleSets":
+			res.resp, res.err = a.dispatchListAvailableWafRuleSets(req)
+		case "ApplicationGatewaysClient.BeginStart":
+			res.resp, res.err = a.dispatchBeginStart(req)
+		case "ApplicationGatewaysClient.BeginStop":
+			res.resp, res.err = a.dispatchBeginStop(req)
+		case "ApplicationGatewaysClient.UpdateTags":
+			res.resp, res.err = a.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ApplicationGatewaysServerTransport) dispatchBeginBackendHealth(req *http.Request) (*http.Response, error) {

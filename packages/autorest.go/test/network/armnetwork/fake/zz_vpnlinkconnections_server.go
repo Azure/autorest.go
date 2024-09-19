@@ -67,21 +67,30 @@ func (v *VPNLinkConnectionsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (v *VPNLinkConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VPNLinkConnectionsClient.BeginGetIkeSas":
-		resp, err = v.dispatchBeginGetIkeSas(req)
-	case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
-		resp, err = v.dispatchNewListByVPNConnectionPager(req)
-	case "VPNLinkConnectionsClient.BeginResetConnection":
-		resp, err = v.dispatchBeginResetConnection(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VPNLinkConnectionsClient.BeginGetIkeSas":
+			res.resp, res.err = v.dispatchBeginGetIkeSas(req)
+		case "VPNLinkConnectionsClient.NewListByVPNConnectionPager":
+			res.resp, res.err = v.dispatchNewListByVPNConnectionPager(req)
+		case "VPNLinkConnectionsClient.BeginResetConnection":
+			res.resp, res.err = v.dispatchBeginResetConnection(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNLinkConnectionsServerTransport) dispatchBeginGetIkeSas(req *http.Request) (*http.Response, error) {

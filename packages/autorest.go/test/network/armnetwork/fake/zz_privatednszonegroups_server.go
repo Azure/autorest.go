@@ -71,23 +71,32 @@ func (p *PrivateDNSZoneGroupsServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (p *PrivateDNSZoneGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "PrivateDNSZoneGroupsClient.BeginCreateOrUpdate":
-		resp, err = p.dispatchBeginCreateOrUpdate(req)
-	case "PrivateDNSZoneGroupsClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PrivateDNSZoneGroupsClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PrivateDNSZoneGroupsClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PrivateDNSZoneGroupsClient.BeginCreateOrUpdate":
+			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+		case "PrivateDNSZoneGroupsClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "PrivateDNSZoneGroupsClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "PrivateDNSZoneGroupsClient.NewListPager":
+			res.resp, res.err = p.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PrivateDNSZoneGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -81,27 +81,36 @@ func (p *PublicIPPrefixesServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (p *PublicIPPrefixesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "PublicIPPrefixesClient.BeginCreateOrUpdate":
-		resp, err = p.dispatchBeginCreateOrUpdate(req)
-	case "PublicIPPrefixesClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PublicIPPrefixesClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PublicIPPrefixesClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "PublicIPPrefixesClient.NewListAllPager":
-		resp, err = p.dispatchNewListAllPager(req)
-	case "PublicIPPrefixesClient.UpdateTags":
-		resp, err = p.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PublicIPPrefixesClient.BeginCreateOrUpdate":
+			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+		case "PublicIPPrefixesClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "PublicIPPrefixesClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "PublicIPPrefixesClient.NewListPager":
+			res.resp, res.err = p.dispatchNewListPager(req)
+		case "PublicIPPrefixesClient.NewListAllPager":
+			res.resp, res.err = p.dispatchNewListAllPager(req)
+		case "PublicIPPrefixesClient.UpdateTags":
+			res.resp, res.err = p.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PublicIPPrefixesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

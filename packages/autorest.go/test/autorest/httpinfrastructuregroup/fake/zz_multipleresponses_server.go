@@ -198,83 +198,92 @@ func (m *MultipleResponsesServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (m *MultipleResponsesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "MultipleResponsesClient.Get200Model201ModelDefaultError200Valid":
-		resp, err = m.dispatchGet200Model201ModelDefaultError200Valid(req)
-	case "MultipleResponsesClient.Get200Model201ModelDefaultError201Valid":
-		resp, err = m.dispatchGet200Model201ModelDefaultError201Valid(req)
-	case "MultipleResponsesClient.Get200Model201ModelDefaultError400Valid":
-		resp, err = m.dispatchGet200Model201ModelDefaultError400Valid(req)
-	case "MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid":
-		resp, err = m.dispatchGet200Model204NoModelDefaultError200Valid(req)
-	case "MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid":
-		resp, err = m.dispatchGet200Model204NoModelDefaultError201Invalid(req)
-	case "MultipleResponsesClient.Get200Model204NoModelDefaultError202None":
-		resp, err = m.dispatchGet200Model204NoModelDefaultError202None(req)
-	case "MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid":
-		resp, err = m.dispatchGet200Model204NoModelDefaultError204Valid(req)
-	case "MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid":
-		resp, err = m.dispatchGet200Model204NoModelDefaultError400Valid(req)
-	case "MultipleResponsesClient.Get200ModelA200Invalid":
-		resp, err = m.dispatchGet200ModelA200Invalid(req)
-	case "MultipleResponsesClient.Get200ModelA200None":
-		resp, err = m.dispatchGet200ModelA200None(req)
-	case "MultipleResponsesClient.Get200ModelA200Valid":
-		resp, err = m.dispatchGet200ModelA200Valid(req)
-	case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid":
-		resp, err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError200Valid(req)
-	case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid":
-		resp, err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError201Valid(req)
-	case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid":
-		resp, err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError400Valid(req)
-	case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid":
-		resp, err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError404Valid(req)
-	case "MultipleResponsesClient.Get200ModelA202Valid":
-		resp, err = m.dispatchGet200ModelA202Valid(req)
-	case "MultipleResponsesClient.Get200ModelA400Invalid":
-		resp, err = m.dispatchGet200ModelA400Invalid(req)
-	case "MultipleResponsesClient.Get200ModelA400None":
-		resp, err = m.dispatchGet200ModelA400None(req)
-	case "MultipleResponsesClient.Get200ModelA400Valid":
-		resp, err = m.dispatchGet200ModelA400Valid(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultError202None":
-		resp, err = m.dispatchGet202None204NoneDefaultError202None(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultError204None":
-		resp, err = m.dispatchGet202None204NoneDefaultError204None(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultError400Valid":
-		resp, err = m.dispatchGet202None204NoneDefaultError400Valid(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid":
-		resp, err = m.dispatchGet202None204NoneDefaultNone202Invalid(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultNone204None":
-		resp, err = m.dispatchGet202None204NoneDefaultNone204None(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid":
-		resp, err = m.dispatchGet202None204NoneDefaultNone400Invalid(req)
-	case "MultipleResponsesClient.Get202None204NoneDefaultNone400None":
-		resp, err = m.dispatchGet202None204NoneDefaultNone400None(req)
-	case "MultipleResponsesClient.GetDefaultModelA200None":
-		resp, err = m.dispatchGetDefaultModelA200None(req)
-	case "MultipleResponsesClient.GetDefaultModelA200Valid":
-		resp, err = m.dispatchGetDefaultModelA200Valid(req)
-	case "MultipleResponsesClient.GetDefaultModelA400None":
-		resp, err = m.dispatchGetDefaultModelA400None(req)
-	case "MultipleResponsesClient.GetDefaultModelA400Valid":
-		resp, err = m.dispatchGetDefaultModelA400Valid(req)
-	case "MultipleResponsesClient.GetDefaultNone200Invalid":
-		resp, err = m.dispatchGetDefaultNone200Invalid(req)
-	case "MultipleResponsesClient.GetDefaultNone200None":
-		resp, err = m.dispatchGetDefaultNone200None(req)
-	case "MultipleResponsesClient.GetDefaultNone400Invalid":
-		resp, err = m.dispatchGetDefaultNone400Invalid(req)
-	case "MultipleResponsesClient.GetDefaultNone400None":
-		resp, err = m.dispatchGetDefaultNone400None(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MultipleResponsesClient.Get200Model201ModelDefaultError200Valid":
+			res.resp, res.err = m.dispatchGet200Model201ModelDefaultError200Valid(req)
+		case "MultipleResponsesClient.Get200Model201ModelDefaultError201Valid":
+			res.resp, res.err = m.dispatchGet200Model201ModelDefaultError201Valid(req)
+		case "MultipleResponsesClient.Get200Model201ModelDefaultError400Valid":
+			res.resp, res.err = m.dispatchGet200Model201ModelDefaultError400Valid(req)
+		case "MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid":
+			res.resp, res.err = m.dispatchGet200Model204NoModelDefaultError200Valid(req)
+		case "MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid":
+			res.resp, res.err = m.dispatchGet200Model204NoModelDefaultError201Invalid(req)
+		case "MultipleResponsesClient.Get200Model204NoModelDefaultError202None":
+			res.resp, res.err = m.dispatchGet200Model204NoModelDefaultError202None(req)
+		case "MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid":
+			res.resp, res.err = m.dispatchGet200Model204NoModelDefaultError204Valid(req)
+		case "MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid":
+			res.resp, res.err = m.dispatchGet200Model204NoModelDefaultError400Valid(req)
+		case "MultipleResponsesClient.Get200ModelA200Invalid":
+			res.resp, res.err = m.dispatchGet200ModelA200Invalid(req)
+		case "MultipleResponsesClient.Get200ModelA200None":
+			res.resp, res.err = m.dispatchGet200ModelA200None(req)
+		case "MultipleResponsesClient.Get200ModelA200Valid":
+			res.resp, res.err = m.dispatchGet200ModelA200Valid(req)
+		case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid":
+			res.resp, res.err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError200Valid(req)
+		case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid":
+			res.resp, res.err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError201Valid(req)
+		case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid":
+			res.resp, res.err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError400Valid(req)
+		case "MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid":
+			res.resp, res.err = m.dispatchGet200ModelA201ModelC404ModelDDefaultError404Valid(req)
+		case "MultipleResponsesClient.Get200ModelA202Valid":
+			res.resp, res.err = m.dispatchGet200ModelA202Valid(req)
+		case "MultipleResponsesClient.Get200ModelA400Invalid":
+			res.resp, res.err = m.dispatchGet200ModelA400Invalid(req)
+		case "MultipleResponsesClient.Get200ModelA400None":
+			res.resp, res.err = m.dispatchGet200ModelA400None(req)
+		case "MultipleResponsesClient.Get200ModelA400Valid":
+			res.resp, res.err = m.dispatchGet200ModelA400Valid(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultError202None":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultError202None(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultError204None":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultError204None(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultError400Valid":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultError400Valid(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultNone202Invalid(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultNone204None":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultNone204None(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultNone400Invalid(req)
+		case "MultipleResponsesClient.Get202None204NoneDefaultNone400None":
+			res.resp, res.err = m.dispatchGet202None204NoneDefaultNone400None(req)
+		case "MultipleResponsesClient.GetDefaultModelA200None":
+			res.resp, res.err = m.dispatchGetDefaultModelA200None(req)
+		case "MultipleResponsesClient.GetDefaultModelA200Valid":
+			res.resp, res.err = m.dispatchGetDefaultModelA200Valid(req)
+		case "MultipleResponsesClient.GetDefaultModelA400None":
+			res.resp, res.err = m.dispatchGetDefaultModelA400None(req)
+		case "MultipleResponsesClient.GetDefaultModelA400Valid":
+			res.resp, res.err = m.dispatchGetDefaultModelA400Valid(req)
+		case "MultipleResponsesClient.GetDefaultNone200Invalid":
+			res.resp, res.err = m.dispatchGetDefaultNone200Invalid(req)
+		case "MultipleResponsesClient.GetDefaultNone200None":
+			res.resp, res.err = m.dispatchGetDefaultNone200None(req)
+		case "MultipleResponsesClient.GetDefaultNone400Invalid":
+			res.resp, res.err = m.dispatchGetDefaultNone400Invalid(req)
+		case "MultipleResponsesClient.GetDefaultNone400None":
+			res.resp, res.err = m.dispatchGetDefaultNone400None(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MultipleResponsesServerTransport) dispatchGet200Model201ModelDefaultError200Valid(req *http.Request) (*http.Response, error) {

@@ -67,25 +67,34 @@ func (v *VirtualMachineImagesServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (v *VirtualMachineImagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "VirtualMachineImagesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineImagesClient.List":
-		resp, err = v.dispatchList(req)
-	case "VirtualMachineImagesClient.ListOffers":
-		resp, err = v.dispatchListOffers(req)
-	case "VirtualMachineImagesClient.ListPublishers":
-		resp, err = v.dispatchListPublishers(req)
-	case "VirtualMachineImagesClient.ListSKUs":
-		resp, err = v.dispatchListSKUs(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineImagesClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualMachineImagesClient.List":
+			res.resp, res.err = v.dispatchList(req)
+		case "VirtualMachineImagesClient.ListOffers":
+			res.resp, res.err = v.dispatchListOffers(req)
+		case "VirtualMachineImagesClient.ListPublishers":
+			res.resp, res.err = v.dispatchListPublishers(req)
+		case "VirtualMachineImagesClient.ListSKUs":
+			res.resp, res.err = v.dispatchListSKUs(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineImagesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

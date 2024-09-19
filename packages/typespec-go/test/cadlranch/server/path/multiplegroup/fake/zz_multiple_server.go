@@ -53,19 +53,28 @@ func (m *MultipleServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (m *MultipleServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "MultipleClient.NoOperationParams":
-		resp, err = m.dispatchNoOperationParams(req)
-	case "MultipleClient.WithOperationPathParam":
-		resp, err = m.dispatchWithOperationPathParam(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MultipleClient.NoOperationParams":
+			res.resp, res.err = m.dispatchNoOperationParams(req)
+		case "MultipleClient.WithOperationPathParam":
+			res.resp, res.err = m.dispatchWithOperationPathParam(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MultipleServerTransport) dispatchNoOperationParams(req *http.Request) (*http.Response, error) {

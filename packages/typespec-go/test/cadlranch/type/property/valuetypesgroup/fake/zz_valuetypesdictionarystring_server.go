@@ -51,19 +51,28 @@ func (v *ValueTypesDictionaryStringServerTransport) Do(req *http.Request) (*http
 }
 
 func (v *ValueTypesDictionaryStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ValueTypesDictionaryStringClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "ValueTypesDictionaryStringClient.Put":
-		resp, err = v.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ValueTypesDictionaryStringClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "ValueTypesDictionaryStringClient.Put":
+			res.resp, res.err = v.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *ValueTypesDictionaryStringServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

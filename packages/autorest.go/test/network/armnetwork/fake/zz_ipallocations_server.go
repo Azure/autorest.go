@@ -81,27 +81,36 @@ func (i *IPAllocationsServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (i *IPAllocationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "IPAllocationsClient.BeginCreateOrUpdate":
-		resp, err = i.dispatchBeginCreateOrUpdate(req)
-	case "IPAllocationsClient.BeginDelete":
-		resp, err = i.dispatchBeginDelete(req)
-	case "IPAllocationsClient.Get":
-		resp, err = i.dispatchGet(req)
-	case "IPAllocationsClient.NewListPager":
-		resp, err = i.dispatchNewListPager(req)
-	case "IPAllocationsClient.NewListByResourceGroupPager":
-		resp, err = i.dispatchNewListByResourceGroupPager(req)
-	case "IPAllocationsClient.UpdateTags":
-		resp, err = i.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "IPAllocationsClient.BeginCreateOrUpdate":
+			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+		case "IPAllocationsClient.BeginDelete":
+			res.resp, res.err = i.dispatchBeginDelete(req)
+		case "IPAllocationsClient.Get":
+			res.resp, res.err = i.dispatchGet(req)
+		case "IPAllocationsClient.NewListPager":
+			res.resp, res.err = i.dispatchNewListPager(req)
+		case "IPAllocationsClient.NewListByResourceGroupPager":
+			res.resp, res.err = i.dispatchNewListByResourceGroupPager(req)
+		case "IPAllocationsClient.UpdateTags":
+			res.resp, res.err = i.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (i *IPAllocationsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

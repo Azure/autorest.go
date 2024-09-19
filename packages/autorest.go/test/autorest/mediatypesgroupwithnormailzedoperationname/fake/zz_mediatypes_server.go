@@ -90,37 +90,46 @@ func (m *MediaTypesServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (m *MediaTypesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "MediaTypesClient.AnalyzeBody":
-		resp, err = m.dispatchAnalyzeBody(req)
-	case "MediaTypesClient.AnalyzeBodyNoAcceptHeader":
-		resp, err = m.dispatchAnalyzeBodyNoAcceptHeader(req)
-	case "MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary":
-		resp, err = m.dispatchAnalyzeBodyNoAcceptHeaderWithBinary(req)
-	case "MediaTypesClient.AnalyzeBodyWithBinary":
-		resp, err = m.dispatchAnalyzeBodyWithBinary(req)
-	case "MediaTypesClient.BinaryBodyWithThreeContentTypesWithBinary":
-		resp, err = m.dispatchBinaryBodyWithThreeContentTypesWithBinary(req)
-	case "MediaTypesClient.BinaryBodyWithTwoContentTypesWithBinary":
-		resp, err = m.dispatchBinaryBodyWithTwoContentTypesWithBinary(req)
-	case "MediaTypesClient.BodyThreeTypes":
-		resp, err = m.dispatchBodyThreeTypes(req)
-	case "MediaTypesClient.BodyThreeTypesWithBinary":
-		resp, err = m.dispatchBodyThreeTypesWithBinary(req)
-	case "MediaTypesClient.BodyThreeTypesWithText":
-		resp, err = m.dispatchBodyThreeTypesWithText(req)
-	case "MediaTypesClient.ContentTypeWithEncodingWithText":
-		resp, err = m.dispatchContentTypeWithEncodingWithText(req)
-	case "MediaTypesClient.PutTextAndJSONBodyWithText":
-		resp, err = m.dispatchPutTextAndJSONBodyWithText(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MediaTypesClient.AnalyzeBody":
+			res.resp, res.err = m.dispatchAnalyzeBody(req)
+		case "MediaTypesClient.AnalyzeBodyNoAcceptHeader":
+			res.resp, res.err = m.dispatchAnalyzeBodyNoAcceptHeader(req)
+		case "MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary":
+			res.resp, res.err = m.dispatchAnalyzeBodyNoAcceptHeaderWithBinary(req)
+		case "MediaTypesClient.AnalyzeBodyWithBinary":
+			res.resp, res.err = m.dispatchAnalyzeBodyWithBinary(req)
+		case "MediaTypesClient.BinaryBodyWithThreeContentTypesWithBinary":
+			res.resp, res.err = m.dispatchBinaryBodyWithThreeContentTypesWithBinary(req)
+		case "MediaTypesClient.BinaryBodyWithTwoContentTypesWithBinary":
+			res.resp, res.err = m.dispatchBinaryBodyWithTwoContentTypesWithBinary(req)
+		case "MediaTypesClient.BodyThreeTypes":
+			res.resp, res.err = m.dispatchBodyThreeTypes(req)
+		case "MediaTypesClient.BodyThreeTypesWithBinary":
+			res.resp, res.err = m.dispatchBodyThreeTypesWithBinary(req)
+		case "MediaTypesClient.BodyThreeTypesWithText":
+			res.resp, res.err = m.dispatchBodyThreeTypesWithText(req)
+		case "MediaTypesClient.ContentTypeWithEncodingWithText":
+			res.resp, res.err = m.dispatchContentTypeWithEncodingWithText(req)
+		case "MediaTypesClient.PutTextAndJSONBodyWithText":
+			res.resp, res.err = m.dispatchPutTextAndJSONBodyWithText(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MediaTypesServerTransport) dispatchAnalyzeBody(req *http.Request) (*http.Response, error) {

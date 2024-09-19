@@ -68,23 +68,32 @@ func (s *SubscriptionNetworkManagerConnectionsServerTransport) Do(req *http.Requ
 }
 
 func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate":
-		resp, err = s.dispatchCreateOrUpdate(req)
-	case "SubscriptionNetworkManagerConnectionsClient.Delete":
-		resp, err = s.dispatchDelete(req)
-	case "SubscriptionNetworkManagerConnectionsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SubscriptionNetworkManagerConnectionsClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SubscriptionNetworkManagerConnectionsClient.CreateOrUpdate":
+			res.resp, res.err = s.dispatchCreateOrUpdate(req)
+		case "SubscriptionNetworkManagerConnectionsClient.Delete":
+			res.resp, res.err = s.dispatchDelete(req)
+		case "SubscriptionNetworkManagerConnectionsClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "SubscriptionNetworkManagerConnectionsClient.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SubscriptionNetworkManagerConnectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -71,23 +71,32 @@ func (l *LROsCustomHeaderServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (l *LROsCustomHeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "LROsCustomHeaderClient.BeginPost202Retry200":
-		resp, err = l.dispatchBeginPost202Retry200(req)
-	case "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded":
-		resp, err = l.dispatchBeginPostAsyncRetrySucceeded(req)
-	case "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200":
-		resp, err = l.dispatchBeginPut201CreatingSucceeded200(req)
-	case "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded":
-		resp, err = l.dispatchBeginPutAsyncRetrySucceeded(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LROsCustomHeaderClient.BeginPost202Retry200":
+			res.resp, res.err = l.dispatchBeginPost202Retry200(req)
+		case "LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPostAsyncRetrySucceeded(req)
+		case "LROsCustomHeaderClient.BeginPut201CreatingSucceeded200":
+			res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
+		case "LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPutAsyncRetrySucceeded(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LROsCustomHeaderServerTransport) dispatchBeginPost202Retry200(req *http.Request) (*http.Response, error) {

@@ -81,27 +81,36 @@ func (s *SecurityPartnerProvidersServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (s *SecurityPartnerProvidersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SecurityPartnerProvidersClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "SecurityPartnerProvidersClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "SecurityPartnerProvidersClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SecurityPartnerProvidersClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "SecurityPartnerProvidersClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	case "SecurityPartnerProvidersClient.UpdateTags":
-		resp, err = s.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SecurityPartnerProvidersClient.BeginCreateOrUpdate":
+			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+		case "SecurityPartnerProvidersClient.BeginDelete":
+			res.resp, res.err = s.dispatchBeginDelete(req)
+		case "SecurityPartnerProvidersClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "SecurityPartnerProvidersClient.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		case "SecurityPartnerProvidersClient.NewListByResourceGroupPager":
+			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+		case "SecurityPartnerProvidersClient.UpdateTags":
+			res.resp, res.err = s.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SecurityPartnerProvidersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

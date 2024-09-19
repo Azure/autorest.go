@@ -77,25 +77,34 @@ func (c *ContainersServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (c *ContainersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ContainersClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "ContainersClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "ContainersClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "ContainersClient.NewListByStorageAccountPager":
-		resp, err = c.dispatchNewListByStorageAccountPager(req)
-	case "ContainersClient.BeginRefresh":
-		resp, err = c.dispatchBeginRefresh(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ContainersClient.BeginCreateOrUpdate":
+			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+		case "ContainersClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "ContainersClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "ContainersClient.NewListByStorageAccountPager":
+			res.resp, res.err = c.dispatchNewListByStorageAccountPager(req)
+		case "ContainersClient.BeginRefresh":
+			res.resp, res.err = c.dispatchBeginRefresh(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ContainersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

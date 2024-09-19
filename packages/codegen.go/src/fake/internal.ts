@@ -67,6 +67,11 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
 
 // contains helpers that are used in all servers
 const alwaysUsed = `
+type result struct {
+	resp *http.Response
+	err error
+}
+
 type nonRetriableError struct {
 	error
 }

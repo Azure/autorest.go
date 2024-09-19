@@ -81,27 +81,36 @@ func (s *ServiceEndpointPoliciesServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (s *ServiceEndpointPoliciesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ServiceEndpointPoliciesClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "ServiceEndpointPoliciesClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "ServiceEndpointPoliciesClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ServiceEndpointPoliciesClient.NewListPager":
-		resp, err = s.dispatchNewListPager(req)
-	case "ServiceEndpointPoliciesClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	case "ServiceEndpointPoliciesClient.UpdateTags":
-		resp, err = s.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ServiceEndpointPoliciesClient.BeginCreateOrUpdate":
+			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+		case "ServiceEndpointPoliciesClient.BeginDelete":
+			res.resp, res.err = s.dispatchBeginDelete(req)
+		case "ServiceEndpointPoliciesClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "ServiceEndpointPoliciesClient.NewListPager":
+			res.resp, res.err = s.dispatchNewListPager(req)
+		case "ServiceEndpointPoliciesClient.NewListByResourceGroupPager":
+			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+		case "ServiceEndpointPoliciesClient.UpdateTags":
+			res.resp, res.err = s.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceEndpointPoliciesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

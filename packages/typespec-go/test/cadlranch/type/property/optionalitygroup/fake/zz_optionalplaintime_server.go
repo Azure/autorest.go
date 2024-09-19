@@ -59,23 +59,32 @@ func (o *OptionalPlainTimeServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (o *OptionalPlainTimeServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "OptionalPlainTimeClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalPlainTimeClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalPlainTimeClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalPlainTimeClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "OptionalPlainTimeClient.GetAll":
+			res.resp, res.err = o.dispatchGetAll(req)
+		case "OptionalPlainTimeClient.GetDefault":
+			res.resp, res.err = o.dispatchGetDefault(req)
+		case "OptionalPlainTimeClient.PutAll":
+			res.resp, res.err = o.dispatchPutAll(req)
+		case "OptionalPlainTimeClient.PutDefault":
+			res.resp, res.err = o.dispatchPutDefault(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalPlainTimeServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {

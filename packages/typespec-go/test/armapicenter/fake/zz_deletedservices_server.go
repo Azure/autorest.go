@@ -68,23 +68,32 @@ func (d *DeletedServicesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (d *DeletedServicesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DeletedServicesClient.Delete":
-		resp, err = d.dispatchDelete(req)
-	case "DeletedServicesClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DeletedServicesClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	case "DeletedServicesClient.NewListBySubscriptionPager":
-		resp, err = d.dispatchNewListBySubscriptionPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DeletedServicesClient.Delete":
+			res.resp, res.err = d.dispatchDelete(req)
+		case "DeletedServicesClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DeletedServicesClient.NewListPager":
+			res.resp, res.err = d.dispatchNewListPager(req)
+		case "DeletedServicesClient.NewListBySubscriptionPager":
+			res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DeletedServicesServerTransport) dispatchDelete(req *http.Request) (*http.Response, error) {

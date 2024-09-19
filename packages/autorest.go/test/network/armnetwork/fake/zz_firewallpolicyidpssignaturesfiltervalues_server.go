@@ -50,17 +50,26 @@ func (f *FirewallPolicyIdpsSignaturesFilterValuesServerTransport) Do(req *http.R
 }
 
 func (f *FirewallPolicyIdpsSignaturesFilterValuesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "FirewallPolicyIdpsSignaturesFilterValuesClient.List":
-		resp, err = f.dispatchList(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FirewallPolicyIdpsSignaturesFilterValuesClient.List":
+			res.resp, res.err = f.dispatchList(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FirewallPolicyIdpsSignaturesFilterValuesServerTransport) dispatchList(req *http.Request) (*http.Response, error) {

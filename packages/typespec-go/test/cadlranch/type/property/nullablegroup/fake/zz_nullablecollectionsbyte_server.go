@@ -59,23 +59,32 @@ func (n *NullableCollectionsByteServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (n *NullableCollectionsByteServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "NullableCollectionsByteClient.GetNonNull":
-		resp, err = n.dispatchGetNonNull(req)
-	case "NullableCollectionsByteClient.GetNull":
-		resp, err = n.dispatchGetNull(req)
-	case "NullableCollectionsByteClient.PatchNonNull":
-		resp, err = n.dispatchPatchNonNull(req)
-	case "NullableCollectionsByteClient.PatchNull":
-		resp, err = n.dispatchPatchNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NullableCollectionsByteClient.GetNonNull":
+			res.resp, res.err = n.dispatchGetNonNull(req)
+		case "NullableCollectionsByteClient.GetNull":
+			res.resp, res.err = n.dispatchGetNull(req)
+		case "NullableCollectionsByteClient.PatchNonNull":
+			res.resp, res.err = n.dispatchPatchNonNull(req)
+		case "NullableCollectionsByteClient.PatchNull":
+			res.resp, res.err = n.dispatchPatchNull(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NullableCollectionsByteServerTransport) dispatchGetNonNull(req *http.Request) (*http.Response, error) {

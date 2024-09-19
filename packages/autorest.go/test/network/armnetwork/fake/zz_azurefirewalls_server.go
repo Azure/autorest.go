@@ -89,29 +89,38 @@ func (a *AzureFirewallsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (a *AzureFirewallsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "AzureFirewallsClient.BeginCreateOrUpdate":
-		resp, err = a.dispatchBeginCreateOrUpdate(req)
-	case "AzureFirewallsClient.BeginDelete":
-		resp, err = a.dispatchBeginDelete(req)
-	case "AzureFirewallsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AzureFirewallsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "AzureFirewallsClient.NewListAllPager":
-		resp, err = a.dispatchNewListAllPager(req)
-	case "AzureFirewallsClient.BeginListLearnedPrefixes":
-		resp, err = a.dispatchBeginListLearnedPrefixes(req)
-	case "AzureFirewallsClient.BeginUpdateTags":
-		resp, err = a.dispatchBeginUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AzureFirewallsClient.BeginCreateOrUpdate":
+			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+		case "AzureFirewallsClient.BeginDelete":
+			res.resp, res.err = a.dispatchBeginDelete(req)
+		case "AzureFirewallsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AzureFirewallsClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		case "AzureFirewallsClient.NewListAllPager":
+			res.resp, res.err = a.dispatchNewListAllPager(req)
+		case "AzureFirewallsClient.BeginListLearnedPrefixes":
+			res.resp, res.err = a.dispatchBeginListLearnedPrefixes(req)
+		case "AzureFirewallsClient.BeginUpdateTags":
+			res.resp, res.err = a.dispatchBeginUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AzureFirewallsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -81,29 +81,38 @@ func (s *SSHPublicKeysServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *SSHPublicKeysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "SSHPublicKeysClient.Create":
-		resp, err = s.dispatchCreate(req)
-	case "SSHPublicKeysClient.Delete":
-		resp, err = s.dispatchDelete(req)
-	case "SSHPublicKeysClient.GenerateKeyPair":
-		resp, err = s.dispatchGenerateKeyPair(req)
-	case "SSHPublicKeysClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "SSHPublicKeysClient.NewListByResourceGroupPager":
-		resp, err = s.dispatchNewListByResourceGroupPager(req)
-	case "SSHPublicKeysClient.NewListBySubscriptionPager":
-		resp, err = s.dispatchNewListBySubscriptionPager(req)
-	case "SSHPublicKeysClient.Update":
-		resp, err = s.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "SSHPublicKeysClient.Create":
+			res.resp, res.err = s.dispatchCreate(req)
+		case "SSHPublicKeysClient.Delete":
+			res.resp, res.err = s.dispatchDelete(req)
+		case "SSHPublicKeysClient.GenerateKeyPair":
+			res.resp, res.err = s.dispatchGenerateKeyPair(req)
+		case "SSHPublicKeysClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "SSHPublicKeysClient.NewListByResourceGroupPager":
+			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+		case "SSHPublicKeysClient.NewListBySubscriptionPager":
+			res.resp, res.err = s.dispatchNewListBySubscriptionPager(req)
+		case "SSHPublicKeysClient.Update":
+			res.resp, res.err = s.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *SSHPublicKeysServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {

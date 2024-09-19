@@ -60,23 +60,32 @@ func (d *DurationServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (d *DurationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "DurationClient.GetInvalid":
-		resp, err = d.dispatchGetInvalid(req)
-	case "DurationClient.GetNull":
-		resp, err = d.dispatchGetNull(req)
-	case "DurationClient.GetPositiveDuration":
-		resp, err = d.dispatchGetPositiveDuration(req)
-	case "DurationClient.PutPositiveDuration":
-		resp, err = d.dispatchPutPositiveDuration(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DurationClient.GetInvalid":
+			res.resp, res.err = d.dispatchGetInvalid(req)
+		case "DurationClient.GetNull":
+			res.resp, res.err = d.dispatchGetNull(req)
+		case "DurationClient.GetPositiveDuration":
+			res.resp, res.err = d.dispatchGetPositiveDuration(req)
+		case "DurationClient.PutPositiveDuration":
+			res.resp, res.err = d.dispatchPutPositiveDuration(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DurationServerTransport) dispatchGetInvalid(req *http.Request) (*http.Response, error) {

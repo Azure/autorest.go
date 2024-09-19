@@ -79,27 +79,36 @@ func (p *ProfilesServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (p *ProfilesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
 
-	switch method {
-	case "ProfilesClient.CreateOrUpdate":
-		resp, err = p.dispatchCreateOrUpdate(req)
-	case "ProfilesClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "ProfilesClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "ProfilesClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "ProfilesClient.NewListAllPager":
-		resp, err = p.dispatchNewListAllPager(req)
-	case "ProfilesClient.UpdateTags":
-		resp, err = p.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ProfilesClient.CreateOrUpdate":
+			res.resp, res.err = p.dispatchCreateOrUpdate(req)
+		case "ProfilesClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "ProfilesClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "ProfilesClient.NewListPager":
+			res.resp, res.err = p.dispatchNewListPager(req)
+		case "ProfilesClient.NewListAllPager":
+			res.resp, res.err = p.dispatchNewListAllPager(req)
+		case "ProfilesClient.UpdateTags":
+			res.resp, res.err = p.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		resultChan <- res
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *ProfilesServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {
