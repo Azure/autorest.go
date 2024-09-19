@@ -36,6 +36,7 @@ export function generateServerInternal(codeModel: go.CodeModel, requiredHelpers:
   const text = contentPreamble(codeModel, 'fake');
   const imports = new ImportManager();
   let body = alwaysUsed;
+  imports.add('net/http');
 
   if (requiredHelpers.getHeaderValue) {
     body += emitGetHeaderValue(imports);

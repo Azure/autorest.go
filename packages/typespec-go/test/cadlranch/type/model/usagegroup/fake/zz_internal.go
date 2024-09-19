@@ -4,6 +4,8 @@
 
 package fake
 
+import "net/http"
+
 type result struct {
 	resp *http.Response
 	err  error

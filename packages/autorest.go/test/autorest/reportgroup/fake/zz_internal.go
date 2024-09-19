@@ -5,7 +5,10 @@
 
 package fake
 
-import "reflect"
+import (
+	"net/http"
+	"reflect"
+)
 
 type result struct {
 	resp *http.Response

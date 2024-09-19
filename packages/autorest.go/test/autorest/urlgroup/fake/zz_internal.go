@@ -6,6 +6,7 @@
 package fake
 
 import (
+	"net/http"
 	"reflect"
 	"strings"
 )

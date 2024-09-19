@@ -4,7 +4,10 @@
 
 package fake
 
-import "sync"
+import (
+	"net/http"
+	"sync"
+)
 
 type result struct {
 	resp *http.Response
