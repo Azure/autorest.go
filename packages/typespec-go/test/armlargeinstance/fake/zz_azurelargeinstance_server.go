@@ -87,29 +87,42 @@ func (a *AzureLargeInstanceServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AzureLargeInstanceClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AzureLargeInstanceClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeInstanceClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeInstanceClient.BeginRestart":
-		resp, err = a.dispatchBeginRestart(req)
-	case "AzureLargeInstanceClient.BeginShutdown":
-		resp, err = a.dispatchBeginShutdown(req)
-	case "AzureLargeInstanceClient.BeginStart":
-		resp, err = a.dispatchBeginStart(req)
-	case "AzureLargeInstanceClient.Update":
-		resp, err = a.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AzureLargeInstanceClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AzureLargeInstanceClient.NewListByResourceGroupPager":
+			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+		case "AzureLargeInstanceClient.NewListBySubscriptionPager":
+			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+		case "AzureLargeInstanceClient.BeginRestart":
+			res.resp, res.err = a.dispatchBeginRestart(req)
+		case "AzureLargeInstanceClient.BeginShutdown":
+			res.resp, res.err = a.dispatchBeginShutdown(req)
+		case "AzureLargeInstanceClient.BeginStart":
+			res.resp, res.err = a.dispatchBeginStart(req)
+		case "AzureLargeInstanceClient.Update":
+			res.resp, res.err = a.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AzureLargeInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

@@ -55,21 +55,34 @@ func (e *EmptyServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (e *EmptyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "EmptyClient.GetEmpty":
-		resp, err = e.dispatchGetEmpty(req)
-	case "EmptyClient.PostRoundTripEmpty":
-		resp, err = e.dispatchPostRoundTripEmpty(req)
-	case "EmptyClient.PutEmpty":
-		resp, err = e.dispatchPutEmpty(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "EmptyClient.GetEmpty":
+			res.resp, res.err = e.dispatchGetEmpty(req)
+		case "EmptyClient.PostRoundTripEmpty":
+			res.resp, res.err = e.dispatchPostRoundTripEmpty(req)
+		case "EmptyClient.PutEmpty":
+			res.resp, res.err = e.dispatchPutEmpty(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *EmptyServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {

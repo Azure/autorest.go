@@ -81,27 +81,40 @@ func (d *DdosProtectionPlansServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (d *DdosProtectionPlansServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DdosProtectionPlansClient.BeginCreateOrUpdate":
-		resp, err = d.dispatchBeginCreateOrUpdate(req)
-	case "DdosProtectionPlansClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DdosProtectionPlansClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DdosProtectionPlansClient.NewListPager":
-		resp, err = d.dispatchNewListPager(req)
-	case "DdosProtectionPlansClient.NewListByResourceGroupPager":
-		resp, err = d.dispatchNewListByResourceGroupPager(req)
-	case "DdosProtectionPlansClient.UpdateTags":
-		resp, err = d.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DdosProtectionPlansClient.BeginCreateOrUpdate":
+			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+		case "DdosProtectionPlansClient.BeginDelete":
+			res.resp, res.err = d.dispatchBeginDelete(req)
+		case "DdosProtectionPlansClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DdosProtectionPlansClient.NewListPager":
+			res.resp, res.err = d.dispatchNewListPager(req)
+		case "DdosProtectionPlansClient.NewListByResourceGroupPager":
+			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+		case "DdosProtectionPlansClient.UpdateTags":
+			res.resp, res.err = d.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DdosProtectionPlansServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

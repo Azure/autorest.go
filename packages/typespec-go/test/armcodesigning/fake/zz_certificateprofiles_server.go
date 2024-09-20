@@ -74,25 +74,38 @@ func (c *CertificateProfilesServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (c *CertificateProfilesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CertificateProfilesClient.BeginCreate":
-		resp, err = c.dispatchBeginCreate(req)
-	case "CertificateProfilesClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CertificateProfilesClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CertificateProfilesClient.NewListByCodeSigningAccountPager":
-		resp, err = c.dispatchNewListByCodeSigningAccountPager(req)
-	case "CertificateProfilesClient.RevokeCertificate":
-		resp, err = c.dispatchRevokeCertificate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CertificateProfilesClient.BeginCreate":
+			res.resp, res.err = c.dispatchBeginCreate(req)
+		case "CertificateProfilesClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "CertificateProfilesClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "CertificateProfilesClient.NewListByCodeSigningAccountPager":
+			res.resp, res.err = c.dispatchNewListByCodeSigningAccountPager(req)
+		case "CertificateProfilesClient.RevokeCertificate":
+			res.resp, res.err = c.dispatchRevokeCertificate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CertificateProfilesServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {

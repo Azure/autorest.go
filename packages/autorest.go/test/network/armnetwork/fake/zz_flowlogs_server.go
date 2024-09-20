@@ -75,25 +75,38 @@ func (f *FlowLogsServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (f *FlowLogsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "FlowLogsClient.BeginCreateOrUpdate":
-		resp, err = f.dispatchBeginCreateOrUpdate(req)
-	case "FlowLogsClient.BeginDelete":
-		resp, err = f.dispatchBeginDelete(req)
-	case "FlowLogsClient.Get":
-		resp, err = f.dispatchGet(req)
-	case "FlowLogsClient.NewListPager":
-		resp, err = f.dispatchNewListPager(req)
-	case "FlowLogsClient.UpdateTags":
-		resp, err = f.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "FlowLogsClient.BeginCreateOrUpdate":
+			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+		case "FlowLogsClient.BeginDelete":
+			res.resp, res.err = f.dispatchBeginDelete(req)
+		case "FlowLogsClient.Get":
+			res.resp, res.err = f.dispatchGet(req)
+		case "FlowLogsClient.NewListPager":
+			res.resp, res.err = f.dispatchNewListPager(req)
+		case "FlowLogsClient.UpdateTags":
+			res.resp, res.err = f.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (f *FlowLogsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

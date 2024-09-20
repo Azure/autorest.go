@@ -135,47 +135,60 @@ func (i *InterfacesServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (i *InterfacesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "InterfacesClient.BeginCreateOrUpdate":
-		resp, err = i.dispatchBeginCreateOrUpdate(req)
-	case "InterfacesClient.BeginDelete":
-		resp, err = i.dispatchBeginDelete(req)
-	case "InterfacesClient.Get":
-		resp, err = i.dispatchGet(req)
-	case "InterfacesClient.GetCloudServiceNetworkInterface":
-		resp, err = i.dispatchGetCloudServiceNetworkInterface(req)
-	case "InterfacesClient.BeginGetEffectiveRouteTable":
-		resp, err = i.dispatchBeginGetEffectiveRouteTable(req)
-	case "InterfacesClient.GetVirtualMachineScaleSetIPConfiguration":
-		resp, err = i.dispatchGetVirtualMachineScaleSetIPConfiguration(req)
-	case "InterfacesClient.GetVirtualMachineScaleSetNetworkInterface":
-		resp, err = i.dispatchGetVirtualMachineScaleSetNetworkInterface(req)
-	case "InterfacesClient.NewListPager":
-		resp, err = i.dispatchNewListPager(req)
-	case "InterfacesClient.NewListAllPager":
-		resp, err = i.dispatchNewListAllPager(req)
-	case "InterfacesClient.NewListCloudServiceNetworkInterfacesPager":
-		resp, err = i.dispatchNewListCloudServiceNetworkInterfacesPager(req)
-	case "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager":
-		resp, err = i.dispatchNewListCloudServiceRoleInstanceNetworkInterfacesPager(req)
-	case "InterfacesClient.BeginListEffectiveNetworkSecurityGroups":
-		resp, err = i.dispatchBeginListEffectiveNetworkSecurityGroups(req)
-	case "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager":
-		resp, err = i.dispatchNewListVirtualMachineScaleSetIPConfigurationsPager(req)
-	case "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager":
-		resp, err = i.dispatchNewListVirtualMachineScaleSetNetworkInterfacesPager(req)
-	case "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager":
-		resp, err = i.dispatchNewListVirtualMachineScaleSetVMNetworkInterfacesPager(req)
-	case "InterfacesClient.UpdateTags":
-		resp, err = i.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "InterfacesClient.BeginCreateOrUpdate":
+			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+		case "InterfacesClient.BeginDelete":
+			res.resp, res.err = i.dispatchBeginDelete(req)
+		case "InterfacesClient.Get":
+			res.resp, res.err = i.dispatchGet(req)
+		case "InterfacesClient.GetCloudServiceNetworkInterface":
+			res.resp, res.err = i.dispatchGetCloudServiceNetworkInterface(req)
+		case "InterfacesClient.BeginGetEffectiveRouteTable":
+			res.resp, res.err = i.dispatchBeginGetEffectiveRouteTable(req)
+		case "InterfacesClient.GetVirtualMachineScaleSetIPConfiguration":
+			res.resp, res.err = i.dispatchGetVirtualMachineScaleSetIPConfiguration(req)
+		case "InterfacesClient.GetVirtualMachineScaleSetNetworkInterface":
+			res.resp, res.err = i.dispatchGetVirtualMachineScaleSetNetworkInterface(req)
+		case "InterfacesClient.NewListPager":
+			res.resp, res.err = i.dispatchNewListPager(req)
+		case "InterfacesClient.NewListAllPager":
+			res.resp, res.err = i.dispatchNewListAllPager(req)
+		case "InterfacesClient.NewListCloudServiceNetworkInterfacesPager":
+			res.resp, res.err = i.dispatchNewListCloudServiceNetworkInterfacesPager(req)
+		case "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager":
+			res.resp, res.err = i.dispatchNewListCloudServiceRoleInstanceNetworkInterfacesPager(req)
+		case "InterfacesClient.BeginListEffectiveNetworkSecurityGroups":
+			res.resp, res.err = i.dispatchBeginListEffectiveNetworkSecurityGroups(req)
+		case "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager":
+			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetIPConfigurationsPager(req)
+		case "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager":
+			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetNetworkInterfacesPager(req)
+		case "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager":
+			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetVMNetworkInterfacesPager(req)
+		case "InterfacesClient.UpdateTags":
+			res.resp, res.err = i.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (i *InterfacesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

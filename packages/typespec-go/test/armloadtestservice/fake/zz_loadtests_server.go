@@ -88,29 +88,42 @@ func (l *LoadTestsServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (l *LoadTestsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LoadTestsClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LoadTestsClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LoadTestsClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadTestsClient.NewListByResourceGroupPager":
-		resp, err = l.dispatchNewListByResourceGroupPager(req)
-	case "LoadTestsClient.NewListBySubscriptionPager":
-		resp, err = l.dispatchNewListBySubscriptionPager(req)
-	case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
-		resp, err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
-	case "LoadTestsClient.BeginUpdate":
-		resp, err = l.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LoadTestsClient.BeginCreateOrUpdate":
+			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+		case "LoadTestsClient.BeginDelete":
+			res.resp, res.err = l.dispatchBeginDelete(req)
+		case "LoadTestsClient.Get":
+			res.resp, res.err = l.dispatchGet(req)
+		case "LoadTestsClient.NewListByResourceGroupPager":
+			res.resp, res.err = l.dispatchNewListByResourceGroupPager(req)
+		case "LoadTestsClient.NewListBySubscriptionPager":
+			res.resp, res.err = l.dispatchNewListBySubscriptionPager(req)
+		case "LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager":
+			res.resp, res.err = l.dispatchNewOutboundNetworkDependenciesEndpointsPager(req)
+		case "LoadTestsClient.BeginUpdate":
+			res.resp, res.err = l.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadTestsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

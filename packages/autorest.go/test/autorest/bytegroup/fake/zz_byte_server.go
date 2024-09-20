@@ -64,25 +64,38 @@ func (b *ByteServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *ByteServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ByteClient.GetEmpty":
-		resp, err = b.dispatchGetEmpty(req)
-	case "ByteClient.GetInvalid":
-		resp, err = b.dispatchGetInvalid(req)
-	case "ByteClient.GetNonASCII":
-		resp, err = b.dispatchGetNonASCII(req)
-	case "ByteClient.GetNull":
-		resp, err = b.dispatchGetNull(req)
-	case "ByteClient.PutNonASCII":
-		resp, err = b.dispatchPutNonASCII(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ByteClient.GetEmpty":
+			res.resp, res.err = b.dispatchGetEmpty(req)
+		case "ByteClient.GetInvalid":
+			res.resp, res.err = b.dispatchGetInvalid(req)
+		case "ByteClient.GetNonASCII":
+			res.resp, res.err = b.dispatchGetNonASCII(req)
+		case "ByteClient.GetNull":
+			res.resp, res.err = b.dispatchGetNull(req)
+		case "ByteClient.PutNonASCII":
+			res.resp, res.err = b.dispatchPutNonASCII(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *ByteServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {

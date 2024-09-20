@@ -51,19 +51,32 @@ func (a *ArrayInt32ValueServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (a *ArrayInt32ValueServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ArrayInt32ValueClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "ArrayInt32ValueClient.Put":
-		resp, err = a.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ArrayInt32ValueClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "ArrayInt32ValueClient.Put":
+			res.resp, res.err = a.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *ArrayInt32ValueServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

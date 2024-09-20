@@ -86,29 +86,42 @@ func (t *TopLevelTrackedResourcesServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (t *TopLevelTrackedResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "TopLevelTrackedResourcesClient.ActionSync":
-		resp, err = t.dispatchActionSync(req)
-	case "TopLevelTrackedResourcesClient.BeginCreateOrReplace":
-		resp, err = t.dispatchBeginCreateOrReplace(req)
-	case "TopLevelTrackedResourcesClient.BeginDelete":
-		resp, err = t.dispatchBeginDelete(req)
-	case "TopLevelTrackedResourcesClient.Get":
-		resp, err = t.dispatchGet(req)
-	case "TopLevelTrackedResourcesClient.NewListByResourceGroupPager":
-		resp, err = t.dispatchNewListByResourceGroupPager(req)
-	case "TopLevelTrackedResourcesClient.NewListBySubscriptionPager":
-		resp, err = t.dispatchNewListBySubscriptionPager(req)
-	case "TopLevelTrackedResourcesClient.BeginUpdate":
-		resp, err = t.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "TopLevelTrackedResourcesClient.ActionSync":
+			res.resp, res.err = t.dispatchActionSync(req)
+		case "TopLevelTrackedResourcesClient.BeginCreateOrReplace":
+			res.resp, res.err = t.dispatchBeginCreateOrReplace(req)
+		case "TopLevelTrackedResourcesClient.BeginDelete":
+			res.resp, res.err = t.dispatchBeginDelete(req)
+		case "TopLevelTrackedResourcesClient.Get":
+			res.resp, res.err = t.dispatchGet(req)
+		case "TopLevelTrackedResourcesClient.NewListByResourceGroupPager":
+			res.resp, res.err = t.dispatchNewListByResourceGroupPager(req)
+		case "TopLevelTrackedResourcesClient.NewListBySubscriptionPager":
+			res.resp, res.err = t.dispatchNewListBySubscriptionPager(req)
+		case "TopLevelTrackedResourcesClient.BeginUpdate":
+			res.resp, res.err = t.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (t *TopLevelTrackedResourcesServerTransport) dispatchActionSync(req *http.Request) (*http.Response, error) {

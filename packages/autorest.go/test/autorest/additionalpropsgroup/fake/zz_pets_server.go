@@ -68,27 +68,40 @@ func (p *PetsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PetsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PetsClient.CreateAPInProperties":
-		resp, err = p.dispatchCreateAPInProperties(req)
-	case "PetsClient.CreateAPInPropertiesWithAPString":
-		resp, err = p.dispatchCreateAPInPropertiesWithAPString(req)
-	case "PetsClient.CreateAPObject":
-		resp, err = p.dispatchCreateAPObject(req)
-	case "PetsClient.CreateAPString":
-		resp, err = p.dispatchCreateAPString(req)
-	case "PetsClient.CreateAPTrue":
-		resp, err = p.dispatchCreateAPTrue(req)
-	case "PetsClient.CreateCatAPTrue":
-		resp, err = p.dispatchCreateCatAPTrue(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PetsClient.CreateAPInProperties":
+			res.resp, res.err = p.dispatchCreateAPInProperties(req)
+		case "PetsClient.CreateAPInPropertiesWithAPString":
+			res.resp, res.err = p.dispatchCreateAPInPropertiesWithAPString(req)
+		case "PetsClient.CreateAPObject":
+			res.resp, res.err = p.dispatchCreateAPObject(req)
+		case "PetsClient.CreateAPString":
+			res.resp, res.err = p.dispatchCreateAPString(req)
+		case "PetsClient.CreateAPTrue":
+			res.resp, res.err = p.dispatchCreateAPTrue(req)
+		case "PetsClient.CreateCatAPTrue":
+			res.resp, res.err = p.dispatchCreateCatAPTrue(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PetsServerTransport) dispatchCreateAPInProperties(req *http.Request) (*http.Response, error) {

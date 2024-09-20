@@ -53,19 +53,32 @@ func (a *AutoRestReportServiceServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (a *AutoRestReportServiceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AutoRestReportServiceClient.GetOptionalReport":
-		resp, err = a.dispatchGetOptionalReport(req)
-	case "AutoRestReportServiceClient.GetReport":
-		resp, err = a.dispatchGetReport(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AutoRestReportServiceClient.GetOptionalReport":
+			res.resp, res.err = a.dispatchGetOptionalReport(req)
+		case "AutoRestReportServiceClient.GetReport":
+			res.resp, res.err = a.dispatchGetReport(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AutoRestReportServiceServerTransport) dispatchGetOptionalReport(req *http.Request) (*http.Response, error) {

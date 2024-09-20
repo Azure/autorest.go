@@ -59,23 +59,36 @@ func (m *MediaTypeStringBodyServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (m *MediaTypeStringBodyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "MediaTypeStringBodyClient.GetAsJSON":
-		resp, err = m.dispatchGetAsJSON(req)
-	case "MediaTypeStringBodyClient.GetAsText":
-		resp, err = m.dispatchGetAsText(req)
-	case "MediaTypeStringBodyClient.SendAsJSON":
-		resp, err = m.dispatchSendAsJSON(req)
-	case "MediaTypeStringBodyClient.SendAsText":
-		resp, err = m.dispatchSendAsText(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "MediaTypeStringBodyClient.GetAsJSON":
+			res.resp, res.err = m.dispatchGetAsJSON(req)
+		case "MediaTypeStringBodyClient.GetAsText":
+			res.resp, res.err = m.dispatchGetAsText(req)
+		case "MediaTypeStringBodyClient.SendAsJSON":
+			res.resp, res.err = m.dispatchSendAsJSON(req)
+		case "MediaTypeStringBodyClient.SendAsText":
+			res.resp, res.err = m.dispatchSendAsText(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *MediaTypeStringBodyServerTransport) dispatchGetAsJSON(req *http.Request) (*http.Response, error) {

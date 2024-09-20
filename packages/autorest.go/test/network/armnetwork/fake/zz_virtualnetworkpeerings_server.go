@@ -71,23 +71,36 @@ func (v *VirtualNetworkPeeringsServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (v *VirtualNetworkPeeringsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualNetworkPeeringsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualNetworkPeeringsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualNetworkPeeringsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualNetworkPeeringsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualNetworkPeeringsClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualNetworkPeeringsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualNetworkPeeringsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualNetworkPeeringsClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualNetworkPeeringsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

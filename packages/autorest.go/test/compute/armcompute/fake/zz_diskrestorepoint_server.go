@@ -71,23 +71,36 @@ func (d *DiskRestorePointServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (d *DiskRestorePointServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DiskRestorePointClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DiskRestorePointClient.BeginGrantAccess":
-		resp, err = d.dispatchBeginGrantAccess(req)
-	case "DiskRestorePointClient.NewListByRestorePointPager":
-		resp, err = d.dispatchNewListByRestorePointPager(req)
-	case "DiskRestorePointClient.BeginRevokeAccess":
-		resp, err = d.dispatchBeginRevokeAccess(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DiskRestorePointClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DiskRestorePointClient.BeginGrantAccess":
+			res.resp, res.err = d.dispatchBeginGrantAccess(req)
+		case "DiskRestorePointClient.NewListByRestorePointPager":
+			res.resp, res.err = d.dispatchNewListByRestorePointPager(req)
+		case "DiskRestorePointClient.BeginRevokeAccess":
+			res.resp, res.err = d.dispatchBeginRevokeAccess(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DiskRestorePointServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

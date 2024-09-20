@@ -71,23 +71,36 @@ func (e *ExpressRoutePortAuthorizationsServerTransport) Do(req *http.Request) (*
 }
 
 func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRoutePortAuthorizationsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRoutePortAuthorizationsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRoutePortAuthorizationsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRoutePortAuthorizationsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRoutePortAuthorizationsClient.BeginDelete":
+			res.resp, res.err = e.dispatchBeginDelete(req)
+		case "ExpressRoutePortAuthorizationsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRoutePortAuthorizationsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRoutePortAuthorizationsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -81,33 +81,46 @@ func (h *HTTPRetryServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (h *HTTPRetryServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HTTPRetryClient.Delete503":
-		resp, err = h.dispatchDelete503(req)
-	case "HTTPRetryClient.Get502":
-		resp, err = h.dispatchGet502(req)
-	case "HTTPRetryClient.Head408":
-		resp, err = h.dispatchHead408(req)
-	case "HTTPRetryClient.Options502":
-		resp, err = h.dispatchOptions502(req)
-	case "HTTPRetryClient.Patch500":
-		resp, err = h.dispatchPatch500(req)
-	case "HTTPRetryClient.Patch504":
-		resp, err = h.dispatchPatch504(req)
-	case "HTTPRetryClient.Post503":
-		resp, err = h.dispatchPost503(req)
-	case "HTTPRetryClient.Put500":
-		resp, err = h.dispatchPut500(req)
-	case "HTTPRetryClient.Put504":
-		resp, err = h.dispatchPut504(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "HTTPRetryClient.Delete503":
+			res.resp, res.err = h.dispatchDelete503(req)
+		case "HTTPRetryClient.Get502":
+			res.resp, res.err = h.dispatchGet502(req)
+		case "HTTPRetryClient.Head408":
+			res.resp, res.err = h.dispatchHead408(req)
+		case "HTTPRetryClient.Options502":
+			res.resp, res.err = h.dispatchOptions502(req)
+		case "HTTPRetryClient.Patch500":
+			res.resp, res.err = h.dispatchPatch500(req)
+		case "HTTPRetryClient.Patch504":
+			res.resp, res.err = h.dispatchPatch504(req)
+		case "HTTPRetryClient.Post503":
+			res.resp, res.err = h.dispatchPost503(req)
+		case "HTTPRetryClient.Put500":
+			res.resp, res.err = h.dispatchPut500(req)
+		case "HTTPRetryClient.Put504":
+			res.resp, res.err = h.dispatchPut504(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HTTPRetryServerTransport) dispatchDelete503(req *http.Request) (*http.Response, error) {

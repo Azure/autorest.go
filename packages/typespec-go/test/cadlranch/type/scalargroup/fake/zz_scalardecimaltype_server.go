@@ -57,21 +57,34 @@ func (s *ScalarDecimalTypeServerTransport) Do(req *http.Request) (*http.Response
 }
 
 func (s *ScalarDecimalTypeServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarDecimalTypeClient.RequestBody":
-		resp, err = s.dispatchRequestBody(req)
-	case "ScalarDecimalTypeClient.RequestParameter":
-		resp, err = s.dispatchRequestParameter(req)
-	case "ScalarDecimalTypeClient.ResponseBody":
-		resp, err = s.dispatchResponseBody(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ScalarDecimalTypeClient.RequestBody":
+			res.resp, res.err = s.dispatchRequestBody(req)
+		case "ScalarDecimalTypeClient.RequestParameter":
+			res.resp, res.err = s.dispatchRequestParameter(req)
+		case "ScalarDecimalTypeClient.ResponseBody":
+			res.resp, res.err = s.dispatchResponseBody(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarDecimalTypeServerTransport) dispatchRequestBody(req *http.Request) (*http.Response, error) {

@@ -52,19 +52,32 @@ func (p *PolymorphicrecursiveServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (p *PolymorphicrecursiveServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PolymorphicrecursiveClient.GetValid":
-		resp, err = p.dispatchGetValid(req)
-	case "PolymorphicrecursiveClient.PutValid":
-		resp, err = p.dispatchPutValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PolymorphicrecursiveClient.GetValid":
+			res.resp, res.err = p.dispatchGetValid(req)
+		case "PolymorphicrecursiveClient.PutValid":
+			res.resp, res.err = p.dispatchPutValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PolymorphicrecursiveServerTransport) dispatchGetValid(req *http.Request) (*http.Response, error) {

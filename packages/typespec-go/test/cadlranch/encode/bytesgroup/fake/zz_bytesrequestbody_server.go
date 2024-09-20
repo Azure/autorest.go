@@ -64,25 +64,38 @@ func (b *BytesRequestBodyServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (b *BytesRequestBodyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BytesRequestBodyClient.Base64":
-		resp, err = b.dispatchBase64(req)
-	case "BytesRequestBodyClient.Base64URL":
-		resp, err = b.dispatchBase64URL(req)
-	case "BytesRequestBodyClient.CustomContentType":
-		resp, err = b.dispatchCustomContentType(req)
-	case "BytesRequestBodyClient.Default":
-		resp, err = b.dispatchDefault(req)
-	case "BytesRequestBodyClient.OctetStream":
-		resp, err = b.dispatchOctetStream(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BytesRequestBodyClient.Base64":
+			res.resp, res.err = b.dispatchBase64(req)
+		case "BytesRequestBodyClient.Base64URL":
+			res.resp, res.err = b.dispatchBase64URL(req)
+		case "BytesRequestBodyClient.CustomContentType":
+			res.resp, res.err = b.dispatchCustomContentType(req)
+		case "BytesRequestBodyClient.Default":
+			res.resp, res.err = b.dispatchDefault(req)
+		case "BytesRequestBodyClient.OctetStream":
+			res.resp, res.err = b.dispatchOctetStream(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BytesRequestBodyServerTransport) dispatchBase64(req *http.Request) (*http.Response, error) {

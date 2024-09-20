@@ -78,19 +78,32 @@ func (b *BodyOptionalityServerTransport) dispatchToClientFake(req *http.Request,
 }
 
 func (b *BodyOptionalityServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BodyOptionalityClient.RequiredExplicit":
-		resp, err = b.dispatchRequiredExplicit(req)
-	case "BodyOptionalityClient.RequiredImplicit":
-		resp, err = b.dispatchRequiredImplicit(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BodyOptionalityClient.RequiredExplicit":
+			res.resp, res.err = b.dispatchRequiredExplicit(req)
+		case "BodyOptionalityClient.RequiredImplicit":
+			res.resp, res.err = b.dispatchRequiredImplicit(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BodyOptionalityServerTransport) dispatchRequiredExplicit(req *http.Request) (*http.Response, error) {

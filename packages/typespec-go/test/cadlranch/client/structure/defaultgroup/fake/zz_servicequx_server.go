@@ -74,17 +74,30 @@ func (s *ServiceQuxServerTransport) dispatchToClientFake(req *http.Request, clie
 }
 
 func (s *ServiceQuxServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ServiceQuxClient.Eight":
-		resp, err = s.dispatchEight(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ServiceQuxClient.Eight":
+			res.resp, res.err = s.dispatchEight(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceQuxServerTransport) dispatchEight(req *http.Request) (*http.Response, error) {

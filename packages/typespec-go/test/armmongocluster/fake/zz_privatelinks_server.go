@@ -53,17 +53,30 @@ func (p *PrivateLinksServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (p *PrivateLinksServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PrivateLinksClient.NewListByMongoClusterPager":
-		resp, err = p.dispatchNewListByMongoClusterPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PrivateLinksClient.NewListByMongoClusterPager":
+			res.resp, res.err = p.dispatchNewListByMongoClusterPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PrivateLinksServerTransport) dispatchNewListByMongoClusterPager(req *http.Request) (*http.Response, error) {

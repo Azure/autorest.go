@@ -56,21 +56,34 @@ func (h *HTTPFailureServerTransport) Do(req *http.Request) (*http.Response, erro
 }
 
 func (h *HTTPFailureServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HTTPFailureClient.GetEmptyError":
-		resp, err = h.dispatchGetEmptyError(req)
-	case "HTTPFailureClient.GetNoModelEmpty":
-		resp, err = h.dispatchGetNoModelEmpty(req)
-	case "HTTPFailureClient.GetNoModelError":
-		resp, err = h.dispatchGetNoModelError(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "HTTPFailureClient.GetEmptyError":
+			res.resp, res.err = h.dispatchGetEmptyError(req)
+		case "HTTPFailureClient.GetNoModelEmpty":
+			res.resp, res.err = h.dispatchGetNoModelEmpty(req)
+		case "HTTPFailureClient.GetNoModelError":
+			res.resp, res.err = h.dispatchGetNoModelError(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HTTPFailureServerTransport) dispatchGetEmptyError(req *http.Request) (*http.Response, error) {

@@ -188,61 +188,74 @@ func (p *PagingServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PagingServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PagingClient.NewAppendAPIVersionPager":
-		resp, err = p.dispatchNewAppendAPIVersionPager(req)
-	case "PagingClient.NewDuplicateParamsPager":
-		resp, err = p.dispatchNewDuplicateParamsPager(req)
-	case "PagingClient.NewFirstResponseEmptyPager":
-		resp, err = p.dispatchNewFirstResponseEmptyPager(req)
-	case "PagingClient.NewGetEmptyNextLinkNamePagesPager":
-		resp, err = p.dispatchNewGetEmptyNextLinkNamePagesPager(req)
-	case "PagingClient.NewGetMultiplePagesPager":
-		resp, err = p.dispatchNewGetMultiplePagesPager(req)
-	case "PagingClient.NewGetMultiplePagesFailurePager":
-		resp, err = p.dispatchNewGetMultiplePagesFailurePager(req)
-	case "PagingClient.NewGetMultiplePagesFailureURIPager":
-		resp, err = p.dispatchNewGetMultiplePagesFailureURIPager(req)
-	case "PagingClient.NewGetMultiplePagesFragmentNextLinkPager":
-		resp, err = p.dispatchNewGetMultiplePagesFragmentNextLinkPager(req)
-	case "PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager":
-		resp, err = p.dispatchNewGetMultiplePagesFragmentWithGroupingNextLinkPager(req)
-	case "PagingClient.BeginGetMultiplePagesLRO":
-		resp, err = p.dispatchBeginGetMultiplePagesLRO(req)
-	case "PagingClient.NewGetMultiplePagesRetryFirstPager":
-		resp, err = p.dispatchNewGetMultiplePagesRetryFirstPager(req)
-	case "PagingClient.NewGetMultiplePagesRetrySecondPager":
-		resp, err = p.dispatchNewGetMultiplePagesRetrySecondPager(req)
-	case "PagingClient.NewGetMultiplePagesWithOffsetPager":
-		resp, err = p.dispatchNewGetMultiplePagesWithOffsetPager(req)
-	case "PagingClient.NewGetNoItemNamePagesPager":
-		resp, err = p.dispatchNewGetNoItemNamePagesPager(req)
-	case "PagingClient.NewGetNullNextLinkNamePagesPager":
-		resp, err = p.dispatchNewGetNullNextLinkNamePagesPager(req)
-	case "PagingClient.NewGetODataMultiplePagesPager":
-		resp, err = p.dispatchNewGetODataMultiplePagesPager(req)
-	case "PagingClient.NewGetPagingModelWithItemNameWithXMSClientNamePager":
-		resp, err = p.dispatchNewGetPagingModelWithItemNameWithXMSClientNamePager(req)
-	case "PagingClient.NewGetSinglePagesPager":
-		resp, err = p.dispatchNewGetSinglePagesPager(req)
-	case "PagingClient.NewGetSinglePagesFailurePager":
-		resp, err = p.dispatchNewGetSinglePagesFailurePager(req)
-	case "PagingClient.NewGetSinglePagesWithBodyParamsPager":
-		resp, err = p.dispatchNewGetSinglePagesWithBodyParamsPager(req)
-	case "PagingClient.NewGetWithQueryParamsPager":
-		resp, err = p.dispatchNewGetWithQueryParamsPager(req)
-	case "PagingClient.NewPageWithMaxPageSizePager":
-		resp, err = p.dispatchNewPageWithMaxPageSizePager(req)
-	case "PagingClient.NewReplaceAPIVersionPager":
-		resp, err = p.dispatchNewReplaceAPIVersionPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PagingClient.NewAppendAPIVersionPager":
+			res.resp, res.err = p.dispatchNewAppendAPIVersionPager(req)
+		case "PagingClient.NewDuplicateParamsPager":
+			res.resp, res.err = p.dispatchNewDuplicateParamsPager(req)
+		case "PagingClient.NewFirstResponseEmptyPager":
+			res.resp, res.err = p.dispatchNewFirstResponseEmptyPager(req)
+		case "PagingClient.NewGetEmptyNextLinkNamePagesPager":
+			res.resp, res.err = p.dispatchNewGetEmptyNextLinkNamePagesPager(req)
+		case "PagingClient.NewGetMultiplePagesPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesPager(req)
+		case "PagingClient.NewGetMultiplePagesFailurePager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesFailurePager(req)
+		case "PagingClient.NewGetMultiplePagesFailureURIPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesFailureURIPager(req)
+		case "PagingClient.NewGetMultiplePagesFragmentNextLinkPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesFragmentNextLinkPager(req)
+		case "PagingClient.NewGetMultiplePagesFragmentWithGroupingNextLinkPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesFragmentWithGroupingNextLinkPager(req)
+		case "PagingClient.BeginGetMultiplePagesLRO":
+			res.resp, res.err = p.dispatchBeginGetMultiplePagesLRO(req)
+		case "PagingClient.NewGetMultiplePagesRetryFirstPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesRetryFirstPager(req)
+		case "PagingClient.NewGetMultiplePagesRetrySecondPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesRetrySecondPager(req)
+		case "PagingClient.NewGetMultiplePagesWithOffsetPager":
+			res.resp, res.err = p.dispatchNewGetMultiplePagesWithOffsetPager(req)
+		case "PagingClient.NewGetNoItemNamePagesPager":
+			res.resp, res.err = p.dispatchNewGetNoItemNamePagesPager(req)
+		case "PagingClient.NewGetNullNextLinkNamePagesPager":
+			res.resp, res.err = p.dispatchNewGetNullNextLinkNamePagesPager(req)
+		case "PagingClient.NewGetODataMultiplePagesPager":
+			res.resp, res.err = p.dispatchNewGetODataMultiplePagesPager(req)
+		case "PagingClient.NewGetPagingModelWithItemNameWithXMSClientNamePager":
+			res.resp, res.err = p.dispatchNewGetPagingModelWithItemNameWithXMSClientNamePager(req)
+		case "PagingClient.NewGetSinglePagesPager":
+			res.resp, res.err = p.dispatchNewGetSinglePagesPager(req)
+		case "PagingClient.NewGetSinglePagesFailurePager":
+			res.resp, res.err = p.dispatchNewGetSinglePagesFailurePager(req)
+		case "PagingClient.NewGetSinglePagesWithBodyParamsPager":
+			res.resp, res.err = p.dispatchNewGetSinglePagesWithBodyParamsPager(req)
+		case "PagingClient.NewGetWithQueryParamsPager":
+			res.resp, res.err = p.dispatchNewGetWithQueryParamsPager(req)
+		case "PagingClient.NewPageWithMaxPageSizePager":
+			res.resp, res.err = p.dispatchNewPageWithMaxPageSizePager(req)
+		case "PagingClient.NewReplaceAPIVersionPager":
+			res.resp, res.err = p.dispatchNewReplaceAPIVersionPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PagingServerTransport) dispatchNewAppendAPIVersionPager(req *http.Request) (*http.Response, error) {

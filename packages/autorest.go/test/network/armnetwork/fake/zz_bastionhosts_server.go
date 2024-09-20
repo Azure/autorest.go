@@ -83,27 +83,40 @@ func (b *BastionHostsServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (b *BastionHostsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BastionHostsClient.BeginCreateOrUpdate":
-		resp, err = b.dispatchBeginCreateOrUpdate(req)
-	case "BastionHostsClient.BeginDelete":
-		resp, err = b.dispatchBeginDelete(req)
-	case "BastionHostsClient.Get":
-		resp, err = b.dispatchGet(req)
-	case "BastionHostsClient.NewListPager":
-		resp, err = b.dispatchNewListPager(req)
-	case "BastionHostsClient.NewListByResourceGroupPager":
-		resp, err = b.dispatchNewListByResourceGroupPager(req)
-	case "BastionHostsClient.BeginUpdateTags":
-		resp, err = b.dispatchBeginUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BastionHostsClient.BeginCreateOrUpdate":
+			res.resp, res.err = b.dispatchBeginCreateOrUpdate(req)
+		case "BastionHostsClient.BeginDelete":
+			res.resp, res.err = b.dispatchBeginDelete(req)
+		case "BastionHostsClient.Get":
+			res.resp, res.err = b.dispatchGet(req)
+		case "BastionHostsClient.NewListPager":
+			res.resp, res.err = b.dispatchNewListPager(req)
+		case "BastionHostsClient.NewListByResourceGroupPager":
+			res.resp, res.err = b.dispatchNewListByResourceGroupPager(req)
+		case "BastionHostsClient.BeginUpdateTags":
+			res.resp, res.err = b.dispatchBeginUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BastionHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

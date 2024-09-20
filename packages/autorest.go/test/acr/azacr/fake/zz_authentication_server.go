@@ -58,21 +58,34 @@ func (a *AuthenticationServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (a *AuthenticationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken":
-		resp, err = a.dispatchExchangeAADAccessTokenForAcrRefreshToken(req)
-	case "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken":
-		resp, err = a.dispatchExchangeAcrRefreshTokenForAcrAccessToken(req)
-	case "AuthenticationClient.GetAcrAccessTokenFromLogin":
-		resp, err = a.dispatchGetAcrAccessTokenFromLogin(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AuthenticationClient.ExchangeAADAccessTokenForAcrRefreshToken":
+			res.resp, res.err = a.dispatchExchangeAADAccessTokenForAcrRefreshToken(req)
+		case "AuthenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken":
+			res.resp, res.err = a.dispatchExchangeAcrRefreshTokenForAcrAccessToken(req)
+		case "AuthenticationClient.GetAcrAccessTokenFromLogin":
+			res.resp, res.err = a.dispatchGetAcrAccessTokenFromLogin(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AuthenticationServerTransport) dispatchExchangeAADAccessTokenForAcrRefreshToken(req *http.Request) (*http.Response, error) {

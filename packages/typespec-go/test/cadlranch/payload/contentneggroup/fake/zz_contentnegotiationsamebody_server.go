@@ -51,19 +51,32 @@ func (c *ContentNegotiationSameBodyServerTransport) Do(req *http.Request) (*http
 }
 
 func (c *ContentNegotiationSameBodyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ContentNegotiationSameBodyClient.GetAvatarAsJPEG":
-		resp, err = c.dispatchGetAvatarAsJPEG(req)
-	case "ContentNegotiationSameBodyClient.GetAvatarAsPNG":
-		resp, err = c.dispatchGetAvatarAsPNG(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ContentNegotiationSameBodyClient.GetAvatarAsJPEG":
+			res.resp, res.err = c.dispatchGetAvatarAsJPEG(req)
+		case "ContentNegotiationSameBodyClient.GetAvatarAsPNG":
+			res.resp, res.err = c.dispatchGetAvatarAsPNG(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ContentNegotiationSameBodyServerTransport) dispatchGetAvatarAsJPEG(req *http.Request) (*http.Response, error) {

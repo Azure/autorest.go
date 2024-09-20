@@ -51,19 +51,32 @@ func (s *ScalarBooleanServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *ScalarBooleanServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarBooleanClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ScalarBooleanClient.Put":
-		resp, err = s.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ScalarBooleanClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "ScalarBooleanClient.Put":
+			res.resp, res.err = s.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarBooleanServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

@@ -84,27 +84,40 @@ func (v *VPNConnectionsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (v *VPNConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VPNConnectionsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VPNConnectionsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VPNConnectionsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VPNConnectionsClient.NewListByVPNGatewayPager":
-		resp, err = v.dispatchNewListByVPNGatewayPager(req)
-	case "VPNConnectionsClient.BeginStartPacketCapture":
-		resp, err = v.dispatchBeginStartPacketCapture(req)
-	case "VPNConnectionsClient.BeginStopPacketCapture":
-		resp, err = v.dispatchBeginStopPacketCapture(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VPNConnectionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VPNConnectionsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VPNConnectionsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VPNConnectionsClient.NewListByVPNGatewayPager":
+			res.resp, res.err = v.dispatchNewListByVPNGatewayPager(req)
+		case "VPNConnectionsClient.BeginStartPacketCapture":
+			res.resp, res.err = v.dispatchBeginStartPacketCapture(req)
+		case "VPNConnectionsClient.BeginStopPacketCapture":
+			res.resp, res.err = v.dispatchBeginStopPacketCapture(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VPNConnectionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

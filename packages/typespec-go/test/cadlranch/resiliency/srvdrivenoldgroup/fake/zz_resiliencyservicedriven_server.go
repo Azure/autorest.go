@@ -56,21 +56,34 @@ func (r *ResiliencyServiceDrivenServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (r *ResiliencyServiceDrivenServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ResiliencyServiceDrivenClient.FromNone":
-		resp, err = r.dispatchFromNone(req)
-	case "ResiliencyServiceDrivenClient.FromOneOptional":
-		resp, err = r.dispatchFromOneOptional(req)
-	case "ResiliencyServiceDrivenClient.FromOneRequired":
-		resp, err = r.dispatchFromOneRequired(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ResiliencyServiceDrivenClient.FromNone":
+			res.resp, res.err = r.dispatchFromNone(req)
+		case "ResiliencyServiceDrivenClient.FromOneOptional":
+			res.resp, res.err = r.dispatchFromOneOptional(req)
+		case "ResiliencyServiceDrivenClient.FromOneRequired":
+			res.resp, res.err = r.dispatchFromOneRequired(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *ResiliencyServiceDrivenServerTransport) dispatchFromNone(req *http.Request) (*http.Response, error) {

@@ -71,23 +71,36 @@ func (i *InboundNatRulesServerTransport) Do(req *http.Request) (*http.Response, 
 }
 
 func (i *InboundNatRulesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "InboundNatRulesClient.BeginCreateOrUpdate":
-		resp, err = i.dispatchBeginCreateOrUpdate(req)
-	case "InboundNatRulesClient.BeginDelete":
-		resp, err = i.dispatchBeginDelete(req)
-	case "InboundNatRulesClient.Get":
-		resp, err = i.dispatchGet(req)
-	case "InboundNatRulesClient.NewListPager":
-		resp, err = i.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "InboundNatRulesClient.BeginCreateOrUpdate":
+			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+		case "InboundNatRulesClient.BeginDelete":
+			res.resp, res.err = i.dispatchBeginDelete(req)
+		case "InboundNatRulesClient.Get":
+			res.resp, res.err = i.dispatchGet(req)
+		case "InboundNatRulesClient.NewListPager":
+			res.resp, res.err = i.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (i *InboundNatRulesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

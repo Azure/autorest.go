@@ -79,27 +79,40 @@ func (r *RestorePointCollectionsServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (r *RestorePointCollectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RestorePointCollectionsClient.CreateOrUpdate":
-		resp, err = r.dispatchCreateOrUpdate(req)
-	case "RestorePointCollectionsClient.BeginDelete":
-		resp, err = r.dispatchBeginDelete(req)
-	case "RestorePointCollectionsClient.Get":
-		resp, err = r.dispatchGet(req)
-	case "RestorePointCollectionsClient.NewListPager":
-		resp, err = r.dispatchNewListPager(req)
-	case "RestorePointCollectionsClient.NewListAllPager":
-		resp, err = r.dispatchNewListAllPager(req)
-	case "RestorePointCollectionsClient.Update":
-		resp, err = r.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RestorePointCollectionsClient.CreateOrUpdate":
+			res.resp, res.err = r.dispatchCreateOrUpdate(req)
+		case "RestorePointCollectionsClient.BeginDelete":
+			res.resp, res.err = r.dispatchBeginDelete(req)
+		case "RestorePointCollectionsClient.Get":
+			res.resp, res.err = r.dispatchGet(req)
+		case "RestorePointCollectionsClient.NewListPager":
+			res.resp, res.err = r.dispatchNewListPager(req)
+		case "RestorePointCollectionsClient.NewListAllPager":
+			res.resp, res.err = r.dispatchNewListAllPager(req)
+		case "RestorePointCollectionsClient.Update":
+			res.resp, res.err = r.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RestorePointCollectionsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

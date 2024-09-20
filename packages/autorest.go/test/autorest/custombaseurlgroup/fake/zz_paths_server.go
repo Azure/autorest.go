@@ -48,17 +48,30 @@ func (p *PathsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PathsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PathsClient.GetEmpty":
-		resp, err = p.dispatchGetEmpty(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PathsClient.GetEmpty":
+			res.resp, res.err = p.dispatchGetEmpty(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {

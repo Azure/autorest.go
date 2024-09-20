@@ -83,27 +83,40 @@ func (d *DedicatedHostsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (d *DedicatedHostsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DedicatedHostsClient.BeginCreateOrUpdate":
-		resp, err = d.dispatchBeginCreateOrUpdate(req)
-	case "DedicatedHostsClient.BeginDelete":
-		resp, err = d.dispatchBeginDelete(req)
-	case "DedicatedHostsClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DedicatedHostsClient.NewListByHostGroupPager":
-		resp, err = d.dispatchNewListByHostGroupPager(req)
-	case "DedicatedHostsClient.BeginRestart":
-		resp, err = d.dispatchBeginRestart(req)
-	case "DedicatedHostsClient.BeginUpdate":
-		resp, err = d.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DedicatedHostsClient.BeginCreateOrUpdate":
+			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+		case "DedicatedHostsClient.BeginDelete":
+			res.resp, res.err = d.dispatchBeginDelete(req)
+		case "DedicatedHostsClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DedicatedHostsClient.NewListByHostGroupPager":
+			res.resp, res.err = d.dispatchNewListByHostGroupPager(req)
+		case "DedicatedHostsClient.BeginRestart":
+			res.resp, res.err = d.dispatchBeginRestart(req)
+		case "DedicatedHostsClient.BeginUpdate":
+			res.resp, res.err = d.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DedicatedHostsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

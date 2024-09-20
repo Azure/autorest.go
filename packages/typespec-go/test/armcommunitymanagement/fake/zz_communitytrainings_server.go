@@ -82,27 +82,40 @@ func (c *CommunityTrainingsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (c *CommunityTrainingsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CommunityTrainingsClient.BeginCreate":
-		resp, err = c.dispatchBeginCreate(req)
-	case "CommunityTrainingsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CommunityTrainingsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CommunityTrainingsClient.NewListByResourceGroupPager":
-		resp, err = c.dispatchNewListByResourceGroupPager(req)
-	case "CommunityTrainingsClient.NewListBySubscriptionPager":
-		resp, err = c.dispatchNewListBySubscriptionPager(req)
-	case "CommunityTrainingsClient.BeginUpdate":
-		resp, err = c.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CommunityTrainingsClient.BeginCreate":
+			res.resp, res.err = c.dispatchBeginCreate(req)
+		case "CommunityTrainingsClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "CommunityTrainingsClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "CommunityTrainingsClient.NewListByResourceGroupPager":
+			res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
+		case "CommunityTrainingsClient.NewListBySubscriptionPager":
+			res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
+		case "CommunityTrainingsClient.BeginUpdate":
+			res.resp, res.err = c.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CommunityTrainingsServerTransport) dispatchBeginCreate(req *http.Request) (*http.Response, error) {

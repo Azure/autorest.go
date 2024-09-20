@@ -93,31 +93,44 @@ func (l *LoadBalancersServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (l *LoadBalancersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LoadBalancersClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LoadBalancersClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LoadBalancersClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LoadBalancersClient.NewListPager":
-		resp, err = l.dispatchNewListPager(req)
-	case "LoadBalancersClient.NewListAllPager":
-		resp, err = l.dispatchNewListAllPager(req)
-	case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
-		resp, err = l.dispatchBeginListInboundNatRulePortMappings(req)
-	case "LoadBalancersClient.BeginSwapPublicIPAddresses":
-		resp, err = l.dispatchBeginSwapPublicIPAddresses(req)
-	case "LoadBalancersClient.UpdateTags":
-		resp, err = l.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LoadBalancersClient.BeginCreateOrUpdate":
+			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+		case "LoadBalancersClient.BeginDelete":
+			res.resp, res.err = l.dispatchBeginDelete(req)
+		case "LoadBalancersClient.Get":
+			res.resp, res.err = l.dispatchGet(req)
+		case "LoadBalancersClient.NewListPager":
+			res.resp, res.err = l.dispatchNewListPager(req)
+		case "LoadBalancersClient.NewListAllPager":
+			res.resp, res.err = l.dispatchNewListAllPager(req)
+		case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
+			res.resp, res.err = l.dispatchBeginListInboundNatRulePortMappings(req)
+		case "LoadBalancersClient.BeginSwapPublicIPAddresses":
+			res.resp, res.err = l.dispatchBeginSwapPublicIPAddresses(req)
+		case "LoadBalancersClient.UpdateTags":
+			res.resp, res.err = l.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LoadBalancersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

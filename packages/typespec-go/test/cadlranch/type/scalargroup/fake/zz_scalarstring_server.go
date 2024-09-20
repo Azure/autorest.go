@@ -51,19 +51,32 @@ func (s *ScalarStringServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (s *ScalarStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarStringClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "ScalarStringClient.Put":
-		resp, err = s.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ScalarStringClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "ScalarStringClient.Put":
+			res.resp, res.err = s.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarStringServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

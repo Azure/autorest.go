@@ -55,21 +55,34 @@ func (u *UsageModelInOperationServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (u *UsageModelInOperationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "UsageModelInOperationClient.InputToInputOutput":
-		resp, err = u.dispatchInputToInputOutput(req)
-	case "UsageModelInOperationClient.ModelInReadOnlyProperty":
-		resp, err = u.dispatchModelInReadOnlyProperty(req)
-	case "UsageModelInOperationClient.OutputToInputOutput":
-		resp, err = u.dispatchOutputToInputOutput(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "UsageModelInOperationClient.InputToInputOutput":
+			res.resp, res.err = u.dispatchInputToInputOutput(req)
+		case "UsageModelInOperationClient.ModelInReadOnlyProperty":
+			res.resp, res.err = u.dispatchModelInReadOnlyProperty(req)
+		case "UsageModelInOperationClient.OutputToInputOutput":
+			res.resp, res.err = u.dispatchOutputToInputOutput(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (u *UsageModelInOperationServerTransport) dispatchInputToInputOutput(req *http.Request) (*http.Response, error) {

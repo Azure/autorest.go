@@ -132,59 +132,72 @@ func (p *PrimitiveServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (p *PrimitiveServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PrimitiveClient.GetBool":
-		resp, err = p.dispatchGetBool(req)
-	case "PrimitiveClient.GetByte":
-		resp, err = p.dispatchGetByte(req)
-	case "PrimitiveClient.GetDate":
-		resp, err = p.dispatchGetDate(req)
-	case "PrimitiveClient.GetDateTime":
-		resp, err = p.dispatchGetDateTime(req)
-	case "PrimitiveClient.GetDateTimeRFC1123":
-		resp, err = p.dispatchGetDateTimeRFC1123(req)
-	case "PrimitiveClient.GetDouble":
-		resp, err = p.dispatchGetDouble(req)
-	case "PrimitiveClient.GetDuration":
-		resp, err = p.dispatchGetDuration(req)
-	case "PrimitiveClient.GetFloat":
-		resp, err = p.dispatchGetFloat(req)
-	case "PrimitiveClient.GetInt":
-		resp, err = p.dispatchGetInt(req)
-	case "PrimitiveClient.GetLong":
-		resp, err = p.dispatchGetLong(req)
-	case "PrimitiveClient.GetString":
-		resp, err = p.dispatchGetString(req)
-	case "PrimitiveClient.PutBool":
-		resp, err = p.dispatchPutBool(req)
-	case "PrimitiveClient.PutByte":
-		resp, err = p.dispatchPutByte(req)
-	case "PrimitiveClient.PutDate":
-		resp, err = p.dispatchPutDate(req)
-	case "PrimitiveClient.PutDateTime":
-		resp, err = p.dispatchPutDateTime(req)
-	case "PrimitiveClient.PutDateTimeRFC1123":
-		resp, err = p.dispatchPutDateTimeRFC1123(req)
-	case "PrimitiveClient.PutDouble":
-		resp, err = p.dispatchPutDouble(req)
-	case "PrimitiveClient.PutDuration":
-		resp, err = p.dispatchPutDuration(req)
-	case "PrimitiveClient.PutFloat":
-		resp, err = p.dispatchPutFloat(req)
-	case "PrimitiveClient.PutInt":
-		resp, err = p.dispatchPutInt(req)
-	case "PrimitiveClient.PutLong":
-		resp, err = p.dispatchPutLong(req)
-	case "PrimitiveClient.PutString":
-		resp, err = p.dispatchPutString(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PrimitiveClient.GetBool":
+			res.resp, res.err = p.dispatchGetBool(req)
+		case "PrimitiveClient.GetByte":
+			res.resp, res.err = p.dispatchGetByte(req)
+		case "PrimitiveClient.GetDate":
+			res.resp, res.err = p.dispatchGetDate(req)
+		case "PrimitiveClient.GetDateTime":
+			res.resp, res.err = p.dispatchGetDateTime(req)
+		case "PrimitiveClient.GetDateTimeRFC1123":
+			res.resp, res.err = p.dispatchGetDateTimeRFC1123(req)
+		case "PrimitiveClient.GetDouble":
+			res.resp, res.err = p.dispatchGetDouble(req)
+		case "PrimitiveClient.GetDuration":
+			res.resp, res.err = p.dispatchGetDuration(req)
+		case "PrimitiveClient.GetFloat":
+			res.resp, res.err = p.dispatchGetFloat(req)
+		case "PrimitiveClient.GetInt":
+			res.resp, res.err = p.dispatchGetInt(req)
+		case "PrimitiveClient.GetLong":
+			res.resp, res.err = p.dispatchGetLong(req)
+		case "PrimitiveClient.GetString":
+			res.resp, res.err = p.dispatchGetString(req)
+		case "PrimitiveClient.PutBool":
+			res.resp, res.err = p.dispatchPutBool(req)
+		case "PrimitiveClient.PutByte":
+			res.resp, res.err = p.dispatchPutByte(req)
+		case "PrimitiveClient.PutDate":
+			res.resp, res.err = p.dispatchPutDate(req)
+		case "PrimitiveClient.PutDateTime":
+			res.resp, res.err = p.dispatchPutDateTime(req)
+		case "PrimitiveClient.PutDateTimeRFC1123":
+			res.resp, res.err = p.dispatchPutDateTimeRFC1123(req)
+		case "PrimitiveClient.PutDouble":
+			res.resp, res.err = p.dispatchPutDouble(req)
+		case "PrimitiveClient.PutDuration":
+			res.resp, res.err = p.dispatchPutDuration(req)
+		case "PrimitiveClient.PutFloat":
+			res.resp, res.err = p.dispatchPutFloat(req)
+		case "PrimitiveClient.PutInt":
+			res.resp, res.err = p.dispatchPutInt(req)
+		case "PrimitiveClient.PutLong":
+			res.resp, res.err = p.dispatchPutLong(req)
+		case "PrimitiveClient.PutString":
+			res.resp, res.err = p.dispatchPutString(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PrimitiveServerTransport) dispatchGetBool(req *http.Request) (*http.Response, error) {

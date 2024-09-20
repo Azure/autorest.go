@@ -77,27 +77,40 @@ func (c *CapacityReservationGroupsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (c *CapacityReservationGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CapacityReservationGroupsClient.CreateOrUpdate":
-		resp, err = c.dispatchCreateOrUpdate(req)
-	case "CapacityReservationGroupsClient.Delete":
-		resp, err = c.dispatchDelete(req)
-	case "CapacityReservationGroupsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CapacityReservationGroupsClient.NewListByResourceGroupPager":
-		resp, err = c.dispatchNewListByResourceGroupPager(req)
-	case "CapacityReservationGroupsClient.NewListBySubscriptionPager":
-		resp, err = c.dispatchNewListBySubscriptionPager(req)
-	case "CapacityReservationGroupsClient.Update":
-		resp, err = c.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CapacityReservationGroupsClient.CreateOrUpdate":
+			res.resp, res.err = c.dispatchCreateOrUpdate(req)
+		case "CapacityReservationGroupsClient.Delete":
+			res.resp, res.err = c.dispatchDelete(req)
+		case "CapacityReservationGroupsClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "CapacityReservationGroupsClient.NewListByResourceGroupPager":
+			res.resp, res.err = c.dispatchNewListByResourceGroupPager(req)
+		case "CapacityReservationGroupsClient.NewListBySubscriptionPager":
+			res.resp, res.err = c.dispatchNewListBySubscriptionPager(req)
+		case "CapacityReservationGroupsClient.Update":
+			res.resp, res.err = c.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CapacityReservationGroupsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

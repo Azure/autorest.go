@@ -62,23 +62,36 @@ func (p *PathItemsServerTransport) Do(req *http.Request) (*http.Response, error)
 }
 
 func (p *PathItemsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PathItemsClient.GetAllWithValues":
-		resp, err = p.dispatchGetAllWithValues(req)
-	case "PathItemsClient.GetGlobalAndLocalQueryNull":
-		resp, err = p.dispatchGetGlobalAndLocalQueryNull(req)
-	case "PathItemsClient.GetGlobalQueryNull":
-		resp, err = p.dispatchGetGlobalQueryNull(req)
-	case "PathItemsClient.GetLocalPathItemQueryNull":
-		resp, err = p.dispatchGetLocalPathItemQueryNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PathItemsClient.GetAllWithValues":
+			res.resp, res.err = p.dispatchGetAllWithValues(req)
+		case "PathItemsClient.GetGlobalAndLocalQueryNull":
+			res.resp, res.err = p.dispatchGetGlobalAndLocalQueryNull(req)
+		case "PathItemsClient.GetGlobalQueryNull":
+			res.resp, res.err = p.dispatchGetGlobalQueryNull(req)
+		case "PathItemsClient.GetLocalPathItemQueryNull":
+			res.resp, res.err = p.dispatchGetLocalPathItemQueryNull(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PathItemsServerTransport) dispatchGetAllWithValues(req *http.Request) (*http.Response, error) {

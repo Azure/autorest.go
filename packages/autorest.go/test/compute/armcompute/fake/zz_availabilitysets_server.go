@@ -83,29 +83,42 @@ func (a *AvailabilitySetsServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (a *AvailabilitySetsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AvailabilitySetsClient.CreateOrUpdate":
-		resp, err = a.dispatchCreateOrUpdate(req)
-	case "AvailabilitySetsClient.Delete":
-		resp, err = a.dispatchDelete(req)
-	case "AvailabilitySetsClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AvailabilitySetsClient.NewListPager":
-		resp, err = a.dispatchNewListPager(req)
-	case "AvailabilitySetsClient.NewListAvailableSizesPager":
-		resp, err = a.dispatchNewListAvailableSizesPager(req)
-	case "AvailabilitySetsClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AvailabilitySetsClient.Update":
-		resp, err = a.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AvailabilitySetsClient.CreateOrUpdate":
+			res.resp, res.err = a.dispatchCreateOrUpdate(req)
+		case "AvailabilitySetsClient.Delete":
+			res.resp, res.err = a.dispatchDelete(req)
+		case "AvailabilitySetsClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AvailabilitySetsClient.NewListPager":
+			res.resp, res.err = a.dispatchNewListPager(req)
+		case "AvailabilitySetsClient.NewListAvailableSizesPager":
+			res.resp, res.err = a.dispatchNewListAvailableSizesPager(req)
+		case "AvailabilitySetsClient.NewListBySubscriptionPager":
+			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+		case "AvailabilitySetsClient.Update":
+			res.resp, res.err = a.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AvailabilitySetsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

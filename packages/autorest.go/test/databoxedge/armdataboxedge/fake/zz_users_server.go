@@ -71,23 +71,36 @@ func (u *UsersServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (u *UsersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "UsersClient.BeginCreateOrUpdate":
-		resp, err = u.dispatchBeginCreateOrUpdate(req)
-	case "UsersClient.BeginDelete":
-		resp, err = u.dispatchBeginDelete(req)
-	case "UsersClient.Get":
-		resp, err = u.dispatchGet(req)
-	case "UsersClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = u.dispatchNewListByDataBoxEdgeDevicePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "UsersClient.BeginCreateOrUpdate":
+			res.resp, res.err = u.dispatchBeginCreateOrUpdate(req)
+		case "UsersClient.BeginDelete":
+			res.resp, res.err = u.dispatchBeginDelete(req)
+		case "UsersClient.Get":
+			res.resp, res.err = u.dispatchGet(req)
+		case "UsersClient.NewListByDataBoxEdgeDevicePager":
+			res.resp, res.err = u.dispatchNewListByDataBoxEdgeDevicePager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (u *UsersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -55,21 +55,34 @@ func (t *TwoOperationGroupGroup1ServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (t *TwoOperationGroupGroup1ServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "TwoOperationGroupGroup1Client.Four":
-		resp, err = t.dispatchFour(req)
-	case "TwoOperationGroupGroup1Client.One":
-		resp, err = t.dispatchOne(req)
-	case "TwoOperationGroupGroup1Client.Three":
-		resp, err = t.dispatchThree(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "TwoOperationGroupGroup1Client.Four":
+			res.resp, res.err = t.dispatchFour(req)
+		case "TwoOperationGroupGroup1Client.One":
+			res.resp, res.err = t.dispatchOne(req)
+		case "TwoOperationGroupGroup1Client.Three":
+			res.resp, res.err = t.dispatchThree(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (t *TwoOperationGroupGroup1ServerTransport) dispatchFour(req *http.Request) (*http.Response, error) {

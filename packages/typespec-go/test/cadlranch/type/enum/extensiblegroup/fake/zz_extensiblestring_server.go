@@ -59,23 +59,36 @@ func (e *ExtensibleStringServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (e *ExtensibleStringServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExtensibleStringClient.GetKnownValue":
-		resp, err = e.dispatchGetKnownValue(req)
-	case "ExtensibleStringClient.GetUnknownValue":
-		resp, err = e.dispatchGetUnknownValue(req)
-	case "ExtensibleStringClient.PutKnownValue":
-		resp, err = e.dispatchPutKnownValue(req)
-	case "ExtensibleStringClient.PutUnknownValue":
-		resp, err = e.dispatchPutUnknownValue(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExtensibleStringClient.GetKnownValue":
+			res.resp, res.err = e.dispatchGetKnownValue(req)
+		case "ExtensibleStringClient.GetUnknownValue":
+			res.resp, res.err = e.dispatchGetUnknownValue(req)
+		case "ExtensibleStringClient.PutKnownValue":
+			res.resp, res.err = e.dispatchPutKnownValue(req)
+		case "ExtensibleStringClient.PutUnknownValue":
+			res.resp, res.err = e.dispatchPutUnknownValue(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExtensibleStringServerTransport) dispatchGetKnownValue(req *http.Request) (*http.Response, error) {

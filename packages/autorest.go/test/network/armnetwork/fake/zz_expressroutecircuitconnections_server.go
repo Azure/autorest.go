@@ -71,23 +71,36 @@ func (e *ExpressRouteCircuitConnectionsServerTransport) Do(req *http.Request) (*
 }
 
 func (e *ExpressRouteCircuitConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRouteCircuitConnectionsClient.BeginCreateOrUpdate":
-		resp, err = e.dispatchBeginCreateOrUpdate(req)
-	case "ExpressRouteCircuitConnectionsClient.BeginDelete":
-		resp, err = e.dispatchBeginDelete(req)
-	case "ExpressRouteCircuitConnectionsClient.Get":
-		resp, err = e.dispatchGet(req)
-	case "ExpressRouteCircuitConnectionsClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteCircuitConnectionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+		case "ExpressRouteCircuitConnectionsClient.BeginDelete":
+			res.resp, res.err = e.dispatchBeginDelete(req)
+		case "ExpressRouteCircuitConnectionsClient.Get":
+			res.resp, res.err = e.dispatchGet(req)
+		case "ExpressRouteCircuitConnectionsClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteCircuitConnectionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

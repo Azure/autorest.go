@@ -9,6 +9,11 @@ import (
 	"reflect"
 )
 
+type result struct {
+	resp *http.Response
+	err  error
+}
+
 type nonRetriableError struct {
 	error
 }

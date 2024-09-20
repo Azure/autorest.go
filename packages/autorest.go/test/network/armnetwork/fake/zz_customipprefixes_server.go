@@ -81,27 +81,40 @@ func (c *CustomIPPrefixesServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (c *CustomIPPrefixesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CustomIPPrefixesClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "CustomIPPrefixesClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CustomIPPrefixesClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CustomIPPrefixesClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	case "CustomIPPrefixesClient.NewListAllPager":
-		resp, err = c.dispatchNewListAllPager(req)
-	case "CustomIPPrefixesClient.UpdateTags":
-		resp, err = c.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CustomIPPrefixesClient.BeginCreateOrUpdate":
+			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+		case "CustomIPPrefixesClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "CustomIPPrefixesClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "CustomIPPrefixesClient.NewListPager":
+			res.resp, res.err = c.dispatchNewListPager(req)
+		case "CustomIPPrefixesClient.NewListAllPager":
+			res.resp, res.err = c.dispatchNewListAllPager(req)
+		case "CustomIPPrefixesClient.UpdateTags":
+			res.resp, res.err = c.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CustomIPPrefixesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

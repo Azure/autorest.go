@@ -87,29 +87,42 @@ func (v *VirtualMachineRunCommandsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (v *VirtualMachineRunCommandsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineRunCommandsClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualMachineRunCommandsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualMachineRunCommandsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineRunCommandsClient.GetByVirtualMachine":
-		resp, err = v.dispatchGetByVirtualMachine(req)
-	case "VirtualMachineRunCommandsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualMachineRunCommandsClient.NewListByVirtualMachinePager":
-		resp, err = v.dispatchNewListByVirtualMachinePager(req)
-	case "VirtualMachineRunCommandsClient.BeginUpdate":
-		resp, err = v.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineRunCommandsClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualMachineRunCommandsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualMachineRunCommandsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualMachineRunCommandsClient.GetByVirtualMachine":
+			res.resp, res.err = v.dispatchGetByVirtualMachine(req)
+		case "VirtualMachineRunCommandsClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualMachineRunCommandsClient.NewListByVirtualMachinePager":
+			res.resp, res.err = v.dispatchNewListByVirtualMachinePager(req)
+		case "VirtualMachineRunCommandsClient.BeginUpdate":
+			res.resp, res.err = v.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineRunCommandsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -124,41 +124,54 @@ func (c *CloudServicesServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (c *CloudServicesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "CloudServicesClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "CloudServicesClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "CloudServicesClient.BeginDeleteInstances":
-		resp, err = c.dispatchBeginDeleteInstances(req)
-	case "CloudServicesClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "CloudServicesClient.GetInstanceView":
-		resp, err = c.dispatchGetInstanceView(req)
-	case "CloudServicesClient.NewListPager":
-		resp, err = c.dispatchNewListPager(req)
-	case "CloudServicesClient.NewListAllPager":
-		resp, err = c.dispatchNewListAllPager(req)
-	case "CloudServicesClient.BeginPowerOff":
-		resp, err = c.dispatchBeginPowerOff(req)
-	case "CloudServicesClient.BeginRebuild":
-		resp, err = c.dispatchBeginRebuild(req)
-	case "CloudServicesClient.BeginReimage":
-		resp, err = c.dispatchBeginReimage(req)
-	case "CloudServicesClient.BeginRestart":
-		resp, err = c.dispatchBeginRestart(req)
-	case "CloudServicesClient.BeginStart":
-		resp, err = c.dispatchBeginStart(req)
-	case "CloudServicesClient.BeginUpdate":
-		resp, err = c.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "CloudServicesClient.BeginCreateOrUpdate":
+			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+		case "CloudServicesClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "CloudServicesClient.BeginDeleteInstances":
+			res.resp, res.err = c.dispatchBeginDeleteInstances(req)
+		case "CloudServicesClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "CloudServicesClient.GetInstanceView":
+			res.resp, res.err = c.dispatchGetInstanceView(req)
+		case "CloudServicesClient.NewListPager":
+			res.resp, res.err = c.dispatchNewListPager(req)
+		case "CloudServicesClient.NewListAllPager":
+			res.resp, res.err = c.dispatchNewListAllPager(req)
+		case "CloudServicesClient.BeginPowerOff":
+			res.resp, res.err = c.dispatchBeginPowerOff(req)
+		case "CloudServicesClient.BeginRebuild":
+			res.resp, res.err = c.dispatchBeginRebuild(req)
+		case "CloudServicesClient.BeginReimage":
+			res.resp, res.err = c.dispatchBeginReimage(req)
+		case "CloudServicesClient.BeginRestart":
+			res.resp, res.err = c.dispatchBeginRestart(req)
+		case "CloudServicesClient.BeginStart":
+			res.resp, res.err = c.dispatchBeginStart(req)
+		case "CloudServicesClient.BeginUpdate":
+			res.resp, res.err = c.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *CloudServicesServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

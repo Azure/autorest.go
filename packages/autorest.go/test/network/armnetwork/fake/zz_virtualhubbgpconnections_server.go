@@ -67,21 +67,34 @@ func (v *VirtualHubBgpConnectionsServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (v *VirtualHubBgpConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualHubBgpConnectionsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes":
-		resp, err = v.dispatchBeginListAdvertisedRoutes(req)
-	case "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes":
-		resp, err = v.dispatchBeginListLearnedRoutes(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualHubBgpConnectionsClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes":
+			res.resp, res.err = v.dispatchBeginListAdvertisedRoutes(req)
+		case "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes":
+			res.resp, res.err = v.dispatchBeginListLearnedRoutes(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualHubBgpConnectionsServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {

@@ -176,59 +176,72 @@ func (v *VirtualNetworkGatewaysServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (v *VirtualNetworkGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualNetworkGatewaysClient.BeginCreateOrUpdate":
-		resp, err = v.dispatchBeginCreateOrUpdate(req)
-	case "VirtualNetworkGatewaysClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections":
-		resp, err = v.dispatchBeginDisconnectVirtualNetworkGatewayVPNConnections(req)
-	case "VirtualNetworkGatewaysClient.BeginGenerateVPNProfile":
-		resp, err = v.dispatchBeginGenerateVPNProfile(req)
-	case "VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage":
-		resp, err = v.dispatchBeginGeneratevpnclientpackage(req)
-	case "VirtualNetworkGatewaysClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes":
-		resp, err = v.dispatchBeginGetAdvertisedRoutes(req)
-	case "VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus":
-		resp, err = v.dispatchBeginGetBgpPeerStatus(req)
-	case "VirtualNetworkGatewaysClient.BeginGetLearnedRoutes":
-		resp, err = v.dispatchBeginGetLearnedRoutes(req)
-	case "VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL":
-		resp, err = v.dispatchBeginGetVPNProfilePackageURL(req)
-	case "VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth":
-		resp, err = v.dispatchBeginGetVpnclientConnectionHealth(req)
-	case "VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters":
-		resp, err = v.dispatchBeginGetVpnclientIPSecParameters(req)
-	case "VirtualNetworkGatewaysClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualNetworkGatewaysClient.NewListConnectionsPager":
-		resp, err = v.dispatchNewListConnectionsPager(req)
-	case "VirtualNetworkGatewaysClient.BeginReset":
-		resp, err = v.dispatchBeginReset(req)
-	case "VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey":
-		resp, err = v.dispatchBeginResetVPNClientSharedKey(req)
-	case "VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters":
-		resp, err = v.dispatchBeginSetVpnclientIPSecParameters(req)
-	case "VirtualNetworkGatewaysClient.BeginStartPacketCapture":
-		resp, err = v.dispatchBeginStartPacketCapture(req)
-	case "VirtualNetworkGatewaysClient.BeginStopPacketCapture":
-		resp, err = v.dispatchBeginStopPacketCapture(req)
-	case "VirtualNetworkGatewaysClient.SupportedVPNDevices":
-		resp, err = v.dispatchSupportedVPNDevices(req)
-	case "VirtualNetworkGatewaysClient.BeginUpdateTags":
-		resp, err = v.dispatchBeginUpdateTags(req)
-	case "VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript":
-		resp, err = v.dispatchVPNDeviceConfigurationScript(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualNetworkGatewaysClient.BeginCreateOrUpdate":
+			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+		case "VirtualNetworkGatewaysClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections":
+			res.resp, res.err = v.dispatchBeginDisconnectVirtualNetworkGatewayVPNConnections(req)
+		case "VirtualNetworkGatewaysClient.BeginGenerateVPNProfile":
+			res.resp, res.err = v.dispatchBeginGenerateVPNProfile(req)
+		case "VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage":
+			res.resp, res.err = v.dispatchBeginGeneratevpnclientpackage(req)
+		case "VirtualNetworkGatewaysClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes":
+			res.resp, res.err = v.dispatchBeginGetAdvertisedRoutes(req)
+		case "VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus":
+			res.resp, res.err = v.dispatchBeginGetBgpPeerStatus(req)
+		case "VirtualNetworkGatewaysClient.BeginGetLearnedRoutes":
+			res.resp, res.err = v.dispatchBeginGetLearnedRoutes(req)
+		case "VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL":
+			res.resp, res.err = v.dispatchBeginGetVPNProfilePackageURL(req)
+		case "VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth":
+			res.resp, res.err = v.dispatchBeginGetVpnclientConnectionHealth(req)
+		case "VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters":
+			res.resp, res.err = v.dispatchBeginGetVpnclientIPSecParameters(req)
+		case "VirtualNetworkGatewaysClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualNetworkGatewaysClient.NewListConnectionsPager":
+			res.resp, res.err = v.dispatchNewListConnectionsPager(req)
+		case "VirtualNetworkGatewaysClient.BeginReset":
+			res.resp, res.err = v.dispatchBeginReset(req)
+		case "VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey":
+			res.resp, res.err = v.dispatchBeginResetVPNClientSharedKey(req)
+		case "VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters":
+			res.resp, res.err = v.dispatchBeginSetVpnclientIPSecParameters(req)
+		case "VirtualNetworkGatewaysClient.BeginStartPacketCapture":
+			res.resp, res.err = v.dispatchBeginStartPacketCapture(req)
+		case "VirtualNetworkGatewaysClient.BeginStopPacketCapture":
+			res.resp, res.err = v.dispatchBeginStopPacketCapture(req)
+		case "VirtualNetworkGatewaysClient.SupportedVPNDevices":
+			res.resp, res.err = v.dispatchSupportedVPNDevices(req)
+		case "VirtualNetworkGatewaysClient.BeginUpdateTags":
+			res.resp, res.err = v.dispatchBeginUpdateTags(req)
+		case "VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript":
+			res.resp, res.err = v.dispatchVPNDeviceConfigurationScript(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

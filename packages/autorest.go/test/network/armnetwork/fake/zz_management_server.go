@@ -114,41 +114,54 @@ func (m *ManagementServerTransport) Do(req *http.Request) (*http.Response, error
 }
 
 func (m *ManagementServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagementClient.CheckDNSNameAvailability":
-		resp, err = m.dispatchCheckDNSNameAvailability(req)
-	case "ManagementClient.BeginDeleteBastionShareableLink":
-		resp, err = m.dispatchBeginDeleteBastionShareableLink(req)
-	case "ManagementClient.NewDisconnectActiveSessionsPager":
-		resp, err = m.dispatchNewDisconnectActiveSessionsPager(req)
-	case "ManagementClient.ExpressRouteProviderPort":
-		resp, err = m.dispatchExpressRouteProviderPort(req)
-	case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
-		resp, err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
-	case "ManagementClient.BeginGetActiveSessions":
-		resp, err = m.dispatchBeginGetActiveSessions(req)
-	case "ManagementClient.NewGetBastionShareableLinkPager":
-		resp, err = m.dispatchNewGetBastionShareableLinkPager(req)
-	case "ManagementClient.ListActiveConnectivityConfigurations":
-		resp, err = m.dispatchListActiveConnectivityConfigurations(req)
-	case "ManagementClient.ListActiveSecurityAdminRules":
-		resp, err = m.dispatchListActiveSecurityAdminRules(req)
-	case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
-		resp, err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
-	case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
-		resp, err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
-	case "ManagementClient.BeginPutBastionShareableLink":
-		resp, err = m.dispatchBeginPutBastionShareableLink(req)
-	case "ManagementClient.SupportedSecurityProviders":
-		resp, err = m.dispatchSupportedSecurityProviders(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ManagementClient.CheckDNSNameAvailability":
+			res.resp, res.err = m.dispatchCheckDNSNameAvailability(req)
+		case "ManagementClient.BeginDeleteBastionShareableLink":
+			res.resp, res.err = m.dispatchBeginDeleteBastionShareableLink(req)
+		case "ManagementClient.NewDisconnectActiveSessionsPager":
+			res.resp, res.err = m.dispatchNewDisconnectActiveSessionsPager(req)
+		case "ManagementClient.ExpressRouteProviderPort":
+			res.resp, res.err = m.dispatchExpressRouteProviderPort(req)
+		case "ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile":
+			res.resp, res.err = m.dispatchBeginGeneratevirtualwanvpnserverconfigurationvpnprofile(req)
+		case "ManagementClient.BeginGetActiveSessions":
+			res.resp, res.err = m.dispatchBeginGetActiveSessions(req)
+		case "ManagementClient.NewGetBastionShareableLinkPager":
+			res.resp, res.err = m.dispatchNewGetBastionShareableLinkPager(req)
+		case "ManagementClient.ListActiveConnectivityConfigurations":
+			res.resp, res.err = m.dispatchListActiveConnectivityConfigurations(req)
+		case "ManagementClient.ListActiveSecurityAdminRules":
+			res.resp, res.err = m.dispatchListActiveSecurityAdminRules(req)
+		case "ManagementClient.ListNetworkManagerEffectiveConnectivityConfigurations":
+			res.resp, res.err = m.dispatchListNetworkManagerEffectiveConnectivityConfigurations(req)
+		case "ManagementClient.ListNetworkManagerEffectiveSecurityAdminRules":
+			res.resp, res.err = m.dispatchListNetworkManagerEffectiveSecurityAdminRules(req)
+		case "ManagementClient.BeginPutBastionShareableLink":
+			res.resp, res.err = m.dispatchBeginPutBastionShareableLink(req)
+		case "ManagementClient.SupportedSecurityProviders":
+			res.resp, res.err = m.dispatchSupportedSecurityProviders(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagementServerTransport) dispatchCheckDNSNameAvailability(req *http.Request) (*http.Response, error) {

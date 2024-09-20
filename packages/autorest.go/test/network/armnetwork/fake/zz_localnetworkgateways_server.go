@@ -75,25 +75,38 @@ func (l *LocalNetworkGatewaysServerTransport) Do(req *http.Request) (*http.Respo
 }
 
 func (l *LocalNetworkGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LocalNetworkGatewaysClient.BeginCreateOrUpdate":
-		resp, err = l.dispatchBeginCreateOrUpdate(req)
-	case "LocalNetworkGatewaysClient.BeginDelete":
-		resp, err = l.dispatchBeginDelete(req)
-	case "LocalNetworkGatewaysClient.Get":
-		resp, err = l.dispatchGet(req)
-	case "LocalNetworkGatewaysClient.NewListPager":
-		resp, err = l.dispatchNewListPager(req)
-	case "LocalNetworkGatewaysClient.UpdateTags":
-		resp, err = l.dispatchUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LocalNetworkGatewaysClient.BeginCreateOrUpdate":
+			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+		case "LocalNetworkGatewaysClient.BeginDelete":
+			res.resp, res.err = l.dispatchBeginDelete(req)
+		case "LocalNetworkGatewaysClient.Get":
+			res.resp, res.err = l.dispatchGet(req)
+		case "LocalNetworkGatewaysClient.NewListPager":
+			res.resp, res.err = l.dispatchNewListPager(req)
+		case "LocalNetworkGatewaysClient.UpdateTags":
+			res.resp, res.err = l.dispatchUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LocalNetworkGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -57,21 +57,34 @@ func (q *QueriesServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (q *QueriesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "QueriesClient.ArrayStringMultiEmpty":
-		resp, err = q.dispatchArrayStringMultiEmpty(req)
-	case "QueriesClient.ArrayStringMultiNull":
-		resp, err = q.dispatchArrayStringMultiNull(req)
-	case "QueriesClient.ArrayStringMultiValid":
-		resp, err = q.dispatchArrayStringMultiValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "QueriesClient.ArrayStringMultiEmpty":
+			res.resp, res.err = q.dispatchArrayStringMultiEmpty(req)
+		case "QueriesClient.ArrayStringMultiNull":
+			res.resp, res.err = q.dispatchArrayStringMultiNull(req)
+		case "QueriesClient.ArrayStringMultiValid":
+			res.resp, res.err = q.dispatchArrayStringMultiValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (q *QueriesServerTransport) dispatchArrayStringMultiEmpty(req *http.Request) (*http.Response, error) {

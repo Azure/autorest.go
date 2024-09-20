@@ -55,21 +55,34 @@ func (r *RenamedOperationGroupServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (r *RenamedOperationGroupServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RenamedOperationGroupClient.RenamedFour":
-		resp, err = r.dispatchRenamedFour(req)
-	case "RenamedOperationGroupClient.RenamedSix":
-		resp, err = r.dispatchRenamedSix(req)
-	case "RenamedOperationGroupClient.RenamedTwo":
-		resp, err = r.dispatchRenamedTwo(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RenamedOperationGroupClient.RenamedFour":
+			res.resp, res.err = r.dispatchRenamedFour(req)
+		case "RenamedOperationGroupClient.RenamedSix":
+			res.resp, res.err = r.dispatchRenamedSix(req)
+		case "RenamedOperationGroupClient.RenamedTwo":
+			res.resp, res.err = r.dispatchRenamedTwo(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RenamedOperationGroupServerTransport) dispatchRenamedFour(req *http.Request) (*http.Response, error) {

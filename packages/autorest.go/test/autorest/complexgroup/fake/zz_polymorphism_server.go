@@ -80,33 +80,46 @@ func (p *PolymorphismServerTransport) Do(req *http.Request) (*http.Response, err
 }
 
 func (p *PolymorphismServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PolymorphismClient.GetComplicated":
-		resp, err = p.dispatchGetComplicated(req)
-	case "PolymorphismClient.GetComposedWithDiscriminator":
-		resp, err = p.dispatchGetComposedWithDiscriminator(req)
-	case "PolymorphismClient.GetComposedWithoutDiscriminator":
-		resp, err = p.dispatchGetComposedWithoutDiscriminator(req)
-	case "PolymorphismClient.GetDotSyntax":
-		resp, err = p.dispatchGetDotSyntax(req)
-	case "PolymorphismClient.GetValid":
-		resp, err = p.dispatchGetValid(req)
-	case "PolymorphismClient.PutComplicated":
-		resp, err = p.dispatchPutComplicated(req)
-	case "PolymorphismClient.PutMissingDiscriminator":
-		resp, err = p.dispatchPutMissingDiscriminator(req)
-	case "PolymorphismClient.PutValid":
-		resp, err = p.dispatchPutValid(req)
-	case "PolymorphismClient.PutValidMissingRequired":
-		resp, err = p.dispatchPutValidMissingRequired(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PolymorphismClient.GetComplicated":
+			res.resp, res.err = p.dispatchGetComplicated(req)
+		case "PolymorphismClient.GetComposedWithDiscriminator":
+			res.resp, res.err = p.dispatchGetComposedWithDiscriminator(req)
+		case "PolymorphismClient.GetComposedWithoutDiscriminator":
+			res.resp, res.err = p.dispatchGetComposedWithoutDiscriminator(req)
+		case "PolymorphismClient.GetDotSyntax":
+			res.resp, res.err = p.dispatchGetDotSyntax(req)
+		case "PolymorphismClient.GetValid":
+			res.resp, res.err = p.dispatchGetValid(req)
+		case "PolymorphismClient.PutComplicated":
+			res.resp, res.err = p.dispatchPutComplicated(req)
+		case "PolymorphismClient.PutMissingDiscriminator":
+			res.resp, res.err = p.dispatchPutMissingDiscriminator(req)
+		case "PolymorphismClient.PutValid":
+			res.resp, res.err = p.dispatchPutValid(req)
+		case "PolymorphismClient.PutValidMissingRequired":
+			res.resp, res.err = p.dispatchPutValidMissingRequired(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PolymorphismServerTransport) dispatchGetComplicated(req *http.Request) (*http.Response, error) {

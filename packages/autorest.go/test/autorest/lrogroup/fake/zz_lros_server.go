@@ -311,103 +311,116 @@ func (l *LROsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (l *LROsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "LROsClient.BeginDelete202NoRetry204":
-		resp, err = l.dispatchBeginDelete202NoRetry204(req)
-	case "LROsClient.BeginDelete202Retry200":
-		resp, err = l.dispatchBeginDelete202Retry200(req)
-	case "LROsClient.BeginDelete204Succeeded":
-		resp, err = l.dispatchBeginDelete204Succeeded(req)
-	case "LROsClient.BeginDeleteAsyncNoHeaderInRetry":
-		resp, err = l.dispatchBeginDeleteAsyncNoHeaderInRetry(req)
-	case "LROsClient.BeginDeleteAsyncNoRetrySucceeded":
-		resp, err = l.dispatchBeginDeleteAsyncNoRetrySucceeded(req)
-	case "LROsClient.BeginDeleteAsyncRetryFailed":
-		resp, err = l.dispatchBeginDeleteAsyncRetryFailed(req)
-	case "LROsClient.BeginDeleteAsyncRetrySucceeded":
-		resp, err = l.dispatchBeginDeleteAsyncRetrySucceeded(req)
-	case "LROsClient.BeginDeleteAsyncRetrycanceled":
-		resp, err = l.dispatchBeginDeleteAsyncRetrycanceled(req)
-	case "LROsClient.BeginDeleteNoHeaderInRetry":
-		resp, err = l.dispatchBeginDeleteNoHeaderInRetry(req)
-	case "LROsClient.BeginDeleteProvisioning202Accepted200Succeeded":
-		resp, err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
-	case "LROsClient.BeginDeleteProvisioning202DeletingFailed200":
-		resp, err = l.dispatchBeginDeleteProvisioning202DeletingFailed200(req)
-	case "LROsClient.BeginDeleteProvisioning202Deletingcanceled200":
-		resp, err = l.dispatchBeginDeleteProvisioning202Deletingcanceled200(req)
-	case "LROsClient.BeginPatch200SucceededIgnoreHeaders":
-		resp, err = l.dispatchBeginPatch200SucceededIgnoreHeaders(req)
-	case "LROsClient.BeginPatch201RetryWithAsyncHeader":
-		resp, err = l.dispatchBeginPatch201RetryWithAsyncHeader(req)
-	case "LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader":
-		resp, err = l.dispatchBeginPatch202RetryWithAsyncAndLocationHeader(req)
-	case "LROsClient.BeginPost200WithPayload":
-		resp, err = l.dispatchBeginPost200WithPayload(req)
-	case "LROsClient.BeginPost202List":
-		resp, err = l.dispatchBeginPost202List(req)
-	case "LROsClient.BeginPost202NoRetry204":
-		resp, err = l.dispatchBeginPost202NoRetry204(req)
-	case "LROsClient.BeginPost202Retry200":
-		resp, err = l.dispatchBeginPost202Retry200(req)
-	case "LROsClient.BeginPostAsyncNoRetrySucceeded":
-		resp, err = l.dispatchBeginPostAsyncNoRetrySucceeded(req)
-	case "LROsClient.BeginPostAsyncRetryFailed":
-		resp, err = l.dispatchBeginPostAsyncRetryFailed(req)
-	case "LROsClient.BeginPostAsyncRetrySucceeded":
-		resp, err = l.dispatchBeginPostAsyncRetrySucceeded(req)
-	case "LROsClient.BeginPostAsyncRetrycanceled":
-		resp, err = l.dispatchBeginPostAsyncRetrycanceled(req)
-	case "LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGet":
-		resp, err = l.dispatchBeginPostDoubleHeadersFinalAzureHeaderGet(req)
-	case "LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGetDefault":
-		resp, err = l.dispatchBeginPostDoubleHeadersFinalAzureHeaderGetDefault(req)
-	case "LROsClient.BeginPostDoubleHeadersFinalLocationGet":
-		resp, err = l.dispatchBeginPostDoubleHeadersFinalLocationGet(req)
-	case "LROsClient.BeginPut200Acceptedcanceled200":
-		resp, err = l.dispatchBeginPut200Acceptedcanceled200(req)
-	case "LROsClient.BeginPut200Succeeded":
-		resp, err = l.dispatchBeginPut200Succeeded(req)
-	case "LROsClient.BeginPut200SucceededNoState":
-		resp, err = l.dispatchBeginPut200SucceededNoState(req)
-	case "LROsClient.BeginPut200UpdatingSucceeded204":
-		resp, err = l.dispatchBeginPut200UpdatingSucceeded204(req)
-	case "LROsClient.BeginPut201CreatingFailed200":
-		resp, err = l.dispatchBeginPut201CreatingFailed200(req)
-	case "LROsClient.BeginPut201CreatingSucceeded200":
-		resp, err = l.dispatchBeginPut201CreatingSucceeded200(req)
-	case "LROsClient.BeginPut201Succeeded":
-		resp, err = l.dispatchBeginPut201Succeeded(req)
-	case "LROsClient.BeginPut202Retry200":
-		resp, err = l.dispatchBeginPut202Retry200(req)
-	case "LROsClient.BeginPutAsyncNoHeaderInRetry":
-		resp, err = l.dispatchBeginPutAsyncNoHeaderInRetry(req)
-	case "LROsClient.BeginPutAsyncNoRetrySucceeded":
-		resp, err = l.dispatchBeginPutAsyncNoRetrySucceeded(req)
-	case "LROsClient.BeginPutAsyncNoRetrycanceled":
-		resp, err = l.dispatchBeginPutAsyncNoRetrycanceled(req)
-	case "LROsClient.BeginPutAsyncNonResource":
-		resp, err = l.dispatchBeginPutAsyncNonResource(req)
-	case "LROsClient.BeginPutAsyncRetryFailed":
-		resp, err = l.dispatchBeginPutAsyncRetryFailed(req)
-	case "LROsClient.BeginPutAsyncRetrySucceeded":
-		resp, err = l.dispatchBeginPutAsyncRetrySucceeded(req)
-	case "LROsClient.BeginPutAsyncSubResource":
-		resp, err = l.dispatchBeginPutAsyncSubResource(req)
-	case "LROsClient.BeginPutNoHeaderInRetry":
-		resp, err = l.dispatchBeginPutNoHeaderInRetry(req)
-	case "LROsClient.BeginPutNonResource":
-		resp, err = l.dispatchBeginPutNonResource(req)
-	case "LROsClient.BeginPutSubResource":
-		resp, err = l.dispatchBeginPutSubResource(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "LROsClient.BeginDelete202NoRetry204":
+			res.resp, res.err = l.dispatchBeginDelete202NoRetry204(req)
+		case "LROsClient.BeginDelete202Retry200":
+			res.resp, res.err = l.dispatchBeginDelete202Retry200(req)
+		case "LROsClient.BeginDelete204Succeeded":
+			res.resp, res.err = l.dispatchBeginDelete204Succeeded(req)
+		case "LROsClient.BeginDeleteAsyncNoHeaderInRetry":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncNoHeaderInRetry(req)
+		case "LROsClient.BeginDeleteAsyncNoRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncNoRetrySucceeded(req)
+		case "LROsClient.BeginDeleteAsyncRetryFailed":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRetryFailed(req)
+		case "LROsClient.BeginDeleteAsyncRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRetrySucceeded(req)
+		case "LROsClient.BeginDeleteAsyncRetrycanceled":
+			res.resp, res.err = l.dispatchBeginDeleteAsyncRetrycanceled(req)
+		case "LROsClient.BeginDeleteNoHeaderInRetry":
+			res.resp, res.err = l.dispatchBeginDeleteNoHeaderInRetry(req)
+		case "LROsClient.BeginDeleteProvisioning202Accepted200Succeeded":
+			res.resp, res.err = l.dispatchBeginDeleteProvisioning202Accepted200Succeeded(req)
+		case "LROsClient.BeginDeleteProvisioning202DeletingFailed200":
+			res.resp, res.err = l.dispatchBeginDeleteProvisioning202DeletingFailed200(req)
+		case "LROsClient.BeginDeleteProvisioning202Deletingcanceled200":
+			res.resp, res.err = l.dispatchBeginDeleteProvisioning202Deletingcanceled200(req)
+		case "LROsClient.BeginPatch200SucceededIgnoreHeaders":
+			res.resp, res.err = l.dispatchBeginPatch200SucceededIgnoreHeaders(req)
+		case "LROsClient.BeginPatch201RetryWithAsyncHeader":
+			res.resp, res.err = l.dispatchBeginPatch201RetryWithAsyncHeader(req)
+		case "LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader":
+			res.resp, res.err = l.dispatchBeginPatch202RetryWithAsyncAndLocationHeader(req)
+		case "LROsClient.BeginPost200WithPayload":
+			res.resp, res.err = l.dispatchBeginPost200WithPayload(req)
+		case "LROsClient.BeginPost202List":
+			res.resp, res.err = l.dispatchBeginPost202List(req)
+		case "LROsClient.BeginPost202NoRetry204":
+			res.resp, res.err = l.dispatchBeginPost202NoRetry204(req)
+		case "LROsClient.BeginPost202Retry200":
+			res.resp, res.err = l.dispatchBeginPost202Retry200(req)
+		case "LROsClient.BeginPostAsyncNoRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPostAsyncNoRetrySucceeded(req)
+		case "LROsClient.BeginPostAsyncRetryFailed":
+			res.resp, res.err = l.dispatchBeginPostAsyncRetryFailed(req)
+		case "LROsClient.BeginPostAsyncRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPostAsyncRetrySucceeded(req)
+		case "LROsClient.BeginPostAsyncRetrycanceled":
+			res.resp, res.err = l.dispatchBeginPostAsyncRetrycanceled(req)
+		case "LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGet":
+			res.resp, res.err = l.dispatchBeginPostDoubleHeadersFinalAzureHeaderGet(req)
+		case "LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGetDefault":
+			res.resp, res.err = l.dispatchBeginPostDoubleHeadersFinalAzureHeaderGetDefault(req)
+		case "LROsClient.BeginPostDoubleHeadersFinalLocationGet":
+			res.resp, res.err = l.dispatchBeginPostDoubleHeadersFinalLocationGet(req)
+		case "LROsClient.BeginPut200Acceptedcanceled200":
+			res.resp, res.err = l.dispatchBeginPut200Acceptedcanceled200(req)
+		case "LROsClient.BeginPut200Succeeded":
+			res.resp, res.err = l.dispatchBeginPut200Succeeded(req)
+		case "LROsClient.BeginPut200SucceededNoState":
+			res.resp, res.err = l.dispatchBeginPut200SucceededNoState(req)
+		case "LROsClient.BeginPut200UpdatingSucceeded204":
+			res.resp, res.err = l.dispatchBeginPut200UpdatingSucceeded204(req)
+		case "LROsClient.BeginPut201CreatingFailed200":
+			res.resp, res.err = l.dispatchBeginPut201CreatingFailed200(req)
+		case "LROsClient.BeginPut201CreatingSucceeded200":
+			res.resp, res.err = l.dispatchBeginPut201CreatingSucceeded200(req)
+		case "LROsClient.BeginPut201Succeeded":
+			res.resp, res.err = l.dispatchBeginPut201Succeeded(req)
+		case "LROsClient.BeginPut202Retry200":
+			res.resp, res.err = l.dispatchBeginPut202Retry200(req)
+		case "LROsClient.BeginPutAsyncNoHeaderInRetry":
+			res.resp, res.err = l.dispatchBeginPutAsyncNoHeaderInRetry(req)
+		case "LROsClient.BeginPutAsyncNoRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPutAsyncNoRetrySucceeded(req)
+		case "LROsClient.BeginPutAsyncNoRetrycanceled":
+			res.resp, res.err = l.dispatchBeginPutAsyncNoRetrycanceled(req)
+		case "LROsClient.BeginPutAsyncNonResource":
+			res.resp, res.err = l.dispatchBeginPutAsyncNonResource(req)
+		case "LROsClient.BeginPutAsyncRetryFailed":
+			res.resp, res.err = l.dispatchBeginPutAsyncRetryFailed(req)
+		case "LROsClient.BeginPutAsyncRetrySucceeded":
+			res.resp, res.err = l.dispatchBeginPutAsyncRetrySucceeded(req)
+		case "LROsClient.BeginPutAsyncSubResource":
+			res.resp, res.err = l.dispatchBeginPutAsyncSubResource(req)
+		case "LROsClient.BeginPutNoHeaderInRetry":
+			res.resp, res.err = l.dispatchBeginPutNoHeaderInRetry(req)
+		case "LROsClient.BeginPutNonResource":
+			res.resp, res.err = l.dispatchBeginPutNonResource(req)
+		case "LROsClient.BeginPutSubResource":
+			res.resp, res.err = l.dispatchBeginPutSubResource(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (l *LROsServerTransport) dispatchBeginDelete202NoRetry204(req *http.Request) (*http.Response, error) {

@@ -82,27 +82,40 @@ func (p *PoolsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PoolsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PoolsClient.BeginCreateOrUpdate":
-		resp, err = p.dispatchBeginCreateOrUpdate(req)
-	case "PoolsClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "PoolsClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "PoolsClient.NewListByResourceGroupPager":
-		resp, err = p.dispatchNewListByResourceGroupPager(req)
-	case "PoolsClient.NewListBySubscriptionPager":
-		resp, err = p.dispatchNewListBySubscriptionPager(req)
-	case "PoolsClient.BeginUpdate":
-		resp, err = p.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PoolsClient.BeginCreateOrUpdate":
+			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+		case "PoolsClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "PoolsClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "PoolsClient.NewListByResourceGroupPager":
+			res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
+		case "PoolsClient.NewListBySubscriptionPager":
+			res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
+		case "PoolsClient.BeginUpdate":
+			res.resp, res.err = p.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PoolsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

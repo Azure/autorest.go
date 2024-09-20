@@ -65,25 +65,38 @@ func (d *DatetimeHeaderServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (d *DatetimeHeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DatetimeHeaderClient.Default":
-		resp, err = d.dispatchDefault(req)
-	case "DatetimeHeaderClient.RFC3339":
-		resp, err = d.dispatchRFC3339(req)
-	case "DatetimeHeaderClient.RFC7231":
-		resp, err = d.dispatchRFC7231(req)
-	case "DatetimeHeaderClient.UnixTimestamp":
-		resp, err = d.dispatchUnixTimestamp(req)
-	case "DatetimeHeaderClient.UnixTimestampArray":
-		resp, err = d.dispatchUnixTimestampArray(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DatetimeHeaderClient.Default":
+			res.resp, res.err = d.dispatchDefault(req)
+		case "DatetimeHeaderClient.RFC3339":
+			res.resp, res.err = d.dispatchRFC3339(req)
+		case "DatetimeHeaderClient.RFC7231":
+			res.resp, res.err = d.dispatchRFC7231(req)
+		case "DatetimeHeaderClient.UnixTimestamp":
+			res.resp, res.err = d.dispatchUnixTimestamp(req)
+		case "DatetimeHeaderClient.UnixTimestampArray":
+			res.resp, res.err = d.dispatchUnixTimestampArray(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DatetimeHeaderServerTransport) dispatchDefault(req *http.Request) (*http.Response, error) {

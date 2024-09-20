@@ -71,23 +71,36 @@ func (r *RoutingIntentServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (r *RoutingIntentServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "RoutingIntentClient.BeginCreateOrUpdate":
-		resp, err = r.dispatchBeginCreateOrUpdate(req)
-	case "RoutingIntentClient.BeginDelete":
-		resp, err = r.dispatchBeginDelete(req)
-	case "RoutingIntentClient.Get":
-		resp, err = r.dispatchGet(req)
-	case "RoutingIntentClient.NewListPager":
-		resp, err = r.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "RoutingIntentClient.BeginCreateOrUpdate":
+			res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+		case "RoutingIntentClient.BeginDelete":
+			res.resp, res.err = r.dispatchBeginDelete(req)
+		case "RoutingIntentClient.Get":
+			res.resp, res.err = r.dispatchGet(req)
+		case "RoutingIntentClient.NewListPager":
+			res.resp, res.err = r.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (r *RoutingIntentServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

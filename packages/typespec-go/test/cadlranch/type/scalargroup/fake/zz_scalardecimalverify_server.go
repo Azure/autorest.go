@@ -51,19 +51,32 @@ func (s *ScalarDecimalVerifyServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (s *ScalarDecimalVerifyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ScalarDecimalVerifyClient.PrepareVerify":
-		resp, err = s.dispatchPrepareVerify(req)
-	case "ScalarDecimalVerifyClient.Verify":
-		resp, err = s.dispatchVerify(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ScalarDecimalVerifyClient.PrepareVerify":
+			res.resp, res.err = s.dispatchPrepareVerify(req)
+		case "ScalarDecimalVerifyClient.Verify":
+			res.resp, res.err = s.dispatchVerify(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ScalarDecimalVerifyServerTransport) dispatchPrepareVerify(req *http.Request) (*http.Response, error) {

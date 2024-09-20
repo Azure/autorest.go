@@ -139,47 +139,60 @@ func (v *VirtualMachineScaleSetVMsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (v *VirtualMachineScaleSetVMsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineScaleSetVMsClient.BeginDeallocate":
-		resp, err = v.dispatchBeginDeallocate(req)
-	case "VirtualMachineScaleSetVMsClient.BeginDelete":
-		resp, err = v.dispatchBeginDelete(req)
-	case "VirtualMachineScaleSetVMsClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineScaleSetVMsClient.GetInstanceView":
-		resp, err = v.dispatchGetInstanceView(req)
-	case "VirtualMachineScaleSetVMsClient.NewListPager":
-		resp, err = v.dispatchNewListPager(req)
-	case "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance":
-		resp, err = v.dispatchBeginPerformMaintenance(req)
-	case "VirtualMachineScaleSetVMsClient.BeginPowerOff":
-		resp, err = v.dispatchBeginPowerOff(req)
-	case "VirtualMachineScaleSetVMsClient.BeginRedeploy":
-		resp, err = v.dispatchBeginRedeploy(req)
-	case "VirtualMachineScaleSetVMsClient.BeginReimage":
-		resp, err = v.dispatchBeginReimage(req)
-	case "VirtualMachineScaleSetVMsClient.BeginReimageAll":
-		resp, err = v.dispatchBeginReimageAll(req)
-	case "VirtualMachineScaleSetVMsClient.BeginRestart":
-		resp, err = v.dispatchBeginRestart(req)
-	case "VirtualMachineScaleSetVMsClient.RetrieveBootDiagnosticsData":
-		resp, err = v.dispatchRetrieveBootDiagnosticsData(req)
-	case "VirtualMachineScaleSetVMsClient.BeginRunCommand":
-		resp, err = v.dispatchBeginRunCommand(req)
-	case "VirtualMachineScaleSetVMsClient.SimulateEviction":
-		resp, err = v.dispatchSimulateEviction(req)
-	case "VirtualMachineScaleSetVMsClient.BeginStart":
-		resp, err = v.dispatchBeginStart(req)
-	case "VirtualMachineScaleSetVMsClient.BeginUpdate":
-		resp, err = v.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineScaleSetVMsClient.BeginDeallocate":
+			res.resp, res.err = v.dispatchBeginDeallocate(req)
+		case "VirtualMachineScaleSetVMsClient.BeginDelete":
+			res.resp, res.err = v.dispatchBeginDelete(req)
+		case "VirtualMachineScaleSetVMsClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualMachineScaleSetVMsClient.GetInstanceView":
+			res.resp, res.err = v.dispatchGetInstanceView(req)
+		case "VirtualMachineScaleSetVMsClient.NewListPager":
+			res.resp, res.err = v.dispatchNewListPager(req)
+		case "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance":
+			res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
+		case "VirtualMachineScaleSetVMsClient.BeginPowerOff":
+			res.resp, res.err = v.dispatchBeginPowerOff(req)
+		case "VirtualMachineScaleSetVMsClient.BeginRedeploy":
+			res.resp, res.err = v.dispatchBeginRedeploy(req)
+		case "VirtualMachineScaleSetVMsClient.BeginReimage":
+			res.resp, res.err = v.dispatchBeginReimage(req)
+		case "VirtualMachineScaleSetVMsClient.BeginReimageAll":
+			res.resp, res.err = v.dispatchBeginReimageAll(req)
+		case "VirtualMachineScaleSetVMsClient.BeginRestart":
+			res.resp, res.err = v.dispatchBeginRestart(req)
+		case "VirtualMachineScaleSetVMsClient.RetrieveBootDiagnosticsData":
+			res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
+		case "VirtualMachineScaleSetVMsClient.BeginRunCommand":
+			res.resp, res.err = v.dispatchBeginRunCommand(req)
+		case "VirtualMachineScaleSetVMsClient.SimulateEviction":
+			res.resp, res.err = v.dispatchSimulateEviction(req)
+		case "VirtualMachineScaleSetVMsClient.BeginStart":
+			res.resp, res.err = v.dispatchBeginStart(req)
+		case "VirtualMachineScaleSetVMsClient.BeginUpdate":
+			res.resp, res.err = v.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineScaleSetVMsServerTransport) dispatchBeginDeallocate(req *http.Request) (*http.Response, error) {

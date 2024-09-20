@@ -53,17 +53,30 @@ func (e *ExpressRouteServiceProvidersServerTransport) Do(req *http.Request) (*ht
 }
 
 func (e *ExpressRouteServiceProvidersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ExpressRouteServiceProvidersClient.NewListPager":
-		resp, err = e.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ExpressRouteServiceProvidersClient.NewListPager":
+			res.resp, res.err = e.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (e *ExpressRouteServiceProvidersServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {

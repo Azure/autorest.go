@@ -71,23 +71,36 @@ func (s *StorageAccountCredentialsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (s *StorageAccountCredentialsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "StorageAccountCredentialsClient.BeginCreateOrUpdate":
-		resp, err = s.dispatchBeginCreateOrUpdate(req)
-	case "StorageAccountCredentialsClient.BeginDelete":
-		resp, err = s.dispatchBeginDelete(req)
-	case "StorageAccountCredentialsClient.Get":
-		resp, err = s.dispatchGet(req)
-	case "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager":
-		resp, err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "StorageAccountCredentialsClient.BeginCreateOrUpdate":
+			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+		case "StorageAccountCredentialsClient.BeginDelete":
+			res.resp, res.err = s.dispatchBeginDelete(req)
+		case "StorageAccountCredentialsClient.Get":
+			res.resp, res.err = s.dispatchGet(req)
+		case "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager":
+			res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *StorageAccountCredentialsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -54,17 +54,30 @@ func (m *ManagerCommitsServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (m *ManagerCommitsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagerCommitsClient.BeginPost":
-		resp, err = m.dispatchBeginPost(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ManagerCommitsClient.BeginPost":
+			res.resp, res.err = m.dispatchBeginPost(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagerCommitsServerTransport) dispatchBeginPost(req *http.Request) (*http.Response, error) {

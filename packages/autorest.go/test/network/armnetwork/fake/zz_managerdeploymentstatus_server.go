@@ -51,17 +51,30 @@ func (m *ManagerDeploymentStatusServerTransport) Do(req *http.Request) (*http.Re
 }
 
 func (m *ManagerDeploymentStatusServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ManagerDeploymentStatusClient.List":
-		resp, err = m.dispatchList(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ManagerDeploymentStatusClient.List":
+			res.resp, res.err = m.dispatchList(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (m *ManagerDeploymentStatusServerTransport) dispatchList(req *http.Request) (*http.Response, error) {

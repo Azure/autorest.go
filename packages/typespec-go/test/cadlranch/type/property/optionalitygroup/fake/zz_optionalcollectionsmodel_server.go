@@ -59,23 +59,36 @@ func (o *OptionalCollectionsModelServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (o *OptionalCollectionsModelServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "OptionalCollectionsModelClient.GetAll":
-		resp, err = o.dispatchGetAll(req)
-	case "OptionalCollectionsModelClient.GetDefault":
-		resp, err = o.dispatchGetDefault(req)
-	case "OptionalCollectionsModelClient.PutAll":
-		resp, err = o.dispatchPutAll(req)
-	case "OptionalCollectionsModelClient.PutDefault":
-		resp, err = o.dispatchPutDefault(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "OptionalCollectionsModelClient.GetAll":
+			res.resp, res.err = o.dispatchGetAll(req)
+		case "OptionalCollectionsModelClient.GetDefault":
+			res.resp, res.err = o.dispatchGetDefault(req)
+		case "OptionalCollectionsModelClient.PutAll":
+			res.resp, res.err = o.dispatchPutAll(req)
+		case "OptionalCollectionsModelClient.PutDefault":
+			res.resp, res.err = o.dispatchPutDefault(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (o *OptionalCollectionsModelServerTransport) dispatchGetAll(req *http.Request) (*http.Response, error) {

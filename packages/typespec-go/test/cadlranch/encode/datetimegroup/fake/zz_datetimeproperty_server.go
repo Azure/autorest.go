@@ -63,25 +63,38 @@ func (d *DatetimePropertyServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (d *DatetimePropertyServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DatetimePropertyClient.Default":
-		resp, err = d.dispatchDefault(req)
-	case "DatetimePropertyClient.RFC3339":
-		resp, err = d.dispatchRFC3339(req)
-	case "DatetimePropertyClient.RFC7231":
-		resp, err = d.dispatchRFC7231(req)
-	case "DatetimePropertyClient.UnixTimestamp":
-		resp, err = d.dispatchUnixTimestamp(req)
-	case "DatetimePropertyClient.UnixTimestampArray":
-		resp, err = d.dispatchUnixTimestampArray(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DatetimePropertyClient.Default":
+			res.resp, res.err = d.dispatchDefault(req)
+		case "DatetimePropertyClient.RFC3339":
+			res.resp, res.err = d.dispatchRFC3339(req)
+		case "DatetimePropertyClient.RFC7231":
+			res.resp, res.err = d.dispatchRFC7231(req)
+		case "DatetimePropertyClient.UnixTimestamp":
+			res.resp, res.err = d.dispatchUnixTimestamp(req)
+		case "DatetimePropertyClient.UnixTimestampArray":
+			res.resp, res.err = d.dispatchUnixTimestampArray(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DatetimePropertyServerTransport) dispatchDefault(req *http.Request) (*http.Response, error) {

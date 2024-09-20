@@ -92,37 +92,50 @@ func (c *ContainerRegistryBlobServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (c *ContainerRegistryBlobServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ContainerRegistryBlobClient.CancelUpload":
-		resp, err = c.dispatchCancelUpload(req)
-	case "ContainerRegistryBlobClient.CheckBlobExists":
-		resp, err = c.dispatchCheckBlobExists(req)
-	case "ContainerRegistryBlobClient.CheckChunkExists":
-		resp, err = c.dispatchCheckChunkExists(req)
-	case "ContainerRegistryBlobClient.CompleteUpload":
-		resp, err = c.dispatchCompleteUpload(req)
-	case "ContainerRegistryBlobClient.DeleteBlob":
-		resp, err = c.dispatchDeleteBlob(req)
-	case "ContainerRegistryBlobClient.GetBlob":
-		resp, err = c.dispatchGetBlob(req)
-	case "ContainerRegistryBlobClient.GetChunk":
-		resp, err = c.dispatchGetChunk(req)
-	case "ContainerRegistryBlobClient.GetUploadStatus":
-		resp, err = c.dispatchGetUploadStatus(req)
-	case "ContainerRegistryBlobClient.MountBlob":
-		resp, err = c.dispatchMountBlob(req)
-	case "ContainerRegistryBlobClient.StartUpload":
-		resp, err = c.dispatchStartUpload(req)
-	case "ContainerRegistryBlobClient.UploadChunk":
-		resp, err = c.dispatchUploadChunk(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ContainerRegistryBlobClient.CancelUpload":
+			res.resp, res.err = c.dispatchCancelUpload(req)
+		case "ContainerRegistryBlobClient.CheckBlobExists":
+			res.resp, res.err = c.dispatchCheckBlobExists(req)
+		case "ContainerRegistryBlobClient.CheckChunkExists":
+			res.resp, res.err = c.dispatchCheckChunkExists(req)
+		case "ContainerRegistryBlobClient.CompleteUpload":
+			res.resp, res.err = c.dispatchCompleteUpload(req)
+		case "ContainerRegistryBlobClient.DeleteBlob":
+			res.resp, res.err = c.dispatchDeleteBlob(req)
+		case "ContainerRegistryBlobClient.GetBlob":
+			res.resp, res.err = c.dispatchGetBlob(req)
+		case "ContainerRegistryBlobClient.GetChunk":
+			res.resp, res.err = c.dispatchGetChunk(req)
+		case "ContainerRegistryBlobClient.GetUploadStatus":
+			res.resp, res.err = c.dispatchGetUploadStatus(req)
+		case "ContainerRegistryBlobClient.MountBlob":
+			res.resp, res.err = c.dispatchMountBlob(req)
+		case "ContainerRegistryBlobClient.StartUpload":
+			res.resp, res.err = c.dispatchStartUpload(req)
+		case "ContainerRegistryBlobClient.UploadChunk":
+			res.resp, res.err = c.dispatchUploadChunk(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ContainerRegistryBlobServerTransport) dispatchCancelUpload(req *http.Request) (*http.Response, error) {

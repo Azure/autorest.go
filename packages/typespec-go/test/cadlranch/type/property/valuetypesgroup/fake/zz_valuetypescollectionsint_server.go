@@ -51,19 +51,32 @@ func (v *ValueTypesCollectionsIntServerTransport) Do(req *http.Request) (*http.R
 }
 
 func (v *ValueTypesCollectionsIntServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ValueTypesCollectionsIntClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "ValueTypesCollectionsIntClient.Put":
-		resp, err = v.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ValueTypesCollectionsIntClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "ValueTypesCollectionsIntClient.Put":
+			res.resp, res.err = v.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *ValueTypesCollectionsIntServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

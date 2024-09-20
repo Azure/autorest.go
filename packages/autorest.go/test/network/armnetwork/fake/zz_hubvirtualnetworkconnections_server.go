@@ -71,23 +71,36 @@ func (h *HubVirtualNetworkConnectionsServerTransport) Do(req *http.Request) (*ht
 }
 
 func (h *HubVirtualNetworkConnectionsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate":
-		resp, err = h.dispatchBeginCreateOrUpdate(req)
-	case "HubVirtualNetworkConnectionsClient.BeginDelete":
-		resp, err = h.dispatchBeginDelete(req)
-	case "HubVirtualNetworkConnectionsClient.Get":
-		resp, err = h.dispatchGet(req)
-	case "HubVirtualNetworkConnectionsClient.NewListPager":
-		resp, err = h.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "HubVirtualNetworkConnectionsClient.BeginCreateOrUpdate":
+			res.resp, res.err = h.dispatchBeginCreateOrUpdate(req)
+		case "HubVirtualNetworkConnectionsClient.BeginDelete":
+			res.resp, res.err = h.dispatchBeginDelete(req)
+		case "HubVirtualNetworkConnectionsClient.Get":
+			res.resp, res.err = h.dispatchGet(req)
+		case "HubVirtualNetworkConnectionsClient.NewListPager":
+			res.resp, res.err = h.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (h *HubVirtualNetworkConnectionsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

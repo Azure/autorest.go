@@ -68,23 +68,36 @@ func (a *AzureLargeStorageInstanceServerTransport) Do(req *http.Request) (*http.
 }
 
 func (a *AzureLargeStorageInstanceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AzureLargeStorageInstanceClient.Get":
-		resp, err = a.dispatchGet(req)
-	case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
-		resp, err = a.dispatchNewListByResourceGroupPager(req)
-	case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
-		resp, err = a.dispatchNewListBySubscriptionPager(req)
-	case "AzureLargeStorageInstanceClient.Update":
-		resp, err = a.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AzureLargeStorageInstanceClient.Get":
+			res.resp, res.err = a.dispatchGet(req)
+		case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
+			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+		case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
+			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+		case "AzureLargeStorageInstanceClient.Update":
+			res.resp, res.err = a.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AzureLargeStorageInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

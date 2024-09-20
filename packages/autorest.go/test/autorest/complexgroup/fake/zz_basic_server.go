@@ -68,27 +68,40 @@ func (b *BasicServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "BasicClient.GetEmpty":
-		resp, err = b.dispatchGetEmpty(req)
-	case "BasicClient.GetInvalid":
-		resp, err = b.dispatchGetInvalid(req)
-	case "BasicClient.GetNotProvided":
-		resp, err = b.dispatchGetNotProvided(req)
-	case "BasicClient.GetNull":
-		resp, err = b.dispatchGetNull(req)
-	case "BasicClient.GetValid":
-		resp, err = b.dispatchGetValid(req)
-	case "BasicClient.PutValid":
-		resp, err = b.dispatchPutValid(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "BasicClient.GetEmpty":
+			res.resp, res.err = b.dispatchGetEmpty(req)
+		case "BasicClient.GetInvalid":
+			res.resp, res.err = b.dispatchGetInvalid(req)
+		case "BasicClient.GetNotProvided":
+			res.resp, res.err = b.dispatchGetNotProvided(req)
+		case "BasicClient.GetNull":
+			res.resp, res.err = b.dispatchGetNull(req)
+		case "BasicClient.GetValid":
+			res.resp, res.err = b.dispatchGetValid(req)
+		case "BasicClient.PutValid":
+			res.resp, res.err = b.dispatchPutValid(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (b *BasicServerTransport) dispatchGetEmpty(req *http.Request) (*http.Response, error) {

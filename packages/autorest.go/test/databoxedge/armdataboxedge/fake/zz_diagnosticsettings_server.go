@@ -68,23 +68,36 @@ func (d *DiagnosticSettingsServerTransport) Do(req *http.Request) (*http.Respons
 }
 
 func (d *DiagnosticSettingsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings":
-		resp, err = d.dispatchGetDiagnosticProactiveLogCollectionSettings(req)
-	case "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings":
-		resp, err = d.dispatchGetDiagnosticRemoteSupportSettings(req)
-	case "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings":
-		resp, err = d.dispatchBeginUpdateDiagnosticProactiveLogCollectionSettings(req)
-	case "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings":
-		resp, err = d.dispatchBeginUpdateDiagnosticRemoteSupportSettings(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings":
+			res.resp, res.err = d.dispatchGetDiagnosticProactiveLogCollectionSettings(req)
+		case "DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings":
+			res.resp, res.err = d.dispatchGetDiagnosticRemoteSupportSettings(req)
+		case "DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings":
+			res.resp, res.err = d.dispatchBeginUpdateDiagnosticProactiveLogCollectionSettings(req)
+		case "DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings":
+			res.resp, res.err = d.dispatchBeginUpdateDiagnosticRemoteSupportSettings(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DiagnosticSettingsServerTransport) dispatchGetDiagnosticProactiveLogCollectionSettings(req *http.Request) (*http.Response, error) {

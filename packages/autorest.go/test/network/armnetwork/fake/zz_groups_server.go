@@ -70,23 +70,36 @@ func (g *GroupsServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (g *GroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "GroupsClient.CreateOrUpdate":
-		resp, err = g.dispatchCreateOrUpdate(req)
-	case "GroupsClient.BeginDelete":
-		resp, err = g.dispatchBeginDelete(req)
-	case "GroupsClient.Get":
-		resp, err = g.dispatchGet(req)
-	case "GroupsClient.NewListPager":
-		resp, err = g.dispatchNewListPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "GroupsClient.CreateOrUpdate":
+			res.resp, res.err = g.dispatchCreateOrUpdate(req)
+		case "GroupsClient.BeginDelete":
+			res.resp, res.err = g.dispatchBeginDelete(req)
+		case "GroupsClient.Get":
+			res.resp, res.err = g.dispatchGet(req)
+		case "GroupsClient.NewListPager":
+			res.resp, res.err = g.dispatchNewListPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (g *GroupsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

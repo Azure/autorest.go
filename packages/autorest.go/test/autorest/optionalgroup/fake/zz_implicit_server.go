@@ -80,31 +80,44 @@ func (i *ImplicitServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (i *ImplicitServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ImplicitClient.GetOptionalGlobalQuery":
-		resp, err = i.dispatchGetOptionalGlobalQuery(req)
-	case "ImplicitClient.GetRequiredGlobalPath":
-		resp, err = i.dispatchGetRequiredGlobalPath(req)
-	case "ImplicitClient.GetRequiredGlobalQuery":
-		resp, err = i.dispatchGetRequiredGlobalQuery(req)
-	case "ImplicitClient.GetRequiredPath":
-		resp, err = i.dispatchGetRequiredPath(req)
-	case "ImplicitClient.PutOptionalBinaryBody":
-		resp, err = i.dispatchPutOptionalBinaryBody(req)
-	case "ImplicitClient.PutOptionalBody":
-		resp, err = i.dispatchPutOptionalBody(req)
-	case "ImplicitClient.PutOptionalHeader":
-		resp, err = i.dispatchPutOptionalHeader(req)
-	case "ImplicitClient.PutOptionalQuery":
-		resp, err = i.dispatchPutOptionalQuery(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ImplicitClient.GetOptionalGlobalQuery":
+			res.resp, res.err = i.dispatchGetOptionalGlobalQuery(req)
+		case "ImplicitClient.GetRequiredGlobalPath":
+			res.resp, res.err = i.dispatchGetRequiredGlobalPath(req)
+		case "ImplicitClient.GetRequiredGlobalQuery":
+			res.resp, res.err = i.dispatchGetRequiredGlobalQuery(req)
+		case "ImplicitClient.GetRequiredPath":
+			res.resp, res.err = i.dispatchGetRequiredPath(req)
+		case "ImplicitClient.PutOptionalBinaryBody":
+			res.resp, res.err = i.dispatchPutOptionalBinaryBody(req)
+		case "ImplicitClient.PutOptionalBody":
+			res.resp, res.err = i.dispatchPutOptionalBody(req)
+		case "ImplicitClient.PutOptionalHeader":
+			res.resp, res.err = i.dispatchPutOptionalHeader(req)
+		case "ImplicitClient.PutOptionalQuery":
+			res.resp, res.err = i.dispatchPutOptionalQuery(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (i *ImplicitServerTransport) dispatchGetOptionalGlobalQuery(req *http.Request) (*http.Response, error) {

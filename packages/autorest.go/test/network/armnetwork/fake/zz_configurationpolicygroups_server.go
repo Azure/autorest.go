@@ -71,23 +71,36 @@ func (c *ConfigurationPolicyGroupsServerTransport) Do(req *http.Request) (*http.
 }
 
 func (c *ConfigurationPolicyGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ConfigurationPolicyGroupsClient.BeginCreateOrUpdate":
-		resp, err = c.dispatchBeginCreateOrUpdate(req)
-	case "ConfigurationPolicyGroupsClient.BeginDelete":
-		resp, err = c.dispatchBeginDelete(req)
-	case "ConfigurationPolicyGroupsClient.Get":
-		resp, err = c.dispatchGet(req)
-	case "ConfigurationPolicyGroupsClient.NewListByVPNServerConfigurationPager":
-		resp, err = c.dispatchNewListByVPNServerConfigurationPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ConfigurationPolicyGroupsClient.BeginCreateOrUpdate":
+			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+		case "ConfigurationPolicyGroupsClient.BeginDelete":
+			res.resp, res.err = c.dispatchBeginDelete(req)
+		case "ConfigurationPolicyGroupsClient.Get":
+			res.resp, res.err = c.dispatchGet(req)
+		case "ConfigurationPolicyGroupsClient.NewListByVPNServerConfigurationPager":
+			res.resp, res.err = c.dispatchNewListByVPNServerConfigurationPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (c *ConfigurationPolicyGroupsServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

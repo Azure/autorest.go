@@ -94,31 +94,44 @@ func (w *WatchersServerTransport) Do(req *http.Request) (*http.Response, error) 
 }
 
 func (w *WatchersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "WatchersClient.BeginCreateOrUpdate":
-		resp, err = w.dispatchBeginCreateOrUpdate(req)
-	case "WatchersClient.BeginDelete":
-		resp, err = w.dispatchBeginDelete(req)
-	case "WatchersClient.Get":
-		resp, err = w.dispatchGet(req)
-	case "WatchersClient.NewListByResourceGroupPager":
-		resp, err = w.dispatchNewListByResourceGroupPager(req)
-	case "WatchersClient.NewListBySubscriptionPager":
-		resp, err = w.dispatchNewListBySubscriptionPager(req)
-	case "WatchersClient.BeginStart":
-		resp, err = w.dispatchBeginStart(req)
-	case "WatchersClient.BeginStop":
-		resp, err = w.dispatchBeginStop(req)
-	case "WatchersClient.BeginUpdate":
-		resp, err = w.dispatchBeginUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "WatchersClient.BeginCreateOrUpdate":
+			res.resp, res.err = w.dispatchBeginCreateOrUpdate(req)
+		case "WatchersClient.BeginDelete":
+			res.resp, res.err = w.dispatchBeginDelete(req)
+		case "WatchersClient.Get":
+			res.resp, res.err = w.dispatchGet(req)
+		case "WatchersClient.NewListByResourceGroupPager":
+			res.resp, res.err = w.dispatchNewListByResourceGroupPager(req)
+		case "WatchersClient.NewListBySubscriptionPager":
+			res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
+		case "WatchersClient.BeginStart":
+			res.resp, res.err = w.dispatchBeginStart(req)
+		case "WatchersClient.BeginStop":
+			res.resp, res.err = w.dispatchBeginStop(req)
+		case "WatchersClient.BeginUpdate":
+			res.resp, res.err = w.dispatchBeginUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (w *WatchersServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

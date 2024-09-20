@@ -77,27 +77,40 @@ func (d *DedicatedHostGroupsServerTransport) Do(req *http.Request) (*http.Respon
 }
 
 func (d *DedicatedHostGroupsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DedicatedHostGroupsClient.CreateOrUpdate":
-		resp, err = d.dispatchCreateOrUpdate(req)
-	case "DedicatedHostGroupsClient.Delete":
-		resp, err = d.dispatchDelete(req)
-	case "DedicatedHostGroupsClient.Get":
-		resp, err = d.dispatchGet(req)
-	case "DedicatedHostGroupsClient.NewListByResourceGroupPager":
-		resp, err = d.dispatchNewListByResourceGroupPager(req)
-	case "DedicatedHostGroupsClient.NewListBySubscriptionPager":
-		resp, err = d.dispatchNewListBySubscriptionPager(req)
-	case "DedicatedHostGroupsClient.Update":
-		resp, err = d.dispatchUpdate(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DedicatedHostGroupsClient.CreateOrUpdate":
+			res.resp, res.err = d.dispatchCreateOrUpdate(req)
+		case "DedicatedHostGroupsClient.Delete":
+			res.resp, res.err = d.dispatchDelete(req)
+		case "DedicatedHostGroupsClient.Get":
+			res.resp, res.err = d.dispatchGet(req)
+		case "DedicatedHostGroupsClient.NewListByResourceGroupPager":
+			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+		case "DedicatedHostGroupsClient.NewListBySubscriptionPager":
+			res.resp, res.err = d.dispatchNewListBySubscriptionPager(req)
+		case "DedicatedHostGroupsClient.Update":
+			res.resp, res.err = d.dispatchUpdate(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DedicatedHostGroupsServerTransport) dispatchCreateOrUpdate(req *http.Request) (*http.Response, error) {

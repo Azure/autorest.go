@@ -53,17 +53,30 @@ func (a *AzureFirewallFqdnTagsServerTransport) Do(req *http.Request) (*http.Resp
 }
 
 func (a *AzureFirewallFqdnTagsServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "AzureFirewallFqdnTagsClient.NewListAllPager":
-		resp, err = a.dispatchNewListAllPager(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "AzureFirewallFqdnTagsClient.NewListAllPager":
+			res.resp, res.err = a.dispatchNewListAllPager(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (a *AzureFirewallFqdnTagsServerTransport) dispatchNewListAllPager(req *http.Request) (*http.Response, error) {

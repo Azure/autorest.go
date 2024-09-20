@@ -51,19 +51,32 @@ func (v *ValueTypesUnionStringLiteralServerTransport) Do(req *http.Request) (*ht
 }
 
 func (v *ValueTypesUnionStringLiteralServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ValueTypesUnionStringLiteralClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "ValueTypesUnionStringLiteralClient.Put":
-		resp, err = v.dispatchPut(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ValueTypesUnionStringLiteralClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "ValueTypesUnionStringLiteralClient.Put":
+			res.resp, res.err = v.dispatchPut(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *ValueTypesUnionStringLiteralServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

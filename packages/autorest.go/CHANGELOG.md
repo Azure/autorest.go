@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Throw an error when an operation doesn't define any media types. This is indicative of an authoring error.
+* Fake servers will honor the caller's context in the `*http.Request`.
 
 ## 4.0.0-preview.67 (2024-07-30)
 

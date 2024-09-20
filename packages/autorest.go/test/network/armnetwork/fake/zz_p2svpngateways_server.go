@@ -113,37 +113,50 @@ func (p *P2SVPNGatewaysServerTransport) Do(req *http.Request) (*http.Response, e
 }
 
 func (p *P2SVPNGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "P2SVPNGatewaysClient.BeginCreateOrUpdate":
-		resp, err = p.dispatchBeginCreateOrUpdate(req)
-	case "P2SVPNGatewaysClient.BeginDelete":
-		resp, err = p.dispatchBeginDelete(req)
-	case "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections":
-		resp, err = p.dispatchBeginDisconnectP2SVPNConnections(req)
-	case "P2SVPNGatewaysClient.BeginGenerateVPNProfile":
-		resp, err = p.dispatchBeginGenerateVPNProfile(req)
-	case "P2SVPNGatewaysClient.Get":
-		resp, err = p.dispatchGet(req)
-	case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth":
-		resp, err = p.dispatchBeginGetP2SVPNConnectionHealth(req)
-	case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed":
-		resp, err = p.dispatchBeginGetP2SVPNConnectionHealthDetailed(req)
-	case "P2SVPNGatewaysClient.NewListPager":
-		resp, err = p.dispatchNewListPager(req)
-	case "P2SVPNGatewaysClient.NewListByResourceGroupPager":
-		resp, err = p.dispatchNewListByResourceGroupPager(req)
-	case "P2SVPNGatewaysClient.BeginReset":
-		resp, err = p.dispatchBeginReset(req)
-	case "P2SVPNGatewaysClient.BeginUpdateTags":
-		resp, err = p.dispatchBeginUpdateTags(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "P2SVPNGatewaysClient.BeginCreateOrUpdate":
+			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+		case "P2SVPNGatewaysClient.BeginDelete":
+			res.resp, res.err = p.dispatchBeginDelete(req)
+		case "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections":
+			res.resp, res.err = p.dispatchBeginDisconnectP2SVPNConnections(req)
+		case "P2SVPNGatewaysClient.BeginGenerateVPNProfile":
+			res.resp, res.err = p.dispatchBeginGenerateVPNProfile(req)
+		case "P2SVPNGatewaysClient.Get":
+			res.resp, res.err = p.dispatchGet(req)
+		case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth":
+			res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealth(req)
+		case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed":
+			res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealthDetailed(req)
+		case "P2SVPNGatewaysClient.NewListPager":
+			res.resp, res.err = p.dispatchNewListPager(req)
+		case "P2SVPNGatewaysClient.NewListByResourceGroupPager":
+			res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
+		case "P2SVPNGatewaysClient.BeginReset":
+			res.resp, res.err = p.dispatchBeginReset(req)
+		case "P2SVPNGatewaysClient.BeginUpdateTags":
+			res.resp, res.err = p.dispatchBeginUpdateTags(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *P2SVPNGatewaysServerTransport) dispatchBeginCreateOrUpdate(req *http.Request) (*http.Response, error) {

@@ -59,23 +59,36 @@ func (n *NullableDurationServerTransport) Do(req *http.Request) (*http.Response,
 }
 
 func (n *NullableDurationServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "NullableDurationClient.GetNonNull":
-		resp, err = n.dispatchGetNonNull(req)
-	case "NullableDurationClient.GetNull":
-		resp, err = n.dispatchGetNull(req)
-	case "NullableDurationClient.PatchNonNull":
-		resp, err = n.dispatchPatchNonNull(req)
-	case "NullableDurationClient.PatchNull":
-		resp, err = n.dispatchPatchNull(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "NullableDurationClient.GetNonNull":
+			res.resp, res.err = n.dispatchGetNonNull(req)
+		case "NullableDurationClient.GetNull":
+			res.resp, res.err = n.dispatchGetNull(req)
+		case "NullableDurationClient.PatchNonNull":
+			res.resp, res.err = n.dispatchPatchNonNull(req)
+		case "NullableDurationClient.PatchNull":
+			res.resp, res.err = n.dispatchPatchNull(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (n *NullableDurationServerTransport) dispatchGetNonNull(req *http.Request) (*http.Response, error) {

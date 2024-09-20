@@ -47,17 +47,30 @@ func (s *ServiceBazFooServerTransport) Do(req *http.Request) (*http.Response, er
 }
 
 func (s *ServiceBazFooServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "ServiceBazFooClient.Seven":
-		resp, err = s.dispatchSeven(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "ServiceBazFooClient.Seven":
+			res.resp, res.err = s.dispatchSeven(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (s *ServiceBazFooServerTransport) dispatchSeven(req *http.Request) (*http.Response, error) {

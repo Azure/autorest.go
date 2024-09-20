@@ -59,21 +59,34 @@ func (v *VirtualMachineExtensionImagesServerTransport) Do(req *http.Request) (*h
 }
 
 func (v *VirtualMachineExtensionImagesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "VirtualMachineExtensionImagesClient.Get":
-		resp, err = v.dispatchGet(req)
-	case "VirtualMachineExtensionImagesClient.ListTypes":
-		resp, err = v.dispatchListTypes(req)
-	case "VirtualMachineExtensionImagesClient.ListVersions":
-		resp, err = v.dispatchListVersions(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "VirtualMachineExtensionImagesClient.Get":
+			res.resp, res.err = v.dispatchGet(req)
+		case "VirtualMachineExtensionImagesClient.ListTypes":
+			res.resp, res.err = v.dispatchListTypes(req)
+		case "VirtualMachineExtensionImagesClient.ListVersions":
+			res.resp, res.err = v.dispatchListVersions(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (v *VirtualMachineExtensionImagesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {

@@ -55,19 +55,32 @@ func (p *PetServerTransport) Do(req *http.Request) (*http.Response, error) {
 }
 
 func (p *PetServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "PetClient.AddPet":
-		resp, err = p.dispatchAddPet(req)
-	case "PetClient.GetByPetID":
-		resp, err = p.dispatchGetByPetID(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "PetClient.AddPet":
+			res.resp, res.err = p.dispatchAddPet(req)
+		case "PetClient.GetByPetID":
+			res.resp, res.err = p.dispatchGetByPetID(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (p *PetServerTransport) dispatchAddPet(req *http.Request) (*http.Response, error) {

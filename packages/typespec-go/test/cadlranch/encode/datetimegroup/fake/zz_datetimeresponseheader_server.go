@@ -60,23 +60,36 @@ func (d *DatetimeResponseHeaderServerTransport) Do(req *http.Request) (*http.Res
 }
 
 func (d *DatetimeResponseHeaderServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
-	var resp *http.Response
-	var err error
+	resultChan := make(chan result)
+	defer close(resultChan)
 
-	switch method {
-	case "DatetimeResponseHeaderClient.Default":
-		resp, err = d.dispatchDefault(req)
-	case "DatetimeResponseHeaderClient.RFC3339":
-		resp, err = d.dispatchRFC3339(req)
-	case "DatetimeResponseHeaderClient.RFC7231":
-		resp, err = d.dispatchRFC7231(req)
-	case "DatetimeResponseHeaderClient.UnixTimestamp":
-		resp, err = d.dispatchUnixTimestamp(req)
-	default:
-		err = fmt.Errorf("unhandled API %s", method)
+	go func() {
+		var res result
+		switch method {
+		case "DatetimeResponseHeaderClient.Default":
+			res.resp, res.err = d.dispatchDefault(req)
+		case "DatetimeResponseHeaderClient.RFC3339":
+			res.resp, res.err = d.dispatchRFC3339(req)
+		case "DatetimeResponseHeaderClient.RFC7231":
+			res.resp, res.err = d.dispatchRFC7231(req)
+		case "DatetimeResponseHeaderClient.UnixTimestamp":
+			res.resp, res.err = d.dispatchUnixTimestamp(req)
+		default:
+			res.err = fmt.Errorf("unhandled API %s", method)
+		}
+
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
+	}()
+
+	select {
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
+	case res := <-resultChan:
+		return res.resp, res.err
 	}
-
-	return resp, err
 }
 
 func (d *DatetimeResponseHeaderServerTransport) dispatchDefault(req *http.Request) (*http.Response, error) {
