@@ -60,6 +60,7 @@ func (v *VersionedServerTransport) Do(req *http.Request) (*http.Response, error)
 
 func (v *VersionedServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -76,7 +77,10 @@ func (v *VersionedServerTransport) dispatchToMethodFake(req *http.Request, metho
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

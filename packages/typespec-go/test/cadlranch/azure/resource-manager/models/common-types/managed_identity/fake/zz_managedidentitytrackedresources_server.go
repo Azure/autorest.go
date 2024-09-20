@@ -58,6 +58,7 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) Do(req *http.Request) (
 
 func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -72,7 +73,10 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchToMethodFake(re
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

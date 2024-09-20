@@ -275,7 +275,8 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
 
   const receiverName = serverTransport[0].toLowerCase();
   let content = `func (${receiverName} *${serverTransport}) ${dispatchMethodFake}(req *http.Request, method string) (*http.Response, error) {\n`;
-  content += '\tresultChan := make(chan result)\n\n';
+  content += '\tresultChan := make(chan result)\n';
+  content += '\tdefer close(resultChan)\n\n';
   content += '\tgo func() {\n\t\tvar res result\n';
   content += '\t\tswitch method {\n';
 
@@ -285,9 +286,14 @@ function generateServerTransportMethodDispatch(serverTransport: string, client: 
     content += `\t\t\tres.resp, res.err = ${receiverName}.dispatch${operationName}(req)\n`;
   }
 
-  content += '\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
+  content += '\t\t\tdefault:\n\t\tres.err = fmt.Errorf("unhandled API %s", method)\n';
   content += '\t\t}\n\n'; // end switch
-  content += '\t\tresultChan <- res\n\t}()\n\n'
+
+  content += '\t\tselect {\n';
+  content += '\t\tcase resultChan <- res:\n';
+  content += '\t\tcase <-req.Context().Done():\n';
+  content += '\t\t}\n';
+  content += '\t}()\n\n'; // end goroutine
 
   content += '\tselect {\n';
   content += '\tcase <-req.Context().Done():\n';

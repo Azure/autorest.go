@@ -82,6 +82,7 @@ func (r *RouteFiltersServerTransport) Do(req *http.Request) (*http.Response, err
 
 func (r *RouteFiltersServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -102,7 +103,10 @@ func (r *RouteFiltersServerTransport) dispatchToMethodFake(req *http.Request, me
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

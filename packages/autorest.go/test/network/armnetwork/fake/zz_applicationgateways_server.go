@@ -136,6 +136,7 @@ func (a *ApplicationGatewaysServerTransport) Do(req *http.Request) (*http.Respon
 
 func (a *ApplicationGatewaysServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -178,7 +179,10 @@ func (a *ApplicationGatewaysServerTransport) dispatchToMethodFake(req *http.Requ
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

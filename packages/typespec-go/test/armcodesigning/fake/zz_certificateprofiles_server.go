@@ -75,6 +75,7 @@ func (c *CertificateProfilesServerTransport) Do(req *http.Request) (*http.Respon
 
 func (c *CertificateProfilesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -93,7 +94,10 @@ func (c *CertificateProfilesServerTransport) dispatchToMethodFake(req *http.Requ
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

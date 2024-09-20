@@ -71,6 +71,7 @@ func (w *WorkspacesServerTransport) Do(req *http.Request) (*http.Response, error
 
 func (w *WorkspacesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -89,7 +90,10 @@ func (w *WorkspacesServerTransport) dispatchToMethodFake(req *http.Request, meth
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

@@ -54,6 +54,7 @@ func (a *AutoRestReportServiceServerTransport) Do(req *http.Request) (*http.Resp
 
 func (a *AutoRestReportServiceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -66,7 +67,10 @@ func (a *AutoRestReportServiceServerTransport) dispatchToMethodFake(req *http.Re
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

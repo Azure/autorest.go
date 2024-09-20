@@ -85,6 +85,7 @@ func (m *MultipleInheritanceServiceServerTransport) Do(req *http.Request) (*http
 
 func (m *MultipleInheritanceServiceServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -113,7 +114,10 @@ func (m *MultipleInheritanceServiceServerTransport) dispatchToMethodFake(req *ht
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {

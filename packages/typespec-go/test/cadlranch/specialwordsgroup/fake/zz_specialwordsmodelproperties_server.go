@@ -48,6 +48,7 @@ func (s *SpecialWordsModelPropertiesServerTransport) Do(req *http.Request) (*htt
 
 func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
+	defer close(resultChan)
 
 	go func() {
 		var res result
@@ -58,7 +59,10 @@ func (s *SpecialWordsModelPropertiesServerTransport) dispatchToMethodFake(req *h
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
 
-		resultChan <- res
+		select {
+		case resultChan <- res:
+		case <-req.Context().Done():
+		}
 	}()
 
 	select {
