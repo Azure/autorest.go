@@ -130,3 +130,17 @@ func TestTopLevelTrackedResourcesClient_NewListBySubscriptionPager(t *testing.T)
 	require.Equal(t, *validTopLevelResource.Type, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].Type)
 	require.Equal(t, *validTopLevelResource.Location, *TopLevelTrackedResourcesClientListBySubscriptionResponse.Value[0].Location)
 }
+
+func TestTopLevelTrackedResourcesClient_ActionSync(t *testing.T) {
+	_, err := clientFactory.NewTopLevelTrackedResourcesClient().ActionSync(
+		ctx,
+		resourceGroupExpected,
+		"top",
+		resources.NotificationDetails{
+			Message: to.Ptr("Resource action at top level."),
+			Urgent:  to.Ptr(true),
+		},
+		nil,
+	)
+	require.NoError(t, err)
+}
