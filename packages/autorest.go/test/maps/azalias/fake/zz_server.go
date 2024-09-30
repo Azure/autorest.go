@@ -682,6 +682,9 @@ func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response,
 				return nil, err
 			}
 			OptionalBool, err = strconv.ParseBool(string(content))
+			if err != nil {
+				return nil, err
+			}
 		case "OptionalIntEnum":
 			content, err = io.ReadAll(part)
 			if err != nil {
