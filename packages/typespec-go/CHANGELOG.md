@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 * Fake servers will honor the caller's context in the `*http.Request`.
+* Add missing error check when parsing multipart/form content in fakes.
 
 ## 0.3.1 (2024-08-14)
 

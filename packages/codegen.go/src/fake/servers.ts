@@ -440,16 +440,19 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
     content += '\t\tswitch fn := part.FormName(); fn {\n';
 
     // specify boolTarget if parsing bools happens in place.
-    // in this case, the err check is omitted and assumed to happen elsewhere.
-    // the parsed value is in a local var named parsed.
+    // i.e. the result from the parsing doesn't require further conversion (e.g. casting)
+    // otherwise the parsed value is in a local var named parsed.
     const parsePrimitiveType = function (typeName: go.PrimitiveTypeName, boolTarget?: string): string {
-      const parseResults = 'parsed, parseErr';
+      let parseErr = 'parseErr';
+      const parseResults = `parsed, ${parseErr}`;
       let parsingCode = '';
       imports.add('strconv');
       switch (typeName) {
         case 'bool':
           if (boolTarget) {
-            parsingCode = `\t\t\t${boolTarget} = strconv.ParseBool(string(content))\n`;
+            // we reuse the err var declared earlier when calling reader.NextPart()
+            parsingCode = `\t\t\t${boolTarget}, err = strconv.ParseBool(string(content))\n`;
+            parseErr = 'err';
           } else {
             parsingCode = `\t\t\t${parseResults} := strconv.ParseBool(string(content))\n`;
           }
@@ -467,9 +470,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
         default:
           throw new Error(`unhandled multipart parameter primitive type ${typeName}`);
       }
-      if (!boolTarget) {
-        parsingCode += '\t\t\tif parseErr != nil {\n\t\t\t\treturn nil, parseErr\n\t\t\t}\n';
-      }
+      parsingCode += `\t\t\tif ${parseErr} != nil {\n\t\t\t\treturn nil, ${parseErr}\n\t\t\t}\n`;
       return parsingCode;
     };
 
@@ -511,7 +512,7 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
           case 'bool':
             imports.add('strconv');
             // ParseBool happens in place, so no need to set assignedValue
-            caseContent += parsePrimitiveType(type.typeName, `${paramVar}, err`);
+            caseContent += parsePrimitiveType(type.typeName, paramVar);
             break;
           case 'float32':
           case 'float64':
