@@ -34,7 +34,7 @@ type AzureLargeInstanceServer struct {
 	NewListBySubscriptionPager func(options *armlargeinstance.AzureLargeInstanceClientListBySubscriptionOptions) (resp azfake.PagerResponder[armlargeinstance.AzureLargeInstanceClientListBySubscriptionResponse])
 
 	// BeginRestart is the fake for method AzureLargeInstanceClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRestart func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions) (resp azfake.PollerResponder[armlargeinstance.AzureLargeInstanceClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginShutdown is the fake for method AzureLargeInstanceClient.BeginShutdown
@@ -271,9 +271,9 @@ func (a *AzureLargeInstanceServerTransport) dispatchBeginRestart(req *http.Reque
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		a.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		a.beginRestart.remove(req)

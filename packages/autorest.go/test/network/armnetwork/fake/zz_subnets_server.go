@@ -38,11 +38,11 @@ type SubnetsServer struct {
 	NewListPager func(resourceGroupName string, virtualNetworkName string, options *armnetwork.SubnetsClientListOptions) (resp azfake.PagerResponder[armnetwork.SubnetsClientListResponse])
 
 	// BeginPrepareNetworkPolicies is the fake for method SubnetsClient.BeginPrepareNetworkPolicies
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginPrepareNetworkPolicies func(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters armnetwork.PrepareNetworkPoliciesRequest, options *armnetwork.SubnetsClientBeginPrepareNetworkPoliciesOptions) (resp azfake.PollerResponder[armnetwork.SubnetsClientPrepareNetworkPoliciesResponse], errResp azfake.ErrorResponder)
 
 	// BeginUnprepareNetworkPolicies is the fake for method SubnetsClient.BeginUnprepareNetworkPolicies
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginUnprepareNetworkPolicies func(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters armnetwork.UnprepareNetworkPoliciesRequest, options *armnetwork.SubnetsClientBeginUnprepareNetworkPoliciesOptions) (resp azfake.PollerResponder[armnetwork.SubnetsClientUnprepareNetworkPoliciesResponse], errResp azfake.ErrorResponder)
 }
 
@@ -350,9 +350,9 @@ func (s *SubnetsServerTransport) dispatchBeginPrepareNetworkPolicies(req *http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginPrepareNetworkPolicies.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginPrepareNetworkPolicies) {
 		s.beginPrepareNetworkPolicies.remove(req)
@@ -402,9 +402,9 @@ func (s *SubnetsServerTransport) dispatchBeginUnprepareNetworkPolicies(req *http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginUnprepareNetworkPolicies.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUnprepareNetworkPolicies) {
 		s.beginUnprepareNetworkPolicies.remove(req)

@@ -29,11 +29,11 @@ type DiagnosticSettingsServer struct {
 	GetDiagnosticRemoteSupportSettings func(ctx context.Context, deviceName string, resourceGroupName string, options *armdataboxedge.DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (resp azfake.Responder[armdataboxedge.DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdateDiagnosticProactiveLogCollectionSettings is the fake for method DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginUpdateDiagnosticProactiveLogCollectionSettings func(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings armdataboxedge.DiagnosticProactiveLogCollectionSettings, options *armdataboxedge.DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (resp azfake.PollerResponder[armdataboxedge.DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdateDiagnosticRemoteSupportSettings is the fake for method DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginUpdateDiagnosticRemoteSupportSettings func(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings armdataboxedge.DiagnosticRemoteSupportSettings, options *armdataboxedge.DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (resp azfake.PollerResponder[armdataboxedge.DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], errResp azfake.ErrorResponder)
 }
 
@@ -203,9 +203,9 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticProacti
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginUpdateDiagnosticProactiveLogCollectionSettings.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdateDiagnosticProactiveLogCollectionSettings) {
 		d.beginUpdateDiagnosticProactiveLogCollectionSettings.remove(req)
@@ -251,9 +251,9 @@ func (d *DiagnosticSettingsServerTransport) dispatchBeginUpdateDiagnosticRemoteS
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginUpdateDiagnosticRemoteSupportSettings.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdateDiagnosticRemoteSupportSettings) {
 		d.beginUpdateDiagnosticRemoteSupportSettings.remove(req)

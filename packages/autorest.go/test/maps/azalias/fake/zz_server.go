@@ -39,7 +39,7 @@ type Server struct {
 	NewListPager func(headerEnums []azalias.IntEnum, queryEnum azalias.IntEnum, options *azalias.ListOptions) (resp azfake.PagerResponder[azalias.ListResponseEnvelope])
 
 	// BeginListLRO is the fake for method Client.BeginListLRO
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginListLRO func(ctx context.Context, options *azalias.BeginListLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[azalias.ListLROResponse]], errResp azfake.ErrorResponder)
 
 	// NewListWithSharedNextOnePager is the fake for method Client.NewListWithSharedNextOnePager
@@ -504,9 +504,9 @@ func (s *ServerTransport) dispatchBeginListLRO(req *http.Request) (*http.Respons
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		s.beginListLRO.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginListLRO) {
 		s.beginListLRO.remove(req)

@@ -21,7 +21,7 @@ import (
 // SupportPackagesServer is a fake server for instances of the armdataboxedge.SupportPackagesClient type.
 type SupportPackagesServer struct {
 	// BeginTriggerSupportPackage is the fake for method SupportPackagesClient.BeginTriggerSupportPackage
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginTriggerSupportPackage func(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest armdataboxedge.TriggerSupportPackageRequest, options *armdataboxedge.SupportPackagesClientBeginTriggerSupportPackageOptions) (resp azfake.PollerResponder[armdataboxedge.SupportPackagesClientTriggerSupportPackageResponse], errResp azfake.ErrorResponder)
 }
 
@@ -117,9 +117,9 @@ func (s *SupportPackagesServerTransport) dispatchBeginTriggerSupportPackage(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginTriggerSupportPackage.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginTriggerSupportPackage) {
 		s.beginTriggerSupportPackage.remove(req)

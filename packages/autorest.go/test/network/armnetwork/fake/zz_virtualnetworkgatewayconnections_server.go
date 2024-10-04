@@ -47,7 +47,7 @@ type VirtualNetworkGatewayConnectionsServer struct {
 	NewListPager func(resourceGroupName string, options *armnetwork.VirtualNetworkGatewayConnectionsClientListOptions) (resp azfake.PagerResponder[armnetwork.VirtualNetworkGatewayConnectionsClientListResponse])
 
 	// BeginResetConnection is the fake for method VirtualNetworkGatewayConnectionsClient.BeginResetConnection
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginResetConnection func(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *armnetwork.VirtualNetworkGatewayConnectionsClientBeginResetConnectionOptions) (resp azfake.PollerResponder[armnetwork.VirtualNetworkGatewayConnectionsClientResetConnectionResponse], errResp azfake.ErrorResponder)
 
 	// BeginResetSharedKey is the fake for method VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey
@@ -438,9 +438,9 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginResetConn
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginResetConnection.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginResetConnection) {
 		v.beginResetConnection.remove(req)

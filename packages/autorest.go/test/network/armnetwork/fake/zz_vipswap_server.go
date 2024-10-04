@@ -21,7 +21,7 @@ import (
 // VipSwapServer is a fake server for instances of the armnetwork.VipSwapClient type.
 type VipSwapServer struct {
 	// BeginCreate is the fake for method VipSwapClient.BeginCreate
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginCreate func(ctx context.Context, groupName string, resourceName string, parameters armnetwork.SwapResource, options *armnetwork.VipSwapClientBeginCreateOptions) (resp azfake.PollerResponder[armnetwork.VipSwapClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method VipSwapClient.Get
@@ -129,9 +129,9 @@ func (v *VipSwapServerTransport) dispatchBeginCreate(req *http.Request) (*http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginCreate.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreate) {
 		v.beginCreate.remove(req)

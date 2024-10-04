@@ -21,11 +21,11 @@ import (
 // PacketCapturesServer is a fake server for instances of the armnetwork.PacketCapturesClient type.
 type PacketCapturesServer struct {
 	// BeginCreate is the fake for method PacketCapturesClient.BeginCreate
-	// HTTP status codes to indicate success: http.StatusCreated
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	BeginCreate func(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters armnetwork.PacketCapture, options *armnetwork.PacketCapturesClientBeginCreateOptions) (resp azfake.PollerResponder[armnetwork.PacketCapturesClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method PacketCapturesClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *armnetwork.PacketCapturesClientBeginDeleteOptions) (resp azfake.PollerResponder[armnetwork.PacketCapturesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method PacketCapturesClient.Get
@@ -41,7 +41,7 @@ type PacketCapturesServer struct {
 	NewListPager func(resourceGroupName string, networkWatcherName string, options *armnetwork.PacketCapturesClientListOptions) (resp azfake.PagerResponder[armnetwork.PacketCapturesClientListResponse])
 
 	// BeginStop is the fake for method PacketCapturesClient.BeginStop
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStop func(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *armnetwork.PacketCapturesClientBeginStopOptions) (resp azfake.PollerResponder[armnetwork.PacketCapturesClientStopResponse], errResp azfake.ErrorResponder)
 }
 
@@ -159,9 +159,9 @@ func (p *PacketCapturesServerTransport) dispatchBeginCreate(req *http.Request) (
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusCreated}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusCreated}, resp.StatusCode) {
 		p.beginCreate.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusCreated", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginCreate) {
 		p.beginCreate.remove(req)
@@ -207,9 +207,9 @@ func (p *PacketCapturesServerTransport) dispatchBeginDelete(req *http.Request) (
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		p.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		p.beginDelete.remove(req)
@@ -378,9 +378,9 @@ func (p *PacketCapturesServerTransport) dispatchBeginStop(req *http.Request) (*h
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		p.beginStop.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStop) {
 		p.beginStop.remove(req)

@@ -24,11 +24,11 @@ type StandardServer struct {
 	BeginCreateOrReplace func(ctx context.Context, name string, resource lrostdgroup.User, options *lrostdgroup.StandardClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method StandardClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, name string, options *lrostdgroup.StandardClientBeginDeleteOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginExport is the fake for method StandardClient.BeginExport
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginExport func(ctx context.Context, name string, formatParam string, options *lrostdgroup.StandardClientBeginExportOptions) (resp azfake.PollerResponder[lrostdgroup.StandardClientExportResponse], errResp azfake.ErrorResponder)
 }
 
@@ -168,9 +168,9 @@ func (s *StandardServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		s.beginDelete.remove(req)
@@ -213,9 +213,9 @@ func (s *StandardServerTransport) dispatchBeginExport(req *http.Request) (*http.
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		s.beginExport.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginExport) {
 		s.beginExport.remove(req)

@@ -46,7 +46,7 @@ type DisksServer struct {
 	NewListByResourceGroupPager func(resourceGroupName string, options *armcompute.DisksClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.DisksClientListByResourceGroupResponse])
 
 	// BeginRevokeAccess is the fake for method DisksClient.BeginRevokeAccess
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRevokeAccess func(ctx context.Context, resourceGroupName string, diskName string, options *armcompute.DisksClientBeginRevokeAccessOptions) (resp azfake.PollerResponder[armcompute.DisksClientRevokeAccessResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method DisksClient.BeginUpdate
@@ -411,9 +411,9 @@ func (d *DisksServerTransport) dispatchBeginRevokeAccess(req *http.Request) (*ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginRevokeAccess.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRevokeAccess) {
 		d.beginRevokeAccess.remove(req)

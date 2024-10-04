@@ -25,7 +25,7 @@ type FirewallRulesServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, mongoClusterName string, firewallRuleName string, resource armmongocluster.FirewallRule, options *armmongocluster.FirewallRulesClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmongocluster.FirewallRulesClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method FirewallRulesClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, mongoClusterName string, firewallRuleName string, options *armmongocluster.FirewallRulesClientBeginDeleteOptions) (resp azfake.PollerResponder[armmongocluster.FirewallRulesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method FirewallRulesClient.Get
@@ -191,9 +191,9 @@ func (f *FirewallRulesServerTransport) dispatchBeginDelete(req *http.Request) (*
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		f.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		f.beginDelete.remove(req)

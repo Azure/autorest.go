@@ -30,7 +30,7 @@ type P2SVPNGatewaysServer struct {
 	BeginDelete func(ctx context.Context, resourceGroupName string, gatewayName string, options *armnetwork.P2SVPNGatewaysClientBeginDeleteOptions) (resp azfake.PollerResponder[armnetwork.P2SVPNGatewaysClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginDisconnectP2SVPNConnections is the fake for method P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDisconnectP2SVPNConnections func(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request armnetwork.P2SVPNConnectionRequest, options *armnetwork.P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (resp azfake.PollerResponder[armnetwork.P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse], errResp azfake.ErrorResponder)
 
 	// BeginGenerateVPNProfile is the fake for method P2SVPNGatewaysClient.BeginGenerateVPNProfile
@@ -288,9 +288,9 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginDisconnectP2SVPNConnections
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		p.beginDisconnectP2SVPNConnections.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDisconnectP2SVPNConnections) {
 		p.beginDisconnectP2SVPNConnections.remove(req)

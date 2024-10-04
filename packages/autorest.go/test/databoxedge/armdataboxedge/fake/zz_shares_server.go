@@ -38,7 +38,7 @@ type SharesServer struct {
 	NewListByDataBoxEdgeDevicePager func(deviceName string, resourceGroupName string, options *armdataboxedge.SharesClientListByDataBoxEdgeDeviceOptions) (resp azfake.PagerResponder[armdataboxedge.SharesClientListByDataBoxEdgeDeviceResponse])
 
 	// BeginRefresh is the fake for method SharesClient.BeginRefresh
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRefresh func(ctx context.Context, deviceName string, name string, resourceGroupName string, options *armdataboxedge.SharesClientBeginRefreshOptions) (resp azfake.PollerResponder[armdataboxedge.SharesClientRefreshResponse], errResp azfake.ErrorResponder)
 }
 
@@ -326,9 +326,9 @@ func (s *SharesServerTransport) dispatchBeginRefresh(req *http.Request) (*http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginRefresh.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRefresh) {
 		s.beginRefresh.remove(req)

@@ -46,7 +46,7 @@ type LoadBalancersServer struct {
 	BeginListInboundNatRulePortMappings func(ctx context.Context, groupName string, loadBalancerName string, backendPoolName string, parameters armnetwork.QueryInboundNatRulePortMappingRequest, options *armnetwork.LoadBalancersClientBeginListInboundNatRulePortMappingsOptions) (resp azfake.PollerResponder[armnetwork.LoadBalancersClientListInboundNatRulePortMappingsResponse], errResp azfake.ErrorResponder)
 
 	// BeginSwapPublicIPAddresses is the fake for method LoadBalancersClient.BeginSwapPublicIPAddresses
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginSwapPublicIPAddresses func(ctx context.Context, location string, parameters armnetwork.LoadBalancerVipSwapRequest, options *armnetwork.LoadBalancersClientBeginSwapPublicIPAddressesOptions) (resp azfake.PollerResponder[armnetwork.LoadBalancersClientSwapPublicIPAddressesResponse], errResp azfake.ErrorResponder)
 
 	// UpdateTags is the fake for method LoadBalancersClient.UpdateTags
@@ -425,9 +425,9 @@ func (l *LoadBalancersServerTransport) dispatchBeginSwapPublicIPAddresses(req *h
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginSwapPublicIPAddresses.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginSwapPublicIPAddresses) {
 		l.beginSwapPublicIPAddresses.remove(req)

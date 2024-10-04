@@ -27,7 +27,7 @@ type ManagementServer struct {
 	CheckDNSNameAvailability func(ctx context.Context, location string, domainNameLabel string, options *armnetwork.ManagementClientCheckDNSNameAvailabilityOptions) (resp azfake.Responder[armnetwork.ManagementClientCheckDNSNameAvailabilityResponse], errResp azfake.ErrorResponder)
 
 	// BeginDeleteBastionShareableLink is the fake for method ManagementClient.BeginDeleteBastionShareableLink
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDeleteBastionShareableLink func(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest armnetwork.BastionShareableLinkListRequest, options *armnetwork.ManagementClientBeginDeleteBastionShareableLinkOptions) (resp azfake.PollerResponder[armnetwork.ManagementClientDeleteBastionShareableLinkResponse], errResp azfake.ErrorResponder)
 
 	// NewDisconnectActiveSessionsPager is the fake for method ManagementClient.NewDisconnectActiveSessionsPager
@@ -235,9 +235,9 @@ func (m *ManagementServerTransport) dispatchBeginDeleteBastionShareableLink(req 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		m.beginDeleteBastionShareableLink.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDeleteBastionShareableLink) {
 		m.beginDeleteBastionShareableLink.remove(req)

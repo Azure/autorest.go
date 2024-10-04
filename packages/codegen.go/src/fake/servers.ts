@@ -112,7 +112,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
       content += `\t// ${operationName} is the fake for method ${client.name}.${operationName}\n`;
       const successCodes = new Array<string>();
       if (method.responseEnvelope.result && go.isAnyResult(method.responseEnvelope.result)) {
-        for (const httpStatus of values(method.httpStatusCodes)) {
+        for (const httpStatus of getMethodStatusCodes(method)) {
           const result = method.responseEnvelope.result.httpStatusCodeType[httpStatus];
           if (!result) {
             // the operation contains a mix of schemas and non-schema responses
@@ -126,7 +126,7 @@ export async function generateServers(codeModel: go.CodeModel): Promise<ServerCo
           content += `\t//   - ${successCode}\n`;
         }
       } else {
-        for (const statusCode of values(method.httpStatusCodes)) {
+        for (const statusCode of getMethodStatusCodes(method)) {
           successCodes.push(`${helpers.formatStatusCode(statusCode)}`);
         }
         content += `\t// HTTP status codes to indicate success: ${successCodes.join(', ')}\n`;
@@ -673,6 +673,22 @@ function dispatchForOperationBody(clientPkg: string, receiverName: string, metho
   return content;
 }
 
+function getMethodStatusCodes(method: go.Method): Array<number> {
+  // NOTE: don't modify the original array!
+  const statusCodes = Array.from(method.httpStatusCodes);
+  if (go.isLROMethod(method)) {
+    if (!statusCodes.includes(200)) {
+      // pollers always include 200 as an acceptible status code so we emulate that here
+      statusCodes.unshift(200);
+    }
+    if (!method.responseEnvelope.result && !statusCodes.includes(204)) {
+      // also include 204 if the LRO doesn't return a body
+      statusCodes.push(204);
+    }
+  }
+  return statusCodes;
+}
+
 function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.Method, imports: ImportManager): string {
   const operationName = fixUpMethodName(method);
   const localVarName = uncapitalize(operationName);
@@ -687,7 +703,7 @@ function dispatchForLROBody(clientPkg: string, receiverName: string, method: go.
   content += `\tresp, err := server.PollerResponderNext(${localVarName}, req)\n`;
   content += '\tif err != nil {\n\t\treturn nil, err\n\t}\n\n';
 
-  const formattedStatusCodes = helpers.formatStatusCodes(method.httpStatusCodes);
+  const formattedStatusCodes = helpers.formatStatusCodes(getMethodStatusCodes(method));
   content += `\tif !contains([]int{${formattedStatusCodes}}, resp.StatusCode) {\n`;
   content += `\t\t${operationStateMachine}.remove(req)\n`;
   content += `\t\treturn nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are ${formattedStatusCodes}", resp.StatusCode)}\n\t}\n`;

@@ -20,11 +20,11 @@ import (
 // LROsCustomHeaderServer is a fake server for instances of the lrogroup.LROsCustomHeaderClient type.
 type LROsCustomHeaderServer struct {
 	// BeginPost202Retry200 is the fake for method LROsCustomHeaderClient.BeginPost202Retry200
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginPost202Retry200 func(ctx context.Context, options *lrogroup.LROsCustomHeaderClientBeginPost202Retry200Options) (resp azfake.PollerResponder[lrogroup.LROsCustomHeaderClientPost202Retry200Response], errResp azfake.ErrorResponder)
 
 	// BeginPostAsyncRetrySucceeded is the fake for method LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginPostAsyncRetrySucceeded func(ctx context.Context, options *lrogroup.LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (resp azfake.PollerResponder[lrogroup.LROsCustomHeaderClientPostAsyncRetrySucceededResponse], errResp azfake.ErrorResponder)
 
 	// BeginPut201CreatingSucceeded200 is the fake for method LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
@@ -132,9 +132,9 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPost202Retry200(req *http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginPost202Retry200.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginPost202Retry200) {
 		l.beginPost202Retry200.remove(req)
@@ -172,9 +172,9 @@ func (l *LROsCustomHeaderServerTransport) dispatchBeginPostAsyncRetrySucceeded(r
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginPostAsyncRetrySucceeded.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginPostAsyncRetrySucceeded) {
 		l.beginPostAsyncRetrySucceeded.remove(req)

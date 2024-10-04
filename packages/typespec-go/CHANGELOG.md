@@ -7,6 +7,10 @@
 * Fake servers will honor the caller's context in the `*http.Request`.
 * Add missing error check when parsing multipart/form content in fakes.
 
+### Other Fixes
+
+* Fake pollers will always include `http.StatusOK` as an acceptible status code, and `http.StatusNoContent` for operations that don't return a body.
+
 ## 0.3.1 (2024-08-14)
 
 ### Bugs Fixed

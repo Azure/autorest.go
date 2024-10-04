@@ -29,7 +29,7 @@ type AccountsServer struct {
 	BeginCreate func(ctx context.Context, resourceGroupName string, accountName string, resource armcodesigning.Account, options *armcodesigning.AccountsClientBeginCreateOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientCreateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method AccountsClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, accountName string, options *armcodesigning.AccountsClientBeginDeleteOptions) (resp azfake.PollerResponder[armcodesigning.AccountsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method AccountsClient.Get
@@ -234,9 +234,9 @@ func (a *AccountsServerTransport) dispatchBeginDelete(req *http.Request) (*http.
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		a.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		a.beginDelete.remove(req)

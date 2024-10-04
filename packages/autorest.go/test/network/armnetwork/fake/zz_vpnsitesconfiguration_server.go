@@ -21,7 +21,7 @@ import (
 // VPNSitesConfigurationServer is a fake server for instances of the armnetwork.VPNSitesConfigurationClient type.
 type VPNSitesConfigurationServer struct {
 	// BeginDownload is the fake for method VPNSitesConfigurationClient.BeginDownload
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDownload func(ctx context.Context, resourceGroupName string, virtualWANName string, request armnetwork.GetVPNSitesConfigurationRequest, options *armnetwork.VPNSitesConfigurationClientBeginDownloadOptions) (resp azfake.PollerResponder[armnetwork.VPNSitesConfigurationClientDownloadResponse], errResp azfake.ErrorResponder)
 }
 
@@ -117,9 +117,9 @@ func (v *VPNSitesConfigurationServerTransport) dispatchBeginDownload(req *http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginDownload.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDownload) {
 		v.beginDownload.remove(req)
