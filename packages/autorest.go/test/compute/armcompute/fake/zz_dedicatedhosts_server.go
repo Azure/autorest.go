@@ -38,7 +38,7 @@ type DedicatedHostsServer struct {
 	NewListByHostGroupPager func(resourceGroupName string, hostGroupName string, options *armcompute.DedicatedHostsClientListByHostGroupOptions) (resp azfake.PagerResponder[armcompute.DedicatedHostsClientListByHostGroupResponse])
 
 	// BeginRestart is the fake for method DedicatedHostsClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
 	BeginRestart func(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *armcompute.DedicatedHostsClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.DedicatedHostsClientRestartResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method DedicatedHostsClient.BeginUpdate
@@ -346,9 +346,9 @@ func (d *DedicatedHostsServerTransport) dispatchBeginRestart(req *http.Request) 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusNoContent}, resp.StatusCode) {
 		d.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		d.beginRestart.remove(req)

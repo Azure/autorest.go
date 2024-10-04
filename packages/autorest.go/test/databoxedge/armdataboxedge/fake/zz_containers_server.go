@@ -26,7 +26,7 @@ type ContainersServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam armdataboxedge.Container, options *armdataboxedge.ContainersClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armdataboxedge.ContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method ContainersClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *armdataboxedge.ContainersClientBeginDeleteOptions) (resp azfake.PollerResponder[armdataboxedge.ContainersClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method ContainersClient.Get
@@ -38,7 +38,7 @@ type ContainersServer struct {
 	NewListByStorageAccountPager func(deviceName string, storageAccountName string, resourceGroupName string, options *armdataboxedge.ContainersClientListByStorageAccountOptions) (resp azfake.PagerResponder[armdataboxedge.ContainersClientListByStorageAccountResponse])
 
 	// BeginRefresh is the fake for method ContainersClient.BeginRefresh
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRefresh func(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *armdataboxedge.ContainersClientBeginRefreshOptions) (resp azfake.PollerResponder[armdataboxedge.ContainersClientRefreshResponse], errResp azfake.ErrorResponder)
 }
 
@@ -208,9 +208,9 @@ func (c *ContainersServerTransport) dispatchBeginDelete(req *http.Request) (*htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		c.beginDelete.remove(req)
@@ -346,9 +346,9 @@ func (c *ContainersServerTransport) dispatchBeginRefresh(req *http.Request) (*ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginRefresh.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRefresh) {
 		c.beginRefresh.remove(req)

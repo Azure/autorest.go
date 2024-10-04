@@ -31,7 +31,7 @@ type VirtualNetworkGatewaysServer struct {
 	BeginDelete func(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *armnetwork.VirtualNetworkGatewaysClientBeginDeleteOptions) (resp azfake.PollerResponder[armnetwork.VirtualNetworkGatewaysClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// BeginDisconnectVirtualNetworkGatewayVPNConnections is the fake for method VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDisconnectVirtualNetworkGatewayVPNConnections func(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request armnetwork.P2SVPNConnectionRequest, options *armnetwork.VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (resp azfake.PollerResponder[armnetwork.VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse], errResp azfake.ErrorResponder)
 
 	// BeginGenerateVPNProfile is the fake for method VirtualNetworkGatewaysClient.BeginGenerateVPNProfile
@@ -83,7 +83,7 @@ type VirtualNetworkGatewaysServer struct {
 	BeginReset func(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *armnetwork.VirtualNetworkGatewaysClientBeginResetOptions) (resp azfake.PollerResponder[armnetwork.VirtualNetworkGatewaysClientResetResponse], errResp azfake.ErrorResponder)
 
 	// BeginResetVPNClientSharedKey is the fake for method VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginResetVPNClientSharedKey func(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *armnetwork.VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (resp azfake.PollerResponder[armnetwork.VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse], errResp azfake.ErrorResponder)
 
 	// BeginSetVpnclientIPSecParameters is the fake for method VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters
@@ -373,9 +373,9 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginDisconnectVirtualNe
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginDisconnectVirtualNetworkGatewayVPNConnections.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDisconnectVirtualNetworkGatewayVPNConnections) {
 		v.beginDisconnectVirtualNetworkGatewayVPNConnections.remove(req)
@@ -961,9 +961,9 @@ func (v *VirtualNetworkGatewaysServerTransport) dispatchBeginResetVPNClientShare
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginResetVPNClientSharedKey.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginResetVPNClientSharedKey) {
 		v.beginResetVPNClientSharedKey.remove(req)

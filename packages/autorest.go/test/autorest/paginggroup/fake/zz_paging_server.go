@@ -59,7 +59,7 @@ type PagingServer struct {
 	NewGetMultiplePagesFragmentWithGroupingNextLinkPager func(customParameterGroup paginggroup.CustomParameterGroup, options *paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) (resp azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse])
 
 	// BeginGetMultiplePagesLRO is the fake for method PagingClient.BeginGetMultiplePagesLRO
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginGetMultiplePagesLRO func(ctx context.Context, options *paginggroup.PagingClientBeginGetMultiplePagesLROOptions) (resp azfake.PollerResponder[azfake.PagerResponder[paginggroup.PagingClientGetMultiplePagesLROResponse]], errResp azfake.ErrorResponder)
 
 	// NewGetMultiplePagesRetryFirstPager is the fake for method PagingClient.NewGetMultiplePagesRetryFirstPager
@@ -624,9 +624,9 @@ func (p *PagingServerTransport) dispatchBeginGetMultiplePagesLRO(req *http.Reque
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		p.beginGetMultiplePagesLRO.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetMultiplePagesLRO) {
 		p.beginGetMultiplePagesLRO.remove(req)

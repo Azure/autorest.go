@@ -34,7 +34,7 @@ type DiskRestorePointServer struct {
 	NewListByRestorePointPager func(resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, options *armcompute.DiskRestorePointClientListByRestorePointOptions) (resp azfake.PagerResponder[armcompute.DiskRestorePointClientListByRestorePointResponse])
 
 	// BeginRevokeAccess is the fake for method DiskRestorePointClient.BeginRevokeAccess
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRevokeAccess func(ctx context.Context, resourceGroupName string, restorePointCollectionName string, vmRestorePointName string, diskRestorePointName string, options *armcompute.DiskRestorePointClientBeginRevokeAccessOptions) (resp azfake.PollerResponder[armcompute.DiskRestorePointClientRevokeAccessResponse], errResp azfake.ErrorResponder)
 }
 
@@ -286,9 +286,9 @@ func (d *DiskRestorePointServerTransport) dispatchBeginRevokeAccess(req *http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		d.beginRevokeAccess.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRevokeAccess) {
 		d.beginRevokeAccess.remove(req)

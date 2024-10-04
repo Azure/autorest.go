@@ -18,7 +18,7 @@ import (
 // RPCServer is a fake server for instances of the lrorpcgroup.RPCClient type.
 type RPCServer struct {
 	// BeginLongRunningRPC is the fake for method RPCClient.BeginLongRunningRPC
-	// HTTP status codes to indicate success: http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginLongRunningRPC func(ctx context.Context, body lrorpcgroup.GenerationOptions, options *lrorpcgroup.RPCClientBeginLongRunningRPCOptions) (resp azfake.PollerResponder[lrorpcgroup.RPCClientLongRunningRPCResponse], errResp azfake.ErrorResponder)
 }
 
@@ -100,9 +100,9 @@ func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*ht
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
 		r.beginLongRunningRPC.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginLongRunningRPC) {
 		r.beginLongRunningRPC.remove(req)

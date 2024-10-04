@@ -25,7 +25,7 @@ type PoolsServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, poolName string, resource armdevopsinfrastructure.Pool, options *armdevopsinfrastructure.PoolsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armdevopsinfrastructure.PoolsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method PoolsClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, poolName string, options *armdevopsinfrastructure.PoolsClientBeginDeleteOptions) (resp azfake.PollerResponder[armdevopsinfrastructure.PoolsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method PoolsClient.Get
@@ -199,9 +199,9 @@ func (p *PoolsServerTransport) dispatchBeginDelete(req *http.Request) (*http.Res
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		p.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		p.beginDelete.remove(req)

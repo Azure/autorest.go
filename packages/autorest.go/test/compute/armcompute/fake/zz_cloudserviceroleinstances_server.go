@@ -42,15 +42,15 @@ type CloudServiceRoleInstancesServer struct {
 	NewListPager func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientListOptions) (resp azfake.PagerResponder[armcompute.CloudServiceRoleInstancesClientListResponse])
 
 	// BeginRebuild is the fake for method CloudServiceRoleInstancesClient.BeginRebuild
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRebuild func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRebuildOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRebuildResponse], errResp azfake.ErrorResponder)
 
 	// BeginReimage is the fake for method CloudServiceRoleInstancesClient.BeginReimage
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginReimage func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginReimageOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientReimageResponse], errResp azfake.ErrorResponder)
 
 	// BeginRestart is the fake for method CloudServiceRoleInstancesClient.BeginRestart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRestart func(ctx context.Context, roleInstanceName string, resourceGroupName string, cloudServiceName string, options *armcompute.CloudServiceRoleInstancesClientBeginRestartOptions) (resp azfake.PollerResponder[armcompute.CloudServiceRoleInstancesClientRestartResponse], errResp azfake.ErrorResponder)
 }
 
@@ -395,9 +395,9 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRebuild(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginRebuild.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRebuild) {
 		c.beginRebuild.remove(req)
@@ -443,9 +443,9 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginReimage(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginReimage.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginReimage) {
 		c.beginReimage.remove(req)
@@ -491,9 +491,9 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRestart(req *htt
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginRestart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRestart) {
 		c.beginRestart.remove(req)

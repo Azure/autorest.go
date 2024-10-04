@@ -29,7 +29,7 @@ type MongoClustersServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, mongoClusterName string, resource armmongocluster.MongoCluster, options *armmongocluster.MongoClustersClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmongocluster.MongoClustersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method MongoClustersClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, mongoClusterName string, options *armmongocluster.MongoClustersClientBeginDeleteOptions) (resp azfake.PollerResponder[armmongocluster.MongoClustersClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method MongoClustersClient.Get
@@ -244,9 +244,9 @@ func (m *MongoClustersServerTransport) dispatchBeginDelete(req *http.Request) (*
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		m.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		m.beginDelete.remove(req)

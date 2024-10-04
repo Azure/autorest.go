@@ -31,7 +31,7 @@ type CloudServicesUpdateDomainServer struct {
 	NewListUpdateDomainsPager func(resourceGroupName string, cloudServiceName string, options *armcompute.CloudServicesUpdateDomainClientListUpdateDomainsOptions) (resp azfake.PagerResponder[armcompute.CloudServicesUpdateDomainClientListUpdateDomainsResponse])
 
 	// BeginWalkUpdateDomain is the fake for method CloudServicesUpdateDomainClient.BeginWalkUpdateDomain
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginWalkUpdateDomain func(ctx context.Context, resourceGroupName string, cloudServiceName string, updateDomain int32, parameters armcompute.UpdateDomain, options *armcompute.CloudServicesUpdateDomainClientBeginWalkUpdateDomainOptions) (resp azfake.PollerResponder[armcompute.CloudServicesUpdateDomainClientWalkUpdateDomainResponse], errResp azfake.ErrorResponder)
 }
 
@@ -235,9 +235,9 @@ func (c *CloudServicesUpdateDomainServerTransport) dispatchBeginWalkUpdateDomain
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		c.beginWalkUpdateDomain.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginWalkUpdateDomain) {
 		c.beginWalkUpdateDomain.remove(req)

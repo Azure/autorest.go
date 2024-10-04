@@ -25,7 +25,7 @@ type NestedProxyResourcesServer struct {
 	BeginCreateOrReplace func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, resource resources.NestedProxyResource, options *resources.NestedProxyResourcesClientBeginCreateOrReplaceOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientCreateOrReplaceResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method NestedProxyResourcesClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, topLevelTrackedResourceName string, nextedProxyResourceName string, options *resources.NestedProxyResourcesClientBeginDeleteOptions) (resp azfake.PollerResponder[resources.NestedProxyResourcesClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method NestedProxyResourcesClient.Get
@@ -199,9 +199,9 @@ func (n *NestedProxyResourcesServerTransport) dispatchBeginDelete(req *http.Requ
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		n.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		n.beginDelete.remove(req)

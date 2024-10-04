@@ -46,7 +46,7 @@ type SnapshotsServer struct {
 	NewListByResourceGroupPager func(resourceGroupName string, options *armcompute.SnapshotsClientListByResourceGroupOptions) (resp azfake.PagerResponder[armcompute.SnapshotsClientListByResourceGroupResponse])
 
 	// BeginRevokeAccess is the fake for method SnapshotsClient.BeginRevokeAccess
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginRevokeAccess func(ctx context.Context, resourceGroupName string, snapshotName string, options *armcompute.SnapshotsClientBeginRevokeAccessOptions) (resp azfake.PollerResponder[armcompute.SnapshotsClientRevokeAccessResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method SnapshotsClient.BeginUpdate
@@ -411,9 +411,9 @@ func (s *SnapshotsServerTransport) dispatchBeginRevokeAccess(req *http.Request) 
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		s.beginRevokeAccess.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginRevokeAccess) {
 		s.beginRevokeAccess.remove(req)

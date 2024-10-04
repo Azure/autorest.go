@@ -78,11 +78,11 @@ type ApplicationGatewaysServer struct {
 	ListAvailableWafRuleSets func(ctx context.Context, options *armnetwork.ApplicationGatewaysClientListAvailableWafRuleSetsOptions) (resp azfake.Responder[armnetwork.ApplicationGatewaysClientListAvailableWafRuleSetsResponse], errResp azfake.ErrorResponder)
 
 	// BeginStart is the fake for method ApplicationGatewaysClient.BeginStart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStart func(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *armnetwork.ApplicationGatewaysClientBeginStartOptions) (resp azfake.PollerResponder[armnetwork.ApplicationGatewaysClientStartResponse], errResp azfake.ErrorResponder)
 
 	// BeginStop is the fake for method ApplicationGatewaysClient.BeginStop
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStop func(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *armnetwork.ApplicationGatewaysClientBeginStopOptions) (resp azfake.PollerResponder[armnetwork.ApplicationGatewaysClientStopResponse], errResp azfake.ErrorResponder)
 
 	// UpdateTags is the fake for method ApplicationGatewaysClient.UpdateTags
@@ -724,9 +724,9 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStart(req *http.Reques
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		a.beginStart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStart) {
 		a.beginStart.remove(req)
@@ -768,9 +768,9 @@ func (a *ApplicationGatewaysServerTransport) dispatchBeginStop(req *http.Request
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		a.beginStop.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStop) {
 		a.beginStop.remove(req)

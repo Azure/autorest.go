@@ -35,15 +35,15 @@ type VirtualHubsServer struct {
 	Get func(ctx context.Context, resourceGroupName string, virtualHubName string, options *armnetwork.VirtualHubsClientGetOptions) (resp azfake.Responder[armnetwork.VirtualHubsClientGetResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetEffectiveVirtualHubRoutes is the fake for method VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetEffectiveVirtualHubRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, options *armnetwork.VirtualHubsClientBeginGetEffectiveVirtualHubRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetEffectiveVirtualHubRoutesResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetInboundRoutes is the fake for method VirtualHubsClient.BeginGetInboundRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetInboundRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, getInboundRoutesParameters armnetwork.GetInboundRoutesParameters, options *armnetwork.VirtualHubsClientBeginGetInboundRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetInboundRoutesResponse], errResp azfake.ErrorResponder)
 
 	// BeginGetOutboundRoutes is the fake for method VirtualHubsClient.BeginGetOutboundRoutes
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginGetOutboundRoutes func(ctx context.Context, resourceGroupName string, virtualHubName string, getOutboundRoutesParameters armnetwork.GetOutboundRoutesParameters, options *armnetwork.VirtualHubsClientBeginGetOutboundRoutesOptions) (resp azfake.PollerResponder[armnetwork.VirtualHubsClientGetOutboundRoutesResponse], errResp azfake.ErrorResponder)
 
 	// NewListPager is the fake for method VirtualHubsClient.NewListPager
@@ -310,9 +310,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetEffectiveVirtualHubRoutes(r
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetEffectiveVirtualHubRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetEffectiveVirtualHubRoutes) {
 		v.beginGetEffectiveVirtualHubRoutes.remove(req)
@@ -358,9 +358,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetInboundRoutes(req *http.Req
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetInboundRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetInboundRoutes) {
 		v.beginGetInboundRoutes.remove(req)
@@ -406,9 +406,9 @@ func (v *VirtualHubsServerTransport) dispatchBeginGetOutboundRoutes(req *http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		v.beginGetOutboundRoutes.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginGetOutboundRoutes) {
 		v.beginGetOutboundRoutes.remove(req)

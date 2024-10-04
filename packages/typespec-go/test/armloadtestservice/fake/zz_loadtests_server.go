@@ -25,7 +25,7 @@ type LoadTestsServer struct {
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, resource armloadtestservice.LoadTestResource, options *armloadtestservice.LoadTestsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// BeginDelete is the fake for method LoadTestsClient.BeginDelete
-	// HTTP status codes to indicate success: http.StatusAccepted, http.StatusNoContent
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginDelete func(ctx context.Context, resourceGroupName string, loadTestName string, options *armloadtestservice.LoadTestsClientBeginDeleteOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientDeleteResponse], errResp azfake.ErrorResponder)
 
 	// Get is the fake for method LoadTestsClient.Get
@@ -207,9 +207,9 @@ func (l *LoadTestsServerTransport) dispatchBeginDelete(req *http.Request) (*http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginDelete.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginDelete) {
 		l.beginDelete.remove(req)
