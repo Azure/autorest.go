@@ -54,14 +54,20 @@ func (p *PathsServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PathsClient.GetEmpty":
-			res.resp, res.err = p.dispatchGetEmpty(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if pathsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pathsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PathsClient.GetEmpty":
+				res.resp, res.err = p.dispatchGetEmpty(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -115,4 +121,10 @@ func (p *PathsServerTransport) dispatchGetEmpty(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PathsServerTransport
+var pathsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

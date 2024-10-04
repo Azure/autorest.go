@@ -69,22 +69,28 @@ func (s *SpreadAliasServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SpreadAliasClient.SpreadAsRequestBody":
-			res.resp, res.err = s.dispatchSpreadAsRequestBody(req)
-		case "SpreadAliasClient.SpreadAsRequestParameter":
-			res.resp, res.err = s.dispatchSpreadAsRequestParameter(req)
-		case "SpreadAliasClient.SpreadParameterWithInnerAlias":
-			res.resp, res.err = s.dispatchSpreadParameterWithInnerAlias(req)
-		case "SpreadAliasClient.SpreadParameterWithInnerModel":
-			res.resp, res.err = s.dispatchSpreadParameterWithInnerModel(req)
-		case "SpreadAliasClient.SpreadWithMultipleParameters":
-			res.resp, res.err = s.dispatchSpreadWithMultipleParameters(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if spreadAliasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = spreadAliasServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SpreadAliasClient.SpreadAsRequestBody":
+				res.resp, res.err = s.dispatchSpreadAsRequestBody(req)
+			case "SpreadAliasClient.SpreadAsRequestParameter":
+				res.resp, res.err = s.dispatchSpreadAsRequestParameter(req)
+			case "SpreadAliasClient.SpreadParameterWithInnerAlias":
+				res.resp, res.err = s.dispatchSpreadParameterWithInnerAlias(req)
+			case "SpreadAliasClient.SpreadParameterWithInnerModel":
+				res.resp, res.err = s.dispatchSpreadParameterWithInnerModel(req)
+			case "SpreadAliasClient.SpreadWithMultipleParameters":
+				res.resp, res.err = s.dispatchSpreadWithMultipleParameters(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -278,4 +284,10 @@ func (s *SpreadAliasServerTransport) dispatchSpreadWithMultipleParameters(req *h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SpreadAliasServerTransport
+var spreadAliasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

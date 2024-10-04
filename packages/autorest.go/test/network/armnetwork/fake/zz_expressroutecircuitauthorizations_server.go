@@ -75,20 +75,26 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchToMethodFake(
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteCircuitAuthorizationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRouteCircuitAuthorizationsClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRouteCircuitAuthorizationsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteCircuitAuthorizationsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteCircuitAuthorizationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteCircuitAuthorizationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteCircuitAuthorizationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteCircuitAuthorizationsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRouteCircuitAuthorizationsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteCircuitAuthorizationsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (e *ExpressRouteCircuitAuthorizationsServerTransport) dispatchNewListPager(
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteCircuitAuthorizationsServerTransport
+var expressRouteCircuitAuthorizationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchToMethodFake
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FirewallPolicyRuleCollectionGroupsClient.BeginCreateOrUpdate":
-			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
-		case "FirewallPolicyRuleCollectionGroupsClient.BeginDelete":
-			res.resp, res.err = f.dispatchBeginDelete(req)
-		case "FirewallPolicyRuleCollectionGroupsClient.Get":
-			res.resp, res.err = f.dispatchGet(req)
-		case "FirewallPolicyRuleCollectionGroupsClient.NewListPager":
-			res.resp, res.err = f.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if firewallPolicyRuleCollectionGroupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallPolicyRuleCollectionGroupsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FirewallPolicyRuleCollectionGroupsClient.BeginCreateOrUpdate":
+				res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+			case "FirewallPolicyRuleCollectionGroupsClient.BeginDelete":
+				res.resp, res.err = f.dispatchBeginDelete(req)
+			case "FirewallPolicyRuleCollectionGroupsClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FirewallPolicyRuleCollectionGroupsClient.NewListPager":
+				res.resp, res.err = f.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (f *FirewallPolicyRuleCollectionGroupsServerTransport) dispatchNewListPager
 		f.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallPolicyRuleCollectionGroupsServerTransport
+var firewallPolicyRuleCollectionGroupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

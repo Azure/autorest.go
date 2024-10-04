@@ -79,22 +79,28 @@ func (l *LocalNetworkGatewaysServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LocalNetworkGatewaysClient.BeginCreateOrUpdate":
-			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
-		case "LocalNetworkGatewaysClient.BeginDelete":
-			res.resp, res.err = l.dispatchBeginDelete(req)
-		case "LocalNetworkGatewaysClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LocalNetworkGatewaysClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		case "LocalNetworkGatewaysClient.UpdateTags":
-			res.resp, res.err = l.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if localNetworkGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = localNetworkGatewaysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LocalNetworkGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LocalNetworkGatewaysClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LocalNetworkGatewaysClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LocalNetworkGatewaysClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			case "LocalNetworkGatewaysClient.UpdateTags":
+				res.resp, res.err = l.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -306,4 +312,10 @@ func (l *LocalNetworkGatewaysServerTransport) dispatchUpdateTags(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LocalNetworkGatewaysServerTransport
+var localNetworkGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

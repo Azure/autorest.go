@@ -64,16 +64,22 @@ func (a *AvailableServiceAliasesServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AvailableServiceAliasesClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		case "AvailableServiceAliasesClient.NewListByResourceGroupPager":
-			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if availableServiceAliasesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = availableServiceAliasesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AvailableServiceAliasesClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "AvailableServiceAliasesClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -164,4 +170,10 @@ func (a *AvailableServiceAliasesServerTransport) dispatchNewListByResourceGroupP
 		a.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AvailableServiceAliasesServerTransport
+var availableServiceAliasesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

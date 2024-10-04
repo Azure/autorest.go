@@ -56,16 +56,22 @@ func (r *ReadonlypropertyServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ReadonlypropertyClient.GetValid":
-			res.resp, res.err = r.dispatchGetValid(req)
-		case "ReadonlypropertyClient.PutValid":
-			res.resp, res.err = r.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if readonlypropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = readonlypropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ReadonlypropertyClient.GetValid":
+				res.resp, res.err = r.dispatchGetValid(req)
+			case "ReadonlypropertyClient.PutValid":
+				res.resp, res.err = r.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -120,4 +126,10 @@ func (r *ReadonlypropertyServerTransport) dispatchPutValid(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ReadonlypropertyServerTransport
+var readonlypropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

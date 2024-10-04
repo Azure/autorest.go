@@ -56,16 +56,22 @@ func (a *ArrayDatetimeValueServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayDatetimeValueClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ArrayDatetimeValueClient.Put":
-			res.resp, res.err = a.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayDatetimeValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayDatetimeValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayDatetimeValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayDatetimeValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -120,4 +126,10 @@ func (a *ArrayDatetimeValueServerTransport) dispatchPut(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayDatetimeValueServerTransport
+var arrayDatetimeValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

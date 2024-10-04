@@ -65,20 +65,26 @@ func (h *HTTPServerFailureServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPServerFailureClient.Delete505":
-			res.resp, res.err = h.dispatchDelete505(req)
-		case "HTTPServerFailureClient.Get501":
-			res.resp, res.err = h.dispatchGet501(req)
-		case "HTTPServerFailureClient.Head501":
-			res.resp, res.err = h.dispatchHead501(req)
-		case "HTTPServerFailureClient.Post505":
-			res.resp, res.err = h.dispatchPost505(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpServerFailureServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpServerFailureServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPServerFailureClient.Delete505":
+				res.resp, res.err = h.dispatchDelete505(req)
+			case "HTTPServerFailureClient.Get501":
+				res.resp, res.err = h.dispatchGet501(req)
+			case "HTTPServerFailureClient.Head501":
+				res.resp, res.err = h.dispatchHead501(req)
+			case "HTTPServerFailureClient.Post505":
+				res.resp, res.err = h.dispatchPost505(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -187,4 +193,10 @@ func (h *HTTPServerFailureServerTransport) dispatchPost505(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPServerFailureServerTransport
+var httpServerFailureServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

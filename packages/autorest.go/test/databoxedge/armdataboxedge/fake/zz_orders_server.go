@@ -79,22 +79,28 @@ func (o *OrdersServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OrdersClient.BeginCreateOrUpdate":
-			res.resp, res.err = o.dispatchBeginCreateOrUpdate(req)
-		case "OrdersClient.BeginDelete":
-			res.resp, res.err = o.dispatchBeginDelete(req)
-		case "OrdersClient.Get":
-			res.resp, res.err = o.dispatchGet(req)
-		case "OrdersClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = o.dispatchNewListByDataBoxEdgeDevicePager(req)
-		case "OrdersClient.ListDCAccessCode":
-			res.resp, res.err = o.dispatchListDCAccessCode(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if ordersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = ordersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OrdersClient.BeginCreateOrUpdate":
+				res.resp, res.err = o.dispatchBeginCreateOrUpdate(req)
+			case "OrdersClient.BeginDelete":
+				res.resp, res.err = o.dispatchBeginDelete(req)
+			case "OrdersClient.Get":
+				res.resp, res.err = o.dispatchGet(req)
+			case "OrdersClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = o.dispatchNewListByDataBoxEdgeDevicePager(req)
+			case "OrdersClient.ListDCAccessCode":
+				res.resp, res.err = o.dispatchListDCAccessCode(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -306,4 +312,10 @@ func (o *OrdersServerTransport) dispatchListDCAccessCode(req *http.Request) (*ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OrdersServerTransport
+var ordersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

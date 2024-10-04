@@ -75,20 +75,26 @@ func (e *ExpressRouteCrossConnectionPeeringsServerTransport) dispatchToMethodFak
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRouteCrossConnectionPeeringsClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRouteCrossConnectionPeeringsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteCrossConnectionPeeringsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteCrossConnectionPeeringsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteCrossConnectionPeeringsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteCrossConnectionPeeringsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRouteCrossConnectionPeeringsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteCrossConnectionPeeringsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (e *ExpressRouteCrossConnectionPeeringsServerTransport) dispatchNewListPage
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteCrossConnectionPeeringsServerTransport
+var expressRouteCrossConnectionPeeringsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -51,14 +51,20 @@ func (s *ServiceBazFooServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ServiceBazFooClient.Seven":
-			res.resp, res.err = s.dispatchSeven(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if serviceBazFooServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceBazFooServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ServiceBazFooClient.Seven":
+				res.resp, res.err = s.dispatchSeven(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -90,4 +96,10 @@ func (s *ServiceBazFooServerTransport) dispatchSeven(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceBazFooServerTransport
+var serviceBazFooServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

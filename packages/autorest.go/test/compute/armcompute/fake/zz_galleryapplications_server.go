@@ -81,22 +81,28 @@ func (g *GalleryApplicationsServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "GalleryApplicationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
-		case "GalleryApplicationsClient.BeginDelete":
-			res.resp, res.err = g.dispatchBeginDelete(req)
-		case "GalleryApplicationsClient.Get":
-			res.resp, res.err = g.dispatchGet(req)
-		case "GalleryApplicationsClient.NewListByGalleryPager":
-			res.resp, res.err = g.dispatchNewListByGalleryPager(req)
-		case "GalleryApplicationsClient.BeginUpdate":
-			res.resp, res.err = g.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if galleryApplicationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleryApplicationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "GalleryApplicationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleryApplicationsClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleryApplicationsClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleryApplicationsClient.NewListByGalleryPager":
+				res.resp, res.err = g.dispatchNewListByGalleryPager(req)
+			case "GalleryApplicationsClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -339,4 +345,10 @@ func (g *GalleryApplicationsServerTransport) dispatchBeginUpdate(req *http.Reque
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleryApplicationsServerTransport
+var galleryApplicationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

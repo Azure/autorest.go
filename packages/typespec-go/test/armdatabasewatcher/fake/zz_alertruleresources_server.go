@@ -70,20 +70,26 @@ func (a *AlertRuleResourcesServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AlertRuleResourcesClient.CreateOrUpdate":
-			res.resp, res.err = a.dispatchCreateOrUpdate(req)
-		case "AlertRuleResourcesClient.Delete":
-			res.resp, res.err = a.dispatchDelete(req)
-		case "AlertRuleResourcesClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AlertRuleResourcesClient.NewListByParentPager":
-			res.resp, res.err = a.dispatchNewListByParentPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if alertRuleResourcesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = alertRuleResourcesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AlertRuleResourcesClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "AlertRuleResourcesClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "AlertRuleResourcesClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AlertRuleResourcesClient.NewListByParentPager":
+				res.resp, res.err = a.dispatchNewListByParentPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -252,4 +258,10 @@ func (a *AlertRuleResourcesServerTransport) dispatchNewListByParentPager(req *ht
 		a.newListByParentPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AlertRuleResourcesServerTransport
+var alertRuleResourcesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -58,14 +58,20 @@ func (i *InboundSecurityRuleServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InboundSecurityRuleClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if inboundSecurityRuleServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = inboundSecurityRuleServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InboundSecurityRuleClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -130,4 +136,10 @@ func (i *InboundSecurityRuleServerTransport) dispatchBeginCreateOrUpdate(req *ht
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InboundSecurityRuleServerTransport
+var inboundSecurityRuleServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

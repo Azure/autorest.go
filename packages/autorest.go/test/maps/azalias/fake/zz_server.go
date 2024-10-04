@@ -98,28 +98,34 @@ func (s *ServerTransport) dispatchToMethodFake(req *http.Request, method string)
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "Client.Create":
-			res.resp, res.err = s.dispatchCreate(req)
-		case "Client.GetScript":
-			res.resp, res.err = s.dispatchGetScript(req)
-		case "Client.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "Client.BeginListLRO":
-			res.resp, res.err = s.dispatchBeginListLRO(req)
-		case "Client.NewListWithSharedNextOnePager":
-			res.resp, res.err = s.dispatchNewListWithSharedNextOnePager(req)
-		case "Client.NewListWithSharedNextTwoPager":
-			res.resp, res.err = s.dispatchNewListWithSharedNextTwoPager(req)
-		case "Client.PolicyAssignment":
-			res.resp, res.err = s.dispatchPolicyAssignment(req)
-		case "Client.UploadForm":
-			res.resp, res.err = s.dispatchUploadForm(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if serverTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serverTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "Client.Create":
+				res.resp, res.err = s.dispatchCreate(req)
+			case "Client.GetScript":
+				res.resp, res.err = s.dispatchGetScript(req)
+			case "Client.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "Client.BeginListLRO":
+				res.resp, res.err = s.dispatchBeginListLRO(req)
+			case "Client.NewListWithSharedNextOnePager":
+				res.resp, res.err = s.dispatchNewListWithSharedNextOnePager(req)
+			case "Client.NewListWithSharedNextTwoPager":
+				res.resp, res.err = s.dispatchNewListWithSharedNextTwoPager(req)
+			case "Client.PolicyAssignment":
+				res.resp, res.err = s.dispatchPolicyAssignment(req)
+			case "Client.UploadForm":
+				res.resp, res.err = s.dispatchUploadForm(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -720,4 +726,10 @@ func (s *ServerTransport) dispatchUploadForm(req *http.Request) (*http.Response,
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServerTransport
+var serverTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

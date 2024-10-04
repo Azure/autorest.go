@@ -185,58 +185,64 @@ func (v *VirtualMachineScaleSetsServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineScaleSetsClient.ConvertToSinglePlacementGroup":
-			res.resp, res.err = v.dispatchConvertToSinglePlacementGroup(req)
-		case "VirtualMachineScaleSetsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineScaleSetsClient.BeginDeallocate":
-			res.resp, res.err = v.dispatchBeginDeallocate(req)
-		case "VirtualMachineScaleSetsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineScaleSetsClient.BeginDeleteInstances":
-			res.resp, res.err = v.dispatchBeginDeleteInstances(req)
-		case "VirtualMachineScaleSetsClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk":
-			res.resp, res.err = v.dispatchForceRecoveryServiceFabricPlatformUpdateDomainWalk(req)
-		case "VirtualMachineScaleSetsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineScaleSetsClient.GetInstanceView":
-			res.resp, res.err = v.dispatchGetInstanceView(req)
-		case "VirtualMachineScaleSetsClient.NewGetOSUpgradeHistoryPager":
-			res.resp, res.err = v.dispatchNewGetOSUpgradeHistoryPager(req)
-		case "VirtualMachineScaleSetsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachineScaleSetsClient.NewListAllPager":
-			res.resp, res.err = v.dispatchNewListAllPager(req)
-		case "VirtualMachineScaleSetsClient.NewListByLocationPager":
-			res.resp, res.err = v.dispatchNewListByLocationPager(req)
-		case "VirtualMachineScaleSetsClient.NewListSKUsPager":
-			res.resp, res.err = v.dispatchNewListSKUsPager(req)
-		case "VirtualMachineScaleSetsClient.BeginPerformMaintenance":
-			res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
-		case "VirtualMachineScaleSetsClient.BeginPowerOff":
-			res.resp, res.err = v.dispatchBeginPowerOff(req)
-		case "VirtualMachineScaleSetsClient.BeginRedeploy":
-			res.resp, res.err = v.dispatchBeginRedeploy(req)
-		case "VirtualMachineScaleSetsClient.BeginReimage":
-			res.resp, res.err = v.dispatchBeginReimage(req)
-		case "VirtualMachineScaleSetsClient.BeginReimageAll":
-			res.resp, res.err = v.dispatchBeginReimageAll(req)
-		case "VirtualMachineScaleSetsClient.BeginRestart":
-			res.resp, res.err = v.dispatchBeginRestart(req)
-		case "VirtualMachineScaleSetsClient.BeginSetOrchestrationServiceState":
-			res.resp, res.err = v.dispatchBeginSetOrchestrationServiceState(req)
-		case "VirtualMachineScaleSetsClient.BeginStart":
-			res.resp, res.err = v.dispatchBeginStart(req)
-		case "VirtualMachineScaleSetsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		case "VirtualMachineScaleSetsClient.BeginUpdateInstances":
-			res.resp, res.err = v.dispatchBeginUpdateInstances(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineScaleSetsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetsClient.ConvertToSinglePlacementGroup":
+				res.resp, res.err = v.dispatchConvertToSinglePlacementGroup(req)
+			case "VirtualMachineScaleSetsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineScaleSetsClient.BeginDeallocate":
+				res.resp, res.err = v.dispatchBeginDeallocate(req)
+			case "VirtualMachineScaleSetsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetsClient.BeginDeleteInstances":
+				res.resp, res.err = v.dispatchBeginDeleteInstances(req)
+			case "VirtualMachineScaleSetsClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk":
+				res.resp, res.err = v.dispatchForceRecoveryServiceFabricPlatformUpdateDomainWalk(req)
+			case "VirtualMachineScaleSetsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetsClient.GetInstanceView":
+				res.resp, res.err = v.dispatchGetInstanceView(req)
+			case "VirtualMachineScaleSetsClient.NewGetOSUpgradeHistoryPager":
+				res.resp, res.err = v.dispatchNewGetOSUpgradeHistoryPager(req)
+			case "VirtualMachineScaleSetsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineScaleSetsClient.NewListAllPager":
+				res.resp, res.err = v.dispatchNewListAllPager(req)
+			case "VirtualMachineScaleSetsClient.NewListByLocationPager":
+				res.resp, res.err = v.dispatchNewListByLocationPager(req)
+			case "VirtualMachineScaleSetsClient.NewListSKUsPager":
+				res.resp, res.err = v.dispatchNewListSKUsPager(req)
+			case "VirtualMachineScaleSetsClient.BeginPerformMaintenance":
+				res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
+			case "VirtualMachineScaleSetsClient.BeginPowerOff":
+				res.resp, res.err = v.dispatchBeginPowerOff(req)
+			case "VirtualMachineScaleSetsClient.BeginRedeploy":
+				res.resp, res.err = v.dispatchBeginRedeploy(req)
+			case "VirtualMachineScaleSetsClient.BeginReimage":
+				res.resp, res.err = v.dispatchBeginReimage(req)
+			case "VirtualMachineScaleSetsClient.BeginReimageAll":
+				res.resp, res.err = v.dispatchBeginReimageAll(req)
+			case "VirtualMachineScaleSetsClient.BeginRestart":
+				res.resp, res.err = v.dispatchBeginRestart(req)
+			case "VirtualMachineScaleSetsClient.BeginSetOrchestrationServiceState":
+				res.resp, res.err = v.dispatchBeginSetOrchestrationServiceState(req)
+			case "VirtualMachineScaleSetsClient.BeginStart":
+				res.resp, res.err = v.dispatchBeginStart(req)
+			case "VirtualMachineScaleSetsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			case "VirtualMachineScaleSetsClient.BeginUpdateInstances":
+				res.resp, res.err = v.dispatchBeginUpdateInstances(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1374,4 +1380,10 @@ func (v *VirtualMachineScaleSetsServerTransport) dispatchBeginUpdateInstances(re
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetsServerTransport
+var virtualMachineScaleSetsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

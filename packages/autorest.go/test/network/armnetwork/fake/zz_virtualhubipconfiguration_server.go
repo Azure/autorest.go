@@ -75,20 +75,26 @@ func (v *VirtualHubIPConfigurationServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualHubIPConfigurationClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualHubIPConfigurationClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualHubIPConfigurationClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualHubIPConfigurationClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualHubIPConfigurationServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubIPConfigurationServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubIPConfigurationClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualHubIPConfigurationClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualHubIPConfigurationClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualHubIPConfigurationClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (v *VirtualHubIPConfigurationServerTransport) dispatchNewListPager(req *htt
 		v.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubIPConfigurationServerTransport
+var virtualHubIPConfigurationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

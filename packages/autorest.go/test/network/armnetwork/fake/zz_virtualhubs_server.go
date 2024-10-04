@@ -104,30 +104,36 @@ func (v *VirtualHubsServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualHubsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualHubsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualHubsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
-			res.resp, res.err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
-		case "VirtualHubsClient.BeginGetInboundRoutes":
-			res.resp, res.err = v.dispatchBeginGetInboundRoutes(req)
-		case "VirtualHubsClient.BeginGetOutboundRoutes":
-			res.resp, res.err = v.dispatchBeginGetOutboundRoutes(req)
-		case "VirtualHubsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualHubsClient.NewListByResourceGroupPager":
-			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
-		case "VirtualHubsClient.UpdateTags":
-			res.resp, res.err = v.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualHubsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualHubsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualHubsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualHubsClient.BeginGetEffectiveVirtualHubRoutes":
+				res.resp, res.err = v.dispatchBeginGetEffectiveVirtualHubRoutes(req)
+			case "VirtualHubsClient.BeginGetInboundRoutes":
+				res.resp, res.err = v.dispatchBeginGetInboundRoutes(req)
+			case "VirtualHubsClient.BeginGetOutboundRoutes":
+				res.resp, res.err = v.dispatchBeginGetOutboundRoutes(req)
+			case "VirtualHubsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualHubsClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			case "VirtualHubsClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -522,4 +528,10 @@ func (v *VirtualHubsServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubsServerTransport
+var virtualHubsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

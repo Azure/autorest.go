@@ -78,14 +78,20 @@ func (s *ServiceQuxServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ServiceQuxClient.Eight":
-			res.resp, res.err = s.dispatchEight(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if serviceQuxServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = serviceQuxServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ServiceQuxClient.Eight":
+				res.resp, res.err = s.dispatchEight(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -117,4 +123,10 @@ func (s *ServiceQuxServerTransport) dispatchEight(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ServiceQuxServerTransport
+var serviceQuxServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -122,36 +122,42 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchToMethodFake(r
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualNetworkGatewayConnectionsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas":
-			res.resp, res.err = v.dispatchBeginGetIkeSas(req)
-		case "VirtualNetworkGatewayConnectionsClient.GetSharedKey":
-			res.resp, res.err = v.dispatchGetSharedKey(req)
-		case "VirtualNetworkGatewayConnectionsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginResetConnection":
-			res.resp, res.err = v.dispatchBeginResetConnection(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey":
-			res.resp, res.err = v.dispatchBeginResetSharedKey(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey":
-			res.resp, res.err = v.dispatchBeginSetSharedKey(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture":
-			res.resp, res.err = v.dispatchBeginStartPacketCapture(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture":
-			res.resp, res.err = v.dispatchBeginStopPacketCapture(req)
-		case "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags":
-			res.resp, res.err = v.dispatchBeginUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualNetworkGatewayConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualNetworkGatewayConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualNetworkGatewayConnectionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginGetIkeSas":
+				res.resp, res.err = v.dispatchBeginGetIkeSas(req)
+			case "VirtualNetworkGatewayConnectionsClient.GetSharedKey":
+				res.resp, res.err = v.dispatchGetSharedKey(req)
+			case "VirtualNetworkGatewayConnectionsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginResetConnection":
+				res.resp, res.err = v.dispatchBeginResetConnection(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey":
+				res.resp, res.err = v.dispatchBeginResetSharedKey(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey":
+				res.resp, res.err = v.dispatchBeginSetSharedKey(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture":
+				res.resp, res.err = v.dispatchBeginStartPacketCapture(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture":
+				res.resp, res.err = v.dispatchBeginStopPacketCapture(req)
+			case "VirtualNetworkGatewayConnectionsClient.BeginUpdateTags":
+				res.resp, res.err = v.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -693,4 +699,10 @@ func (v *VirtualNetworkGatewayConnectionsServerTransport) dispatchBeginUpdateTag
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualNetworkGatewayConnectionsServerTransport
+var virtualNetworkGatewayConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -160,3 +160,9 @@ func (x *XMLServerTransport) dispatchToClientFake(req *http.Request, client stri
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to XMLServerTransport
+var xmlServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

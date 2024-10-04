@@ -54,14 +54,20 @@ func (j *JobsServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "JobsClient.Get":
-			res.resp, res.err = j.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if jobsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = jobsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "JobsClient.Get":
+				res.resp, res.err = j.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (j *JobsServerTransport) dispatchGet(req *http.Request) (*http.Response, er
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to JobsServerTransport
+var jobsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

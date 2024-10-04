@@ -184,80 +184,86 @@ func (s *SpecialWordsParametersServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SpecialWordsParametersClient.WithAnd":
-			res.resp, res.err = s.dispatchWithAnd(req)
-		case "SpecialWordsParametersClient.WithAs":
-			res.resp, res.err = s.dispatchWithAs(req)
-		case "SpecialWordsParametersClient.WithAssert":
-			res.resp, res.err = s.dispatchWithAssert(req)
-		case "SpecialWordsParametersClient.WithAsync":
-			res.resp, res.err = s.dispatchWithAsync(req)
-		case "SpecialWordsParametersClient.WithAwait":
-			res.resp, res.err = s.dispatchWithAwait(req)
-		case "SpecialWordsParametersClient.WithBreak":
-			res.resp, res.err = s.dispatchWithBreak(req)
-		case "SpecialWordsParametersClient.WithCancellationToken":
-			res.resp, res.err = s.dispatchWithCancellationToken(req)
-		case "SpecialWordsParametersClient.WithClass":
-			res.resp, res.err = s.dispatchWithClass(req)
-		case "SpecialWordsParametersClient.WithConstructor":
-			res.resp, res.err = s.dispatchWithConstructor(req)
-		case "SpecialWordsParametersClient.WithContinue":
-			res.resp, res.err = s.dispatchWithContinue(req)
-		case "SpecialWordsParametersClient.WithDef":
-			res.resp, res.err = s.dispatchWithDef(req)
-		case "SpecialWordsParametersClient.WithDel":
-			res.resp, res.err = s.dispatchWithDel(req)
-		case "SpecialWordsParametersClient.WithElif":
-			res.resp, res.err = s.dispatchWithElif(req)
-		case "SpecialWordsParametersClient.WithElse":
-			res.resp, res.err = s.dispatchWithElse(req)
-		case "SpecialWordsParametersClient.WithExcept":
-			res.resp, res.err = s.dispatchWithExcept(req)
-		case "SpecialWordsParametersClient.WithExec":
-			res.resp, res.err = s.dispatchWithExec(req)
-		case "SpecialWordsParametersClient.WithFinally":
-			res.resp, res.err = s.dispatchWithFinally(req)
-		case "SpecialWordsParametersClient.WithFor":
-			res.resp, res.err = s.dispatchWithFor(req)
-		case "SpecialWordsParametersClient.WithFrom":
-			res.resp, res.err = s.dispatchWithFrom(req)
-		case "SpecialWordsParametersClient.WithGlobal":
-			res.resp, res.err = s.dispatchWithGlobal(req)
-		case "SpecialWordsParametersClient.WithIf":
-			res.resp, res.err = s.dispatchWithIf(req)
-		case "SpecialWordsParametersClient.WithImport":
-			res.resp, res.err = s.dispatchWithImport(req)
-		case "SpecialWordsParametersClient.WithIn":
-			res.resp, res.err = s.dispatchWithIn(req)
-		case "SpecialWordsParametersClient.WithIs":
-			res.resp, res.err = s.dispatchWithIs(req)
-		case "SpecialWordsParametersClient.WithLambda":
-			res.resp, res.err = s.dispatchWithLambda(req)
-		case "SpecialWordsParametersClient.WithNot":
-			res.resp, res.err = s.dispatchWithNot(req)
-		case "SpecialWordsParametersClient.WithOr":
-			res.resp, res.err = s.dispatchWithOr(req)
-		case "SpecialWordsParametersClient.WithPass":
-			res.resp, res.err = s.dispatchWithPass(req)
-		case "SpecialWordsParametersClient.WithRaise":
-			res.resp, res.err = s.dispatchWithRaise(req)
-		case "SpecialWordsParametersClient.WithReturn":
-			res.resp, res.err = s.dispatchWithReturn(req)
-		case "SpecialWordsParametersClient.WithTry":
-			res.resp, res.err = s.dispatchWithTry(req)
-		case "SpecialWordsParametersClient.WithWhile":
-			res.resp, res.err = s.dispatchWithWhile(req)
-		case "SpecialWordsParametersClient.WithWith":
-			res.resp, res.err = s.dispatchWithWith(req)
-		case "SpecialWordsParametersClient.WithYield":
-			res.resp, res.err = s.dispatchWithYield(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if specialWordsParametersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = specialWordsParametersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SpecialWordsParametersClient.WithAnd":
+				res.resp, res.err = s.dispatchWithAnd(req)
+			case "SpecialWordsParametersClient.WithAs":
+				res.resp, res.err = s.dispatchWithAs(req)
+			case "SpecialWordsParametersClient.WithAssert":
+				res.resp, res.err = s.dispatchWithAssert(req)
+			case "SpecialWordsParametersClient.WithAsync":
+				res.resp, res.err = s.dispatchWithAsync(req)
+			case "SpecialWordsParametersClient.WithAwait":
+				res.resp, res.err = s.dispatchWithAwait(req)
+			case "SpecialWordsParametersClient.WithBreak":
+				res.resp, res.err = s.dispatchWithBreak(req)
+			case "SpecialWordsParametersClient.WithCancellationToken":
+				res.resp, res.err = s.dispatchWithCancellationToken(req)
+			case "SpecialWordsParametersClient.WithClass":
+				res.resp, res.err = s.dispatchWithClass(req)
+			case "SpecialWordsParametersClient.WithConstructor":
+				res.resp, res.err = s.dispatchWithConstructor(req)
+			case "SpecialWordsParametersClient.WithContinue":
+				res.resp, res.err = s.dispatchWithContinue(req)
+			case "SpecialWordsParametersClient.WithDef":
+				res.resp, res.err = s.dispatchWithDef(req)
+			case "SpecialWordsParametersClient.WithDel":
+				res.resp, res.err = s.dispatchWithDel(req)
+			case "SpecialWordsParametersClient.WithElif":
+				res.resp, res.err = s.dispatchWithElif(req)
+			case "SpecialWordsParametersClient.WithElse":
+				res.resp, res.err = s.dispatchWithElse(req)
+			case "SpecialWordsParametersClient.WithExcept":
+				res.resp, res.err = s.dispatchWithExcept(req)
+			case "SpecialWordsParametersClient.WithExec":
+				res.resp, res.err = s.dispatchWithExec(req)
+			case "SpecialWordsParametersClient.WithFinally":
+				res.resp, res.err = s.dispatchWithFinally(req)
+			case "SpecialWordsParametersClient.WithFor":
+				res.resp, res.err = s.dispatchWithFor(req)
+			case "SpecialWordsParametersClient.WithFrom":
+				res.resp, res.err = s.dispatchWithFrom(req)
+			case "SpecialWordsParametersClient.WithGlobal":
+				res.resp, res.err = s.dispatchWithGlobal(req)
+			case "SpecialWordsParametersClient.WithIf":
+				res.resp, res.err = s.dispatchWithIf(req)
+			case "SpecialWordsParametersClient.WithImport":
+				res.resp, res.err = s.dispatchWithImport(req)
+			case "SpecialWordsParametersClient.WithIn":
+				res.resp, res.err = s.dispatchWithIn(req)
+			case "SpecialWordsParametersClient.WithIs":
+				res.resp, res.err = s.dispatchWithIs(req)
+			case "SpecialWordsParametersClient.WithLambda":
+				res.resp, res.err = s.dispatchWithLambda(req)
+			case "SpecialWordsParametersClient.WithNot":
+				res.resp, res.err = s.dispatchWithNot(req)
+			case "SpecialWordsParametersClient.WithOr":
+				res.resp, res.err = s.dispatchWithOr(req)
+			case "SpecialWordsParametersClient.WithPass":
+				res.resp, res.err = s.dispatchWithPass(req)
+			case "SpecialWordsParametersClient.WithRaise":
+				res.resp, res.err = s.dispatchWithRaise(req)
+			case "SpecialWordsParametersClient.WithReturn":
+				res.resp, res.err = s.dispatchWithReturn(req)
+			case "SpecialWordsParametersClient.WithTry":
+				res.resp, res.err = s.dispatchWithTry(req)
+			case "SpecialWordsParametersClient.WithWhile":
+				res.resp, res.err = s.dispatchWithWhile(req)
+			case "SpecialWordsParametersClient.WithWith":
+				res.resp, res.err = s.dispatchWithWith(req)
+			case "SpecialWordsParametersClient.WithYield":
+				res.resp, res.err = s.dispatchWithYield(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1086,4 +1092,10 @@ func (s *SpecialWordsParametersServerTransport) dispatchWithYield(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SpecialWordsParametersServerTransport
+var specialWordsParametersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

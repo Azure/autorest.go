@@ -61,18 +61,24 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScalarDecimal128TypeClient.RequestBody":
-			res.resp, res.err = s.dispatchRequestBody(req)
-		case "ScalarDecimal128TypeClient.RequestParameter":
-			res.resp, res.err = s.dispatchRequestParameter(req)
-		case "ScalarDecimal128TypeClient.ResponseBody":
-			res.resp, res.err = s.dispatchResponseBody(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scalarDecimal128TypeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarDecimal128TypeServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScalarDecimal128TypeClient.RequestBody":
+				res.resp, res.err = s.dispatchRequestBody(req)
+			case "ScalarDecimal128TypeClient.RequestParameter":
+				res.resp, res.err = s.dispatchRequestParameter(req)
+			case "ScalarDecimal128TypeClient.ResponseBody":
+				res.resp, res.err = s.dispatchResponseBody(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -155,4 +161,10 @@ func (s *ScalarDecimal128TypeServerTransport) dispatchResponseBody(req *http.Req
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarDecimal128TypeServerTransport
+var scalarDecimal128TypeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

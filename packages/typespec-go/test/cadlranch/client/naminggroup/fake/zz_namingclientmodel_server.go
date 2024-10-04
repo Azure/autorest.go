@@ -55,16 +55,22 @@ func (n *NamingClientModelServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NamingClientModelClient.Client":
-			res.resp, res.err = n.dispatchClient(req)
-		case "NamingClientModelClient.Language":
-			res.resp, res.err = n.dispatchLanguage(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if namingClientModelServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = namingClientModelServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NamingClientModelClient.Client":
+				res.resp, res.err = n.dispatchClient(req)
+			case "NamingClientModelClient.Language":
+				res.resp, res.err = n.dispatchLanguage(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -123,4 +129,10 @@ func (n *NamingClientModelServerTransport) dispatchLanguage(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NamingClientModelServerTransport
+var namingClientModelServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

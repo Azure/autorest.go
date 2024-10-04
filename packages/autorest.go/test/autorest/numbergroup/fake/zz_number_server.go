@@ -144,60 +144,66 @@ func (n *NumberServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NumberClient.GetBigDecimal":
-			res.resp, res.err = n.dispatchGetBigDecimal(req)
-		case "NumberClient.GetBigDecimalNegativeDecimal":
-			res.resp, res.err = n.dispatchGetBigDecimalNegativeDecimal(req)
-		case "NumberClient.GetBigDecimalPositiveDecimal":
-			res.resp, res.err = n.dispatchGetBigDecimalPositiveDecimal(req)
-		case "NumberClient.GetBigDouble":
-			res.resp, res.err = n.dispatchGetBigDouble(req)
-		case "NumberClient.GetBigDoubleNegativeDecimal":
-			res.resp, res.err = n.dispatchGetBigDoubleNegativeDecimal(req)
-		case "NumberClient.GetBigDoublePositiveDecimal":
-			res.resp, res.err = n.dispatchGetBigDoublePositiveDecimal(req)
-		case "NumberClient.GetBigFloat":
-			res.resp, res.err = n.dispatchGetBigFloat(req)
-		case "NumberClient.GetInvalidDecimal":
-			res.resp, res.err = n.dispatchGetInvalidDecimal(req)
-		case "NumberClient.GetInvalidDouble":
-			res.resp, res.err = n.dispatchGetInvalidDouble(req)
-		case "NumberClient.GetInvalidFloat":
-			res.resp, res.err = n.dispatchGetInvalidFloat(req)
-		case "NumberClient.GetNull":
-			res.resp, res.err = n.dispatchGetNull(req)
-		case "NumberClient.GetSmallDecimal":
-			res.resp, res.err = n.dispatchGetSmallDecimal(req)
-		case "NumberClient.GetSmallDouble":
-			res.resp, res.err = n.dispatchGetSmallDouble(req)
-		case "NumberClient.GetSmallFloat":
-			res.resp, res.err = n.dispatchGetSmallFloat(req)
-		case "NumberClient.PutBigDecimal":
-			res.resp, res.err = n.dispatchPutBigDecimal(req)
-		case "NumberClient.PutBigDecimalNegativeDecimal":
-			res.resp, res.err = n.dispatchPutBigDecimalNegativeDecimal(req)
-		case "NumberClient.PutBigDecimalPositiveDecimal":
-			res.resp, res.err = n.dispatchPutBigDecimalPositiveDecimal(req)
-		case "NumberClient.PutBigDouble":
-			res.resp, res.err = n.dispatchPutBigDouble(req)
-		case "NumberClient.PutBigDoubleNegativeDecimal":
-			res.resp, res.err = n.dispatchPutBigDoubleNegativeDecimal(req)
-		case "NumberClient.PutBigDoublePositiveDecimal":
-			res.resp, res.err = n.dispatchPutBigDoublePositiveDecimal(req)
-		case "NumberClient.PutBigFloat":
-			res.resp, res.err = n.dispatchPutBigFloat(req)
-		case "NumberClient.PutSmallDecimal":
-			res.resp, res.err = n.dispatchPutSmallDecimal(req)
-		case "NumberClient.PutSmallDouble":
-			res.resp, res.err = n.dispatchPutSmallDouble(req)
-		case "NumberClient.PutSmallFloat":
-			res.resp, res.err = n.dispatchPutSmallFloat(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if numberServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = numberServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NumberClient.GetBigDecimal":
+				res.resp, res.err = n.dispatchGetBigDecimal(req)
+			case "NumberClient.GetBigDecimalNegativeDecimal":
+				res.resp, res.err = n.dispatchGetBigDecimalNegativeDecimal(req)
+			case "NumberClient.GetBigDecimalPositiveDecimal":
+				res.resp, res.err = n.dispatchGetBigDecimalPositiveDecimal(req)
+			case "NumberClient.GetBigDouble":
+				res.resp, res.err = n.dispatchGetBigDouble(req)
+			case "NumberClient.GetBigDoubleNegativeDecimal":
+				res.resp, res.err = n.dispatchGetBigDoubleNegativeDecimal(req)
+			case "NumberClient.GetBigDoublePositiveDecimal":
+				res.resp, res.err = n.dispatchGetBigDoublePositiveDecimal(req)
+			case "NumberClient.GetBigFloat":
+				res.resp, res.err = n.dispatchGetBigFloat(req)
+			case "NumberClient.GetInvalidDecimal":
+				res.resp, res.err = n.dispatchGetInvalidDecimal(req)
+			case "NumberClient.GetInvalidDouble":
+				res.resp, res.err = n.dispatchGetInvalidDouble(req)
+			case "NumberClient.GetInvalidFloat":
+				res.resp, res.err = n.dispatchGetInvalidFloat(req)
+			case "NumberClient.GetNull":
+				res.resp, res.err = n.dispatchGetNull(req)
+			case "NumberClient.GetSmallDecimal":
+				res.resp, res.err = n.dispatchGetSmallDecimal(req)
+			case "NumberClient.GetSmallDouble":
+				res.resp, res.err = n.dispatchGetSmallDouble(req)
+			case "NumberClient.GetSmallFloat":
+				res.resp, res.err = n.dispatchGetSmallFloat(req)
+			case "NumberClient.PutBigDecimal":
+				res.resp, res.err = n.dispatchPutBigDecimal(req)
+			case "NumberClient.PutBigDecimalNegativeDecimal":
+				res.resp, res.err = n.dispatchPutBigDecimalNegativeDecimal(req)
+			case "NumberClient.PutBigDecimalPositiveDecimal":
+				res.resp, res.err = n.dispatchPutBigDecimalPositiveDecimal(req)
+			case "NumberClient.PutBigDouble":
+				res.resp, res.err = n.dispatchPutBigDouble(req)
+			case "NumberClient.PutBigDoubleNegativeDecimal":
+				res.resp, res.err = n.dispatchPutBigDoubleNegativeDecimal(req)
+			case "NumberClient.PutBigDoublePositiveDecimal":
+				res.resp, res.err = n.dispatchPutBigDoublePositiveDecimal(req)
+			case "NumberClient.PutBigFloat":
+				res.resp, res.err = n.dispatchPutBigFloat(req)
+			case "NumberClient.PutSmallDecimal":
+				res.resp, res.err = n.dispatchPutSmallDecimal(req)
+			case "NumberClient.PutSmallDouble":
+				res.resp, res.err = n.dispatchPutSmallDouble(req)
+			case "NumberClient.PutSmallFloat":
+				res.resp, res.err = n.dispatchPutSmallFloat(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -690,4 +696,10 @@ func (n *NumberServerTransport) dispatchPutSmallFloat(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NumberServerTransport
+var numberServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (r *RouteMapsServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RouteMapsClient.BeginCreateOrUpdate":
-			res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
-		case "RouteMapsClient.BeginDelete":
-			res.resp, res.err = r.dispatchBeginDelete(req)
-		case "RouteMapsClient.Get":
-			res.resp, res.err = r.dispatchGet(req)
-		case "RouteMapsClient.NewListPager":
-			res.resp, res.err = r.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if routeMapsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = routeMapsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RouteMapsClient.BeginCreateOrUpdate":
+				res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+			case "RouteMapsClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RouteMapsClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			case "RouteMapsClient.NewListPager":
+				res.resp, res.err = r.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (r *RouteMapsServerTransport) dispatchNewListPager(req *http.Request) (*htt
 		r.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RouteMapsServerTransport
+var routeMapsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

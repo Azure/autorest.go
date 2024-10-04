@@ -60,18 +60,24 @@ func (h *HTTPFailureServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPFailureClient.GetEmptyError":
-			res.resp, res.err = h.dispatchGetEmptyError(req)
-		case "HTTPFailureClient.GetNoModelEmpty":
-			res.resp, res.err = h.dispatchGetNoModelEmpty(req)
-		case "HTTPFailureClient.GetNoModelError":
-			res.resp, res.err = h.dispatchGetNoModelError(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpFailureServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpFailureServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPFailureClient.GetEmptyError":
+				res.resp, res.err = h.dispatchGetEmptyError(req)
+			case "HTTPFailureClient.GetNoModelEmpty":
+				res.resp, res.err = h.dispatchGetNoModelEmpty(req)
+			case "HTTPFailureClient.GetNoModelError":
+				res.resp, res.err = h.dispatchGetNoModelError(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -141,4 +147,10 @@ func (h *HTTPFailureServerTransport) dispatchGetNoModelError(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPFailureServerTransport
+var httpFailureServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

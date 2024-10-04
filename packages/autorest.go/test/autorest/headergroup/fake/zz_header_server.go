@@ -167,70 +167,76 @@ func (h *HeaderServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HeaderClient.CustomRequestID":
-			res.resp, res.err = h.dispatchCustomRequestID(req)
-		case "HeaderClient.ParamBool":
-			res.resp, res.err = h.dispatchParamBool(req)
-		case "HeaderClient.ParamByte":
-			res.resp, res.err = h.dispatchParamByte(req)
-		case "HeaderClient.ParamDate":
-			res.resp, res.err = h.dispatchParamDate(req)
-		case "HeaderClient.ParamDatetime":
-			res.resp, res.err = h.dispatchParamDatetime(req)
-		case "HeaderClient.ParamDatetimeRFC1123":
-			res.resp, res.err = h.dispatchParamDatetimeRFC1123(req)
-		case "HeaderClient.ParamDouble":
-			res.resp, res.err = h.dispatchParamDouble(req)
-		case "HeaderClient.ParamDuration":
-			res.resp, res.err = h.dispatchParamDuration(req)
-		case "HeaderClient.ParamEnum":
-			res.resp, res.err = h.dispatchParamEnum(req)
-		case "HeaderClient.ParamExistingKey":
-			res.resp, res.err = h.dispatchParamExistingKey(req)
-		case "HeaderClient.ParamFloat":
-			res.resp, res.err = h.dispatchParamFloat(req)
-		case "HeaderClient.ParamInteger":
-			res.resp, res.err = h.dispatchParamInteger(req)
-		case "HeaderClient.ParamLong":
-			res.resp, res.err = h.dispatchParamLong(req)
-		case "HeaderClient.ParamProtectedKey":
-			res.resp, res.err = h.dispatchParamProtectedKey(req)
-		case "HeaderClient.ParamString":
-			res.resp, res.err = h.dispatchParamString(req)
-		case "HeaderClient.ResponseBool":
-			res.resp, res.err = h.dispatchResponseBool(req)
-		case "HeaderClient.ResponseByte":
-			res.resp, res.err = h.dispatchResponseByte(req)
-		case "HeaderClient.ResponseDate":
-			res.resp, res.err = h.dispatchResponseDate(req)
-		case "HeaderClient.ResponseDatetime":
-			res.resp, res.err = h.dispatchResponseDatetime(req)
-		case "HeaderClient.ResponseDatetimeRFC1123":
-			res.resp, res.err = h.dispatchResponseDatetimeRFC1123(req)
-		case "HeaderClient.ResponseDouble":
-			res.resp, res.err = h.dispatchResponseDouble(req)
-		case "HeaderClient.ResponseDuration":
-			res.resp, res.err = h.dispatchResponseDuration(req)
-		case "HeaderClient.ResponseEnum":
-			res.resp, res.err = h.dispatchResponseEnum(req)
-		case "HeaderClient.ResponseExistingKey":
-			res.resp, res.err = h.dispatchResponseExistingKey(req)
-		case "HeaderClient.ResponseFloat":
-			res.resp, res.err = h.dispatchResponseFloat(req)
-		case "HeaderClient.ResponseInteger":
-			res.resp, res.err = h.dispatchResponseInteger(req)
-		case "HeaderClient.ResponseLong":
-			res.resp, res.err = h.dispatchResponseLong(req)
-		case "HeaderClient.ResponseProtectedKey":
-			res.resp, res.err = h.dispatchResponseProtectedKey(req)
-		case "HeaderClient.ResponseString":
-			res.resp, res.err = h.dispatchResponseString(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if headerServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = headerServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HeaderClient.CustomRequestID":
+				res.resp, res.err = h.dispatchCustomRequestID(req)
+			case "HeaderClient.ParamBool":
+				res.resp, res.err = h.dispatchParamBool(req)
+			case "HeaderClient.ParamByte":
+				res.resp, res.err = h.dispatchParamByte(req)
+			case "HeaderClient.ParamDate":
+				res.resp, res.err = h.dispatchParamDate(req)
+			case "HeaderClient.ParamDatetime":
+				res.resp, res.err = h.dispatchParamDatetime(req)
+			case "HeaderClient.ParamDatetimeRFC1123":
+				res.resp, res.err = h.dispatchParamDatetimeRFC1123(req)
+			case "HeaderClient.ParamDouble":
+				res.resp, res.err = h.dispatchParamDouble(req)
+			case "HeaderClient.ParamDuration":
+				res.resp, res.err = h.dispatchParamDuration(req)
+			case "HeaderClient.ParamEnum":
+				res.resp, res.err = h.dispatchParamEnum(req)
+			case "HeaderClient.ParamExistingKey":
+				res.resp, res.err = h.dispatchParamExistingKey(req)
+			case "HeaderClient.ParamFloat":
+				res.resp, res.err = h.dispatchParamFloat(req)
+			case "HeaderClient.ParamInteger":
+				res.resp, res.err = h.dispatchParamInteger(req)
+			case "HeaderClient.ParamLong":
+				res.resp, res.err = h.dispatchParamLong(req)
+			case "HeaderClient.ParamProtectedKey":
+				res.resp, res.err = h.dispatchParamProtectedKey(req)
+			case "HeaderClient.ParamString":
+				res.resp, res.err = h.dispatchParamString(req)
+			case "HeaderClient.ResponseBool":
+				res.resp, res.err = h.dispatchResponseBool(req)
+			case "HeaderClient.ResponseByte":
+				res.resp, res.err = h.dispatchResponseByte(req)
+			case "HeaderClient.ResponseDate":
+				res.resp, res.err = h.dispatchResponseDate(req)
+			case "HeaderClient.ResponseDatetime":
+				res.resp, res.err = h.dispatchResponseDatetime(req)
+			case "HeaderClient.ResponseDatetimeRFC1123":
+				res.resp, res.err = h.dispatchResponseDatetimeRFC1123(req)
+			case "HeaderClient.ResponseDouble":
+				res.resp, res.err = h.dispatchResponseDouble(req)
+			case "HeaderClient.ResponseDuration":
+				res.resp, res.err = h.dispatchResponseDuration(req)
+			case "HeaderClient.ResponseEnum":
+				res.resp, res.err = h.dispatchResponseEnum(req)
+			case "HeaderClient.ResponseExistingKey":
+				res.resp, res.err = h.dispatchResponseExistingKey(req)
+			case "HeaderClient.ResponseFloat":
+				res.resp, res.err = h.dispatchResponseFloat(req)
+			case "HeaderClient.ResponseInteger":
+				res.resp, res.err = h.dispatchResponseInteger(req)
+			case "HeaderClient.ResponseLong":
+				res.resp, res.err = h.dispatchResponseLong(req)
+			case "HeaderClient.ResponseProtectedKey":
+				res.resp, res.err = h.dispatchResponseProtectedKey(req)
+			case "HeaderClient.ResponseString":
+				res.resp, res.err = h.dispatchResponseString(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -904,4 +910,10 @@ func (h *HeaderServerTransport) dispatchResponseString(req *http.Request) (*http
 		resp.Header.Set("value", *val)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HeaderServerTransport
+var headerServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

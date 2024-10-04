@@ -62,18 +62,24 @@ func (p *PetServerTransport) dispatchToMethodFake(req *http.Request, method stri
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PetClient.DoSomething":
-			res.resp, res.err = p.dispatchDoSomething(req)
-		case "PetClient.GetPetByID":
-			res.resp, res.err = p.dispatchGetPetByID(req)
-		case "PetClient.HasModelsParam":
-			res.resp, res.err = p.dispatchHasModelsParam(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if petServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = petServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PetClient.DoSomething":
+				res.resp, res.err = p.dispatchDoSomething(req)
+			case "PetClient.GetPetByID":
+				res.resp, res.err = p.dispatchGetPetByID(req)
+			case "PetClient.HasModelsParam":
+				res.resp, res.err = p.dispatchHasModelsParam(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -175,4 +181,10 @@ func (p *PetServerTransport) dispatchHasModelsParam(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PetServerTransport
+var petServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

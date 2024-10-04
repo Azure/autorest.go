@@ -58,16 +58,22 @@ func (o *ObjectTypeServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ObjectTypeClient.Get":
-			res.resp, res.err = o.dispatchGet(req)
-		case "ObjectTypeClient.Put":
-			res.resp, res.err = o.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if objectTypeServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = objectTypeServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ObjectTypeClient.Get":
+				res.resp, res.err = o.dispatchGet(req)
+			case "ObjectTypeClient.Put":
+				res.resp, res.err = o.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -126,4 +132,10 @@ func (o *ObjectTypeServerTransport) dispatchPut(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ObjectTypeServerTransport
+var objectTypeServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

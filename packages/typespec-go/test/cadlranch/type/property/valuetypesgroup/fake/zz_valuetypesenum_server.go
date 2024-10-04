@@ -55,16 +55,22 @@ func (v *ValueTypesEnumServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ValueTypesEnumClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "ValueTypesEnumClient.Put":
-			res.resp, res.err = v.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if valueTypesEnumServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesEnumServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesEnumClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesEnumClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (v *ValueTypesEnumServerTransport) dispatchPut(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesEnumServerTransport
+var valueTypesEnumServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

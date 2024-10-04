@@ -66,20 +66,26 @@ func (p *PathItemsServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PathItemsClient.GetAllWithValues":
-			res.resp, res.err = p.dispatchGetAllWithValues(req)
-		case "PathItemsClient.GetGlobalAndLocalQueryNull":
-			res.resp, res.err = p.dispatchGetGlobalAndLocalQueryNull(req)
-		case "PathItemsClient.GetGlobalQueryNull":
-			res.resp, res.err = p.dispatchGetGlobalQueryNull(req)
-		case "PathItemsClient.GetLocalPathItemQueryNull":
-			res.resp, res.err = p.dispatchGetLocalPathItemQueryNull(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if pathItemsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pathItemsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PathItemsClient.GetAllWithValues":
+				res.resp, res.err = p.dispatchGetAllWithValues(req)
+			case "PathItemsClient.GetGlobalAndLocalQueryNull":
+				res.resp, res.err = p.dispatchGetGlobalAndLocalQueryNull(req)
+			case "PathItemsClient.GetGlobalQueryNull":
+				res.resp, res.err = p.dispatchGetGlobalQueryNull(req)
+			case "PathItemsClient.GetLocalPathItemQueryNull":
+				res.resp, res.err = p.dispatchGetLocalPathItemQueryNull(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -296,4 +302,10 @@ func (p *PathItemsServerTransport) dispatchGetLocalPathItemQueryNull(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PathItemsServerTransport
+var pathItemsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -55,16 +55,22 @@ func (j *JSONPropertyServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "JSONPropertyClient.Get":
-			res.resp, res.err = j.dispatchGet(req)
-		case "JSONPropertyClient.Send":
-			res.resp, res.err = j.dispatchSend(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if jsonPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = jsonPropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "JSONPropertyClient.Get":
+				res.resp, res.err = j.dispatchGet(req)
+			case "JSONPropertyClient.Send":
+				res.resp, res.err = j.dispatchSend(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (j *JSONPropertyServerTransport) dispatchSend(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to JSONPropertyServerTransport
+var jsonPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -68,22 +68,28 @@ func (b *ByteServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ByteClient.GetEmpty":
-			res.resp, res.err = b.dispatchGetEmpty(req)
-		case "ByteClient.GetInvalid":
-			res.resp, res.err = b.dispatchGetInvalid(req)
-		case "ByteClient.GetNonASCII":
-			res.resp, res.err = b.dispatchGetNonASCII(req)
-		case "ByteClient.GetNull":
-			res.resp, res.err = b.dispatchGetNull(req)
-		case "ByteClient.PutNonASCII":
-			res.resp, res.err = b.dispatchPutNonASCII(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if byteServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = byteServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ByteClient.GetEmpty":
+				res.resp, res.err = b.dispatchGetEmpty(req)
+			case "ByteClient.GetInvalid":
+				res.resp, res.err = b.dispatchGetInvalid(req)
+			case "ByteClient.GetNonASCII":
+				res.resp, res.err = b.dispatchGetNonASCII(req)
+			case "ByteClient.GetNull":
+				res.resp, res.err = b.dispatchGetNull(req)
+			case "ByteClient.PutNonASCII":
+				res.resp, res.err = b.dispatchPutNonASCII(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -195,4 +201,10 @@ func (b *ByteServerTransport) dispatchPutNonASCII(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ByteServerTransport
+var byteServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

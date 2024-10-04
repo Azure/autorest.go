@@ -60,18 +60,24 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ResiliencyServiceDrivenClient.FromNone":
-			res.resp, res.err = r.dispatchFromNone(req)
-		case "ResiliencyServiceDrivenClient.FromOneOptional":
-			res.resp, res.err = r.dispatchFromOneOptional(req)
-		case "ResiliencyServiceDrivenClient.FromOneRequired":
-			res.resp, res.err = r.dispatchFromOneRequired(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if resiliencyServiceDrivenServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = resiliencyServiceDrivenServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ResiliencyServiceDrivenClient.FromNone":
+				res.resp, res.err = r.dispatchFromNone(req)
+			case "ResiliencyServiceDrivenClient.FromOneOptional":
+				res.resp, res.err = r.dispatchFromOneOptional(req)
+			case "ResiliencyServiceDrivenClient.FromOneRequired":
+				res.resp, res.err = r.dispatchFromOneRequired(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -158,4 +164,10 @@ func (r *ResiliencyServiceDrivenServerTransport) dispatchFromOneRequired(req *ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ResiliencyServiceDrivenServerTransport
+var resiliencyServiceDrivenServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

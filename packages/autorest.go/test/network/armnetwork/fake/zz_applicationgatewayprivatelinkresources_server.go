@@ -58,14 +58,20 @@ func (a *ApplicationGatewayPrivateLinkResourcesServerTransport) dispatchToMethod
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ApplicationGatewayPrivateLinkResourcesClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if applicationGatewayPrivateLinkResourcesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewayPrivateLinkResourcesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewayPrivateLinkResourcesClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (a *ApplicationGatewayPrivateLinkResourcesServerTransport) dispatchNewListP
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewayPrivateLinkResourcesServerTransport
+var applicationGatewayPrivateLinkResourcesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -55,16 +55,22 @@ func (v *ValueTypesDictionaryStringServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ValueTypesDictionaryStringClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "ValueTypesDictionaryStringClient.Put":
-			res.resp, res.err = v.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if valueTypesDictionaryStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = valueTypesDictionaryStringServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ValueTypesDictionaryStringClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "ValueTypesDictionaryStringClient.Put":
+				res.resp, res.err = v.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (v *ValueTypesDictionaryStringServerTransport) dispatchPut(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ValueTypesDictionaryStringServerTransport
+var valueTypesDictionaryStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

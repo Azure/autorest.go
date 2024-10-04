@@ -59,18 +59,24 @@ func (f *FixedStringServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FixedStringClient.GetKnownValue":
-			res.resp, res.err = f.dispatchGetKnownValue(req)
-		case "FixedStringClient.PutKnownValue":
-			res.resp, res.err = f.dispatchPutKnownValue(req)
-		case "FixedStringClient.PutUnknownValue":
-			res.resp, res.err = f.dispatchPutUnknownValue(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if fixedStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = fixedStringServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FixedStringClient.GetKnownValue":
+				res.resp, res.err = f.dispatchGetKnownValue(req)
+			case "FixedStringClient.PutKnownValue":
+				res.resp, res.err = f.dispatchPutKnownValue(req)
+			case "FixedStringClient.PutUnknownValue":
+				res.resp, res.err = f.dispatchPutUnknownValue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -148,4 +154,10 @@ func (f *FixedStringServerTransport) dispatchPutUnknownValue(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FixedStringServerTransport
+var fixedStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

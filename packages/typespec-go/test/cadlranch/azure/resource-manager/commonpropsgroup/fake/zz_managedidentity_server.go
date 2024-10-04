@@ -61,18 +61,24 @@ func (m *ManagedIdentityServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ManagedIdentityClient.CreateWithSystemAssigned":
-			res.resp, res.err = m.dispatchCreateWithSystemAssigned(req)
-		case "ManagedIdentityClient.Get":
-			res.resp, res.err = m.dispatchGet(req)
-		case "ManagedIdentityClient.UpdateWithUserAssignedAndSystemAssigned":
-			res.resp, res.err = m.dispatchUpdateWithUserAssignedAndSystemAssigned(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if managedIdentityServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managedIdentityServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ManagedIdentityClient.CreateWithSystemAssigned":
+				res.resp, res.err = m.dispatchCreateWithSystemAssigned(req)
+			case "ManagedIdentityClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "ManagedIdentityClient.UpdateWithUserAssignedAndSystemAssigned":
+				res.resp, res.err = m.dispatchUpdateWithUserAssignedAndSystemAssigned(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -192,4 +198,10 @@ func (m *ManagedIdentityServerTransport) dispatchUpdateWithUserAssignedAndSystem
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagedIdentityServerTransport
+var managedIdentityServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

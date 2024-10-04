@@ -68,20 +68,26 @@ func (a *AutoRestValidationTestServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AutoRestValidationTestClient.GetWithConstantInPath":
-			res.resp, res.err = a.dispatchGetWithConstantInPath(req)
-		case "AutoRestValidationTestClient.PostWithConstantInBody":
-			res.resp, res.err = a.dispatchPostWithConstantInBody(req)
-		case "AutoRestValidationTestClient.ValidationOfBody":
-			res.resp, res.err = a.dispatchValidationOfBody(req)
-		case "AutoRestValidationTestClient.ValidationOfMethodParameters":
-			res.resp, res.err = a.dispatchValidationOfMethodParameters(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if autoRestValidationTestServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = autoRestValidationTestServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AutoRestValidationTestClient.GetWithConstantInPath":
+				res.resp, res.err = a.dispatchGetWithConstantInPath(req)
+			case "AutoRestValidationTestClient.PostWithConstantInBody":
+				res.resp, res.err = a.dispatchPostWithConstantInBody(req)
+			case "AutoRestValidationTestClient.ValidationOfBody":
+				res.resp, res.err = a.dispatchValidationOfBody(req)
+			case "AutoRestValidationTestClient.ValidationOfMethodParameters":
+				res.resp, res.err = a.dispatchValidationOfMethodParameters(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -232,4 +238,10 @@ func (a *AutoRestValidationTestServerTransport) dispatchValidationOfMethodParame
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AutoRestValidationTestServerTransport
+var autoRestValidationTestServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

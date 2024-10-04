@@ -74,20 +74,26 @@ func (f *FirewallRulesServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FirewallRulesClient.BeginCreateOrUpdate":
-			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
-		case "FirewallRulesClient.BeginDelete":
-			res.resp, res.err = f.dispatchBeginDelete(req)
-		case "FirewallRulesClient.Get":
-			res.resp, res.err = f.dispatchGet(req)
-		case "FirewallRulesClient.NewListByMongoClusterPager":
-			res.resp, res.err = f.dispatchNewListByMongoClusterPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if firewallRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallRulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FirewallRulesClient.BeginCreateOrUpdate":
+				res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+			case "FirewallRulesClient.BeginDelete":
+				res.resp, res.err = f.dispatchBeginDelete(req)
+			case "FirewallRulesClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FirewallRulesClient.NewListByMongoClusterPager":
+				res.resp, res.err = f.dispatchNewListByMongoClusterPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -278,4 +284,10 @@ func (f *FirewallRulesServerTransport) dispatchNewListByMongoClusterPager(req *h
 		f.newListByMongoClusterPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallRulesServerTransport
+var firewallRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

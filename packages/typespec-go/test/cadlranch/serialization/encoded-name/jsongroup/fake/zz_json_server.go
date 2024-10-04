@@ -61,3 +61,9 @@ func (j *JSONServerTransport) dispatchToClientFake(req *http.Request, client str
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to JSONServerTransport
+var jsonServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

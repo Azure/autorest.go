@@ -59,18 +59,24 @@ func (n *NumericPropertyServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NumericPropertyClient.SafeintAsString":
-			res.resp, res.err = n.dispatchSafeintAsString(req)
-		case "NumericPropertyClient.Uint32AsStringOptional":
-			res.resp, res.err = n.dispatchUint32AsStringOptional(req)
-		case "NumericPropertyClient.Uint8AsString":
-			res.resp, res.err = n.dispatchUint8AsString(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if numericPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = numericPropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NumericPropertyClient.SafeintAsString":
+				res.resp, res.err = n.dispatchSafeintAsString(req)
+			case "NumericPropertyClient.Uint32AsStringOptional":
+				res.resp, res.err = n.dispatchUint32AsStringOptional(req)
+			case "NumericPropertyClient.Uint8AsString":
+				res.resp, res.err = n.dispatchUint8AsString(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -152,4 +158,10 @@ func (n *NumericPropertyServerTransport) dispatchUint8AsString(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NumericPropertyServerTransport
+var numericPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -63,20 +63,26 @@ func (m *MediaTypeStringBodyServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "MediaTypeStringBodyClient.GetAsJSON":
-			res.resp, res.err = m.dispatchGetAsJSON(req)
-		case "MediaTypeStringBodyClient.GetAsText":
-			res.resp, res.err = m.dispatchGetAsText(req)
-		case "MediaTypeStringBodyClient.SendAsJSON":
-			res.resp, res.err = m.dispatchSendAsJSON(req)
-		case "MediaTypeStringBodyClient.SendAsText":
-			res.resp, res.err = m.dispatchSendAsText(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if mediaTypeStringBodyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = mediaTypeStringBodyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "MediaTypeStringBodyClient.GetAsJSON":
+				res.resp, res.err = m.dispatchGetAsJSON(req)
+			case "MediaTypeStringBodyClient.GetAsText":
+				res.resp, res.err = m.dispatchGetAsText(req)
+			case "MediaTypeStringBodyClient.SendAsJSON":
+				res.resp, res.err = m.dispatchSendAsJSON(req)
+			case "MediaTypeStringBodyClient.SendAsText":
+				res.resp, res.err = m.dispatchSendAsText(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -179,4 +185,10 @@ func (m *MediaTypeStringBodyServerTransport) dispatchSendAsText(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to MediaTypeStringBodyServerTransport
+var mediaTypeStringBodyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -58,14 +58,20 @@ func (g *GallerySharingProfileServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "GallerySharingProfileClient.BeginUpdate":
-			res.resp, res.err = g.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if gallerySharingProfileServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = gallerySharingProfileServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "GallerySharingProfileClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -126,4 +132,10 @@ func (g *GallerySharingProfileServerTransport) dispatchBeginUpdate(req *http.Req
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GallerySharingProfileServerTransport
+var gallerySharingProfileServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

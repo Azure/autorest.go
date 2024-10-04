@@ -79,3 +79,9 @@ func (d *DurationServerTransport) dispatchToClientFake(req *http.Request, client
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to DurationServerTransport
+var durationServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

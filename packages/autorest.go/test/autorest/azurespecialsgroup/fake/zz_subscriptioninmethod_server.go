@@ -66,20 +66,26 @@ func (s *SubscriptionInMethodServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SubscriptionInMethodClient.PostMethodLocalNull":
-			res.resp, res.err = s.dispatchPostMethodLocalNull(req)
-		case "SubscriptionInMethodClient.PostMethodLocalValid":
-			res.resp, res.err = s.dispatchPostMethodLocalValid(req)
-		case "SubscriptionInMethodClient.PostPathLocalValid":
-			res.resp, res.err = s.dispatchPostPathLocalValid(req)
-		case "SubscriptionInMethodClient.PostSwaggerLocalValid":
-			res.resp, res.err = s.dispatchPostSwaggerLocalValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if subscriptionInMethodServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = subscriptionInMethodServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SubscriptionInMethodClient.PostMethodLocalNull":
+				res.resp, res.err = s.dispatchPostMethodLocalNull(req)
+			case "SubscriptionInMethodClient.PostMethodLocalValid":
+				res.resp, res.err = s.dispatchPostMethodLocalValid(req)
+			case "SubscriptionInMethodClient.PostPathLocalValid":
+				res.resp, res.err = s.dispatchPostPathLocalValid(req)
+			case "SubscriptionInMethodClient.PostSwaggerLocalValid":
+				res.resp, res.err = s.dispatchPostSwaggerLocalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -208,4 +214,10 @@ func (s *SubscriptionInMethodServerTransport) dispatchPostSwaggerLocalValid(req 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SubscriptionInMethodServerTransport
+var subscriptionInMethodServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

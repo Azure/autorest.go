@@ -54,14 +54,20 @@ func (r *ResourceNavigationLinksServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ResourceNavigationLinksClient.List":
-			res.resp, res.err = r.dispatchList(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if resourceNavigationLinksServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = resourceNavigationLinksServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ResourceNavigationLinksClient.List":
+				res.resp, res.err = r.dispatchList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -111,4 +117,10 @@ func (r *ResourceNavigationLinksServerTransport) dispatchList(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ResourceNavigationLinksServerTransport
+var resourceNavigationLinksServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

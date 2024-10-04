@@ -85,24 +85,30 @@ func (s *SecurityGroupsServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SecurityGroupsClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "SecurityGroupsClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SecurityGroupsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SecurityGroupsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "SecurityGroupsClient.NewListAllPager":
-			res.resp, res.err = s.dispatchNewListAllPager(req)
-		case "SecurityGroupsClient.UpdateTags":
-			res.resp, res.err = s.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if securityGroupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = securityGroupsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SecurityGroupsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SecurityGroupsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SecurityGroupsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SecurityGroupsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "SecurityGroupsClient.NewListAllPager":
+				res.resp, res.err = s.dispatchNewListAllPager(req)
+			case "SecurityGroupsClient.UpdateTags":
+				res.resp, res.err = s.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (s *SecurityGroupsServerTransport) dispatchUpdateTags(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SecurityGroupsServerTransport
+var securityGroupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

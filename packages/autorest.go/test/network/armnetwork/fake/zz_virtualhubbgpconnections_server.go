@@ -71,18 +71,24 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchToMethodFake(req *http
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualHubBgpConnectionsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes":
-			res.resp, res.err = v.dispatchBeginListAdvertisedRoutes(req)
-		case "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes":
-			res.resp, res.err = v.dispatchBeginListLearnedRoutes(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualHubBgpConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualHubBgpConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualHubBgpConnectionsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualHubBgpConnectionsClient.BeginListAdvertisedRoutes":
+				res.resp, res.err = v.dispatchBeginListAdvertisedRoutes(req)
+			case "VirtualHubBgpConnectionsClient.BeginListLearnedRoutes":
+				res.resp, res.err = v.dispatchBeginListLearnedRoutes(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -232,4 +238,10 @@ func (v *VirtualHubBgpConnectionsServerTransport) dispatchBeginListLearnedRoutes
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualHubBgpConnectionsServerTransport
+var virtualHubBgpConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (i *InterfaceTapConfigurationsServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InterfaceTapConfigurationsClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		case "InterfaceTapConfigurationsClient.BeginDelete":
-			res.resp, res.err = i.dispatchBeginDelete(req)
-		case "InterfaceTapConfigurationsClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "InterfaceTapConfigurationsClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if interfaceTapConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = interfaceTapConfigurationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InterfaceTapConfigurationsClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			case "InterfaceTapConfigurationsClient.BeginDelete":
+				res.resp, res.err = i.dispatchBeginDelete(req)
+			case "InterfaceTapConfigurationsClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "InterfaceTapConfigurationsClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (i *InterfaceTapConfigurationsServerTransport) dispatchNewListPager(req *ht
 		i.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InterfaceTapConfigurationsServerTransport
+var interfaceTapConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

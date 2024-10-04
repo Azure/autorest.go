@@ -139,44 +139,50 @@ func (i *InterfacesServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InterfacesClient.BeginCreateOrUpdate":
-			res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
-		case "InterfacesClient.BeginDelete":
-			res.resp, res.err = i.dispatchBeginDelete(req)
-		case "InterfacesClient.Get":
-			res.resp, res.err = i.dispatchGet(req)
-		case "InterfacesClient.GetCloudServiceNetworkInterface":
-			res.resp, res.err = i.dispatchGetCloudServiceNetworkInterface(req)
-		case "InterfacesClient.BeginGetEffectiveRouteTable":
-			res.resp, res.err = i.dispatchBeginGetEffectiveRouteTable(req)
-		case "InterfacesClient.GetVirtualMachineScaleSetIPConfiguration":
-			res.resp, res.err = i.dispatchGetVirtualMachineScaleSetIPConfiguration(req)
-		case "InterfacesClient.GetVirtualMachineScaleSetNetworkInterface":
-			res.resp, res.err = i.dispatchGetVirtualMachineScaleSetNetworkInterface(req)
-		case "InterfacesClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		case "InterfacesClient.NewListAllPager":
-			res.resp, res.err = i.dispatchNewListAllPager(req)
-		case "InterfacesClient.NewListCloudServiceNetworkInterfacesPager":
-			res.resp, res.err = i.dispatchNewListCloudServiceNetworkInterfacesPager(req)
-		case "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager":
-			res.resp, res.err = i.dispatchNewListCloudServiceRoleInstanceNetworkInterfacesPager(req)
-		case "InterfacesClient.BeginListEffectiveNetworkSecurityGroups":
-			res.resp, res.err = i.dispatchBeginListEffectiveNetworkSecurityGroups(req)
-		case "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager":
-			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetIPConfigurationsPager(req)
-		case "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager":
-			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetNetworkInterfacesPager(req)
-		case "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager":
-			res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetVMNetworkInterfacesPager(req)
-		case "InterfacesClient.UpdateTags":
-			res.resp, res.err = i.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if interfacesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = interfacesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InterfacesClient.BeginCreateOrUpdate":
+				res.resp, res.err = i.dispatchBeginCreateOrUpdate(req)
+			case "InterfacesClient.BeginDelete":
+				res.resp, res.err = i.dispatchBeginDelete(req)
+			case "InterfacesClient.Get":
+				res.resp, res.err = i.dispatchGet(req)
+			case "InterfacesClient.GetCloudServiceNetworkInterface":
+				res.resp, res.err = i.dispatchGetCloudServiceNetworkInterface(req)
+			case "InterfacesClient.BeginGetEffectiveRouteTable":
+				res.resp, res.err = i.dispatchBeginGetEffectiveRouteTable(req)
+			case "InterfacesClient.GetVirtualMachineScaleSetIPConfiguration":
+				res.resp, res.err = i.dispatchGetVirtualMachineScaleSetIPConfiguration(req)
+			case "InterfacesClient.GetVirtualMachineScaleSetNetworkInterface":
+				res.resp, res.err = i.dispatchGetVirtualMachineScaleSetNetworkInterface(req)
+			case "InterfacesClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			case "InterfacesClient.NewListAllPager":
+				res.resp, res.err = i.dispatchNewListAllPager(req)
+			case "InterfacesClient.NewListCloudServiceNetworkInterfacesPager":
+				res.resp, res.err = i.dispatchNewListCloudServiceNetworkInterfacesPager(req)
+			case "InterfacesClient.NewListCloudServiceRoleInstanceNetworkInterfacesPager":
+				res.resp, res.err = i.dispatchNewListCloudServiceRoleInstanceNetworkInterfacesPager(req)
+			case "InterfacesClient.BeginListEffectiveNetworkSecurityGroups":
+				res.resp, res.err = i.dispatchBeginListEffectiveNetworkSecurityGroups(req)
+			case "InterfacesClient.NewListVirtualMachineScaleSetIPConfigurationsPager":
+				res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetIPConfigurationsPager(req)
+			case "InterfacesClient.NewListVirtualMachineScaleSetNetworkInterfacesPager":
+				res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetNetworkInterfacesPager(req)
+			case "InterfacesClient.NewListVirtualMachineScaleSetVMNetworkInterfacesPager":
+				res.resp, res.err = i.dispatchNewListVirtualMachineScaleSetVMNetworkInterfacesPager(req)
+			case "InterfacesClient.UpdateTags":
+				res.resp, res.err = i.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -917,4 +923,10 @@ func (i *InterfacesServerTransport) dispatchUpdateTags(req *http.Request) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InterfacesServerTransport
+var interfacesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

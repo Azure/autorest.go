@@ -71,24 +71,30 @@ func (d *DurationPropertyServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DurationPropertyClient.Default":
-			res.resp, res.err = d.dispatchDefault(req)
-		case "DurationPropertyClient.Float64Seconds":
-			res.resp, res.err = d.dispatchFloat64Seconds(req)
-		case "DurationPropertyClient.FloatSeconds":
-			res.resp, res.err = d.dispatchFloatSeconds(req)
-		case "DurationPropertyClient.FloatSecondsArray":
-			res.resp, res.err = d.dispatchFloatSecondsArray(req)
-		case "DurationPropertyClient.ISO8601":
-			res.resp, res.err = d.dispatchISO8601(req)
-		case "DurationPropertyClient.Int32Seconds":
-			res.resp, res.err = d.dispatchInt32Seconds(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if durationPropertyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = durationPropertyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DurationPropertyClient.Default":
+				res.resp, res.err = d.dispatchDefault(req)
+			case "DurationPropertyClient.Float64Seconds":
+				res.resp, res.err = d.dispatchFloat64Seconds(req)
+			case "DurationPropertyClient.FloatSeconds":
+				res.resp, res.err = d.dispatchFloatSeconds(req)
+			case "DurationPropertyClient.FloatSecondsArray":
+				res.resp, res.err = d.dispatchFloatSecondsArray(req)
+			case "DurationPropertyClient.ISO8601":
+				res.resp, res.err = d.dispatchISO8601(req)
+			case "DurationPropertyClient.Int32Seconds":
+				res.resp, res.err = d.dispatchInt32Seconds(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -239,4 +245,10 @@ func (d *DurationPropertyServerTransport) dispatchInt32Seconds(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DurationPropertyServerTransport
+var durationPropertyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

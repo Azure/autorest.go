@@ -99,28 +99,34 @@ func (d *DisksServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DisksClient.BeginCreateOrUpdate":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
-		case "DisksClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DisksClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DisksClient.BeginGrantAccess":
-			res.resp, res.err = d.dispatchBeginGrantAccess(req)
-		case "DisksClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		case "DisksClient.NewListByResourceGroupPager":
-			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
-		case "DisksClient.BeginRevokeAccess":
-			res.resp, res.err = d.dispatchBeginRevokeAccess(req)
-		case "DisksClient.BeginUpdate":
-			res.resp, res.err = d.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if disksServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = disksServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DisksClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DisksClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DisksClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DisksClient.BeginGrantAccess":
+				res.resp, res.err = d.dispatchBeginGrantAccess(req)
+			case "DisksClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DisksClient.NewListByResourceGroupPager":
+				res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+			case "DisksClient.BeginRevokeAccess":
+				res.resp, res.err = d.dispatchBeginRevokeAccess(req)
+			case "DisksClient.BeginUpdate":
+				res.resp, res.err = d.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -468,4 +474,10 @@ func (d *DisksServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Res
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DisksServerTransport
+var disksServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -78,22 +78,28 @@ func (c *CertificateProfilesServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CertificateProfilesClient.BeginCreate":
-			res.resp, res.err = c.dispatchBeginCreate(req)
-		case "CertificateProfilesClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "CertificateProfilesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CertificateProfilesClient.NewListByCodeSigningAccountPager":
-			res.resp, res.err = c.dispatchNewListByCodeSigningAccountPager(req)
-		case "CertificateProfilesClient.RevokeCertificate":
-			res.resp, res.err = c.dispatchRevokeCertificate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if certificateProfilesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = certificateProfilesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CertificateProfilesClient.BeginCreate":
+				res.resp, res.err = c.dispatchBeginCreate(req)
+			case "CertificateProfilesClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CertificateProfilesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CertificateProfilesClient.NewListByCodeSigningAccountPager":
+				res.resp, res.err = c.dispatchNewListByCodeSigningAccountPager(req)
+			case "CertificateProfilesClient.RevokeCertificate":
+				res.resp, res.err = c.dispatchRevokeCertificate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -325,4 +331,10 @@ func (c *CertificateProfilesServerTransport) dispatchRevokeCertificate(req *http
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CertificateProfilesServerTransport
+var certificateProfilesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -81,22 +81,28 @@ func (v *VirtualRoutersServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualRoutersClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualRoutersClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualRoutersClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualRoutersClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualRoutersClient.NewListByResourceGroupPager":
-			res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualRoutersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualRoutersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualRoutersClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualRoutersClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualRoutersClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualRoutersClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualRoutersClient.NewListByResourceGroupPager":
+				res.resp, res.err = v.dispatchNewListByResourceGroupPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -316,4 +322,10 @@ func (v *VirtualRoutersServerTransport) dispatchNewListByResourceGroupPager(req 
 		v.newListByResourceGroupPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualRoutersServerTransport
+var virtualRoutersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

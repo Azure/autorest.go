@@ -66,20 +66,26 @@ func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) dispatchToMethodF
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FirewallPolicyIdpsSignaturesOverridesClient.Get":
-			res.resp, res.err = f.dispatchGet(req)
-		case "FirewallPolicyIdpsSignaturesOverridesClient.List":
-			res.resp, res.err = f.dispatchList(req)
-		case "FirewallPolicyIdpsSignaturesOverridesClient.Patch":
-			res.resp, res.err = f.dispatchPatch(req)
-		case "FirewallPolicyIdpsSignaturesOverridesClient.Put":
-			res.resp, res.err = f.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.List":
+				res.resp, res.err = f.dispatchList(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Patch":
+				res.resp, res.err = f.dispatchPatch(req)
+			case "FirewallPolicyIdpsSignaturesOverridesClient.Put":
+				res.resp, res.err = f.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -232,4 +238,10 @@ func (f *FirewallPolicyIdpsSignaturesOverridesServerTransport) dispatchPut(req *
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallPolicyIdpsSignaturesOverridesServerTransport
+var firewallPolicyIdpsSignaturesOverridesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

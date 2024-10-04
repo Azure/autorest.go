@@ -57,14 +57,20 @@ func (a *AzureFirewallFqdnTagsServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AzureFirewallFqdnTagsClient.NewListAllPager":
-			res.resp, res.err = a.dispatchNewListAllPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if azureFirewallFqdnTagsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureFirewallFqdnTagsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AzureFirewallFqdnTagsClient.NewListAllPager":
+				res.resp, res.err = a.dispatchNewListAllPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -110,4 +116,10 @@ func (a *AzureFirewallFqdnTagsServerTransport) dispatchNewListAllPager(req *http
 		a.newListAllPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureFirewallFqdnTagsServerTransport
+var azureFirewallFqdnTagsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

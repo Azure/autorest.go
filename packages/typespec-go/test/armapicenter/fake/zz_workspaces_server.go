@@ -74,22 +74,28 @@ func (w *WorkspacesServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "WorkspacesClient.CreateOrUpdate":
-			res.resp, res.err = w.dispatchCreateOrUpdate(req)
-		case "WorkspacesClient.Delete":
-			res.resp, res.err = w.dispatchDelete(req)
-		case "WorkspacesClient.Get":
-			res.resp, res.err = w.dispatchGet(req)
-		case "WorkspacesClient.Head":
-			res.resp, res.err = w.dispatchHead(req)
-		case "WorkspacesClient.NewListPager":
-			res.resp, res.err = w.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if workspacesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = workspacesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "WorkspacesClient.CreateOrUpdate":
+				res.resp, res.err = w.dispatchCreateOrUpdate(req)
+			case "WorkspacesClient.Delete":
+				res.resp, res.err = w.dispatchDelete(req)
+			case "WorkspacesClient.Get":
+				res.resp, res.err = w.dispatchGet(req)
+			case "WorkspacesClient.Head":
+				res.resp, res.err = w.dispatchHead(req)
+			case "WorkspacesClient.NewListPager":
+				res.resp, res.err = w.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -313,4 +319,10 @@ func (w *WorkspacesServerTransport) dispatchNewListPager(req *http.Request) (*ht
 		w.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to WorkspacesServerTransport
+var workspacesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

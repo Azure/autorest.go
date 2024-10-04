@@ -97,28 +97,34 @@ func (l *LoadBalancersServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadBalancersClient.BeginCreateOrUpdate":
-			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
-		case "LoadBalancersClient.BeginDelete":
-			res.resp, res.err = l.dispatchBeginDelete(req)
-		case "LoadBalancersClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadBalancersClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		case "LoadBalancersClient.NewListAllPager":
-			res.resp, res.err = l.dispatchNewListAllPager(req)
-		case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
-			res.resp, res.err = l.dispatchBeginListInboundNatRulePortMappings(req)
-		case "LoadBalancersClient.BeginSwapPublicIPAddresses":
-			res.resp, res.err = l.dispatchBeginSwapPublicIPAddresses(req)
-		case "LoadBalancersClient.UpdateTags":
-			res.resp, res.err = l.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadBalancersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadBalancersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadBalancersClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadBalancersClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LoadBalancersClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadBalancersClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			case "LoadBalancersClient.NewListAllPager":
+				res.resp, res.err = l.dispatchNewListAllPager(req)
+			case "LoadBalancersClient.BeginListInboundNatRulePortMappings":
+				res.resp, res.err = l.dispatchBeginListInboundNatRulePortMappings(req)
+			case "LoadBalancersClient.BeginSwapPublicIPAddresses":
+				res.resp, res.err = l.dispatchBeginSwapPublicIPAddresses(req)
+			case "LoadBalancersClient.UpdateTags":
+				res.resp, res.err = l.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -471,4 +477,10 @@ func (l *LoadBalancersServerTransport) dispatchUpdateTags(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadBalancersServerTransport
+var loadBalancersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

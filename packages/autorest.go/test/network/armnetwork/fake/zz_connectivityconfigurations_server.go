@@ -74,20 +74,26 @@ func (c *ConnectivityConfigurationsServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ConnectivityConfigurationsClient.CreateOrUpdate":
-			res.resp, res.err = c.dispatchCreateOrUpdate(req)
-		case "ConnectivityConfigurationsClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "ConnectivityConfigurationsClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "ConnectivityConfigurationsClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if connectivityConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = connectivityConfigurationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ConnectivityConfigurationsClient.CreateOrUpdate":
+				res.resp, res.err = c.dispatchCreateOrUpdate(req)
+			case "ConnectivityConfigurationsClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "ConnectivityConfigurationsClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "ConnectivityConfigurationsClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -309,4 +315,10 @@ func (c *ConnectivityConfigurationsServerTransport) dispatchNewListPager(req *ht
 		c.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ConnectivityConfigurationsServerTransport
+var connectivityConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

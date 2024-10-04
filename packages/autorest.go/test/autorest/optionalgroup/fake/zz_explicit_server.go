@@ -147,60 +147,66 @@ func (e *ExplicitServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExplicitClient.PostOptionalArrayHeader":
-			res.resp, res.err = e.dispatchPostOptionalArrayHeader(req)
-		case "ExplicitClient.PostOptionalArrayParameter":
-			res.resp, res.err = e.dispatchPostOptionalArrayParameter(req)
-		case "ExplicitClient.PostOptionalArrayProperty":
-			res.resp, res.err = e.dispatchPostOptionalArrayProperty(req)
-		case "ExplicitClient.PostOptionalClassParameter":
-			res.resp, res.err = e.dispatchPostOptionalClassParameter(req)
-		case "ExplicitClient.PostOptionalClassProperty":
-			res.resp, res.err = e.dispatchPostOptionalClassProperty(req)
-		case "ExplicitClient.PostOptionalIntegerHeader":
-			res.resp, res.err = e.dispatchPostOptionalIntegerHeader(req)
-		case "ExplicitClient.PostOptionalIntegerParameter":
-			res.resp, res.err = e.dispatchPostOptionalIntegerParameter(req)
-		case "ExplicitClient.PostOptionalIntegerProperty":
-			res.resp, res.err = e.dispatchPostOptionalIntegerProperty(req)
-		case "ExplicitClient.PostOptionalStringHeader":
-			res.resp, res.err = e.dispatchPostOptionalStringHeader(req)
-		case "ExplicitClient.PostOptionalStringParameter":
-			res.resp, res.err = e.dispatchPostOptionalStringParameter(req)
-		case "ExplicitClient.PostOptionalStringProperty":
-			res.resp, res.err = e.dispatchPostOptionalStringProperty(req)
-		case "ExplicitClient.PostRequiredArrayHeader":
-			res.resp, res.err = e.dispatchPostRequiredArrayHeader(req)
-		case "ExplicitClient.PostRequiredArrayParameter":
-			res.resp, res.err = e.dispatchPostRequiredArrayParameter(req)
-		case "ExplicitClient.PostRequiredArrayProperty":
-			res.resp, res.err = e.dispatchPostRequiredArrayProperty(req)
-		case "ExplicitClient.PostRequiredClassParameter":
-			res.resp, res.err = e.dispatchPostRequiredClassParameter(req)
-		case "ExplicitClient.PostRequiredClassProperty":
-			res.resp, res.err = e.dispatchPostRequiredClassProperty(req)
-		case "ExplicitClient.PostRequiredIntegerHeader":
-			res.resp, res.err = e.dispatchPostRequiredIntegerHeader(req)
-		case "ExplicitClient.PostRequiredIntegerParameter":
-			res.resp, res.err = e.dispatchPostRequiredIntegerParameter(req)
-		case "ExplicitClient.PostRequiredIntegerProperty":
-			res.resp, res.err = e.dispatchPostRequiredIntegerProperty(req)
-		case "ExplicitClient.PostRequiredStringHeader":
-			res.resp, res.err = e.dispatchPostRequiredStringHeader(req)
-		case "ExplicitClient.PostRequiredStringParameter":
-			res.resp, res.err = e.dispatchPostRequiredStringParameter(req)
-		case "ExplicitClient.PostRequiredStringProperty":
-			res.resp, res.err = e.dispatchPostRequiredStringProperty(req)
-		case "ExplicitClient.PutOptionalBinaryBody":
-			res.resp, res.err = e.dispatchPutOptionalBinaryBody(req)
-		case "ExplicitClient.PutRequiredBinaryBody":
-			res.resp, res.err = e.dispatchPutRequiredBinaryBody(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if explicitServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = explicitServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExplicitClient.PostOptionalArrayHeader":
+				res.resp, res.err = e.dispatchPostOptionalArrayHeader(req)
+			case "ExplicitClient.PostOptionalArrayParameter":
+				res.resp, res.err = e.dispatchPostOptionalArrayParameter(req)
+			case "ExplicitClient.PostOptionalArrayProperty":
+				res.resp, res.err = e.dispatchPostOptionalArrayProperty(req)
+			case "ExplicitClient.PostOptionalClassParameter":
+				res.resp, res.err = e.dispatchPostOptionalClassParameter(req)
+			case "ExplicitClient.PostOptionalClassProperty":
+				res.resp, res.err = e.dispatchPostOptionalClassProperty(req)
+			case "ExplicitClient.PostOptionalIntegerHeader":
+				res.resp, res.err = e.dispatchPostOptionalIntegerHeader(req)
+			case "ExplicitClient.PostOptionalIntegerParameter":
+				res.resp, res.err = e.dispatchPostOptionalIntegerParameter(req)
+			case "ExplicitClient.PostOptionalIntegerProperty":
+				res.resp, res.err = e.dispatchPostOptionalIntegerProperty(req)
+			case "ExplicitClient.PostOptionalStringHeader":
+				res.resp, res.err = e.dispatchPostOptionalStringHeader(req)
+			case "ExplicitClient.PostOptionalStringParameter":
+				res.resp, res.err = e.dispatchPostOptionalStringParameter(req)
+			case "ExplicitClient.PostOptionalStringProperty":
+				res.resp, res.err = e.dispatchPostOptionalStringProperty(req)
+			case "ExplicitClient.PostRequiredArrayHeader":
+				res.resp, res.err = e.dispatchPostRequiredArrayHeader(req)
+			case "ExplicitClient.PostRequiredArrayParameter":
+				res.resp, res.err = e.dispatchPostRequiredArrayParameter(req)
+			case "ExplicitClient.PostRequiredArrayProperty":
+				res.resp, res.err = e.dispatchPostRequiredArrayProperty(req)
+			case "ExplicitClient.PostRequiredClassParameter":
+				res.resp, res.err = e.dispatchPostRequiredClassParameter(req)
+			case "ExplicitClient.PostRequiredClassProperty":
+				res.resp, res.err = e.dispatchPostRequiredClassProperty(req)
+			case "ExplicitClient.PostRequiredIntegerHeader":
+				res.resp, res.err = e.dispatchPostRequiredIntegerHeader(req)
+			case "ExplicitClient.PostRequiredIntegerParameter":
+				res.resp, res.err = e.dispatchPostRequiredIntegerParameter(req)
+			case "ExplicitClient.PostRequiredIntegerProperty":
+				res.resp, res.err = e.dispatchPostRequiredIntegerProperty(req)
+			case "ExplicitClient.PostRequiredStringHeader":
+				res.resp, res.err = e.dispatchPostRequiredStringHeader(req)
+			case "ExplicitClient.PostRequiredStringParameter":
+				res.resp, res.err = e.dispatchPostRequiredStringParameter(req)
+			case "ExplicitClient.PostRequiredStringProperty":
+				res.resp, res.err = e.dispatchPostRequiredStringProperty(req)
+			case "ExplicitClient.PutOptionalBinaryBody":
+				res.resp, res.err = e.dispatchPutOptionalBinaryBody(req)
+			case "ExplicitClient.PutRequiredBinaryBody":
+				res.resp, res.err = e.dispatchPutRequiredBinaryBody(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -827,4 +833,10 @@ func (e *ExplicitServerTransport) dispatchPutRequiredBinaryBody(req *http.Reques
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExplicitServerTransport
+var explicitServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -85,24 +85,30 @@ func (r *RouteTablesServerTransport) dispatchToMethodFake(req *http.Request, met
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RouteTablesClient.BeginCreateOrUpdate":
-			res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
-		case "RouteTablesClient.BeginDelete":
-			res.resp, res.err = r.dispatchBeginDelete(req)
-		case "RouteTablesClient.Get":
-			res.resp, res.err = r.dispatchGet(req)
-		case "RouteTablesClient.NewListPager":
-			res.resp, res.err = r.dispatchNewListPager(req)
-		case "RouteTablesClient.NewListAllPager":
-			res.resp, res.err = r.dispatchNewListAllPager(req)
-		case "RouteTablesClient.UpdateTags":
-			res.resp, res.err = r.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if routeTablesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = routeTablesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RouteTablesClient.BeginCreateOrUpdate":
+				res.resp, res.err = r.dispatchBeginCreateOrUpdate(req)
+			case "RouteTablesClient.BeginDelete":
+				res.resp, res.err = r.dispatchBeginDelete(req)
+			case "RouteTablesClient.Get":
+				res.resp, res.err = r.dispatchGet(req)
+			case "RouteTablesClient.NewListPager":
+				res.resp, res.err = r.dispatchNewListPager(req)
+			case "RouteTablesClient.NewListAllPager":
+				res.resp, res.err = r.dispatchNewListAllPager(req)
+			case "RouteTablesClient.UpdateTags":
+				res.resp, res.err = r.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (r *RouteTablesServerTransport) dispatchUpdateTags(req *http.Request) (*htt
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RouteTablesServerTransport
+var routeTablesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

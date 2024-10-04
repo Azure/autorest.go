@@ -57,14 +57,20 @@ func (r *ReplicasServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ReplicasClient.NewListByParentPager":
-			res.resp, res.err = r.dispatchNewListByParentPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if replicasServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = replicasServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ReplicasClient.NewListByParentPager":
+				res.resp, res.err = r.dispatchNewListByParentPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -118,4 +124,10 @@ func (r *ReplicasServerTransport) dispatchNewListByParentPager(req *http.Request
 		r.newListByParentPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ReplicasServerTransport
+var replicasServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

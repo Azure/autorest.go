@@ -143,44 +143,50 @@ func (v *VirtualMachineScaleSetVMsServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineScaleSetVMsClient.BeginDeallocate":
-			res.resp, res.err = v.dispatchBeginDeallocate(req)
-		case "VirtualMachineScaleSetVMsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineScaleSetVMsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineScaleSetVMsClient.GetInstanceView":
-			res.resp, res.err = v.dispatchGetInstanceView(req)
-		case "VirtualMachineScaleSetVMsClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance":
-			res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
-		case "VirtualMachineScaleSetVMsClient.BeginPowerOff":
-			res.resp, res.err = v.dispatchBeginPowerOff(req)
-		case "VirtualMachineScaleSetVMsClient.BeginRedeploy":
-			res.resp, res.err = v.dispatchBeginRedeploy(req)
-		case "VirtualMachineScaleSetVMsClient.BeginReimage":
-			res.resp, res.err = v.dispatchBeginReimage(req)
-		case "VirtualMachineScaleSetVMsClient.BeginReimageAll":
-			res.resp, res.err = v.dispatchBeginReimageAll(req)
-		case "VirtualMachineScaleSetVMsClient.BeginRestart":
-			res.resp, res.err = v.dispatchBeginRestart(req)
-		case "VirtualMachineScaleSetVMsClient.RetrieveBootDiagnosticsData":
-			res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
-		case "VirtualMachineScaleSetVMsClient.BeginRunCommand":
-			res.resp, res.err = v.dispatchBeginRunCommand(req)
-		case "VirtualMachineScaleSetVMsClient.SimulateEviction":
-			res.resp, res.err = v.dispatchSimulateEviction(req)
-		case "VirtualMachineScaleSetVMsClient.BeginStart":
-			res.resp, res.err = v.dispatchBeginStart(req)
-		case "VirtualMachineScaleSetVMsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineScaleSetVMSServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetVMSServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetVMsClient.BeginDeallocate":
+				res.resp, res.err = v.dispatchBeginDeallocate(req)
+			case "VirtualMachineScaleSetVMsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetVMsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetVMsClient.GetInstanceView":
+				res.resp, res.err = v.dispatchGetInstanceView(req)
+			case "VirtualMachineScaleSetVMsClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualMachineScaleSetVMsClient.BeginPerformMaintenance":
+				res.resp, res.err = v.dispatchBeginPerformMaintenance(req)
+			case "VirtualMachineScaleSetVMsClient.BeginPowerOff":
+				res.resp, res.err = v.dispatchBeginPowerOff(req)
+			case "VirtualMachineScaleSetVMsClient.BeginRedeploy":
+				res.resp, res.err = v.dispatchBeginRedeploy(req)
+			case "VirtualMachineScaleSetVMsClient.BeginReimage":
+				res.resp, res.err = v.dispatchBeginReimage(req)
+			case "VirtualMachineScaleSetVMsClient.BeginReimageAll":
+				res.resp, res.err = v.dispatchBeginReimageAll(req)
+			case "VirtualMachineScaleSetVMsClient.BeginRestart":
+				res.resp, res.err = v.dispatchBeginRestart(req)
+			case "VirtualMachineScaleSetVMsClient.RetrieveBootDiagnosticsData":
+				res.resp, res.err = v.dispatchRetrieveBootDiagnosticsData(req)
+			case "VirtualMachineScaleSetVMsClient.BeginRunCommand":
+				res.resp, res.err = v.dispatchBeginRunCommand(req)
+			case "VirtualMachineScaleSetVMsClient.SimulateEviction":
+				res.resp, res.err = v.dispatchSimulateEviction(req)
+			case "VirtualMachineScaleSetVMsClient.BeginStart":
+				res.resp, res.err = v.dispatchBeginStart(req)
+			case "VirtualMachineScaleSetVMsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -1015,4 +1021,10 @@ func (v *VirtualMachineScaleSetVMsServerTransport) dispatchBeginUpdate(req *http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetVMsServerTransport
+var virtualMachineScaleSetVMSServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

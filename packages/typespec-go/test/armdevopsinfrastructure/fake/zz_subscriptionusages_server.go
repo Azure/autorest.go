@@ -57,14 +57,20 @@ func (s *SubscriptionUsagesServerTransport) dispatchToMethodFake(req *http.Reque
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SubscriptionUsagesClient.NewUsagesPager":
-			res.resp, res.err = s.dispatchNewUsagesPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if subscriptionUsagesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = subscriptionUsagesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SubscriptionUsagesClient.NewUsagesPager":
+				res.resp, res.err = s.dispatchNewUsagesPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -114,4 +120,10 @@ func (s *SubscriptionUsagesServerTransport) dispatchNewUsagesPager(req *http.Req
 		s.newUsagesPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SubscriptionUsagesServerTransport
+var subscriptionUsagesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

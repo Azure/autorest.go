@@ -55,16 +55,22 @@ func (s *ScalarDecimal128VerifyServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScalarDecimal128VerifyClient.PrepareVerify":
-			res.resp, res.err = s.dispatchPrepareVerify(req)
-		case "ScalarDecimal128VerifyClient.Verify":
-			res.resp, res.err = s.dispatchVerify(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scalarDecimal128VerifyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scalarDecimal128VerifyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScalarDecimal128VerifyClient.PrepareVerify":
+				res.resp, res.err = s.dispatchPrepareVerify(req)
+			case "ScalarDecimal128VerifyClient.Verify":
+				res.resp, res.err = s.dispatchVerify(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (s *ScalarDecimal128VerifyServerTransport) dispatchVerify(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScalarDecimal128VerifyServerTransport
+var scalarDecimal128VerifyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

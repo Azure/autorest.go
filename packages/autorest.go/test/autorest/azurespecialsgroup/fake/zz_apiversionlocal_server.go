@@ -65,20 +65,26 @@ func (a *APIVersionLocalServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "APIVersionLocalClient.GetMethodLocalNull":
-			res.resp, res.err = a.dispatchGetMethodLocalNull(req)
-		case "APIVersionLocalClient.GetMethodLocalValid":
-			res.resp, res.err = a.dispatchGetMethodLocalValid(req)
-		case "APIVersionLocalClient.GetPathLocalValid":
-			res.resp, res.err = a.dispatchGetPathLocalValid(req)
-		case "APIVersionLocalClient.GetSwaggerLocalValid":
-			res.resp, res.err = a.dispatchGetSwaggerLocalValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if apiVersionLocalServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = apiVersionLocalServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "APIVersionLocalClient.GetMethodLocalNull":
+				res.resp, res.err = a.dispatchGetMethodLocalNull(req)
+			case "APIVersionLocalClient.GetMethodLocalValid":
+				res.resp, res.err = a.dispatchGetMethodLocalValid(req)
+			case "APIVersionLocalClient.GetPathLocalValid":
+				res.resp, res.err = a.dispatchGetPathLocalValid(req)
+			case "APIVersionLocalClient.GetSwaggerLocalValid":
+				res.resp, res.err = a.dispatchGetSwaggerLocalValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -179,4 +185,10 @@ func (a *APIVersionLocalServerTransport) dispatchGetSwaggerLocalValid(req *http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to APIVersionLocalServerTransport
+var apiVersionLocalServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -54,14 +54,20 @@ func (v *VPNSiteLinkConnectionsServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VPNSiteLinkConnectionsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if vpnSiteLinkConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = vpnSiteLinkConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VPNSiteLinkConnectionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -115,4 +121,10 @@ func (v *VPNSiteLinkConnectionsServerTransport) dispatchGet(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VPNSiteLinkConnectionsServerTransport
+var vpnSiteLinkConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

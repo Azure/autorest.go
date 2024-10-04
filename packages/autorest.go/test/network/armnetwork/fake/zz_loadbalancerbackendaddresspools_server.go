@@ -75,20 +75,26 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchToMethodFake(re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate":
-			res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
-		case "LoadBalancerBackendAddressPoolsClient.BeginDelete":
-			res.resp, res.err = l.dispatchBeginDelete(req)
-		case "LoadBalancerBackendAddressPoolsClient.Get":
-			res.resp, res.err = l.dispatchGet(req)
-		case "LoadBalancerBackendAddressPoolsClient.NewListPager":
-			res.resp, res.err = l.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if loadBalancerBackendAddressPoolsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = loadBalancerBackendAddressPoolsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "LoadBalancerBackendAddressPoolsClient.BeginCreateOrUpdate":
+				res.resp, res.err = l.dispatchBeginCreateOrUpdate(req)
+			case "LoadBalancerBackendAddressPoolsClient.BeginDelete":
+				res.resp, res.err = l.dispatchBeginDelete(req)
+			case "LoadBalancerBackendAddressPoolsClient.Get":
+				res.resp, res.err = l.dispatchGet(req)
+			case "LoadBalancerBackendAddressPoolsClient.NewListPager":
+				res.resp, res.err = l.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (l *LoadBalancerBackendAddressPoolsServerTransport) dispatchNewListPager(re
 		l.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to LoadBalancerBackendAddressPoolsServerTransport
+var loadBalancerBackendAddressPoolsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

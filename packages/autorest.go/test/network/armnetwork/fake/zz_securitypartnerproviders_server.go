@@ -85,24 +85,30 @@ func (s *SecurityPartnerProvidersServerTransport) dispatchToMethodFake(req *http
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SecurityPartnerProvidersClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "SecurityPartnerProvidersClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SecurityPartnerProvidersClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SecurityPartnerProvidersClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		case "SecurityPartnerProvidersClient.NewListByResourceGroupPager":
-			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
-		case "SecurityPartnerProvidersClient.UpdateTags":
-			res.resp, res.err = s.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if securityPartnerProvidersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = securityPartnerProvidersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SecurityPartnerProvidersClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "SecurityPartnerProvidersClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SecurityPartnerProvidersClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SecurityPartnerProvidersClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			case "SecurityPartnerProvidersClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "SecurityPartnerProvidersClient.UpdateTags":
+				res.resp, res.err = s.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -347,4 +353,10 @@ func (s *SecurityPartnerProvidersServerTransport) dispatchUpdateTags(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SecurityPartnerProvidersServerTransport
+var securityPartnerProvidersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

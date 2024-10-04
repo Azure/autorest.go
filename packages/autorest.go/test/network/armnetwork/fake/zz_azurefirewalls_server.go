@@ -93,26 +93,32 @@ func (a *AzureFirewallsServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AzureFirewallsClient.BeginCreateOrUpdate":
-			res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
-		case "AzureFirewallsClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "AzureFirewallsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AzureFirewallsClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		case "AzureFirewallsClient.NewListAllPager":
-			res.resp, res.err = a.dispatchNewListAllPager(req)
-		case "AzureFirewallsClient.BeginListLearnedPrefixes":
-			res.resp, res.err = a.dispatchBeginListLearnedPrefixes(req)
-		case "AzureFirewallsClient.BeginUpdateTags":
-			res.resp, res.err = a.dispatchBeginUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if azureFirewallsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureFirewallsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AzureFirewallsClient.BeginCreateOrUpdate":
+				res.resp, res.err = a.dispatchBeginCreateOrUpdate(req)
+			case "AzureFirewallsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AzureFirewallsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AzureFirewallsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "AzureFirewallsClient.NewListAllPager":
+				res.resp, res.err = a.dispatchNewListAllPager(req)
+			case "AzureFirewallsClient.BeginListLearnedPrefixes":
+				res.resp, res.err = a.dispatchBeginListLearnedPrefixes(req)
+			case "AzureFirewallsClient.BeginUpdateTags":
+				res.resp, res.err = a.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -412,4 +418,10 @@ func (a *AzureFirewallsServerTransport) dispatchBeginUpdateTags(req *http.Reques
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureFirewallsServerTransport
+var azureFirewallsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

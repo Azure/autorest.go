@@ -72,24 +72,30 @@ func (d *DictionaryServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DictionaryClient.GetEmpty":
-			res.resp, res.err = d.dispatchGetEmpty(req)
-		case "DictionaryClient.GetNotProvided":
-			res.resp, res.err = d.dispatchGetNotProvided(req)
-		case "DictionaryClient.GetNull":
-			res.resp, res.err = d.dispatchGetNull(req)
-		case "DictionaryClient.GetValid":
-			res.resp, res.err = d.dispatchGetValid(req)
-		case "DictionaryClient.PutEmpty":
-			res.resp, res.err = d.dispatchPutEmpty(req)
-		case "DictionaryClient.PutValid":
-			res.resp, res.err = d.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if dictionaryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DictionaryClient.GetEmpty":
+				res.resp, res.err = d.dispatchGetEmpty(req)
+			case "DictionaryClient.GetNotProvided":
+				res.resp, res.err = d.dispatchGetNotProvided(req)
+			case "DictionaryClient.GetNull":
+				res.resp, res.err = d.dispatchGetNull(req)
+			case "DictionaryClient.GetValid":
+				res.resp, res.err = d.dispatchGetValid(req)
+			case "DictionaryClient.PutEmpty":
+				res.resp, res.err = d.dispatchPutEmpty(req)
+			case "DictionaryClient.PutValid":
+				res.resp, res.err = d.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -224,4 +230,10 @@ func (d *DictionaryServerTransport) dispatchPutValid(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryServerTransport
+var dictionaryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -82,16 +82,22 @@ func (b *BodyOptionalityServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BodyOptionalityClient.RequiredExplicit":
-			res.resp, res.err = b.dispatchRequiredExplicit(req)
-		case "BodyOptionalityClient.RequiredImplicit":
-			res.resp, res.err = b.dispatchRequiredImplicit(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if bodyOptionalityServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = bodyOptionalityServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BodyOptionalityClient.RequiredExplicit":
+				res.resp, res.err = b.dispatchRequiredExplicit(req)
+			case "BodyOptionalityClient.RequiredImplicit":
+				res.resp, res.err = b.dispatchRequiredImplicit(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -153,4 +159,10 @@ func (b *BodyOptionalityServerTransport) dispatchRequiredImplicit(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BodyOptionalityServerTransport
+var bodyOptionalityServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

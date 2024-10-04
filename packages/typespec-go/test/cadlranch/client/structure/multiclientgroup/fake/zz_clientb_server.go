@@ -59,18 +59,24 @@ func (c *ClientBServerTransport) dispatchToMethodFake(req *http.Request, method 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ClientBClient.RenamedFour":
-			res.resp, res.err = c.dispatchRenamedFour(req)
-		case "ClientBClient.RenamedSix":
-			res.resp, res.err = c.dispatchRenamedSix(req)
-		case "ClientBClient.RenamedTwo":
-			res.resp, res.err = c.dispatchRenamedTwo(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if clientBServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = clientBServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ClientBClient.RenamedFour":
+				res.resp, res.err = c.dispatchRenamedFour(req)
+			case "ClientBClient.RenamedSix":
+				res.resp, res.err = c.dispatchRenamedSix(req)
+			case "ClientBClient.RenamedTwo":
+				res.resp, res.err = c.dispatchRenamedTwo(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -140,4 +146,10 @@ func (c *ClientBServerTransport) dispatchRenamedTwo(req *http.Request) (*http.Re
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ClientBServerTransport
+var clientBServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -102,30 +102,36 @@ func (v *VirtualNetworksServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualNetworksClient.CheckIPAddressAvailability":
-			res.resp, res.err = v.dispatchCheckIPAddressAvailability(req)
-		case "VirtualNetworksClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualNetworksClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualNetworksClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualNetworksClient.NewListPager":
-			res.resp, res.err = v.dispatchNewListPager(req)
-		case "VirtualNetworksClient.NewListAllPager":
-			res.resp, res.err = v.dispatchNewListAllPager(req)
-		case "VirtualNetworksClient.BeginListDdosProtectionStatus":
-			res.resp, res.err = v.dispatchBeginListDdosProtectionStatus(req)
-		case "VirtualNetworksClient.NewListUsagePager":
-			res.resp, res.err = v.dispatchNewListUsagePager(req)
-		case "VirtualNetworksClient.UpdateTags":
-			res.resp, res.err = v.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualNetworksServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualNetworksServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualNetworksClient.CheckIPAddressAvailability":
+				res.resp, res.err = v.dispatchCheckIPAddressAvailability(req)
+			case "VirtualNetworksClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualNetworksClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualNetworksClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualNetworksClient.NewListPager":
+				res.resp, res.err = v.dispatchNewListPager(req)
+			case "VirtualNetworksClient.NewListAllPager":
+				res.resp, res.err = v.dispatchNewListAllPager(req)
+			case "VirtualNetworksClient.BeginListDdosProtectionStatus":
+				res.resp, res.err = v.dispatchBeginListDdosProtectionStatus(req)
+			case "VirtualNetworksClient.NewListUsagePager":
+				res.resp, res.err = v.dispatchNewListUsagePager(req)
+			case "VirtualNetworksClient.UpdateTags":
+				res.resp, res.err = v.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -532,4 +538,10 @@ func (v *VirtualNetworksServerTransport) dispatchUpdateTags(req *http.Request) (
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualNetworksServerTransport
+var virtualNetworksServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

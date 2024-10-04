@@ -55,14 +55,20 @@ func (r *RPCServerTransport) dispatchToMethodFake(req *http.Request, method stri
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "RPCClient.BeginLongRunningRPC":
-			res.resp, res.err = r.dispatchBeginLongRunningRPC(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if rpcServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = rpcServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "RPCClient.BeginLongRunningRPC":
+				res.resp, res.err = r.dispatchBeginLongRunningRPC(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -109,4 +115,10 @@ func (r *RPCServerTransport) dispatchBeginLongRunningRPC(req *http.Request) (*ht
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to RPCServerTransport
+var rpcServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -74,20 +74,26 @@ func (a *AdminRulesServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AdminRulesClient.CreateOrUpdate":
-			res.resp, res.err = a.dispatchCreateOrUpdate(req)
-		case "AdminRulesClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "AdminRulesClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AdminRulesClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if adminRulesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = adminRulesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AdminRulesClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "AdminRulesClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AdminRulesClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AdminRulesClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -345,4 +351,10 @@ func (a *AdminRulesServerTransport) dispatchNewListPager(req *http.Request) (*ht
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AdminRulesServerTransport
+var adminRulesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

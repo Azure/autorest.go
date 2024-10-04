@@ -87,24 +87,30 @@ func (g *GalleriesServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "GalleriesClient.BeginCreateOrUpdate":
-			res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
-		case "GalleriesClient.BeginDelete":
-			res.resp, res.err = g.dispatchBeginDelete(req)
-		case "GalleriesClient.Get":
-			res.resp, res.err = g.dispatchGet(req)
-		case "GalleriesClient.NewListPager":
-			res.resp, res.err = g.dispatchNewListPager(req)
-		case "GalleriesClient.NewListByResourceGroupPager":
-			res.resp, res.err = g.dispatchNewListByResourceGroupPager(req)
-		case "GalleriesClient.BeginUpdate":
-			res.resp, res.err = g.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if galleriesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = galleriesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "GalleriesClient.BeginCreateOrUpdate":
+				res.resp, res.err = g.dispatchBeginCreateOrUpdate(req)
+			case "GalleriesClient.BeginDelete":
+				res.resp, res.err = g.dispatchBeginDelete(req)
+			case "GalleriesClient.Get":
+				res.resp, res.err = g.dispatchGet(req)
+			case "GalleriesClient.NewListPager":
+				res.resp, res.err = g.dispatchNewListPager(req)
+			case "GalleriesClient.NewListByResourceGroupPager":
+				res.resp, res.err = g.dispatchNewListByResourceGroupPager(req)
+			case "GalleriesClient.BeginUpdate":
+				res.resp, res.err = g.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -378,4 +384,10 @@ func (g *GalleriesServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to GalleriesServerTransport
+var galleriesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

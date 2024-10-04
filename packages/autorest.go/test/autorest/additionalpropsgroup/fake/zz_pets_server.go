@@ -72,24 +72,30 @@ func (p *PetsServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PetsClient.CreateAPInProperties":
-			res.resp, res.err = p.dispatchCreateAPInProperties(req)
-		case "PetsClient.CreateAPInPropertiesWithAPString":
-			res.resp, res.err = p.dispatchCreateAPInPropertiesWithAPString(req)
-		case "PetsClient.CreateAPObject":
-			res.resp, res.err = p.dispatchCreateAPObject(req)
-		case "PetsClient.CreateAPString":
-			res.resp, res.err = p.dispatchCreateAPString(req)
-		case "PetsClient.CreateAPTrue":
-			res.resp, res.err = p.dispatchCreateAPTrue(req)
-		case "PetsClient.CreateCatAPTrue":
-			res.resp, res.err = p.dispatchCreateCatAPTrue(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if petsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = petsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PetsClient.CreateAPInProperties":
+				res.resp, res.err = p.dispatchCreateAPInProperties(req)
+			case "PetsClient.CreateAPInPropertiesWithAPString":
+				res.resp, res.err = p.dispatchCreateAPInPropertiesWithAPString(req)
+			case "PetsClient.CreateAPObject":
+				res.resp, res.err = p.dispatchCreateAPObject(req)
+			case "PetsClient.CreateAPString":
+				res.resp, res.err = p.dispatchCreateAPString(req)
+			case "PetsClient.CreateAPTrue":
+				res.resp, res.err = p.dispatchCreateAPTrue(req)
+			case "PetsClient.CreateCatAPTrue":
+				res.resp, res.err = p.dispatchCreateCatAPTrue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -240,4 +246,10 @@ func (p *PetsServerTransport) dispatchCreateCatAPTrue(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PetsServerTransport
+var petsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

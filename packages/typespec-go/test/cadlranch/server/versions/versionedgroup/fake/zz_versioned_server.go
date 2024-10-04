@@ -63,20 +63,26 @@ func (v *VersionedServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VersionedClient.WithPathAPIVersion":
-			res.resp, res.err = v.dispatchWithPathAPIVersion(req)
-		case "VersionedClient.WithQueryAPIVersion":
-			res.resp, res.err = v.dispatchWithQueryAPIVersion(req)
-		case "VersionedClient.WithQueryOldAPIVersion":
-			res.resp, res.err = v.dispatchWithQueryOldAPIVersion(req)
-		case "VersionedClient.WithoutAPIVersion":
-			res.resp, res.err = v.dispatchWithoutAPIVersion(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if versionedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = versionedServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VersionedClient.WithPathAPIVersion":
+				res.resp, res.err = v.dispatchWithPathAPIVersion(req)
+			case "VersionedClient.WithQueryAPIVersion":
+				res.resp, res.err = v.dispatchWithQueryAPIVersion(req)
+			case "VersionedClient.WithQueryOldAPIVersion":
+				res.resp, res.err = v.dispatchWithQueryOldAPIVersion(req)
+			case "VersionedClient.WithoutAPIVersion":
+				res.resp, res.err = v.dispatchWithoutAPIVersion(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -165,4 +171,10 @@ func (v *VersionedServerTransport) dispatchWithoutAPIVersion(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VersionedServerTransport
+var versionedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

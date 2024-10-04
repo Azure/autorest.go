@@ -84,30 +84,36 @@ func (p *PolymorphismServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PolymorphismClient.GetComplicated":
-			res.resp, res.err = p.dispatchGetComplicated(req)
-		case "PolymorphismClient.GetComposedWithDiscriminator":
-			res.resp, res.err = p.dispatchGetComposedWithDiscriminator(req)
-		case "PolymorphismClient.GetComposedWithoutDiscriminator":
-			res.resp, res.err = p.dispatchGetComposedWithoutDiscriminator(req)
-		case "PolymorphismClient.GetDotSyntax":
-			res.resp, res.err = p.dispatchGetDotSyntax(req)
-		case "PolymorphismClient.GetValid":
-			res.resp, res.err = p.dispatchGetValid(req)
-		case "PolymorphismClient.PutComplicated":
-			res.resp, res.err = p.dispatchPutComplicated(req)
-		case "PolymorphismClient.PutMissingDiscriminator":
-			res.resp, res.err = p.dispatchPutMissingDiscriminator(req)
-		case "PolymorphismClient.PutValid":
-			res.resp, res.err = p.dispatchPutValid(req)
-		case "PolymorphismClient.PutValidMissingRequired":
-			res.resp, res.err = p.dispatchPutValidMissingRequired(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if polymorphismServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = polymorphismServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PolymorphismClient.GetComplicated":
+				res.resp, res.err = p.dispatchGetComplicated(req)
+			case "PolymorphismClient.GetComposedWithDiscriminator":
+				res.resp, res.err = p.dispatchGetComposedWithDiscriminator(req)
+			case "PolymorphismClient.GetComposedWithoutDiscriminator":
+				res.resp, res.err = p.dispatchGetComposedWithoutDiscriminator(req)
+			case "PolymorphismClient.GetDotSyntax":
+				res.resp, res.err = p.dispatchGetDotSyntax(req)
+			case "PolymorphismClient.GetValid":
+				res.resp, res.err = p.dispatchGetValid(req)
+			case "PolymorphismClient.PutComplicated":
+				res.resp, res.err = p.dispatchPutComplicated(req)
+			case "PolymorphismClient.PutMissingDiscriminator":
+				res.resp, res.err = p.dispatchPutMissingDiscriminator(req)
+			case "PolymorphismClient.PutValid":
+				res.resp, res.err = p.dispatchPutValid(req)
+			case "PolymorphismClient.PutValidMissingRequired":
+				res.resp, res.err = p.dispatchPutValidMissingRequired(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -323,4 +329,10 @@ func (p *PolymorphismServerTransport) dispatchPutValidMissingRequired(req *http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PolymorphismServerTransport
+var polymorphismServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

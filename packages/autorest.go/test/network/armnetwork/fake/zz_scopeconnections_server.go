@@ -72,20 +72,26 @@ func (s *ScopeConnectionsServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ScopeConnectionsClient.CreateOrUpdate":
-			res.resp, res.err = s.dispatchCreateOrUpdate(req)
-		case "ScopeConnectionsClient.Delete":
-			res.resp, res.err = s.dispatchDelete(req)
-		case "ScopeConnectionsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "ScopeConnectionsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if scopeConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = scopeConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ScopeConnectionsClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "ScopeConnectionsClient.Delete":
+				res.resp, res.err = s.dispatchDelete(req)
+			case "ScopeConnectionsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "ScopeConnectionsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -281,4 +287,10 @@ func (s *ScopeConnectionsServerTransport) dispatchNewListPager(req *http.Request
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ScopeConnectionsServerTransport
+var scopeConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

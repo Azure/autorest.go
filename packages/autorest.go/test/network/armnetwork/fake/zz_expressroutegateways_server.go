@@ -82,24 +82,30 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteGatewaysClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRouteGatewaysClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRouteGatewaysClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteGatewaysClient.ListByResourceGroup":
-			res.resp, res.err = e.dispatchListByResourceGroup(req)
-		case "ExpressRouteGatewaysClient.ListBySubscription":
-			res.resp, res.err = e.dispatchListBySubscription(req)
-		case "ExpressRouteGatewaysClient.BeginUpdateTags":
-			res.resp, res.err = e.dispatchBeginUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteGatewaysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteGatewaysClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRouteGatewaysClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteGatewaysClient.ListByResourceGroup":
+				res.resp, res.err = e.dispatchListByResourceGroup(req)
+			case "ExpressRouteGatewaysClient.ListBySubscription":
+				res.resp, res.err = e.dispatchListBySubscription(req)
+			case "ExpressRouteGatewaysClient.BeginUpdateTags":
+				res.resp, res.err = e.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -339,4 +345,10 @@ func (e *ExpressRouteGatewaysServerTransport) dispatchBeginUpdateTags(req *http.
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteGatewaysServerTransport
+var expressRouteGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

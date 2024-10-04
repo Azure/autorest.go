@@ -51,14 +51,20 @@ func (n *NotDefinedServerTransport) dispatchToMethodFake(req *http.Request, meth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NotDefinedClient.Valid":
-			res.resp, res.err = n.dispatchValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if notDefinedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = notDefinedServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NotDefinedClient.Valid":
+				res.resp, res.err = n.dispatchValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -90,4 +96,10 @@ func (n *NotDefinedServerTransport) dispatchValid(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NotDefinedServerTransport
+var notDefinedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

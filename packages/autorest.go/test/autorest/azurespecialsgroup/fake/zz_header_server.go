@@ -60,18 +60,24 @@ func (h *HeaderServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HeaderClient.CustomNamedRequestID":
-			res.resp, res.err = h.dispatchCustomNamedRequestID(req)
-		case "HeaderClient.CustomNamedRequestIDHead":
-			res.resp, res.err = h.dispatchCustomNamedRequestIDHead(req)
-		case "HeaderClient.CustomNamedRequestIDParamGrouping":
-			res.resp, res.err = h.dispatchCustomNamedRequestIDParamGrouping(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if headerServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = headerServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HeaderClient.CustomNamedRequestID":
+				res.resp, res.err = h.dispatchCustomNamedRequestID(req)
+			case "HeaderClient.CustomNamedRequestIDHead":
+				res.resp, res.err = h.dispatchCustomNamedRequestIDHead(req)
+			case "HeaderClient.CustomNamedRequestIDParamGrouping":
+				res.resp, res.err = h.dispatchCustomNamedRequestIDParamGrouping(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -153,4 +159,10 @@ func (h *HeaderServerTransport) dispatchCustomNamedRequestIDParamGrouping(req *h
 		resp.Header.Set("foo-request-id", *val)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HeaderServerTransport
+var headerServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

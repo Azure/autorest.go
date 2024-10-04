@@ -81,24 +81,30 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchToMethodFake(req *http
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ProximityPlacementGroupsClient.CreateOrUpdate":
-			res.resp, res.err = p.dispatchCreateOrUpdate(req)
-		case "ProximityPlacementGroupsClient.Delete":
-			res.resp, res.err = p.dispatchDelete(req)
-		case "ProximityPlacementGroupsClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "ProximityPlacementGroupsClient.NewListByResourceGroupPager":
-			res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
-		case "ProximityPlacementGroupsClient.NewListBySubscriptionPager":
-			res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
-		case "ProximityPlacementGroupsClient.Update":
-			res.resp, res.err = p.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if proximityPlacementGroupsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = proximityPlacementGroupsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ProximityPlacementGroupsClient.CreateOrUpdate":
+				res.resp, res.err = p.dispatchCreateOrUpdate(req)
+			case "ProximityPlacementGroupsClient.Delete":
+				res.resp, res.err = p.dispatchDelete(req)
+			case "ProximityPlacementGroupsClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "ProximityPlacementGroupsClient.NewListByResourceGroupPager":
+				res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
+			case "ProximityPlacementGroupsClient.NewListBySubscriptionPager":
+				res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
+			case "ProximityPlacementGroupsClient.Update":
+				res.resp, res.err = p.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -333,4 +339,10 @@ func (p *ProximityPlacementGroupsServerTransport) dispatchUpdate(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ProximityPlacementGroupsServerTransport
+var proximityPlacementGroupsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -313,3 +313,9 @@ func (v *ValueTypesServerTransport) dispatchToClientFake(req *http.Request, clie
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to ValueTypesServerTransport
+var valueTypesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

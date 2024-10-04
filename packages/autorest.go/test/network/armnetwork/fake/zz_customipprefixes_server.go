@@ -85,24 +85,30 @@ func (c *CustomIPPrefixesServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CustomIPPrefixesClient.BeginCreateOrUpdate":
-			res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
-		case "CustomIPPrefixesClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "CustomIPPrefixesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CustomIPPrefixesClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		case "CustomIPPrefixesClient.NewListAllPager":
-			res.resp, res.err = c.dispatchNewListAllPager(req)
-		case "CustomIPPrefixesClient.UpdateTags":
-			res.resp, res.err = c.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if customIPPrefixesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = customIPPrefixesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CustomIPPrefixesClient.BeginCreateOrUpdate":
+				res.resp, res.err = c.dispatchBeginCreateOrUpdate(req)
+			case "CustomIPPrefixesClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CustomIPPrefixesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CustomIPPrefixesClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "CustomIPPrefixesClient.NewListAllPager":
+				res.resp, res.err = c.dispatchNewListAllPager(req)
+			case "CustomIPPrefixesClient.UpdateTags":
+				res.resp, res.err = c.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (c *CustomIPPrefixesServerTransport) dispatchUpdateTags(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CustomIPPrefixesServerTransport
+var customIPPrefixesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -52,14 +52,20 @@ func (t *TypeChangedFromServerTransport) dispatchToMethodFake(req *http.Request,
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "TypeChangedFromClient.Test":
-			res.resp, res.err = t.dispatchTest(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if typeChangedFromServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = typeChangedFromServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "TypeChangedFromClient.Test":
+				res.resp, res.err = t.dispatchTest(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -100,4 +106,10 @@ func (t *TypeChangedFromServerTransport) dispatchTest(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to TypeChangedFromServerTransport
+var typeChangedFromServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

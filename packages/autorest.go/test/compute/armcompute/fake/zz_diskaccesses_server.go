@@ -113,34 +113,40 @@ func (d *DiskAccessesServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DiskAccessesClient.BeginCreateOrUpdate":
-			res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
-		case "DiskAccessesClient.BeginDelete":
-			res.resp, res.err = d.dispatchBeginDelete(req)
-		case "DiskAccessesClient.BeginDeleteAPrivateEndpointConnection":
-			res.resp, res.err = d.dispatchBeginDeleteAPrivateEndpointConnection(req)
-		case "DiskAccessesClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DiskAccessesClient.GetAPrivateEndpointConnection":
-			res.resp, res.err = d.dispatchGetAPrivateEndpointConnection(req)
-		case "DiskAccessesClient.GetPrivateLinkResources":
-			res.resp, res.err = d.dispatchGetPrivateLinkResources(req)
-		case "DiskAccessesClient.NewListPager":
-			res.resp, res.err = d.dispatchNewListPager(req)
-		case "DiskAccessesClient.NewListByResourceGroupPager":
-			res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
-		case "DiskAccessesClient.NewListPrivateEndpointConnectionsPager":
-			res.resp, res.err = d.dispatchNewListPrivateEndpointConnectionsPager(req)
-		case "DiskAccessesClient.BeginUpdate":
-			res.resp, res.err = d.dispatchBeginUpdate(req)
-		case "DiskAccessesClient.BeginUpdateAPrivateEndpointConnection":
-			res.resp, res.err = d.dispatchBeginUpdateAPrivateEndpointConnection(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if diskAccessesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = diskAccessesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DiskAccessesClient.BeginCreateOrUpdate":
+				res.resp, res.err = d.dispatchBeginCreateOrUpdate(req)
+			case "DiskAccessesClient.BeginDelete":
+				res.resp, res.err = d.dispatchBeginDelete(req)
+			case "DiskAccessesClient.BeginDeleteAPrivateEndpointConnection":
+				res.resp, res.err = d.dispatchBeginDeleteAPrivateEndpointConnection(req)
+			case "DiskAccessesClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DiskAccessesClient.GetAPrivateEndpointConnection":
+				res.resp, res.err = d.dispatchGetAPrivateEndpointConnection(req)
+			case "DiskAccessesClient.GetPrivateLinkResources":
+				res.resp, res.err = d.dispatchGetPrivateLinkResources(req)
+			case "DiskAccessesClient.NewListPager":
+				res.resp, res.err = d.dispatchNewListPager(req)
+			case "DiskAccessesClient.NewListByResourceGroupPager":
+				res.resp, res.err = d.dispatchNewListByResourceGroupPager(req)
+			case "DiskAccessesClient.NewListPrivateEndpointConnectionsPager":
+				res.resp, res.err = d.dispatchNewListPrivateEndpointConnectionsPager(req)
+			case "DiskAccessesClient.BeginUpdate":
+				res.resp, res.err = d.dispatchBeginUpdate(req)
+			case "DiskAccessesClient.BeginUpdateAPrivateEndpointConnection":
+				res.resp, res.err = d.dispatchBeginUpdateAPrivateEndpointConnection(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -607,4 +613,10 @@ func (d *DiskAccessesServerTransport) dispatchBeginUpdateAPrivateEndpointConnect
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DiskAccessesServerTransport
+var diskAccessesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

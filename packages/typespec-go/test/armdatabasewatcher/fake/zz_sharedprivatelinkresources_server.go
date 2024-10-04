@@ -74,20 +74,26 @@ func (s *SharedPrivateLinkResourcesServerTransport) dispatchToMethodFake(req *ht
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SharedPrivateLinkResourcesClient.BeginCreate":
-			res.resp, res.err = s.dispatchBeginCreate(req)
-		case "SharedPrivateLinkResourcesClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SharedPrivateLinkResourcesClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SharedPrivateLinkResourcesClient.NewListByWatcherPager":
-			res.resp, res.err = s.dispatchNewListByWatcherPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if sharedPrivateLinkResourcesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = sharedPrivateLinkResourcesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SharedPrivateLinkResourcesClient.BeginCreate":
+				res.resp, res.err = s.dispatchBeginCreate(req)
+			case "SharedPrivateLinkResourcesClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SharedPrivateLinkResourcesClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SharedPrivateLinkResourcesClient.NewListByWatcherPager":
+				res.resp, res.err = s.dispatchNewListByWatcherPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -278,4 +284,10 @@ func (s *SharedPrivateLinkResourcesServerTransport) dispatchNewListByWatcherPage
 		s.newListByWatcherPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SharedPrivateLinkResourcesServerTransport
+var sharedPrivateLinkResourcesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

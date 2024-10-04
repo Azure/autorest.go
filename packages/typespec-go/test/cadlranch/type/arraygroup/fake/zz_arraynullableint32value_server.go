@@ -55,16 +55,22 @@ func (a *ArrayNullableInt32ValueServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayNullableInt32ValueClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ArrayNullableInt32ValueClient.Put":
-			res.resp, res.err = a.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayNullableInt32ValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayNullableInt32ValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayNullableInt32ValueClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ArrayNullableInt32ValueClient.Put":
+				res.resp, res.err = a.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (a *ArrayNullableInt32ValueServerTransport) dispatchPut(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayNullableInt32ValueServerTransport
+var arrayNullableInt32ValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

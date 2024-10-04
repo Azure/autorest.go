@@ -80,24 +80,30 @@ func (a *AzureLargeStorageInstanceServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AzureLargeStorageInstanceClient.Create":
-			res.resp, res.err = a.dispatchCreate(req)
-		case "AzureLargeStorageInstanceClient.Delete":
-			res.resp, res.err = a.dispatchDelete(req)
-		case "AzureLargeStorageInstanceClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
-			res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
-		case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
-			res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
-		case "AzureLargeStorageInstanceClient.Update":
-			res.resp, res.err = a.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if azureLargeStorageInstanceServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = azureLargeStorageInstanceServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AzureLargeStorageInstanceClient.Create":
+				res.resp, res.err = a.dispatchCreate(req)
+			case "AzureLargeStorageInstanceClient.Delete":
+				res.resp, res.err = a.dispatchDelete(req)
+			case "AzureLargeStorageInstanceClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AzureLargeStorageInstanceClient.NewListByResourceGroupPager":
+				res.resp, res.err = a.dispatchNewListByResourceGroupPager(req)
+			case "AzureLargeStorageInstanceClient.NewListBySubscriptionPager":
+				res.resp, res.err = a.dispatchNewListBySubscriptionPager(req)
+			case "AzureLargeStorageInstanceClient.Update":
+				res.resp, res.err = a.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -320,4 +326,10 @@ func (a *AzureLargeStorageInstanceServerTransport) dispatchUpdate(req *http.Requ
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AzureLargeStorageInstanceServerTransport
+var azureLargeStorageInstanceServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

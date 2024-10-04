@@ -59,18 +59,24 @@ func (t *TwoOperationGroupGroup1ServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "TwoOperationGroupGroup1Client.Four":
-			res.resp, res.err = t.dispatchFour(req)
-		case "TwoOperationGroupGroup1Client.One":
-			res.resp, res.err = t.dispatchOne(req)
-		case "TwoOperationGroupGroup1Client.Three":
-			res.resp, res.err = t.dispatchThree(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if twoOperationGroupGroup1ServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = twoOperationGroupGroup1ServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "TwoOperationGroupGroup1Client.Four":
+				res.resp, res.err = t.dispatchFour(req)
+			case "TwoOperationGroupGroup1Client.One":
+				res.resp, res.err = t.dispatchOne(req)
+			case "TwoOperationGroupGroup1Client.Three":
+				res.resp, res.err = t.dispatchThree(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -140,4 +146,10 @@ func (t *TwoOperationGroupGroup1ServerTransport) dispatchThree(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to TwoOperationGroupGroup1ServerTransport
+var twoOperationGroupGroup1ServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

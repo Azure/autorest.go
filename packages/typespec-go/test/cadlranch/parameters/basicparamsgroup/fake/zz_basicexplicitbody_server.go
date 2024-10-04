@@ -51,14 +51,20 @@ func (b *BasicExplicitBodyServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BasicExplicitBodyClient.Simple":
-			res.resp, res.err = b.dispatchSimple(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if basicExplicitBodyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = basicExplicitBodyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BasicExplicitBodyClient.Simple":
+				res.resp, res.err = b.dispatchSimple(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -94,4 +100,10 @@ func (b *BasicExplicitBodyServerTransport) dispatchSimple(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BasicExplicitBodyServerTransport
+var basicExplicitBodyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

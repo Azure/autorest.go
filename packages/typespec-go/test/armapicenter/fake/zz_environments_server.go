@@ -74,22 +74,28 @@ func (e *EnvironmentsServerTransport) dispatchToMethodFake(req *http.Request, me
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "EnvironmentsClient.CreateOrUpdate":
-			res.resp, res.err = e.dispatchCreateOrUpdate(req)
-		case "EnvironmentsClient.Delete":
-			res.resp, res.err = e.dispatchDelete(req)
-		case "EnvironmentsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "EnvironmentsClient.Head":
-			res.resp, res.err = e.dispatchHead(req)
-		case "EnvironmentsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if environmentsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = environmentsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "EnvironmentsClient.CreateOrUpdate":
+				res.resp, res.err = e.dispatchCreateOrUpdate(req)
+			case "EnvironmentsClient.Delete":
+				res.resp, res.err = e.dispatchDelete(req)
+			case "EnvironmentsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "EnvironmentsClient.Head":
+				res.resp, res.err = e.dispatchHead(req)
+			case "EnvironmentsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -333,4 +339,10 @@ func (e *EnvironmentsServerTransport) dispatchNewListPager(req *http.Request) (*
 		e.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to EnvironmentsServerTransport
+var environmentsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

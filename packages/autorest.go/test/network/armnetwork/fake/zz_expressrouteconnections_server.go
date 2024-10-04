@@ -72,20 +72,26 @@ func (e *ExpressRouteConnectionsServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteConnectionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRouteConnectionsClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRouteConnectionsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteConnectionsClient.List":
-			res.resp, res.err = e.dispatchList(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteConnectionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteConnectionsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRouteConnectionsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteConnectionsClient.List":
+				res.resp, res.err = e.dispatchList(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -268,4 +274,10 @@ func (e *ExpressRouteConnectionsServerTransport) dispatchList(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteConnectionsServerTransport
+var expressRouteConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

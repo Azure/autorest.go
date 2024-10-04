@@ -65,18 +65,24 @@ func (f *FormdataServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FormdataClient.UploadFile":
-			res.resp, res.err = f.dispatchUploadFile(req)
-		case "FormdataClient.UploadFileViaBody":
-			res.resp, res.err = f.dispatchUploadFileViaBody(req)
-		case "FormdataClient.UploadFiles":
-			res.resp, res.err = f.dispatchUploadFiles(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if formdataServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = formdataServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FormdataClient.UploadFile":
+				res.resp, res.err = f.dispatchUploadFile(req)
+			case "FormdataClient.UploadFileViaBody":
+				res.resp, res.err = f.dispatchUploadFileViaBody(req)
+			case "FormdataClient.UploadFiles":
+				res.resp, res.err = f.dispatchUploadFiles(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -214,4 +220,10 @@ func (f *FormdataServerTransport) dispatchUploadFiles(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FormdataServerTransport
+var formdataServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

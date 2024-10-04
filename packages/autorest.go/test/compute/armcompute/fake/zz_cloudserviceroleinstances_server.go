@@ -95,28 +95,34 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CloudServiceRoleInstancesClient.BeginDelete":
-			res.resp, res.err = c.dispatchBeginDelete(req)
-		case "CloudServiceRoleInstancesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CloudServiceRoleInstancesClient.GetInstanceView":
-			res.resp, res.err = c.dispatchGetInstanceView(req)
-		case "CloudServiceRoleInstancesClient.GetRemoteDesktopFile":
-			res.resp, res.err = c.dispatchGetRemoteDesktopFile(req)
-		case "CloudServiceRoleInstancesClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		case "CloudServiceRoleInstancesClient.BeginRebuild":
-			res.resp, res.err = c.dispatchBeginRebuild(req)
-		case "CloudServiceRoleInstancesClient.BeginReimage":
-			res.resp, res.err = c.dispatchBeginReimage(req)
-		case "CloudServiceRoleInstancesClient.BeginRestart":
-			res.resp, res.err = c.dispatchBeginRestart(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if cloudServiceRoleInstancesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServiceRoleInstancesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CloudServiceRoleInstancesClient.BeginDelete":
+				res.resp, res.err = c.dispatchBeginDelete(req)
+			case "CloudServiceRoleInstancesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CloudServiceRoleInstancesClient.GetInstanceView":
+				res.resp, res.err = c.dispatchGetInstanceView(req)
+			case "CloudServiceRoleInstancesClient.GetRemoteDesktopFile":
+				res.resp, res.err = c.dispatchGetRemoteDesktopFile(req)
+			case "CloudServiceRoleInstancesClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			case "CloudServiceRoleInstancesClient.BeginRebuild":
+				res.resp, res.err = c.dispatchBeginRebuild(req)
+			case "CloudServiceRoleInstancesClient.BeginReimage":
+				res.resp, res.err = c.dispatchBeginReimage(req)
+			case "CloudServiceRoleInstancesClient.BeginRestart":
+				res.resp, res.err = c.dispatchBeginRestart(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -500,4 +506,10 @@ func (c *CloudServiceRoleInstancesServerTransport) dispatchBeginRestart(req *htt
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServiceRoleInstancesServerTransport
+var cloudServiceRoleInstancesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

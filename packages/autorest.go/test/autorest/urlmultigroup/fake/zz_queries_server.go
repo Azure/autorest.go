@@ -61,18 +61,24 @@ func (q *QueriesServerTransport) dispatchToMethodFake(req *http.Request, method 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "QueriesClient.ArrayStringMultiEmpty":
-			res.resp, res.err = q.dispatchArrayStringMultiEmpty(req)
-		case "QueriesClient.ArrayStringMultiNull":
-			res.resp, res.err = q.dispatchArrayStringMultiNull(req)
-		case "QueriesClient.ArrayStringMultiValid":
-			res.resp, res.err = q.dispatchArrayStringMultiValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if queriesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = queriesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "QueriesClient.ArrayStringMultiEmpty":
+				res.resp, res.err = q.dispatchArrayStringMultiEmpty(req)
+			case "QueriesClient.ArrayStringMultiNull":
+				res.resp, res.err = q.dispatchArrayStringMultiNull(req)
+			case "QueriesClient.ArrayStringMultiValid":
+				res.resp, res.err = q.dispatchArrayStringMultiValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -190,4 +196,10 @@ func (q *QueriesServerTransport) dispatchArrayStringMultiValid(req *http.Request
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to QueriesServerTransport
+var queriesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

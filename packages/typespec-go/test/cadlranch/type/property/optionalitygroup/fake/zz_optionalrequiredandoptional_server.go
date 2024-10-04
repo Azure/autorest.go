@@ -63,20 +63,26 @@ func (o *OptionalRequiredAndOptionalServerTransport) dispatchToMethodFake(req *h
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalRequiredAndOptionalClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalRequiredAndOptionalClient.GetRequiredOnly":
-			res.resp, res.err = o.dispatchGetRequiredOnly(req)
-		case "OptionalRequiredAndOptionalClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalRequiredAndOptionalClient.PutRequiredOnly":
-			res.resp, res.err = o.dispatchPutRequiredOnly(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalRequiredAndOptionalServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalRequiredAndOptionalServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalRequiredAndOptionalClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalRequiredAndOptionalClient.GetRequiredOnly":
+				res.resp, res.err = o.dispatchGetRequiredOnly(req)
+			case "OptionalRequiredAndOptionalClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalRequiredAndOptionalClient.PutRequiredOnly":
+				res.resp, res.err = o.dispatchPutRequiredOnly(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalRequiredAndOptionalServerTransport) dispatchPutRequiredOnly(req
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalRequiredAndOptionalServerTransport
+var optionalRequiredAndOptionalServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

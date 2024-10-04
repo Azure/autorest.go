@@ -61,3 +61,9 @@ func (s *ServiceBazServerTransport) dispatchToClientFake(req *http.Request, clie
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to ServiceBazServerTransport
+var serviceBazServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

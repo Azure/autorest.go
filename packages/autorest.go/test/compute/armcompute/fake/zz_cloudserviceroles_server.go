@@ -63,16 +63,22 @@ func (c *CloudServiceRolesServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CloudServiceRolesClient.Get":
-			res.resp, res.err = c.dispatchGet(req)
-		case "CloudServiceRolesClient.NewListPager":
-			res.resp, res.err = c.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if cloudServiceRolesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServiceRolesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CloudServiceRolesClient.Get":
+				res.resp, res.err = c.dispatchGet(req)
+			case "CloudServiceRolesClient.NewListPager":
+				res.resp, res.err = c.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -163,4 +169,10 @@ func (c *CloudServiceRolesServerTransport) dispatchNewListPager(req *http.Reques
 		c.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServiceRolesServerTransport
+var cloudServiceRolesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

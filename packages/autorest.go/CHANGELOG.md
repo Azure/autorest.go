@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0-preview.69 (Unreleased)
+
+### Features Added
+
+* Internal fake server request interceptor.
+
 ## 4.0.0-preview.68 (2024-10-08)
 
 ### Bugs Fixed

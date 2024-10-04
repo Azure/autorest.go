@@ -117,34 +117,40 @@ func (p *P2SVPNGatewaysServerTransport) dispatchToMethodFake(req *http.Request, 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "P2SVPNGatewaysClient.BeginCreateOrUpdate":
-			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
-		case "P2SVPNGatewaysClient.BeginDelete":
-			res.resp, res.err = p.dispatchBeginDelete(req)
-		case "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections":
-			res.resp, res.err = p.dispatchBeginDisconnectP2SVPNConnections(req)
-		case "P2SVPNGatewaysClient.BeginGenerateVPNProfile":
-			res.resp, res.err = p.dispatchBeginGenerateVPNProfile(req)
-		case "P2SVPNGatewaysClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth":
-			res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealth(req)
-		case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed":
-			res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealthDetailed(req)
-		case "P2SVPNGatewaysClient.NewListPager":
-			res.resp, res.err = p.dispatchNewListPager(req)
-		case "P2SVPNGatewaysClient.NewListByResourceGroupPager":
-			res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
-		case "P2SVPNGatewaysClient.BeginReset":
-			res.resp, res.err = p.dispatchBeginReset(req)
-		case "P2SVPNGatewaysClient.BeginUpdateTags":
-			res.resp, res.err = p.dispatchBeginUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if p2SvpnGatewaysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = p2SvpnGatewaysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "P2SVPNGatewaysClient.BeginCreateOrUpdate":
+				res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+			case "P2SVPNGatewaysClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections":
+				res.resp, res.err = p.dispatchBeginDisconnectP2SVPNConnections(req)
+			case "P2SVPNGatewaysClient.BeginGenerateVPNProfile":
+				res.resp, res.err = p.dispatchBeginGenerateVPNProfile(req)
+			case "P2SVPNGatewaysClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth":
+				res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealth(req)
+			case "P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed":
+				res.resp, res.err = p.dispatchBeginGetP2SVPNConnectionHealthDetailed(req)
+			case "P2SVPNGatewaysClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "P2SVPNGatewaysClient.NewListByResourceGroupPager":
+				res.resp, res.err = p.dispatchNewListByResourceGroupPager(req)
+			case "P2SVPNGatewaysClient.BeginReset":
+				res.resp, res.err = p.dispatchBeginReset(req)
+			case "P2SVPNGatewaysClient.BeginUpdateTags":
+				res.resp, res.err = p.dispatchBeginUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -632,4 +638,10 @@ func (p *P2SVPNGatewaysServerTransport) dispatchBeginUpdateTags(req *http.Reques
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to P2SVPNGatewaysServerTransport
+var p2SvpnGatewaysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

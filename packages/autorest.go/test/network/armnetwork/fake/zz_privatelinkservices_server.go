@@ -125,38 +125,44 @@ func (p *PrivateLinkServicesServerTransport) dispatchToMethodFake(req *http.Requ
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility":
-			res.resp, res.err = p.dispatchBeginCheckPrivateLinkServiceVisibility(req)
-		case "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup":
-			res.resp, res.err = p.dispatchBeginCheckPrivateLinkServiceVisibilityByResourceGroup(req)
-		case "PrivateLinkServicesClient.BeginCreateOrUpdate":
-			res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
-		case "PrivateLinkServicesClient.BeginDelete":
-			res.resp, res.err = p.dispatchBeginDelete(req)
-		case "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection":
-			res.resp, res.err = p.dispatchBeginDeletePrivateEndpointConnection(req)
-		case "PrivateLinkServicesClient.Get":
-			res.resp, res.err = p.dispatchGet(req)
-		case "PrivateLinkServicesClient.GetPrivateEndpointConnection":
-			res.resp, res.err = p.dispatchGetPrivateEndpointConnection(req)
-		case "PrivateLinkServicesClient.NewListPager":
-			res.resp, res.err = p.dispatchNewListPager(req)
-		case "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesPager":
-			res.resp, res.err = p.dispatchNewListAutoApprovedPrivateLinkServicesPager(req)
-		case "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesByResourceGroupPager":
-			res.resp, res.err = p.dispatchNewListAutoApprovedPrivateLinkServicesByResourceGroupPager(req)
-		case "PrivateLinkServicesClient.NewListBySubscriptionPager":
-			res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
-		case "PrivateLinkServicesClient.NewListPrivateEndpointConnectionsPager":
-			res.resp, res.err = p.dispatchNewListPrivateEndpointConnectionsPager(req)
-		case "PrivateLinkServicesClient.UpdatePrivateEndpointConnection":
-			res.resp, res.err = p.dispatchUpdatePrivateEndpointConnection(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if privateLinkServicesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = privateLinkServicesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility":
+				res.resp, res.err = p.dispatchBeginCheckPrivateLinkServiceVisibility(req)
+			case "PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup":
+				res.resp, res.err = p.dispatchBeginCheckPrivateLinkServiceVisibilityByResourceGroup(req)
+			case "PrivateLinkServicesClient.BeginCreateOrUpdate":
+				res.resp, res.err = p.dispatchBeginCreateOrUpdate(req)
+			case "PrivateLinkServicesClient.BeginDelete":
+				res.resp, res.err = p.dispatchBeginDelete(req)
+			case "PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection":
+				res.resp, res.err = p.dispatchBeginDeletePrivateEndpointConnection(req)
+			case "PrivateLinkServicesClient.Get":
+				res.resp, res.err = p.dispatchGet(req)
+			case "PrivateLinkServicesClient.GetPrivateEndpointConnection":
+				res.resp, res.err = p.dispatchGetPrivateEndpointConnection(req)
+			case "PrivateLinkServicesClient.NewListPager":
+				res.resp, res.err = p.dispatchNewListPager(req)
+			case "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesPager":
+				res.resp, res.err = p.dispatchNewListAutoApprovedPrivateLinkServicesPager(req)
+			case "PrivateLinkServicesClient.NewListAutoApprovedPrivateLinkServicesByResourceGroupPager":
+				res.resp, res.err = p.dispatchNewListAutoApprovedPrivateLinkServicesByResourceGroupPager(req)
+			case "PrivateLinkServicesClient.NewListBySubscriptionPager":
+				res.resp, res.err = p.dispatchNewListBySubscriptionPager(req)
+			case "PrivateLinkServicesClient.NewListPrivateEndpointConnectionsPager":
+				res.resp, res.err = p.dispatchNewListPrivateEndpointConnectionsPager(req)
+			case "PrivateLinkServicesClient.UpdatePrivateEndpointConnection":
+				res.resp, res.err = p.dispatchUpdatePrivateEndpointConnection(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -725,4 +731,10 @@ func (p *PrivateLinkServicesServerTransport) dispatchUpdatePrivateEndpointConnec
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PrivateLinkServicesServerTransport
+var privateLinkServicesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

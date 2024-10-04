@@ -59,18 +59,24 @@ func (n *NotDiscriminatedServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NotDiscriminatedClient.GetValid":
-			res.resp, res.err = n.dispatchGetValid(req)
-		case "NotDiscriminatedClient.PostValid":
-			res.resp, res.err = n.dispatchPostValid(req)
-		case "NotDiscriminatedClient.PutValid":
-			res.resp, res.err = n.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if notDiscriminatedServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = notDiscriminatedServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NotDiscriminatedClient.GetValid":
+				res.resp, res.err = n.dispatchGetValid(req)
+			case "NotDiscriminatedClient.PostValid":
+				res.resp, res.err = n.dispatchPostValid(req)
+			case "NotDiscriminatedClient.PutValid":
+				res.resp, res.err = n.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -148,4 +154,10 @@ func (n *NotDiscriminatedServerTransport) dispatchPutValid(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NotDiscriminatedServerTransport
+var notDiscriminatedServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

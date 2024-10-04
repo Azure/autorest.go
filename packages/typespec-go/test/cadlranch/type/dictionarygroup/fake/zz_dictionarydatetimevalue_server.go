@@ -56,16 +56,22 @@ func (d *DictionaryDatetimeValueServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DictionaryDatetimeValueClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DictionaryDatetimeValueClient.Put":
-			res.resp, res.err = d.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if dictionaryDatetimeValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryDatetimeValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DictionaryDatetimeValueClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DictionaryDatetimeValueClient.Put":
+				res.resp, res.err = d.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -120,4 +126,10 @@ func (d *DictionaryDatetimeValueServerTransport) dispatchPut(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryDatetimeValueServerTransport
+var dictionaryDatetimeValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

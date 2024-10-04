@@ -53,14 +53,20 @@ func (a *AutoRestReportServiceForAzureServerTransport) dispatchToMethodFake(req 
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AutoRestReportServiceForAzureClient.GetReport":
-			res.resp, res.err = a.dispatchGetReport(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if autoRestReportServiceForAzureServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = autoRestReportServiceForAzureServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AutoRestReportServiceForAzureClient.GetReport":
+				res.resp, res.err = a.dispatchGetReport(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -104,4 +110,10 @@ func (a *AutoRestReportServiceForAzureServerTransport) dispatchGetReport(req *ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AutoRestReportServiceForAzureServerTransport
+var autoRestReportServiceForAzureServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

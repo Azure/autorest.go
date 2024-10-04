@@ -75,20 +75,26 @@ func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) dispatchTo
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "ApplicationGatewayPrivateEndpointConnectionsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "ApplicationGatewayPrivateEndpointConnectionsClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate":
-			res.resp, res.err = a.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			case "ApplicationGatewayPrivateEndpointConnectionsClient.BeginUpdate":
+				res.resp, res.err = a.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (a *ApplicationGatewayPrivateEndpointConnectionsServerTransport) dispatchBe
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ApplicationGatewayPrivateEndpointConnectionsServerTransport
+var applicationGatewayPrivateEndpointConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

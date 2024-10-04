@@ -85,30 +85,36 @@ func (h *HTTPRetryServerTransport) dispatchToMethodFake(req *http.Request, metho
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "HTTPRetryClient.Delete503":
-			res.resp, res.err = h.dispatchDelete503(req)
-		case "HTTPRetryClient.Get502":
-			res.resp, res.err = h.dispatchGet502(req)
-		case "HTTPRetryClient.Head408":
-			res.resp, res.err = h.dispatchHead408(req)
-		case "HTTPRetryClient.Options502":
-			res.resp, res.err = h.dispatchOptions502(req)
-		case "HTTPRetryClient.Patch500":
-			res.resp, res.err = h.dispatchPatch500(req)
-		case "HTTPRetryClient.Patch504":
-			res.resp, res.err = h.dispatchPatch504(req)
-		case "HTTPRetryClient.Post503":
-			res.resp, res.err = h.dispatchPost503(req)
-		case "HTTPRetryClient.Put500":
-			res.resp, res.err = h.dispatchPut500(req)
-		case "HTTPRetryClient.Put504":
-			res.resp, res.err = h.dispatchPut504(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if httpRetryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = httpRetryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "HTTPRetryClient.Delete503":
+				res.resp, res.err = h.dispatchDelete503(req)
+			case "HTTPRetryClient.Get502":
+				res.resp, res.err = h.dispatchGet502(req)
+			case "HTTPRetryClient.Head408":
+				res.resp, res.err = h.dispatchHead408(req)
+			case "HTTPRetryClient.Options502":
+				res.resp, res.err = h.dispatchOptions502(req)
+			case "HTTPRetryClient.Patch500":
+				res.resp, res.err = h.dispatchPatch500(req)
+			case "HTTPRetryClient.Patch504":
+				res.resp, res.err = h.dispatchPatch504(req)
+			case "HTTPRetryClient.Post503":
+				res.resp, res.err = h.dispatchPost503(req)
+			case "HTTPRetryClient.Put500":
+				res.resp, res.err = h.dispatchPut500(req)
+			case "HTTPRetryClient.Put504":
+				res.resp, res.err = h.dispatchPut504(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -312,4 +318,10 @@ func (h *HTTPRetryServerTransport) dispatchPut504(req *http.Request) (*http.Resp
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to HTTPRetryServerTransport
+var httpRetryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

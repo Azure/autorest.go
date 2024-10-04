@@ -75,24 +75,30 @@ func (p *ParameterGroupingServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ParameterGroupingClient.GroupWithConstant":
-			res.resp, res.err = p.dispatchGroupWithConstant(req)
-		case "ParameterGroupingClient.PostMultiParamGroups":
-			res.resp, res.err = p.dispatchPostMultiParamGroups(req)
-		case "ParameterGroupingClient.PostOptional":
-			res.resp, res.err = p.dispatchPostOptional(req)
-		case "ParameterGroupingClient.PostRequired":
-			res.resp, res.err = p.dispatchPostRequired(req)
-		case "ParameterGroupingClient.PostReservedWords":
-			res.resp, res.err = p.dispatchPostReservedWords(req)
-		case "ParameterGroupingClient.PostSharedParameterGroupObject":
-			res.resp, res.err = p.dispatchPostSharedParameterGroupObject(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if parameterGroupingServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = parameterGroupingServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ParameterGroupingClient.GroupWithConstant":
+				res.resp, res.err = p.dispatchGroupWithConstant(req)
+			case "ParameterGroupingClient.PostMultiParamGroups":
+				res.resp, res.err = p.dispatchPostMultiParamGroups(req)
+			case "ParameterGroupingClient.PostOptional":
+				res.resp, res.err = p.dispatchPostOptional(req)
+			case "ParameterGroupingClient.PostRequired":
+				res.resp, res.err = p.dispatchPostRequired(req)
+			case "ParameterGroupingClient.PostReservedWords":
+				res.resp, res.err = p.dispatchPostReservedWords(req)
+			case "ParameterGroupingClient.PostSharedParameterGroupObject":
+				res.resp, res.err = p.dispatchPostSharedParameterGroupObject(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -373,4 +379,10 @@ func (p *ParameterGroupingServerTransport) dispatchPostSharedParameterGroupObjec
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ParameterGroupingServerTransport
+var parameterGroupingServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

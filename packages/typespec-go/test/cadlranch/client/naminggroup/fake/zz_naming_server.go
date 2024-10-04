@@ -112,26 +112,32 @@ func (n *NamingServerTransport) dispatchToMethodFake(req *http.Request, method s
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NamingClient.Client":
-			res.resp, res.err = n.dispatchClient(req)
-		case "NamingClient.ClientName":
-			res.resp, res.err = n.dispatchClientName(req)
-		case "NamingClient.CompatibleWithEncodedName":
-			res.resp, res.err = n.dispatchCompatibleWithEncodedName(req)
-		case "NamingClient.Language":
-			res.resp, res.err = n.dispatchLanguage(req)
-		case "NamingClient.Parameter":
-			res.resp, res.err = n.dispatchParameter(req)
-		case "NamingClient.Request":
-			res.resp, res.err = n.dispatchRequest(req)
-		case "NamingClient.Response":
-			res.resp, res.err = n.dispatchResponse(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if namingServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = namingServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NamingClient.Client":
+				res.resp, res.err = n.dispatchClient(req)
+			case "NamingClient.ClientName":
+				res.resp, res.err = n.dispatchClientName(req)
+			case "NamingClient.CompatibleWithEncodedName":
+				res.resp, res.err = n.dispatchCompatibleWithEncodedName(req)
+			case "NamingClient.Language":
+				res.resp, res.err = n.dispatchLanguage(req)
+			case "NamingClient.Parameter":
+				res.resp, res.err = n.dispatchParameter(req)
+			case "NamingClient.Request":
+				res.resp, res.err = n.dispatchRequest(req)
+			case "NamingClient.Response":
+				res.resp, res.err = n.dispatchResponse(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -297,4 +303,10 @@ func (n *NamingServerTransport) dispatchResponse(req *http.Request) (*http.Respo
 		resp.Header.Set("default-name", *val)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NamingServerTransport
+var namingServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

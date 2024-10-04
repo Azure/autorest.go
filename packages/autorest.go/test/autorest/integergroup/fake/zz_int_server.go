@@ -105,40 +105,46 @@ func (i *IntServerTransport) dispatchToMethodFake(req *http.Request, method stri
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "IntClient.GetInvalid":
-			res.resp, res.err = i.dispatchGetInvalid(req)
-		case "IntClient.GetInvalidUnixTime":
-			res.resp, res.err = i.dispatchGetInvalidUnixTime(req)
-		case "IntClient.GetNull":
-			res.resp, res.err = i.dispatchGetNull(req)
-		case "IntClient.GetNullUnixTime":
-			res.resp, res.err = i.dispatchGetNullUnixTime(req)
-		case "IntClient.GetOverflowInt32":
-			res.resp, res.err = i.dispatchGetOverflowInt32(req)
-		case "IntClient.GetOverflowInt64":
-			res.resp, res.err = i.dispatchGetOverflowInt64(req)
-		case "IntClient.GetUnderflowInt32":
-			res.resp, res.err = i.dispatchGetUnderflowInt32(req)
-		case "IntClient.GetUnderflowInt64":
-			res.resp, res.err = i.dispatchGetUnderflowInt64(req)
-		case "IntClient.GetUnixTime":
-			res.resp, res.err = i.dispatchGetUnixTime(req)
-		case "IntClient.PutMax32":
-			res.resp, res.err = i.dispatchPutMax32(req)
-		case "IntClient.PutMax64":
-			res.resp, res.err = i.dispatchPutMax64(req)
-		case "IntClient.PutMin32":
-			res.resp, res.err = i.dispatchPutMin32(req)
-		case "IntClient.PutMin64":
-			res.resp, res.err = i.dispatchPutMin64(req)
-		case "IntClient.PutUnixTimeDate":
-			res.resp, res.err = i.dispatchPutUnixTimeDate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if intServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = intServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "IntClient.GetInvalid":
+				res.resp, res.err = i.dispatchGetInvalid(req)
+			case "IntClient.GetInvalidUnixTime":
+				res.resp, res.err = i.dispatchGetInvalidUnixTime(req)
+			case "IntClient.GetNull":
+				res.resp, res.err = i.dispatchGetNull(req)
+			case "IntClient.GetNullUnixTime":
+				res.resp, res.err = i.dispatchGetNullUnixTime(req)
+			case "IntClient.GetOverflowInt32":
+				res.resp, res.err = i.dispatchGetOverflowInt32(req)
+			case "IntClient.GetOverflowInt64":
+				res.resp, res.err = i.dispatchGetOverflowInt64(req)
+			case "IntClient.GetUnderflowInt32":
+				res.resp, res.err = i.dispatchGetUnderflowInt32(req)
+			case "IntClient.GetUnderflowInt64":
+				res.resp, res.err = i.dispatchGetUnderflowInt64(req)
+			case "IntClient.GetUnixTime":
+				res.resp, res.err = i.dispatchGetUnixTime(req)
+			case "IntClient.PutMax32":
+				res.resp, res.err = i.dispatchPutMax32(req)
+			case "IntClient.PutMax64":
+				res.resp, res.err = i.dispatchPutMax64(req)
+			case "IntClient.PutMin32":
+				res.resp, res.err = i.dispatchPutMin32(req)
+			case "IntClient.PutMin64":
+				res.resp, res.err = i.dispatchPutMin64(req)
+			case "IntClient.PutUnixTimeDate":
+				res.resp, res.err = i.dispatchPutUnixTimeDate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -437,4 +443,10 @@ func (i *IntServerTransport) dispatchPutUnixTimeDate(req *http.Request) (*http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to IntServerTransport
+var intServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

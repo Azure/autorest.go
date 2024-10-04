@@ -68,22 +68,28 @@ func (c *CollectionFormatQueryServerTransport) dispatchToMethodFake(req *http.Re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CollectionFormatQueryClient.CSV":
-			res.resp, res.err = c.dispatchCSV(req)
-		case "CollectionFormatQueryClient.Multi":
-			res.resp, res.err = c.dispatchMulti(req)
-		case "CollectionFormatQueryClient.Pipes":
-			res.resp, res.err = c.dispatchPipes(req)
-		case "CollectionFormatQueryClient.Ssv":
-			res.resp, res.err = c.dispatchSsv(req)
-		case "CollectionFormatQueryClient.Tsv":
-			res.resp, res.err = c.dispatchTsv(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if collectionFormatQueryServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = collectionFormatQueryServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CollectionFormatQueryClient.CSV":
+				res.resp, res.err = c.dispatchCSV(req)
+			case "CollectionFormatQueryClient.Multi":
+				res.resp, res.err = c.dispatchMulti(req)
+			case "CollectionFormatQueryClient.Pipes":
+				res.resp, res.err = c.dispatchPipes(req)
+			case "CollectionFormatQueryClient.Ssv":
+				res.resp, res.err = c.dispatchSsv(req)
+			case "CollectionFormatQueryClient.Tsv":
+				res.resp, res.err = c.dispatchTsv(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -221,4 +227,10 @@ func (c *CollectionFormatQueryServerTransport) dispatchTsv(req *http.Request) (*
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CollectionFormatQueryServerTransport
+var collectionFormatQueryServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

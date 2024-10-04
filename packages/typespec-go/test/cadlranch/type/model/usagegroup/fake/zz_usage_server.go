@@ -59,18 +59,24 @@ func (u *UsageServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "UsageClient.Input":
-			res.resp, res.err = u.dispatchInput(req)
-		case "UsageClient.InputAndOutput":
-			res.resp, res.err = u.dispatchInputAndOutput(req)
-		case "UsageClient.Output":
-			res.resp, res.err = u.dispatchOutput(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if usageServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = usageServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "UsageClient.Input":
+				res.resp, res.err = u.dispatchInput(req)
+			case "UsageClient.InputAndOutput":
+				res.resp, res.err = u.dispatchInputAndOutput(req)
+			case "UsageClient.Output":
+				res.resp, res.err = u.dispatchOutput(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -148,4 +154,10 @@ func (u *UsageServerTransport) dispatchOutput(req *http.Request) (*http.Response
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to UsageServerTransport
+var usageServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

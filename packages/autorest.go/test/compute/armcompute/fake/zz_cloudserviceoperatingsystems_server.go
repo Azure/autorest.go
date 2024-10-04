@@ -73,20 +73,26 @@ func (c *CloudServiceOperatingSystemsServerTransport) dispatchToMethodFake(req *
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "CloudServiceOperatingSystemsClient.GetOSFamily":
-			res.resp, res.err = c.dispatchGetOSFamily(req)
-		case "CloudServiceOperatingSystemsClient.GetOSVersion":
-			res.resp, res.err = c.dispatchGetOSVersion(req)
-		case "CloudServiceOperatingSystemsClient.NewListOSFamiliesPager":
-			res.resp, res.err = c.dispatchNewListOSFamiliesPager(req)
-		case "CloudServiceOperatingSystemsClient.NewListOSVersionsPager":
-			res.resp, res.err = c.dispatchNewListOSVersionsPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if cloudServiceOperatingSystemsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = cloudServiceOperatingSystemsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "CloudServiceOperatingSystemsClient.GetOSFamily":
+				res.resp, res.err = c.dispatchGetOSFamily(req)
+			case "CloudServiceOperatingSystemsClient.GetOSVersion":
+				res.resp, res.err = c.dispatchGetOSVersion(req)
+			case "CloudServiceOperatingSystemsClient.NewListOSFamiliesPager":
+				res.resp, res.err = c.dispatchNewListOSFamiliesPager(req)
+			case "CloudServiceOperatingSystemsClient.NewListOSVersionsPager":
+				res.resp, res.err = c.dispatchNewListOSVersionsPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -239,4 +245,10 @@ func (c *CloudServiceOperatingSystemsServerTransport) dispatchNewListOSVersionsP
 		c.newListOSVersionsPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to CloudServiceOperatingSystemsServerTransport
+var cloudServiceOperatingSystemsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

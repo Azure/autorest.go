@@ -97,28 +97,34 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchToMethodFake(req *
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRouteCrossConnectionsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRouteCrossConnectionsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		case "ExpressRouteCrossConnectionsClient.BeginListArpTable":
-			res.resp, res.err = e.dispatchBeginListArpTable(req)
-		case "ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager":
-			res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
-		case "ExpressRouteCrossConnectionsClient.BeginListRoutesTable":
-			res.resp, res.err = e.dispatchBeginListRoutesTable(req)
-		case "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary":
-			res.resp, res.err = e.dispatchBeginListRoutesTableSummary(req)
-		case "ExpressRouteCrossConnectionsClient.UpdateTags":
-			res.resp, res.err = e.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRouteCrossConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRouteCrossConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRouteCrossConnectionsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRouteCrossConnectionsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			case "ExpressRouteCrossConnectionsClient.BeginListArpTable":
+				res.resp, res.err = e.dispatchBeginListArpTable(req)
+			case "ExpressRouteCrossConnectionsClient.NewListByResourceGroupPager":
+				res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
+			case "ExpressRouteCrossConnectionsClient.BeginListRoutesTable":
+				res.resp, res.err = e.dispatchBeginListRoutesTable(req)
+			case "ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary":
+				res.resp, res.err = e.dispatchBeginListRoutesTableSummary(req)
+			case "ExpressRouteCrossConnectionsClient.UpdateTags":
+				res.resp, res.err = e.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -475,4 +481,10 @@ func (e *ExpressRouteCrossConnectionsServerTransport) dispatchUpdateTags(req *ht
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRouteCrossConnectionsServerTransport
+var expressRouteCrossConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

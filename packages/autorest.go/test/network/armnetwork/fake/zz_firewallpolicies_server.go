@@ -85,24 +85,30 @@ func (f *FirewallPoliciesServerTransport) dispatchToMethodFake(req *http.Request
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "FirewallPoliciesClient.BeginCreateOrUpdate":
-			res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
-		case "FirewallPoliciesClient.BeginDelete":
-			res.resp, res.err = f.dispatchBeginDelete(req)
-		case "FirewallPoliciesClient.Get":
-			res.resp, res.err = f.dispatchGet(req)
-		case "FirewallPoliciesClient.NewListPager":
-			res.resp, res.err = f.dispatchNewListPager(req)
-		case "FirewallPoliciesClient.NewListAllPager":
-			res.resp, res.err = f.dispatchNewListAllPager(req)
-		case "FirewallPoliciesClient.UpdateTags":
-			res.resp, res.err = f.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if firewallPoliciesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = firewallPoliciesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "FirewallPoliciesClient.BeginCreateOrUpdate":
+				res.resp, res.err = f.dispatchBeginCreateOrUpdate(req)
+			case "FirewallPoliciesClient.BeginDelete":
+				res.resp, res.err = f.dispatchBeginDelete(req)
+			case "FirewallPoliciesClient.Get":
+				res.resp, res.err = f.dispatchGet(req)
+			case "FirewallPoliciesClient.NewListPager":
+				res.resp, res.err = f.dispatchNewListPager(req)
+			case "FirewallPoliciesClient.NewListAllPager":
+				res.resp, res.err = f.dispatchNewListAllPager(req)
+			case "FirewallPoliciesClient.UpdateTags":
+				res.resp, res.err = f.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -359,4 +365,10 @@ func (f *FirewallPoliciesServerTransport) dispatchUpdateTags(req *http.Request) 
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to FirewallPoliciesServerTransport
+var firewallPoliciesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

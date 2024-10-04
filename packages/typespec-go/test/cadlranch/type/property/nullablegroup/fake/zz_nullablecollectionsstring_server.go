@@ -63,20 +63,26 @@ func (n *NullableCollectionsStringServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "NullableCollectionsStringClient.GetNonNull":
-			res.resp, res.err = n.dispatchGetNonNull(req)
-		case "NullableCollectionsStringClient.GetNull":
-			res.resp, res.err = n.dispatchGetNull(req)
-		case "NullableCollectionsStringClient.PatchNonNull":
-			res.resp, res.err = n.dispatchPatchNonNull(req)
-		case "NullableCollectionsStringClient.PatchNull":
-			res.resp, res.err = n.dispatchPatchNull(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if nullableCollectionsStringServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = nullableCollectionsStringServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "NullableCollectionsStringClient.GetNonNull":
+				res.resp, res.err = n.dispatchGetNonNull(req)
+			case "NullableCollectionsStringClient.GetNull":
+				res.resp, res.err = n.dispatchGetNull(req)
+			case "NullableCollectionsStringClient.PatchNonNull":
+				res.resp, res.err = n.dispatchPatchNonNull(req)
+			case "NullableCollectionsStringClient.PatchNull":
+				res.resp, res.err = n.dispatchPatchNull(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (n *NullableCollectionsStringServerTransport) dispatchPatchNull(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to NullableCollectionsStringServerTransport
+var nullableCollectionsStringServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

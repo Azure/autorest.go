@@ -161,66 +161,72 @@ func (p *PathsServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PathsClient.ArrayCSVInPath":
-			res.resp, res.err = p.dispatchArrayCSVInPath(req)
-		case "PathsClient.Base64URL":
-			res.resp, res.err = p.dispatchBase64URL(req)
-		case "PathsClient.ByteEmpty":
-			res.resp, res.err = p.dispatchByteEmpty(req)
-		case "PathsClient.ByteMultiByte":
-			res.resp, res.err = p.dispatchByteMultiByte(req)
-		case "PathsClient.ByteNull":
-			res.resp, res.err = p.dispatchByteNull(req)
-		case "PathsClient.DateNull":
-			res.resp, res.err = p.dispatchDateNull(req)
-		case "PathsClient.DateTimeNull":
-			res.resp, res.err = p.dispatchDateTimeNull(req)
-		case "PathsClient.DateTimeValid":
-			res.resp, res.err = p.dispatchDateTimeValid(req)
-		case "PathsClient.DateValid":
-			res.resp, res.err = p.dispatchDateValid(req)
-		case "PathsClient.DoubleDecimalNegative":
-			res.resp, res.err = p.dispatchDoubleDecimalNegative(req)
-		case "PathsClient.DoubleDecimalPositive":
-			res.resp, res.err = p.dispatchDoubleDecimalPositive(req)
-		case "PathsClient.EnumNull":
-			res.resp, res.err = p.dispatchEnumNull(req)
-		case "PathsClient.EnumValid":
-			res.resp, res.err = p.dispatchEnumValid(req)
-		case "PathsClient.FloatScientificNegative":
-			res.resp, res.err = p.dispatchFloatScientificNegative(req)
-		case "PathsClient.FloatScientificPositive":
-			res.resp, res.err = p.dispatchFloatScientificPositive(req)
-		case "PathsClient.GetBooleanFalse":
-			res.resp, res.err = p.dispatchGetBooleanFalse(req)
-		case "PathsClient.GetBooleanTrue":
-			res.resp, res.err = p.dispatchGetBooleanTrue(req)
-		case "PathsClient.GetIntNegativeOneMillion":
-			res.resp, res.err = p.dispatchGetIntNegativeOneMillion(req)
-		case "PathsClient.GetIntOneMillion":
-			res.resp, res.err = p.dispatchGetIntOneMillion(req)
-		case "PathsClient.GetNegativeTenBillion":
-			res.resp, res.err = p.dispatchGetNegativeTenBillion(req)
-		case "PathsClient.GetTenBillion":
-			res.resp, res.err = p.dispatchGetTenBillion(req)
-		case "PathsClient.StringEmpty":
-			res.resp, res.err = p.dispatchStringEmpty(req)
-		case "PathsClient.StringNull":
-			res.resp, res.err = p.dispatchStringNull(req)
-		case "PathsClient.StringURLEncoded":
-			res.resp, res.err = p.dispatchStringURLEncoded(req)
-		case "PathsClient.StringURLNonEncoded":
-			res.resp, res.err = p.dispatchStringURLNonEncoded(req)
-		case "PathsClient.StringUnicode":
-			res.resp, res.err = p.dispatchStringUnicode(req)
-		case "PathsClient.UnixTimeURL":
-			res.resp, res.err = p.dispatchUnixTimeURL(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if pathsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pathsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PathsClient.ArrayCSVInPath":
+				res.resp, res.err = p.dispatchArrayCSVInPath(req)
+			case "PathsClient.Base64URL":
+				res.resp, res.err = p.dispatchBase64URL(req)
+			case "PathsClient.ByteEmpty":
+				res.resp, res.err = p.dispatchByteEmpty(req)
+			case "PathsClient.ByteMultiByte":
+				res.resp, res.err = p.dispatchByteMultiByte(req)
+			case "PathsClient.ByteNull":
+				res.resp, res.err = p.dispatchByteNull(req)
+			case "PathsClient.DateNull":
+				res.resp, res.err = p.dispatchDateNull(req)
+			case "PathsClient.DateTimeNull":
+				res.resp, res.err = p.dispatchDateTimeNull(req)
+			case "PathsClient.DateTimeValid":
+				res.resp, res.err = p.dispatchDateTimeValid(req)
+			case "PathsClient.DateValid":
+				res.resp, res.err = p.dispatchDateValid(req)
+			case "PathsClient.DoubleDecimalNegative":
+				res.resp, res.err = p.dispatchDoubleDecimalNegative(req)
+			case "PathsClient.DoubleDecimalPositive":
+				res.resp, res.err = p.dispatchDoubleDecimalPositive(req)
+			case "PathsClient.EnumNull":
+				res.resp, res.err = p.dispatchEnumNull(req)
+			case "PathsClient.EnumValid":
+				res.resp, res.err = p.dispatchEnumValid(req)
+			case "PathsClient.FloatScientificNegative":
+				res.resp, res.err = p.dispatchFloatScientificNegative(req)
+			case "PathsClient.FloatScientificPositive":
+				res.resp, res.err = p.dispatchFloatScientificPositive(req)
+			case "PathsClient.GetBooleanFalse":
+				res.resp, res.err = p.dispatchGetBooleanFalse(req)
+			case "PathsClient.GetBooleanTrue":
+				res.resp, res.err = p.dispatchGetBooleanTrue(req)
+			case "PathsClient.GetIntNegativeOneMillion":
+				res.resp, res.err = p.dispatchGetIntNegativeOneMillion(req)
+			case "PathsClient.GetIntOneMillion":
+				res.resp, res.err = p.dispatchGetIntOneMillion(req)
+			case "PathsClient.GetNegativeTenBillion":
+				res.resp, res.err = p.dispatchGetNegativeTenBillion(req)
+			case "PathsClient.GetTenBillion":
+				res.resp, res.err = p.dispatchGetTenBillion(req)
+			case "PathsClient.StringEmpty":
+				res.resp, res.err = p.dispatchStringEmpty(req)
+			case "PathsClient.StringNull":
+				res.resp, res.err = p.dispatchStringNull(req)
+			case "PathsClient.StringURLEncoded":
+				res.resp, res.err = p.dispatchStringURLEncoded(req)
+			case "PathsClient.StringURLNonEncoded":
+				res.resp, res.err = p.dispatchStringURLNonEncoded(req)
+			case "PathsClient.StringUnicode":
+				res.resp, res.err = p.dispatchStringUnicode(req)
+			case "PathsClient.UnixTimeURL":
+				res.resp, res.err = p.dispatchUnixTimeURL(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -888,4 +894,10 @@ func (p *PathsServerTransport) dispatchUnixTimeURL(req *http.Request) (*http.Res
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PathsServerTransport
+var pathsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

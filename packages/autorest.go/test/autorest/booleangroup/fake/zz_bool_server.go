@@ -72,24 +72,30 @@ func (b *BoolServerTransport) dispatchToMethodFake(req *http.Request, method str
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BoolClient.GetFalse":
-			res.resp, res.err = b.dispatchGetFalse(req)
-		case "BoolClient.GetInvalid":
-			res.resp, res.err = b.dispatchGetInvalid(req)
-		case "BoolClient.GetNull":
-			res.resp, res.err = b.dispatchGetNull(req)
-		case "BoolClient.GetTrue":
-			res.resp, res.err = b.dispatchGetTrue(req)
-		case "BoolClient.PutFalse":
-			res.resp, res.err = b.dispatchPutFalse(req)
-		case "BoolClient.PutTrue":
-			res.resp, res.err = b.dispatchPutTrue(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if boolServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = boolServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BoolClient.GetFalse":
+				res.resp, res.err = b.dispatchGetFalse(req)
+			case "BoolClient.GetInvalid":
+				res.resp, res.err = b.dispatchGetInvalid(req)
+			case "BoolClient.GetNull":
+				res.resp, res.err = b.dispatchGetNull(req)
+			case "BoolClient.GetTrue":
+				res.resp, res.err = b.dispatchGetTrue(req)
+			case "BoolClient.PutFalse":
+				res.resp, res.err = b.dispatchPutFalse(req)
+			case "BoolClient.PutTrue":
+				res.resp, res.err = b.dispatchPutTrue(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -216,4 +222,10 @@ func (b *BoolServerTransport) dispatchPutTrue(req *http.Request) (*http.Response
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BoolServerTransport
+var boolServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

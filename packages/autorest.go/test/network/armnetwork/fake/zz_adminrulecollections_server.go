@@ -74,20 +74,26 @@ func (a *AdminRuleCollectionsServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "AdminRuleCollectionsClient.CreateOrUpdate":
-			res.resp, res.err = a.dispatchCreateOrUpdate(req)
-		case "AdminRuleCollectionsClient.BeginDelete":
-			res.resp, res.err = a.dispatchBeginDelete(req)
-		case "AdminRuleCollectionsClient.Get":
-			res.resp, res.err = a.dispatchGet(req)
-		case "AdminRuleCollectionsClient.NewListPager":
-			res.resp, res.err = a.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if adminRuleCollectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = adminRuleCollectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "AdminRuleCollectionsClient.CreateOrUpdate":
+				res.resp, res.err = a.dispatchCreateOrUpdate(req)
+			case "AdminRuleCollectionsClient.BeginDelete":
+				res.resp, res.err = a.dispatchBeginDelete(req)
+			case "AdminRuleCollectionsClient.Get":
+				res.resp, res.err = a.dispatchGet(req)
+			case "AdminRuleCollectionsClient.NewListPager":
+				res.resp, res.err = a.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -325,4 +331,10 @@ func (a *AdminRuleCollectionsServerTransport) dispatchNewListPager(req *http.Req
 		a.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to AdminRuleCollectionsServerTransport
+var adminRuleCollectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

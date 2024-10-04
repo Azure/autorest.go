@@ -68,22 +68,28 @@ func (a *ArrayServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ArrayClient.GetEmpty":
-			res.resp, res.err = a.dispatchGetEmpty(req)
-		case "ArrayClient.GetNotProvided":
-			res.resp, res.err = a.dispatchGetNotProvided(req)
-		case "ArrayClient.GetValid":
-			res.resp, res.err = a.dispatchGetValid(req)
-		case "ArrayClient.PutEmpty":
-			res.resp, res.err = a.dispatchPutEmpty(req)
-		case "ArrayClient.PutValid":
-			res.resp, res.err = a.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if arrayServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = arrayServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ArrayClient.GetEmpty":
+				res.resp, res.err = a.dispatchGetEmpty(req)
+			case "ArrayClient.GetNotProvided":
+				res.resp, res.err = a.dispatchGetNotProvided(req)
+			case "ArrayClient.GetValid":
+				res.resp, res.err = a.dispatchGetValid(req)
+			case "ArrayClient.PutEmpty":
+				res.resp, res.err = a.dispatchPutEmpty(req)
+			case "ArrayClient.PutValid":
+				res.resp, res.err = a.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -199,4 +205,10 @@ func (a *ArrayServerTransport) dispatchPutValid(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ArrayServerTransport
+var arrayServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

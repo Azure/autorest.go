@@ -63,16 +63,22 @@ func (w *WebCategoriesServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "WebCategoriesClient.Get":
-			res.resp, res.err = w.dispatchGet(req)
-		case "WebCategoriesClient.NewListBySubscriptionPager":
-			res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if webCategoriesServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = webCategoriesServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "WebCategoriesClient.Get":
+				res.resp, res.err = w.dispatchGet(req)
+			case "WebCategoriesClient.NewListBySubscriptionPager":
+				res.resp, res.err = w.dispatchNewListBySubscriptionPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -159,4 +165,10 @@ func (w *WebCategoriesServerTransport) dispatchNewListBySubscriptionPager(req *h
 		w.newListBySubscriptionPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to WebCategoriesServerTransport
+var webCategoriesServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

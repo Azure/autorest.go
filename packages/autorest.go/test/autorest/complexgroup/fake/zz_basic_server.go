@@ -72,24 +72,30 @@ func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method st
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "BasicClient.GetEmpty":
-			res.resp, res.err = b.dispatchGetEmpty(req)
-		case "BasicClient.GetInvalid":
-			res.resp, res.err = b.dispatchGetInvalid(req)
-		case "BasicClient.GetNotProvided":
-			res.resp, res.err = b.dispatchGetNotProvided(req)
-		case "BasicClient.GetNull":
-			res.resp, res.err = b.dispatchGetNull(req)
-		case "BasicClient.GetValid":
-			res.resp, res.err = b.dispatchGetValid(req)
-		case "BasicClient.PutValid":
-			res.resp, res.err = b.dispatchPutValid(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if basicServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = basicServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "BasicClient.GetEmpty":
+				res.resp, res.err = b.dispatchGetEmpty(req)
+			case "BasicClient.GetInvalid":
+				res.resp, res.err = b.dispatchGetInvalid(req)
+			case "BasicClient.GetNotProvided":
+				res.resp, res.err = b.dispatchGetNotProvided(req)
+			case "BasicClient.GetNull":
+				res.resp, res.err = b.dispatchGetNull(req)
+			case "BasicClient.GetValid":
+				res.resp, res.err = b.dispatchGetValid(req)
+			case "BasicClient.PutValid":
+				res.resp, res.err = b.dispatchPutValid(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -220,4 +226,10 @@ func (b *BasicServerTransport) dispatchPutValid(req *http.Request) (*http.Respon
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to BasicServerTransport
+var basicServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (s *StorageAccountCredentialsServerTransport) dispatchToMethodFake(req *htt
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "StorageAccountCredentialsClient.BeginCreateOrUpdate":
-			res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
-		case "StorageAccountCredentialsClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "StorageAccountCredentialsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if storageAccountCredentialsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = storageAccountCredentialsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "StorageAccountCredentialsClient.BeginCreateOrUpdate":
+				res.resp, res.err = s.dispatchBeginCreateOrUpdate(req)
+			case "StorageAccountCredentialsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "StorageAccountCredentialsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "StorageAccountCredentialsClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = s.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -279,4 +285,10 @@ func (s *StorageAccountCredentialsServerTransport) dispatchNewListByDataBoxEdgeD
 		s.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to StorageAccountCredentialsServerTransport
+var storageAccountCredentialsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

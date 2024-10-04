@@ -89,26 +89,32 @@ func (e *ExpressRoutePortsServerTransport) dispatchToMethodFake(req *http.Reques
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ExpressRoutePortsClient.BeginCreateOrUpdate":
-			res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
-		case "ExpressRoutePortsClient.BeginDelete":
-			res.resp, res.err = e.dispatchBeginDelete(req)
-		case "ExpressRoutePortsClient.GenerateLOA":
-			res.resp, res.err = e.dispatchGenerateLOA(req)
-		case "ExpressRoutePortsClient.Get":
-			res.resp, res.err = e.dispatchGet(req)
-		case "ExpressRoutePortsClient.NewListPager":
-			res.resp, res.err = e.dispatchNewListPager(req)
-		case "ExpressRoutePortsClient.NewListByResourceGroupPager":
-			res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
-		case "ExpressRoutePortsClient.UpdateTags":
-			res.resp, res.err = e.dispatchUpdateTags(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if expressRoutePortsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = expressRoutePortsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ExpressRoutePortsClient.BeginCreateOrUpdate":
+				res.resp, res.err = e.dispatchBeginCreateOrUpdate(req)
+			case "ExpressRoutePortsClient.BeginDelete":
+				res.resp, res.err = e.dispatchBeginDelete(req)
+			case "ExpressRoutePortsClient.GenerateLOA":
+				res.resp, res.err = e.dispatchGenerateLOA(req)
+			case "ExpressRoutePortsClient.Get":
+				res.resp, res.err = e.dispatchGet(req)
+			case "ExpressRoutePortsClient.NewListPager":
+				res.resp, res.err = e.dispatchNewListPager(req)
+			case "ExpressRoutePortsClient.NewListByResourceGroupPager":
+				res.resp, res.err = e.dispatchNewListByResourceGroupPager(req)
+			case "ExpressRoutePortsClient.UpdateTags":
+				res.resp, res.err = e.dispatchUpdateTags(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -390,4 +396,10 @@ func (e *ExpressRoutePortsServerTransport) dispatchUpdateTags(req *http.Request)
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ExpressRoutePortsServerTransport
+var expressRoutePortsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

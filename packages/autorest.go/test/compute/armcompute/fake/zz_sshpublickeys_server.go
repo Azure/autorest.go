@@ -85,26 +85,32 @@ func (s *SSHPublicKeysServerTransport) dispatchToMethodFake(req *http.Request, m
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SSHPublicKeysClient.Create":
-			res.resp, res.err = s.dispatchCreate(req)
-		case "SSHPublicKeysClient.Delete":
-			res.resp, res.err = s.dispatchDelete(req)
-		case "SSHPublicKeysClient.GenerateKeyPair":
-			res.resp, res.err = s.dispatchGenerateKeyPair(req)
-		case "SSHPublicKeysClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SSHPublicKeysClient.NewListByResourceGroupPager":
-			res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
-		case "SSHPublicKeysClient.NewListBySubscriptionPager":
-			res.resp, res.err = s.dispatchNewListBySubscriptionPager(req)
-		case "SSHPublicKeysClient.Update":
-			res.resp, res.err = s.dispatchUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if sshPublicKeysServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = sshPublicKeysServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SSHPublicKeysClient.Create":
+				res.resp, res.err = s.dispatchCreate(req)
+			case "SSHPublicKeysClient.Delete":
+				res.resp, res.err = s.dispatchDelete(req)
+			case "SSHPublicKeysClient.GenerateKeyPair":
+				res.resp, res.err = s.dispatchGenerateKeyPair(req)
+			case "SSHPublicKeysClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SSHPublicKeysClient.NewListByResourceGroupPager":
+				res.resp, res.err = s.dispatchNewListByResourceGroupPager(req)
+			case "SSHPublicKeysClient.NewListBySubscriptionPager":
+				res.resp, res.err = s.dispatchNewListBySubscriptionPager(req)
+			case "SSHPublicKeysClient.Update":
+				res.resp, res.err = s.dispatchUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -360,4 +366,10 @@ func (s *SSHPublicKeysServerTransport) dispatchUpdate(req *http.Request) (*http.
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SSHPublicKeysServerTransport
+var sshPublicKeysServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

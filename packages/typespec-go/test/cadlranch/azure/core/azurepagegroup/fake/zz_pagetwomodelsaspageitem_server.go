@@ -61,16 +61,22 @@ func (p *PageTwoModelsAsPageItemServerTransport) dispatchToMethodFake(req *http.
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "PageTwoModelsAsPageItemClient.NewListFirstItemPager":
-			res.resp, res.err = p.dispatchNewListFirstItemPager(req)
-		case "PageTwoModelsAsPageItemClient.NewListSecondItemPager":
-			res.resp, res.err = p.dispatchNewListSecondItemPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if pageTwoModelsAsPageItemServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = pageTwoModelsAsPageItemServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "PageTwoModelsAsPageItemClient.NewListFirstItemPager":
+				res.resp, res.err = p.dispatchNewListFirstItemPager(req)
+			case "PageTwoModelsAsPageItemClient.NewListSecondItemPager":
+				res.resp, res.err = p.dispatchNewListSecondItemPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -137,4 +143,10 @@ func (p *PageTwoModelsAsPageItemServerTransport) dispatchNewListSecondItemPager(
 		p.newListSecondItemPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to PageTwoModelsAsPageItemServerTransport
+var pageTwoModelsAsPageItemServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -78,22 +78,28 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchToMethodFake
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate":
-			res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
-		case "VirtualMachineScaleSetVMExtensionsClient.BeginDelete":
-			res.resp, res.err = v.dispatchBeginDelete(req)
-		case "VirtualMachineScaleSetVMExtensionsClient.Get":
-			res.resp, res.err = v.dispatchGet(req)
-		case "VirtualMachineScaleSetVMExtensionsClient.List":
-			res.resp, res.err = v.dispatchList(req)
-		case "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate":
-			res.resp, res.err = v.dispatchBeginUpdate(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if virtualMachineScaleSetVMExtensionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = virtualMachineScaleSetVMExtensionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate":
+				res.resp, res.err = v.dispatchBeginCreateOrUpdate(req)
+			case "VirtualMachineScaleSetVMExtensionsClient.BeginDelete":
+				res.resp, res.err = v.dispatchBeginDelete(req)
+			case "VirtualMachineScaleSetVMExtensionsClient.Get":
+				res.resp, res.err = v.dispatchGet(req)
+			case "VirtualMachineScaleSetVMExtensionsClient.List":
+				res.resp, res.err = v.dispatchList(req)
+			case "VirtualMachineScaleSetVMExtensionsClient.BeginUpdate":
+				res.resp, res.err = v.dispatchBeginUpdate(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -372,4 +378,10 @@ func (v *VirtualMachineScaleSetVMExtensionsServerTransport) dispatchBeginUpdate(
 	}
 
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to VirtualMachineScaleSetVMExtensionsServerTransport
+var virtualMachineScaleSetVMExtensionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -75,20 +75,26 @@ func (t *TriggersServerTransport) dispatchToMethodFake(req *http.Request, method
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "TriggersClient.BeginCreateOrUpdate":
-			res.resp, res.err = t.dispatchBeginCreateOrUpdate(req)
-		case "TriggersClient.BeginDelete":
-			res.resp, res.err = t.dispatchBeginDelete(req)
-		case "TriggersClient.Get":
-			res.resp, res.err = t.dispatchGet(req)
-		case "TriggersClient.NewListByDataBoxEdgeDevicePager":
-			res.resp, res.err = t.dispatchNewListByDataBoxEdgeDevicePager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if triggersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = triggersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "TriggersClient.BeginCreateOrUpdate":
+				res.resp, res.err = t.dispatchBeginCreateOrUpdate(req)
+			case "TriggersClient.BeginDelete":
+				res.resp, res.err = t.dispatchBeginDelete(req)
+			case "TriggersClient.Get":
+				res.resp, res.err = t.dispatchGet(req)
+			case "TriggersClient.NewListByDataBoxEdgeDevicePager":
+				res.resp, res.err = t.dispatchNewListByDataBoxEdgeDevicePager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -295,4 +301,10 @@ func (t *TriggersServerTransport) dispatchNewListByDataBoxEdgeDevicePager(req *h
 		t.newListByDataBoxEdgeDevicePager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to TriggersServerTransport
+var triggersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

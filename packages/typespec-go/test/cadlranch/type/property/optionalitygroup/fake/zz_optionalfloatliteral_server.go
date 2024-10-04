@@ -63,20 +63,26 @@ func (o *OptionalFloatLiteralServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "OptionalFloatLiteralClient.GetAll":
-			res.resp, res.err = o.dispatchGetAll(req)
-		case "OptionalFloatLiteralClient.GetDefault":
-			res.resp, res.err = o.dispatchGetDefault(req)
-		case "OptionalFloatLiteralClient.PutAll":
-			res.resp, res.err = o.dispatchPutAll(req)
-		case "OptionalFloatLiteralClient.PutDefault":
-			res.resp, res.err = o.dispatchPutDefault(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if optionalFloatLiteralServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = optionalFloatLiteralServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "OptionalFloatLiteralClient.GetAll":
+				res.resp, res.err = o.dispatchGetAll(req)
+			case "OptionalFloatLiteralClient.GetDefault":
+				res.resp, res.err = o.dispatchGetDefault(req)
+			case "OptionalFloatLiteralClient.PutAll":
+				res.resp, res.err = o.dispatchPutAll(req)
+			case "OptionalFloatLiteralClient.PutDefault":
+				res.resp, res.err = o.dispatchPutDefault(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -173,4 +179,10 @@ func (o *OptionalFloatLiteralServerTransport) dispatchPutDefault(req *http.Reque
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to OptionalFloatLiteralServerTransport
+var optionalFloatLiteralServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

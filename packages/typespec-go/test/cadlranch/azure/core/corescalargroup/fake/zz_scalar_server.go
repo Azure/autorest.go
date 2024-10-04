@@ -61,3 +61,9 @@ func (s *ScalarServerTransport) dispatchToClientFake(req *http.Request, client s
 
 	return resp, err
 }
+
+// set this to conditionally intercept incoming requests to ScalarServerTransport
+var scalarServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
+}

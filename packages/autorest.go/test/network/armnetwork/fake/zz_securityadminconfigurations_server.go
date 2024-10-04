@@ -74,20 +74,26 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchToMethodFake(req *h
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "SecurityAdminConfigurationsClient.CreateOrUpdate":
-			res.resp, res.err = s.dispatchCreateOrUpdate(req)
-		case "SecurityAdminConfigurationsClient.BeginDelete":
-			res.resp, res.err = s.dispatchBeginDelete(req)
-		case "SecurityAdminConfigurationsClient.Get":
-			res.resp, res.err = s.dispatchGet(req)
-		case "SecurityAdminConfigurationsClient.NewListPager":
-			res.resp, res.err = s.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if securityAdminConfigurationsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = securityAdminConfigurationsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "SecurityAdminConfigurationsClient.CreateOrUpdate":
+				res.resp, res.err = s.dispatchCreateOrUpdate(req)
+			case "SecurityAdminConfigurationsClient.BeginDelete":
+				res.resp, res.err = s.dispatchBeginDelete(req)
+			case "SecurityAdminConfigurationsClient.Get":
+				res.resp, res.err = s.dispatchGet(req)
+			case "SecurityAdminConfigurationsClient.NewListPager":
+				res.resp, res.err = s.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -309,4 +315,10 @@ func (s *SecurityAdminConfigurationsServerTransport) dispatchNewListPager(req *h
 		s.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to SecurityAdminConfigurationsServerTransport
+var securityAdminConfigurationsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

@@ -58,14 +58,20 @@ func (i *InterfaceLoadBalancersServerTransport) dispatchToMethodFake(req *http.R
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "InterfaceLoadBalancersClient.NewListPager":
-			res.resp, res.err = i.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if interfaceLoadBalancersServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = interfaceLoadBalancersServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "InterfaceLoadBalancersClient.NewListPager":
+				res.resp, res.err = i.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (i *InterfaceLoadBalancersServerTransport) dispatchNewListPager(req *http.R
 		i.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to InterfaceLoadBalancersServerTransport
+var interfaceLoadBalancersServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

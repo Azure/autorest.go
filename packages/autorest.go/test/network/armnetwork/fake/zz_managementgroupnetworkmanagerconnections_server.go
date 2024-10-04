@@ -72,20 +72,26 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchToMeth
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
-			res.resp, res.err = m.dispatchCreateOrUpdate(req)
-		case "ManagementGroupNetworkManagerConnectionsClient.Delete":
-			res.resp, res.err = m.dispatchDelete(req)
-		case "ManagementGroupNetworkManagerConnectionsClient.Get":
-			res.resp, res.err = m.dispatchGet(req)
-		case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
-			res.resp, res.err = m.dispatchNewListPager(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if managementGroupNetworkManagerConnectionsServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = managementGroupNetworkManagerConnectionsServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ManagementGroupNetworkManagerConnectionsClient.CreateOrUpdate":
+				res.resp, res.err = m.dispatchCreateOrUpdate(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.Delete":
+				res.resp, res.err = m.dispatchDelete(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.Get":
+				res.resp, res.err = m.dispatchGet(req)
+			case "ManagementGroupNetworkManagerConnectionsClient.NewListPager":
+				res.resp, res.err = m.dispatchNewListPager(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -265,4 +271,10 @@ func (m *ManagementGroupNetworkManagerConnectionsServerTransport) dispatchNewLis
 		m.newListPager.remove(req)
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ManagementGroupNetworkManagerConnectionsServerTransport
+var managementGroupNetworkManagerConnectionsServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

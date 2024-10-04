@@ -55,16 +55,22 @@ func (x *XMLModelWithUnwrappedArrayValueServerTransport) dispatchToMethodFake(re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "XMLModelWithUnwrappedArrayValueClient.Get":
-			res.resp, res.err = x.dispatchGet(req)
-		case "XMLModelWithUnwrappedArrayValueClient.Put":
-			res.resp, res.err = x.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if xmlModelWithUnwrappedArrayValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = xmlModelWithUnwrappedArrayValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "XMLModelWithUnwrappedArrayValueClient.Get":
+				res.resp, res.err = x.dispatchGet(req)
+			case "XMLModelWithUnwrappedArrayValueClient.Put":
+				res.resp, res.err = x.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -122,4 +128,10 @@ func (x *XMLModelWithUnwrappedArrayValueServerTransport) dispatchPut(req *http.R
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to XMLModelWithUnwrappedArrayValueServerTransport
+var xmlModelWithUnwrappedArrayValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

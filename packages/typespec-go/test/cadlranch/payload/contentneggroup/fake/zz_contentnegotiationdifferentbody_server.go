@@ -55,16 +55,22 @@ func (c *ContentNegotiationDifferentBodyServerTransport) dispatchToMethodFake(re
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "ContentNegotiationDifferentBodyClient.GetAvatarAsJSON":
-			res.resp, res.err = c.dispatchGetAvatarAsJSON(req)
-		case "ContentNegotiationDifferentBodyClient.GetAvatarAsPNG":
-			res.resp, res.err = c.dispatchGetAvatarAsPNG(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if contentNegotiationDifferentBodyServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = contentNegotiationDifferentBodyServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "ContentNegotiationDifferentBodyClient.GetAvatarAsJSON":
+				res.resp, res.err = c.dispatchGetAvatarAsJSON(req)
+			case "ContentNegotiationDifferentBodyClient.GetAvatarAsPNG":
+				res.resp, res.err = c.dispatchGetAvatarAsPNG(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -124,4 +130,10 @@ func (c *ContentNegotiationDifferentBodyServerTransport) dispatchGetAvatarAsPNG(
 		resp.Header.Set("content-type", "image/png")
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to ContentNegotiationDifferentBodyServerTransport
+var contentNegotiationDifferentBodyServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }

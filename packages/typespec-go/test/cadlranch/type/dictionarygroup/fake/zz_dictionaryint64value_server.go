@@ -55,16 +55,22 @@ func (d *DictionaryInt64ValueServerTransport) dispatchToMethodFake(req *http.Req
 	defer close(resultChan)
 
 	go func() {
+		var intercepted bool
 		var res result
-		switch method {
-		case "DictionaryInt64ValueClient.Get":
-			res.resp, res.err = d.dispatchGet(req)
-		case "DictionaryInt64ValueClient.Put":
-			res.resp, res.err = d.dispatchPut(req)
-		default:
-			res.err = fmt.Errorf("unhandled API %s", method)
+		if dictionaryInt64ValueServerTransportInterceptor != nil {
+			res.resp, res.err, intercepted = dictionaryInt64ValueServerTransportInterceptor.Do(req)
 		}
+		if !intercepted {
+			switch method {
+			case "DictionaryInt64ValueClient.Get":
+				res.resp, res.err = d.dispatchGet(req)
+			case "DictionaryInt64ValueClient.Put":
+				res.resp, res.err = d.dispatchPut(req)
+			default:
+				res.err = fmt.Errorf("unhandled API %s", method)
+			}
 
+		}
 		select {
 		case resultChan <- res:
 		case <-req.Context().Done():
@@ -119,4 +125,10 @@ func (d *DictionaryInt64ValueServerTransport) dispatchPut(req *http.Request) (*h
 		return nil, err
 	}
 	return resp, nil
+}
+
+// set this to conditionally intercept incoming requests to DictionaryInt64ValueServerTransport
+var dictionaryInt64ValueServerTransportInterceptor interface {
+	// Do returns true if the server transport should use the returned response/error
+	Do(*http.Request) (*http.Response, error, bool)
 }
