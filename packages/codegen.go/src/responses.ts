@@ -6,7 +6,7 @@
 import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
-import { commentLength, contentPreamble, sortAscending } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 import { getStar } from './models.js';
 
@@ -26,7 +26,7 @@ export async function generateResponses(codeModel: go.CodeModel): Promise<Respon
 
   const imports = new ImportManager();
   const serdeImports = new ImportManager();
-  let responses = contentPreamble(codeModel);
+  let responses = helpers.contentPreamble(codeModel);
   let serDe = '';
   let respContent = '';
   let serdeContent = '';
@@ -43,7 +43,7 @@ export async function generateResponses(codeModel: go.CodeModel): Promise<Respon
   responses += respContent;
 
   if (serdeContent.length > 0) {
-    serDe = contentPreamble(codeModel);
+    serDe = helpers.contentPreamble(codeModel);
     serDe += serdeImports.text();
     serDe += serdeContent;
   }
@@ -61,7 +61,7 @@ function generateMarshaller(respEnv: go.ResponseEnvelope, imports: ImportManager
     // without it, the response envelope type name is the outer type which is incorrect.
     imports.add('encoding/json');
     const receiver = respEnv.name[0].toLowerCase();
-    text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
+    text += `${comment(`MarshalJSON implements the json.Marshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
     text += `func (${receiver} ${respEnv.name}) MarshalJSON() ([]byte, error) {\n`;
     // TODO: this doesn't include any headers. however, LROs with header responses are currently broken :(
     text += `\treturn json.Marshal(${receiver}.${go.getTypeDeclaration(respEnv.result.interfaceType)})\n}\n\n`;
@@ -87,7 +87,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
   }
 
   const receiver = respEnv.name[0].toLowerCase();
-  let unmarshaller = `${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, commentLength)}\n`;
+  let unmarshaller = `${comment(`UnmarshalJSON implements the json.Unmarshaller interface for type ${respEnv.name}.`, '// ', undefined, helpers.commentLength)}\n`;
   unmarshaller += `func (${receiver} *${respEnv.name}) UnmarshalJSON(data []byte) error {\n`;
 
   // add a custom unmarshaller to the response envelope
@@ -110,10 +110,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
 }
 
 function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
-  let text = '';
-  if (respEnv.description) {
-    text += `${comment(respEnv.description, '// ', undefined, commentLength)}\n`;
-  }
+  let text = helpers.formatDocComment(respEnv.description);
 
   text += `type ${respEnv.name} struct {\n`;
   if (!respEnv.result && respEnv.headers.length === 0) {
@@ -129,15 +126,13 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     if (respEnv.result) {
       if (go.isModelResult(respEnv.result) || go.isPolymorphicResult(respEnv.result)) {
         // anonymously embedded type always goes first
-        if (respEnv.result.description) {
-          text += `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
-        }
+        text += helpers.formatDocComment(respEnv.result.description);
         text += `\t${go.getTypeDeclaration(go.getResultPossibleType(respEnv.result))}\n`;
         first = false;
       } else {
         let desc: string | undefined;
         if (respEnv.result.description) {
-          desc = `\t${comment(respEnv.result.description, '// ', undefined, commentLength)}\n`;
+          desc = `\t${comment(respEnv.result.description, '// ', undefined, helpers.commentLength)}\n`;
         }
 
         const type = go.getResultPossibleType(respEnv.result);
@@ -161,12 +156,12 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
       imports.addImportForType(header.type);
       let desc: string | undefined;
       if (header.description) {
-        desc = `\t${comment(header.description, '// ', undefined, commentLength)}\n`;
+        desc = `\t${comment(header.description, '// ', undefined, helpers.commentLength)}\n`;
       }
       fields.push({desc: desc, field: `\t${header.fieldName} ${getStar(header.byValue)}${go.getTypeDeclaration(header.type)}\n`});
     }
 
-    fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return sortAscending(a.field, b.field); });
+    fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });
 
     for (const field of fields) {
       if (field.desc) {

@@ -3,9 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, contentPreamble } from './helpers.js';
+import * as helpers from './helpers.js';
 import * as go from '../../codemodel.go/src/index.js';
 
 // Creates the content in constants.go
@@ -14,7 +13,7 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
   if (!codeModel.clients || (codeModel.constants.length === 0 && !codeModel.host && codeModel.type !== 'azure-arm')) {
     return '';
   }
-  let text = contentPreamble(codeModel);
+  let text = helpers.contentPreamble(codeModel);
   if (codeModel.host) {
     text += `const host = "${codeModel.host}"\n\n`;
   }
@@ -30,16 +29,12 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
     text += ')\n\n';
   }
   for (const enm of values(codeModel.constants)) {
-    if (enm.description) {
-      text += `${comment(`${enm.name} - ${enm.description}`, '// ', undefined, commentLength)}\n`;
-    }
+    text += helpers.formatDocCommentWithPrefix(enm.name, enm.description);
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
     text += 'const (\n';
     for (const val of values(enm.values)) {
-      if (val.description) {
-        text += `\t${comment(`${val.name} - ${val.description}`, '//', undefined, commentLength)}\n`;
-      }
+      text += helpers.formatDocCommentWithPrefix(val.name, val.description);
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {
         formatValue = `${val.value}`;
