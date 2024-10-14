@@ -6,7 +6,7 @@
 import * as go from '../../codemodel.go/src/index.js';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { commentLength, contentPreamble, formatLiteralValue, getSerDeFormat, recursiveUnwrapMapSlice, SerDeFormat, sortAscending } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 export interface ModelsSerDe {
@@ -26,7 +26,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   // this list of packages to import
   const modelImports = new ImportManager();
   const serdeImports = new ImportManager();
-  let modelText = contentPreamble(codeModel);
+  let modelText = helpers.contentPreamble(codeModel);
 
   // we do model generation first as it can add imports to the imports list
   const modelDefs = generateModelDefs(modelImports, serdeImports, codeModel);
@@ -43,18 +43,18 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   for (const modelDef of values(modelDefs)) {
     modelText += modelDef.text();
 
-    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
+    modelDef.Methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
     for (const method of values(modelDef.Methods)) {
       if (method.desc.length > 0) {
-        modelText += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
+        modelText += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       modelText += method.text;
     }
 
-    modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return sortAscending(a.name, b.name); });
+    modelDef.SerDe.methods.sort((a: ModelMethod, b: ModelMethod) => { return helpers.sortAscending(a.name, b.name); });
     for (const method of values(modelDef.SerDe.methods)) {
       if (method.desc.length > 0) {
-        serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
+        serdeTextBody += `${comment(method.desc, '// ', undefined, helpers.commentLength)}\n`;
       }
       serdeTextBody += method.text;
     }
@@ -134,7 +134,7 @@ export async function generateModels(codeModel: go.CodeModel): Promise<ModelsSer
   }
   let serdeText = '';
   if (serdeTextBody.length > 0) {
-    serdeText = contentPreamble(codeModel);
+    serdeText = helpers.contentPreamble(codeModel);
     serdeText += serdeImports.text();
     serdeText += serdeTextBody;
   }
@@ -165,7 +165,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         if (field.description) {
           field.description += '\n';
         }
-        field.description += `Field has constant value ${formatLiteralValue(field.type, false)}, any specified value is ignored.`;
+        field.description += `Field has constant value ${helpers.formatLiteralValue(field.type, false)}, any specified value is ignored.`;
       }
       if (field.description) {
         descriptionMods.push(field.description);
@@ -176,7 +176,7 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       field.description = descriptionMods.join('; ');
     }
 
-    const serDeFormat = getSerDeFormat(model, codeModel);
+    const serDeFormat = helpers.getSerDeFormat(model, codeModel);
     const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.description);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
@@ -269,7 +269,7 @@ function generateToMultipartForm(modelDef: ModelDef) {
   let method = `func (${receiver} ${modelDef.Name}) toMultipartFormData() (map[string]any, error) {\n`;
   method += '\tobjectMap := make(map[string]any)\n';
   for (const field of modelDef.Fields) {
-    const fieldType = recursiveUnwrapMapSlice(field.type);
+    const fieldType = helpers.recursiveUnwrapMapSlice(field.type);
     let setField: string;
     let star = '';
     if (!field.byValue) {
@@ -316,7 +316,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
     }
     if (field.annotations.isDiscriminator) {
       if (field.defaultValue) {
-        marshaller += `\tobjectMap["${field.serializedName}"] = ${formatLiteralValue(field.defaultValue, true)}\n`;
+        marshaller += `\tobjectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.defaultValue, true)}\n`;
       } else {
         // if there's no discriminator value (e.g. Fish in test server), use the field's value.
         // this will enable support for custom types that aren't (yet) described in the swagger.
@@ -348,7 +348,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
       marshaller += `\tpopulate(objectMap, "${field.serializedName}", aux)\n`;
       modelDef.SerDe.needsJSONPopulate = true;
     } else if (go.isLiteralValue(field.type)) {
-      const setter = `objectMap["${field.serializedName}"] = ${formatLiteralValue(field.type, true)}`;
+      const setter = `objectMap["${field.serializedName}"] = ${helpers.formatLiteralValue(field.type, true)}`;
       if (!field.annotations.required) {
         marshaller += `\tif ${receiver}.${field.name} != nil {\n\t\t${setter}\n\t}\n`;
       } else {
@@ -360,7 +360,7 @@ function generateJSONMarshallerBody(modelType: go.ModelType | go.PolymorphicType
     } else {
       if (field.defaultValue) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
-        marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
+        marshaller += `\tif ${receiver}.${field.name} == nil {\n\t\t${receiver}.${field.name} = to.Ptr(${helpers.formatLiteralValue(field.defaultValue, true)})\n\t}\n`;
       }
       let populate = 'populate';
       if (go.isTimeType(field.type)) {
@@ -771,13 +771,13 @@ class SerDeInfo {
 // represents model definition as a Go struct
 class ModelDef {
   readonly Name: string;
-  readonly Format: SerDeFormat;
+  readonly Format: helpers.SerDeFormat;
   readonly Description?: string;
   readonly Fields: Array<go.ModelField>;
   readonly SerDe: SerDeInfo;
   readonly Methods: Array<ModelMethod>;
 
-  constructor(name: string, format: SerDeFormat, fields: Array<go.ModelField>, description?: string) {
+  constructor(name: string, format: helpers.SerDeFormat, fields: Array<go.ModelField>, description?: string) {
     this.Name = name;
     this.Format = format;
     this.Description = description;
@@ -789,7 +789,7 @@ class ModelDef {
   text(): string {
     let text = '';
     if (this.Description) {
-      text += `${comment(this.Description, '// ', undefined, commentLength)}\n`;
+      text += `${comment(this.Description, '// ', undefined, helpers.commentLength)}\n`;
     }
     text += `type ${this.Name} struct {\n`;
 
@@ -814,7 +814,7 @@ class ModelDef {
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(field.description, '// ', undefined, commentLength)}\n`;
+        text += `\t${comment(field.description, '// ', undefined, helpers.commentLength)}\n`;
       }
       let typeName = go.getTypeDeclaration(field.type);
       if (go.isLiteralValue(field.type)) {

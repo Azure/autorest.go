@@ -6,7 +6,7 @@
 import { capitalize, comment } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import * as go from '../../codemodel.go/src/index.js';
-import { commentLength, contentPreamble } from './helpers.js';
+import * as helpers from './helpers.js';
 import { ImportManager } from './imports.js';
 
 // Creates the content in options.go
@@ -16,7 +16,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
   }
 
   const imports = new ImportManager();
-  let optionsText = contentPreamble(codeModel);
+  let optionsText = helpers.contentPreamble(codeModel);
   let content = '';
 
   for (const paramGroup of values(codeModel.paramGroups)) {
@@ -29,10 +29,7 @@ export async function generateOptions(codeModel: go.CodeModel): Promise<string> 
 }
 
 function emit(struct: go.StructType, imports: ImportManager): string {
-  let text = '';
-  if (struct.description) {
-    text += `${comment(struct.description, '// ', undefined, commentLength)}\n`;
-  }
+  let text = helpers.formatDocComment(struct.description);
   text += `type ${struct.name} struct {\n`;
 
   if (struct.fields.length === 0) {
@@ -50,7 +47,7 @@ function emit(struct: go.StructType, imports: ImportManager): string {
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(field.description, '// ', undefined, commentLength)}\n`;
+        text += `\t${comment(field.description, '// ', undefined, helpers.commentLength)}\n`;
       }
 
       let typeName = go.getTypeDeclaration(field.type);

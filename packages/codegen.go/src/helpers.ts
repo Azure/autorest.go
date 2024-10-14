@@ -546,6 +546,23 @@ export function formatCommentAsBulletItem(description: string): string {
   return chunks.join('\n');
 }
 
+// conditionally returns a doc comment on an entity that requires a prefix.
+// e.g.: // {Prefix} - {docs}
+export function formatDocCommentWithPrefix(prefix: string, docs?: string): string {
+  if (!docs) {
+    return '';
+  }
+  return `${comment(`${prefix} - ${docs}`, '// ', undefined, commentLength)}\n`;
+}
+
+// conditionally returns a doc comment
+export function formatDocComment(docs?: string): string {
+  if (!docs) {
+    return '';
+  }
+  return `${comment(docs, '// ', undefined, commentLength)}\n`;
+}
+
 export function getParentImport(codeModel: go.CodeModel): string {
   const clientPkg = codeModel.packageName;
   if (codeModel.options.module) {
