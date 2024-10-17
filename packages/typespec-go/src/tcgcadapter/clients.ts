@@ -269,7 +269,9 @@ export class clientAdapter {
     // we must do this after adapting method params as it can add optional params
     this.ta.codeModel.paramGroups.push(this.adaptParameterGroup(method.optionalParamsGroup));
 
-    this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
+    if (this.ta.codeModel.options.generateExamples) {
+      this.adaptHttpOperationExamples(sdkMethod, method, paramMapping);
+    }
   }
 
   private adaptMethodParameters(sdkMethod: tcgc.SdkServiceMethod<tcgc.SdkHttpOperation>, method: go.Method | go.NextPageMethod): Map<tcgc.SdkHttpParameter, Array<go.Parameter>> {

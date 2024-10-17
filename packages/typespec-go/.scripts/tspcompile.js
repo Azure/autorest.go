@@ -186,6 +186,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
   ];
 
   // these options _can_ be changed per test
+  // TODO: disabled examples by default https://github.com/Azure/autorest.go/issues/1441
   const defaultOptions = [
     'module-version=0.1.0',
     'generate-fakes=true',
@@ -194,7 +195,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'remove-unreferenced-types=true',
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
-    'generate-examples=true'
+    'generate-examples=false'
   ];
 
   let allOptions = fixedOptions;
