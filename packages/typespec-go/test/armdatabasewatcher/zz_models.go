@@ -6,6 +6,54 @@ package armdatabasewatcher
 
 import "time"
 
+// AlertRuleResource - Concrete proxy resource types can be created by aliasing this type using a specific property type.
+type AlertRuleResource struct {
+	// The resource-specific properties for this resource.
+	Properties *AlertRuleResourceProperties
+
+	// READ-ONLY; The alert rule proxy resource name.
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// AlertRuleResourceListResult - The response of a AlertRuleResource list operation.
+type AlertRuleResourceListResult struct {
+	// REQUIRED; The AlertRuleResource items on this page
+	Value []*AlertRuleResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// AlertRuleResourceProperties - The generic properties of the alert rule proxy resource.
+type AlertRuleResourceProperties struct {
+	// REQUIRED; The resource ID of the alert rule resource.
+	AlertRuleResourceID *string
+
+	// REQUIRED; The template ID associated with alert rule resource.
+	AlertRuleTemplateID *string
+
+	// REQUIRED; The alert rule template version.
+	AlertRuleTemplateVersion *string
+
+	// REQUIRED; The properties with which the alert rule resource was created.
+	CreatedWithProperties *AlertRuleCreationProperties
+
+	// REQUIRED; The creation time of the alert rule resource.
+	CreationTime *time.Time
+
+	// READ-ONLY; The provisioning state of the alert rule resource.
+	ProvisioningState *ResourceProvisioningState
+}
+
 // Datastore - The properties of a data store.
 type Datastore struct {
 	// REQUIRED; The Kusto cluster URI.
@@ -66,8 +114,8 @@ type ErrorResponse struct {
 	Error *ErrorDetail
 }
 
-// ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity struct {
+// ManagedServiceIdentityV4 - Managed service identity (system assigned and/or user assigned identities)
+type ManagedServiceIdentityV4 struct {
 	// REQUIRED; The type of managed identity assigned to this resource.
 	Type *ManagedServiceIdentityType
 
@@ -490,7 +538,7 @@ type Watcher struct {
 	Name *string
 
 	// The managed service identities assigned to this resource.
-	Identity *ManagedServiceIdentity
+	Identity *ManagedServiceIdentityV4
 
 	// The resource-specific properties for this resource.
 	Properties *WatcherProperties
@@ -522,9 +570,33 @@ type WatcherProperties struct {
 	// The data store for collected monitoring data.
 	Datastore *Datastore
 
+	// The resource ID of a user-assigned managed identity that will be assigned to a new alert rule.
+	DefaultAlertRuleIdentityResourceID *string
+
 	// READ-ONLY; The provisioning state of the resource watcher.
 	ProvisioningState *DatabaseWatcherProvisioningState
 
 	// READ-ONLY; The monitoring collection status of the watcher.
 	Status *WatcherStatus
+}
+
+// WatcherUpdate - The type used for update operations of the Watcher.
+type WatcherUpdate struct {
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentityV4
+
+	// The resource-specific properties for this resource.
+	Properties *WatcherUpdateProperties
+
+	// Resource tags.
+	Tags map[string]*string
+}
+
+// WatcherUpdateProperties - The updatable properties of the Watcher.
+type WatcherUpdateProperties struct {
+	// The data store for collected monitoring data.
+	Datastore *Datastore
+
+	// The resource ID of a user-assigned managed identity that will be assigned to a new alert rule.
+	DefaultAlertRuleIdentityResourceID *string
 }

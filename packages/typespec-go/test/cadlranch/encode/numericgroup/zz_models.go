@@ -12,3 +12,8 @@ type SafeintAsStringProperty struct {
 type Uint32AsStringProperty struct {
 	Value *uint32
 }
+
+type Uint8AsStringProperty struct {
+	// REQUIRED
+	Value *uint8
+}

@@ -19,6 +19,11 @@ type BasicClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
+// BasicClientExportAllUsersOptions contains the optional parameters for the BasicClient.ExportAllUsers method.
+type BasicClientExportAllUsersOptions struct {
+	// placeholder for future optional parameters
+}
+
 // BasicClientExportOptions contains the optional parameters for the BasicClient.Export method.
 type BasicClientExportOptions struct {
 	// placeholder for future optional parameters

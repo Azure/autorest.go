@@ -13,10 +13,15 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"time"
 )
 
 // ConditionalRequestServer is a fake server for instances of the condreqgroup.ConditionalRequestClient type.
 type ConditionalRequestServer struct {
+	// HeadIfModifiedSince is the fake for method ConditionalRequestClient.HeadIfModifiedSince
+	// HTTP status codes to indicate success: http.StatusNoContent
+	HeadIfModifiedSince func(ctx context.Context, options *condreqgroup.ConditionalRequestClientHeadIfModifiedSinceOptions) (resp azfake.Responder[condreqgroup.ConditionalRequestClientHeadIfModifiedSinceResponse], errResp azfake.ErrorResponder)
+
 	// PostIfMatch is the fake for method ConditionalRequestClient.PostIfMatch
 	// HTTP status codes to indicate success: http.StatusNoContent
 	PostIfMatch func(ctx context.Context, options *condreqgroup.ConditionalRequestClientPostIfMatchOptions) (resp azfake.Responder[condreqgroup.ConditionalRequestClientPostIfMatchResponse], errResp azfake.ErrorResponder)
@@ -24,6 +29,10 @@ type ConditionalRequestServer struct {
 	// PostIfNoneMatch is the fake for method ConditionalRequestClient.PostIfNoneMatch
 	// HTTP status codes to indicate success: http.StatusNoContent
 	PostIfNoneMatch func(ctx context.Context, options *condreqgroup.ConditionalRequestClientPostIfNoneMatchOptions) (resp azfake.Responder[condreqgroup.ConditionalRequestClientPostIfNoneMatchResponse], errResp azfake.ErrorResponder)
+
+	// PostIfUnmodifiedSince is the fake for method ConditionalRequestClient.PostIfUnmodifiedSince
+	// HTTP status codes to indicate success: http.StatusNoContent
+	PostIfUnmodifiedSince func(ctx context.Context, options *condreqgroup.ConditionalRequestClientPostIfUnmodifiedSinceOptions) (resp azfake.Responder[condreqgroup.ConditionalRequestClientPostIfUnmodifiedSinceResponse], errResp azfake.ErrorResponder)
 }
 
 // NewConditionalRequestServerTransport creates a new instance of ConditionalRequestServerTransport with the provided implementation.
@@ -57,10 +66,14 @@ func (c *ConditionalRequestServerTransport) dispatchToMethodFake(req *http.Reque
 	go func() {
 		var res result
 		switch method {
+		case "ConditionalRequestClient.HeadIfModifiedSince":
+			res.resp, res.err = c.dispatchHeadIfModifiedSince(req)
 		case "ConditionalRequestClient.PostIfMatch":
 			res.resp, res.err = c.dispatchPostIfMatch(req)
 		case "ConditionalRequestClient.PostIfNoneMatch":
 			res.resp, res.err = c.dispatchPostIfNoneMatch(req)
+		case "ConditionalRequestClient.PostIfUnmodifiedSince":
+			res.resp, res.err = c.dispatchPostIfUnmodifiedSince(req)
 		default:
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
@@ -77,6 +90,35 @@ func (c *ConditionalRequestServerTransport) dispatchToMethodFake(req *http.Reque
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (c *ConditionalRequestServerTransport) dispatchHeadIfModifiedSince(req *http.Request) (*http.Response, error) {
+	if c.srv.HeadIfModifiedSince == nil {
+		return nil, &nonRetriableError{errors.New("fake for method HeadIfModifiedSince not implemented")}
+	}
+	ifModifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Modified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	if err != nil {
+		return nil, err
+	}
+	var options *condreqgroup.ConditionalRequestClientHeadIfModifiedSinceOptions
+	if ifModifiedSinceParam != nil {
+		options = &condreqgroup.ConditionalRequestClientHeadIfModifiedSinceOptions{
+			IfModifiedSince: ifModifiedSinceParam,
+		}
+	}
+	respr, errRespr := c.srv.HeadIfModifiedSince(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *ConditionalRequestServerTransport) dispatchPostIfMatch(req *http.Request) (*http.Response, error) {
@@ -117,6 +159,35 @@ func (c *ConditionalRequestServerTransport) dispatchPostIfNoneMatch(req *http.Re
 		}
 	}
 	respr, errRespr := c.srv.PostIfNoneMatch(req.Context(), options)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *ConditionalRequestServerTransport) dispatchPostIfUnmodifiedSince(req *http.Request) (*http.Response, error) {
+	if c.srv.PostIfUnmodifiedSince == nil {
+		return nil, &nonRetriableError{errors.New("fake for method PostIfUnmodifiedSince not implemented")}
+	}
+	ifUnmodifiedSinceParam, err := parseOptional(getHeaderValue(req.Header, "If-Unmodified-Since"), func(v string) (time.Time, error) { return time.Parse(time.RFC1123, v) })
+	if err != nil {
+		return nil, err
+	}
+	var options *condreqgroup.ConditionalRequestClientPostIfUnmodifiedSinceOptions
+	if ifUnmodifiedSinceParam != nil {
+		options = &condreqgroup.ConditionalRequestClientPostIfUnmodifiedSinceOptions{
+			IfUnmodifiedSince: ifUnmodifiedSinceParam,
+		}
+	}
+	respr, errRespr := c.srv.PostIfUnmodifiedSince(req.Context(), options)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

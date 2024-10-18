@@ -34,6 +34,7 @@ export class typeAdapter {
 
   // converts all model/enum SDK types to Go code model types
   adaptTypes(sdkContext: tcgc.SdkContext, removeUnreferencedTypes: boolean) {
+    // TODO: fix flagging unreferenced types https://github.com/Azure/autorest.go/issues/1443
     if (removeUnreferencedTypes) {
       // this is a superset of flagUnreferencedBaseModels
       this.flagUnreferencedTypes(sdkContext);
@@ -57,10 +58,15 @@ export class typeAdapter {
     const modelTypes = new Array<ModelTypeSdkModelType>();
     const ifaceTypes = new Array<InterfaceTypeSdkModelType>();
     for (const modelType of sdkContext.sdkPackage.models) {
-      if (this.unreferencedModels.has(modelType.name)) {
+      if (modelType.name.length === 0) {
+        // tcgc creates some unamed models for spread params.
+        // we don't use these so just skip them.
+        continue;
+      } else if (this.unreferencedModels.has(modelType.name)) {
         // skip unreferenced type
         continue;
       }
+
       if (modelType.discriminatedSubtypes) {
         // this is a root discriminated type
         const iface = this.getInterfaceType(modelType);
@@ -486,11 +492,7 @@ export class typeAdapter {
 
   // converts an SdkModelType to a go.ModelType or go.PolymorphicType if the model is polymorphic
   private getModel(model: tcgc.SdkModelType): go.ModelType | go.PolymorphicType {
-    let modelName = model.name;
-    if (modelName.length === 0) {
-      throw new Error('unnamed model');
-    }
-    modelName = naming.ensureNameCase(modelName);
+    let modelName = naming.ensureNameCase(model.name);
     if (model.access === 'internal') {
       modelName = naming.getEscapedReservedName(uncapitalize(modelName), 'Model');
     }
@@ -507,7 +509,7 @@ export class typeAdapter {
       usage |= go.UsageFlags.Output;
     }
 
-    const annotations = new go.ModelAnnotations(false, model.isFormDataType);
+    const annotations = new go.ModelAnnotations(false, (model.usage & tcgc.UsageFlags.MultipartFormData) === tcgc.UsageFlags.MultipartFormData);
     if (model.discriminatedSubtypes || model.discriminatorValue) {
       let iface: go.InterfaceType | undefined;
       let discriminatorLiteral: go.LiteralValue | undefined;

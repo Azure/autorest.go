@@ -22,13 +22,13 @@ type NumericPropertyClient struct {
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NumericPropertyClientSafeintAsStringOptions contains the optional parameters for the NumericPropertyClient.SafeintAsString
 //     method.
-func (client *NumericPropertyClient) SafeintAsString(ctx context.Context, body SafeintAsStringProperty, options *NumericPropertyClientSafeintAsStringOptions) (NumericPropertyClientSafeintAsStringResponse, error) {
+func (client *NumericPropertyClient) SafeintAsString(ctx context.Context, value SafeintAsStringProperty, options *NumericPropertyClientSafeintAsStringOptions) (NumericPropertyClientSafeintAsStringResponse, error) {
 	var err error
 	const operationName = "NumericPropertyClient.SafeintAsString"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.safeintAsStringCreateRequest(ctx, body, options)
+	req, err := client.safeintAsStringCreateRequest(ctx, value, options)
 	if err != nil {
 		return NumericPropertyClientSafeintAsStringResponse{}, err
 	}
@@ -45,7 +45,7 @@ func (client *NumericPropertyClient) SafeintAsString(ctx context.Context, body S
 }
 
 // safeintAsStringCreateRequest creates the SafeintAsString request.
-func (client *NumericPropertyClient) safeintAsStringCreateRequest(ctx context.Context, body SafeintAsStringProperty, _ *NumericPropertyClientSafeintAsStringOptions) (*policy.Request, error) {
+func (client *NumericPropertyClient) safeintAsStringCreateRequest(ctx context.Context, value SafeintAsStringProperty, _ *NumericPropertyClientSafeintAsStringOptions) (*policy.Request, error) {
 	urlPath := "/encode/numeric/property/safeint"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -53,7 +53,7 @@ func (client *NumericPropertyClient) safeintAsStringCreateRequest(ctx context.Co
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -72,13 +72,13 @@ func (client *NumericPropertyClient) safeintAsStringHandleResponse(resp *http.Re
 // If the operation fails it returns an *azcore.ResponseError type.
 //   - options - NumericPropertyClientUint32AsStringOptionalOptions contains the optional parameters for the NumericPropertyClient.Uint32AsStringOptional
 //     method.
-func (client *NumericPropertyClient) Uint32AsStringOptional(ctx context.Context, body Uint32AsStringProperty, options *NumericPropertyClientUint32AsStringOptionalOptions) (NumericPropertyClientUint32AsStringOptionalResponse, error) {
+func (client *NumericPropertyClient) Uint32AsStringOptional(ctx context.Context, value Uint32AsStringProperty, options *NumericPropertyClientUint32AsStringOptionalOptions) (NumericPropertyClientUint32AsStringOptionalResponse, error) {
 	var err error
 	const operationName = "NumericPropertyClient.Uint32AsStringOptional"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
 	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
 	defer func() { endSpan(err) }()
-	req, err := client.uint32AsStringOptionalCreateRequest(ctx, body, options)
+	req, err := client.uint32AsStringOptionalCreateRequest(ctx, value, options)
 	if err != nil {
 		return NumericPropertyClientUint32AsStringOptionalResponse{}, err
 	}
@@ -95,7 +95,7 @@ func (client *NumericPropertyClient) Uint32AsStringOptional(ctx context.Context,
 }
 
 // uint32AsStringOptionalCreateRequest creates the Uint32AsStringOptional request.
-func (client *NumericPropertyClient) uint32AsStringOptionalCreateRequest(ctx context.Context, body Uint32AsStringProperty, _ *NumericPropertyClientUint32AsStringOptionalOptions) (*policy.Request, error) {
+func (client *NumericPropertyClient) uint32AsStringOptionalCreateRequest(ctx context.Context, value Uint32AsStringProperty, _ *NumericPropertyClientUint32AsStringOptionalOptions) (*policy.Request, error) {
 	urlPath := "/encode/numeric/property/uint32"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -103,7 +103,7 @@ func (client *NumericPropertyClient) uint32AsStringOptionalCreateRequest(ctx con
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
-	if err := runtime.MarshalAsJSON(req, body); err != nil {
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
 		return nil, err
 	}
 	return req, nil
@@ -114,6 +114,56 @@ func (client *NumericPropertyClient) uint32AsStringOptionalHandleResponse(resp *
 	result := NumericPropertyClientUint32AsStringOptionalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Uint32AsStringProperty); err != nil {
 		return NumericPropertyClientUint32AsStringOptionalResponse{}, err
+	}
+	return result, nil
+}
+
+// Uint8AsString -
+// If the operation fails it returns an *azcore.ResponseError type.
+//   - options - NumericPropertyClientUint8AsStringOptions contains the optional parameters for the NumericPropertyClient.Uint8AsString
+//     method.
+func (client *NumericPropertyClient) Uint8AsString(ctx context.Context, value Uint8AsStringProperty, options *NumericPropertyClientUint8AsStringOptions) (NumericPropertyClientUint8AsStringResponse, error) {
+	var err error
+	const operationName = "NumericPropertyClient.Uint8AsString"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.uint8AsStringCreateRequest(ctx, value, options)
+	if err != nil {
+		return NumericPropertyClientUint8AsStringResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return NumericPropertyClientUint8AsStringResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return NumericPropertyClientUint8AsStringResponse{}, err
+	}
+	resp, err := client.uint8AsStringHandleResponse(httpResp)
+	return resp, err
+}
+
+// uint8AsStringCreateRequest creates the Uint8AsString request.
+func (client *NumericPropertyClient) uint8AsStringCreateRequest(ctx context.Context, value Uint8AsStringProperty, _ *NumericPropertyClientUint8AsStringOptions) (*policy.Request, error) {
+	urlPath := "/encode/numeric/property/uint8"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, value); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// uint8AsStringHandleResponse handles the Uint8AsString response.
+func (client *NumericPropertyClient) uint8AsStringHandleResponse(resp *http.Response) (NumericPropertyClientUint8AsStringResponse, error) {
+	result := NumericPropertyClientUint8AsStringResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Uint8AsStringProperty); err != nil {
+		return NumericPropertyClientUint8AsStringResponse{}, err
 	}
 	return result, nil
 }

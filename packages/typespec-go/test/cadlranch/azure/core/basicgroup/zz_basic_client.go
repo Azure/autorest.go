@@ -231,6 +231,58 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 	return result, nil
 }
 
+// ExportAllUsers - Exports all users.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2022-12-01-preview
+//   - formatParam - The format of the data.
+//   - options - BasicClientExportAllUsersOptions contains the optional parameters for the BasicClient.ExportAllUsers method.
+func (client *BasicClient) ExportAllUsers(ctx context.Context, formatParam string, options *BasicClientExportAllUsersOptions) (BasicClientExportAllUsersResponse, error) {
+	var err error
+	const operationName = "BasicClient.ExportAllUsers"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.exportAllUsersCreateRequest(ctx, formatParam, options)
+	if err != nil {
+		return BasicClientExportAllUsersResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return BasicClientExportAllUsersResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK) {
+		err = runtime.NewResponseError(httpResp)
+		return BasicClientExportAllUsersResponse{}, err
+	}
+	resp, err := client.exportAllUsersHandleResponse(httpResp)
+	return resp, err
+}
+
+// exportAllUsersCreateRequest creates the ExportAllUsers request.
+func (client *BasicClient) exportAllUsersCreateRequest(ctx context.Context, formatParam string, _ *BasicClientExportAllUsersOptions) (*policy.Request, error) {
+	urlPath := "/azure/core/basic/users:exportallusers"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2022-12-01-preview")
+	reqQP.Set("format", formatParam)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
+// exportAllUsersHandleResponse handles the ExportAllUsers response.
+func (client *BasicClient) exportAllUsersHandleResponse(resp *http.Response) (BasicClientExportAllUsersResponse, error) {
+	result := BasicClientExportAllUsersResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.UserList); err != nil {
+		return BasicClientExportAllUsersResponse{}, err
+	}
+	return result, nil
+}
+
 // Get - Gets a user.
 // If the operation fails it returns an *azcore.ResponseError type.
 //

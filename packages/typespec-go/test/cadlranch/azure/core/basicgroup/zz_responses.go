@@ -21,6 +21,11 @@ type BasicClientDeleteResponse struct {
 	// placeholder for future response values
 }
 
+// BasicClientExportAllUsersResponse contains the response from method BasicClient.ExportAllUsers.
+type BasicClientExportAllUsersResponse struct {
+	UserList
+}
+
 // BasicClientExportResponse contains the response from method BasicClient.Export.
 type BasicClientExportResponse struct {
 	// Details about a user.

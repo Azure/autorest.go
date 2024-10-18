@@ -4,6 +4,61 @@
 
 package armloadtestservice
 
+// LoadTestMappingsClientCreateOrUpdateOptions contains the optional parameters for the LoadTestMappingsClient.CreateOrUpdate
+// method.
+type LoadTestMappingsClientCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMappingsClientDeleteOptions contains the optional parameters for the LoadTestMappingsClient.Delete method.
+type LoadTestMappingsClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMappingsClientGetOptions contains the optional parameters for the LoadTestMappingsClient.Get method.
+type LoadTestMappingsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMappingsClientListOptions contains the optional parameters for the LoadTestMappingsClient.NewListPager method.
+type LoadTestMappingsClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestMappingsClientUpdateOptions contains the optional parameters for the LoadTestMappingsClient.Update method.
+type LoadTestMappingsClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestProfileMappingsClientCreateOrUpdateOptions contains the optional parameters for the LoadTestProfileMappingsClient.CreateOrUpdate
+// method.
+type LoadTestProfileMappingsClientCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestProfileMappingsClientDeleteOptions contains the optional parameters for the LoadTestProfileMappingsClient.Delete
+// method.
+type LoadTestProfileMappingsClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestProfileMappingsClientGetOptions contains the optional parameters for the LoadTestProfileMappingsClient.Get method.
+type LoadTestProfileMappingsClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestProfileMappingsClientListOptions contains the optional parameters for the LoadTestProfileMappingsClient.NewListPager
+// method.
+type LoadTestProfileMappingsClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
+// LoadTestProfileMappingsClientUpdateOptions contains the optional parameters for the LoadTestProfileMappingsClient.Update
+// method.
+type LoadTestProfileMappingsClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
 // LoadTestsClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadTestsClient.BeginCreateOrUpdate
 // method.
 type LoadTestsClientBeginCreateOrUpdateOptions struct {

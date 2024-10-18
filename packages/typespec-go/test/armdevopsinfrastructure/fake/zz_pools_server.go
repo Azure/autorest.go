@@ -42,7 +42,7 @@ type PoolsServer struct {
 
 	// BeginUpdate is the fake for method PoolsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, poolName string, properties armdevopsinfrastructure.Pool, options *armdevopsinfrastructure.PoolsClientBeginUpdateOptions) (resp azfake.PollerResponder[armdevopsinfrastructure.PoolsClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, poolName string, properties armdevopsinfrastructure.PoolUpdate, options *armdevopsinfrastructure.PoolsClientBeginUpdateOptions) (resp azfake.PollerResponder[armdevopsinfrastructure.PoolsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewPoolsServerTransport creates a new instance of PoolsServerTransport with the provided implementation.
@@ -325,7 +325,7 @@ func (p *PoolsServerTransport) dispatchBeginUpdate(req *http.Request) (*http.Res
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armdevopsinfrastructure.Pool](req)
+		body, err := server.UnmarshalRequestAsJSON[armdevopsinfrastructure.PoolUpdate](req)
 		if err != nil {
 			return nil, err
 		}

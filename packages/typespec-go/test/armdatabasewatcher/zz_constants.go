@@ -24,6 +24,24 @@ func PossibleActionTypeValues() []ActionType {
 	}
 }
 
+// AlertRuleCreationProperties - The properties with which the alert rule resource was created.
+type AlertRuleCreationProperties string
+
+const (
+	// AlertRuleCreationPropertiesCreatedWithActionGroup - The alert rule was created with an action group.
+	AlertRuleCreationPropertiesCreatedWithActionGroup AlertRuleCreationProperties = "CreatedWithActionGroup"
+	// AlertRuleCreationPropertiesNone - The alert rule was created with no properties.
+	AlertRuleCreationPropertiesNone AlertRuleCreationProperties = "None"
+)
+
+// PossibleAlertRuleCreationPropertiesValues returns the possible values for the AlertRuleCreationProperties const type.
+func PossibleAlertRuleCreationPropertiesValues() []AlertRuleCreationProperties {
+	return []AlertRuleCreationProperties{
+		AlertRuleCreationPropertiesCreatedWithActionGroup,
+		AlertRuleCreationPropertiesNone,
+	}
+}
+
 // CreatedByType - The kind of entity that created the resource.
 type CreatedByType string
 
@@ -96,8 +114,8 @@ type ManagedServiceIdentityType string
 const (
 	// ManagedServiceIdentityTypeNone - No managed identity.
 	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
-	// ManagedServiceIdentityTypeSystemAndUserAssignedV3 - System and user assigned managed identity.
-	ManagedServiceIdentityTypeSystemAndUserAssignedV3 ManagedServiceIdentityType = "SystemAssigned,UserAssigned"
+	// ManagedServiceIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
+	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned, UserAssigned"
 	// ManagedServiceIdentityTypeSystemAssigned - System assigned managed identity.
 	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
 	// ManagedServiceIdentityTypeUserAssigned - User assigned managed identity.
@@ -108,7 +126,7 @@ const (
 func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
 	return []ManagedServiceIdentityType{
 		ManagedServiceIdentityTypeNone,
-		ManagedServiceIdentityTypeSystemAndUserAssignedV3,
+		ManagedServiceIdentityTypeSystemAndUserAssigned,
 		ManagedServiceIdentityTypeSystemAssigned,
 		ManagedServiceIdentityTypeUserAssigned,
 	}

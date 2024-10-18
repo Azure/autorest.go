@@ -31,3 +31,13 @@ func TestNumericPropertyClient_Uint32AsStringOptional(t *testing.T) {
 		Value: to.Ptr(uint32(1)),
 	}, resp.Uint32AsStringProperty)
 }
+
+func TestNumericPropertyClient_Uint8AsString(t *testing.T) {
+	client, err := numericgroup.NewNumericClient(nil)
+	require.NoError(t, err)
+	resp, err := client.NewNumericPropertyClient().Uint8AsString(context.Background(), numericgroup.Uint8AsStringProperty{Value: to.Ptr(uint8(255))}, nil)
+	require.NoError(t, err)
+	require.Equal(t, numericgroup.Uint8AsStringProperty{
+		Value: to.Ptr(uint8(255)),
+	}, resp.Uint8AsStringProperty)
+}

@@ -13,3 +13,8 @@ type NumericPropertyClientSafeintAsStringResponse struct {
 type NumericPropertyClientUint32AsStringOptionalResponse struct {
 	Uint32AsStringProperty
 }
+
+// NumericPropertyClientUint8AsStringResponse contains the response from method NumericPropertyClient.Uint8AsString.
+type NumericPropertyClientUint8AsStringResponse struct {
+	Uint8AsStringProperty
+}

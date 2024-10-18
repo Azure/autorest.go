@@ -55,7 +55,8 @@ func (client *CommunityTrainingsClient) BeginCreate(ctx context.Context, resourc
 			return nil, err
 		}
 		poller, err := runtime.NewPoller(resp, client.internal.Pipeline(), &runtime.NewPollerOptions[CommunityTrainingsClientCreateResponse]{
-			Tracer: client.internal.Tracer(),
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+			Tracer:        client.internal.Tracer(),
 		})
 		return poller, err
 	} else {
@@ -384,7 +385,7 @@ func (client *CommunityTrainingsClient) listBySubscriptionHandleResponse(resp *h
 //   - properties - The resource properties to be updated.
 //   - options - CommunityTrainingsClientBeginUpdateOptions contains the optional parameters for the CommunityTrainingsClient.BeginUpdate
 //     method.
-func (client *CommunityTrainingsClient) BeginUpdate(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTraining, options *CommunityTrainingsClientBeginUpdateOptions) (*runtime.Poller[CommunityTrainingsClientUpdateResponse], error) {
+func (client *CommunityTrainingsClient) BeginUpdate(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTrainingUpdate, options *CommunityTrainingsClientBeginUpdateOptions) (*runtime.Poller[CommunityTrainingsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, communityTrainingName, properties, options)
 		if err != nil {
@@ -405,7 +406,7 @@ func (client *CommunityTrainingsClient) BeginUpdate(ctx context.Context, resourc
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2023-11-01
-func (client *CommunityTrainingsClient) update(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTraining, options *CommunityTrainingsClientBeginUpdateOptions) (*http.Response, error) {
+func (client *CommunityTrainingsClient) update(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTrainingUpdate, options *CommunityTrainingsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "CommunityTrainingsClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -427,7 +428,7 @@ func (client *CommunityTrainingsClient) update(ctx context.Context, resourceGrou
 }
 
 // updateCreateRequest creates the Update request.
-func (client *CommunityTrainingsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTraining, _ *CommunityTrainingsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *CommunityTrainingsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, communityTrainingName string, properties CommunityTrainingUpdate, _ *CommunityTrainingsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Community/communityTrainings/{communityTrainingName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

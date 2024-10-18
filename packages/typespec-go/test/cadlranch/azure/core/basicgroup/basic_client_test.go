@@ -64,6 +64,25 @@ func TestBasicClient_Export(t *testing.T) {
 	}, resp.User)
 }
 
+func TestBasicClient_ExportAllUsers(t *testing.T) {
+	client, err := basicgroup.NewBasicClient(nil)
+	require.NoError(t, err)
+	resp, err := client.ExportAllUsers(context.Background(), "json", nil)
+	require.NoError(t, err)
+	require.EqualValues(t, []*basicgroup.User{
+		{
+			Etag: to.Ptr[azcore.ETag]("11bdc430-65e8-45ad-81d9-8ffa60d55b59"),
+			ID:   to.Ptr[int32](1),
+			Name: to.Ptr("Madge"),
+		},
+		{
+			Etag: to.Ptr[azcore.ETag]("22bdc430-65e8-45ad-81d9-8ffa60d55b59"),
+			ID:   to.Ptr[int32](2),
+			Name: to.Ptr("John"),
+		},
+	}, resp.Users)
+}
+
 func TestBasicClient_Get(t *testing.T) {
 	client, err := basicgroup.NewBasicClient(nil)
 	require.NoError(t, err)

@@ -45,3 +45,14 @@ func getOptional[T any](v T) *T {
 	}
 	return &v
 }
+
+func parseOptional[T any](v string, parse func(v string) (T, error)) (*T, error) {
+	if v == "" {
+		return nil, nil
+	}
+	t, err := parse(v)
+	if err != nil {
+		return nil, err
+	}
+	return &t, err
+}

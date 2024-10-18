@@ -42,7 +42,7 @@ func NewLoadTestsClient(subscriptionID string, credential azcore.TokenCredential
 // BeginCreateOrUpdate - Create a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - resource - Resource create parameters.
@@ -68,7 +68,7 @@ func (client *LoadTestsClient) BeginCreateOrUpdate(ctx context.Context, resource
 // CreateOrUpdate - Create a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 func (client *LoadTestsClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadTestName string, resource LoadTestResource, options *LoadTestsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestsClient.BeginCreateOrUpdate"
@@ -110,7 +110,7 @@ func (client *LoadTestsClient) createOrUpdateCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -123,7 +123,7 @@ func (client *LoadTestsClient) createOrUpdateCreateRequest(ctx context.Context, 
 // BeginDelete - Delete a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestsClientBeginDeleteOptions contains the optional parameters for the LoadTestsClient.BeginDelete method.
@@ -147,7 +147,7 @@ func (client *LoadTestsClient) BeginDelete(ctx context.Context, resourceGroupNam
 // Delete - Delete a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 func (client *LoadTestsClient) deleteOperation(ctx context.Context, resourceGroupName string, loadTestName string, options *LoadTestsClientBeginDeleteOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestsClient.BeginDelete"
@@ -189,7 +189,7 @@ func (client *LoadTestsClient) deleteCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -198,7 +198,7 @@ func (client *LoadTestsClient) deleteCreateRequest(ctx context.Context, resource
 // Get - Get a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestsClientGetOptions contains the optional parameters for the LoadTestsClient.Get method.
@@ -244,7 +244,7 @@ func (client *LoadTestsClient) getCreateRequest(ctx context.Context, resourceGro
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -261,7 +261,7 @@ func (client *LoadTestsClient) getHandleResponse(resp *http.Response) (LoadTests
 
 // NewListByResourceGroupPager - List LoadTestResource resources by resource group
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - LoadTestsClientListByResourceGroupOptions contains the optional parameters for the LoadTestsClient.NewListByResourceGroupPager
 //     method.
@@ -304,7 +304,7 @@ func (client *LoadTestsClient) listByResourceGroupCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -321,7 +321,7 @@ func (client *LoadTestsClient) listByResourceGroupHandleResponse(resp *http.Resp
 
 // NewListBySubscriptionPager - List LoadTestResource resources by subscription ID
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - options - LoadTestsClientListBySubscriptionOptions contains the optional parameters for the LoadTestsClient.NewListBySubscriptionPager
 //     method.
 func (client *LoadTestsClient) NewListBySubscriptionPager(options *LoadTestsClientListBySubscriptionOptions) *runtime.Pager[LoadTestsClientListBySubscriptionResponse] {
@@ -359,7 +359,7 @@ func (client *LoadTestsClient) listBySubscriptionCreateRequest(ctx context.Conte
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -376,7 +376,7 @@ func (client *LoadTestsClient) listBySubscriptionHandleResponse(resp *http.Respo
 
 // NewOutboundNetworkDependenciesEndpointsPager - Lists the endpoints that agents may call as part of load testing.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - options - LoadTestsClientOutboundNetworkDependenciesEndpointsOptions contains the optional parameters for the LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager
@@ -424,7 +424,7 @@ func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsCreateRequest
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -433,7 +433,7 @@ func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsCreateRequest
 // outboundNetworkDependenciesEndpointsHandleResponse handles the OutboundNetworkDependenciesEndpoints response.
 func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsHandleResponse(resp *http.Response) (LoadTestsClientOutboundNetworkDependenciesEndpointsResponse, error) {
 	result := LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.OutboundEnvironmentEndpointCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.PagedOutboundEnvironmentEndpoint); err != nil {
 		return LoadTestsClientOutboundNetworkDependenciesEndpointsResponse{}, err
 	}
 	return result, nil
@@ -442,12 +442,12 @@ func (client *LoadTestsClient) outboundNetworkDependenciesEndpointsHandleRespons
 // BeginUpdate - Update a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - loadTestName - Load Test name
 //   - properties - The resource properties to be updated.
 //   - options - LoadTestsClientBeginUpdateOptions contains the optional parameters for the LoadTestsClient.BeginUpdate method.
-func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, options *LoadTestsClientBeginUpdateOptions) (*runtime.Poller[LoadTestsClientUpdateResponse], error) {
+func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, options *LoadTestsClientBeginUpdateOptions) (*runtime.Poller[LoadTestsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, loadTestName, properties, options)
 		if err != nil {
@@ -467,8 +467,8 @@ func (client *LoadTestsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 // Update - Update a LoadTestResource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
-func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, options *LoadTestsClientBeginUpdateOptions) (*http.Response, error) {
+// Generated from API version 2023-12-01-preview
+func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, options *LoadTestsClientBeginUpdateOptions) (*http.Response, error) {
 	var err error
 	const operationName = "LoadTestsClient.BeginUpdate"
 	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
@@ -490,7 +490,7 @@ func (client *LoadTestsClient) update(ctx context.Context, resourceGroupName str
 }
 
 // updateCreateRequest creates the Update request.
-func (client *LoadTestsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResource, _ *LoadTestsClientBeginUpdateOptions) (*policy.Request, error) {
+func (client *LoadTestsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, loadTestName string, properties LoadTestResourceUpdate, _ *LoadTestsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -509,7 +509,7 @@ func (client *LoadTestsClient) updateCreateRequest(ctx context.Context, resource
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

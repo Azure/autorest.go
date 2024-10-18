@@ -42,7 +42,7 @@ func NewQuotasClient(subscriptionID string, credential azcore.TokenCredential, o
 // CheckAvailability - Check Quota Availability on quota bucket per region per subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - body - The content of the action request
@@ -90,7 +90,7 @@ func (client *QuotasClient) checkAvailabilityCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -112,7 +112,7 @@ func (client *QuotasClient) checkAvailabilityHandleResponse(resp *http.Response)
 // Get - Get the available quota for a quota bucket per region per subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - quotaBucketName - The quota name.
 //   - options - QuotasClientGetOptions contains the optional parameters for the QuotasClient.Get method.
@@ -158,7 +158,7 @@ func (client *QuotasClient) getCreateRequest(ctx context.Context, location strin
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -175,7 +175,7 @@ func (client *QuotasClient) getHandleResponse(resp *http.Response) (QuotasClient
 
 // NewListPager - List quotas for a given subscription Id.
 //
-// Generated from API version 2022-12-01
+// Generated from API version 2023-12-01-preview
 //   - location - The name of the Azure region.
 //   - options - QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
 func (client *QuotasClient) NewListPager(location string, options *QuotasClientListOptions) *runtime.Pager[QuotasClientListResponse] {
@@ -217,7 +217,7 @@ func (client *QuotasClient) listCreateRequest(ctx context.Context, location stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-12-01")
+	reqQP.Set("api-version", "2023-12-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

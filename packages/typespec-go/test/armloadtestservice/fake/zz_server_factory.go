@@ -15,6 +15,12 @@ import (
 
 // ServerFactory is a fake server for instances of the armloadtestservice.ClientFactory type.
 type ServerFactory struct {
+	// LoadTestMappingsServer contains the fakes for client LoadTestMappingsClient
+	LoadTestMappingsServer LoadTestMappingsServer
+
+	// LoadTestProfileMappingsServer contains the fakes for client LoadTestProfileMappingsClient
+	LoadTestProfileMappingsServer LoadTestProfileMappingsServer
+
 	// LoadTestsServer contains the fakes for client LoadTestsClient
 	LoadTestsServer LoadTestsServer
 
@@ -37,11 +43,13 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 // ServerFactoryTransport connects instances of armloadtestservice.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv                *ServerFactory
-	trMu               sync.Mutex
-	trLoadTestsServer  *LoadTestsServerTransport
-	trOperationsServer *OperationsServerTransport
-	trQuotasServer     *QuotasServerTransport
+	srv                             *ServerFactory
+	trMu                            sync.Mutex
+	trLoadTestMappingsServer        *LoadTestMappingsServerTransport
+	trLoadTestProfileMappingsServer *LoadTestProfileMappingsServerTransport
+	trLoadTestsServer               *LoadTestsServerTransport
+	trOperationsServer              *OperationsServerTransport
+	trQuotasServer                  *QuotasServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -57,6 +65,16 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "LoadTestMappingsClient":
+		initServer(s, &s.trLoadTestMappingsServer, func() *LoadTestMappingsServerTransport {
+			return NewLoadTestMappingsServerTransport(&s.srv.LoadTestMappingsServer)
+		})
+		resp, err = s.trLoadTestMappingsServer.Do(req)
+	case "LoadTestProfileMappingsClient":
+		initServer(s, &s.trLoadTestProfileMappingsServer, func() *LoadTestProfileMappingsServerTransport {
+			return NewLoadTestProfileMappingsServerTransport(&s.srv.LoadTestProfileMappingsServer)
+		})
+		resp, err = s.trLoadTestProfileMappingsServer.Do(req)
 	case "LoadTestsClient":
 		initServer(s, &s.trLoadTestsServer, func() *LoadTestsServerTransport { return NewLoadTestsServerTransport(&s.srv.LoadTestsServer) })
 		resp, err = s.trLoadTestsServer.Do(req)

@@ -4,6 +4,18 @@
 
 package armlargeinstance
 
+// AzureLargeInstanceClientCreateResponse contains the response from method AzureLargeInstanceClient.Create.
+type AzureLargeInstanceClientCreateResponse struct {
+	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+	// properties)
+	AzureLargeInstance
+}
+
+// AzureLargeInstanceClientDeleteResponse contains the response from method AzureLargeInstanceClient.Delete.
+type AzureLargeInstanceClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
 // AzureLargeInstanceClientGetResponse contains the response from method AzureLargeInstanceClient.Get.
 type AzureLargeInstanceClientGetResponse struct {
 	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
@@ -45,6 +57,18 @@ type AzureLargeInstanceClientUpdateResponse struct {
 	// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
 	// properties)
 	AzureLargeInstance
+}
+
+// AzureLargeStorageInstanceClientCreateResponse contains the response from method AzureLargeStorageInstanceClient.Create.
+type AzureLargeStorageInstanceClientCreateResponse struct {
+	// AzureLargeStorageInstance info on Azure (ARM properties and
+	// AzureLargeStorageInstance properties)
+	AzureLargeStorageInstance
+}
+
+// AzureLargeStorageInstanceClientDeleteResponse contains the response from method AzureLargeStorageInstanceClient.Delete.
+type AzureLargeStorageInstanceClientDeleteResponse struct {
+	// placeholder for future response values
 }
 
 // AzureLargeStorageInstanceClientGetResponse contains the response from method AzureLargeStorageInstanceClient.Get.

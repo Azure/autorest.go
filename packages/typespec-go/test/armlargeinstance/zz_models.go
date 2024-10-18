@@ -37,14 +37,17 @@ type AzureLargeStorageInstance struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string
 
+	// READ-ONLY; Name of the AzureLargeStorageInstance.
+	Name *string
+
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentity
+
 	// The resource-specific properties for this resource.
 	Properties *AzureLargeStorageInstanceProperties
 
 	// Resource tags.
 	Tags map[string]*string
-
-	// READ-ONLY; Name of the AzureLargeStorageInstance.
-	Name *string
 
 	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
 	ID *string
@@ -76,6 +79,9 @@ type AzureLargeStorageInstanceProperties struct {
 
 // AzureLargeStorageInstanceTagsUpdate - The type used for updating tags in AzureLargeStorageInstance resources.
 type AzureLargeStorageInstanceTagsUpdate struct {
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentity
+
 	// Resource tags.
 	Tags map[string]*string
 }
@@ -133,10 +139,10 @@ type ForceState struct {
 
 // HardwareProfile - Specifies the hardware settings for the Azure Large Instance.
 type HardwareProfile struct {
-	// READ-ONLY; Specifies the Azure Large Instance SKU.
+	// Specifies the Azure Large Instance SKU.
 	AzureLargeInstanceSize *SizeNamesEnum
 
-	// READ-ONLY; Name of the hardware type (vendor and/or their product name)
+	// Name of the hardware type (vendor and/or their product name)
 	HardwareType *HardwareTypeNamesEnum
 }
 
@@ -155,13 +161,29 @@ type ListResult struct {
 	NextLink *string
 }
 
+// ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
+type ManagedServiceIdentity struct {
+	// REQUIRED; The type of managed identity assigned to this resource.
+	Type *ManagedServiceIdentityType
+
+	// The identities assigned to this resource by the user.
+	UserAssignedIdentities map[string]*UserAssignedIdentity
+
+	// READ-ONLY; The service principal ID of the system assigned identity. This property will only be provided for a system assigned
+	// identity.
+	PrincipalID *string
+
+	// READ-ONLY; The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string
+}
+
 // NetworkProfile - Specifies the network settings for the Azure Large Instance disks.
 type NetworkProfile struct {
+	// Specifies the circuit id for connecting to express route.
+	CircuitID *string
+
 	// Specifies the network interfaces for the Azure Large Instance.
 	NetworkInterfaces []*IPAddress
-
-	// READ-ONLY; Specifies the circuit id for connecting to express route.
-	CircuitID *string
 }
 
 // Operation - Details of a REST API operation, returned from the Resource Provider Operations API
@@ -245,20 +267,26 @@ type OsProfile struct {
 	// Specifies the host OS name of the Azure Large Instance.
 	ComputerName *string
 
+	// This property allows you to specify the type of the OS.
+	OSType *string
+
 	// Specifies the SSH public key used to access the operating system.
 	SSHPublicKey *string
 
-	// READ-ONLY; This property allows you to specify the type of the OS.
-	OSType *string
-
-	// READ-ONLY; Specifies version of operating system.
+	// Specifies version of operating system.
 	Version *string
 }
 
 // Properties - Describes the properties of an Azure Large Instance.
 type Properties struct {
+	// Specifies the Azure Large Instance unique ID.
+	AzureLargeInstanceID *string
+
 	// Specifies the hardware settings for the Azure Large Instance.
 	HardwareProfile *HardwareProfile
+
+	// Hardware revision of an Azure Large Instance
+	HwRevision *string
 
 	// Specifies the network settings for the Azure Large Instance.
 	NetworkProfile *NetworkProfile
@@ -266,27 +294,17 @@ type Properties struct {
 	// Specifies the operating system settings for the Azure Large Instance.
 	OSProfile *OsProfile
 
-	// ARM ID of another AzureLargeInstance that will share a network with this
-	// AzureLargeInstance
-	PartnerNodeID *string
+	// Resource power state
+	PowerState *PowerStateEnum
+
+	// Resource proximity placement group
+	ProximityPlacementGroup *string
 
 	// Specifies the storage settings for the Azure Large Instance disks.
 	StorageProfile *StorageProfile
 
-	// READ-ONLY; Specifies the Azure Large Instance unique ID.
-	AzureLargeInstanceID *string
-
-	// READ-ONLY; Hardware revision of an Azure Large Instance
-	HwRevision *string
-
-	// READ-ONLY; Resource power state
-	PowerState *PowerStateEnum
-
 	// READ-ONLY; State of provisioning of the AzureLargeInstance
 	ProvisioningState *ProvisioningStatesEnum
-
-	// READ-ONLY; Resource proximity placement group
-	ProximityPlacementGroup *string
 }
 
 // StorageBillingProperties - Describes the billing related details of the AzureLargeStorageInstance.
@@ -300,12 +318,12 @@ type StorageBillingProperties struct {
 
 // StorageProfile - Specifies the storage settings for the Azure Large Instance disks.
 type StorageProfile struct {
+	// IP Address to connect to storage.
+	NfsIPAddress *string
+
 	// Specifies information about the operating system disk used by Azure Large
 	// Instance.
 	OSDisks []*Disk
-
-	// READ-ONLY; IP Address to connect to storage.
-	NfsIPAddress *string
 }
 
 // StorageProperties - described the storage properties of the azure large storage instance
@@ -357,4 +375,13 @@ type SystemData struct {
 type TagsUpdate struct {
 	// Resource tags.
 	Tags map[string]*string
+}
+
+// UserAssignedIdentity - User assigned identity properties
+type UserAssignedIdentity struct {
+	// READ-ONLY; The client ID of the assigned identity.
+	ClientID *string
+
+	// READ-ONLY; The principal ID of the assigned identity.
+	PrincipalID *string
 }

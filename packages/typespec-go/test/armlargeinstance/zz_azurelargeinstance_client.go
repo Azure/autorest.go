@@ -39,11 +39,138 @@ func NewAzureLargeInstanceClient(subscriptionID string, credential azcore.TokenC
 	return client, nil
 }
 
+// Create - Creates an Azure Large Instance for the specified subscription,
+// resource group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-08-01-preview
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - azureLargeInstanceName - Name of the AzureLargeInstance.
+//   - resource - Resource create parameters.
+//   - options - AzureLargeInstanceClientCreateOptions contains the optional parameters for the AzureLargeInstanceClient.Create
+//     method.
+func (client *AzureLargeInstanceClient) Create(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, resource AzureLargeInstance, options *AzureLargeInstanceClientCreateOptions) (AzureLargeInstanceClientCreateResponse, error) {
+	var err error
+	const operationName = "AzureLargeInstanceClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.createCreateRequest(ctx, resourceGroupName, azureLargeInstanceName, resource, options)
+	if err != nil {
+		return AzureLargeInstanceClientCreateResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return AzureLargeInstanceClientCreateResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return AzureLargeInstanceClientCreateResponse{}, err
+	}
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
+}
+
+// createCreateRequest creates the Create request.
+func (client *AzureLargeInstanceClient) createCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, resource AzureLargeInstance, _ *AzureLargeInstanceClientCreateOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if azureLargeInstanceName == "" {
+		return nil, errors.New("parameter azureLargeInstanceName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{azureLargeInstanceName}", url.PathEscape(azureLargeInstanceName))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2024-08-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, resource); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// createHandleResponse handles the Create response.
+func (client *AzureLargeInstanceClient) createHandleResponse(resp *http.Response) (AzureLargeInstanceClientCreateResponse, error) {
+	result := AzureLargeInstanceClientCreateResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeInstance); err != nil {
+		return AzureLargeInstanceClientCreateResponse{}, err
+	}
+	return result, nil
+}
+
+// Delete - Deletes an Azure Large Instance for the specified subscription, resource group,
+// and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-08-01-preview
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - azureLargeInstanceName - Name of the AzureLargeInstance.
+//   - options - AzureLargeInstanceClientDeleteOptions contains the optional parameters for the AzureLargeInstanceClient.Delete
+//     method.
+func (client *AzureLargeInstanceClient) Delete(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientDeleteOptions) (AzureLargeInstanceClientDeleteResponse, error) {
+	var err error
+	const operationName = "AzureLargeInstanceClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, azureLargeInstanceName, options)
+	if err != nil {
+		return AzureLargeInstanceClientDeleteResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return AzureLargeInstanceClientDeleteResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return AzureLargeInstanceClientDeleteResponse{}, err
+	}
+	return AzureLargeInstanceClientDeleteResponse{}, nil
+}
+
+// deleteCreateRequest creates the Delete request.
+func (client *AzureLargeInstanceClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, _ *AzureLargeInstanceClientDeleteOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if azureLargeInstanceName == "" {
+		return nil, errors.New("parameter azureLargeInstanceName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{azureLargeInstanceName}", url.PathEscape(azureLargeInstanceName))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2024-08-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
 // Get - Gets an Azure Large Instance for the specified subscription, resource group,
 // and instance name.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstanceClientGetOptions contains the optional parameters for the AzureLargeInstanceClient.Get method.
@@ -89,7 +216,7 @@ func (client *AzureLargeInstanceClient) getCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,7 +234,7 @@ func (client *AzureLargeInstanceClient) getHandleResponse(resp *http.Response) (
 // NewListByResourceGroupPager - Gets a list of Azure Large Instances in the specified subscription and resource
 // group. The operations returns various properties of each Azure Large Instance.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - AzureLargeInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeInstanceClient.NewListByResourceGroupPager
 //     method.
@@ -150,7 +277,7 @@ func (client *AzureLargeInstanceClient) listByResourceGroupCreateRequest(ctx con
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -168,7 +295,7 @@ func (client *AzureLargeInstanceClient) listByResourceGroupHandleResponse(resp *
 // NewListBySubscriptionPager - Gets a list of Azure Large Instances in the specified subscription. The
 // operations returns various properties of each Azure Large Instance.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - options - AzureLargeInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeInstanceClient.NewListBySubscriptionPager
 //     method.
 func (client *AzureLargeInstanceClient) NewListBySubscriptionPager(options *AzureLargeInstanceClientListBySubscriptionOptions) *runtime.Pager[AzureLargeInstanceClientListBySubscriptionResponse] {
@@ -206,7 +333,7 @@ func (client *AzureLargeInstanceClient) listBySubscriptionCreateRequest(ctx cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -224,7 +351,7 @@ func (client *AzureLargeInstanceClient) listBySubscriptionHandleResponse(resp *h
 // BeginRestart - The operation to restart an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstanceClientBeginRestartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginRestart
@@ -249,7 +376,7 @@ func (client *AzureLargeInstanceClient) BeginRestart(ctx context.Context, resour
 // Restart - The operation to restart an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 func (client *AzureLargeInstanceClient) restart(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginRestartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstanceClient.BeginRestart"
@@ -291,10 +418,12 @@ func (client *AzureLargeInstanceClient) restartCreateRequest(ctx context.Context
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if options != nil && options.ContentType != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
+	}
 	if options != nil && options.ForceParameter != nil {
 		if err := runtime.MarshalAsJSON(req, *options.ForceParameter); err != nil {
 			return nil, err
@@ -307,7 +436,7 @@ func (client *AzureLargeInstanceClient) restartCreateRequest(ctx context.Context
 // BeginShutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstanceClientBeginShutdownOptions contains the optional parameters for the AzureLargeInstanceClient.BeginShutdown
@@ -332,7 +461,7 @@ func (client *AzureLargeInstanceClient) BeginShutdown(ctx context.Context, resou
 // Shutdown - The operation to shutdown an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 func (client *AzureLargeInstanceClient) shutdown(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginShutdownOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstanceClient.BeginShutdown"
@@ -374,7 +503,7 @@ func (client *AzureLargeInstanceClient) shutdownCreateRequest(ctx context.Contex
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -383,7 +512,7 @@ func (client *AzureLargeInstanceClient) shutdownCreateRequest(ctx context.Contex
 // BeginStart - The operation to start an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - options - AzureLargeInstanceClientBeginStartOptions contains the optional parameters for the AzureLargeInstanceClient.BeginStart
@@ -408,7 +537,7 @@ func (client *AzureLargeInstanceClient) BeginStart(ctx context.Context, resource
 // Start - The operation to start an Azure Large Instance (only for compute instances)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 func (client *AzureLargeInstanceClient) start(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *AzureLargeInstanceClientBeginStartOptions) (*http.Response, error) {
 	var err error
 	const operationName = "AzureLargeInstanceClient.BeginStart"
@@ -450,7 +579,7 @@ func (client *AzureLargeInstanceClient) startCreateRequest(ctx context.Context, 
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -460,7 +589,7 @@ func (client *AzureLargeInstanceClient) startCreateRequest(ctx context.Context, 
 // subscription, resource group, and instance name.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeInstanceName - Name of the AzureLargeInstance.
 //   - properties - The resource properties to be updated.
@@ -508,7 +637,7 @@ func (client *AzureLargeInstanceClient) updateCreateRequest(ctx context.Context,
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}

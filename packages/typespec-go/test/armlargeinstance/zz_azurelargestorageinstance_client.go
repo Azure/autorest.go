@@ -39,11 +39,138 @@ func NewAzureLargeStorageInstanceClient(subscriptionID string, credential azcore
 	return client, nil
 }
 
+// Create - Creates an Azure Large Storage Instance for the specified subscription,
+// resource group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-08-01-preview
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
+//   - resource - Resource create parameters.
+//   - options - AzureLargeStorageInstanceClientCreateOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Create
+//     method.
+func (client *AzureLargeStorageInstanceClient) Create(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, resource AzureLargeStorageInstance, options *AzureLargeStorageInstanceClientCreateOptions) (AzureLargeStorageInstanceClientCreateResponse, error) {
+	var err error
+	const operationName = "AzureLargeStorageInstanceClient.Create"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.createCreateRequest(ctx, resourceGroupName, azureLargeStorageInstanceName, resource, options)
+	if err != nil {
+		return AzureLargeStorageInstanceClientCreateResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return AzureLargeStorageInstanceClientCreateResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusCreated) {
+		err = runtime.NewResponseError(httpResp)
+		return AzureLargeStorageInstanceClientCreateResponse{}, err
+	}
+	resp, err := client.createHandleResponse(httpResp)
+	return resp, err
+}
+
+// createCreateRequest creates the Create request.
+func (client *AzureLargeStorageInstanceClient) createCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, resource AzureLargeStorageInstance, _ *AzureLargeStorageInstanceClientCreateOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if azureLargeStorageInstanceName == "" {
+		return nil, errors.New("parameter azureLargeStorageInstanceName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{azureLargeStorageInstanceName}", url.PathEscape(azureLargeStorageInstanceName))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2024-08-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
+	if err := runtime.MarshalAsJSON(req, resource); err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
+// createHandleResponse handles the Create response.
+func (client *AzureLargeStorageInstanceClient) createHandleResponse(resp *http.Response) (AzureLargeStorageInstanceClientCreateResponse, error) {
+	result := AzureLargeStorageInstanceClientCreateResponse{}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AzureLargeStorageInstance); err != nil {
+		return AzureLargeStorageInstanceClientCreateResponse{}, err
+	}
+	return result, nil
+}
+
+// Delete - Deletes an Azure Large Storage Instance for the specified subscription,
+// resource group, and instance name.
+// If the operation fails it returns an *azcore.ResponseError type.
+//
+// Generated from API version 2024-08-01-preview
+//   - resourceGroupName - The name of the resource group. The name is case insensitive.
+//   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
+//   - options - AzureLargeStorageInstanceClientDeleteOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Delete
+//     method.
+func (client *AzureLargeStorageInstanceClient) Delete(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, options *AzureLargeStorageInstanceClientDeleteOptions) (AzureLargeStorageInstanceClientDeleteResponse, error) {
+	var err error
+	const operationName = "AzureLargeStorageInstanceClient.Delete"
+	ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, operationName)
+	ctx, endSpan := runtime.StartSpan(ctx, operationName, client.internal.Tracer(), nil)
+	defer func() { endSpan(err) }()
+	req, err := client.deleteCreateRequest(ctx, resourceGroupName, azureLargeStorageInstanceName, options)
+	if err != nil {
+		return AzureLargeStorageInstanceClientDeleteResponse{}, err
+	}
+	httpResp, err := client.internal.Pipeline().Do(req)
+	if err != nil {
+		return AzureLargeStorageInstanceClientDeleteResponse{}, err
+	}
+	if !runtime.HasStatusCode(httpResp, http.StatusOK, http.StatusNoContent) {
+		err = runtime.NewResponseError(httpResp)
+		return AzureLargeStorageInstanceClientDeleteResponse{}, err
+	}
+	return AzureLargeStorageInstanceClientDeleteResponse{}, nil
+}
+
+// deleteCreateRequest creates the Delete request.
+func (client *AzureLargeStorageInstanceClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, azureLargeStorageInstanceName string, _ *AzureLargeStorageInstanceClientDeleteOptions) (*policy.Request, error) {
+	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}"
+	if client.subscriptionID == "" {
+		return nil, errors.New("parameter client.subscriptionID cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
+	if resourceGroupName == "" {
+		return nil, errors.New("parameter resourceGroupName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
+	if azureLargeStorageInstanceName == "" {
+		return nil, errors.New("parameter azureLargeStorageInstanceName cannot be empty")
+	}
+	urlPath = strings.ReplaceAll(urlPath, "{azureLargeStorageInstanceName}", url.PathEscape(azureLargeStorageInstanceName))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.internal.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("api-version", "2024-08-01-preview")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Accept"] = []string{"application/json"}
+	return req, nil
+}
+
 // Get - Gets an Azure Large Storage instance for the specified subscription, resource
 // group, and instance name.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
 //   - options - AzureLargeStorageInstanceClientGetOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Get
@@ -90,7 +217,7 @@ func (client *AzureLargeStorageInstanceClient) getCreateRequest(ctx context.Cont
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -109,7 +236,7 @@ func (client *AzureLargeStorageInstanceClient) getHandleResponse(resp *http.Resp
 // resource group. The operations returns various properties of each Azure
 // LargeStorage instance.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - options - AzureLargeStorageInstanceClientListByResourceGroupOptions contains the optional parameters for the AzureLargeStorageInstanceClient.NewListByResourceGroupPager
 //     method.
@@ -152,7 +279,7 @@ func (client *AzureLargeStorageInstanceClient) listByResourceGroupCreateRequest(
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -170,7 +297,7 @@ func (client *AzureLargeStorageInstanceClient) listByResourceGroupHandleResponse
 // NewListBySubscriptionPager - Gets a list of AzureLargeStorageInstances in the specified subscription. The
 // operations returns various properties of each Azure LargeStorage instance.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - options - AzureLargeStorageInstanceClientListBySubscriptionOptions contains the optional parameters for the AzureLargeStorageInstanceClient.NewListBySubscriptionPager
 //     method.
 func (client *AzureLargeStorageInstanceClient) NewListBySubscriptionPager(options *AzureLargeStorageInstanceClientListBySubscriptionOptions) *runtime.Pager[AzureLargeStorageInstanceClientListBySubscriptionResponse] {
@@ -208,7 +335,7 @@ func (client *AzureLargeStorageInstanceClient) listBySubscriptionCreateRequest(c
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -227,7 +354,7 @@ func (client *AzureLargeStorageInstanceClient) listBySubscriptionHandleResponse(
 // subscription, resource group, and instance name.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-07-20-preview
+// Generated from API version 2024-08-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - azureLargeStorageInstanceName - Name of the AzureLargeStorageInstance.
 //   - properties - The resource properties to be updated.
@@ -275,7 +402,7 @@ func (client *AzureLargeStorageInstanceClient) updateCreateRequest(ctx context.C
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-07-20-preview")
+	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
