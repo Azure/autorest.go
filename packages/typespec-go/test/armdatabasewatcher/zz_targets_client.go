@@ -42,7 +42,7 @@ func NewTargetsClient(subscriptionID string, credential azcore.TokenCredential, 
 // CreateOrUpdate - Create a Target
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-09-01-preview
+// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -94,7 +94,7 @@ func (client *TargetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-09-01-preview")
+	reqQP.Set("api-version", "2024-07-19-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	req.Raw().Header["Content-Type"] = []string{"application/json"}
@@ -116,7 +116,7 @@ func (client *TargetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 // Delete - Delete a Target
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-09-01-preview
+// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -166,7 +166,7 @@ func (client *TargetsClient) deleteCreateRequest(ctx context.Context, resourceGr
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-09-01-preview")
+	reqQP.Set("api-version", "2024-07-19-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -175,7 +175,7 @@ func (client *TargetsClient) deleteCreateRequest(ctx context.Context, resourceGr
 // Get - Get a Target
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2023-09-01-preview
+// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - targetName - The target resource name.
@@ -226,7 +226,7 @@ func (client *TargetsClient) getCreateRequest(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-09-01-preview")
+	reqQP.Set("api-version", "2024-07-19-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -243,7 +243,7 @@ func (client *TargetsClient) getHandleResponse(resp *http.Response) (TargetsClie
 
 // NewListByWatcherPager - List Target resources by Watcher
 //
-// Generated from API version 2023-09-01-preview
+// Generated from API version 2024-07-19-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - watcherName - The database watcher name.
 //   - options - TargetsClientListByWatcherOptions contains the optional parameters for the TargetsClient.NewListByWatcherPager
@@ -291,7 +291,7 @@ func (client *TargetsClient) listByWatcherCreateRequest(ctx context.Context, res
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2023-09-01-preview")
+	reqQP.Set("api-version", "2024-07-19-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil

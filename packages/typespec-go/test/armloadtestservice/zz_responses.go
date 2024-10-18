@@ -4,6 +4,64 @@
 
 package armloadtestservice
 
+// LoadTestMappingsClientCreateOrUpdateResponse contains the response from method LoadTestMappingsClient.CreateOrUpdate.
+type LoadTestMappingsClientCreateOrUpdateResponse struct {
+	// LoadTest mapping resource details
+	LoadTestMappingResource
+}
+
+// LoadTestMappingsClientDeleteResponse contains the response from method LoadTestMappingsClient.Delete.
+type LoadTestMappingsClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// LoadTestMappingsClientGetResponse contains the response from method LoadTestMappingsClient.Get.
+type LoadTestMappingsClientGetResponse struct {
+	// LoadTest mapping resource details
+	LoadTestMappingResource
+}
+
+// LoadTestMappingsClientListResponse contains the response from method LoadTestMappingsClient.NewListPager.
+type LoadTestMappingsClientListResponse struct {
+	// The response of a LoadTestMappingResource list operation.
+	LoadTestMappingResourceListResult
+}
+
+// LoadTestMappingsClientUpdateResponse contains the response from method LoadTestMappingsClient.Update.
+type LoadTestMappingsClientUpdateResponse struct {
+	// LoadTest mapping resource details
+	LoadTestMappingResource
+}
+
+// LoadTestProfileMappingsClientCreateOrUpdateResponse contains the response from method LoadTestProfileMappingsClient.CreateOrUpdate.
+type LoadTestProfileMappingsClientCreateOrUpdateResponse struct {
+	// LoadTest profile mapping resource details
+	LoadTestProfileMappingResource
+}
+
+// LoadTestProfileMappingsClientDeleteResponse contains the response from method LoadTestProfileMappingsClient.Delete.
+type LoadTestProfileMappingsClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// LoadTestProfileMappingsClientGetResponse contains the response from method LoadTestProfileMappingsClient.Get.
+type LoadTestProfileMappingsClientGetResponse struct {
+	// LoadTest profile mapping resource details
+	LoadTestProfileMappingResource
+}
+
+// LoadTestProfileMappingsClientListResponse contains the response from method LoadTestProfileMappingsClient.NewListPager.
+type LoadTestProfileMappingsClientListResponse struct {
+	// The response of a LoadTestProfileMappingResource list operation.
+	LoadTestProfileMappingResourceListResult
+}
+
+// LoadTestProfileMappingsClientUpdateResponse contains the response from method LoadTestProfileMappingsClient.Update.
+type LoadTestProfileMappingsClientUpdateResponse struct {
+	// LoadTest profile mapping resource details
+	LoadTestProfileMappingResource
+}
+
 // LoadTestsClientCreateOrUpdateResponse contains the response from method LoadTestsClient.BeginCreateOrUpdate.
 type LoadTestsClientCreateOrUpdateResponse struct {
 	// LoadTest details.
@@ -36,13 +94,12 @@ type LoadTestsClientListBySubscriptionResponse struct {
 // LoadTestsClientOutboundNetworkDependenciesEndpointsResponse contains the response from method LoadTestsClient.NewOutboundNetworkDependenciesEndpointsPager.
 type LoadTestsClientOutboundNetworkDependenciesEndpointsResponse struct {
 	// Values returned by the List operation.
-	OutboundEnvironmentEndpointCollection
+	PagedOutboundEnvironmentEndpoint
 }
 
 // LoadTestsClientUpdateResponse contains the response from method LoadTestsClient.BeginUpdate.
 type LoadTestsClientUpdateResponse struct {
-	// LoadTest details.
-	LoadTestResource
+	// placeholder for future response values
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.

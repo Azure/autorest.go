@@ -359,7 +359,34 @@ export class clientAdapter {
       }
       paramMapping.get(opParam)?.push(adaptedParam);
 
-      if (adaptedParam.location === 'client') {
+      if (adaptedParam.kind !== 'required' && adaptedParam.kind !== 'literal') {
+        // add optional method param to the options param group
+        if (!optionalGroup) {
+          throw new Error(`optional parameter ${param.name} has no optional parameter group`);
+        }
+        adaptedParam.group = optionalGroup;
+        optionalGroup.params.push(adaptedParam);
+      }
+    }
+
+    // client params aren't included in method.parameters so
+    // look for them in the operation parameters.
+    for (const opParam of allOpParams) {
+      if (opParam.onClient) {
+        const adaptedParam = this.adaptMethodParameter(opParam);
+        adaptedParam.description = opParam.description;
+        method.parameters.push(adaptedParam);
+        if (!paramMapping.has(opParam)) {
+          paramMapping.set(opParam, new Array<go.Parameter>());
+        }
+        paramMapping.get(opParam)?.push(adaptedParam);
+
+        // if the adapted client param is a literal then don't add it to
+        // the array of client params as it's not a formal parameter.
+        if (go.isLiteralParameter(adaptedParam)) {
+          continue;
+        }
+
         // we must check via param name and not reference equality. this is because a client param
         // can be used in multiple ways. e.g. a client param "apiVersion" that's used as a path param
         // in one method and a query param in another.
@@ -368,13 +395,6 @@ export class clientAdapter {
         })) {
           method.client.parameters.push(adaptedParam);
         }
-      } else if (adaptedParam.kind !== 'required' && adaptedParam.kind !== 'literal') {
-        // add optional method param to the options param group
-        if (!optionalGroup) {
-          throw new Error(`optional parameter ${param.name} has no optional parameter group`);
-        }
-        adaptedParam.group = optionalGroup;
-        optionalGroup.params.push(adaptedParam);
       }
     }
 
@@ -655,6 +675,7 @@ export class clientAdapter {
   private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
+      // TODO: https://github.com/Azure/autorest.go/issues/1444
       if (param.optional) {
         return 'flag';
       }
@@ -686,7 +707,7 @@ export class clientAdapter {
             for (const goParam of goParams) {
               const propertyValue = (<tcgc.SdkModelExample>param.value).value[(<go.PartialBodyParameter>goParam).serializedName];
               const paramExample = new go.ParameterExample(goParam, this.adaptExampleType(propertyValue, goParam?.type));
-              if (goParam?.group) {
+              if (goParam.group) {
                 goExample.optionalParamsGroup.push(paramExample);
               } else {
                 goExample.parameters.push(paramExample);
@@ -712,16 +733,19 @@ export class clientAdapter {
             }
             goExample.responseEnvelope.headers.push(new go.ResponseHeaderExample(goHeader, this.adaptExampleType(header.value, goHeader.type)));
           }
-          if (response.bodyValue) {
-            if (go.isAnyResult(method.responseEnvelope.result!)) {
+          // there are some problems with LROs at present which can cause the result
+          // to be undefined even though the operation returns a response.
+          // TODO: https://github.com/Azure/typespec-azure/issues/1688
+          if (response.bodyValue && method.responseEnvelope.result) {
+            if (go.isAnyResult(method.responseEnvelope.result)) {
               goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('any'));
-            } else if (go.isModelResult(method.responseEnvelope.result!)) {
+            } else if (go.isModelResult(method.responseEnvelope.result)) {
               goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.modelType);
-            } else if (go.isBinaryResult(method.responseEnvelope.result!)) {
+            } else if (go.isBinaryResult(method.responseEnvelope.result)) {
               goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, new go.PrimitiveType('byte'));
-            } else if (go.isMonomorphicResult(method.responseEnvelope.result!)) {
+            } else if (go.isMonomorphicResult(method.responseEnvelope.result)) {
               goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.monomorphicType);
-            } else if (go.isPolymorphicResult(method.responseEnvelope.result!)) {
+            } else if (go.isPolymorphicResult(method.responseEnvelope.result)) {
               goExample.responseEnvelope.result = this.adaptExampleType(response.bodyValue, method.responseEnvelope.result.interfaceType);
             }
           }

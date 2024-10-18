@@ -41,16 +41,16 @@ type WatchersServer struct {
 	NewListBySubscriptionPager func(options *armdatabasewatcher.WatchersClientListBySubscriptionOptions) (resp azfake.PagerResponder[armdatabasewatcher.WatchersClientListBySubscriptionResponse])
 
 	// BeginStart is the fake for method WatchersClient.BeginStart
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStart func(ctx context.Context, resourceGroupName string, watcherName string, options *armdatabasewatcher.WatchersClientBeginStartOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientStartResponse], errResp azfake.ErrorResponder)
 
 	// BeginStop is the fake for method WatchersClient.BeginStop
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
 	BeginStop func(ctx context.Context, resourceGroupName string, watcherName string, options *armdatabasewatcher.WatchersClientBeginStopOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientStopResponse], errResp azfake.ErrorResponder)
 
 	// BeginUpdate is the fake for method WatchersClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, watcherName string, properties armdatabasewatcher.Watcher, options *armdatabasewatcher.WatchersClientBeginUpdateOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientUpdateResponse], errResp azfake.ErrorResponder)
+	BeginUpdate func(ctx context.Context, resourceGroupName string, watcherName string, properties armdatabasewatcher.WatcherUpdate, options *armdatabasewatcher.WatchersClientBeginUpdateOptions) (resp azfake.PollerResponder[armdatabasewatcher.WatchersClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewWatchersServerTransport creates a new instance of WatchersServerTransport with the provided implementation.
@@ -362,9 +362,9 @@ func (w *WatchersServerTransport) dispatchBeginStart(req *http.Request) (*http.R
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		w.beginStart.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStart) {
 		w.beginStart.remove(req)
@@ -406,9 +406,9 @@ func (w *WatchersServerTransport) dispatchBeginStop(req *http.Request) (*http.Re
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		w.beginStop.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginStop) {
 		w.beginStop.remove(req)
@@ -429,7 +429,7 @@ func (w *WatchersServerTransport) dispatchBeginUpdate(req *http.Request) (*http.
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armdatabasewatcher.Watcher](req)
+		body, err := server.UnmarshalRequestAsJSON[armdatabasewatcher.WatcherUpdate](req)
 		if err != nil {
 			return nil, err
 		}

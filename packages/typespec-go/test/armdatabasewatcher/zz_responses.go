@@ -4,6 +4,29 @@
 
 package armdatabasewatcher
 
+// AlertRuleResourcesClientCreateOrUpdateResponse contains the response from method AlertRuleResourcesClient.CreateOrUpdate.
+type AlertRuleResourcesClientCreateOrUpdateResponse struct {
+	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+	AlertRuleResource
+}
+
+// AlertRuleResourcesClientDeleteResponse contains the response from method AlertRuleResourcesClient.Delete.
+type AlertRuleResourcesClientDeleteResponse struct {
+	// placeholder for future response values
+}
+
+// AlertRuleResourcesClientGetResponse contains the response from method AlertRuleResourcesClient.Get.
+type AlertRuleResourcesClientGetResponse struct {
+	// Concrete proxy resource types can be created by aliasing this type using a specific property type.
+	AlertRuleResource
+}
+
+// AlertRuleResourcesClientListByParentResponse contains the response from method AlertRuleResourcesClient.NewListByParentPager.
+type AlertRuleResourcesClientListByParentResponse struct {
+	// The response of a AlertRuleResource list operation.
+	AlertRuleResourceListResult
+}
+
 // OperationsClientListResponse contains the response from method OperationsClient.NewListPager.
 type OperationsClientListResponse struct {
 	// A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
@@ -87,14 +110,12 @@ type WatchersClientListBySubscriptionResponse struct {
 
 // WatchersClientStartResponse contains the response from method WatchersClient.BeginStart.
 type WatchersClientStartResponse struct {
-	// The DatabaseWatcherProviderHub resource.
-	Watcher
+	// placeholder for future response values
 }
 
 // WatchersClientStopResponse contains the response from method WatchersClient.BeginStop.
 type WatchersClientStopResponse struct {
-	// The DatabaseWatcherProviderHub resource.
-	Watcher
+	// placeholder for future response values
 }
 
 // WatchersClientUpdateResponse contains the response from method WatchersClient.BeginUpdate.

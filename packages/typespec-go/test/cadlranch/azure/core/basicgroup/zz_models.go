@@ -30,6 +30,11 @@ type User struct {
 	ID *int32
 }
 
+type UserList struct {
+	// REQUIRED
+	Users []*User
+}
+
 // UserOrder for testing list with expand.
 type UserOrder struct {
 	// REQUIRED; The user's order detail

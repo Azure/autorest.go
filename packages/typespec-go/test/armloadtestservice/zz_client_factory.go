@@ -32,6 +32,20 @@ func NewClientFactory(subscriptionID string, credential azcore.TokenCredential, 
 	}, nil
 }
 
+// NewLoadTestMappingsClient creates a new instance of LoadTestMappingsClient.
+func (c *ClientFactory) NewLoadTestMappingsClient() *LoadTestMappingsClient {
+	return &LoadTestMappingsClient{
+		internal: c.internal,
+	}
+}
+
+// NewLoadTestProfileMappingsClient creates a new instance of LoadTestProfileMappingsClient.
+func (c *ClientFactory) NewLoadTestProfileMappingsClient() *LoadTestProfileMappingsClient {
+	return &LoadTestProfileMappingsClient{
+		internal: c.internal,
+	}
+}
+
 // NewLoadTestsClient creates a new instance of LoadTestsClient.
 func (c *ClientFactory) NewLoadTestsClient() *LoadTestsClient {
 	return &LoadTestsClient{

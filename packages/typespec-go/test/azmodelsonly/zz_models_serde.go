@@ -11,6 +11,33 @@ import (
 	"reflect"
 )
 
+// MarshalJSON implements the json.Marshaller interface for type BaseClassThatsPruned.
+func (b BaseClassThatsPruned) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]any)
+	populate(objectMap, "id", b.ID)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BaseClassThatsPruned.
+func (b *BaseClassThatsPruned) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", b, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "id":
+			err = unpopulate(val, "ID", &b.ID)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", b, err)
+		}
+	}
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaller interface for type DerivedOne.
 func (d DerivedOne) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]any)

@@ -19,11 +19,15 @@ import (
 type NumericPropertyServer struct {
 	// SafeintAsString is the fake for method NumericPropertyClient.SafeintAsString
 	// HTTP status codes to indicate success: http.StatusOK
-	SafeintAsString func(ctx context.Context, body numericgroup.SafeintAsStringProperty, options *numericgroup.NumericPropertyClientSafeintAsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientSafeintAsStringResponse], errResp azfake.ErrorResponder)
+	SafeintAsString func(ctx context.Context, value numericgroup.SafeintAsStringProperty, options *numericgroup.NumericPropertyClientSafeintAsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientSafeintAsStringResponse], errResp azfake.ErrorResponder)
 
 	// Uint32AsStringOptional is the fake for method NumericPropertyClient.Uint32AsStringOptional
 	// HTTP status codes to indicate success: http.StatusOK
-	Uint32AsStringOptional func(ctx context.Context, body numericgroup.Uint32AsStringProperty, options *numericgroup.NumericPropertyClientUint32AsStringOptionalOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint32AsStringOptionalResponse], errResp azfake.ErrorResponder)
+	Uint32AsStringOptional func(ctx context.Context, value numericgroup.Uint32AsStringProperty, options *numericgroup.NumericPropertyClientUint32AsStringOptionalOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint32AsStringOptionalResponse], errResp azfake.ErrorResponder)
+
+	// Uint8AsString is the fake for method NumericPropertyClient.Uint8AsString
+	// HTTP status codes to indicate success: http.StatusOK
+	Uint8AsString func(ctx context.Context, value numericgroup.Uint8AsStringProperty, options *numericgroup.NumericPropertyClientUint8AsStringOptions) (resp azfake.Responder[numericgroup.NumericPropertyClientUint8AsStringResponse], errResp azfake.ErrorResponder)
 }
 
 // NewNumericPropertyServerTransport creates a new instance of NumericPropertyServerTransport with the provided implementation.
@@ -61,6 +65,8 @@ func (n *NumericPropertyServerTransport) dispatchToMethodFake(req *http.Request,
 			res.resp, res.err = n.dispatchSafeintAsString(req)
 		case "NumericPropertyClient.Uint32AsStringOptional":
 			res.resp, res.err = n.dispatchUint32AsStringOptional(req)
+		case "NumericPropertyClient.Uint8AsString":
+			res.resp, res.err = n.dispatchUint8AsString(req)
 		default:
 			res.err = fmt.Errorf("unhandled API %s", method)
 		}
@@ -119,6 +125,29 @@ func (n *NumericPropertyServerTransport) dispatchUint32AsStringOptional(req *htt
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Uint32AsStringProperty, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (n *NumericPropertyServerTransport) dispatchUint8AsString(req *http.Request) (*http.Response, error) {
+	if n.srv.Uint8AsString == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Uint8AsString not implemented")}
+	}
+	body, err := server.UnmarshalRequestAsJSON[numericgroup.Uint8AsStringProperty](req)
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.Uint8AsString(req.Context(), body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).Uint8AsStringProperty, req)
 	if err != nil {
 		return nil, err
 	}

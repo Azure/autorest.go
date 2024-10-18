@@ -37,6 +37,10 @@ type BasicServer struct {
 	// HTTP status codes to indicate success: http.StatusOK
 	Export func(ctx context.Context, id int32, formatParam string, options *basicgroup.BasicClientExportOptions) (resp azfake.Responder[basicgroup.BasicClientExportResponse], errResp azfake.ErrorResponder)
 
+	// ExportAllUsers is the fake for method BasicClient.ExportAllUsers
+	// HTTP status codes to indicate success: http.StatusOK
+	ExportAllUsers func(ctx context.Context, formatParam string, options *basicgroup.BasicClientExportAllUsersOptions) (resp azfake.Responder[basicgroup.BasicClientExportAllUsersResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method BasicClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, id int32, options *basicgroup.BasicClientGetOptions) (resp azfake.Responder[basicgroup.BasicClientGetResponse], errResp azfake.ErrorResponder)
@@ -89,6 +93,8 @@ func (b *BasicServerTransport) dispatchToMethodFake(req *http.Request, method st
 			res.resp, res.err = b.dispatchDelete(req)
 		case "BasicClient.Export":
 			res.resp, res.err = b.dispatchExport(req)
+		case "BasicClient.ExportAllUsers":
+			res.resp, res.err = b.dispatchExportAllUsers(req)
 		case "BasicClient.Get":
 			res.resp, res.err = b.dispatchGet(req)
 		case "BasicClient.NewListPager":
@@ -274,6 +280,30 @@ func (b *BasicServerTransport) dispatchExport(req *http.Request) (*http.Response
 		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
 	}
 	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).User, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (b *BasicServerTransport) dispatchExportAllUsers(req *http.Request) (*http.Response, error) {
+	if b.srv.ExportAllUsers == nil {
+		return nil, &nonRetriableError{errors.New("fake for method ExportAllUsers not implemented")}
+	}
+	qp := req.URL.Query()
+	formatParamParam, err := url.QueryUnescape(qp.Get("format"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := b.srv.ExportAllUsers(req.Context(), formatParamParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).UserList, req)
 	if err != nil {
 		return nil, err
 	}

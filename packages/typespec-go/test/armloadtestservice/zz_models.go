@@ -72,6 +72,120 @@ type EndpointDetail struct {
 	Port *int32
 }
 
+// LoadTestMappingProperties - Azure LoadTest mapping resource properties.
+type LoadTestMappingProperties struct {
+	// Mapped Azure Load Test resource Id.
+	AzureLoadTestingResourceID *string
+
+	// Mapped source resource Id.
+	SourceResourceID *string
+
+	// Mapped Azure Load Test resource test-id.
+	TestID *string
+}
+
+// LoadTestMappingResource - LoadTest mapping resource details
+type LoadTestMappingResource struct {
+	// The resource-specific properties for this resource.
+	Properties *LoadTestMappingProperties
+
+	// READ-ONLY; Load Test Mapping name
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// LoadTestMappingResourceListResult - The response of a LoadTestMappingResource list operation.
+type LoadTestMappingResourceListResult struct {
+	// REQUIRED; The LoadTestMappingResource items on this page
+	Value []*LoadTestMappingResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// LoadTestMappingResourceUpdate - The type used for update operations of the LoadTestMappingResource.
+type LoadTestMappingResourceUpdate struct {
+	// The resource-specific properties for this resource.
+	Properties *LoadTestMappingResourceUpdateProperties
+}
+
+// LoadTestMappingResourceUpdateProperties - The updatable properties of the LoadTestMappingResource.
+type LoadTestMappingResourceUpdateProperties struct {
+	// Mapped Azure Load Test resource Id.
+	AzureLoadTestingResourceID *string
+
+	// Mapped source resource Id.
+	SourceResourceID *string
+
+	// Mapped Azure Load Test resource test-id.
+	TestID *string
+}
+
+// LoadTestProfileMappingProperties - Azure LoadTest profile mapping resource properties.
+type LoadTestProfileMappingProperties struct {
+	// Mapped Azure Load Test resource Id.
+	AzureLoadTestingResourceID *string
+
+	// Mapped source resource Id.
+	SourceResourceID *string
+
+	// Mapped Azure Load Test resource test-profile-id.
+	TestProfileID *string
+}
+
+// LoadTestProfileMappingResource - LoadTest profile mapping resource details
+type LoadTestProfileMappingResource struct {
+	// The resource-specific properties for this resource.
+	Properties *LoadTestProfileMappingProperties
+
+	// READ-ONLY; Load Test Profile Mapping name
+	Name *string
+
+	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string
+
+	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
+	SystemData *SystemData
+
+	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+	Type *string
+}
+
+// LoadTestProfileMappingResourceListResult - The response of a LoadTestProfileMappingResource list operation.
+type LoadTestProfileMappingResourceListResult struct {
+	// REQUIRED; The LoadTestProfileMappingResource items on this page
+	Value []*LoadTestProfileMappingResource
+
+	// The link to the next page of items
+	NextLink *string
+}
+
+// LoadTestProfileMappingResourceUpdate - The type used for update operations of the LoadTestProfileMappingResource.
+type LoadTestProfileMappingResourceUpdate struct {
+	// The resource-specific properties for this resource.
+	Properties *LoadTestProfileMappingResourceUpdateProperties
+}
+
+// LoadTestProfileMappingResourceUpdateProperties - The updatable properties of the LoadTestProfileMappingResource.
+type LoadTestProfileMappingResourceUpdateProperties struct {
+	// Mapped Azure Load Test resource Id.
+	AzureLoadTestingResourceID *string
+
+	// Mapped source resource Id.
+	SourceResourceID *string
+
+	// Mapped Azure Load Test resource test-profile-id.
+	TestProfileID *string
+}
+
 // LoadTestProperties - LoadTest resource properties.
 type LoadTestProperties struct {
 	// Description of the resource.
@@ -121,6 +235,27 @@ type LoadTestResourceListResult struct {
 
 	// The link to the next page of items
 	NextLink *string
+}
+
+// LoadTestResourceUpdate - The type used for update operations of the LoadTestResource.
+type LoadTestResourceUpdate struct {
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentity
+
+	// The resource-specific properties for this resource.
+	Properties *LoadTestResourceUpdateProperties
+
+	// Resource tags.
+	Tags map[string]*string
+}
+
+// LoadTestResourceUpdateProperties - The updatable properties of the LoadTestResource.
+type LoadTestResourceUpdateProperties struct {
+	// Description of the resource.
+	Description *string
+
+	// CMK Encryption property.
+	Encryption *EncryptionProperties
 }
 
 // ManagedServiceIdentity - Managed service identity (system assigned and/or user assigned identities)
@@ -198,8 +333,8 @@ type OutboundEnvironmentEndpoint struct {
 	Endpoints []*EndpointDependency
 }
 
-// OutboundEnvironmentEndpointCollection - Values returned by the List operation.
-type OutboundEnvironmentEndpointCollection struct {
+// PagedOutboundEnvironmentEndpoint - Values returned by the List operation.
+type PagedOutboundEnvironmentEndpoint struct {
 	// REQUIRED; The OutboundEnvironmentEndpoint items on this page
 	Value []*OutboundEnvironmentEndpoint
 
