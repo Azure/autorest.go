@@ -375,7 +375,7 @@ export class clientAdapter {
       if (opParam.onClient) {
         const adaptedParam = this.adaptMethodParameter(opParam);
         adaptedParam.description = opParam.description;
-        method.parameters.push(adaptedParam);
+        method.parameters.unshift(adaptedParam);
         if (!paramMapping.has(opParam)) {
           paramMapping.set(opParam, new Array<go.Parameter>());
         }

@@ -578,17 +578,10 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     // swagger defines path params, emit path and replace tokens
     imports.add('strings');
     // replace path parameters
-    // sort them such that any path params on the client come first.
-    const sortedPathParams = <Array<go.PathParameter>>values(method.parameters).where((e) => { return go.isPathParameter(e) }).toArray();
-    sortedPathParams.sort((a, b) => {
-      if (a.location === 'client' && b.location === 'method') {
-        return -1;
-      } else if (a.location === 'method' && b.location === 'client') {
-        return 1;
+    for (const pp of values(method.parameters)) {
+      if (!go.isPathParameter(pp)) {
+        continue;
       }
-      return 0;
-    });
-    for (const pp of sortedPathParams) {
       // emit check to ensure path param isn't an empty string.  we only need
       // to do this for params that have an underlying type of string.
       const choiceIsString = function (type: go.PathParameterType): boolean {
