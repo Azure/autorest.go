@@ -37,6 +37,7 @@ var (
 )
 
 func TestTopLevelTrackedResourcesClient_Get(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	topLevelTrackedResourcesClientGetResponse, err := clientFactory.NewTopLevelTrackedResourcesClient().Get(
 		ctx,
 		"test-rg",
@@ -50,6 +51,7 @@ func TestTopLevelTrackedResourcesClient_Get(t *testing.T) {
 }
 
 func TestTopLevelTrackedResourcesClient_CreateOrReplace(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	topLevelTrackedResourcesClientCreateOrReplaceResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginCreateOrReplace(
 		ctx,
 		"test-rg",
@@ -73,6 +75,7 @@ func TestTopLevelTrackedResourcesClient_CreateOrReplace(t *testing.T) {
 }
 
 func TestTopLevelTrackedResourcesClient_BeginUpdate(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	topLevelTrackedResourcesClientUpdateResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginUpdate(
 		ctx,
 		"test-rg",
@@ -95,6 +98,7 @@ func TestTopLevelTrackedResourcesClient_BeginUpdate(t *testing.T) {
 }
 
 func TestTopLevelTrackedResourcesClient_BeginDelete(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	topLevelTrackedResourcesClientDeleteResponsePoller, err := clientFactory.NewTopLevelTrackedResourcesClient().BeginDelete(
 		ctx,
 		"test-rg",
@@ -108,6 +112,7 @@ func TestTopLevelTrackedResourcesClient_BeginDelete(t *testing.T) {
 }
 
 func TestTopLevelTrackedResourcesClient_NewListByResourceGroupPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	topLevelTrackedResourcesClientListByResourceGroupResponsePager := clientFactory.NewTopLevelTrackedResourcesClient().NewListByResourceGroupPager("test-rg", nil)
 	require.True(t, topLevelTrackedResourcesClientListByResourceGroupResponsePager.More())
 	topLevelTrackedResourcesClientListByResourceGroupResponse, err := topLevelTrackedResourcesClientListByResourceGroupResponsePager.NextPage(ctx)
@@ -120,6 +125,7 @@ func TestTopLevelTrackedResourcesClient_NewListByResourceGroupPager(t *testing.T
 }
 
 func TestTopLevelTrackedResourcesClient_NewListBySubscriptionPager(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	TopLevelTrackedResourcesClientListBySubscriptionResponsePager := clientFactory.NewTopLevelTrackedResourcesClient().NewListBySubscriptionPager(nil)
 	require.True(t, TopLevelTrackedResourcesClientListBySubscriptionResponsePager.More())
 	TopLevelTrackedResourcesClientListBySubscriptionResponse, err := TopLevelTrackedResourcesClientListBySubscriptionResponsePager.NextPage(ctx)
