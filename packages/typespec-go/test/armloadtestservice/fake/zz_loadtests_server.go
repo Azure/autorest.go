@@ -45,8 +45,8 @@ type LoadTestsServer struct {
 	NewOutboundNetworkDependenciesEndpointsPager func(resourceGroupName string, loadTestName string, options *armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsOptions) (resp azfake.PagerResponder[armloadtestservice.LoadTestsClientOutboundNetworkDependenciesEndpointsResponse])
 
 	// BeginUpdate is the fake for method LoadTestsClient.BeginUpdate
-	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
-	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResource, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted, http.StatusNoContent
+	BeginUpdate func(ctx context.Context, resourceGroupName string, loadTestName string, properties armloadtestservice.LoadTestResourceUpdate, options *armloadtestservice.LoadTestsClientBeginUpdateOptions) (resp azfake.PollerResponder[armloadtestservice.LoadTestsClientUpdateResponse], errResp azfake.ErrorResponder)
 }
 
 // NewLoadTestsServerTransport creates a new instance of LoadTestsServerTransport with the provided implementation.
@@ -374,7 +374,7 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		if matches == nil || len(matches) < 3 {
 			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 		}
-		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResource](req)
+		body, err := server.UnmarshalRequestAsJSON[armloadtestservice.LoadTestResourceUpdate](req)
 		if err != nil {
 			return nil, err
 		}
@@ -399,9 +399,9 @@ func (l *LoadTestsServerTransport) dispatchBeginUpdate(req *http.Request) (*http
 		return nil, err
 	}
 
-	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+	if !contains([]int{http.StatusOK, http.StatusAccepted, http.StatusNoContent}, resp.StatusCode) {
 		l.beginUpdate.remove(req)
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted, http.StatusNoContent", resp.StatusCode)}
 	}
 	if !server.PollerResponderMore(beginUpdate) {
 		l.beginUpdate.remove(req)

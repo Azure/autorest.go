@@ -48,15 +48,21 @@ type CreateMode string
 const (
 	// CreateModeDefault - Create a new mongo cluster.
 	CreateModeDefault CreateMode = "Default"
+	// CreateModeGeoReplica - Create a replica cluster in distinct geographic region from the source cluster.
+	CreateModeGeoReplica CreateMode = "GeoReplica"
 	// CreateModePointInTimeRestore - Create a mongo cluster from a restore point-in-time.
 	CreateModePointInTimeRestore CreateMode = "PointInTimeRestore"
+	// CreateModeReplica - Create a replica cluster in the same geographic region as the source cluster.
+	CreateModeReplica CreateMode = "Replica"
 )
 
 // PossibleCreateModeValues returns the possible values for the CreateMode const type.
 func PossibleCreateModeValues() []CreateMode {
 	return []CreateMode{
 		CreateModeDefault,
+		CreateModeGeoReplica,
 		CreateModePointInTimeRestore,
+		CreateModeReplica,
 	}
 }
 
@@ -84,18 +90,27 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 	}
 }
 
-// NodeKind - The kind of the node on the cluster.
-type NodeKind string
+// HighAvailabilityMode - The high availability modes for a cluster.
+type HighAvailabilityMode string
 
 const (
-	// NodeKindShard - The node is a shard kind.
-	NodeKindShard NodeKind = "Shard"
+	// HighAvailabilityModeDisabled - High availability mode is disabled. This mode is can see availability impact during faults
+	// or maintenance and is not recommended for production.
+	HighAvailabilityModeDisabled HighAvailabilityMode = "Disabled"
+	// HighAvailabilityModeSameZone - High availability mode is enabled, where each server in a shard is placed in the same availability
+	// zone.
+	HighAvailabilityModeSameZone HighAvailabilityMode = "SameZone"
+	// HighAvailabilityModeZoneRedundantPreferred - High availability mode is enabled and preferences ZoneRedundant if availability
+	// zones capacity is available in the region, otherwise falls-back to provisioning with SameZone.
+	HighAvailabilityModeZoneRedundantPreferred HighAvailabilityMode = "ZoneRedundantPreferred"
 )
 
-// PossibleNodeKindValues returns the possible values for the NodeKind const type.
-func PossibleNodeKindValues() []NodeKind {
-	return []NodeKind{
-		NodeKindShard,
+// PossibleHighAvailabilityModeValues returns the possible values for the HighAvailabilityMode const type.
+func PossibleHighAvailabilityModeValues() []HighAvailabilityMode {
+	return []HighAvailabilityMode{
+		HighAvailabilityModeDisabled,
+		HighAvailabilityModeSameZone,
+		HighAvailabilityModeZoneRedundantPreferred,
 	}
 }
 
@@ -118,6 +133,22 @@ func PossibleOriginValues() []Origin {
 		OriginSystem,
 		OriginUser,
 		OriginUserSystem,
+	}
+}
+
+// PreviewFeature - Preview features that can be enabled on a mongo cluster.
+type PreviewFeature string
+
+const (
+	// PreviewFeatureGeoReplicas - Enables geo replicas preview feature. The feature must be set at create-time on new cluster
+	// to enable linking a geo-replica cluster to it.
+	PreviewFeatureGeoReplicas PreviewFeature = "GeoReplicas"
+)
+
+// PossiblePreviewFeatureValues returns the possible values for the PreviewFeature const type.
+func PossiblePreviewFeatureValues() []PreviewFeature {
+	return []PreviewFeature{
+		PreviewFeatureGeoReplicas,
 	}
 }
 
@@ -163,6 +194,38 @@ func PossiblePrivateEndpointServiceConnectionStatusValues() []PrivateEndpointSer
 		PrivateEndpointServiceConnectionStatusApproved,
 		PrivateEndpointServiceConnectionStatusPending,
 		PrivateEndpointServiceConnectionStatusRejected,
+	}
+}
+
+// PromoteMode - The mode to apply to a promote operation.
+type PromoteMode string
+
+const (
+	// PromoteModeSwitchover - Promotion will switch the current replica cluster to the primary role and the original primary
+	// will be switched to a replica role, maintaining the replication link.
+	PromoteModeSwitchover PromoteMode = "Switchover"
+)
+
+// PossiblePromoteModeValues returns the possible values for the PromoteMode const type.
+func PossiblePromoteModeValues() []PromoteMode {
+	return []PromoteMode{
+		PromoteModeSwitchover,
+	}
+}
+
+// PromoteOption - The option to apply to a promote operation.
+type PromoteOption string
+
+const (
+	// PromoteOptionForced - Promote option forces the promotion without waiting for the replica to be caught up to the primary.
+	// This can result in data-loss so should only be used during disaster recovery scenarios.
+	PromoteOptionForced PromoteOption = "Forced"
+)
+
+// PossiblePromoteOptionValues returns the possible values for the PromoteOption const type.
+func PossiblePromoteOptionValues() []PromoteOption {
+	return []PromoteOption{
+		PromoteOptionForced,
 	}
 }
 
@@ -212,6 +275,58 @@ func PossiblePublicNetworkAccessValues() []PublicNetworkAccess {
 	return []PublicNetworkAccess{
 		PublicNetworkAccessDisabled,
 		PublicNetworkAccessEnabled,
+	}
+}
+
+// ReplicationRole - Replication role of the mongo cluster.
+type ReplicationRole string
+
+const (
+	// ReplicationRoleAsyncReplica - The cluster is a local asynchronous replica.
+	ReplicationRoleAsyncReplica ReplicationRole = "AsyncReplica"
+	// ReplicationRoleGeoAsyncReplica - The cluster is a geo-asynchronous replica.
+	ReplicationRoleGeoAsyncReplica ReplicationRole = "GeoAsyncReplica"
+	// ReplicationRolePrimary - The cluster is a primary replica.
+	ReplicationRolePrimary ReplicationRole = "Primary"
+)
+
+// PossibleReplicationRoleValues returns the possible values for the ReplicationRole const type.
+func PossibleReplicationRoleValues() []ReplicationRole {
+	return []ReplicationRole{
+		ReplicationRoleAsyncReplica,
+		ReplicationRoleGeoAsyncReplica,
+		ReplicationRolePrimary,
+	}
+}
+
+// ReplicationState - The state of the replication link between the replica and source cluster.
+type ReplicationState string
+
+const (
+	// ReplicationStateActive - Replication link is active.
+	ReplicationStateActive ReplicationState = "Active"
+	// ReplicationStateBroken - Replication link is broken and the replica may need to be recreated.
+	ReplicationStateBroken ReplicationState = "Broken"
+	// ReplicationStateCatchup - Replica is catching-up with the primary. This can occur after the replica is created or after
+	// a promotion is triggered.
+	ReplicationStateCatchup ReplicationState = "Catchup"
+	// ReplicationStateProvisioning - Replica and replication link to the primary is being created.
+	ReplicationStateProvisioning ReplicationState = "Provisioning"
+	// ReplicationStateReconfiguring - Replication link is re-configuring due to a promotion event.
+	ReplicationStateReconfiguring ReplicationState = "Reconfiguring"
+	// ReplicationStateUpdating - Replication link is being updated due to a change on the replica or an upgrade.
+	ReplicationStateUpdating ReplicationState = "Updating"
+)
+
+// PossibleReplicationStateValues returns the possible values for the ReplicationState const type.
+func PossibleReplicationStateValues() []ReplicationState {
+	return []ReplicationState{
+		ReplicationStateActive,
+		ReplicationStateBroken,
+		ReplicationStateCatchup,
+		ReplicationStateProvisioning,
+		ReplicationStateReconfiguring,
+		ReplicationStateUpdating,
 	}
 }
 

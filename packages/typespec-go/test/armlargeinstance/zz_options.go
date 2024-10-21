@@ -10,6 +10,9 @@ type AzureLargeInstanceClientBeginRestartOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
 
+	// Body parameter's content type. Known values are application/json
+	ContentType *string
+
 	// When set to 'active', this parameter empowers the server with the ability to forcefully terminate and halt any existing
 	// processes that may be running on the server
 	ForceParameter *ForceState
@@ -27,6 +30,16 @@ type AzureLargeInstanceClientBeginShutdownOptions struct {
 type AzureLargeInstanceClientBeginStartOptions struct {
 	// Resumes the long-running operation from the provided token.
 	ResumeToken string
+}
+
+// AzureLargeInstanceClientCreateOptions contains the optional parameters for the AzureLargeInstanceClient.Create method.
+type AzureLargeInstanceClientCreateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AzureLargeInstanceClientDeleteOptions contains the optional parameters for the AzureLargeInstanceClient.Delete method.
+type AzureLargeInstanceClientDeleteOptions struct {
+	// placeholder for future optional parameters
 }
 
 // AzureLargeInstanceClientGetOptions contains the optional parameters for the AzureLargeInstanceClient.Get method.
@@ -48,6 +61,18 @@ type AzureLargeInstanceClientListBySubscriptionOptions struct {
 
 // AzureLargeInstanceClientUpdateOptions contains the optional parameters for the AzureLargeInstanceClient.Update method.
 type AzureLargeInstanceClientUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AzureLargeStorageInstanceClientCreateOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Create
+// method.
+type AzureLargeStorageInstanceClientCreateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AzureLargeStorageInstanceClientDeleteOptions contains the optional parameters for the AzureLargeStorageInstanceClient.Delete
+// method.
+type AzureLargeStorageInstanceClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 

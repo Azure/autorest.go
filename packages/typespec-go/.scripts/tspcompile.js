@@ -29,7 +29,7 @@ const cadlRanch = {
   'azurepagegroup': ['azure/core/page'],
   'corescalargroup': ['azure/core/scalar'],
   'managed_identity': ['azure/resource-manager/models/common-types/managed-identity'],
-  'resources': ['azure/resource-manager/models/resources'],
+  //'resources': ['azure/resource-manager/models/resources'], // TODO: https://github.com/Azure/typespec-azure/issues/1709
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],
   'naminggroup': ['client/naming'],
@@ -48,7 +48,7 @@ const cadlRanch = {
   'contentneggroup': ['payload/content-negotiation'],
   'jmergepatchgroup': ['payload/json-merge-patch'],
   'mediatypegroup': ['payload/media-type'],
-  'multipartgroup': ['payload/multipart'],
+  //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],

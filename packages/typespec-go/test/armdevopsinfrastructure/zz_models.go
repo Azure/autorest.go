@@ -275,6 +275,15 @@ type OsProfile struct {
 	SecretsManagementSettings *SecretsManagementSettings
 }
 
+// PagedQuota - Paged collection of Quota items
+type PagedQuota struct {
+	// REQUIRED; The Quota items on this page
+	Value []*Quota
+
+	// The link to the next page of items
+	NextLink *string
+}
+
 // Pool - Concrete tracked resource types can be created by aliasing this type using a specific property type.
 type Pool struct {
 	// REQUIRED; The geo-location where the resource lives
@@ -347,31 +356,55 @@ type PoolProperties struct {
 	ProvisioningState *ProvisioningState
 }
 
-// Quota - Describes Resource Quota
-type Quota struct {
+// PoolUpdate - The type used for update operations of the Pool.
+type PoolUpdate struct {
+	// The managed service identities assigned to this resource.
+	Identity *ManagedServiceIdentity
+
 	// The resource-specific properties for this resource.
-	Properties *QuotaProperties
+	Properties *PoolUpdateProperties
 
-	// READ-ONLY; The name of the quota.
-	Name *string
-
-	// READ-ONLY; Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string
-
-	// READ-ONLY; Azure Resource Manager metadata containing createdBy and modifiedBy information.
-	SystemData *SystemData
-
-	// READ-ONLY; The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
-	Type *string
+	// Resource tags.
+	Tags map[string]*string
 }
 
-// QuotaListResult - The response of a Quota list operation.
-type QuotaListResult struct {
-	// REQUIRED; The Quota items on this page
-	Value []*Quota
+// PoolUpdateProperties - The updatable properties of the Pool.
+type PoolUpdateProperties struct {
+	// Defines how the machine will be handled once it executed a job.
+	AgentProfile AgentProfileClassification
 
-	// The link to the next page of items
-	NextLink *string
+	// The resource id of the DevCenter Project the pool belongs to.
+	DevCenterProjectResourceID *string
+
+	// Defines the type of fabric the agent will run on.
+	FabricProfile FabricProfileClassification
+
+	// Defines how many resources can there be created at any given time.
+	MaximumConcurrency *int32
+
+	// Defines the organization in which the pool will be used.
+	OrganizationProfile OrganizationProfileClassification
+
+	// The status of the current operation.
+	ProvisioningState *ProvisioningState
+}
+
+// Quota - Describes Resource Quota
+type Quota struct {
+	// REQUIRED; The current usage of the resource.
+	CurrentValue *int64
+
+	// REQUIRED; Fully qualified ARM resource id
+	ID *string
+
+	// REQUIRED; The maximum permitted usage of the resource.
+	Limit *int64
+
+	// REQUIRED; The unit of usage measurement.
+	Unit *string
+
+	// READ-ONLY; The name of the quota.
+	Name *QuotaName
 }
 
 // QuotaName - The Quota Names
@@ -381,21 +414,6 @@ type QuotaName struct {
 
 	// The name of the resource.
 	Value *string
-}
-
-// QuotaProperties - Describes Resource Quota properties
-type QuotaProperties struct {
-	// REQUIRED; The current usage of the resource.
-	CurrentValue *int64
-
-	// REQUIRED; The maximum permitted usage of the resource.
-	Limit *int64
-
-	// REQUIRED; The details of the quota.
-	Name *QuotaName
-
-	// REQUIRED; The unit of usage measurement.
-	Unit *string
 }
 
 // ResourceDetailsObject - A ResourceDetailsObject

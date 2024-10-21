@@ -15,3 +15,9 @@ type NumericPropertyClientSafeintAsStringOptions struct {
 type NumericPropertyClientUint32AsStringOptionalOptions struct {
 	// placeholder for future optional parameters
 }
+
+// NumericPropertyClientUint8AsStringOptions contains the optional parameters for the NumericPropertyClient.Uint8AsString
+// method.
+type NumericPropertyClientUint8AsStringOptions struct {
+	// placeholder for future optional parameters
+}

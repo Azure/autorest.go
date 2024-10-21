@@ -21,6 +21,14 @@ import (
 
 // AzureLargeInstanceServer is a fake server for instances of the armlargeinstance.AzureLargeInstanceClient type.
 type AzureLargeInstanceServer struct {
+	// Create is the fake for method AzureLargeInstanceClient.Create
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
+	Create func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, resource armlargeinstance.AzureLargeInstance, options *armlargeinstance.AzureLargeInstanceClientCreateOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientCreateResponse], errResp azfake.ErrorResponder)
+
+	// Delete is the fake for method AzureLargeInstanceClient.Delete
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
+	Delete func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientDeleteOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientDeleteResponse], errResp azfake.ErrorResponder)
+
 	// Get is the fake for method AzureLargeInstanceClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
 	Get func(ctx context.Context, resourceGroupName string, azureLargeInstanceName string, options *armlargeinstance.AzureLargeInstanceClientGetOptions) (resp azfake.Responder[armlargeinstance.AzureLargeInstanceClientGetResponse], errResp azfake.ErrorResponder)
@@ -93,6 +101,10 @@ func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Reque
 	go func() {
 		var res result
 		switch method {
+		case "AzureLargeInstanceClient.Create":
+			res.resp, res.err = a.dispatchCreate(req)
+		case "AzureLargeInstanceClient.Delete":
+			res.resp, res.err = a.dispatchDelete(req)
 		case "AzureLargeInstanceClient.Get":
 			res.resp, res.err = a.dispatchGet(req)
 		case "AzureLargeInstanceClient.NewListByResourceGroupPager":
@@ -123,6 +135,76 @@ func (a *AzureLargeInstanceServerTransport) dispatchToMethodFake(req *http.Reque
 	case res := <-resultChan:
 		return res.resp, res.err
 	}
+}
+
+func (a *AzureLargeInstanceServerTransport) dispatchCreate(req *http.Request) (*http.Response, error) {
+	if a.srv.Create == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Create not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeInstances/(?P<azureLargeInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armlargeinstance.AzureLargeInstance](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Create(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusCreated}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusCreated", respContent.HTTPStatus)}
+	}
+	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).AzureLargeInstance, req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (a *AzureLargeInstanceServerTransport) dispatchDelete(req *http.Request) (*http.Response, error) {
+	if a.srv.Delete == nil {
+		return nil, &nonRetriableError{errors.New("fake for method Delete not implemented")}
+	}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.AzureLargeInstance/azureLargeInstances/(?P<azureLargeInstanceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	azureLargeInstanceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("azureLargeInstanceName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := a.srv.Delete(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+	respContent := server.GetResponseContent(respr)
+	if !contains([]int{http.StatusOK, http.StatusNoContent}, respContent.HTTPStatus) {
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusNoContent", respContent.HTTPStatus)}
+	}
+	resp, err := server.NewResponse(respContent, req, nil)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (a *AzureLargeInstanceServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
@@ -252,10 +334,12 @@ func (a *AzureLargeInstanceServerTransport) dispatchBeginRestart(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
+		contentTypeParam := getOptional(getHeaderValue(req.Header, "Content-Type"))
 		var options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions
-		if !reflect.ValueOf(body).IsZero() {
+		if !reflect.ValueOf(body).IsZero() || contentTypeParam != nil {
 			options = &armlargeinstance.AzureLargeInstanceClientBeginRestartOptions{
 				ForceParameter: &body,
+				ContentType:    contentTypeParam,
 			}
 		}
 		respr, errRespr := a.srv.BeginRestart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, options)

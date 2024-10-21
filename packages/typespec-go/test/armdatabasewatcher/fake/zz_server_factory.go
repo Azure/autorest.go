@@ -15,6 +15,9 @@ import (
 
 // ServerFactory is a fake server for instances of the armdatabasewatcher.ClientFactory type.
 type ServerFactory struct {
+	// AlertRuleResourcesServer contains the fakes for client AlertRuleResourcesClient
+	AlertRuleResourcesServer AlertRuleResourcesServer
+
 	// OperationsServer contains the fakes for client OperationsClient
 	OperationsServer OperationsServer
 
@@ -42,6 +45,7 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 type ServerFactoryTransport struct {
 	srv                                *ServerFactory
 	trMu                               sync.Mutex
+	trAlertRuleResourcesServer         *AlertRuleResourcesServerTransport
 	trOperationsServer                 *OperationsServerTransport
 	trSharedPrivateLinkResourcesServer *SharedPrivateLinkResourcesServerTransport
 	trTargetsServer                    *TargetsServerTransport
@@ -61,6 +65,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
+	case "AlertRuleResourcesClient":
+		initServer(s, &s.trAlertRuleResourcesServer, func() *AlertRuleResourcesServerTransport {
+			return NewAlertRuleResourcesServerTransport(&s.srv.AlertRuleResourcesServer)
+		})
+		resp, err = s.trAlertRuleResourcesServer.Do(req)
 	case "OperationsClient":
 		initServer(s, &s.trOperationsServer, func() *OperationsServerTransport { return NewOperationsServerTransport(&s.srv.OperationsServer) })
 		resp, err = s.trOperationsServer.Do(req)

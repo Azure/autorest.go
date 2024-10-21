@@ -20,10 +20,16 @@ type BodyOptionalityClientRequiredImplicitOptions struct {
 // method.
 type BodyOptionalityOptionalExplicitClientOmitOptions struct {
 	Body *BodyModel
+
+	// Body parameter's content type. Known values are application/json
+	ContentType *string
 }
 
 // BodyOptionalityOptionalExplicitClientSetOptions contains the optional parameters for the BodyOptionalityOptionalExplicitClient.Set
 // method.
 type BodyOptionalityOptionalExplicitClientSetOptions struct {
 	Body *BodyModel
+
+	// Body parameter's content type. Known values are application/json
+	ContentType *string
 }

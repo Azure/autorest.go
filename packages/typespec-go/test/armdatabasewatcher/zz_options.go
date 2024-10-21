@@ -4,6 +4,28 @@
 
 package armdatabasewatcher
 
+// AlertRuleResourcesClientCreateOrUpdateOptions contains the optional parameters for the AlertRuleResourcesClient.CreateOrUpdate
+// method.
+type AlertRuleResourcesClientCreateOrUpdateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AlertRuleResourcesClientDeleteOptions contains the optional parameters for the AlertRuleResourcesClient.Delete method.
+type AlertRuleResourcesClientDeleteOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AlertRuleResourcesClientGetOptions contains the optional parameters for the AlertRuleResourcesClient.Get method.
+type AlertRuleResourcesClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// AlertRuleResourcesClientListByParentOptions contains the optional parameters for the AlertRuleResourcesClient.NewListByParentPager
+// method.
+type AlertRuleResourcesClientListByParentOptions struct {
+	// placeholder for future optional parameters
+}
+
 // OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
 type OperationsClientListOptions struct {
 	// placeholder for future optional parameters

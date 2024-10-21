@@ -90,6 +90,30 @@ func PossibleHardwareTypeNamesEnumValues() []HardwareTypeNamesEnum {
 	}
 }
 
+// ManagedServiceIdentityType - Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+type ManagedServiceIdentityType string
+
+const (
+	// ManagedServiceIdentityTypeNone - No managed identity.
+	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
+	// ManagedServiceIdentityTypeSystemAndUserAssigned - System and user assigned managed identity.
+	ManagedServiceIdentityTypeSystemAndUserAssigned ManagedServiceIdentityType = "SystemAssigned,UserAssigned"
+	// ManagedServiceIdentityTypeSystemAssigned - System assigned managed identity.
+	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
+	// ManagedServiceIdentityTypeUserAssigned - User assigned managed identity.
+	ManagedServiceIdentityTypeUserAssigned ManagedServiceIdentityType = "UserAssigned"
+)
+
+// PossibleManagedServiceIdentityTypeValues returns the possible values for the ManagedServiceIdentityType const type.
+func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
+	return []ManagedServiceIdentityType{
+		ManagedServiceIdentityTypeNone,
+		ManagedServiceIdentityTypeSystemAndUserAssigned,
+		ManagedServiceIdentityTypeSystemAssigned,
+		ManagedServiceIdentityTypeUserAssigned,
+	}
+}
+
 // Origin - The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
 // value is "user,system"
 type Origin string
