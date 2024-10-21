@@ -22,6 +22,8 @@ type StandardClient struct {
 }
 
 // BeginCreateOrReplace - Adds a user or replaces a user's fields.
+//
+// Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -47,6 +49,8 @@ func (client *StandardClient) BeginCreateOrReplace(ctx context.Context, name str
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
+//
+// Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -94,6 +98,8 @@ func (client *StandardClient) createOrReplaceCreateRequest(ctx context.Context, 
 }
 
 // BeginDelete - Deletes a user.
+//
+// Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -117,6 +123,8 @@ func (client *StandardClient) BeginDelete(ctx context.Context, name string, opti
 }
 
 // Delete - Deletes a user.
+//
+// Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -160,6 +168,8 @@ func (client *StandardClient) deleteCreateRequest(ctx context.Context, name stri
 }
 
 // BeginExport - Exports a user.
+//
+// Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -184,6 +194,8 @@ func (client *StandardClient) BeginExport(ctx context.Context, name string, form
 }
 
 // Export - Exports a user.
+//
+// Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview

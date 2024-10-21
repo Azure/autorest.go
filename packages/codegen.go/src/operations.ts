@@ -50,8 +50,7 @@ export async function generateOperations(codeModel: go.CodeModel): Promise<Array
 
     // generate client type
 
-    let clientText = '';
-    clientText += `${comment(`${client.description}`, '//', undefined, helpers.commentLength)}\n`;
+    let clientText = helpers.formatDocComment(client.docs);
     clientText += '// Don\'t use this type directly, use ';
     if (client.constructors.length === 1) {
       clientText += `${client.constructors[0].name}() instead.\n`;
@@ -181,18 +180,18 @@ function generateConstructors(azureARM: boolean, client: go.Client, imports: Imp
     for (const ctorParam of constructor.parameters) {
       imports.addImportForType(ctorParam.type);
       ctorParams.push(`${ctorParam.name} ${helpers.formatParameterTypeName(ctorParam)}`);
-      if (ctorParam.description) {
-        paramDocs.push(helpers.formatCommentAsBulletItem(`${ctorParam.name} - ${ctorParam.description}`));
+      if (ctorParam.docs.summary || ctorParam.docs.description) {
+        paramDocs.push(helpers.formatCommentAsBulletItem(ctorParam.name, ctorParam.docs));
       }
     }
 
     // add client options last
     ctorParams.push(`${client.options.name} ${helpers.formatParameterTypeName(client.options)}`);
-    paramDocs.push(helpers.formatCommentAsBulletItem(`${client.options.name} - ${client.options.description}`));
+    paramDocs.push(helpers.formatCommentAsBulletItem(client.options.name, client.options.docs));
 
     ctorText += `// ${constructor.name} creates a new instance of ${client.name} with the specified values.\n`;
     for (const doc of paramDocs) {
-      ctorText += `${doc}\n`;
+      ctorText += doc;
     }
 
     ctorText += `func ${constructor.name}(${ctorParams.join(', ')}) (*${client.name}, error) {\n`;
@@ -230,7 +229,7 @@ function createARMClientConstructor(client: go.Client, imports: ImportManager): 
     ctor.parameters.push(param);
   }
   const tokenCredParam = new go.Parameter('credential', new go.QualifiedType('TokenCredential', 'github.com/Azure/azure-sdk-for-go/sdk/azcore'), 'required', true, 'client');
-  tokenCredParam.description = 'used to authorize requests. Usually a credential from azidentity.';
+  tokenCredParam.docs.summary = 'used to authorize requests. Usually a credential from azidentity.';
   ctor.parameters.push(tokenCredParam);
   return ctor;
 }
@@ -437,8 +436,8 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
   let text = '';
   const respErrDoc = genRespErrorDoc(method);
   const apiVerDoc = genApiVersionDoc(method.apiVersions);
-  if (method.description) {
-    text += `${comment(`${methodName} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+  if (method.docs.summary || method.docs.description) {
+    text += helpers.formatDocCommentWithPrefix(methodName, method.docs);
   } else if (respErrDoc.length > 0 || apiVerDoc.length > 0) {
     // if the method has no doc comment but we're adding other
     // doc comments, add an empty method name comment. this preserves
@@ -451,9 +450,7 @@ function generateOperation(client: go.Client, method: go.Method, imports: Import
     methodName = method.naming.internalMethod;
   } else {
     for (const param of values(helpers.getMethodParameters(method))) {
-      if (param.description) {
-        text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
-      }
+      text += helpers.formatCommentAsBulletItem(param.name, param.docs);
     }
   }
   text += `func (client *${client.name}) ${methodName}(${params}) (${returns.join(', ')}) {\n`;
@@ -1208,17 +1205,15 @@ function generateLROBeginMethod(client: go.Client, method: go.LROMethod, imports
   const returns = generateReturnsInfo(method, 'api');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
-  if (method.description) {
-    text += `${comment(`${fixUpMethodName(method)} - ${method.description}`, '//', undefined, helpers.commentLength)}\n`;
+  if (method.docs.summary || method.docs.description) {
+    text += helpers.formatDocCommentWithPrefix(fixUpMethodName(method), method.docs);
     text += genRespErrorDoc(method);
     text += genApiVersionDoc(method.apiVersions);
   }
   const zeroResp = getZeroReturnValue(method, 'api');
   const methodParams = helpers.getMethodParameters(method);
   for (const param of values(methodParams)) {
-    if (param.description) {
-      text += `${helpers.formatCommentAsBulletItem(`${param.name} - ${param.description}`)}\n`;
-    }
+    text += helpers.formatCommentAsBulletItem(param.name, param.docs);
   }
   text += `func (client *${client.name}) ${fixUpMethodName(method)}(${params}) (${returns.join(', ')}) {\n`;
   let pollerType = 'nil';

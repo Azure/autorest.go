@@ -13,14 +13,14 @@ import (
 	"sync"
 )
 
-// ServerFactory is a fake server for instances of the managed_identity.ClientFactory type.
+// ServerFactory is a fake server for instances of the commonpropsgroup.ClientFactory type.
 type ServerFactory struct {
-	// ManagedIdentityTrackedResourcesServer contains the fakes for client ManagedIdentityTrackedResourcesClient
-	ManagedIdentityTrackedResourcesServer ManagedIdentityTrackedResourcesServer
+	// ManagedIdentityServer contains the fakes for client ManagedIdentityClient
+	ManagedIdentityServer ManagedIdentityServer
 }
 
 // NewServerFactoryTransport creates a new instance of ServerFactoryTransport with the provided implementation.
-// The returned ServerFactoryTransport instance is connected to an instance of managed_identity.ClientFactory via the
+// The returned ServerFactoryTransport instance is connected to an instance of commonpropsgroup.ClientFactory via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 	return &ServerFactoryTransport{
@@ -28,12 +28,12 @@ func NewServerFactoryTransport(srv *ServerFactory) *ServerFactoryTransport {
 	}
 }
 
-// ServerFactoryTransport connects instances of managed_identity.ClientFactory to instances of ServerFactory.
+// ServerFactoryTransport connects instances of commonpropsgroup.ClientFactory to instances of ServerFactory.
 // Don't use this type directly, use NewServerFactoryTransport instead.
 type ServerFactoryTransport struct {
-	srv                                     *ServerFactory
-	trMu                                    sync.Mutex
-	trManagedIdentityTrackedResourcesServer *ManagedIdentityTrackedResourcesServerTransport
+	srv                     *ServerFactory
+	trMu                    sync.Mutex
+	trManagedIdentityServer *ManagedIdentityServerTransport
 }
 
 // Do implements the policy.Transporter interface for ServerFactoryTransport.
@@ -49,11 +49,11 @@ func (s *ServerFactoryTransport) Do(req *http.Request) (*http.Response, error) {
 	var err error
 
 	switch client {
-	case "ManagedIdentityTrackedResourcesClient":
-		initServer(s, &s.trManagedIdentityTrackedResourcesServer, func() *ManagedIdentityTrackedResourcesServerTransport {
-			return NewManagedIdentityTrackedResourcesServerTransport(&s.srv.ManagedIdentityTrackedResourcesServer)
+	case "ManagedIdentityClient":
+		initServer(s, &s.trManagedIdentityServer, func() *ManagedIdentityServerTransport {
+			return NewManagedIdentityServerTransport(&s.srv.ManagedIdentityServer)
 		})
-		resp, err = s.trManagedIdentityTrackedResourcesServer.Do(req)
+		resp, err = s.trManagedIdentityServer.Do(req)
 	default:
 		err = fmt.Errorf("unhandled client %s", client)
 	}

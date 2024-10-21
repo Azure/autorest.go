@@ -13,7 +13,7 @@ import * as type from './type.js';
 export interface Client {
   name: string;
 
-  description: string;
+  docs: type.Docs;
 
   // the client options type. for ARM, this will be a QualifiedType (arm.ClientOptions)
   options: ClientOptions;
@@ -65,7 +65,7 @@ export interface ClientAccessor {
 export interface Method {
   name: string;
 
-  description?: string;
+  docs: type.Docs;
 
   httpPath: string;
 
@@ -158,11 +158,11 @@ export function newClientOptions(modelType: pkg.CodeModelType, clientName: strin
   let options: ClientOptions;
   if (modelType === 'azure-arm') {
     options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
-    options.description = 'pass nil to accept the default values.';
+    options.docs.description = 'pass nil to accept the default values.';
   } else {
     const optionsTypeName = `${clientName}Options`;
     options = new param.ParameterGroup('options', optionsTypeName, false, 'client');
-    options.description = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
+    options.docs.summary = `${optionsTypeName} contains the optional values for creating a [${clientName}]`;
   }
   return options;
 }
@@ -185,6 +185,7 @@ export class Method implements Method {
     this.naming = naming;
     this.parameters = new Array<param.Parameter>();
     this.examples = [];
+    this.docs = {};
   }
 }
 
@@ -192,11 +193,11 @@ export class Method implements Method {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class Client implements Client {
-  constructor(name: string, description: string, options: ClientOptions) {
+  constructor(name: string, docs: type.Docs, options: ClientOptions) {
     this.name = name;
     this.templatedHost = false;
     this.constructors = new Array<Constructor>();
-    this.description = description;
+    this.docs = docs;
     this.methods = new Array<Method>();
     this.clientAccessors = new Array<ClientAccessor>();
     this.parameters = new Array<param.Parameter>();

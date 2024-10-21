@@ -29,12 +29,12 @@ export async function generateConstants(codeModel: go.CodeModel): Promise<string
     text += ')\n\n';
   }
   for (const enm of values(codeModel.constants)) {
-    text += helpers.formatDocCommentWithPrefix(enm.name, enm.description);
+    text += helpers.formatDocCommentWithPrefix(enm.name, enm.docs);
     text += `type ${enm.name} ${enm.type}\n\n`;
     const vals = new Array<string>();
     text += 'const (\n';
     for (const val of values(enm.values)) {
-      text += helpers.formatDocCommentWithPrefix(val.name, val.description);
+      text += helpers.formatDocCommentWithPrefix(val.name, val.docs);
       let formatValue = `"${val.value}"`;
       if (enm.type !== 'string') {
         formatValue = `${val.value}`;

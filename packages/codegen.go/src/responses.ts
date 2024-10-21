@@ -110,7 +110,7 @@ function generateUnmarshaller(respEnv: go.ResponseEnvelope, imports: ImportManag
 }
 
 function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
-  let text = helpers.formatDocComment(respEnv.description);
+  let text = helpers.formatDocComment(respEnv.docs);
 
   text += `type ${respEnv.name} struct {\n`;
   if (!respEnv.result && respEnv.headers.length === 0) {
@@ -118,7 +118,7 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     text += '\t// placeholder for future response values\n';
   } else {
     // fields will contain the merged headers and response field so they can be sorted together
-    const fields = new Array<{desc?: string, field: string}>();
+    const fields = new Array<{docs: go.Docs, field: string}>();
 
     // used to track when to add an extra \n between fields that have comments
     let first = true;
@@ -126,15 +126,10 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
     if (respEnv.result) {
       if (go.isModelResult(respEnv.result) || go.isPolymorphicResult(respEnv.result)) {
         // anonymously embedded type always goes first
-        text += helpers.formatDocComment(respEnv.result.description);
+        text += helpers.formatDocComment(respEnv.result.docs);
         text += `\t${go.getTypeDeclaration(go.getResultPossibleType(respEnv.result))}\n`;
         first = false;
       } else {
-        let desc: string | undefined;
-        if (respEnv.result.description) {
-          desc = `\t${comment(respEnv.result.description, '// ', undefined, helpers.commentLength)}\n`;
-        }
-
         const type = go.getResultPossibleType(respEnv.result);
         imports.addImportForType(type);
 
@@ -148,29 +143,25 @@ function emit(respEnv: go.ResponseEnvelope, imports: ImportManager): string {
           }
         }
 
-        fields.push({desc: desc, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
+        fields.push({docs: respEnv.result.docs, field: `\t${respEnv.result.fieldName} ${getStar(respEnv.result.byValue)}${go.getTypeDeclaration(type)}${tag}\n`});
       }
     }
 
     for (const header of values(respEnv.headers)) {
       imports.addImportForType(header.type);
-      let desc: string | undefined;
-      if (header.description) {
-        desc = `\t${comment(header.description, '// ', undefined, helpers.commentLength)}\n`;
-      }
-      fields.push({desc: desc, field: `\t${header.fieldName} ${getStar(header.byValue)}${go.getTypeDeclaration(header.type)}\n`});
+      fields.push({docs: header.docs, field: `\t${header.fieldName} ${getStar(header.byValue)}${go.getTypeDeclaration(header.type)}\n`});
     }
 
     fields.sort((a: {desc?: string, field: string}, b: {desc?: string, field: string}) => { return helpers.sortAscending(a.field, b.field); });
 
     for (const field of fields) {
-      if (field.desc) {
+      if (field.docs.summary || field.docs.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += field.desc;
+        text += helpers.formatDocComment(field.docs);
       }
       text += field.field;
       first = false;

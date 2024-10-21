@@ -162,22 +162,22 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
       }
       if (go.isLiteralValue(field.type) && model.usage !== go.UsageFlags.Output) {
         // add a comment with the const value for const properties that are sent over the wire
-        if (field.description) {
-          field.description += '\n';
+        if (field.docs.description) {
+          field.docs.description += '\n';
         }
-        field.description += `Field has constant value ${helpers.formatLiteralValue(field.type, false)}, any specified value is ignored.`;
+        field.docs.description += `Field has constant value ${helpers.formatLiteralValue(field.type, false)}, any specified value is ignored.`;
       }
-      if (field.description) {
-        descriptionMods.push(field.description);
+      if (field.docs.description) {
+        descriptionMods.push(field.docs.description);
       } else if (go.isSliceType(field.type) && field.type.rawJSONAsBytes) {
         // add a basic description if one isn't available
         descriptionMods.push('The contents of this field are raw JSON.');
       }
-      field.description = descriptionMods.join('; ');
+      field.docs.description = descriptionMods.join('; ');
     }
 
     const serDeFormat = helpers.getSerDeFormat(model, codeModel);
-    const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.description);
+    const modelDef = new ModelDef(model.name, serDeFormat, model.fields, model.docs);
     for (const field of values(modelDef.Fields)) {
       modelImports.addImportForType(field.type);
     }
@@ -772,25 +772,22 @@ class SerDeInfo {
 class ModelDef {
   readonly Name: string;
   readonly Format: helpers.SerDeFormat;
-  readonly Description?: string;
+  readonly Docs: go.Docs;
   readonly Fields: Array<go.ModelField>;
   readonly SerDe: SerDeInfo;
   readonly Methods: Array<ModelMethod>;
 
-  constructor(name: string, format: helpers.SerDeFormat, fields: Array<go.ModelField>, description?: string) {
+  constructor(name: string, format: helpers.SerDeFormat, fields: Array<go.ModelField>, docs: go.Docs) {
     this.Name = name;
     this.Format = format;
-    this.Description = description;
+    this.Docs = docs;
     this.Fields = fields;
     this.SerDe = new SerDeInfo();
     this.Methods = new Array<ModelMethod>();
   }
 
   text(): string {
-    let text = '';
-    if (this.Description) {
-      text += `${comment(this.Description, '// ', undefined, helpers.commentLength)}\n`;
-    }
+    let text = helpers.formatDocComment(this.Docs);
     text += `type ${this.Name} struct {\n`;
 
     // group fields by required/optional/read-only in that order
@@ -808,13 +805,13 @@ class ModelDef {
     let first = true;
 
     for (const field of values(this.Fields)) {
-      if (field.description) {
+      if (field.docs.summary || field.docs.description) {
         if (!first) {
           // add an extra new-line between fields IFF the field
           // has a comment and it's not the very first one.
           text += '\n';
         }
-        text += `\t${comment(field.description, '// ', undefined, helpers.commentLength)}\n`;
+        text += helpers.formatDocComment(field.docs);
       }
       let typeName = go.getTypeDeclaration(field.type);
       if (go.isLiteralValue(field.type)) {

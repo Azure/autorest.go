@@ -197,6 +197,8 @@ type Contact struct {
 }
 
 // CustomProperties - Custom Properties
+//
+// The custom metadata defined for API catalog entities.
 type CustomProperties struct {
 }
 

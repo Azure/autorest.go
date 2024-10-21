@@ -5,13 +5,13 @@
 
 import * as param from './param.js';
 import * as result from './result.js';
-import { BytesType, ConstantType, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
+import { BytesType, ConstantType, Docs, LiteralValue, MapType, ModelType, PolymorphicType, PossibleType, PrimitiveType, SliceType, TimeType } from './type.js';
 
 // MethodExample is an example for a method. This code model part is for example or test generation.
 export interface MethodExample {
   name: string;
 
-  description: string;
+  docs: Docs;
 
   filePath: string;
 
@@ -90,9 +90,9 @@ export interface StructExample {
 }
 
 export class MethodExample implements MethodExample {
-  constructor(name: string, description: string, filePath: string) {
+  constructor(name: string, docs: Docs, filePath: string) {
     this.name = name;
-    this.description = description;
+    this.docs = docs;
     this.filePath = filePath;
     this.parameters = [];
     this.optionalParamsGroup = [];

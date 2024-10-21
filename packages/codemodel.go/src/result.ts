@@ -13,7 +13,7 @@ export type ResultType = AnyResult | BinaryResult | HeadAsBooleanResult | Monomo
 export interface ResponseEnvelope {
   name: string;
 
-  description: string;
+  docs: type.Docs;
 
   // for operations that return no body (e.g. a 204) this will be undefined.
   result?: ResultType;
@@ -31,7 +31,7 @@ export interface AnyResult {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   // maps an HTTP status code to a result type.
   // status codes that don't return a schema will be absent.
@@ -51,7 +51,7 @@ export interface BinaryResult {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   binaryFormat: BinaryResultFormat;
 
@@ -63,7 +63,7 @@ export interface HeadAsBooleanResult {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   headAsBoolean: true;
 
@@ -78,7 +78,7 @@ export interface MonomorphicResult {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   monomorphicType: MonomorphicResultType;
 
@@ -93,7 +93,7 @@ export interface MonomorphicResult {
 // PolymorphicResult is for discriminated types.
 // The type is anonymously embedded in the response envelope.
 export interface PolymorphicResult {
-  description?: string;
+  docs: type.Docs;
 
   interfaceType: type.InterfaceType;
 
@@ -107,7 +107,7 @@ export type ModelResultFormat = 'JSON' | 'XML';
 // ModelResult is a standard schema response.
 // The type is anonymously embedded in the response envelope.
 export interface ModelResult {
-  description?: string;
+  docs: type.Docs;
 
   modelType: type.ModelType;
 
@@ -165,7 +165,7 @@ export interface HeaderResponse {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   type: param.HeaderType;
 
@@ -180,7 +180,7 @@ export interface HeaderMapResponse {
   // the name of the field within the response envelope
   fieldName: string;
 
-  description?: string;
+  docs: type.Docs;
 
   type: type.MapType;
 
@@ -196,8 +196,8 @@ export interface HeaderMapResponse {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export class ResponseEnvelope implements ResponseEnvelope {
-  constructor(name: string, description: string, forMethod: client.Method) {
-    this.description = description;
+  constructor(name: string, docs: type.Docs, forMethod: client.Method) {
+    this.docs = docs;
     this.headers = new Array<HeaderResponse | HeaderMapResponse>();
     this.method = forMethod;
     this.name = name;
@@ -210,6 +210,7 @@ export class HeaderResponse implements HeaderResponse {
     this.type = type;
     this.byValue = byValue;
     this.headerName = headerName;
+    this.docs = {};
   }
 }
 
@@ -220,6 +221,7 @@ export class HeaderMapResponse implements HeaderMapResponse {
     this.collectionPrefix = collectionPrefix;
     this.byValue = byValue;
     this.headerName = headerName;
+    this.docs = {};
   }
 }
 
@@ -229,6 +231,7 @@ export class AnyResult implements AnyResult {
     this.format = format;
     this.httpStatusCodeType = resultTypes;
     this.byValue = true;
+    this.docs = {};
   }
 }
 
@@ -237,6 +240,7 @@ export class BinaryResult implements BinaryResult {
     this.fieldName = fieldName;
     this.binaryFormat = format;
     this.byValue = true;
+    this.docs = {};
   }
 }
 
@@ -245,6 +249,7 @@ export class HeadAsBooleanResult implements HeadAsBooleanResult {
     this.fieldName = fieldName;
     this.headAsBoolean = true;
     this.byValue = true;
+    this.docs = {};
   }
 }
 
@@ -254,6 +259,7 @@ export class MonomorphicResult implements MonomorphicResult {
     this.format = format;
     this.monomorphicType = type;
     this.byValue = byValue;
+    this.docs = {};
   }
 }
 
@@ -261,6 +267,7 @@ export class PolymorphicResult implements PolymorphicResult {
   constructor(type: type.InterfaceType) {
     this.interfaceType = type;
     this.format = 'JSON';
+    this.docs = {};
   }
 }
 
@@ -268,5 +275,6 @@ export class ModelResult implements ModelResult {
   constructor(type: type.ModelType, format: ModelResultFormat) {
     this.modelType = type;
     this.format = format;
+    this.docs = {};
   }
 }

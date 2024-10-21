@@ -22,6 +22,8 @@ type BasicClient struct {
 }
 
 // CreateOrReplace - Adds a user or replaces a user's fields.
+//
+// Creates or replaces a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -79,6 +81,8 @@ func (client *BasicClient) createOrReplaceHandleResponse(resp *http.Response) (B
 }
 
 // CreateOrUpdate - Adds a user or updates a user's fields.
+//
+// Creates or updates a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -136,6 +140,8 @@ func (client *BasicClient) createOrUpdateHandleResponse(resp *http.Response) (Ba
 }
 
 // Delete - Deletes a user.
+//
+// Deletes a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -178,6 +184,8 @@ func (client *BasicClient) deleteCreateRequest(ctx context.Context, id int32, _ 
 }
 
 // Export - Exports a user.
+//
+// Exports a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -232,6 +240,8 @@ func (client *BasicClient) exportHandleResponse(resp *http.Response) (BasicClien
 }
 
 // ExportAllUsers - Exports all users.
+//
+// Exports all users
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -284,6 +294,8 @@ func (client *BasicClient) exportAllUsersHandleResponse(resp *http.Response) (Ba
 }
 
 // Get - Gets a user.
+//
+// Gets a User
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -336,6 +348,8 @@ func (client *BasicClient) getHandleResponse(resp *http.Response) (BasicClientGe
 }
 
 // NewListPager - Lists all users.
+//
+// # Lists all Users
 //
 // Generated from API version 2022-12-01-preview
 //   - options - BasicClientListOptions contains the optional parameters for the BasicClient.NewListPager method.
