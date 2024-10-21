@@ -157,7 +157,7 @@ export class typeAdapter {
   // returns the same instance of the converted type.
   getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
-      case 'any':
+      case 'unknown':
       case 'boolean':
       case 'bytes':
       case 'decimal':
@@ -300,7 +300,7 @@ export class typeAdapter {
 
   private getBuiltInType(type: tcgc.SdkBuiltInType): go.PossibleType {
     switch (type.kind) {
-      case 'any': {
+      case 'unknown': {
         if (this.codeModel.options.rawJSONAsBytes) {
           const anyRawJSONKey = 'any-raw-json';
           let anyRawJSON = this.types.get(anyRawJSONKey);
@@ -946,7 +946,7 @@ export function getEndpointType(param: tcgc.SdkEndpointParameter) {
   if (param.type.kind === 'endpoint') {
     endpointType = param.type;
   } else {
-    endpointType = param.type.values[0];
+    endpointType = param.type.variantTypes[0];
   }
   // for endpoint with only a template argument with default value, we fall back to constant endpoint
   if (endpointType.templateArguments.length === 1 && endpointType.templateArguments[0].clientDefaultValue) {
@@ -1019,7 +1019,7 @@ export function isTypePassedByValue(type: tcgc.SdkType): boolean {
   if (type.kind === 'nullable') {
     type = type.type;
   }
-  return type.kind === 'any' || type.kind === 'array' ||
+  return type.kind === 'unknown' || type.kind === 'array' ||
   type.kind === 'bytes' || type.kind === 'dict' ||
     (type.kind === 'model' && !!type.discriminatedSubtypes);
 }
