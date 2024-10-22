@@ -158,7 +158,7 @@ export function newClientOptions(modelType: pkg.CodeModelType, clientName: strin
   let options: ClientOptions;
   if (modelType === 'azure-arm') {
     options = new param.Parameter('options', new type.QualifiedType('ClientOptions', 'github.com/Azure/azure-sdk-for-go/sdk/azcore/arm'), 'optional', false, 'client');
-    options.docs.description = 'pass nil to accept the default values.';
+    options.docs.summary = 'pass nil to accept the default values.';
   } else {
     const optionsTypeName = `${clientName}Options`;
     options = new param.ParameterGroup('options', optionsTypeName, false, 'client');
