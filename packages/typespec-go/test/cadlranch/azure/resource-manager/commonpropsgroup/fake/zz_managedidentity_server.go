@@ -5,48 +5,48 @@
 package fake
 
 import (
+	"commonpropsgroup"
 	"context"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"managed_identity"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
-// ManagedIdentityTrackedResourcesServer is a fake server for instances of the managed_identity.ManagedIdentityTrackedResourcesClient type.
-type ManagedIdentityTrackedResourcesServer struct {
-	// CreateWithSystemAssigned is the fake for method ManagedIdentityTrackedResourcesClient.CreateWithSystemAssigned
+// ManagedIdentityServer is a fake server for instances of the commonpropsgroup.ManagedIdentityClient type.
+type ManagedIdentityServer struct {
+	// CreateWithSystemAssigned is the fake for method ManagedIdentityClient.CreateWithSystemAssigned
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
-	CreateWithSystemAssigned func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, resource managed_identity.ManagedIdentityTrackedResource, options *managed_identity.ManagedIdentityTrackedResourcesClientCreateWithSystemAssignedOptions) (resp azfake.Responder[managed_identity.ManagedIdentityTrackedResourcesClientCreateWithSystemAssignedResponse], errResp azfake.ErrorResponder)
+	CreateWithSystemAssigned func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, resource commonpropsgroup.ManagedIdentityTrackedResource, options *commonpropsgroup.ManagedIdentityClientCreateWithSystemAssignedOptions) (resp azfake.Responder[commonpropsgroup.ManagedIdentityClientCreateWithSystemAssignedResponse], errResp azfake.ErrorResponder)
 
-	// Get is the fake for method ManagedIdentityTrackedResourcesClient.Get
+	// Get is the fake for method ManagedIdentityClient.Get
 	// HTTP status codes to indicate success: http.StatusOK
-	Get func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, options *managed_identity.ManagedIdentityTrackedResourcesClientGetOptions) (resp azfake.Responder[managed_identity.ManagedIdentityTrackedResourcesClientGetResponse], errResp azfake.ErrorResponder)
+	Get func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, options *commonpropsgroup.ManagedIdentityClientGetOptions) (resp azfake.Responder[commonpropsgroup.ManagedIdentityClientGetResponse], errResp azfake.ErrorResponder)
 
-	// UpdateWithUserAssignedAndSystemAssigned is the fake for method ManagedIdentityTrackedResourcesClient.UpdateWithUserAssignedAndSystemAssigned
+	// UpdateWithUserAssignedAndSystemAssigned is the fake for method ManagedIdentityClient.UpdateWithUserAssignedAndSystemAssigned
 	// HTTP status codes to indicate success: http.StatusOK
-	UpdateWithUserAssignedAndSystemAssigned func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, properties managed_identity.ManagedIdentityTrackedResource, options *managed_identity.ManagedIdentityTrackedResourcesClientUpdateWithUserAssignedAndSystemAssignedOptions) (resp azfake.Responder[managed_identity.ManagedIdentityTrackedResourcesClientUpdateWithUserAssignedAndSystemAssignedResponse], errResp azfake.ErrorResponder)
+	UpdateWithUserAssignedAndSystemAssigned func(ctx context.Context, resourceGroupName string, managedIdentityTrackedResourceName string, properties commonpropsgroup.ManagedIdentityTrackedResource, options *commonpropsgroup.ManagedIdentityClientUpdateWithUserAssignedAndSystemAssignedOptions) (resp azfake.Responder[commonpropsgroup.ManagedIdentityClientUpdateWithUserAssignedAndSystemAssignedResponse], errResp azfake.ErrorResponder)
 }
 
-// NewManagedIdentityTrackedResourcesServerTransport creates a new instance of ManagedIdentityTrackedResourcesServerTransport with the provided implementation.
-// The returned ManagedIdentityTrackedResourcesServerTransport instance is connected to an instance of managed_identity.ManagedIdentityTrackedResourcesClient via the
+// NewManagedIdentityServerTransport creates a new instance of ManagedIdentityServerTransport with the provided implementation.
+// The returned ManagedIdentityServerTransport instance is connected to an instance of commonpropsgroup.ManagedIdentityClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
-func NewManagedIdentityTrackedResourcesServerTransport(srv *ManagedIdentityTrackedResourcesServer) *ManagedIdentityTrackedResourcesServerTransport {
-	return &ManagedIdentityTrackedResourcesServerTransport{srv: srv}
+func NewManagedIdentityServerTransport(srv *ManagedIdentityServer) *ManagedIdentityServerTransport {
+	return &ManagedIdentityServerTransport{srv: srv}
 }
 
-// ManagedIdentityTrackedResourcesServerTransport connects instances of managed_identity.ManagedIdentityTrackedResourcesClient to instances of ManagedIdentityTrackedResourcesServer.
-// Don't use this type directly, use NewManagedIdentityTrackedResourcesServerTransport instead.
-type ManagedIdentityTrackedResourcesServerTransport struct {
-	srv *ManagedIdentityTrackedResourcesServer
+// ManagedIdentityServerTransport connects instances of commonpropsgroup.ManagedIdentityClient to instances of ManagedIdentityServer.
+// Don't use this type directly, use NewManagedIdentityServerTransport instead.
+type ManagedIdentityServerTransport struct {
+	srv *ManagedIdentityServer
 }
 
-// Do implements the policy.Transporter interface for ManagedIdentityTrackedResourcesServerTransport.
-func (m *ManagedIdentityTrackedResourcesServerTransport) Do(req *http.Request) (*http.Response, error) {
+// Do implements the policy.Transporter interface for ManagedIdentityServerTransport.
+func (m *ManagedIdentityServerTransport) Do(req *http.Request) (*http.Response, error) {
 	rawMethod := req.Context().Value(runtime.CtxAPINameKey{})
 	method, ok := rawMethod.(string)
 	if !ok {
@@ -56,18 +56,18 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) Do(req *http.Request) (
 	return m.dispatchToMethodFake(req, method)
 }
 
-func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
+func (m *ManagedIdentityServerTransport) dispatchToMethodFake(req *http.Request, method string) (*http.Response, error) {
 	resultChan := make(chan result)
 	defer close(resultChan)
 
 	go func() {
 		var res result
 		switch method {
-		case "ManagedIdentityTrackedResourcesClient.CreateWithSystemAssigned":
+		case "ManagedIdentityClient.CreateWithSystemAssigned":
 			res.resp, res.err = m.dispatchCreateWithSystemAssigned(req)
-		case "ManagedIdentityTrackedResourcesClient.Get":
+		case "ManagedIdentityClient.Get":
 			res.resp, res.err = m.dispatchGet(req)
-		case "ManagedIdentityTrackedResourcesClient.UpdateWithUserAssignedAndSystemAssigned":
+		case "ManagedIdentityClient.UpdateWithUserAssignedAndSystemAssigned":
 			res.resp, res.err = m.dispatchUpdateWithUserAssignedAndSystemAssigned(req)
 		default:
 			res.err = fmt.Errorf("unhandled API %s", method)
@@ -87,17 +87,17 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchToMethodFake(re
 	}
 }
 
-func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchCreateWithSystemAssigned(req *http.Request) (*http.Response, error) {
+func (m *ManagedIdentityServerTransport) dispatchCreateWithSystemAssigned(req *http.Request) (*http.Response, error) {
 	if m.srv.CreateWithSystemAssigned == nil {
 		return nil, &nonRetriableError{errors.New("fake for method CreateWithSystemAssigned not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.CommonTypes\.ManagedIdentity/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[managed_identity.ManagedIdentityTrackedResource](req)
+	body, err := server.UnmarshalRequestAsJSON[commonpropsgroup.ManagedIdentityTrackedResource](req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,11 +124,11 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchCreateWithSyste
 	return resp, nil
 }
 
-func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
+func (m *ManagedIdentityServerTransport) dispatchGet(req *http.Request) (*http.Response, error) {
 	if m.srv.Get == nil {
 		return nil, &nonRetriableError{errors.New("fake for method Get not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.CommonTypes\.ManagedIdentity/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
@@ -157,17 +157,17 @@ func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchGet(req *http.R
 	return resp, nil
 }
 
-func (m *ManagedIdentityTrackedResourcesServerTransport) dispatchUpdateWithUserAssignedAndSystemAssigned(req *http.Request) (*http.Response, error) {
+func (m *ManagedIdentityServerTransport) dispatchUpdateWithUserAssignedAndSystemAssigned(req *http.Request) (*http.Response, error) {
 	if m.srv.UpdateWithUserAssignedAndSystemAssigned == nil {
 		return nil, &nonRetriableError{errors.New("fake for method UpdateWithUserAssignedAndSystemAssigned not implemented")}
 	}
-	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.Models\.CommonTypes\.ManagedIdentity/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Azure\.ResourceManager\.CommonProperties/managedIdentityTrackedResources/(?P<managedIdentityTrackedResourceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
 	if matches == nil || len(matches) < 3 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	body, err := server.UnmarshalRequestAsJSON[managed_identity.ManagedIdentityTrackedResource](req)
+	body, err := server.UnmarshalRequestAsJSON[commonpropsgroup.ManagedIdentityTrackedResource](req)
 	if err != nil {
 		return nil, err
 	}

@@ -28,7 +28,7 @@ const cadlRanch = {
   'lrostdgroup': ['azure/core/lro/standard'],
   'azurepagegroup': ['azure/core/page'],
   'corescalargroup': ['azure/core/scalar'],
-  'managed_identity': ['azure/resource-manager/models/common-types/managed-identity'],
+  'commonpropsgroup': ['azure/resource-manager/common-properties'],
   //'resources': ['azure/resource-manager/models/resources'], // TODO: https://github.com/Azure/typespec-azure/issues/1709
   //'traitsgroup': ['azure/core/traits'], // requires union support
   'xmsclientreqidgroup': ['azure/special-headers/client-request-id'],

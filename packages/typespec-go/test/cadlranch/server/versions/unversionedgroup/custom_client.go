@@ -14,8 +14,7 @@ func NewNotVersionedClient(options *azcore.ClientOptions) (*NotVersionedClient, 
 		return nil, err
 	}
 	return &NotVersionedClient{
-		internal:   internal,
-		endpoint:   "http://localhost:3000",
-		apiVersion: "v1.0",
+		internal: internal,
+		endpoint: "http://localhost:3000",
 	}, nil
 }

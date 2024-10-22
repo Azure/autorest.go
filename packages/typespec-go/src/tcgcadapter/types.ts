@@ -157,7 +157,6 @@ export class typeAdapter {
   // returns the same instance of the converted type.
   getPossibleType(type: tcgc.SdkType, elementTypeByValue: boolean, substituteDiscriminator: boolean): go.PossibleType {
     switch (type.kind) {
-      case 'unknown':
       case 'boolean':
       case 'bytes':
       case 'decimal':
@@ -173,6 +172,7 @@ export class typeAdapter {
       case 'uint16':
       case 'uint32':
       case 'uint64':
+      case 'unknown':
       case 'safeint':
       case 'plainDate':
       case 'plainTime':
@@ -451,7 +451,8 @@ export class typeAdapter {
     }
     constType = new go.ConstantType(constTypeName, getPrimitiveType(enumType.valueType.kind), `Possible${constTypeName}Values`);
     constType.values = this.getConstantValues(constType, enumType.values);
-    constType.description = enumType.description;
+    constType.docs.summary = enumType.summary;
+    constType.docs.description = enumType.doc;
     this.types.set(constTypeName, constType);
     return constType;
   }
@@ -547,12 +548,19 @@ export class typeAdapter {
       // polymorphic types don't have XMLInfo
       // TODO: XMLInfo
     }
-    if (model.description) {
-      modelType.description = model.description;
-      if (!modelType.description.startsWith(modelName)) {
-        modelType.description = `${modelName} - ${modelType.description}`;
+
+    modelType.docs.summary = model.summary;
+    modelType.docs.description = model.doc;
+    if (modelType.docs.summary) {
+      if (!modelType.docs.summary.startsWith(modelName)) {
+        modelType.docs.summary = `${modelName} - ${modelType.docs.summary}`;
+      }
+    } else if (modelType.docs.description) {
+      if (!modelType.docs.description.startsWith(modelName)) {
+        modelType.docs.description = `${modelName} - ${modelType.docs.description}`;
       }
     }
+
     this.types.set(modelName, modelType);
     return modelType;
   }
@@ -594,7 +602,8 @@ export class typeAdapter {
       }
     }
     const field = new go.ModelField(naming.capitalize(naming.ensureNameCase(prop.name)), type, fieldByValue, prop.serializedName, annotations);
-    field.description = prop.description;
+    field.docs.summary = prop.summary;
+    field.docs.description = prop.doc;
     if (prop.kind === 'path') {
       // for ARM resources, a property of kind path is usually the model
       // key and will be exposed as a discrete method parameter. this also
@@ -623,7 +632,8 @@ export class typeAdapter {
       let value = this.constValues.get(valueTypeName);
       if (!value) {
         value = new go.ConstantValue(valueTypeName, type, valueType.value);
-        value.description = valueType.description;
+        value.docs.summary = valueType.summary;
+        value.docs.description = valueType.doc;
         this.constValues.set(valueTypeName, value);
       }
       values.push(value);
@@ -950,7 +960,7 @@ export function getEndpointType(param: tcgc.SdkEndpointParameter) {
   }
   // for endpoint with only a template argument with default value, we fall back to constant endpoint
   if (endpointType.templateArguments.length === 1 && endpointType.templateArguments[0].clientDefaultValue) {
-    endpointType.serverUrl = endpointType.templateArguments[0].clientDefaultValue;
+    endpointType.serverUrl = <string>endpointType.templateArguments[0].clientDefaultValue;
     endpointType.templateArguments = [];
   }
   return endpointType;

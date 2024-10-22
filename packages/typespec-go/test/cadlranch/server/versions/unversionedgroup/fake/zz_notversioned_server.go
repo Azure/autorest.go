@@ -12,6 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"net/url"
 	"regexp"
 	"unversionedgroup"
 )
@@ -20,11 +21,11 @@ import (
 type NotVersionedServer struct {
 	// WithPathAPIVersion is the fake for method NotVersionedClient.WithPathAPIVersion
 	// HTTP status codes to indicate success: http.StatusOK
-	WithPathAPIVersion func(ctx context.Context, options *unversionedgroup.NotVersionedClientWithPathAPIVersionOptions) (resp azfake.Responder[unversionedgroup.NotVersionedClientWithPathAPIVersionResponse], errResp azfake.ErrorResponder)
+	WithPathAPIVersion func(ctx context.Context, apiVersion string, options *unversionedgroup.NotVersionedClientWithPathAPIVersionOptions) (resp azfake.Responder[unversionedgroup.NotVersionedClientWithPathAPIVersionResponse], errResp azfake.ErrorResponder)
 
 	// WithQueryAPIVersion is the fake for method NotVersionedClient.WithQueryAPIVersion
 	// HTTP status codes to indicate success: http.StatusOK
-	WithQueryAPIVersion func(ctx context.Context, options *unversionedgroup.NotVersionedClientWithQueryAPIVersionOptions) (resp azfake.Responder[unversionedgroup.NotVersionedClientWithQueryAPIVersionResponse], errResp azfake.ErrorResponder)
+	WithQueryAPIVersion func(ctx context.Context, apiVersion string, options *unversionedgroup.NotVersionedClientWithQueryAPIVersionOptions) (resp azfake.Responder[unversionedgroup.NotVersionedClientWithQueryAPIVersionResponse], errResp azfake.ErrorResponder)
 
 	// WithoutAPIVersion is the fake for method NotVersionedClient.WithoutAPIVersion
 	// HTTP status codes to indicate success: http.StatusOK
@@ -96,7 +97,11 @@ func (n *NotVersionedServerTransport) dispatchWithPathAPIVersion(req *http.Reque
 	if matches == nil || len(matches) < 1 {
 		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
 	}
-	respr, errRespr := n.srv.WithPathAPIVersion(req.Context(), nil)
+	apiVersionParam, err := url.PathUnescape(matches[regex.SubexpIndex("apiVersion")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.WithPathAPIVersion(req.Context(), apiVersionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}
@@ -115,7 +120,12 @@ func (n *NotVersionedServerTransport) dispatchWithQueryAPIVersion(req *http.Requ
 	if n.srv.WithQueryAPIVersion == nil {
 		return nil, &nonRetriableError{errors.New("fake for method WithQueryAPIVersion not implemented")}
 	}
-	respr, errRespr := n.srv.WithQueryAPIVersion(req.Context(), nil)
+	qp := req.URL.Query()
+	apiVersionParam, err := url.QueryUnescape(qp.Get("api-version"))
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := n.srv.WithQueryAPIVersion(req.Context(), apiVersionParam, nil)
 	if respErr := server.GetError(errRespr, req); respErr != nil {
 		return nil, respErr
 	}

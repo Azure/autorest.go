@@ -19,6 +19,8 @@ type RPCClient struct {
 }
 
 // BeginLongRunningRPC - Generate data.
+//
+// Generate data.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview
@@ -42,6 +44,8 @@ func (client *RPCClient) BeginLongRunningRPC(ctx context.Context, body Generatio
 }
 
 // LongRunningRPC - Generate data.
+//
+// Generate data.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2022-12-01-preview

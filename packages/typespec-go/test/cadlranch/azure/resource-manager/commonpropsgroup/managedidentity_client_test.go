@@ -1,44 +1,43 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package managed_identity_test
+package commonpropsgroup_test
 
 import (
+	"commonpropsgroup"
 	"fmt"
 	"testing"
-
-	"managed_identity"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 var (
-	validSystemAssignedManagedIdentityResource = managed_identity.ManagedIdentityTrackedResource{
-		ID:       to.Ptr(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Azure.ResourceManager.Models.CommonTypes.ManagedIdentity/managedIdentityTrackedResources/identity", subscriptionIdExpected, resourceGroupExpected)),
+	validSystemAssignedManagedIdentityResource = commonpropsgroup.ManagedIdentityTrackedResource{
+		ID:       to.Ptr(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/identity", subscriptionIdExpected, resourceGroupExpected)),
 		Location: to.Ptr(locationExpected),
 		Tags: map[string]*string{
 			"tagKey1": to.Ptr("tagValue1"),
 		},
-		Identity: &managed_identity.ManagedServiceIdentity{
-			Type:        to.Ptr(managed_identity.ManagedServiceIdentityType(identityTypeSystemAssigendExpected)),
+		Identity: &commonpropsgroup.ManagedServiceIdentity{
+			Type:        to.Ptr(commonpropsgroup.ManagedServiceIdentityType(identityTypeSystemAssigendExpected)),
 			PrincipalID: to.Ptr(principalIdExpected),
 			TenantID:    to.Ptr(tenantIdExpected),
 		},
-		Properties: &managed_identity.ManagedIdentityTrackedResourceProperties{
+		Properties: &commonpropsgroup.ManagedIdentityTrackedResourceProperties{
 			ProvisioningState: to.Ptr("Succeeded"),
 		},
 	}
 
-	validUserAssignedAndSystemAssignedManagedIdentityResource = managed_identity.ManagedIdentityTrackedResource{
-		ID:       to.Ptr(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Azure.ResourceManager.Models.CommonTypes.ManagedIdentity/managedIdentityTrackedResources/identity", subscriptionIdExpected, resourceGroupExpected)),
+	validUserAssignedAndSystemAssignedManagedIdentityResource = commonpropsgroup.ManagedIdentityTrackedResource{
+		ID:       to.Ptr(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Azure.ResourceManager.CommonProperties/managedIdentityTrackedResources/identity", subscriptionIdExpected, resourceGroupExpected)),
 		Location: to.Ptr(locationExpected),
 		Tags: map[string]*string{
 			"tagKey1": to.Ptr("tagValue1"),
 		},
-		Identity: &managed_identity.ManagedServiceIdentity{
-			Type: to.Ptr(managed_identity.ManagedServiceIdentityType(identityTypeSystemUserAssignedExpected)),
-			UserAssignedIdentities: map[string]*managed_identity.UserAssignedIdentity{
+		Identity: &commonpropsgroup.ManagedServiceIdentity{
+			Type: to.Ptr(commonpropsgroup.ManagedServiceIdentityType(identityTypeSystemUserAssignedExpected)),
+			UserAssignedIdentities: map[string]*commonpropsgroup.UserAssignedIdentity{
 				"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": {
 					PrincipalID: to.Ptr(principalIdExpected),
 					ClientID:    to.Ptr(clientIdExpected),
@@ -47,14 +46,14 @@ var (
 			PrincipalID: to.Ptr(principalIdExpected),
 			TenantID:    to.Ptr(tenantIdExpected),
 		},
-		Properties: &managed_identity.ManagedIdentityTrackedResourceProperties{
+		Properties: &commonpropsgroup.ManagedIdentityTrackedResourceProperties{
 			ProvisioningState: to.Ptr("Succeeded"),
 		},
 	}
 )
 
 func TestManagedIdentityTrackedResourcesClient_Get(t *testing.T) {
-	managedIdentityTrackedResourcesClientGetResponse, err := clientFactory.NewManagedIdentityTrackedResourcesClient().Get(ctx, resourceGroupExpected, "identity", nil)
+	managedIdentityTrackedResourcesClientGetResponse, err := clientFactory.NewManagedIdentityClient().Get(ctx, resourceGroupExpected, "identity", nil)
 	require.NoError(t, err)
 	require.Equal(t, *validSystemAssignedManagedIdentityResource.ID, *managedIdentityTrackedResourcesClientGetResponse.ID)
 	require.Equal(t, *validSystemAssignedManagedIdentityResource.Location, *managedIdentityTrackedResourcesClientGetResponse.Location)
@@ -66,14 +65,14 @@ func TestManagedIdentityTrackedResourcesClient_Get(t *testing.T) {
 }
 
 func TestManagedIdentityTrackedResourcesClient_CreateWithSystemAssigned(t *testing.T) {
-	managedIdentityTrackedResourcesClientCreateWithSystemAssignedResponse, err := clientFactory.NewManagedIdentityTrackedResourcesClient().CreateWithSystemAssigned(
+	managedIdentityTrackedResourcesClientCreateWithSystemAssignedResponse, err := clientFactory.NewManagedIdentityClient().CreateWithSystemAssigned(
 		ctx,
 		resourceGroupExpected,
 		"identity",
-		managed_identity.ManagedIdentityTrackedResource{
+		commonpropsgroup.ManagedIdentityTrackedResource{
 			Location: to.Ptr(locationExpected),
-			Identity: &managed_identity.ManagedServiceIdentity{
-				Type: to.Ptr(managed_identity.ManagedServiceIdentityTypeSystemAssigned),
+			Identity: &commonpropsgroup.ManagedServiceIdentity{
+				Type: to.Ptr(commonpropsgroup.ManagedServiceIdentityTypeSystemAssigned),
 			},
 		},
 		nil,
@@ -89,15 +88,15 @@ func TestManagedIdentityTrackedResourcesClient_CreateWithSystemAssigned(t *testi
 }
 
 func TestManagedIdentityTrackedResourcesClient_UpdateWithUserAssignedAndSystemAssigned(t *testing.T) {
-	managedIdentityTrackedResourcesClientUpdateWithUserAssignedAndSystemAssignedResponse, err := clientFactory.NewManagedIdentityTrackedResourcesClient().UpdateWithUserAssignedAndSystemAssigned(
+	managedIdentityTrackedResourcesClientUpdateWithUserAssignedAndSystemAssignedResponse, err := clientFactory.NewManagedIdentityClient().UpdateWithUserAssignedAndSystemAssigned(
 		ctx,
 		resourceGroupExpected,
 		"identity",
-		managed_identity.ManagedIdentityTrackedResource{
+		commonpropsgroup.ManagedIdentityTrackedResource{
 			Location: to.Ptr(locationExpected),
-			Identity: &managed_identity.ManagedServiceIdentity{
-				Type: to.Ptr(managed_identity.ManagedServiceIdentityTypeSystemAndUserAssignedV3),
-				UserAssignedIdentities: map[string]*managed_identity.UserAssignedIdentity{
+			Identity: &commonpropsgroup.ManagedServiceIdentity{
+				Type: to.Ptr(commonpropsgroup.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
+				UserAssignedIdentities: map[string]*commonpropsgroup.UserAssignedIdentity{
 					"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1": {},
 				},
 			},

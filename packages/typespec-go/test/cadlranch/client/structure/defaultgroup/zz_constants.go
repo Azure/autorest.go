@@ -7,15 +7,17 @@ package defaultgroup
 type ClientType string
 
 const (
-	ClientTypeDefault           ClientType = "default"
-	ClientTypeMultiClient       ClientType = "multi-client"
-	ClientTypeRenamedOperation  ClientType = "renamed-operation"
-	ClientTypeTwoOperationGroup ClientType = "two-operation-group"
+	ClientTypeClientOperationGroup ClientType = "client-operation-group"
+	ClientTypeDefault              ClientType = "default"
+	ClientTypeMultiClient          ClientType = "multi-client"
+	ClientTypeRenamedOperation     ClientType = "renamed-operation"
+	ClientTypeTwoOperationGroup    ClientType = "two-operation-group"
 )
 
 // PossibleClientTypeValues returns the possible values for the ClientType const type.
 func PossibleClientTypeValues() []ClientType {
 	return []ClientType{
+		ClientTypeClientOperationGroup,
 		ClientTypeDefault,
 		ClientTypeMultiClient,
 		ClientTypeRenamedOperation,

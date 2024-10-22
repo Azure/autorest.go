@@ -34,6 +34,7 @@ var (
 )
 
 func TestNestedProxyResourcesClient_Get(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	nestedProxyResourcesClientGetResponse, err := clientFactory.NewNestedProxyResourcesClient().Get(
 		ctx,
 		"test-rg",
@@ -48,6 +49,7 @@ func TestNestedProxyResourcesClient_Get(t *testing.T) {
 }
 
 func TestNestedProxyResourcesClient_CreateOrReplase(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	nestedProxyResourcesClientCreateOrReplaceResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginCreateOrReplace(
 		ctx,
 		"test-rg",
@@ -70,6 +72,7 @@ func TestNestedProxyResourcesClient_CreateOrReplase(t *testing.T) {
 }
 
 func TestNestedProxyResourcesClient_BeginUpdate(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	nestedProxyResourcesClientUpdateResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginUpdate(
 		ctx,
 		"test-rg",
@@ -92,6 +95,7 @@ func TestNestedProxyResourcesClient_BeginUpdate(t *testing.T) {
 }
 
 func TestNestedProxyResourcesClient_BeginDelete(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	nestedProxyResourcesClientDeleteResponsePoller, err := clientFactory.NewNestedProxyResourcesClient().BeginDelete(ctx, "test-rg", "top", "nested", nil)
 	require.NoError(t, err)
 	nestedProxyResourcesClientDeleteResponse, err := nestedProxyResourcesClientDeleteResponsePoller.Poll(ctx)
@@ -100,6 +104,7 @@ func TestNestedProxyResourcesClient_BeginDelete(t *testing.T) {
 }
 
 func TestNestedProxyResourcesClient_NewListByTopLevelTrackedResourcePager(t *testing.T) {
+	t.Skip("https://github.com/Azure/typespec-azure/issues/1709")
 	nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager := clientFactory.NewNestedProxyResourcesClient().NewListByTopLevelTrackedResourcePager("test-rg", "top", nil)
 	require.True(t, nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager.More())
 	nestedProxyResourcesClientListByTopLevelTrackedResourceResponse, err := nestedProxyResourcesClientListByTopLevelTrackedResourceResponsePager.NextPage(ctx)

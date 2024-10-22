@@ -24,7 +24,7 @@ export function adaptConstantType(choice: m4.ChoiceSchema | m4.SealedChoiceSchem
   constType = new go.ConstantType(choice.language.go!.name, adaptPrimitiveType(choice.choiceType.language.go!.name), choice.language.go!.possibleValuesFunc);
   constType.values = adaptConstantValue(constType, choice.choices);
   if (hasDescription(choice.language.go!)) {
-    constType.description = choice.language.go!.description;
+    constType.docs.description = choice.language.go!.description;
   }
   types.set(choice.language.go!.name, constType);
   return constType;
@@ -37,7 +37,7 @@ function adaptConstantValue(type: go.ConstantType, choices: Array<m4.ChoiceValue
     if (!value) {
       value = new go.ConstantValue(choice.language.go!.name, type, choice.value);
       if (hasDescription(choice.language.go!)) {
-        value.description = choice.language.go!.description;
+        value.docs.description = choice.language.go!.description;
       }
       constValues.set(choice.language.go!.name, value);
     }
@@ -117,7 +117,7 @@ export function adaptModel(obj: m4.ObjectSchema): go.ModelType | go.PolymorphicT
     modelType.xml = adaptXMLInfo(obj);
   }
   if (hasDescription(obj.language.go!)) {
-    modelType.description = obj.language.go!.description;
+    modelType.docs.description = obj.language.go!.description;
   }
 
   types.set(obj.language.go!.name, modelType);
@@ -179,7 +179,7 @@ export function adaptModelField(prop: m4.Property, obj: m4.ObjectSchema): go.Mod
   const annotations = new go.ModelFieldAnnotations(required, prop.readOnly === true, prop.language.go!.isAdditionalProperties === true, prop.isDiscriminator === true);
   const field = new go.ModelField(prop.language.go!.name, fieldType, prop.language.go!.byValue === true, prop.serializedName, annotations);
   if (hasDescription(prop.language.go!)) {
-    field.description = prop.language.go!.description;
+    field.docs.description = prop.language.go!.description;
   }
   if (prop.isDiscriminator && obj.discriminatorValue) {
     field.defaultValue = getDiscriminatorLiteral(obj.discriminatorValue);

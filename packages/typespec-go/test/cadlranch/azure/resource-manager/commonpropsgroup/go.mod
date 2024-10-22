@@ -1,4 +1,4 @@
-module managed_identity
+module commonpropsgroup
 
 go 1.18
 

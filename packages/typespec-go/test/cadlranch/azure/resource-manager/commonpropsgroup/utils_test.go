@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-package managed_identity_test
+package commonpropsgroup_test
 
 import (
+	"commonpropsgroup"
 	"context"
 	"fmt"
 	"net/http"
 	"testing"
-
-	"managed_identity"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
@@ -19,7 +18,7 @@ import (
 
 var (
 	ctx           context.Context
-	clientFactory *managed_identity.ClientFactory
+	clientFactory *commonpropsgroup.ClientFactory
 
 	subscriptionIdExpected                 = "00000000-0000-0000-0000-000000000000"
 	principalIdExpected                    = "00000000-0000-0000-0000-000000000000"
@@ -33,7 +32,7 @@ var (
 
 func TestMain(m *testing.M) {
 	ctx = context.Background()
-	clientFactory, _ = managed_identity.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
+	clientFactory, _ = commonpropsgroup.NewClientFactory(subscriptionIdExpected, &azfake.TokenCredential{}, &arm.ClientOptions{
 		ClientOptions: azcore.ClientOptions{
 			InsecureAllowCredentialWithHTTP: true,
 			PerCallPolicies: []policy.Policy{

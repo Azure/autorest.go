@@ -37,10 +37,10 @@ export async function generateClientFactory(codeModel: go.CodeModel): Promise<st
   result += '// NewClientFactory creates a new instance of ClientFactory with the specified values.\n';
   result += '// The parameter values will be propagated to any client created from this factory.\n';
   for (const clientParam of values(allClientParams)) {
-    result += `${helpers.formatCommentAsBulletItem(`${clientParam.name} - ${clientParam.description}`)}\n`;
+    result += helpers.formatCommentAsBulletItem(clientParam.name, clientParam.docs);
   }
-  result += `${helpers.formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.')}\n`;
-  result += `${helpers.formatCommentAsBulletItem('options - pass nil to accept the default values.')}\n`;
+  result += helpers.formatCommentAsBulletItem('credential', {summary: 'used to authorize requests. Usually a credential from azidentity.'});
+  result += helpers.formatCommentAsBulletItem('options', {summary: 'pass nil to accept the default values.'});
 
   result += `func NewClientFactory(${allClientParams.map(param => { return `${param.name} ${helpers.formatParameterTypeName(param)}`; }).join(', ')}${allClientParams.length>0 ? ',' : ''} credential azcore.TokenCredential, options *arm.ClientOptions) (*ClientFactory, error) {\n`;
   result += '\tinternal, err := arm.NewClient(moduleName, moduleVersion, credential, options)\n';
