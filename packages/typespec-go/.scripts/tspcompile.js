@@ -50,6 +50,7 @@ const cadlRanch = {
   'mediatypegroup': ['payload/media-type'],
   //'multipartgroup': ['payload/multipart'], // TODO: https://github.com/Azure/autorest.go/issues/1445
   'pageablegroup': ['payload/pageable'],
+  'xmlgroup': ['payload/xml', 'slice-elements-byval=true'],
   'srvdrivenoldgroup': ['resiliency/srv-driven/old.tsp'],
   'srvdrivennewgroup': ['resiliency/srv-driven'],
   'jsongroup': ['serialization/encoded-name/json'],

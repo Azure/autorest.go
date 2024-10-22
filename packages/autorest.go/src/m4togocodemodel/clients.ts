@@ -345,9 +345,9 @@ function adaptMethodParameter(op: m4.Operation, param: m4.Parameter): go.Paramet
       } else {
         const format = adaptBodyFormat(op.requests![0].protocol);
         adaptedParam = new go.BodyParameter(param.language.go!.name, format, contentType, bodyType, placement, param.language.go!.byValue);
+        (<go.BodyParameter>adaptedParam).xml = adaptXMLInfo(param.schema);
       }
 
-      adaptedParam.xml = adaptXMLInfo(param.schema);
       break;
     }
     case 'header': {

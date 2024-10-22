@@ -546,7 +546,7 @@ export class typeAdapter {
     } else {
       modelType = new go.ModelType(modelName, annotations, usage);
       // polymorphic types don't have XMLInfo
-      // TODO: XMLInfo
+      modelType.xml = adaptXMLInfo(model.decorators);
     }
 
     modelType.docs.summary = model.summary;
@@ -616,8 +616,7 @@ export class typeAdapter {
       field.defaultValue = this.getDiscriminatorLiteral(prop);
     }
   
-    // TODO: XMLInfo
-    //field.xml = adaptXMLInfo(prop.schema);
+    field.xml = adaptXMLInfo(prop.decorators, field);
   
     return field;
   }
@@ -1071,4 +1070,60 @@ function aggregateProperties(model: tcgc.SdkModelType): {props: Array<tcgc.SdkMo
     parent = parent.baseModel;
   }
   return {props: allProps, addlProps: addlProps};
+}
+
+// called for models and model fields. for the former, the field param will be undefined
+export function adaptXMLInfo(decorators: Array<tcgc.DecoratorInfo>, field?: go.ModelField): go.XMLInfo | undefined {
+  // if there are no decorators and this isn't a slice
+  // type in a model field then do nothing
+  if (decorators.length === 0 && (!field || (!go.isSliceType(field.type)))) {
+    return undefined;
+  }
+
+  const xmlInfo = new go.XMLInfo();
+  if (field && go.isSliceType(field.type)) {
+    // for tsp, arrays are wrapped by default
+    xmlInfo.wraps = go.getTypeDeclaration(field.type.elementType);
+  }
+
+  const handleName = (decorator: tcgc.DecoratorInfo): void => {
+    if (field) {
+      xmlInfo.name = decorator.arguments['name'];
+    } else {
+      // when applied to a model, it means the model's XML element
+      // node has a different name than the model.
+      xmlInfo.wrapper = decorator.arguments['name'];
+    }
+  };
+
+  for (const decorator of decorators) {
+    switch (decorator.name) {
+      case 'TypeSpec.@encodedName':
+        if (decorator.arguments['mimeType'] === 'application/xml') {
+          handleName(decorator);
+        }
+        break;
+      case 'TypeSpec.Xml.@attribute':
+        xmlInfo.attribute = true;
+        break;
+      case 'TypeSpec.Xml.@name':
+        handleName(decorator);
+        break;
+      case 'TypeSpec.Xml.@unwrapped':
+        // unwrapped can only be applied fields
+        if (field) {
+          if (go.isPrimitiveType(field.type) && field.type.typeName === 'string') {
+            // an unwrapped string means it's text
+            xmlInfo.text = true;  
+          } else if (go.isSliceType(field.type)) {
+            // unwrapped slice. default to using the serialized name
+            xmlInfo.wraps = undefined;
+            xmlInfo.name = field.serializedName;
+          }
+        }
+        break;
+    }
+  }
+
+  return xmlInfo;
 }

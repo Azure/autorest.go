@@ -103,6 +103,19 @@ func (b *Banana) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
+// MarshalXML implements the xml.Marshaller interface for type Blob.
+func (b Blob) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias Blob
+	aux := &struct {
+		*alias
+		Metadata additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(&b),
+	}
+	aux.Metadata = (additionalProperties)(b.Metadata)
+	return enc.EncodeElement(aux, start)
+}
+
 // UnmarshalXML implements the xml.Unmarshaller interface for type Blob.
 func (b *Blob) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) error {
 	type alias Blob
@@ -178,6 +191,19 @@ func (b Blobs) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
 	if b.BlobPrefix != nil {
 		aux.BlobPrefix = &b.BlobPrefix
 	}
+	return enc.EncodeElement(aux, start)
+}
+
+// MarshalXML implements the xml.Marshaller interface for type Container.
+func (c Container) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {
+	type alias Container
+	aux := &struct {
+		*alias
+		Metadata additionalProperties `xml:"Metadata"`
+	}{
+		alias: (*alias)(&c),
+	}
+	aux.Metadata = (additionalProperties)(c.Metadata)
 	return enc.EncodeElement(aux, start)
 }
 
