@@ -129,13 +129,13 @@ const armapicenter = pkgRoot +  'test/tsp/ApiCenter.Management';
 generate('armapicenter', armapicenter, 'test/armapicenter');
 
 const armlargeinstance = pkgRoot + 'test/tsp/AzureLargeInstance.Management';
-generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance']);
+generate('armlargeinstance', armlargeinstance, 'test/armlargeinstance', ['stutter=AzureLargeInstance', 'generate-examples=false']);
 
 const armdatabasewatcher = pkgRoot + 'test/tsp/DatabaseWatcher.Management';
 generate('armdatabasewatcher', armdatabasewatcher, 'test/armdatabasewatcher', ['remove-unreferenced-types=false', 'fix-const-stuttering=false']);
 
 const armloadtestservice = pkgRoot + 'test/tsp/LoadTestService.Management';
-generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice');
+generate('armloadtestservice', armloadtestservice, 'test/armloadtestservice', ['generate-examples=false']);
 
 const armdevopsinfrastructure = pkgRoot + 'test/tsp/Microsoft.DevOpsInfrastructure';
 generate('armdevopsinfrastructure', armdevopsinfrastructure, 'test/armdevopsinfrastructure');
@@ -196,7 +196,7 @@ function generate(moduleName, input, outputDir, perTestOptions) {
     'remove-unreferenced-types=true',
     'fix-const-stuttering=true',
     `examples-directory=${input}/examples`,
-    'generate-examples=false'
+    'generate-examples=true'
   ];
 
   let allOptions = fixedOptions;
