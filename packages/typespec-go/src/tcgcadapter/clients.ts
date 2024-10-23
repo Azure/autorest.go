@@ -710,6 +710,10 @@ export class clientAdapter {
       for (const example of sdkMethod.operation.examples) {
         const goExample = new go.MethodExample(example.name, {summary: example.description}, example.filePath);
         for (const param of example.parameters) {
+          if (param.parameter.isApiVersionParam && param.parameter.clientDefaultValue) {
+            // skip the api-version param as it's not a formal parameter
+            continue;
+          }
           const goParams = paramMapping.get(param.parameter);
           if (!goParams) {
             throw new Error(`can not find go param for example param ${param.parameter.name}`);
