@@ -22,7 +22,13 @@ export async function tcgcToGoCodeModel(context: EmitContext<GoEmitterOptions>):
     options.azcoreVersion = context.options['azcore-version'];
   }
 
-  const sdkContext = await tcgc.createSdkContext(context);
+  // @encodedName can be used in XML scenarios, it
+  // is effectively the same as TypeSpec.Xml.@name.
+  // however, it's filtered out by default so we need
+  // to add it to the allow list of decorators
+  const sdkContext = await tcgc.createSdkContext(context, '@azure-tools/typespec-go', {
+    additionalDecorators: ['TypeSpec\\.@encodedName'],
+  });
   let codeModelType: go.CodeModelType = 'data-plane';
   if (sdkContext.arm === true) {
     codeModelType = 'azure-arm';

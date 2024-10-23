@@ -2,6 +2,10 @@
 
 ## 0.3.2 (Unreleased)
 
+### Features Added
+
+* Add support for XML payloads.
+
 ### Bugs Fixed
 
 * Fake servers will honor the caller's context in the `*http.Request`.

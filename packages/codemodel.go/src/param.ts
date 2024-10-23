@@ -33,8 +33,6 @@ export interface Parameter {
   group?: ParameterGroup;
 
   location: ParameterLocation;
-
-  xml?: type.XMLInfo;
 }
 
 export function isClientSideDefault(kind: ParameterKind): kind is ClientSideDefault {
@@ -149,6 +147,8 @@ export interface BodyParameter extends Parameter {
 
   // "application/text" etc...
   contentType: string;
+
+  xml?: type.XMLInfo;
 }
 
 // PartialBodyParameter is a field within a struct type sent in the body
@@ -157,6 +157,8 @@ export interface PartialBodyParameter extends Parameter {
   serializedName: string;
 
   format: 'JSON' | 'XML';
+
+  xml?: type.XMLInfo;
 }
 
 export interface FormBodyParameter extends Parameter {

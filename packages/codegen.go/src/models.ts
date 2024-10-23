@@ -200,7 +200,8 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
         if (needsDateTimeMarshalling || byteArrayFormat) {
           generateXMLUnmarshaller(model, modelDef, serdeImports);
         }
-      } else if (needsXMLDictionaryUnmarshalling(model)) {
+      } else if (needsXMLDictionaryHelper(model)) {
+        generateXMLMarshaller(model, modelDef, serdeImports);
         generateXMLUnmarshaller(model, modelDef, serdeImports);
       }
       modelDefs.push(modelDef);
@@ -224,9 +225,9 @@ function generateModelDefs(modelImports: ImportManager, serdeImports: ImportMana
   return modelDefs;
 }
 
-function needsXMLDictionaryUnmarshalling(modelType: go.ModelType): boolean {
+function needsXMLDictionaryHelper(modelType: go.ModelType): boolean {
   for (const field of values(modelType.fields)) {
-    // additional properties uses an internal wrapper type with its own unmarshaller
+    // additional properties uses an internal wrapper type with its own serde impl
     if (go.isMapType(field.type) && !field.annotations.isAdditionalProperties) {
       return true;
     }
@@ -652,7 +653,7 @@ function recursivePopulateDiscriminator(item: go.PossibleType, receiver: string,
 }
 
 function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, imports: ImportManager) {
-  // only needed for types with time.Time or where the XML name doesn't match the type name
+  // only needed for types with time.Time, maps, or where the XML name doesn't match the type name
   const receiver = modelDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${modelDef.Name}.`;
   let text = `func (${receiver} ${modelDef.Name}) MarshalXML(enc *xml.Encoder, start xml.StartElement) error {\n`;
@@ -665,6 +666,8 @@ function generateXMLMarshaller(modelType: go.ModelType, modelDef: ModelDef, impo
       text += `\tif ${receiver}.${field.name} != nil {\n`;
       text += `\t\taux.${field.name} = &${receiver}.${field.name}\n`;
       text += '\t}\n';
+    } else if (field.annotations.isAdditionalProperties || go.isMapType(field.type)) {
+      text += `\taux.${field.name} = (additionalProperties)(${receiver}.${field.name})\n`;
     } else if (go.isBytesType(field.type)) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       text += `\tif ${receiver}.${field.name} != nil {\n`;
