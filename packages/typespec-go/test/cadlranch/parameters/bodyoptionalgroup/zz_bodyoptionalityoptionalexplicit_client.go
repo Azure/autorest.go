@@ -50,10 +50,8 @@ func (client *BodyOptionalityOptionalExplicitClient) omitCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	if options != nil && options.ContentType != nil {
-		req.Raw().Header["Content-Type"] = []string{"application/json"}
-	}
 	if options != nil && options.Body != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
 		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
 			return nil, err
 		}
@@ -94,10 +92,8 @@ func (client *BodyOptionalityOptionalExplicitClient) setCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if options != nil && options.ContentType != nil {
-		req.Raw().Header["Content-Type"] = []string{"application/json"}
-	}
 	if options != nil && options.Body != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
 		if err := runtime.MarshalAsJSON(req, *options.Body); err != nil {
 			return nil, err
 		}

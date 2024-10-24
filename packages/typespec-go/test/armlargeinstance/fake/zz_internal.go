@@ -7,7 +7,6 @@ package fake
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"net/http"
-	"reflect"
 	"sync"
 )
 
@@ -31,21 +30,6 @@ func contains[T comparable](s []T, v T) bool {
 		}
 	}
 	return false
-}
-
-func getHeaderValue(h http.Header, k string) string {
-	v := h[k]
-	if len(v) == 0 {
-		return ""
-	}
-	return v[0]
-}
-
-func getOptional[T any](v T) *T {
-	if reflect.ValueOf(v).IsZero() {
-		return nil
-	}
-	return &v
 }
 
 func newTracker[T any]() *tracker[T] {

@@ -10,6 +10,7 @@
 
 * Fake servers will honor the caller's context in the `*http.Request`.
 * Add missing error check when parsing multipart/form content in fakes.
+* Optional body params will only set the `Content-Type` header when a body is specified.
 
 ### Other Fixes
 

@@ -192,8 +192,8 @@ func (client *MediaTypeStringBodyClient) sendAsTextCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"text/plain"}
 	body := streaming.NopCloser(strings.NewReader(textParam))
+	req.Raw().Header["Content-Type"] = []string{"text/plain"}
 	if err := req.SetBody(body, "text/plain"); err != nil {
 		return nil, err
 	}

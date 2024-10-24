@@ -324,6 +324,15 @@ export class clientAdapter {
         throw new Error(`didn't find operation parameter for method ${sdkMethod.name} parameter ${param.name}`);
       }
 
+      if (opParam.kind === 'header' && opParam.serializedName.match(/^content-type$/i) && param.type.kind === 'constant') {
+        // if the body param is optional, then the content-type param is also optional.
+        // for optional constants, this has the side effect of the param being treated like
+        // a flag which isn't what we want. so, we mark it as required. we ONLY do this
+        // if the content-type is a constant (i.e. literal value).
+        // the content-type will be conditionally set based on the requiredness of the body.
+        opParam.optional = false;
+      }
+
       let adaptedParam: go.Parameter;
       if (opParam.kind === 'body' && opParam.type.kind === 'model' && opParam.type.kind !== param.type.kind) {
         const paramKind = this.adaptParameterKind(param);
@@ -687,7 +696,6 @@ export class clientAdapter {
   private adaptParameterKind(param: tcgc.SdkBodyParameter | tcgc.SdkEndpointParameter | tcgc.SdkHeaderParameter | tcgc.SdkMethodParameter | tcgc.SdkPathParameter | tcgc.SdkQueryParameter): go.ParameterKind {
     // NOTE: must check for constant type first as it will also set clientDefaultValue
     if (param.type.kind === 'constant') {
-      // TODO: https://github.com/Azure/autorest.go/issues/1444
       if (param.optional) {
         return 'flag';
       }
