@@ -204,6 +204,8 @@ function getExampleValue(codeModel: go.CodeModel, example: go.ExampleType, inden
       exampleText = getTimeValue(example.type, example.value, imports);
     } else if (go.isBytesType(example.type)) {
       exampleText = `[]byte("${escapeString(example.value)}")`
+    } else if (go.isLiteralValue(example.type) && go.isConstantType(example.type.type)) {
+      exampleText = getConstantValue(codeModel, example.type.type, example.type.literal.value);
     }
     return `${indent}${getPointerValue(example.type, exampleText, byValue, imports)}`;
   } else if (example.kind === 'number') {
