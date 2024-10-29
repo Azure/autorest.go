@@ -86,7 +86,7 @@ export async function generateExamples(codeModel: go.CodeModel): Promise<Array<E
               clientFactoryParams.push({ parameter: clientParam, value: generateFakeExample(clientParam.type, clientParam.name) });
             }
           }
-          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParams.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}, cred, nil)\n`;
+          exampleText += `\tclientFactory, err := ${codeModel.packageName}.NewClientFactory(${clientFactoryParams.map(p => getExampleValue(codeModel, p.value, '\t', imports, helpers.parameterByValue(p.parameter)).slice(1)).join(', ')}${clientFactoryParams.length > 0 ? ', ' : ''}cred, nil)\n`;
           exampleText += `\tif err != nil {\n`;
           exampleText += `\t\tlog.Fatalf("failed to create client: %v", err)\n`;
           exampleText += `\t}\n`;
