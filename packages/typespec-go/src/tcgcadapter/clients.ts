@@ -819,12 +819,15 @@ export class clientAdapter {
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType;
           if (go.isInterfaceType(goType)) {
-            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
+            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
           } else {
             concreteType = goType;
           }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
+            if (concreteType === undefined) {
+              throw new Error(`can not find concrete type for example type ${exampleType.type.name}`);
+            }
             const field = concreteType.fields.find(f => f.serializedName === k)!;
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
