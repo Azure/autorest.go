@@ -819,7 +819,7 @@ export class clientAdapter {
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
           let concreteType: go.ModelType | go.PolymorphicType;
           if (go.isInterfaceType(goType)) {
-            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue)!;
+            concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
           } else {
             concreteType = goType;
           }
