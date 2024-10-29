@@ -421,10 +421,8 @@ func (client *AzureLargeInstanceClient) restartCreateRequest(ctx context.Context
 	reqQP.Set("api-version", "2024-08-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.ContentType != nil {
-		req.Raw().Header["Content-Type"] = []string{"application/json"}
-	}
 	if options != nil && options.ForceParameter != nil {
+		req.Raw().Header["Content-Type"] = []string{"application/json"}
 		if err := runtime.MarshalAsJSON(req, *options.ForceParameter); err != nil {
 			return nil, err
 		}

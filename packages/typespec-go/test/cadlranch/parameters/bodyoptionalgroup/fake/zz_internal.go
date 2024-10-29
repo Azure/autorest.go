@@ -6,7 +6,6 @@ package fake
 
 import (
 	"net/http"
-	"reflect"
 	"sync"
 )
 
@@ -30,21 +29,6 @@ func contains[T comparable](s []T, v T) bool {
 		}
 	}
 	return false
-}
-
-func getHeaderValue(h http.Header, k string) string {
-	v := h[k]
-	if len(v) == 0 {
-		return ""
-	}
-	return v[0]
-}
-
-func getOptional[T any](v T) *T {
-	if reflect.ValueOf(v).IsZero() {
-		return nil
-	}
-	return &v
 }
 
 func initServer[T any](mu *sync.Mutex, dst **T, src func() *T) {

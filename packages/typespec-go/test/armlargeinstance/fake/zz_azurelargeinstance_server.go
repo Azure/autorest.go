@@ -334,12 +334,10 @@ func (a *AzureLargeInstanceServerTransport) dispatchBeginRestart(req *http.Reque
 		if err != nil {
 			return nil, err
 		}
-		contentTypeParam := getOptional(getHeaderValue(req.Header, "Content-Type"))
 		var options *armlargeinstance.AzureLargeInstanceClientBeginRestartOptions
-		if !reflect.ValueOf(body).IsZero() || contentTypeParam != nil {
+		if !reflect.ValueOf(body).IsZero() {
 			options = &armlargeinstance.AzureLargeInstanceClientBeginRestartOptions{
 				ForceParameter: &body,
-				ContentType:    contentTypeParam,
 			}
 		}
 		respr, errRespr := a.srv.BeginRestart(req.Context(), resourceGroupNameParam, azureLargeInstanceNameParam, options)

@@ -736,12 +736,21 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       headerParams.push(param);
     }
   }
+
+  let contentType: string | undefined;
   for (const param of headerParams.sort((a: go.HeaderParameter, b: go.HeaderParameter) => { return helpers.sortAscending(a.headerName, b.headerName);})) {
     if (param.headerName.match(/^content-type$/)) {
       // canonicalize content-type as req.SetBody checks for it via its canonicalized name :(
       param.headerName = 'Content-Type';
     }
-    if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.kind)) {
+
+    if (param.headerName === 'Content-Type' && param.kind === 'literal') {
+      // the content-type header will be set as part of emitSetBodyWithErrCheck
+      // to handle cases where the body param is optional. we don't want to set
+      // the content-type if the body is nil.
+      // we do it like this as tsp specifies content-type while swagger does not.
+      contentType = helpers.formatParamValue(param, imports);
+    } else if (go.isRequiredParameter(param) || go.isLiteralParameter(param) || go.isClientSideDefault(param.kind)) {
       text += emitHeaderSet(param, '\t');
     } else if (param.location === 'client' && !param.group) {
       // global optional param
@@ -757,8 +766,12 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
 
   const partialBodyParams = values(method.parameters).where((param: go.Parameter) => { return go.isPartialBodyParameter(param); }).toArray();
   const bodyParam = <go.BodyParameter | undefined>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each) || go.isFormBodyParameter(each) || go.isMultipartFormBodyParameter(each); }).first();
-  const emitSetBodyWithErrCheck = function(setBodyParam: string): string {
-    return `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n`;
+  const emitSetBodyWithErrCheck = function(setBodyParam: string, contentType?: string): string {
+    let content = `if err := ${setBodyParam}; err != nil {\n\treturn nil, err\n}\n;`;
+    if (contentType) {
+      content = `req.Raw().Header["Content-Type"] = []string{${contentType}}\n` + content;
+    }
+    return content;
   };
 
   if (partialBodyParams.length > 0) {
@@ -783,6 +796,8 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
         text += `\t\tbody.${capitalize(partialBodyParam.serializedName)} = options.${capitalize(partialBodyParam.name)}\n\t}\n`;
       }
     }
+    // TODO: spread params are JSON only https://github.com/Azure/autorest.go/issues/1455
+    text += '\treq.Raw().Header["Content-Type"] = []string{"application/json"}\n';
     text += '\tif err := runtime.MarshalAsJSON(req, body); err != nil {\n\t\treturn nil, err\n\t}\n';
     text += '\treturn req, nil\n';
   } else if (!bodyParam) {
@@ -844,22 +859,22 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
       setBody = `req.SetBody(streaming.NopCloser(bytes.NewReader(${body})), "application/${bodyParam.bodyFormat.toLowerCase()}")`;
     }
     if (go.isRequiredParameter(bodyParam) || go.isLiteralParameter(bodyParam)) {
-      text += `\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
-      text += `\t${emitSetBodyWithErrCheck(setBody)}`;
+      text += `\t${emitSetBodyWithErrCheck(setBody, contentType)}`;
       text += '\t\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
   } else if (bodyParam.bodyFormat === 'binary') {
     if (go.isRequiredParameter(bodyParam)) {
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${bodyParam.name}, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(${helpers.getParamName(bodyParam)}, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';
@@ -870,12 +885,12 @@ function createProtocolRequest(azureARM: boolean, client: go.Client, method: go.
     const bodyParam = <go.BodyParameter>values(method.parameters).where((each: go.Parameter) => { return go.isBodyParameter(each); }).first();
     if (go.isRequiredParameter(bodyParam)) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam.name}))\n`;
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
     } else {
       text += emitParamGroupCheck(bodyParam);
       text += `\tbody := streaming.NopCloser(strings.NewReader(${helpers.getParamName(bodyParam)}))\n`;
-      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`)}`;
+      text += `\t${emitSetBodyWithErrCheck(`req.SetBody(body, ${bodyParam.contentType})`, contentType)}`;
       text += '\treturn req, nil\n';
       text += '\t}\n';
       text += '\treturn req, nil\n';

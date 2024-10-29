@@ -88,12 +88,10 @@ func (b *BodyOptionalityOptionalExplicitServerTransport) dispatchOmit(req *http.
 	if err != nil {
 		return nil, err
 	}
-	contentTypeParam := getOptional(getHeaderValue(req.Header, "Content-Type"))
 	var options *bodyoptionalgroup.BodyOptionalityOptionalExplicitClientOmitOptions
-	if !reflect.ValueOf(body).IsZero() || contentTypeParam != nil {
+	if !reflect.ValueOf(body).IsZero() {
 		options = &bodyoptionalgroup.BodyOptionalityOptionalExplicitClientOmitOptions{
-			Body:        &body,
-			ContentType: contentTypeParam,
+			Body: &body,
 		}
 	}
 	respr, errRespr := b.srv.Omit(req.Context(), options)
@@ -119,12 +117,10 @@ func (b *BodyOptionalityOptionalExplicitServerTransport) dispatchSet(req *http.R
 	if err != nil {
 		return nil, err
 	}
-	contentTypeParam := getOptional(getHeaderValue(req.Header, "Content-Type"))
 	var options *bodyoptionalgroup.BodyOptionalityOptionalExplicitClientSetOptions
-	if !reflect.ValueOf(body).IsZero() || contentTypeParam != nil {
+	if !reflect.ValueOf(body).IsZero() {
 		options = &bodyoptionalgroup.BodyOptionalityOptionalExplicitClientSetOptions{
-			Body:        &body,
-			ContentType: contentTypeParam,
+			Body: &body,
 		}
 	}
 	respr, errRespr := b.srv.Set(req.Context(), options)

@@ -103,11 +103,11 @@ func (client *DictionaryDatetimeValueClient) putCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	aux := map[string]*dateTimeRFC3339{}
 	for k, v := range body {
 		aux[k] = (*dateTimeRFC3339)(v)
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, aux); err != nil {
 		return nil, err
 	}

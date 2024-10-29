@@ -96,12 +96,12 @@ func (client *BodyOptionalityClient) requiredImplicitCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	body := struct {
 		Name string `json:"name"`
 	}{
 		Name: name,
 	}
+	req.Raw().Header["Content-Type"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, body); err != nil {
 		return nil, err
 	}
