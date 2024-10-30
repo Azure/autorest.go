@@ -490,7 +490,7 @@ export class clientAdapter {
         adaptedParam = new go.HeaderParameter(paramName, param.serializedName, this.adaptHeaderType(param.type, true), paramKind, byVal, location);
       }
     } else if (param.kind === 'path') {
-      adaptedParam = new go.PathParameter(paramName, param.serializedName, param.urlEncode && !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
+      adaptedParam = new go.PathParameter(paramName, param.serializedName, !param.allowReserved, this.adaptPathParameterType(param.type), paramKind, byVal, location);
     } else {
       if (param.collectionFormat) {
         const type = this.ta.getPossibleType(param.type, true, false);
@@ -817,17 +817,17 @@ export class clientAdapter {
         throw new Error('go could not support union for now');
       case 'model':
         if (go.isModelType(goType) || go.isInterfaceType(goType)) {
-          let concreteType: go.ModelType | go.PolymorphicType;
+          let concreteType: go.ModelType | go.PolymorphicType | undefined;
           if (go.isInterfaceType(goType)) {
             concreteType = goType.possibleTypes.find(t => t.discriminatorValue?.literal === exampleType.type.discriminatorValue || t.discriminatorValue?.literal.value === exampleType.type.discriminatorValue)!;
           } else {
             concreteType = goType;
           }
+          if (concreteType === undefined) {
+            throw new Error(`can not find concrete type for example type ${exampleType.type.name}`);
+          }
           const ret = new go.StructExample(concreteType);
           for (const [k, v] of Object.entries(exampleType.value)) {
-            if (concreteType === undefined) {
-              throw new Error(`can not find concrete type for example type ${exampleType.type.name}`);
-            }
             const field = concreteType.fields.find(f => f.serializedName === k)!;
             ret.value[field.name] = this.adaptExampleType(v, field.type);
           }
